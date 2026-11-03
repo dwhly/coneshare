@@ -18,6 +18,10 @@ import {
 } from '../ui/Sheet';
 import { Switch } from '../ui/Switch';
 import { PasswordInput } from '../ui/PasswordInput';
+import { AccessGrantsSection, applyPendingGrants } from './AccessGrantsSection';
+
+// AmForge: tiled-watermark variables offered as quick-insert chips.
+const WATERMARK_VARIABLES = ['{{name}}', '{{organisation}}', '{{email}}', '{{ip-address}}', '{{date}}', '{{copy_id}}'];
 
 export function LinkSheet({
   isOpen,
@@ -43,6 +47,10 @@ export function LinkSheet({
   const [isSaving, setIsSaving] = useState(false);
   const [requireNda, setRequireNda] = useState(false);
   const [ndaText, setNdaText] = useState('');
+  // AmForge
+  const [restrictToGrants, setRestrictToGrants] = useState(false);
+  const [pendingGrants, setPendingGrants] = useState([]);
+  const [allowOriginalDownload, setAllowOriginalDownload] = useState(false);
 
   const isEditing = !!currentLink;
   const isWatermarkable = ['pdf', 'document', 'image'].includes(document?.type) || !!dataroom;
@@ -75,19 +83,26 @@ export function LinkSheet({
         setWatermarkText(currentLink.watermark_text || '');
         setRequireNda(currentLink.require_nda || false);
         setNdaText(currentLink.nda_text || '');
+        setRestrictToGrants(currentLink.restrict_to_grants || false);
+        setAllowOriginalDownload(currentLink.allow_original_download || false);
+        setPendingGrants([]);
       } else {
         setName('');
         setRequiresEmail(false);
         setRequiresEmailVerification(false);
-        setAllowDownload(true);
+        // AmForge: downloads OFF and watermark ON by default for data-room links.
+        setAllowDownload(false);
+        setRestrictToGrants(false);
+        setAllowOriginalDownload(false);
+        setPendingGrants([]);
         setEnableQna(true);
         setIsPasswordEnabled(false);
         setPassword('');
         setPasswordTouched(false);
         setExpiresAt('');
         setReceiveEmailNotification(false);
-        setEnableWatermark(false);
-        setWatermarkText('');
+        setEnableWatermark(!!dataroom);
+        setWatermarkText(dataroom ? 'CONFIDENTIAL · {{name}} · {{organisation}} · {{email}}' : '');
         setRequireNda(false);
         setNdaText('');
       }
@@ -113,7 +128,14 @@ export function LinkSheet({
       expires_at: expiresAt ? new Date(expiresAt).toISOString() : null,
       require_nda: requireNda,
       nda_text: requireNda ? ndaText : '',
+      // AmForge: grants force verified email; originals only on explicit opt-in.
+      restrict_to_grants: restrictToGrants,
+      allow_original_download: allowDownload && allowOriginalDownload,
     };
+    if (restrictToGrants) {
+      linkData.requires_email = true;
+      linkData.requires_email_verification = true;
+    }
     
     if (isQnaAvailable) {
       linkData.enable_qna = enableQna;
@@ -140,7 +162,10 @@ export function LinkSheet({
         await updateShareLink(currentLink.id, linkData);
         toast.success(t('linkSheet.linkUpdated'));
       } else {
-        await createShareLink(linkData);
+        const created = await createShareLink(linkData);
+        if (restrictToGrants && pendingGrants.length && created?.data?.id) {
+          await applyPendingGrants(created.data.id, pendingGrants);
+        }
         toast.success(t('linkSheet.linkCreated'));
       }
 
@@ -185,7 +210,8 @@ export function LinkSheet({
               </Label>
               <Switch
                 id="require-email"
-                checked={requiresEmail}
+                checked={requiresEmail || restrictToGrants}
+                disabled={restrictToGrants}
                 onCheckedChange={(checked) => {
                   setRequiresEmail(checked);
                   if (!checked) {
@@ -195,7 +221,7 @@ export function LinkSheet({
                 }}
               />
             </div>
-            {requiresEmail && (
+            {(requiresEmail || restrictToGrants) && (
               <div className="flex items-center justify-between rounded-md border bg-gray-50 p-4 dark:bg-gray-800/50">
                 <Label htmlFor="verify-email" className="flex flex-col space-y-1">
                   <span>{t('linkSheet.verifyEmail')}</span>
@@ -205,12 +231,28 @@ export function LinkSheet({
                 </Label>
                 <Switch
                   id="verify-email"
-                  checked={requiresEmailVerification}
+                  checked={requiresEmailVerification || restrictToGrants}
                   onCheckedChange={setRequiresEmailVerification}
+                  disabled={restrictToGrants}
                 />
               </div>
             )}
           </div>
+
+          <AccessGrantsSection
+            isOpen={isOpen}
+            linkId={isEditing ? currentLink.id : null}
+            restrictToGrants={restrictToGrants}
+            onRestrictToGrantsChange={(checked) => {
+              setRestrictToGrants(checked);
+              if (checked) {
+                setRequiresEmail(true);
+                setRequiresEmailVerification(true);
+              }
+            }}
+            pendingGrants={pendingGrants}
+            onPendingGrantsChange={setPendingGrants}
+          />
 
           <div className="flex items-center justify-between">
             <Label htmlFor="email-notification" className="flex flex-col space-y-1">
@@ -300,6 +342,21 @@ export function LinkSheet({
               disabled={document?.download_only}
             />
           </div>
+          {allowDownload && (
+            <div className="flex items-center justify-between rounded-md border bg-gray-50 p-4 dark:bg-gray-800/50">
+              <Label htmlFor="allow-original-download" className="flex flex-col space-y-1">
+                <span>{t('amforge.downloads.allowOriginal')}</span>
+                <span className="text-sm font-normal text-muted-foreground">
+                  {t('amforge.downloads.allowOriginalSubtitle')}
+                </span>
+              </Label>
+              <Switch
+                id="allow-original-download"
+                checked={allowOriginalDownload}
+                onCheckedChange={setAllowOriginalDownload}
+              />
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <Label htmlFor="enable-qna" className="flex flex-col space-y-1">
@@ -343,24 +400,20 @@ export function LinkSheet({
                   onChange={(e) => setWatermarkText(e.target.value)}
                   placeholder={t('linkSheet.watermarkPlaceholder')}
                 />
-                <div className="flex items-center gap-2 pt-1">
-                  <span
-                    className="cursor-pointer rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground hover:bg-secondary/80"
-                    onClick={() =>
-                      setWatermarkText((prev) => (prev ? `${prev} {{ip-address}}` : '{{ip-address}}'))
-                    }
-                  >
-                    {`{{ip-address}}`}
-                  </span>
-                  <span
-                    className="cursor-pointer rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground hover:bg-secondary/80"
-                    onClick={() =>
-                      setWatermarkText((prev) => (prev ? `${prev} {{email}}` : '{{email}}'))
-                    }
-                  >
-                    {`{{email}}`}
-                  </span>
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  {WATERMARK_VARIABLES.map((variable) => (
+                    <span
+                      key={variable}
+                      className="cursor-pointer rounded-md bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground hover:bg-secondary/80"
+                      onClick={() =>
+                        setWatermarkText((prev) => (prev ? `${prev} ${variable}` : variable))
+                      }
+                    >
+                      {variable}
+                    </span>
+                  ))}
                 </div>
+                <p className="text-xs text-muted-foreground">{t('amforge.watermark.footerNote')}</p>
               </div>
             )}            
           </div>

@@ -123,7 +123,8 @@ def dataroom_share_link(user_context):
     DataroomDocument.objects.create(dataroom=dr, document=doc1)
     DataroomDocument.objects.create(dataroom=dr, document=doc2)
     
-    link = ShareLink.objects.create(dataroom=dr, created_by=user)
+    # AmForge: downloads default OFF and originals need opt-in; keep upstream semantics here.
+    link = ShareLink.objects.create(dataroom=dr, created_by=user, allow_download=True, allow_original_download=True)
     return {'link': link, 'dataroom': dr, 'user_context': user_context}
 
 

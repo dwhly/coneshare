@@ -23,13 +23,98 @@ class ShareLinkTemplate(BaseModel):
     requires_password = models.BooleanField(default=False)
     requires_email = models.BooleanField(default=False)
     requires_email_verification = models.BooleanField(default=False)
-    allow_download = models.BooleanField(default=True)
+    # AmForge: downloads are OFF by default (existing rows keep their value).
+    allow_download = models.BooleanField(default=False)
     enable_watermark = models.BooleanField(default=False)
     watermark_text = models.CharField(max_length=255, blank=True)
     receive_email_notification = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
+
+
+class ViewerOrganisation(BaseModel):
+    """
+    AmForge: an external counterparty (e.g. an investor or acquirer) whose
+    people are identified by their verified email domain. Scoped to the owning
+    tenant Organization. Not to be confused with core.Organization (the tenant).
+    """
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='viewer_organisations')
+    name = models.CharField(max_length=255)
+    # Lower-cased bare domains, e.g. ["acme.com", "acme.co.uk"].
+    email_domains = models.JSONField(default=list, blank=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='viewer_organisations_created')
+
+    class Meta:
+        ordering = ['name']
+        constraints = [
+            models.UniqueConstraint(fields=['organization', 'name'], name='uq_viewer_organisation_tenant_name'),
+        ]
+
+    @staticmethod
+    def normalize_domain(value: str) -> str:
+        value = (value or '').strip().lower()
+        if '@' in value:
+            value = value.rsplit('@', 1)[1]
+        return value.lstrip('.').rstrip('.')
+
+    def save(self, *args, **kwargs):
+        seen = []
+        for d in self.email_domains or []:
+            nd = self.normalize_domain(d)
+            if nd and nd not in seen:
+                seen.append(nd)
+        self.email_domains = seen
+        super().save(*args, **kwargs)
+
+    def matches_email(self, email: str) -> bool:
+        domain = self.normalize_domain(email)
+        return bool(domain) and domain in (self.email_domains or [])
+
+    def __str__(self):
+        return self.name
+
+
+class ShareLinkAccessGrant(BaseModel):
+    """
+    AmForge: grants a ShareLink to a ViewerOrganisation (by verified email
+    domain) or to one explicit email address. Enforced only when
+    ShareLink.restrict_to_grants is True.
+    """
+    share_link = models.ForeignKey('ShareLink', on_delete=models.CASCADE, related_name='access_grants')
+    viewer_organisation = models.ForeignKey(ViewerOrganisation, on_delete=models.CASCADE, null=True, blank=True, related_name='grants')
+    email = models.EmailField(blank=True, default='')
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='share_link_grants_created')
+
+    class Meta:
+        ordering = ['created_at']
+        constraints = [
+            models.CheckConstraint(
+                condition=(
+                    (Q(viewer_organisation__isnull=False) & Q(email='')) |
+                    (Q(viewer_organisation__isnull=True) & ~Q(email=''))
+                ),
+                name='sharelinkaccessgrant_org_xor_email',
+            ),
+            models.UniqueConstraint(
+                fields=['share_link', 'viewer_organisation'],
+                condition=Q(viewer_organisation__isnull=False),
+                name='uq_sharelink_grant_org',
+            ),
+            models.UniqueConstraint(
+                fields=['share_link', 'email'],
+                condition=~Q(email=''),
+                name='uq_sharelink_grant_email',
+            ),
+        ]
+
+    def save(self, *args, **kwargs):
+        if self.email:
+            self.email = self.email.strip().lower()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"grant {self.viewer_organisation or self.email} -> {self.share_link_id}"
 
 
 class ShareLink(BaseModel):
@@ -42,7 +127,14 @@ class ShareLink(BaseModel):
     password = encrypt(models.CharField(max_length=255, null=True, blank=True))
     requires_email = models.BooleanField(default=False)
     requires_email_verification = models.BooleanField(default=False)
-    allow_download = models.BooleanField(default=True)
+    # AmForge: downloads are OFF by default (existing rows keep their value).
+    allow_download = models.BooleanField(default=False)
+    # AmForge: when True, downloads serve the untouched original file (logged as an
+    # IssuedCopy of kind 'original'). Otherwise every download is a watermarked copy.
+    allow_original_download = models.BooleanField(default=False)
+    # AmForge: when True, only verified emails that are explicitly granted, or whose
+    # domain matches a granted ViewerOrganisation, may pass the email gate.
+    restrict_to_grants = models.BooleanField(default=False)
     enable_qna = models.BooleanField(default=True)
     enable_watermark = models.BooleanField(default=False)
     watermark_text = models.CharField(max_length=255, blank=True)
@@ -127,6 +219,8 @@ class EmailVerificationToken(models.Model):
     token = models.CharField(max_length=64, unique=True, db_index=True)
     share_link = models.ForeignKey('ShareLink', on_delete=models.CASCADE, related_name='email_verification_tokens')
     email = models.EmailField()
+    # AmForge: full name typed at the email step, carried through the magic link.
+    name = models.CharField(max_length=255, blank=True, default='')
     expires_at = models.DateTimeField()
 
     def save(self, *args, **kwargs):
@@ -162,7 +256,8 @@ class ShareLinkDataroomSetting(BaseModel):
     dataroom_document = models.ForeignKey('datarooms.DataroomDocument', on_delete=models.CASCADE, null=True, blank=True)
     dataroom_folder = models.ForeignKey('datarooms.DataroomFolder', on_delete=models.CASCADE, null=True, blank=True)
     is_visible = models.BooleanField(default=True)
-    allow_download = models.BooleanField(default=True)
+    # AmForge: downloads are OFF by default (existing rows keep their value).
+    allow_download = models.BooleanField(default=False)
     enable_watermark = models.BooleanField(default=False)
 
     class Meta:
@@ -297,6 +392,8 @@ class Viewer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='viewers')
     email = models.EmailField()
+    # AmForge: last full name the viewer gave at the email step.
+    name = models.CharField(max_length=255, blank=True, default='')
 
     objects = ViewerManager()
 
@@ -324,6 +421,13 @@ class ViewSession(models.Model):
         choices=[('verified', 'Verified'), ('self_reported', 'Self-reported'),
                  ('owner', 'Owner'), ('account', 'Account')],
     )
+    # AmForge: identity captured at the email step and the counterparty organisation
+    # resolved from the verified email domain (snapshot name survives org deletion).
+    viewer_name = models.CharField(max_length=255, blank=True, default='', db_default='')
+    viewer_organisation = models.ForeignKey(
+        'ViewerOrganisation', on_delete=models.SET_NULL, null=True, blank=True, related_name='view_sessions'
+    )
+    viewer_organisation_name = models.CharField(max_length=255, blank=True, default='', db_default='')
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=255, blank=True)
     country = models.CharField(max_length=100, blank=True)
@@ -515,3 +619,63 @@ class NDAAcceptance(models.Model):
 
     def __str__(self):
         return f"NDAAcceptance {self.id} for ShareLink {self.share_link_id} (v{self.nda_version})"
+
+
+def generate_copy_id() -> str:
+    """Short, human-readable, unambiguous copy id, e.g. 'K7Q2-9XMD'."""
+    alphabet = 'ABCDEFGHJKMNPQRSTVWXYZ23456789'
+    raw = ''.join(secrets.choice(alphabet) for _ in range(8))
+    return f"{raw[:4]}-{raw[4:]}"
+
+
+class IssuedCopy(models.Model):
+    """
+    AmForge: one row per watermarked copy handed to a viewer. A 'view' copy is
+    shared by every page image of one document within one viewing session; each
+    'download' produces a fresh copy. 'original' records an un-watermarked
+    original-file download (only possible when ShareLink.allow_original_download).
+    """
+    KIND_VIEW = 'view'
+    KIND_DOWNLOAD = 'download'
+    KIND_ORIGINAL = 'original'
+    KIND_CHOICES = (
+        (KIND_VIEW, 'View'),
+        (KIND_DOWNLOAD, 'Watermarked download'),
+        (KIND_ORIGINAL, 'Original download'),
+    )
+
+    id = ULIDField(primary_key=True, editable=False)
+    copy_id = models.CharField(max_length=16, unique=True, db_index=True)
+    kind = models.CharField(max_length=16, choices=KIND_CHOICES)
+    share_link = models.ForeignKey('ShareLink', on_delete=models.CASCADE, related_name='issued_copies')
+    view_session = models.ForeignKey('ViewSession', on_delete=models.SET_NULL, null=True, blank=True, related_name='issued_copies')
+    # Django session key, used to keep one stable 'view' copy per browser session
+    # when no ViewSession row is known to the page-render request.
+    session_key = models.CharField(max_length=64, blank=True, default='')
+    document = models.ForeignKey('documents.Document', on_delete=models.SET_NULL, null=True, blank=True, related_name='issued_copies')
+    dataroom_document = models.ForeignKey('datarooms.DataroomDocument', on_delete=models.SET_NULL, null=True, blank=True, related_name='issued_copies')
+    viewer_email = models.EmailField(blank=True, default='')
+    viewer_name = models.CharField(max_length=255, blank=True, default='')
+    viewer_organisation_name = models.CharField(max_length=255, blank=True, default='')
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['share_link', 'kind', 'document', 'session_key'], name='issuedcopy_lookup_idx'),
+        ]
+
+    def save(self, *args, **kwargs):
+        if not self.copy_id:
+            for _ in range(10):
+                candidate = generate_copy_id()
+                if not IssuedCopy.objects.filter(copy_id=candidate).exists():
+                    self.copy_id = candidate
+                    break
+        if self.viewer_email:
+            self.viewer_email = self.viewer_email.strip().lower()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"IssuedCopy {self.copy_id} ({self.kind})"

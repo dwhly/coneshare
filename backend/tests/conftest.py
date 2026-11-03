@@ -118,10 +118,12 @@ def document(user, organization):
 @pytest.fixture
 def share_link(document, user):
     """Fixture to create a basic share link."""
+    # AmForge: downloads default OFF; legacy fixtures opt in to upstream's old default.
     return ShareLink.objects.create(
         document=document,
         created_by=user,
         name="Test Share Link",
+        allow_download=True,
     )
 
 

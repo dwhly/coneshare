@@ -674,6 +674,7 @@ class TestViewSessionViewSet:
     def test_record_download_for_view_session(self, public_client, share_link):
         """Test that a download can be recorded for a view session."""
         share_link.allow_download = True
+        share_link.allow_original_download = True  # AmForge: originals need explicit opt-in
         share_link.save()
         # 1. Create a View session
         view_session = ViewSession.objects.create(share_link=share_link)
@@ -803,6 +804,8 @@ class TestShareLinkViewDataView:
         Test successful retrieval of public share link data, ensuring it
         returns secure, proxied page URLs instead of direct storage links.
         """
+        share_link.allow_original_download = True  # AmForge: originals need explicit opt-in
+        share_link.save()
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
 
         assert response.status_code == status.HTTP_200_OK
@@ -885,6 +888,8 @@ class TestShareLinkViewDataView:
         primary_version.original_storage_key = "path/to/original.pdf"
         primary_version.save()
         mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/some-token"
+        share_link.allow_original_download = True  # AmForge: originals need explicit opt-in
+        share_link.save()
 
         # Action
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
@@ -893,9 +898,9 @@ class TestShareLinkViewDataView:
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert "download_url" in data
-        assert data["download_url"] == "http://test.coneshare.com/files/download/some-token"
-
-        mock_fs_download_url.assert_called_once_with("path/to/original.pdf", is_internal=False, filename=share_link.document.name)
+        # AmForge: original downloads are routed through the audited download-file
+        # endpoint (which then redirects to the file server) instead of a direct URL.
+        assert data["download_url"] == f"http://test.coneshare.com/api/v1/links/{share_link.slug}/download-file/"
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('documents.fileserver.fileserver_client.generate_download_url')
@@ -2025,7 +2030,8 @@ class TestDataroomVisitTracking:
             dataroom=dataroom,
             created_by=user,
             enable_watermark=True,
-            watermark_text="CONFIDENTIAL"
+            watermark_text="CONFIDENTIAL",
+            allow_download=True,  # AmForge: downloads default OFF
         )
 
         # 2. Request the document through the dataroom link.
@@ -2458,7 +2464,7 @@ class TestShareLinkViewSet:
         ddoc2 = DataroomDocument.objects.create(dataroom=dataroom, document=other_doc)
 
         # Create share link for dataroom
-        link = ShareLink.objects.create(dataroom=dataroom, name="DR Link", created_by=user)
+        link = ShareLink.objects.create(dataroom=dataroom, name="DR Link", created_by=user, allow_download=True)  # AmForge: downloads default OFF
         assert link.dataroom_settings.count() == 2
 
         setting1 = link.dataroom_settings.get(dataroom_document=ddoc1)
@@ -3795,7 +3801,8 @@ class TestWatermarkingViews:
             document=document_with_page,
             created_by=document_with_page.created_by,
             enable_watermark=False,
-            allow_download=True
+            allow_download=True,
+            allow_original_download=True,  # AmForge: originals need explicit opt-in
         )
         version = document_with_page.versions.get(is_primary=True)
 
@@ -4252,7 +4259,7 @@ class TestWatermarkingViews:
     def test_sharelink_file_download_view_records_dataroom_visit_downloaded_at(self, public_client, dataroom, user, document):
         """Test that GET download-file records downloaded_at on DataroomVisit when view_session_id is present."""
         from datarooms.models import DataroomDocument
-        link = ShareLink.objects.create(dataroom=dataroom, created_by=user, allow_download=True)
+        link = ShareLink.objects.create(dataroom=dataroom, created_by=user, allow_download=True, allow_original_download=True)  # AmForge: originals need explicit opt-in
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document)
         setting, _ = ShareLinkDataroomSetting.objects.get_or_create(share_link=link, dataroom_document=ddoc)
         setting.is_visible = True
@@ -4294,7 +4301,8 @@ class TestWatermarkingViews:
             document=document_with_page,
             created_by=user,
             password="password123",
-            allow_download=True
+            allow_download=True,
+            allow_original_download=True,  # AmForge: originals need explicit opt-in
         )
         version = document_with_page.versions.get(is_primary=True)
         mock_fs_download_url.return_value = "http://fileserver.test/download/some-token"
@@ -4323,6 +4331,7 @@ class TestWatermarkingViews:
             dataroom=dataroom,
             created_by=user,
             allow_download=True,
+            allow_original_download=True,  # AmForge: originals need explicit opt-in
             enable_watermark=False
         )
         version = doc.versions.get(is_primary=True)
@@ -4377,8 +4386,10 @@ def dataroom_with_content_and_link(dataroom, user, document_factory, image_docum
     ddoc_invisible = DataroomDocument.objects.create(dataroom=dataroom, document=invisible_doc, folder=root_folder)
     ddoc_not_downloadable = DataroomDocument.objects.create(dataroom=dataroom, document=not_downloadable_doc, folder=root_folder)
 
-    # Create share link, which will auto-generate settings
-    link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
+    # Create share link, which will auto-generate settings.
+    # AmForge: opt in to upstream download semantics (downloads on, originals for
+    # non-watermarked items) so these archive tests keep exercising both paths.
+    link = ShareLink.objects.create(dataroom=dataroom, created_by=user, allow_download=True, allow_original_download=True)
 
     return {
         'link': link,
@@ -6012,7 +6023,7 @@ class TestDataroomDownloadAllView:
         self, mock_generate_pdf, public_client, dataroom, user, document_factory
     ):
         # Setup dataroom with watermark enabled
-        link = ShareLink.objects.create(dataroom=dataroom, created_by=user, enable_watermark=True, watermark_text="CONF")
+        link = ShareLink.objects.create(dataroom=dataroom, created_by=user, enable_watermark=True, watermark_text="CONF", allow_download=True)  # AmForge: downloads default OFF
 
         # 1. Valid PDF
         doc_valid = document_factory(name="Valid.pdf", type='pdf')

@@ -8,6 +8,7 @@ router.register(r'share-link-templates', views.ShareLinkTemplateViewSet)
 router.register(r'share-links', views.ShareLinkViewSet)
 router.register(r'qna-threads', views.QnAThreadViewSet, basename='qna-thread')
 router.register(r'viewers', views.ViewerViewSet)
+router.register(r'viewer-organisations', views.ViewerOrganisationViewSet, basename='viewer-organisation')
 router.register(r'view-sessions', views.ViewSessionViewSet, basename='viewsession')
 
 urlpatterns = [

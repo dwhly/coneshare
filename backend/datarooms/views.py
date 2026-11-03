@@ -38,6 +38,7 @@ from .models import (
     DataroomFolder,
     DataroomItemOrder,
 )
+from .cloning import clone_dataroom
 from .services import (
     delete_dataroom,
     remove_dataroom_content,
@@ -473,6 +474,30 @@ class DataroomViewSet(viewsets.ModelViewSet):
             return Response({
                 "detail": "An internal server error occurred while moving content."
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=True, methods=['post'], url_path='duplicate')
+    def duplicate(self, request, pk=None):
+        """
+        AmForge: clone this data room (folder tree, document references, ordering,
+        settings/branding and optionally its share links as inactive templates).
+        Body: {"name": "<optional>", "include_share_links": true}
+        """
+        source = self.get_object()
+        if not is_dataroom_collaborator_or_above(request.user, source):
+            raise PermissionDenied("You do not have permission to duplicate this dataroom.")
+        name = request.data.get('name') or None
+        include_links = request.data.get('include_share_links', True)
+        if isinstance(include_links, str):
+            include_links = include_links.strip().lower() not in ('0', 'false', 'no', '')
+        result = clone_dataroom(source, request.user, name=name, include_share_links=bool(include_links))
+        data = DataroomSerializer(result['dataroom'], context=self.get_serializer_context()).data
+        return Response({
+            'dataroom': data,
+            'source_dataroom_id': str(source.id),
+            'folder_count': result['folder_count'],
+            'document_count': result['document_count'],
+            'share_link_count': len(result['share_links']),
+        }, status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['get'], url_path='view-sessions')
     def view_sessions(self, request, pk=None):
