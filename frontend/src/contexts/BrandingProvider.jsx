@@ -6,8 +6,8 @@ const BrandingContext = createContext(null);
 
 export function BrandingProvider({ children }) {
   const [branding, setBranding] = useState({
-    brandName: "Coneshare",
-    brandLogoUrl: "/logo.svg",
+    brandName: "AmForge Send",
+    brandLogoUrl: "/amforge-mark.svg",
     brandWebsiteUrl: "",
     termsUrl: "https://www.coneshare.com/terms",
     privacyPolicyUrl: "https://www.coneshare.com/privacy-policy",
@@ -22,8 +22,8 @@ export function BrandingProvider({ children }) {
       const privacy = data?.privacy_policy_url;
 
       setBranding({
-        brandName: data?.brand_name || "Coneshare",
-        brandLogoUrl: data?.brand_logo_url || "/logo.svg",
+        brandName: data?.brand_name || "AmForge Send",
+        brandLogoUrl: data?.brand_logo_url || "/amforge-mark.svg",
         brandWebsiteUrl: (websiteUrl && isSafeUrl(websiteUrl)) ? websiteUrl : "",
         termsUrl: (terms && isSafeUrl(terms)) ? terms : "https://www.coneshare.com/terms",
         privacyPolicyUrl: (privacy && isSafeUrl(privacy)) ? privacy : "https://www.coneshare.com/privacy-policy",
@@ -42,7 +42,7 @@ export function BrandingProvider({ children }) {
   useEffect(() => {
     const faviconElement = document.querySelector("link[rel~='icon']");
     if (faviconElement) {
-      faviconElement.href = branding.brandLogoUrl || "/logo.svg";
+      faviconElement.href = branding.brandLogoUrl || "/amforge-mark.svg";
     }
   }, [branding.brandLogoUrl]);
 
@@ -63,8 +63,8 @@ export function useBranding() {
   const context = useContext(BrandingContext);
   if (context === null) {
     return {
-      brandName: "Coneshare",
-      brandLogoUrl: "/logo.svg",
+      brandName: "AmForge Send",
+      brandLogoUrl: "/amforge-mark.svg",
       brandWebsiteUrl: "",
       termsUrl: "https://www.coneshare.com/terms",
       privacyPolicyUrl: "https://www.coneshare.com/privacy-policy",

@@ -2,7 +2,6 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSidebar } from "./SidebarProvider";
-import { cn } from "../../lib/utils";
 import { Button } from "../ui/Button";
 import {
   Tooltip,
@@ -12,17 +11,19 @@ import {
 } from "../ui/Tooltip";
 
 import { useBranding } from "../../contexts/BrandingProvider";
+import { AmforgeLogo, AmforgeMark } from "./AmforgeLogo";
 
 function SidebarHeader() {
   const { t } = useTranslation();
   const { isCollapsed, toggleSidebar } = useSidebar();
-  const { brandName, brandLogoUrl, brandWebsiteUrl } = useBranding();
+  const { brandName, brandWebsiteUrl } = useBranding();
 
-  const logoContent = (
-    <>
-      <img src={brandLogoUrl} alt={`${brandName} logo`} className="h-6 w-6 object-contain" />
-      <span className={cn(isCollapsed && "hidden")}>{brandName}</span>
-    </>
+  // AmForge shell: the app chrome always shows the AmForge mark/wordmark; the product name lives in
+  // the product switcher (Header). Per-dataroom/org branding still applies to visitor-facing pages.
+  const logoContent = isCollapsed ? (
+    <AmforgeMark className="h-6 w-6" />
+  ) : (
+    <AmforgeLogo className="h-6 w-auto text-foreground" />
   );
 
   return (

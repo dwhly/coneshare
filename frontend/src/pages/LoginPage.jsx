@@ -7,12 +7,13 @@ import { APP_DISPLAY_VERSION } from '../lib/constants'
 import { Button } from '../components/ui/Button'
 import { useBranding } from '../contexts/BrandingProvider'
 import { LanguagePicker } from '../components/common/LanguagePicker'
+import { AmforgeLogo } from '../components/layout/AmforgeLogo'
 
 function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const { t } = useTranslation()
-  const { brandName, brandLogoUrl, brandWebsiteUrl, termsUrl, privacyPolicyUrl } = useBranding()
+  const { brandName, brandWebsiteUrl, termsUrl, privacyPolicyUrl } = useBranding()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
@@ -70,15 +71,7 @@ function LoginPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
       <div className="w-full max-w-md space-y-8">
         <div className="flex flex-col items-center">
-          {brandLogoUrl ? (
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white p-2 shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
-              <img
-                src={brandLogoUrl}
-                alt={`${brandName} logo`}
-                className="h-12 w-12 object-contain"
-              />
-            </div>
-          ) : null}
+          <AmforgeLogo product="send" className="mb-10 h-7 w-auto text-foreground" />
           <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
             {t('auth.signIn')}
           </h2>

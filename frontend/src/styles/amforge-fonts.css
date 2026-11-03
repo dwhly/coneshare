@@ -1,0 +1,13 @@
+/* VENDORED from amforge-deal-suite/packages/amforge-ui/fonts.css — edit there, then run scripts/sync.sh */
+/*
+ * Inter (SIL OFL 1.1) — the AmForge UI face. Documenso already ships the identical file and
+ * @font-face (apps/remix/app/app.css), so only Coneshare imports this.
+ * The consuming app serves fonts/ at /fonts/ (copied by scripts/sync.sh).
+ */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-variablefont_opsz,wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

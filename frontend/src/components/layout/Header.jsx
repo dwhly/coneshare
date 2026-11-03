@@ -4,6 +4,7 @@ import { Breadcrumbs } from "../documents/Breadcrumbs";
 import { useBreadcrumb } from "./BreadcrumbProvider";
 import { useNavItems } from "./SidebarContent";
 import { DataroomBreadcrumbs } from "../datarooms/DataroomBreadcrumbs";
+import { AmforgeProductSwitcher } from "./AmforgeProductSwitcher";
 
 function Header() {
   const { t } = useTranslation();
@@ -61,6 +62,8 @@ function Header() {
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+      <AmforgeProductSwitcher current="send" className="hidden md:inline-flex" />
+      <div className="hidden h-6 w-px bg-border md:block" aria-hidden="true" />
       {renderBreadcrumbs()}
     </header>
   );

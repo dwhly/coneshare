@@ -1,0 +1,136 @@
+/* VENDORED from amforge-deal-suite/packages/amforge-ui/tokens.css — edit there, then run scripts/sync.sh */
+/*
+ * AmForge design tokens — single source of truth for Send (Coneshare) and Sign (Documenso).
+ *
+ * Format: shadcn/ui convention. Every colour is a bare HSL channel triplet ("H S% L%") so
+ * Tailwind can compose it as `hsl(var(--token) / <alpha-value>)` and opacity modifiers
+ * (`bg-primary/90`, `bg-background/95`) keep working in both apps.
+ *
+ * Layers:
+ *   1. Palette   (--af-gray-*, --af-brand-*)   raw scales; the ONLY place hex-ish decisions live
+ *   2. Semantic  (--background, --primary ...)  shadcn names, mapped 1:1 by both apps' Tailwind configs
+ *   3. Shell     (--af-shell-*)                 shared top-bar/footer metrics
+ *
+ * Selectors: `:root, .dark-mode-disabled` / `.dark:not(.dark-mode-disabled)` match Documenso's
+ * dark-mode contract (it forces light mode with `.dark-mode-disabled` on signing/embed pages) and are
+ * a strict superset of Coneshare's plain `.dark` class. Same selectors in both apps = same specificity.
+ *
+ * To re-brand: change the --af-brand-* scale (and optionally --af-gray-*). Nothing else should need
+ * to move. Edit this file in packages/amforge-ui, then run scripts/sync.sh.
+ */
+
+:root,
+.dark-mode-disabled {
+  /* ---------- 1. Palette ---------- */
+  /* Neutral: cool gray (numerically identical to Tailwind `gray`, Coneshare's existing neutral). */
+  --af-gray-50: 210 20% 98%;
+  --af-gray-100: 220 14.3% 95.9%;
+  --af-gray-200: 220 13% 91%;
+  --af-gray-300: 216 12.2% 83.9%;
+  --af-gray-400: 217.9 10.6% 64.9%;
+  --af-gray-500: 220 8.9% 46.1%;
+  --af-gray-600: 215 13.8% 34.1%;
+  --af-gray-700: 216.9 19.1% 26.7%;
+  --af-gray-800: 215 27.9% 16.9%;
+  --af-gray-900: 220.9 39.3% 11%;
+  --af-gray-950: 224 71.4% 4.1%;
+
+  /* Brand accent: one restrained cobalt. PLACEHOLDER — pending Dan's brand decision. */
+  --af-brand-50: 228 100% 97%;
+  --af-brand-100: 228 96% 94%;
+  --af-brand-200: 228 94% 87%;
+  --af-brand-300: 228 88% 77%;
+  --af-brand-400: 228 80% 66%;
+  --af-brand-500: 228 70% 56%;
+  --af-brand-600: 225 64% 48%;
+  --af-brand-700: 226 64% 40%;
+  --af-brand-800: 227 60% 32%;
+  --af-brand-900: 228 56% 25%;
+  --af-brand-950: 229 56% 15%;
+
+  /* ---------- 2. Semantic (shadcn names) ---------- */
+  --background: 0 0% 100%;
+  --foreground: var(--af-gray-900);
+
+  --card: 0 0% 100%;
+  --card-foreground: var(--af-gray-900);
+
+  --popover: 0 0% 100%;
+  --popover-foreground: var(--af-gray-900);
+
+  /* Primary CTA = ink, not colour. The accent is reserved for focus, links and the brand mark. */
+  --primary: var(--af-gray-900);
+  --primary-foreground: var(--af-gray-50);
+
+  --secondary: var(--af-gray-100);
+  --secondary-foreground: var(--af-gray-900);
+
+  --muted: var(--af-gray-100);
+  --muted-foreground: var(--af-gray-500);
+
+  /* shadcn `accent` = hover/selected surface (neutral). The brand colour is `brand`. */
+  --accent: var(--af-gray-100);
+  --accent-foreground: var(--af-gray-900);
+
+  --destructive: 0 72.2% 50.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --success: 160 84% 39%;
+  --warning: 32 95% 44%;
+
+  --border: var(--af-gray-200);
+  --input: var(--af-gray-200);
+  --ring: var(--af-brand-600);
+
+  --brand: var(--af-brand-600);
+  --brand-foreground: 0 0% 100%;
+  --brand-muted: var(--af-brand-50);
+  --brand-muted-foreground: var(--af-brand-700);
+
+  --radius: 0.5rem;
+
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ---------- 3. Shell ---------- */
+  --af-shell-height: 3.5rem;
+}
+
+.dark:not(.dark-mode-disabled) {
+  --background: 222 39% 7%;
+  --foreground: var(--af-gray-50);
+
+  --card: 222 39% 7%;
+  --card-foreground: var(--af-gray-50);
+
+  --popover: var(--af-gray-900);
+  --popover-foreground: var(--af-gray-50);
+
+  --primary: var(--af-gray-50);
+  --primary-foreground: var(--af-gray-900);
+
+  --secondary: var(--af-gray-800);
+  --secondary-foreground: var(--af-gray-50);
+
+  --muted: var(--af-gray-800);
+  --muted-foreground: var(--af-gray-400);
+
+  --accent: var(--af-gray-800);
+  --accent-foreground: var(--af-gray-50);
+
+  --destructive: 0 62.8% 50%;
+  --destructive-foreground: 0 0% 98%;
+
+  --success: 158 64% 52%;
+  --warning: 38 92% 50%;
+
+  --border: 215 25% 20%;
+  --input: 215 25% 20%;
+  --ring: var(--af-brand-400);
+
+  --brand: var(--af-brand-500);
+  --brand-foreground: 0 0% 100%;
+  --brand-muted: 228 40% 16%;
+  --brand-muted-foreground: var(--af-brand-300);
+}
