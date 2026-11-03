@@ -29,7 +29,10 @@ export function EmailForm({
     setIsLoading(true);
 
     try {
-      const response = await requestShareLinkAccess(slug, email, fullName.trim());
+      const name = fullName.trim();
+      const response = name
+        ? await requestShareLinkAccess(slug, email, name)
+        : await requestShareLinkAccess(slug, email);
       toast.success(getLocalizedErrorMessage(response.data.message));
 
       if (response.data.verification_required) {
@@ -158,12 +161,10 @@ export function EmailForm({
                 name="name"
                 type="text"
                 autoComplete="name"
-                required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className="pl-10"
                 placeholder={t('amforge.viewer.fullNamePlaceholder', { defaultValue: 'Jane Doe' })}
-                autoFocus
               />
             </div>
           </div>
@@ -183,6 +184,7 @@ export function EmailForm({
                 onChange={(e) => setEmail(e.target.value)}
                 className="pl-10"
                 placeholder="you@company.com"
+                autoFocus
               />
             </div>
           </div>
