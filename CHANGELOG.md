@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.11.1](https://github.com/coneshare/coneshare/compare/v1.11.0...v1.11.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* **frontend:** fix test cases when update vitest to v5 ([185a88e](https://github.com/coneshare/coneshare/commit/185a88e5934c6c2218803e774a778d99e366c693))
+
 ## [1.11.0](https://github.com/coneshare/coneshare/compare/v1.10.1...v1.11.0) (2026-11-02)
 
 
