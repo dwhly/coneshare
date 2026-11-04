@@ -83,7 +83,7 @@ def widens_access(operation, before, after):
     return False
 
 
-PUBLIC = {'CustomTokenObtainPairView', 'TokenRefreshView', 'LanguagesView', 'PublicSettingsView', 'HealthCheckView', 'BrandView', 'RecipientChallengeView', 'RecipientConfirmView', 'RecipientRoomView', 'RecipientLogoutView', 'OriginalDownloadView'}
+PUBLIC = {'LogoutView', 'CustomTokenObtainPairView', 'TokenRefreshView', 'LanguagesView', 'PublicSettingsView', 'HealthCheckView', 'BrandView', 'RecipientChallengeView', 'RecipientConfirmView', 'RecipientRoomView', 'RecipientLogoutView', 'OriginalDownloadView'}
 RECIPIENT = {'ShareLinkViewDataView', 'ShareLinkPublicMetaView', 'ShareLinkQnAThreadListCreateView', 'ShareLinkQnASummaryView', 'ShareLinkQnAMessageListCreateView', 'ShareLinkVerifyPasswordView', 'ShareLinkAcceptNDAView', 'ShareLinkRequestAccessView', 'ShareLinkConfirmAccessView', 'ShareLinkPageView', 'WatermarkedPageRenderView', 'ShareLinkFileDownloadView', 'DataroomFolderDownloadView', 'DataroomDownloadAllView', 'RecordPageView', 'RecordLinkClickView', 'ViewSessionViewSet'}
 # All enabled staff surfaces have parity tools; remaining upstream surfaces are denied.
 STAFF = {'PreferencesView', 'RoomViewSet', 'OrgViewSet', 'MemberViewSet', 'GrantViewSet', 'EntryLinkViewSet', 'ApprovalViewSet', 'ActivityViewSet', 'DriftViewSet', 'OperationViewSet', 'CopyViewSet', 'AgentKeyViewSet', 'OriginalExceptionViewSet', 'FilePolicyViewSet'}
@@ -102,6 +102,8 @@ def classify(view, method):
         entry.update(boundary='recipient', reason='Central recipient policy; unsupported legacy actions denied.', widens_access=False)
     elif name in STAFF or (name in UPSTREAM_READ and read):
         entry.update(boundary='staff', reason='Phase-one staff business operation.')
+    if name == 'LogoutView':
+        entry['human_only'] = True
     if name == 'PreferencesView':
         entry['widens_access'] = False
     if name == 'RoomViewSet' and action in ('upload', 'folders'):

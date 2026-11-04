@@ -402,3 +402,11 @@ def test_issuance_ip_cap_aggregates_emails_and_ignores_untrusted_spoof(staff,set
         assert response.status_code==200,response.data
     response=recipient.post(base,{'email':'different@other.test'},format='json',REMOTE_ADDR='198.51.100.8',HTTP_X_FORWARDED_FOR='203.0.113.250')
     assert response.status_code==429
+
+
+@pytest.mark.django_db
+def test_staff_logout_blacklists_own_refresh_but_agent_cannot_logout(staff,agent,owner):
+    token=RefreshToken.for_user(owner)
+    assert agent.post('/api/v1/logout/',{'refresh':str(token)},format='json').status_code==403
+    assert staff.post('/api/v1/logout/',{'refresh':str(token)},format='json').status_code==205
+    assert APIClient().post('/api/v1/token/refresh/',{'refresh':str(token)},format='json').status_code==401

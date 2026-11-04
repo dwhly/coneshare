@@ -610,14 +610,14 @@
     "widens_access": false
   },
   "core_LogoutView_endpoint_post": {
-    "boundary": "denied",
-    "human_only": false,
+    "boundary": "public",
+    "human_only": true,
     "method": "POST",
     "operation_id": "core_LogoutView_endpoint_post",
     "path": "/api/v1/logout/",
-    "reason": "Deferred or operator-only surface; phase 1.",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
     "tier": "read_write",
-    "widens_access": "evaluate_change"
+    "widens_access": false
   },
   "core_OrganizationViewSet_list_get": {
     "boundary": "staff",
