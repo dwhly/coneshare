@@ -179,3 +179,33 @@ class RecipientNdaEnterView(RecipientNdaView):
         from .client import identifier
         # Use only configured origin, never an upstream signingUrl or a caller URL.
         return HttpResponseRedirect(settings.SIGN_PUBLIC_URL.rstrip('/') + '/sign/' + identifier(work.signing_token))
+
+
+class SigningSourceView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def key_scope_targets(self, request):
+        return scoped_room(self, request)
+
+    def get(self, request, room_id):
+        room = staff_room(request, room_id)
+        versions = DocumentVersion.objects.filter(document__dataroomdocument__dataroom=room,
+            document__deleted_at__isnull=True, content_type='application/pdf').select_related('document')
+        return Response([{'id': str(v.pk), 'name': v.document.name, 'version_number': v.version_number} for v in versions])
+
+
+class SigningWhoViewedView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def key_scope_targets(self, request):
+        return scoped_room(self, request)
+
+    def get(self, request, room_id):
+        from django.db.models import Sum, Count, Max
+        from sharelinks.models import ViewSession
+        room = staff_room(request, room_id)
+        rows = ViewSession.objects.filter(share_link__dataroom=room, email_verification_method='verified').values(
+            'viewer_id', 'viewer_email', 'viewer_name').annotate(sessions=Count('id'),
+            observed_seconds=Sum('duration_seconds'), last_seen=Max('viewed_at'))
+        return Response({'room_id': str(room.pk), 'members': list(rows),
+                         'measurement': 'Observed browser engagement, not proof of reading; missing heartbeats are unknown.'})

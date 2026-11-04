@@ -2,7 +2,7 @@
 
 def install():
     from dealroom import registry
-    registry.STAFF.update({'SigningEnvelopeViewSet', 'SignCredentialView', 'SigningNdaPolicyView'})
+    registry.STAFF.update({'SigningEnvelopeViewSet', 'SignCredentialView', 'SigningNdaPolicyView', 'SigningSourceView', 'SigningWhoViewedView'})
     registry.PUBLIC.update({'RecipientNdaView', 'RecipientNdaEnterView'})
     registry.HUMAN_ONLY.add(('SignCredentialView', 'put'))
     # All signing mutations either expose a new recipient or alter the gate. The

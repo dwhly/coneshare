@@ -1,0 +1,80 @@
+name: chief-glue-v1
+x-app: &app
+  image: chief/glue-v1:local
+  env_file: app.env
+  restart: unless-stopped
+  volumes:
+    - data:/data
+  networks:
+    - private
+    - amforge-net
+  logging:
+    driver: json-file
+    options: {max-size: '10m', max-file: '2'}
+services:
+  mcp:
+    image: chief/glue-mcp-v1:local
+    build: ../../mcp-server
+    mem_limit: 192m
+    environment:
+      CONESHARE_API_URL: http://web/api/v1
+      MCP_PATH: /mcp
+      MCP_TRANSPORT: streamable-http
+    networks: [private]
+    restart: unless-stopped
+  db:
+    image: postgres:14-bullseye
+    mem_limit: 192m
+    env_file: .env
+    volumes: [db:/var/lib/postgresql/data]
+    networks: [private]
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U glue']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:6.2.14-alpine
+    mem_limit: 64m
+    command: ['redis-server', '--maxmemory', '40mb', '--maxmemory-policy', 'allkeys-lru', '--save', '']
+    networks: [private]
+    restart: unless-stopped
+  migrate:
+    <<: *app
+    mem_limit: 256m
+    command: ['python', 'manage.py', 'migrate', '--noinput']
+    restart: 'no'
+    depends_on:
+      db: {condition: service_healthy}
+  web:
+    <<: *app
+    build:
+      context: ../..
+      dockerfile: deploy/chief-glue-v1/Dockerfile
+    mem_limit: 512m
+    ports: ['8797:80']
+    depends_on:
+      mcp: {condition: service_started}
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_started}
+  poll:
+    <<: *app
+    mem_limit: 192m
+    command: ['python', 'manage.py', 'sign_poll']
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  control:
+    <<: *app
+    mem_limit: 192m
+    command: ['celery', '-A', 'backend', 'worker', '--loglevel=warning', '--concurrency=1', '-Q', 'celery']
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_started}
+volumes:
+  db:
+  data:
+networks:
+  private:
+  amforge-net:
+    external: true

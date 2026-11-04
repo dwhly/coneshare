@@ -589,3 +589,9 @@ SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SECURE = os.environ.get("DEALROOM_HTTPS", "false").lower() == "true"
 SESSION_COOKIE_AGE = 8 * 60 * 60
 MIDDLEWARE.insert(0, "dealroom.middleware.PrivateRecipientResponses")
+
+INSTALLED_APPS.append("dealroom_sign")
+SIGN_INTERNAL_URL = os.environ.get("SIGN_INTERNAL_URL", "http://amforge-sign-dev-documenso-1:3000")
+SIGN_PUBLIC_URL = os.environ.get("SIGN_PUBLIC_URL", "http://100.110.241.2:8792")
+SIGN_DEPLOYMENT_ID = os.environ.get("SIGN_DEPLOYMENT_ID", "chief-glue-v1")
+SIGN_WEBHOOK_SECRET = os.environ.get("SIGN_WEBHOOK_SECRET", "")

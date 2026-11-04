@@ -255,3 +255,89 @@ def test_webhook_enqueue_failure_retryable():
     req = RequestFactory().post('/hook', {'payload': {'envelopeId': 'envelope_test'}}, content_type='application/json', HTTP_X_DOCUMENSO_SECRET='unit-test-secret')
     with patch('dealroom_sign.webhooks.reconcile_envelope.delay', side_effect=RuntimeError):
         assert webhook(req).status_code == 503
+
+@pytest.fixture
+def agent_client(fixture):
+    from core.models import APIKey
+    from core.authentication import generate_raw_api_key
+    from rest_framework.test import APIClient
+    fixture.user.is_staff = True
+    fixture.user.role = 'admin'
+    fixture.user.save()
+    raw, prefix, hashed = generate_raw_api_key()
+    key = APIKey.objects.create(user=fixture.user, name='Integration test agent', prefix=prefix, hashed_key=hashed, tier='read_write')
+    client = APIClient()
+    client.credentials(HTTP_AUTHORIZATION='Bearer ' + raw)
+    return client, key
+
+
+def test_agent_send_has_no_effect_before_human_approval(fixture, recipients, agent_client):
+    from dealroom.models import AccessApproval
+    client, key = agent_client
+    response = client.post('/api/v1/dealroom-sign/envelopes/', {'room_id': str(fixture.room.pk), 'version_id': str(fixture.version.pk), 'recipients': recipients, 'idempotency_key': 'agent-new'}, format='json')
+    assert response.status_code == 202
+    assert response.data['status'] == 'pending_approval'
+    assert AccessApproval.objects.filter(agent_key=key).count() == 1
+    assert Workflow.objects.count() == 1
+
+
+@pytest.mark.parametrize('change', [{'enabled': False}, {'version_id': 'changed'}, {'fields': []}])
+def test_nda_gate_edits_require_approval(fixture, agent_client, change):
+    client, _ = agent_client
+    response = client.put(f'/api/v1/dealroom-sign/nda-policy/{fixture.room.pk}/', change, format='json')
+    assert response.status_code == 202
+    assert not NdaPolicy.objects.exists()
+
+
+def test_agent_never_configures_raw_sign_credential(fixture, agent_client):
+    client, _ = agent_client
+    response = client.put('/api/v1/dealroom-sign/credentials/', {'token': 'api_replacement', 'team_id': 99}, format='json')
+    assert response.status_code == 403
+    fixture.credential.refresh_from_db()
+    assert fixture.credential.token == 'api_private-test-token'
+
+
+def test_status_projection_never_exposes_signing_token(fixture, agent_client):
+    client, _ = agent_client
+    fixture.work.signing_token = 'private-recipient-token'
+    fixture.work.save()
+    response = client.get(f'/api/v1/dealroom-sign/envelopes/{fixture.work.pk}/')
+    assert response.status_code == 200
+    assert 'private-recipient-token' not in str(response.data)
+    assert 'api_private-test-token' not in str(response.data)
+
+
+def test_scoped_key_cannot_query_other_room(fixture, agent_client):
+    from dealroom.models import KeyScope
+    client, key = agent_client
+    KeyScope.objects.create(key=key, rooms=['some-other-room'])
+    assert client.get(f'/api/v1/dealroom-sign/envelopes/{fixture.work.pk}/').status_code == 403
+
+
+def test_recipient_cannot_use_staff_agent_as_email_proof(fixture, agent_client):
+    from dealroom.models import RoomPolicy
+    from sharelinks.models import ShareLink
+    client, _ = agent_client
+    link = ShareLink.objects.create(dataroom=fixture.room, created_by=fixture.user)
+    RoomPolicy.objects.create(room=fixture.room, entry_link=link)
+    response = client.get(f'/api/v1/dealroom-sign/nda/{fixture.room.pk}/')
+    assert response.status_code in (401, 403)
+    assert response['Referrer-Policy'] == 'no-referrer'
+
+
+def test_revoke_after_signature_still_denies_access(fixture):
+    from dealroom.models import RoomPolicy
+    from dealroom.policy import evaluate
+    from sharelinks.models import ShareLink, ShareLinkAccessGrant, Viewer
+    link = ShareLink.objects.create(dataroom=fixture.room, created_by=fixture.user, restrict_to_grants=True)
+    RoomPolicy.objects.create(room=fixture.room, entry_link=link)
+    grant = ShareLinkAccessGrant.objects.create(share_link=link, email='member@example.test', created_by=fixture.user)
+    member = Viewer.objects.create(organization=fixture.org, email=grant.email, verified_at=timezone.now())
+    policy = NdaPolicy.objects.create(room=fixture.room, source_version=fixture.version, source_sha256=fixture.work.source_sha256)
+    NdaAcceptance.objects.create(room=fixture.room, member_id=str(member.pk), member_email=member.email, policy_revision=str(policy.revision), workflow=fixture.work)
+    now = timezone.now().timestamp()
+    request = SimpleNamespace(session={'dealroom_member': {'room_id': str(fixture.room.pk), 'member_id': str(member.pk), 'email': member.email, 'expires': now+3600, 'last_seen': now}})
+    assert evaluate(request, link).allowed
+    grant.revoked_at = timezone.now(); grant.save()
+    with pytest.raises(PermissionDenied):
+        evaluate(request, link)
