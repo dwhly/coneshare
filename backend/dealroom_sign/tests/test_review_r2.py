@@ -100,7 +100,7 @@ def test_two_members_only_see_subject_executed_folders(fixture, member_context, 
     assert not {'Executed', 'NDAs', 'Agreements', f'{ctx.member.pk}-{ctx.policy.revision}', fixture.work.envelope_id} & names
 
 
-@pytest.mark.parametrize('state', ['failed', 'quarantined', 'distributing', 'uncertain', 'awaiting_seal'])
+@pytest.mark.parametrize('state', ['failed', 'quarantined', 'distributing', 'uncertain', 'awaiting_seal', 'cancelled', 'declined'])
 def test_staff_resets_one_member_with_fresh_generation(fixture, member_context, pdf, human, agent_client, state):
     work = nda_work(fixture, member_context, pdf)
     work.state = state
@@ -337,3 +337,13 @@ def test_scoped_workflow_query_uses_actual_target(fixture, agent_client, endpoin
     response = client.generic('GET', '/api/v1/dealroom-sign/envelopes/'+suffix,
         json.dumps({'room_id': str(allowed.pk)}), content_type='application/json')
     assert response.status_code == 403
+
+
+def test_stuck_nda_status_identifies_subject_for_staff(fixture, member_context, pdf, human):
+    work = nda_work(fixture, member_context, pdf)
+    work.state = 'failed'; work.save()
+    response = human.get(f'/api/v1/dealroom-sign/envelopes/{work.pk}/')
+    assert response.status_code == 200
+    assert response.data['member_email'] == member_context.member.email
+    page = (ROOT/'backend/dealroom_sign/templates/dealroom_sign/staff.html').read_text()
+    assert 'env.member_email' in page

@@ -176,7 +176,7 @@ class RecipientNdaView(APIView):
         workflow = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).order_by('-created_at').first()
         return Response({'required': True, 'accepted': accepted, 'state': workflow.state if workflow else 'not_started',
                          'can_enter': bool(workflow and workflow.state == 'awaiting_signature' and workflow.signing_token and workflow.signer_projection and workflow.signer_projection[0].get('email', '').strip().lower() == member.email.strip().lower() and not accepted),
-                         'overdue': bool(workflow and workflow.state in {'awaiting_seal', 'quarantined', 'failed'} and (timezone.now() - workflow.created_at).total_seconds() > 60)})
+                         'overdue': bool(workflow and workflow.state in {'awaiting_seal', 'quarantined', 'failed', 'distributing', 'uncertain', 'cancelled', 'declined'} and (timezone.now() - workflow.created_at).total_seconds() > 60)})
 
     @extend_schema(request=None, responses=dict)
     def post(self, request, room_id):

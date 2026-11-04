@@ -11,7 +11,7 @@ class WorkflowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workflow
-        fields = ['id', 'room_id', 'purpose', 'envelope_id', 'state', 'source_status', 'signer_projection',
+        fields = ['id', 'room_id', 'purpose', 'envelope_id', 'state', 'member_email', 'source_status', 'signer_projection',
                   'created_at', 'reconciled_at', 'completed_at', 'last_error', 'artifacts']
         read_only_fields = fields
 

@@ -249,7 +249,7 @@ def reset_nda(workflow):
             policy_revision=work.policy_revision).order_by('-created_at').first()
         if latest.pk != work.pk:
             return latest  # retry of a successful reset
-        if work.state not in {'failed', 'quarantined', 'distributing', 'uncertain', 'awaiting_seal'}:
+        if work.state not in {'failed', 'quarantined', 'distributing', 'uncertain', 'awaiting_seal', 'cancelled', 'declined'}:
             raise ValidationError('Only failed or stuck NDA workflows can be reset.')
         if work.lease_until and work.lease_until > timezone.now():
             raise ValidationError('Workflow is being reconciled. Retry after its lease expires.')
