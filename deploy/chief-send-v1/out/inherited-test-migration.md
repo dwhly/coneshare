@@ -1,0 +1,849 @@
+# Inherited backend test migration — fix round r2
+
+Baseline: **818 failing tests and 5 fixture errors (823 distinct test IDs)** from `full-backend-final.log`. All 823 are mapped below. No skips, xfails, collection exclusions, feature-off overrides, or runtime conversion of failure to success were introduced.
+
+For legacy request tests, retain setup and HTTP inputs and replace unsupported handler expectations with exact HTTP status and error payload assertions. Nested cases retain mocks/fixtures where applicable. The 47 disabled BDD workflows now assert their recorded entry denial and unchanged business row counts; the real staff login/logout scenario still runs through JWT. These are phase-one denial contracts, not claims of phase-two functionality.
+
+| Category | Count | Reason | What changed |
+|---|---:|---|---|
+| Unclassified or disabled operation. | 487 | The upstream operation is explicitly excluded in phase one. | Assert exact denial status and payload before former business behavior. |
+| This recipient operation is not enabled in phase 1; use the room entry route. | 225 | Legacy recipient/OTP/session/ZIP/Q&A routes are disabled. | Assert exact denial status and payload before former business behavior. |
+| Email verification required. | 39 | Legacy session/password state is not a room-bound OTP proof. | Assert exact denial status and payload before former business behavior. |
+| Disabled legacy recipient session/page fixtures | 10 | Disabled legacy recipient session/page fixtures | Assert denied password/session/page route and no session creation; phase-one OTP success is tested separately. |
+| This operation requires a human staff JWT, never an API key. | 3 | Forced authentication/API key cannot stand in for a human JWT. | Assert exact denial status and payload before former business behavior. |
+| Staff access is required. | 54 | Upstream role=admin/member is not a provisioned is_staff principal. | Assert exact denial status and payload before former business behavior. |
+| Health transaction regression | 1 | Health transaction regression | Exempt health from dispatch transaction; unchanged inherited outage assertion now passes. |
+| Version-bound evidence fixture | 1 | Version-bound evidence fixture | Create a real primary version; retain view-copy reuse and fresh-download assertions. |
+| Staff JWT fixture | 1 | Staff JWT fixture | Provision BDD login user as staff; real login, logout and refresh rejection remain exercised. |
+| Brand-driven watermark | 1 | Brand-driven watermark | Assert a custom brand file determines the exact footer text. |
+| Original download policy | 1 | Original download policy | Legacy allow_original_download cannot bypass explicit original exceptions; expect watermark. |
+
+## Real suite results
+
+Final full-suite run: pending. Preliminary post-fix diagnostic: 817 failed, 642 passed, 6 errors; not an acceptance result. Focused review suite: 96 passed. BDD after migration: 56 passed. Final numbers will replace this pending line after the complete suite runs.
+
+## Per-test disposition
+
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_dashboard_summary_view` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_dashboard_summary_does_not_expose_link_password` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_dashboard_summary_no_n_plus_one_queries` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_dashboard_summary_includes_email_verification_method` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_daily_visits_view` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_all_links_view` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_all_view_sessions_view` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_all_view_sessions_filters` → Unclassified or disabled operation.
+- `tests/analytics/test_views.py::TestDashboardAnalyticsViews::test_view_session_detail_view` → Unclassified or disabled operation.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_create_view_session_dispatches_document_event` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_create_view_session_dispatches_dataroom_opened_for_dataroom_link` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_record_download_dispatches_document_downloaded` → Email verification required.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_record_download_for_dataroom_document_includes_viewer_and_document_name` → Email verification required.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_dataroom_document_open_dispatches_document_viewed` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_dataroom_view_data_polling_deduplicates_document_viewed` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_dataroom_view_data_anonymous_polling_deduplicates_and_isolates_visitors` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_dataroom_view_data_not_ready_does_not_dispatch` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_dataroom_download_file_with_view_session_dispatches_document_downloaded` → Email verification required.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_dataroom_download_file_dispatches_even_if_session_already_marked_downloaded` → Email verification required.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_dataroom_download_folder_dispatches_document_downloaded` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_event_dispatch_integration.py::TestEventDispatchIntegration::test_request_access_dispatches_email_identified_when_no_verification` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_create_destination_by_admin_sets_org_and_creator` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_headers_hidden_for_non_admin_member` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_create_email_destination_manually_fails` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_list_destinations_is_scoped_to_organization` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_list_destinations_isolates_other_users_email_destinations` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_create_rule_cannot_attach_other_users_email_destination` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_create_rule_allows_destination_in_same_org` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_create_rule_rejects_destination_in_other_org` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_detail_destination_in_same_org_returns_200` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_detail_destination_in_other_org_returns_404` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_update_destination_by_admin_succeeds` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_list_destinations_hides_other_org` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDestinationViewSet::test_create_destination_allows_duplicate_name_in_same_org` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_rule_requires_at_least_one_destination` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_rule_allows_duplicate_name_in_same_org` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_share_link_scope_requires_share_link` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_dataroom_scope_requires_dataroom` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_rule_rejects_destination_from_other_org` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_rule_with_valid_dataroom_scope` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_file_request_uploaded_rule_rejects_non_global_scope` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleViewSet::test_create_file_request_security_rule_rejects_non_global_scope` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDeliveryViewSet::test_list_deliveries_is_scoped_to_request_user` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDeliveryViewSet::test_deliveries_endpoint_is_read_only` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDeliveryViewSet::test_list_deliveries_supports_destination_filter` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationDeliveryViewSet::test_replay_endpoint_resets_and_queues_delivery` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleScopeAuthorization::test_member_cannot_target_other_users_document_share_link` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleScopeAuthorization::test_member_cannot_target_other_users_private_dataroom` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleScopeAuthorization::test_collaborator_can_target_collaborated_dataroom_and_link` → Unclassified or disabled operation.
+- `tests/automations/test_views.py::TestAutomationRuleScopeAuthorization::test_admin_can_target_any_link_or_dataroom_in_org` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudProviderListView::test_list_providers_no_connection` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudProviderListView::test_list_providers_with_connection` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudConnectionListView::test_list_connections_success` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudConnectionListView::test_list_connections_scoped_to_user` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestDropboxConnectView::test_connect_returns_auth_url` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestDropboxConnectView::test_connect_service_error` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestDropboxCallbackView::test_callback_success` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestDropboxCallbackView::test_callback_invalid_state` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestDropboxCallbackView::test_callback_missing_state_in_cache` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestDropboxCallbackView::test_callback_missing_payload` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveConnectView::test_connect_returns_auth_url` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveConnectView::test_connect_service_error` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveCallbackView::test_callback_success` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveCallbackView::test_callback_reconnect_preserves_existing_refresh_token_when_omitted` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveCallbackView::test_callback_reconnect_different_account_does_not_preserve_old_refresh_token` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveCallbackView::test_callback_invalid_state` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveCallbackView::test_callback_missing_state_in_cache` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestGoogleDriveCallbackView::test_callback_missing_payload` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestNextcloudConnectView::test_connect_returns_auth_url` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestNextcloudConnectView::test_connect_service_error` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestNextcloudCallbackView::test_callback_success` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestNextcloudCallbackView::test_callback_invalid_state` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestNextcloudCallbackView::test_callback_missing_state_in_cache` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestNextcloudCallbackView::test_callback_missing_payload` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudFileListView::test_list_files_success` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudFileListView::test_list_files_permission_denied` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudImportView::test_import_file_success[cloud_connection-Dropbox Imports]` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudImportView::test_import_file_success[google_drive_connection-Google Drive Imports]` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudImportView::test_import_file_success[nextcloud_connection-Nextcloud Imports]` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudImportView::test_import_file_too_large` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudImportView::test_import_file_permission_denied` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudImportView::test_import_file_respects_quota` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudConnectionDeleteView::test_delete_connection_success` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudConnectionDeleteView::test_delete_connection_not_found` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudConnectionDeleteView::test_delete_connection_permission_denied` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudConnectionDeleteView::test_delete_connection_best_effort_revocation` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::TestCloudRefreshView::test_refresh_with_reconnected_cloud_connection` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::test_refresh_records_previous_primary_version_in_metadata` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::test_refresh_soft_deleted_document_returns_404` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::test_cloud_import_premature_deletion_quota_accounting` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::test_cloud_import_negative_file_size_rejected` → Unclassified or disabled operation.
+- `tests/cloudfiles/test_views.py::test_cloud_import_version_negative_file_size_rejected` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserViewSetProtection::test_update_cannot_remove_last_admin` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserViewSetProtection::test_admin_cannot_demote_self_even_if_not_last` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserViewSetProtection::test_admin_can_demote_another_admin_if_not_last` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserViewSetProtection::test_admin_can_delete_another_admin_if_not_last` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserViewSetProtection::test_delete_self_is_prevented_when_last_admin` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserCreation::test_admin_create_user_requires_password` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserCreation::test_admin_create_user_with_valid_password` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminSettingsTypedValues::test_list_settings_includes_value_type` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminSettingsTypedValues::test_update_bool_setting_accepts_boolean_and_persists_canonical_value` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminSettingsTypedValues::test_update_int_setting_rejects_invalid_type` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminSettingsTypedValues::test_update_watermark_file_size_rejects_negative_value` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminSettingsTypedValues::test_update_watermark_file_size_accepts_non_negative_value` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminSecurityThreatEventsViewSet::test_list_security_threat_events_scoped_to_org` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminSecurityThreatEventsViewSet::test_filter_security_threat_events` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_get_organization_branding` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_patch_organization_branding` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_patch_organization_branding_with_svg_logo_rejected` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_patch_organization_branding_with_corrupt_logo_rejected` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_patch_organization_branding_with_png_logo` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_patch_organization_branding_clear_fields_and_partial_update` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_recalculate_user_quota_success` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_recalculate_user_quota_excludes_dataroom_vault_documents` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminOrganizationView::test_recalculate_user_quota_other_org_not_found` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserResetPassword::test_admin_can_reset_user_password_and_invalidates_tokens` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserResetPassword::test_reset_user_password_weak_password_fails` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserResetPassword::test_reset_user_password_missing_password_fails` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserResetPassword::test_reset_user_password_other_org_not_found` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserResetPassword::test_reset_user_password_revocation_failure_rolls_back` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserListSearchFilterMetrics::test_list_returns_kpi_metrics` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserListSearchFilterMetrics::test_list_subpage_omits_kpi_metrics` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserListSearchFilterMetrics::test_list_search_by_name_and_email` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserListSearchFilterMetrics::test_list_filter_status_and_role` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserListSearchFilterMetrics::test_list_filter_dataroom_participant` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserListSearchFilterMetrics::test_list_ordering` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserExport::test_admin_can_export_users_csv` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserExport::test_export_users_csv_respects_filters` → Unclassified or disabled operation.
+- `tests/core/test_admin_views.py::TestAdminUserExport::test_export_users_csv_sanitizes_formula_injection` → Unclassified or disabled operation.
+- `tests/core/test_api_keys.py::test_create_api_key` → Unclassified or disabled operation.
+- `tests/core/test_api_keys.py::test_list_api_keys` → Unclassified or disabled operation.
+- `tests/core/test_api_keys.py::test_api_key_authentication_read_only_tier` → Unclassified or disabled operation.
+- `tests/core/test_api_keys.py::test_api_key_authentication_read_write_tier` → Unclassified or disabled operation.
+- `tests/core/test_api_keys.py::test_api_key_read_write_cannot_escalate_role` → Unclassified or disabled operation.
+- `tests/core/test_api_keys.py::test_api_key_read_write_cannot_mutate_admin_endpoints` → Unclassified or disabled operation.
+- `tests/core/test_api_keys.py::test_api_key_full_access_can_mutate_admin_endpoints` → Unclassified or disabled operation.
+- `tests/core/test_auth.py::test_logout` → This operation requires a human staff JWT, never an API key.
+- `tests/core/test_auth.py::test_signup_request_creates_inactive_user_and_sends_email` → Unclassified or disabled operation.
+- `tests/core/test_auth.py::test_signup_request_refreshes_existing_inactive_user` → Unclassified or disabled operation.
+- `tests/core/test_auth.py::test_signup_verify_activates_user_and_returns_jwt` → Unclassified or disabled operation.
+- `tests/core/test_auth.py::test_signup_verify_rejects_invalid_token` → Unclassified or disabled operation.
+- `tests/core/test_auth.py::test_signup_verify_rejects_reused_token` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_update_user_language` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_invalid_language_rejected` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_api_error_respects_accept_language_header` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_api_error_in_russian` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_api_error_in_german` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_api_error_in_french` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_api_error_in_dutch` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_signup_request_uses_user_language_when_no_accept_header` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_sharelink_email_verification_language[en-Verify your email to view 'Test Document.pdf'-Please click the link below to view 'Test Document.pdf'.]` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_sharelink_email_verification_language[zh-hans-\u8bf7\u9a8c\u8bc1\u60a8\u7684\u90ae\u7bb1\u4ee5\u67e5\u770b\u201cTest Document.pdf\u201d-\u8bf7\u70b9\u51fb\u4e0b\u65b9\u94fe\u63a5\u67e5\u770b\u201cTest Document.pdf\u201d\uff1a]` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_sharelink_email_verification_language[ru-\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u0434\u043b\u044f \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0430 \xabTest Document.pdf\xbb-\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u0435\u0440\u0435\u0439\u0434\u0438\u0442\u0435 \u043f\u043e \u0441\u0441\u044b\u043b\u043a\u0435 \u043d\u0438\u0436\u0435 \u0434\u043b\u044f \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0430 \xabTest Document.pdf\xbb.]` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_sharelink_email_verification_language[de-Best\xe4tigen Sie Ihre E-Mail-Adresse, um \u201eTest Document.pdf\u201c anzuzeigen-Bitte klicken Sie auf den unten stehenden Link, um \u201eTest Document.pdf\u201c anzuzeigen.]` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_sharelink_email_verification_language[fr-V\xe9rifiez votre e-mail pour afficher \xab Test Document.pdf \xbb-Veuillez cliquer sur le lien ci-dessous pour afficher \xab Test Document.pdf \xbb.]` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_sharelink_email_verification_language[nl-Verifieer uw e-mailadres om \u2018Test Document.pdf\u2019 te bekijken-Klik op de onderstaande link om \u2018Test Document.pdf\u2019 te bekijken.]` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_signup_request_preserves_user_language_when_accept_header_unsupported` → Unclassified or disabled operation.
+- `tests/core/test_i18n.py::TestUserLanguagePreference::test_sharelink_viewer_email_verification_falls_back_to_en_regardless_of_owner` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/core/test_views.py::test_list_users` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_can_retrieve_self` → Staff access is required.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_retrieve_other_user` → Staff access is required.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_can_update_self` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_escalate_role_via_patch` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_manipulate_custom_quota_via_patch` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_manipulate_is_active_via_patch` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_update_password_via_patch` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_can_update_profile_with_json` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_upload_svg_avatar` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_upload_gif_disguised_as_png_avatar` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_can_upload_valid_png_avatar` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_user_cannot_update_other_user` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_admin_can_retrieve_other_user_in_org` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_admin_cannot_retrieve_user_in_other_org` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_admin_can_update_other_user_in_org` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_admin_cannot_update_user_in_other_org` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_admin_can_update_custom_quota` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_admin_can_update_role` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetPermissions::test_admin_can_update_is_active` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestUserViewSetQueryset::test_user_list_only_shows_self` → Staff access is required.
+- `tests/core/test_views.py::TestUserViewSetQueryset::test_admin_list_shows_all_org_users` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestOrganizationAccessPermissions::test_member_can_query_own_org_but_not_other_org` → Staff access is required.
+- `tests/core/test_views.py::TestOrganizationAccessPermissions::test_organization_viewset_is_strictly_read_only` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestAuthEndpointKeyRejection::test_logout_rejects_other_user_refresh_token` → This operation requires a human staff JWT, never an API key.
+- `tests/core/test_views.py::TestAuthEndpointKeyRejection::test_logout_succeeds_with_own_refresh_token` → This operation requires a human staff JWT, never an API key.
+- `tests/core/test_views.py::TestTokenRevocationOnLifecycleEvents::test_password_change_blacklists_prior_refresh_tokens` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestTokenRevocationOnLifecycleEvents::test_user_deactivation_blacklists_refresh_tokens` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestTokenRevocationOnLifecycleEvents::test_user_deletion_blacklists_refresh_tokens` → Unclassified or disabled operation.
+- `tests/core/test_views.py::TestHealthCheckView::test_health_check_database_unreachable` → Health transaction regression
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_admin_can_list_all_org_datarooms` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_admin_can_update_storage_quota` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_admin_can_transfer_ownership` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_admin_can_upgrade_storage_v1_to_v2` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_admin_can_manage_collaborators` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_eligible_collaborators_is_bounded_to_50` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_admin_can_delete_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_workspace_list_vs_admin_list_scoping` → Staff access is required.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_admin_datarooms_sorting_and_filtering` → Unclassified or disabled operation.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_workspace_list_does_not_execute_n_plus_one_metric_queries` → Staff access is required.
+- `tests/datarooms/test_admin_views.py::TestAdminDataroomViewSet::test_workspace_list_does_not_allow_scope_org_escape_hatch` → Staff access is required.
+- `tests/datarooms/test_api_key_permissions.py::test_read_only_api_key_perm_on_datarooms` → Staff access is required.
+- `tests/datarooms/test_api_key_permissions.py::test_read_write_api_key_perm_on_datarooms` → Unclassified or disabled operation.
+- `tests/datarooms/test_api_key_permissions.py::test_full_access_api_key_perm_on_datarooms` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_list_collaborators` → Staff access is required.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_add_collaborators_by_user_ids` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_add_collaborator_by_email` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_add_collaborator_from_other_org_fails` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_add_owner_as_collaborator_fails` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_add_owner_in_batch_creates_no_collaborators` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_org_admin_can_add_collaborator_to_any_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_remove_collaborator_as_owner` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_collaborator_can_leave_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_transfer_ownership_success` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_eligible_collaborators_list_and_search` → Staff access is required.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_collaborator_can_view_and_manage_dataroom` → Staff access is required.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_scope_filters_on_dataroom_list` → Staff access is required.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_collaborator_share_link_co_management` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_collaborator_folder_creation_sets_created_by` → Unclassified or disabled operation.
+- `tests/datarooms/test_collaborators.py::TestDataroomCollaborators::test_removed_collaborator_privileges_revocation` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_list_datarooms_scoped_to_user` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_list_datarooms_ordered_by_created_at_desc` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_create_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_update_dataroom_branding_fields` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_update_dataroom_branding_invalid_color_fails` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_remove_dataroom_banner` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_retrieve_dataroom_detail` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_cannot_access_other_users_dataroom_folders` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_retrieve_folder_contents_is_performant` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_delete_dataroom_permission_denied` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_delete_dataroom_success` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_delete_dataroom_with_direct_upload_quota_balance` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_direct_upload_does_not_consume_user_personal_quota` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_legacy_v1_direct_upload_consumes_user_personal_quota` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_delete_dataroom_with_shared_direct_upload_preserves_shared_document` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_delete_dataroom_with_colliding_shared_documents_handles_name_collisions_gracefully` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_delete_dataroom_when_created_by_is_none` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_content_to_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_content_exceeding_dataroom_storage_quota_is_rejected` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_upload_finalize_exceeding_dataroom_storage_quota_is_rejected` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_folder_content_exceeding_dataroom_storage_quota_is_rejected` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_existing_document_to_another_folder_does_not_double_count_quota` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_content_permission_denied_for_other_user_content` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_content_updates_existing_share_links` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_folder_content_to_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_document_with_name_conflict_is_renamed` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_add_same_document_to_multiple_locations` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_remove_content_from_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_remove_document_from_dataroom_by_document_id` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_remove_document_with_wrong_key_returns_clean_400` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_remove_content_with_empty_payload_returns_400` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_move_document_to_folder` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_move_folder_to_root` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_move_folder_into_itself_fails` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_move_folder_with_conflict_resolves_name` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_reorder_items_mixed_root_success` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_reorder_items_requires_full_scope_ids` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_dataroom_root_items_excludes_soft_deleted_documents` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_reorder_items_other_user_dataroom_returns_404` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_reorder_items_works_when_file_index_disabled` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_dataroom_folder_retrieve_preserves_item_order_when_file_index_disabled` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_dataroom_folder_retrieve_excludes_soft_deleted_documents` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_reorder_items_after_moving_content_should_succeed` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_reorder_source_folder_after_moving_item_avoids_orphaned_row_integrity_error` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_move_content_within_same_folder_preserves_custom_order` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_reorder_items_after_adding_content_should_succeed` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_list_view_sessions_for_dataroom` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_ensure_paths_in_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_upload_request_in_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_upload_request_inside_folder_with_path` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_upload_finalize_in_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_dataroom_rename_updates_library_folder` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_dataroom_deletion_cleans_uploads` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_direct_upload_deletion_removes_library_document` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_remove_content_resilient_to_storage_delete_failure` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_direct_upload_deletion_with_multiple_dataroom_uploads_folders` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomViewSet::test_remove_content_cleans_backing_document_when_both_direct_and_linked_associations_exist` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_create_dataroom_folder` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_create_folder_with_show_file_index_and_existing_orders` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_list_dataroom_folders_scoped_to_dataroom` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_retrieve_folder_contents` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_rename_folder_success` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_rename_folder_with_conflict_fails` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_toggle_folder_star_success` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_rename_direct_uploaded_folder_propagates` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_dataroom_upload_finalize_rejects_invalid_or_unauthorized_storage_key` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderViewSet::test_dataroom_upload_finalize_rejects_already_claimed_storage_key` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomDocumentViewSet::test_rename_document_success` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomDocumentViewSet::test_rename_document_duplicate_name_in_same_folder_fails` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomDocumentViewSet::test_rename_direct_upload_document_physical_name_collision_handled_gracefully` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomDocumentViewSet::test_rename_document_other_user_dataroom_returns_404` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomDocumentViewSet::test_toggle_document_star_success` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomDocumentViewSet::test_rename_direct_uploaded_document_propagates` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomDocumentViewSet::test_dataroom_name_collision_isolates_library_folders` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_create_dataroom_folder_touches_parent` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_move_dataroom_items_touches_source_and_dest_folders` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_remove_nested_folder_with_documents_succeeds` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_upload_finalize_touches_destination_folder_mtime` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_ensure_paths_touches_parent_folder_mtime` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_add_content_touches_destination_folder_mtime` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_dataroom_storage_quota_settings_and_enforcement` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_dataroom_storage_version_defaults_and_vault_hierarchy` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_v1_dataroom_feature_gating_and_upgrade` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_v1_dataroom_upgrade_with_duplicate_document_names_in_legacy_folders` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_v1_dataroom_upgrade_clears_created_by_on_subfolders_and_deducts_user_quota` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_dataroom_stats` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_dataroom_stats_empty` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomFolderMtimeUpdates::test_dataroom_stats_with_anonymous_viewers` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomBannerGalleryAndBrandingViews::test_update_banner_mode_and_logo_mode` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomBannerGalleryAndBrandingViews::test_upload_and_remove_brand_logo_override` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomBannerGalleryAndBrandingViews::test_upload_svg_brand_logo_override_rejected` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomBannerGalleryAndBrandingViews::test_banner_images_crud_and_max_limit` → Staff access is required.
+- `tests/datarooms/test_views.py::TestDataroomBannerGalleryAndBrandingViews::test_reorder_banner_images` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomBannerGalleryAndBrandingViews::test_reorder_banner_images_rejects_duplicate_ids_and_positions` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderHierarchyAndScopeBoundary::test_dataroom_folder_cannot_set_parent_to_self` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderHierarchyAndScopeBoundary::test_dataroom_folder_cannot_set_parent_to_descendant` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderHierarchyAndScopeBoundary::test_dataroom_folder_cannot_change_dataroom_on_update` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderHierarchyAndScopeBoundary::test_dataroom_folder_cannot_create_with_parent_from_different_dataroom` → Unclassified or disabled operation.
+- `tests/datarooms/test_views.py::TestDataroomFolderHierarchyAndScopeBoundary::test_dataroom_folder_move_rejects_duplicate_sibling_name_on_parent_only_patch` → Unclassified or disabled operation.
+- `tests/documents/test_api_key_permissions.py::test_read_only_api_key_perm_on_documents` → Staff access is required.
+- `tests/documents/test_api_key_permissions.py::test_read_write_api_key_perm_on_documents` → Unclassified or disabled operation.
+- `tests/documents/test_api_key_permissions.py::test_full_access_api_key_perm_on_documents` → Unclassified or disabled operation.
+- `tests/documents/test_api_key_permissions.py::test_read_only_api_key_perm_on_folders` → Staff access is required.
+- `tests/documents/test_collaborator_access.py::TestCollaboratorDocumentAccess::test_collaborator_can_retrieve_dataroom_document` → Staff access is required.
+- `tests/documents/test_collaborator_access.py::TestCollaboratorDocumentAccess::test_collaborator_can_view_document_stats_and_sessions` → Staff access is required.
+- `tests/documents/test_collaborator_access.py::TestCollaboratorDocumentAccess::test_collaborator_can_download_document` → Unclassified or disabled operation.
+- `tests/documents/test_collaborator_access.py::TestCollaboratorDocumentAccess::test_non_collaborator_gets_404` → Staff access is required.
+- `tests/documents/test_collaborator_access.py::TestCollaboratorDocumentAccess::test_collaborator_personal_library_does_not_list_dataroom_document` → Staff access is required.
+- `tests/documents/test_collaborator_access.py::TestCollaboratorDocumentAccess::test_collaborator_cannot_view_owner_direct_share_links_in_document_serializer` → Staff access is required.
+- `tests/documents/test_heic_preview.py::TestHeicPreviewDataApiView::test_preview_data_heic_empty_pages_during_processing` → Unclassified or disabled operation.
+- `tests/documents/test_heic_preview.py::TestHeicPreviewDataApiView::test_preview_data_heic_ready_state_serves_preview_page` → Unclassified or disabled operation.
+- `tests/documents/test_heic_preview.py::TestHeicShareLinkView::test_sharelink_page_serves_transcoded_page` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/documents/test_heic_preview.py::TestHeicShareLinkView::test_watermarked_heic_page_render` → Email verification required.
+- `tests/documents/test_markdown_renderer.py::TestDocumentPreviewDataViewMarkdown::test_preview_data_markdown` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_root_folder_contents` → Staff access is required.
+- `tests/documents/test_views.py::test_get_folder_contents_retrieve` → Staff access is required.
+- `tests/documents/test_views.py::test_list_root_folder_with_multiple_items` → Staff access is required.
+- `tests/documents/test_views.py::test_list_sub_folder_contents_and_check_permissions` → Staff access is required.
+- `tests/documents/test_views.py::test_create_folder` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_create_duplicate_root_folder_is_renamed` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_create_duplicate_subfolder_is_renamed` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestEnsureFolderPathsView::test_ensure_paths_success_and_returns_mappings` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestEnsureFolderPathsView::test_ensure_paths_renames_conflicting_top_level_folder` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestEnsureFolderPathsView::test_ensure_paths_in_subfolder_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestEnsureFolderPathsView::test_ensure_paths_in_subfolder_renames_conflict` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestEnsureFolderPathsView::test_ensure_paths_with_invalid_parent_path` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestEnsureFolderPathsView::test_ensure_paths_allows_separate_users_to_create_same_name_folder` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_delete_folder_permission_denied` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_soft_delete_folder_keeps_size_and_files` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_permanent_delete_trash_item_file_server_error_returns_500` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_update_folder_name` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_update_folder_star_status` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_update_folder_permission_denied` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_star_folder_permission_denied` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_create_folder_with_other_users_parent_folder_fails` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_create_folder_with_non_existent_parent_fails` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_list_folder_contents_includes_share_link_views` → Staff access is required.
+- `tests/documents/test_views.py::test_list_folder_contents_includes_direct_share_link_view_count` → Staff access is required.
+- `tests/documents/test_views.py::test_list_documents_is_scoped_to_user_and_root_only` → Staff access is required.
+- `tests/documents/test_views.py::test_list_documents_includes_direct_share_link_view_count` → Staff access is required.
+- `tests/documents/test_views.py::test_list_documents_in_folder` → Staff access is required.
+- `tests/documents/test_views.py::test_create_document_is_deprecated` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_upload_document_with_path` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_upload_duplicate_root_file_is_renamed` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_finalize_duplicate_name_defensive_rename` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_finalize_invalid_or_unauthorized_storage_key` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_finalize_nonexistent_destination_path_returns_400` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_for_image_document` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_spreadsheet_document_preview_data_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_permission_denied_for_other_user` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_not_ready` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_too_many_pages` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_post_rebuild_preview` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_rebuild_preview_concurrency_conflict` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_rebuild_preview_force_override_processing_status` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_rebuild_preview_stale_processing_task_auto_recovers` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_enqueue_render_task_stamps_updated_at_preventing_premature_stale_rebuild` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_rebuild_preview_no_existing_pages` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_wrong_org` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_soft_delete_document_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_delete_document_permission_denied` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_soft_delete_document_in_subfolder_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentVersionUploadViews::test_upload_new_version_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentVersionUploadViews::test_finalize_version_rejects_invalid_or_unauthorized_storage_key` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentVersionUploadViews::test_upload_version_for_other_user_doc_permission_denied` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_retrieve_document_with_share_link_views` → Staff access is required.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_document_views_pagination` → Staff access is required.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_document_views_forbidden_for_non_owner_dataroom_collaborator` → Staff access is required.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_update_document_star_status` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_star_document_permission_denied` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_copy_document_api_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_copy_document_api_permission_denied` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_copy_document_api_quota_exceeded` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_copy_document_api_fileserver_error` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentViewSet::test_copy_document_api_throttling` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_items_to_another_folder` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_items_to_root` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_folder_into_itself_fails` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_folder_into_descendant_fails` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_items_permission_denied_for_destination` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_items_permission_denied_for_source` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_items_with_name_conflict_is_renamed` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestMoveItemsView::test_move_no_items_fails` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestQuotaAndSizeTracking::test_document_lifecycle_updates_user_size` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestQuotaAndSizeTracking::test_upload_request_respects_quota` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestQuotaAndSizeTracking::test_upload_request_nonexistent_folder_path_returns_400` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_client_pdf` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_get_document_preview_data_video_stream_ttl` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_document_status_endpoint` → Staff access is required.
+- `tests/documents/test_views.py::test_promote_version_endpoint_success` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_promote_version_endpoint_wrong_doc` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_preview_data_endpoint_with_version_id` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_list_versions_endpoint_success` → Staff access is required.
+- `tests/documents/test_views.py::test_promote_version_endpoint_respects_quota` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_promote_version_endpoint_vault_document_bypasses_user_quota` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_version_upload_request_vault_document_bypasses_user_quota` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_version_upload_finalize_vault_document_does_not_consume_user_quota` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_version_upload_finalize_vault_document_quota_exceeded_returns_400` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_preview_data_endpoint_document_uploading_state` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_soft_deleted_document_not_accessible_via_document_viewset` → Staff access is required.
+- `tests/documents/test_views.py::test_soft_deleted_folder_not_accessible_via_folder_viewset` → Staff access is required.
+- `tests/documents/test_views.py::test_restore_folder_with_duplicate_trashed_document_names_succeeds` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_restore_document_with_trashed_parent_folder_is_rejected` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_trash_list_filters_to_root_level_deleted_items_only` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_trash_list_pagination_metadata` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_trash_restore_returns_rename_feedback` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_independently_trashed_file_remains_in_trash_when_parent_folder_trashed` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_restore_document_relinks_to_newly_created_active_parent_folder` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_restore_document_does_not_relink_to_another_users_active_parent_folder` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_rename_document_with_duplicate_name_fails` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_create_subfolder_touches_parent_folder_mtime` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_rename_subfolder_touches_parent_folder_mtime` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_rename_document_touches_parent_folder_mtime` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_bulk_move_items_touches_source_and_destination_folders` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::test_ensure_folder_paths_touches_parent_folder_mtime` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_upload_request_rejects_negative_and_zero_file_size` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_upload_finalize_verifies_storage_file_size_and_ignores_client_value` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_finalize_rejects_conflicting_extension_and_content_type` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_finalize_rejects_dangerous_storage_key_extension_with_safe_name` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_version_upload_request_and_finalize_rejects_negative_and_zero_file_size` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_upload_finalize_rejects_already_claimed_storage_key` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_version_upload_finalize_rejects_already_claimed_storage_key` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestDocumentUploadConstraints::test_patch_document_ignores_read_only_fields_and_preserves_folder` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestFolderHierarchyBoundary::test_folder_cannot_set_parent_to_self` → Unclassified or disabled operation.
+- `tests/documents/test_views.py::TestFolderHierarchyBoundary::test_folder_cannot_set_parent_to_descendant` → Unclassified or disabled operation.
+- `tests/filerequests/test_export_intake.py::TestCloudFolderListEndpoint::test_get_folders_only` → Unclassified or disabled operation.
+- `tests/filerequests/test_export_intake.py::TestFileRequestExportAPI::test_export_uploads_success` → Unclassified or disabled operation.
+- `tests/filerequests/test_export_intake.py::TestFileRequestExportAPI::test_export_uploads_unauthorized` → Unclassified or disabled operation.
+- `tests/filerequests/test_export_intake.py::TestFileRequestExportAPI::test_export_uploads_invalid_connection` → Unclassified or disabled operation.
+- `tests/filerequests/test_export_intake.py::TestFileRequestExportAPI::test_list_exports_history` → Unclassified or disabled operation.
+- `tests/filerequests/test_export_intake.py::TestFileRequestExportAPI::test_export_uploads_blocked_when_document_not_ready` → Unclassified or disabled operation.
+- `tests/filerequests/test_export_intake.py::TestFileRequestExportAPI::test_export_uploads_supports_duplicate_ids_in_payload` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_create_file_request_success` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_create_file_request_with_custom_fields` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_create_file_request_rejects_invalid_custom_field_schema` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_create_file_request_for_other_user_folder_fails` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_list_file_requests_is_scoped_to_user_and_ordered` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_update_file_request` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_delete_file_request` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestViewSet::test_create_file_request_for_other_organization_folder_fails` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_get_public_details_success` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_get_public_details_includes_custom_fields` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_get_public_details_inactive` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_get_public_details_expired` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_get_public_details_folder_in_trash` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_folder_in_trash` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_folder_in_trash` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_success` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_with_string_file_size` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_exceeds_size_limit` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_disallowed_file_type` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_allowed_file_type_normalized` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_allows_multi_part_extension` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_request_upload_url_exceeds_user_quota` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_success_and_creates_document` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_invalid_or_unauthorized_storage_key` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_persists_custom_field_values` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_missing_required_custom_field` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_required_checkbox_when_false` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_boolean_for_number_field` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_non_finite_number_field[NaN]` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_non_finite_number_field[Infinity]` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_non_finite_number_field[-Infinity]` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_allows_optional_checkbox_when_false` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_disallowed_file_type` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_allows_multi_part_extension` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_rejects_malicious_file` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_malicious_file_cleanup_failure_is_recorded` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_scanner_unavailable_dispatches_security_event` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestPublicFileRequestViews::test_finalize_upload_scanner_unavailable_cleanup_failure_is_recorded` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestUploadConstraints::test_request_upload_rejects_negative_and_zero_file_size` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestUploadConstraints::test_finalize_upload_verifies_storage_file_size_and_ignores_client_value` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestUploadConstraints::test_finalize_upload_enforces_max_file_size_and_owner_quota` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestUploadConstraints::test_finalize_upload_rejects_already_claimed_storage_key` → Unclassified or disabled operation.
+- `tests/filerequests/test_views.py::TestFileRequestUploadConstraints::test_finalize_upload_skipped_deletion_recorded_as_failed` → Unclassified or disabled operation.
+- `tests/sharelinks/test_amforge_watermark.py::test_issue_copy_reuses_view_copy_and_mints_new_downloads` → Version-bound evidence fixture
+- `tests/sharelinks/test_api_key_permissions.py::test_read_only_api_key_perm_on_sharelinks` → Unclassified or disabled operation.
+- `tests/sharelinks/test_api_key_permissions.py::test_read_write_api_key_perm_on_sharelinks` → Unclassified or disabled operation.
+- `tests/sharelinks/test_api_key_permissions.py::test_full_access_api_key_perm_on_sharelinks` → Unclassified or disabled operation.
+- `tests/sharelinks/test_api_key_permissions.py::test_public_sharelink_views_accessible_without_api_key` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_email_verification_method.py::test_no_email_gate_records_no_method` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_email_verification_method.py::test_typed_email_without_verification_is_self_reported` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_email_verification_method.py::test_clicked_verification_link_is_verified` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_email_verification_method.py::test_link_owner_is_owner` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_email_verification_method.py::test_other_logged_in_user_is_account` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_email_verification_method.py::test_staff_user_viewing_other_users_link_is_account` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_email_verification_method.py::test_staff_user_via_view_data_is_account` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_email_verification_method.py::test_pre_patch_session_dict_yields_empty_method` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_email_verification_method.py::test_field_exposed_in_api_and_webhook_context` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_email_verification_method.py::test_email_verification_with_nda_flow_records_verified` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_email_verification_method.py::test_owner_preview_session_flow_records_owner` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_email_verification_method.py::test_staff_preview_session_flow_records_account` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_public_meta_includes_nda_info` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_view_data_gated_by_nda` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_accept_nda_creates_session_and_acceptance` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_pages_and_renders_gated_by_nda` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_nda_version_increment_requires_reacceptance` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_accept_nda_triggers_notifications_and_automation` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_accept_nda_email_verified_flow` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_nda_acceptance_recognized_with_different_email_casing` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_accept_nda_password_verified_flow` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_accept_nda_twice_reuses_view_session` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_preview_token_invalid_bypass_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_preview_token_valid_bypass_succeeds` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_nda_gate.py::TestShareLinkNDAGate::test_owner_clean_link_access_populates_session` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_document_link_viewer_can_create_and_list_qna_thread` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_document_link_viewer_can_fetch_qna_summary` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_viewer_cannot_use_view_session_from_another_share_link` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_anonymous_view_session_can_create_qna_when_link_does_not_require_email` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_email_gated_qna_requires_view_session_email_to_match_verified_email` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_qna_endpoints_require_nda_acceptance_when_nda_configured` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_dataroom_viewer_can_create_and_list_root_qna_thread` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_dataroom_qna_summary_is_scoped_to_folder_context` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_qna_thread_creation_dispatches_automation_event` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_owner_can_close_and_reopen_thread` → Unclassified or disabled operation.
+- `tests/sharelinks/test_qna_views.py::test_owner_can_create_document_qna_thread` → Unclassified or disabled operation.
+- `tests/sharelinks/test_qna_views.py::test_owner_can_create_dataroom_root_qna_thread` → Unclassified or disabled operation.
+- `tests/sharelinks/test_qna_views.py::test_owner_cannot_create_qna_thread_for_other_users_share_link` → Unclassified or disabled operation.
+- `tests/sharelinks/test_qna_views.py::test_owner_create_qna_thread_rejects_dataroom_item_context` → Unclassified or disabled operation.
+- `tests/sharelinks/test_qna_views.py::test_owner_can_filter_qna_threads_by_document` → Unclassified or disabled operation.
+- `tests/sharelinks/test_qna_views.py::test_link_level_qna_switch_disables_qna_for_that_link_only` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_qna_views.py::test_owner_cannot_create_qna_thread_when_qna_is_disabled` → Unclassified or disabled operation.
+- `tests/sharelinks/test_qna_views.py::test_owner_can_still_moderate_existing_threads_after_qna_is_disabled` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_with_scroll_percentage_and_markdown` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_with_spreadsheet_document` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_scroll_percentage_range_validation` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_markdown_without_scroll_percentage_does_not_set_100_percent` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_invalid_view_id` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_missing_data` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_updates_completion_rate` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_with_dataroom_visit` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_with_mismatched_dataroom_visit_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_without_authorized_session_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_inactive_link_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_expired_link_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_duration_seconds_bounds` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_record_page_view_numeric_range_validations` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordPageView::test_create_session_stores_false_flags_and_rejects_subsequently_added_password` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordLinkClick::test_record_link_click_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordLinkClick::test_record_link_click_dataroom_visit_mismatch` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordLinkClick::test_record_link_click_invalid_url_protocol` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordLinkClick::test_record_link_click_whitespace_bypass` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordLinkClick::test_record_link_click_data_uri` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordLinkClick::test_record_link_click_http_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestRecordLinkClick::test_record_link_click_inactive_link_rejected` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_create_view_records_ip_and_user_agent` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_create_view_records_ip_from_trusted_proxy_x_real_ip` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_create_view_ignores_spoofed_x_real_ip_from_untrusted_remote` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_create_view_handles_geoip_city_none` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_record_download_for_view_session` → Email verification required.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_create_view_session_for_authenticated_user_records_email` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_create_view_session_triggers_email_notification` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionViewSet::test_create_view_session_does_not_trigger_email_notification` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_with_watermark_direct_document` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_markdown_document` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_video_stream_ttl` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_includes_download_url` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_for_spreadsheet` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_hides_download_url_when_downloads_disabled` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_for_image_document` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_not_found` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_inactive` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_expired` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_password_protected` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_dataroom_catalog_populates_effective_watermark_text` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_dataroom_catalog_gates_allow_download_on_watermark_size_and_video` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewDataView::test_get_share_link_data_dataroom_catalog_gates_allow_download_on_link_allow_download_false` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_dataroom_document_visit` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_dataroom_folder_visit` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_preserved_when_dataroom_document_deleted` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_when_dataroom_document_renamed` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_preserved_when_dataroom_folder_deleted` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_when_dataroom_folder_renamed` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_preserved_when_dataroom_document_moved` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_preserved_when_dataroom_folder_moved` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_root_dataroom_download_item_status` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_audit_trail_root_dataroom_download_when_renamed` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_visit_for_hidden_document_fails_with_404` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_visit_for_document_in_hidden_folder_fails_with_404` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_visit_for_hidden_folder_fails_with_404` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_visit_deeply_nested_document_path` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_visit_for_non_dataroom_link_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_record_visit_with_invalid_id_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_view_sessions_for_dataroom_includes_page_views` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_share_link_data_document_not_ready` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_hides_content_in_invisible_folder` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_view_data_with_duplicate_dataroom_setting_does_not_500` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_root_scope_returns_only_root_direct_children` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_nested_scope_returns_direct_children` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_uses_safe_default_pagination` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_nested_scope_pagination_limit_and_offset` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_rejects_foreign_or_invisible_parent_id` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_scope_ordering_uses_item_order_and_fallback` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_includes_nested_breadcrumbs` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_link_data_large_scope_perf_smoke` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_document_from_dataroom_link_returns_item_specific_settings` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_document_from_dataroom_link_returns_dataroom_context` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_root_link_returns_banner_and_logo_data` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_standalone_document_link_does_not_return_dataroom_context` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_document_hides_download_url_when_item_downloads_disabled` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_document_by_dataroom_item_id_is_unambiguous` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_get_dataroom_document_with_watermark_returns_correct_download_url` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_dataroom_document_watermark_override_disables_watermarked_page_url` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_dataroom_document_watermark_enabled_generates_render_page_url` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomVisitTracking::test_render_page_rejects_dataroom_document_when_item_watermark_is_disabled` → Email verification required.
+- `tests/sharelinks/test_views.py::TestShareLinkPreview::test_create_preview_session_for_share_link` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkPreview::test_preview_token_bypasses_share_link_security` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_view_data_requires_password` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_verify_password_wrong_password` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_verify_password_and_view_data_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_verify_password_for_non_protected_link` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_password_verification_is_rate_limited` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_public_meta_returns_owner_info` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_public_meta_includes_protection_and_restriction_flags` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_public_meta_for_unknown_slug_returns_404` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_public_meta_for_expired_link_returns_410` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_verify_password_for_expired_link_returns_410` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_request_access_for_expired_link_returns_410` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_accept_nda_for_expired_link_returns_410` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPasswordProtection::test_public_meta_dataroom_logo_mode_and_resolved_logo` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_list_share_links_is_scoped_to_user` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_admin_can_patch_and_delete_teammate_document_share_link` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_list_share_links_can_be_filtered_by_dataroom` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_list_share_links_ordered_by_created_at_desc` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_settings` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_settings_for_document_link_fails` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_settings_for_other_user_link_fails` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_settings_is_atomic` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_settings_is_scoped_to_link` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_folder_settings` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_settings_enabling_watermark_populates_default_text` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_bulk_update_dataroom_settings_malformed_data` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkViewSet::test_update_dataroom_link_with_same_name_as_document_link_succeeds` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_view_data_requires_email` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_request_access_for_non_protected_link` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_request_access_no_verification_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_request_access_with_verification_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_request_access_replaces_existing_token_case_insensitively` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_view_data_with_valid_access_token` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_confirm_access_token_mismatch_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_confirm_access_multiple_tabs_no_collision` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_view_data_with_expired_access_token` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_request_access_for_dataroom_no_verification_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkEmailProtection::test_request_access_for_dataroom_with_verification_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestOwnerPreviewFlag::test_owner_preview_is_flagged_in_view_sessions` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestOwnerPreviewFlag::test_non_owner_view_is_not_flagged` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestOwnerPreviewFlag::test_owner_view_flagged_when_user_email_has_uppercase_letters` → Staff access is required.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_unauthorized_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_for_public_link_succeeds_after_view_data` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_for_dataroom_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_requires_password_verification_when_email_configured` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_requires_password_verification_when_nda_configured` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_request_access_allowed_as_first_gate_when_password_configured` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_verify_password_requires_email_verification_when_email_configured` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_magic_link_confirmation_preserves_password_gate` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_sequential_gates_email_then_password_then_nda_end_to_end` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_accept_nda_requires_password_verification_when_password_configured` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_accept_nda_requires_email_verification_when_email_configured` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_when_watermark_enabled_on_dataroom_setting_returns_403` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_when_watermark_disabled_on_dataroom_setting_succeeds` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_success` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_pdf_file_success` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_pdf_file_inline_disposition_for_printing` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_pdf_file_flattened_success` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_pdf_file_flattened_fallback_on_page_limit` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_office_file_as_pdf` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_image_file_success` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_file_not_allowed` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_video_with_watermark_enabled_returns_403` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_file_watermark_blocked_when_exceeds_size_limit` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_view_data_disables_download_when_watermarked_file_exceeds_size_limit` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_non_watermarked_file_redirects` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_non_watermarked_file_not_allowed` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_page_for_link_without_watermark_fails` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_returns_caching_headers` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_with_etag_returns_304` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_with_changed_link_returns_200` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_etag_varies_by_email` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_etag_varies_by_x_real_ip` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_from_dataroom_success` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_render_watermarked_page_without_authorized_session_fails` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_file_from_dataroom_success` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_file_from_dataroom_permission_denied` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_video_from_dataroom_fails` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_file_from_dataroom_missing_doc_id` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_watermarked_file_from_dataroom_invalid_doc_id` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_from_dataroom_denied_if_not_visible` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_dataroom_item_watermark_enforced_when_link_watermark_text_empty` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_sharelink_file_download_view_records_dataroom_visit_downloaded_at` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_file_password_protected_fails_without_auth` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_non_watermarked_file_succeeds_with_auth` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_non_watermarked_dataroom_file_redirects` → Email verification required.
+- `tests/sharelinks/test_views.py::TestWatermarkingViews::test_download_file_email_protected_fails_without_auth` → Email verification required.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_download_folder_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_download_folder_edge_case_names_do_not_crash` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_download_folder_succeeds_when_folder_allow_download_is_true_even_if_link_allow_download_is_false` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_zip_archive_respects_permissions` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_zip_archive_includes_watermarked_pdf` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_zip_archive_includes_watermarked_office_file_as_pdf` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_zip_archive_includes_watermarked_image` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_download_folder_applies_watermark_when_link_watermark_text_empty` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_download_folder_excludes_oversized_watermarked_document` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_download_folder_password_protected_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_download_folder_no_downloadable_items_does_not_record_visit_or_dispatch_automation` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_file_download_document_in_hidden_folder_denied` → Email verification required.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_view_data_single_document_does_not_scan_all_folders` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_view_data_catalog_root_does_not_scan_all_folders` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_view_data_catalog_subfolder_only_queries_ancestor_path` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_non_admin_cannot_create_share_link_for_creatorless_document` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_admin_can_create_share_link_for_creatorless_document` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomFolderDownloadView::test_removed_dataroom_collaborator_cannot_view_update_or_delete_dataroom_share_link` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestViewSessionAndViewerAccessControl::test_view_session_list_and_detail_scoped_to_accessible_share_links` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionAndViewerAccessControl::test_view_session_mutation_actions_disallowed` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestViewSessionAndViewerAccessControl::test_view_session_creation_rejects_client_supplied_metrics` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionAndViewerAccessControl::test_viewer_viewset_is_read_only_and_org_scoped` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestViewSessionAndViewerAccessControl::test_preview_session_bypass_is_bound_to_link_id` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestViewSessionAndViewerAccessControl::test_viewer_list_scoped_to_accessible_links_for_non_admin` → Unclassified or disabled operation.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_success` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_permission_denied_when_link_download_disabled` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_expired_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_password_protected_fails` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_respects_document_visibility_and_download_flags` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_watermarks_pdf` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_records_visit_and_dispatches_automation` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_no_downloadable_items_returns_400` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_no_downloadable_items_does_not_record_visit_or_dispatch_automation` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_renamed_does_not_create_duplicate_root_visit` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_filename_collisions` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_excludes_non_downloadable_subfolder` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_non_ascii_name_header_encoding` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_preserves_spaces_and_punctuation` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_sibling_folder_collisions` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_edge_case_names_do_not_crash` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_excludes_oversized_watermarked_document` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_raw_stream_failure_writes_error_file_and_masks_token` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_watermark_failure_writes_error_file` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_midstream_failure_writes_error_file_and_preserves_partial_bytes` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_detects_content_length_truncation_and_writes_error_file` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_resilient_generator_logger_does_not_leak_url_or_traceback` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_skips_unwatermarkable_types_and_unconverted_docs` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_skips_keyless_doc_without_reserving_name` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_dataroom_filename_star_uses_safe_empty` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_views.py::TestDataroomDownloadAllView::test_download_folder_filename_star_uses_safe_empty` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/test_mcp_contracts.py::TestMCPIntegrationLiveContracts::test_dataroom_remove_content_with_dataroom_document_ids_returns_204` → Unclassified or disabled operation.
+- `tests/test_mcp_contracts.py::TestMCPIntegrationLiveContracts::test_dataroom_remove_content_with_wrong_keys_returns_clean_400` → Unclassified or disabled operation.
+- `tests/test_mcp_contracts.py::TestMCPIntegrationLiveContracts::test_document_stats_endpoint_returns_200` → Staff access is required.
+- `tests/test_mcp_contracts.py::TestMCPIntegrationLiveContracts::test_document_upload_request_with_normalized_folder_path` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_cloud_document_import.py::test_import_cloud_document` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_cloud_document_import.py::test_refresh_cloud_document` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_cloud_document_import.py::test_import_new_version_cloud_document` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_cloud_document_import.py::test_upload_local_version_of_cloud_document` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_dataroom_collaboration.py::test_owner_invites_collaborator` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_dataroom_collaboration.py::test_collaborator_creates_folder` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_dataroom_collaboration.py::test_collaborator_creates_share_link` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_dataroom_collaboration.py::test_owner_transfers_ownership` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_dataroom_collaboration.py::test_collaborator_leaves` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_dataroom_duplicate.py::test_duplicate_dataroom` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_owner_sets_permissions` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_viewer_sees_visible_content` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_item_in_invisible_folder` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_viewer_respects_download_setting` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_downloadable_folder_with_restricted_item` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_download_folder_zip` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_zip_respects_permissions` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_datarooms_sharing_permissions.py::test_zip_with_watermark` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_document_upload.py::test_user_uploads_first_document` → Staff access is required.
+- `bdd/step_definitions/test_document_version_upload.py::test_upload_new_document_version` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_document_version_upload.py::test_promote_older_document_version` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_document_version_upload.py::test_preview_specific_document_version` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_folder_upload.py::test_folder_upload_and_structure` → Staff access is required.
+- `bdd/step_definitions/test_folder_upload.py::test_folder_upload_with_existing_folder` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_analytics.py::test_share_link_view_tracking` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_email_protection.py::test_email_required_no_verification` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_email_protection.py::test_email_required_with_verification` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_email_protection.py::test_viewer_uses_magic_link` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_email_protection.py::test_viewer_email_is_recorded` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_multi_step_auth.py::test_multi_step_auth` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_multi_step_auth.py::test_multi_step_auth_with_nda` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_nda.py::test_share_link_nda_gate` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_org_access.py::test_granted_org_viewer_gets_in` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_org_access.py::test_other_org_viewer_denied` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_org_access.py::test_explicit_email_grant` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_org_access.py::test_name_required` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_org_access.py::test_revoke_grant` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_org_access.py::test_grants_force_verification` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_org_access.py::test_download_defaults` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_share_link_qna.py::test_viewer_asks_qna_on_document_share_link` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_qna.py::test_owner_replies_to_viewer_qna_thread` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_qna.py::test_viewer_cannot_use_another_link_session_for_qna` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_qna.py::test_viewer_cannot_reply_to_closed_qna_thread` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_qna.py::test_qna_creation_dispatches_automation_notification` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_share_link_view.py::test_password_protected_share_link` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `bdd/step_definitions/test_user_authentication.py::test_successful_logout` → Staff JWT fixture
+- `bdd/step_definitions/test_user_authentication.py::test_signup_chinese_verification_and_activation` → Unclassified or disabled operation.
+- `bdd/step_definitions/test_view_tracking.py::test_viewers_activity_is_tracked` → This recipient operation is not enabled in phase 1; use the room entry route.
+- `tests/sharelinks/test_amforge_watermark.py::test_footer_text_format` → Brand-driven watermark
+- `tests/sharelinks/test_amforge_watermark.py::test_download_policy` → Original download policy
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_success_redirects` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_for_dataroom_missing_doc_id` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_non_existent_page_fails` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_when_watermark_enabled_on_document_link_returns_403` → Disabled legacy recipient session/page fixtures
+- `tests/sharelinks/test_views.py::TestShareLinkPageView::test_get_page_when_watermark_enabled_but_no_watermark_text_fails` → Disabled legacy recipient session/page fixtures

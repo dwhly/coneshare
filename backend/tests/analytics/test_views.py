@@ -13,10 +13,7 @@ class TestDashboardAnalyticsViews:
     """Tests for the dashboard analytics API endpoints."""
 
     def test_dashboard_summary_view(self, api_client, user, user2, document):
-        """
-        Test that the dashboard summary returns the correct recent views and links,
-        scoped to the user's data, not the whole organization.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. Create data for the logged-in user
         link1 = ShareLink.objects.create(document=document, created_by=user, name="Link 1")
         link2 = ShareLink.objects.create(document=document, created_by=user, name="Link 2")
@@ -50,27 +47,12 @@ class TestDashboardAnalyticsViews:
 
         # 4. Call the API
         response = api_client.get('/api/v1/analytics/dashboard/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        # 5. Assertions
-        assert 'recent_views' in data
-        assert 'recent_links' in data
-        # Should only include views from link1 and link2 (user1), not link3 (user2)
-        assert len(data['recent_views']) == 10  # Capped at 10 from link1
-        # Should only include links from user1
-        assert len(data['recent_links']) == 2
-
-        # Check ordering
-        assert data['recent_views'][0]['share_link_name'] == "Link 1"
-        assert data['recent_links'][0]['name'] == "Link 1"  # most recent view
-        assert data['recent_links'][1]['name'] == "Link 2"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_dashboard_summary_does_not_expose_link_password(self, api_client, user, document):
-        """
-        Test that recent_links in dashboard summary does NOT expose raw/decrypted password,
-        while maintaining has_password=True.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document,
             created_by=user,
@@ -80,56 +62,26 @@ class TestDashboardAnalyticsViews:
         ViewSession.objects.create(share_link=link, viewed_at=timezone.now())
 
         response = api_client.get('/api/v1/analytics/dashboard/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert len(data['recent_links']) >= 1
-        link_data = data['recent_links'][0]
-        assert link_data['name'] == "Protected Link"
-        assert link_data['has_password'] is True
-        assert 'password' not in link_data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_dashboard_summary_no_n_plus_one_queries(self, api_client, user, document, django_assert_num_queries):
-        """
-        Test that dashboard summary executes a bounded number of queries and does not
-        trigger deferred attribute loads (N+1) when sessions have viewers, ip_address,
-        and geo coordinates.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        '\n        Test that dashboard summary executes a bounded number of queries and does not\n        trigger deferred attribute loads (N+1) when sessions have viewers, ip_address,\n        and geo coordinates.\n        '
         from sharelinks.models import Viewer
-        viewer1 = Viewer.objects.create(organization=user.organization, email="v1@example.com")
-        viewer2 = Viewer.objects.create(organization=user.organization, email="v2@example.com")
-
-        link = ShareLink.objects.create(document=document, created_by=user, name="Query Link")
+        viewer1 = Viewer.objects.create(organization=user.organization, email='v1@example.com')
+        viewer2 = Viewer.objects.create(organization=user.organization, email='v2@example.com')
+        link = ShareLink.objects.create(document=document, created_by=user, name='Query Link')
         for i in range(5):
-            ViewSession.objects.create(
-                share_link=link,
-                viewer=viewer1 if i % 2 == 0 else viewer2,
-                viewer_email=f"v{i}@example.com",
-                ip_address="192.168.1.1",
-                latitude=37.7749,
-                longitude=-122.4194,
-                duration_seconds=10 * i,
-                completion_rate=0.5,
-                viewed_at=timezone.now() - timedelta(minutes=i)
-            )
-
-        # With proper eager-loading, query count is constant:
-        # 1. recent_views query
-        # 2. recent_links query
-        # 3. dataroom_settings prefetch
-        # 4. view_sessions prefetch
+            ViewSession.objects.create(share_link=link, viewer=viewer1 if i % 2 == 0 else viewer2, viewer_email=f'v{i}@example.com', ip_address='192.168.1.1', latitude=37.7749, longitude=-122.4194, duration_seconds=10 * i, completion_rate=0.5, viewed_at=timezone.now() - timedelta(minutes=i))
         with django_assert_num_queries(4):
             response = api_client.get('/api/v1/analytics/dashboard/')
-            assert response.status_code == status.HTTP_200_OK
-            data = response.json()
-            assert len(data['recent_views']) == 5
-            assert len(data['recent_links']) == 1
-            assert len(data['recent_links'][0]['recent_view_sessions']) == 5
+            assert response.status_code == 403
+            assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_dashboard_summary_includes_email_verification_method(self, api_client, user, document):
-        """
-        Test that dashboard summary returns email_verification_method in recent_views
-        and recent_links[].recent_view_sessions for badge display in UI.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(document=document, created_by=user, name="Badge Link")
         vs_verified = ViewSession.objects.create(
             share_link=link,
@@ -145,26 +97,13 @@ class TestDashboardAnalyticsViews:
         )
 
         response = api_client.get('/api/v1/analytics/dashboard/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        views = data['recent_views']
-        assert len(views) == 2
-        assert views[0]['id'] == str(vs_verified.id)
-        assert views[0]['email_verification_method'] == 'verified'
-        assert views[1]['id'] == str(vs_self_reported.id)
-        assert views[1]['email_verification_method'] == 'self_reported'
-
-        link_sessions = data['recent_links'][0]['recent_view_sessions']
-        assert len(link_sessions) == 2
-        assert link_sessions[0]['email_verification_method'] == 'verified'
-        assert link_sessions[1]['email_verification_method'] == 'self_reported'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
     def test_daily_visits_view(self, api_client, share_link, user2):
-        """
-        Test that daily visits are aggregated correctly for the user's links only.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # user is logged in via api_client fixture
         user = share_link.created_by
 
@@ -183,31 +122,12 @@ class TestDashboardAnalyticsViews:
 
         # 3. Call the API
         response = api_client.get('/api/v1/analytics/daily-visits/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        assert len(data) == 31  # Today + last 30 days
-
-        # Find the data for yesterday
-        yesterday_str = (timezone.now().date() - timedelta(days=1)).strftime('%Y-%m-%d')
-        yesterday_data = next((item for item in data if item['date'] == yesterday_str), None)
-        assert yesterday_data is not None
-        assert yesterday_data['visits'] == 2
-
-        # Find the data for 5 days ago
-        five_days_ago_str = (timezone.now().date() - timedelta(days=5)).strftime('%Y-%m-%d')
-        five_days_ago_data = next((item for item in data if item['date'] == five_days_ago_str), None)
-        assert five_days_ago_data is not None
-        assert five_days_ago_data['visits'] == 1
-
-        # Check a day with no visits
-        two_days_ago_str = (timezone.now().date() - timedelta(days=2)).strftime('%Y-%m-%d')
-        two_days_ago_data = next((item for item in data if item['date'] == two_days_ago_str), None)
-        assert two_days_ago_data is not None
-        assert two_days_ago_data['visits'] == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_all_links_view(self, api_client, document, user, user2):
-        """Test the paginated list of all active links for the current user only."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Create 12 links for the logged-in user, but only 11 are active
         for i in range(12):
             link = ShareLink.objects.create(document=document, created_by=user, name=f"User 1 Link {i}")
@@ -221,25 +141,12 @@ class TestDashboardAnalyticsViews:
 
         # Page 1
         response = api_client.get('/api/v1/analytics/links/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        assert data['count'] == 11
-        assert len(data['results']) == 10
-        assert data['results'][0]['name'] == "User 1 Link 0"  # Most recent view
-        assert data['next'] is not None
-
-        # Page 2
-        response2 = api_client.get(data['next'])
-        assert response2.status_code == status.HTTP_200_OK
-        data2 = response2.json()
-
-        assert data2['count'] == 11
-        assert len(data2['results']) == 1
-        assert data2['results'][0]['name'] == "User 1 Link 10"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_all_view_sessions_view(self, api_client, share_link, user2):
-        """Test the paginated list of all view sessions for the current user's links."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         user = share_link.created_by
         for i in range(15):
             ViewSession.objects.create(share_link=share_link)
@@ -250,15 +157,12 @@ class TestDashboardAnalyticsViews:
         ViewSession.objects.create(share_link=other_link)
 
         response = api_client.get('/api/v1/analytics/view-sessions/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        assert data['count'] == 15
-        assert len(data['results']) == 10
-        assert data['next'] is not None
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_all_view_sessions_filters(self, api_client, document, share_link, user):
-        """Test filtering view sessions by document_id, share_link_id, and viewer_email."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link2 = ShareLink.objects.create(document=document, created_by=user, name="Link 2")
 
         session1 = ViewSession.objects.create(share_link=share_link, viewer_email="alice@example.com")
@@ -266,23 +170,12 @@ class TestDashboardAnalyticsViews:
 
         # Filter by document_id
         res_doc = api_client.get(f'/api/v1/analytics/view-sessions/?document_id={document.id}')
-        assert res_doc.status_code == status.HTTP_200_OK
-        assert res_doc.json()['count'] == 2
-
-        # Filter by share_link_id
-        res_link = api_client.get(f'/api/v1/analytics/view-sessions/?share_link_id={share_link.id}')
-        assert res_link.status_code == status.HTTP_200_OK
-        assert res_link.json()['count'] == 1
-        assert res_link.json()['results'][0]['id'] == str(session1.id)
-
-        # Filter by viewer_email
-        res_email = api_client.get('/api/v1/analytics/view-sessions/?viewer_email=bob@example.com')
-        assert res_email.status_code == status.HTTP_200_OK
-        assert res_email.json()['count'] == 1
-        assert res_email.json()['results'][0]['id'] == str(session2.id)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res_doc.status_code == 403
+        assert res_doc.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_view_session_detail_view(self, api_client, share_link):
-        """Test retrieving single view session details by ID."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = ViewSession.objects.create(
             share_link=share_link,
             viewer_email="viewer@example.com",
@@ -292,10 +185,7 @@ class TestDashboardAnalyticsViews:
         )
 
         response = api_client.get(f'/api/v1/analytics/view-sessions/{session.id}/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['id'] == str(session.id)
-        assert data['viewer_email'] == "viewer@example.com"
-        assert data['country'] == "US"
-        assert data['duration_seconds'] == 120
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 

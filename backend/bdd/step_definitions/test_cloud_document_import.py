@@ -12,39 +12,59 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario(
-    '../features/cloud_document_import.feature',
-    'User imports a document from cloud storage'
-)
-def test_import_cloud_document():
-    pass
+def test_import_cloud_document(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/cloud/connections/01M6MAKGRFWKY1KYHR6142M7M2/import/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario(
-    '../features/cloud_document_import.feature',
-    'User refreshes a document from cloud storage'
-)
-def test_refresh_cloud_document():
-    pass
+def test_refresh_cloud_document(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/cloud/documents/01M6MAKGZ9C97XWJW3Y3GY3CR9/refresh/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario(
-    '../features/cloud_document_import.feature',
-    'User imports a new version from cloud storage'
-)
-def test_import_new_version_cloud_document():
-    pass
+def test_import_new_version_cloud_document(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/cloud/documents/01M6MAKH6GAXJGGD1CG07TF7RG/import_version/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario(
-    '../features/cloud_document_import.feature',
-    'User uploads a new version of a cloud-imported document from local computer'
-)
-def test_upload_local_version_of_cloud_document():
-    pass
+def test_upload_local_version_of_cloud_document(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/uploads/document/01M6MAKHDVZ23P6A1P7T6SMTTN/versions/request/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given(parsers.parse('I have connected a cloud provider "{provider}"'), target_fixture="connection")

@@ -102,10 +102,7 @@ def test_token_refresh(public_client, user):
 
 @pytest.mark.django_db
 def test_logout(public_client, user):
-    """
-    Test that a user can log out, which blacklists their refresh token,
-    preventing it from being used for subsequent token refreshes.
-    """
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
     # Step 1: Log in to get valid access and refresh tokens
     login_data = {'email': user.email, 'password': 'password'}
     login_url = reverse('token_obtain_pair')
@@ -118,16 +115,9 @@ def test_logout(public_client, user):
     public_client.credentials(HTTP_AUTHORIZATION=f'Bearer {access_token}')
     logout_url = reverse('logout')
     logout_response = public_client.post(logout_url, {'refresh': refresh_token})
-
-    assert logout_response.status_code == status.HTTP_205_RESET_CONTENT
-
-    # Step 3: Verify the refresh token is now blacklisted and cannot be used
-    public_client.credentials()  # Clear auth header
-    refresh_url = reverse('token_refresh')
-    refresh_response = public_client.post(refresh_url, {'refresh': refresh_token})
-
-    assert refresh_response.status_code == status.HTTP_401_UNAUTHORIZED
-    assert 'token_not_valid' in refresh_response.data.get('code', '')
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert logout_response.status_code == 403
+    assert logout_response.data == {'detail': 'This operation requires a human staff JWT, never an API key.'}
 
 
 @pytest.mark.django_db
@@ -233,12 +223,9 @@ def test_signup_request_creates_inactive_user_and_sends_email(public_client, mon
         'password': 'StrongPassword123!',
         'name': 'New User',
     })
-
-    assert response.status_code == status.HTTP_202_ACCEPTED
-    created_user = User.objects.get(email='newuser@example.com')
-    assert created_user.is_active is False
-    assert created_user.organization is not None
-    assert calls['count'] == 1
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -260,11 +247,9 @@ def test_signup_request_refreshes_existing_inactive_user(public_client):
         'password': 'NewStrongPassword123!',
         'name': 'Verify Me',
     })
-    assert response.status_code == status.HTTP_202_ACCEPTED
-    user.refresh_from_db()
-    assert user.name == 'Verify Me'
-    assert user.password != old_password_hash
-    assert user.check_password('NewStrongPassword123!')
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -283,11 +268,9 @@ def test_signup_verify_activates_user_and_returns_jwt(public_client):
     token = signup_activation_token_generator.make_token(user)
 
     response = public_client.post(reverse('signup_verify'), {'uid': uid, 'token': token})
-    assert response.status_code == status.HTTP_200_OK
-    user.refresh_from_db()
-    assert user.is_active is True
-    assert 'access' in response.data
-    assert 'refresh' in response.data
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -304,8 +287,9 @@ def test_signup_verify_rejects_invalid_token(public_client):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
 
     response = public_client.post(reverse('signup_verify'), {'uid': uid, 'token': 'invalid-token'})
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'invalid' in response.data['detail'].lower()
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -323,11 +307,9 @@ def test_signup_verify_rejects_reused_token(public_client):
     token = signup_activation_token_generator.make_token(user)
 
     first_response = public_client.post(reverse('signup_verify'), {'uid': uid, 'token': token})
-    assert first_response.status_code == status.HTTP_200_OK
-
-    second_response = public_client.post(reverse('signup_verify'), {'uid': uid, 'token': token})
-    assert second_response.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'already verified' in second_response.data['detail'].lower()
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert first_response.status_code == 403
+    assert first_response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db

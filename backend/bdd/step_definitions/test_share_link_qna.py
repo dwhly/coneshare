@@ -12,21 +12,45 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_qna.feature', 'Viewer asks Q&A on a single-document share link')
-def test_viewer_asks_qna_on_document_share_link():
-    pass
+def test_viewer_asks_qna_on_document_share_link(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/view-sessions/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_qna.feature', "Owner replies to a viewer's Q&A thread")
-def test_owner_replies_to_viewer_qna_thread():
-    pass
+def test_owner_replies_to_viewer_qna_thread(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/view-sessions/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_qna.feature', "Viewer cannot create Q&A using another link's session")
-def test_viewer_cannot_use_another_link_session_for_qna():
-    pass
+def test_viewer_cannot_use_another_link_session_for_qna(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/links/wsj9YUkX6yFNAgVzmUfcoA/qna-threads/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
@@ -36,15 +60,31 @@ def test_viewer_cannot_ask_qna_on_invisible_dataroom_content():
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_qna.feature', 'Viewer cannot reply to a closed Q&A thread')
-def test_viewer_cannot_reply_to_closed_qna_thread():
-    pass
+def test_viewer_cannot_reply_to_closed_qna_thread(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/view-sessions/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_qna.feature', 'Q&A creation dispatches an automation notification')
-def test_qna_creation_dispatches_automation_notification():
-    pass
+def test_qna_creation_dispatches_automation_notification(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/view-sessions/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 def _create_document(user, name):

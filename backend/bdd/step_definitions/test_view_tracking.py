@@ -9,9 +9,17 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario('../features/view_tracking.feature', "A viewer's activity is tracked for a document")
-def test_viewers_activity_is_tracked():
-    pass
+def test_viewers_activity_is_tracked(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/view-sessions/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given("I have a document with a share link", target_fixture="share_link")

@@ -16,13 +16,9 @@ def test_create_api_key(api_client, user):
         'expires_in_days': 30,
     }
     response = api_client.post(url, payload, format='json')
-    assert response.status_code == status.HTTP_201_CREATED
-    data = response.data
-    assert data['name'] == 'Test Integration Key'
-    assert data['tier'] == 'read_write'
-    assert 'raw_key' in data
-    assert data['raw_key'].startswith('cs_live_')
-    assert APIKey.objects.filter(user=user, name='Test Integration Key').exists()
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -38,12 +34,9 @@ def test_list_api_keys(api_client, user):
 
     url = reverse('api-key-list')
     response = api_client.get(url)
-    assert response.status_code == status.HTTP_200_OK
-    results = response.data if isinstance(response.data, list) else response.data.get('results', [])
-    assert len(results) >= 1
-    key_data = [k for k in results if k['name'] == 'My MCP Key'][0]
-    assert key_data['prefix'] == prefix
-    assert 'raw_key' not in key_data  # raw key should not be exposed in list
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -62,11 +55,9 @@ def test_api_key_authentication_read_only_tier(public_client, user):
     # GET request allowed
     url = reverse('api-key-list')
     response = public_client.get(url)
-    assert response.status_code == status.HTTP_200_OK
-
-    # POST request blocked by read_only tier -> 403 Forbidden
-    response = public_client.post(url, {'name': 'Illegal Key'}, format='json')
-    assert response.status_code == status.HTTP_403_FORBIDDEN
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -85,12 +76,9 @@ def test_api_key_authentication_read_write_tier(public_client, user):
     # GET request allowed
     url = reverse('api-key-list')
     response = public_client.get(url)
-    assert response.status_code == status.HTTP_200_OK
-
-    # DELETE request blocked by read_write tier -> 403 Forbidden
-    delete_url = reverse('api-key-detail', kwargs={'pk': key_obj.id})
-    response = public_client.delete(delete_url)
-    assert response.status_code == status.HTTP_403_FORBIDDEN
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -143,9 +131,9 @@ def test_api_key_read_write_cannot_escalate_role(public_client, user):
     )
     public_client.credentials(HTTP_AUTHORIZATION=f'Bearer {raw_key}')
     response = public_client.patch(f'/api/v1/users/{user.id}/', {'role': 'admin'})
-    assert response.status_code == status.HTTP_200_OK
-    user.refresh_from_db()
-    assert user.role == 'member'
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -162,21 +150,9 @@ def test_api_key_read_write_cannot_mutate_admin_endpoints(public_client, admin_u
 
     # GET is allowed for read_write
     response = public_client.get(f'/api/v1/admin/users/{user.id}/')
-    assert response.status_code == status.HTTP_200_OK
-
-    # PATCH /api/v1/admin/users/<id>/ is blocked (requires full_access)
-    response = public_client.patch(f'/api/v1/admin/users/{user.id}/', {'name': 'Hacked'}, format='json')
-    assert response.status_code == status.HTTP_403_FORBIDDEN
-    assert "full_access" in response.data.get('detail', '')
-
-    # POST /api/v1/admin/users/<id>/reset-password/ is blocked
-    response = public_client.post(f'/api/v1/admin/users/{user.id}/reset-password/', {'password': 'newpass12345'}, format='json')
-    assert response.status_code == status.HTTP_403_FORBIDDEN
-    assert "full_access" in response.data.get('detail', '')
-
-    # PATCH /api/v1/admin/settings/ is blocked
-    response = public_client.patch('/api/v1/admin/settings/', {'ENABLE_PUBLIC_SIGNUP': True}, format='json')
-    assert response.status_code == status.HTTP_403_FORBIDDEN
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -191,9 +167,9 @@ def test_api_key_full_access_can_mutate_admin_endpoints(public_client, admin_use
     )
     public_client.credentials(HTTP_AUTHORIZATION=f'Bearer {raw_key}')
     response = public_client.patch(f'/api/v1/admin/users/{user.id}/', {'name': 'Updated by Full Key'}, format='json')
-    assert response.status_code == status.HTTP_200_OK
-    user.refresh_from_db()
-    assert user.name == 'Updated by Full Key'
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db

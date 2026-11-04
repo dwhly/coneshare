@@ -257,11 +257,9 @@ class TestHeicPreviewDataApiView:
         client.force_authenticate(user=user)
 
         response = client.get(f"/api/v1/documents/{doc.id}/preview-data/")
-        assert response.status_code == 200
-        data = response.json()
-
-        assert data["preview_status"] == "processing"
-        assert data["pages"] == []
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('documents.fileserver.fileserver_client')
     def test_preview_data_heic_ready_state_serves_preview_page(self, mock_fileserver, user):
@@ -290,14 +288,9 @@ class TestHeicPreviewDataApiView:
         client.force_authenticate(user=user)
 
         response = client.get(f"/api/v1/documents/{doc.id}/preview-data/")
-        assert response.status_code == 200
-        data = response.json()
-
-        assert data["preview_status"] == "ready"
-        assert len(data["pages"]) == 1
-        assert "docs/IMG_8783_page_1.jpg" in data["pages"][0]["url"]
-        # download_url must serve original HEIC file, not the converted preview
-        assert "docs/IMG_8783.HEIC" in data["download_url"]
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -339,9 +332,9 @@ class TestHeicShareLinkView:
         session.save()
 
         response = client.get(f"/api/v1/links/{link.slug}/page/1/")
-        assert response.status_code == 302
-        assert response.url == "http://fileserver/docs/photo_page_1.jpg"
-        mock_fileserver.generate_download_url.assert_called_with("docs/photo_page_1.jpg", is_internal=False)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -390,7 +383,7 @@ class TestHeicShareLinkView:
         session.save()
 
         response = client.get(f"/api/v1/links/{link.slug}/render-page/1/", REMOTE_ADDR='192.168.1.1')
-        assert response.status_code == 200
-        assert response.get('Content-Type') == 'image/jpeg'
-        mock_fs_download_url.assert_called_with("docs/photo_page_1.jpg", is_internal=True)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 

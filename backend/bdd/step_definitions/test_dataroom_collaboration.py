@@ -12,21 +12,45 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 # Scenarios
 @pytest.mark.django_db
-@scenario('../features/dataroom_collaboration.feature', 'Dataroom owner invites an internal collaborator')
-def test_owner_invites_collaborator():
-    pass
+def test_owner_invites_collaborator(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/datarooms/01M6MAKHVHMDYYJVKABHSGN3D5/collaborators/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/dataroom_collaboration.feature', 'Collaborator creates a folder and views dataroom content')
-def test_collaborator_creates_folder():
-    pass
+def test_collaborator_creates_folder(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/dataroom-folders/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/dataroom_collaboration.feature', 'Collaborator creates a share link for the co-managed dataroom')
-def test_collaborator_creates_share_link():
-    pass
+def test_collaborator_creates_share_link(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/share-links/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
@@ -36,15 +60,31 @@ def test_collaborator_cannot_edit_other_share_link():
 
 
 @pytest.mark.django_db
-@scenario('../features/dataroom_collaboration.feature', 'Dataroom owner transfers ownership to a collaborator')
-def test_owner_transfers_ownership():
-    pass
+def test_owner_transfers_ownership(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/datarooms/01M6MAKKVJP8JSYX7JJ551RVH6/transfer-ownership/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/dataroom_collaboration.feature', 'Collaborator leaves a co-managed dataroom')
-def test_collaborator_leaves():
-    pass
+def test_collaborator_leaves(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.delete('/api/v1/datarooms/01M6MAKMAR5KFHVZ2YZ64002DD/collaborators/01M6MAKM4HTSDV4MZY38G3KG0G/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db

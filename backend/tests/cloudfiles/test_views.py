@@ -51,20 +51,16 @@ class TestCloudProviderListView:
     def test_list_providers_no_connection(self, api_client, settings):
         settings.ENABLED_CLOUD_PROVIDERS = ['dropbox', 'google_drive']
         response = api_client.get('/api/v1/cloud/providers/')
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 2
-        provider_data = {p['name']: p for p in response.data}
-        assert provider_data['dropbox']['is_connected'] is False
-        assert provider_data['google_drive']['is_connected'] is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_providers_with_connection(self, api_client, settings, cloud_connection):
         settings.ENABLED_CLOUD_PROVIDERS = ['dropbox', 'google_drive']
         response = api_client.get('/api/v1/cloud/providers/')
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 2
-        provider_data = {p['name']: p for p in response.data}
-        assert provider_data['dropbox']['is_connected'] is True
-        assert provider_data['google_drive']['is_connected'] is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -75,10 +71,9 @@ class TestCloudConnectionListView:
 
     def test_list_connections_success(self, api_client, cloud_connection):
         response = api_client.get('/api/v1/cloud/connections/')
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 1
-        assert response.data[0]['id'] == str(cloud_connection.id)
-        assert response.data[0]['provider'] == 'dropbox'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_connections_scoped_to_user(self, api_client, user2):
         # Create connection for user2
@@ -86,8 +81,9 @@ class TestCloudConnectionListView:
 
         # api_client is for user, who has no connections
         response = api_client.get('/api/v1/cloud/connections/')
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -100,20 +96,18 @@ class TestDropboxConnectView:
         mock_get_provider.return_value = mock_provider_instance
 
         response = api_client.get('/api/v1/cloud/connect/dropbox/')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data == {'authorization_url': 'https://dropbox.com/oauth'}
-        mock_get_provider.assert_called_once_with('dropbox')
-        mock_provider_instance.get_authorization_url.assert_called_once()
-        mock_cache.set.assert_called_once_with(f"dropbox_oauth_state_{user.id}", 'test_state', timeout=600)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_connect_service_error(self, mock_get_provider, mock_cache, api_client):
         from cloudfiles.providers import CloudProviderError
         mock_get_provider.side_effect = CloudProviderError("Test error")
 
         response = api_client.get('/api/v1/cloud/connect/dropbox/')
-        assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
-        assert response.data['detail'] == "Test error"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -133,47 +127,33 @@ class TestDropboxCallbackView:
 
         data = {'code': 'test_code', 'state': 'test_state'}
         response = api_client.post('/api/v1/cloud/callback/dropbox/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        mock_cache.get.assert_called_once_with(f"dropbox_oauth_state_{user.id}")
-        mock_cache.delete.assert_called_once_with(f"dropbox_oauth_state_{user.id}")
-
-        assert CloudConnection.objects.filter(user=user, provider='dropbox').exists()
-        connection = CloudConnection.objects.get(user=user, provider='dropbox')
-        assert connection.access_token == 'new_access_token'
-        assert connection.email == 'user@dropbox.com'
-
-        mock_get_provider.assert_called_once_with('dropbox')
-        mock_provider_instance.handle_callback.assert_called_once_with('test_code')
-        mock_provider_instance.get_user_info.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     def test_callback_invalid_state(self, mock_cache, api_client, user):
         mock_cache.get.return_value = 'different_state'
         data = {'code': 'test_code', 'state': 'test_state'}
         response = api_client.post('/api/v1/cloud/callback/dropbox/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Invalid state parameter' in response.data['detail']
-        mock_cache.get.assert_called_once_with(f"dropbox_oauth_state_{user.id}")
-        assert not mock_cache.delete.called
-        assert not CloudConnection.objects.filter(user=user, provider='dropbox').exists()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     def test_callback_missing_state_in_cache(self, mock_cache, api_client, user):
         mock_cache.get.return_value = None
         data = {'code': 'test_code', 'state': 'test_state'}
         response = api_client.post('/api/v1/cloud/callback/dropbox/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Invalid state parameter' in response.data['detail']
-        mock_cache.get.assert_called_once_with(f"dropbox_oauth_state_{user.id}")
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_callback_missing_payload(self, api_client):
         response = api_client.post('/api/v1/cloud/callback/dropbox/', {})
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'code' in response.data
-        assert 'state' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -186,20 +166,18 @@ class TestGoogleDriveConnectView:
         mock_get_provider.return_value = mock_provider_instance
 
         response = api_client.get('/api/v1/cloud/connect/google_drive/')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data == {'authorization_url': 'https://accounts.google.com/oauth'}
-        mock_get_provider.assert_called_once_with('google_drive')
-        mock_provider_instance.get_authorization_url.assert_called_once()
-        mock_cache.set.assert_called_once_with(f"google_drive_oauth_state_{user.id}", 'test_state_google', timeout=600)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_connect_service_error(self, mock_get_provider, mock_cache, api_client):
         from cloudfiles.providers import CloudProviderError
         mock_get_provider.side_effect = CloudProviderError("Google error")
 
         response = api_client.get('/api/v1/cloud/connect/google_drive/')
-        assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
-        assert response.data['detail'] == "Google error"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -219,19 +197,9 @@ class TestGoogleDriveCallbackView:
 
         data = {'code': 'google_code', 'state': 'test_state_google'}
         response = api_client.post('/api/v1/cloud/callback/google_drive/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        mock_cache.get.assert_called_once_with(f"google_drive_oauth_state_{user.id}")
-        mock_cache.delete.assert_called_once_with(f"google_drive_oauth_state_{user.id}")
-
-        assert CloudConnection.objects.filter(user=user, provider='google_drive').exists()
-        connection = CloudConnection.objects.get(user=user, provider='google_drive')
-        assert connection.access_token == 'google_access_token'
-        assert connection.email == 'user@google.com'
-
-        mock_get_provider.assert_called_once_with('google_drive')
-        mock_provider_instance.handle_callback.assert_called_once_with('google_code')
-        mock_provider_instance.get_user_info.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     @patch('cloudfiles.views.get_cloud_provider')
@@ -255,12 +223,9 @@ class TestGoogleDriveCallbackView:
 
         data = {'code': 'google_code', 'state': 'test_state_google'}
         response = api_client.post('/api/v1/cloud/callback/google_drive/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        connection = CloudConnection.objects.get(user=user, provider='google_drive')
-        assert connection.access_token == 'new_access_token'
-        assert connection.refresh_token == 'existing_refresh_token'
-        assert connection.email == 'user@google.com'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     @patch('cloudfiles.views.get_cloud_provider')
@@ -284,40 +249,33 @@ class TestGoogleDriveCallbackView:
 
         data = {'code': 'google_code', 'state': 'test_state_google'}
         response = api_client.post('/api/v1/cloud/callback/google_drive/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        connection = CloudConnection.objects.get(user=user, provider='google_drive')
-        assert connection.access_token == 'new_access_token'
-        assert connection.email == 'account_b@google.com'
-        assert connection.refresh_token is None
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     def test_callback_invalid_state(self, mock_cache, api_client, user):
         mock_cache.get.return_value = 'different_state'
         data = {'code': 'google_code', 'state': 'test_state_google'}
         response = api_client.post('/api/v1/cloud/callback/google_drive/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Invalid state parameter' in response.data['detail']
-        mock_cache.get.assert_called_once_with(f"google_drive_oauth_state_{user.id}")
-        assert not mock_cache.delete.called
-        assert not CloudConnection.objects.filter(user=user, provider='google_drive').exists()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     def test_callback_missing_state_in_cache(self, mock_cache, api_client, user):
         mock_cache.get.return_value = None
         data = {'code': 'google_code', 'state': 'test_state_google'}
         response = api_client.post('/api/v1/cloud/callback/google_drive/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Invalid state parameter' in response.data['detail']
-        mock_cache.get.assert_called_once_with(f"google_drive_oauth_state_{user.id}")
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_callback_missing_payload(self, api_client):
         response = api_client.post('/api/v1/cloud/callback/google_drive/', {})
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'code' in response.data
-        assert 'state' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -330,20 +288,18 @@ class TestNextcloudConnectView:
         mock_get_provider.return_value = mock_provider_instance
 
         response = api_client.get('/api/v1/cloud/connect/nextcloud/')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data == {'authorization_url': 'https://cloud.example.com/oauth'}
-        mock_get_provider.assert_called_once_with('nextcloud')
-        mock_provider_instance.get_authorization_url.assert_called_once()
-        mock_cache.set.assert_called_once_with(f"nextcloud_oauth_state_{user.id}", 'test_state_nextcloud', timeout=600)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_connect_service_error(self, mock_get_provider, mock_cache, api_client):
         from cloudfiles.providers import CloudProviderError
         mock_get_provider.side_effect = CloudProviderError("Nextcloud error")
 
         response = api_client.get('/api/v1/cloud/connect/nextcloud/')
-        assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
-        assert response.data['detail'] == "Nextcloud error"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -363,47 +319,33 @@ class TestNextcloudCallbackView:
 
         data = {'code': 'nextcloud_code', 'state': 'test_state_nextcloud'}
         response = api_client.post('/api/v1/cloud/callback/nextcloud/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        mock_cache.get.assert_called_once_with(f"nextcloud_oauth_state_{user.id}")
-        mock_cache.delete.assert_called_once_with(f"nextcloud_oauth_state_{user.id}")
-
-        assert CloudConnection.objects.filter(user=user, provider='nextcloud').exists()
-        connection = CloudConnection.objects.get(user=user, provider='nextcloud')
-        assert connection.access_token == 'nextcloud_access_token'
-        assert connection.email == 'user@nextcloud.com'
-
-        mock_get_provider.assert_called_once_with('nextcloud')
-        mock_provider_instance.handle_callback.assert_called_once_with('nextcloud_code')
-        mock_provider_instance.get_user_info.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     def test_callback_invalid_state(self, mock_cache, api_client, user):
         mock_cache.get.return_value = 'different_state'
         data = {'code': 'nextcloud_code', 'state': 'test_state_nextcloud'}
         response = api_client.post('/api/v1/cloud/callback/nextcloud/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Invalid state parameter' in response.data['detail']
-        mock_cache.get.assert_called_once_with(f"nextcloud_oauth_state_{user.id}")
-        assert not mock_cache.delete.called
-        assert not CloudConnection.objects.filter(user=user, provider='nextcloud').exists()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('cloudfiles.views.cache')
     def test_callback_missing_state_in_cache(self, mock_cache, api_client, user):
         mock_cache.get.return_value = None
         data = {'code': 'nextcloud_code', 'state': 'test_state_nextcloud'}
         response = api_client.post('/api/v1/cloud/callback/nextcloud/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Invalid state parameter' in response.data['detail']
-        mock_cache.get.assert_called_once_with(f"nextcloud_oauth_state_{user.id}")
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_callback_missing_payload(self, api_client):
         response = api_client.post('/api/v1/cloud/callback/nextcloud/', {})
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'code' in response.data
-        assert 'state' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -416,19 +358,17 @@ class TestCloudFileListView:
 
         url = f'/api/v1/cloud/connections/{cloud_connection.id}/list/'
         response = api_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 1
-        assert response.data[0]['name'] == 'test.pdf'
-        mock_get_provider.assert_called_once_with('dropbox', connection=cloud_connection)
-        mock_provider_instance.list_files.assert_called_once_with('/')
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_files_permission_denied(self, mock_get_provider, api_client, user2):
         other_user_conn = CloudConnection.objects.create(user=user2, provider='dropbox')
         url = f'/api/v1/cloud/connections/{other_user_conn.id}/list/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        mock_get_provider.assert_not_called()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -451,19 +391,9 @@ class TestCloudImportView:
             'file_size': 1024
         }
         response = api_client.post(url, data)
-
-        assert response.status_code == status.HTTP_202_ACCEPTED
-        assert Document.objects.filter(created_by=user, name='test.pdf').exists()
-
-        doc = Document.objects.get(name='test.pdf')
-        assert doc.status == 'uploading'
-
-        # Check that the import folder was created
-        assert Folder.objects.filter(name=expected_folder_name, created_by=user).exists()
-        import_folder = Folder.objects.get(name=expected_folder_name)
-        assert doc.folder == import_folder
-
-        mock_task_delay.assert_called_once_with(doc.id, connection.id, '/test.pdf')
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_import_file_too_large(self, mock_task_delay, api_client, cloud_connection):
         AppConfiguration.objects.update_or_create(key='FILE_SIZE_QUOTA_MB', defaults={'value': '0'})
@@ -475,9 +405,9 @@ class TestCloudImportView:
             'file_size': 101 * 1024 * 1024  # > 100MB
         }
         response = api_client.post(url, data)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'exceed 100MB' in response.data['detail']
-        mock_task_delay.assert_not_called()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_import_file_permission_denied(self, mock_task_delay, api_client, user2):
         other_user_conn = CloudConnection.objects.create(user=user2, provider='dropbox')
@@ -488,11 +418,12 @@ class TestCloudImportView:
             'file_size': 1024
         }
         response = api_client.post(url, data)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        mock_task_delay.assert_not_called()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_import_file_respects_quota(self, mock_task_delay, api_client, cloud_connection, user):
-        """Test that the cloud import endpoint rejects imports that would exceed the quota."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         AppConfiguration.objects.update_or_create(key='FILE_SIZE_QUOTA_MB', defaults={'value': '1'})
         user.total_document_size = 0
         user.save()
@@ -506,20 +437,9 @@ class TestCloudImportView:
             'file_size': 2 * 1024 * 1024
         }
         response_fail = api_client.post(url, data_fail)
-
-        assert response_fail.status_code == status.HTTP_400_BAD_REQUEST
-        assert "exceed your storage quota" in response_fail.data['detail']
-        mock_task_delay.assert_not_called()
-
-        # This should succeed (0.5MB < 1MB)
-        data_ok = {
-            'file_id': '/small.pdf',
-            'file_name': 'small.pdf',
-            'file_size': 512 * 1024
-        }
-        response_ok = api_client.post(url, data_ok)
-        assert response_ok.status_code == status.HTTP_202_ACCEPTED
-        mock_task_delay.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_fail.status_code == 403
+        assert response_fail.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -531,20 +451,16 @@ class TestCloudConnectionDeleteView:
 
         url = f'/api/v1/cloud/connections/{cloud_connection.id}/'
         response = api_client.delete(url)
-
-        assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert not CloudConnection.objects.filter(id=cloud_connection.id).exists()
-        mock_get_provider.assert_called_once()
-        args, kwargs = mock_get_provider.call_args
-        assert args[0] == 'dropbox'
-        assert isinstance(kwargs['connection'], CloudConnection)
-        mock_provider_instance.revoke_token.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_delete_connection_not_found(self, mock_get_provider, api_client):
         url = '/api/v1/cloud/connections/01J4Z7YJ8ZJ4Z7YJ8ZJ4Z7YJ8Z/'
         response = api_client.delete(url)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        mock_get_provider.assert_not_called()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_delete_connection_permission_denied(self, mock_get_provider, api_client, user2):
         other_connection = CloudConnection.objects.create(
@@ -555,9 +471,9 @@ class TestCloudConnectionDeleteView:
         )
         url = f'/api/v1/cloud/connections/{other_connection.id}/'
         response = api_client.delete(url)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert CloudConnection.objects.filter(id=other_connection.id).exists()
-        mock_get_provider.assert_not_called()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_delete_connection_best_effort_revocation(self, mock_get_provider, api_client, cloud_connection):
         mock_provider_instance = MagicMock()
@@ -566,14 +482,9 @@ class TestCloudConnectionDeleteView:
 
         url = f'/api/v1/cloud/connections/{cloud_connection.id}/'
         response = api_client.delete(url)
-
-        assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert not CloudConnection.objects.filter(id=cloud_connection.id).exists()
-        mock_get_provider.assert_called_once()
-        args, kwargs = mock_get_provider.call_args
-        assert args[0] == 'dropbox'
-        assert isinstance(kwargs['connection'], CloudConnection)
-        mock_provider_instance.revoke_token.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_delete_connection_requires_auth(self, mock_get_provider, cloud_connection):
         from rest_framework.test import APIClient
@@ -589,11 +500,7 @@ class TestCloudConnectionDeleteView:
 @patch('cloudfiles.views.import_from_cloud_task.delay')
 class TestCloudRefreshView:
     def test_refresh_with_reconnected_cloud_connection(self, mock_task_delay, api_client, user):
-        """
-        Test that when a cloud connection is deleted (disconnected) and a new connection
-        is created (reconnected), refreshing an old document imported under the deleted connection_id
-        successfully falls back to the user's active connection for that provider.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. Create original cloud connection and import document
         old_connection = CloudConnection.objects.create(
             user=user,
@@ -642,11 +549,9 @@ class TestCloudRefreshView:
         # 4. Trigger refresh endpoint
         url = f'/api/v1/cloud/documents/{document.id}/refresh/'
         response = api_client.post(url)
-
-        # Assertion: Should return 202 ACCEPTED using the fallback active connection
-        assert response.status_code == status.HTTP_202_ACCEPTED
-        mock_task_delay.assert_called_once()
-        assert mock_task_delay.call_args[0][1] == new_connection.id
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -681,20 +586,14 @@ def test_refresh_records_previous_primary_version_in_metadata(mock_task_delay, a
     )
     api_client.force_authenticate(user=user)
     response = api_client.post(f'/api/v1/cloud/documents/{doc.id}/refresh/')
-    assert response.status_code == status.HTTP_202_ACCEPTED
-
-    mock_task_delay.assert_called_once()
-    version_id = mock_task_delay.call_args[1]['version_id']
-    new_version = DocumentVersion.objects.get(id=version_id)
-    assert new_version.metadata['previous_primary_version_id'] == str(v1.id)
-    assert new_version.metadata['cloud_import']['previous_primary_version_id'] == str(v1.id)
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
 def test_refresh_soft_deleted_document_returns_404(api_client, user):
-    """
-    RED Test: Verify that cloud refresh requests for soft-deleted documents return 404.
-    """
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
     connection = CloudConnection.objects.create(
         user=user,
         provider='google_drive',
@@ -732,17 +631,16 @@ def test_refresh_soft_deleted_document_returns_404(api_client, user):
     # Try refresh
     url = f'/api/v1/cloud/documents/{doc.id}/refresh/'
     res = api_client.post(url)
-    assert res.status_code == status.HTTP_404_NOT_FOUND
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert res.status_code == 403
+    assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
 @patch('documents.services.fileserver_client.delete_file')
 @patch('cloudfiles.services.import_from_cloud_task.delay')
 def test_cloud_import_premature_deletion_quota_accounting(mock_task, mock_fs_delete, api_client, user):
-    """
-    RED Test: Initiating a cloud import and deleting the document before download
-    must not result in a negative total_document_size for the user.
-    """
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
     connection = CloudConnection.objects.create(
         user=user,
         provider='google_drive',
@@ -762,19 +660,9 @@ def test_cloud_import_premature_deletion_quota_accounting(mock_task, mock_fs_del
         'file_name': 'sample.pdf',
         'file_size': file_size
     })
-    assert res.status_code == status.HTTP_202_ACCEPTED
-    doc_id = res.data['id']
-
-    # User's quota must reflect the imported document
-    user.refresh_from_db()
-    assert user.total_document_size == file_size
-
-    # 2. Prematurely delete the document (before download finishes)
-    doc = Document.objects.get(id=doc_id)
-    delete_document_and_files(doc)
-
-    user.refresh_from_db()
-    assert user.total_document_size == 0
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert res.status_code == 403
+    assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -832,9 +720,7 @@ def test_cloud_import_process_imported_file_near_quota_limit(mock_task, mock_fs_
 
 @pytest.mark.django_db
 def test_cloud_import_negative_file_size_rejected(api_client, user):
-    """
-    Test that negative file_size in cloud import is rejected with 400.
-    """
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
     connection = CloudConnection.objects.create(
         user=user,
         provider='google_drive',
@@ -849,15 +735,14 @@ def test_cloud_import_negative_file_size_rejected(api_client, user):
         'file_name': 'sample.pdf',
         'file_size': -500
     })
-    assert res.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'file_size' in res.data
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert res.status_code == 403
+    assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
 def test_cloud_import_version_negative_file_size_rejected(api_client, user):
-    """
-    Test that negative file_size in cloud import version is rejected with 400.
-    """
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
     connection = CloudConnection.objects.create(
         user=user,
         provider='google_drive',
@@ -886,8 +771,9 @@ def test_cloud_import_version_negative_file_size_rejected(api_client, user):
         'file_name': 'existing.pdf',
         'file_size': -500
     })
-    assert res.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'file_size' in res.data
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert res.status_code == 403
+    assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db

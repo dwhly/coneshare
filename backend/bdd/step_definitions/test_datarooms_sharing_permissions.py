@@ -15,39 +15,87 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 # Scenarios
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'Owner sets granular permissions for a dataroom share link')
-def test_owner_sets_permissions():
-    pass
+def test_owner_sets_permissions(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/share-links/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'Viewer sees only visible content in a dataroom share link')
-def test_viewer_sees_visible_content():
-    pass
+def test_viewer_sees_visible_content(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/5goo5W2-rCSoORrvGgqPHw/view-data/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'An item inside an invisible folder is not visible')
-def test_item_in_invisible_folder():
-    pass
+def test_item_in_invisible_folder(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/gNs_bct838zpXkrm_fn7bw/view-data/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'Viewer respects the allow_download setting for an individual item')
-def test_viewer_respects_download_setting():
-    pass
+def test_viewer_respects_download_setting(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/mjLGf9nmP61b2NTDjBkFzw/view-data/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'A downloadable folder does not allow downloading a restricted item inside it')
-def test_downloadable_folder_with_restricted_item():
-    pass
+def test_downloadable_folder_with_restricted_item(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/qaCV9a--JenCBlOkD5UNJg/view-data/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'Viewer successfully downloads a folder as a ZIP archive')
-def test_download_folder_zip():
-    pass
+def test_download_folder_zip(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/ZO1qVj-tvcpa1eKNrDllWw/download-folder/01M6MAKPNZX1Z2B88J6BFE3C09/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
@@ -57,15 +105,31 @@ def test_download_forbidden():
 
 
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'Downloaded ZIP archive respects item visibility and download permissions')
-def test_zip_respects_permissions():
-    pass
+def test_zip_respects_permissions(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/xUqIb4CQUWjSYKPvTT6E2A/download-folder/01M6MAKQ3M7ZB6D78C5K1Z6APX/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/datarooms_sharing_permissions.feature', 'A document in a downloaded folder is watermarked')
-def test_zip_with_watermark():
-    pass
+def test_zip_with_watermark(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/HyObieE_ShIG-ssugu0drA/download-folder/01M6MAKQB5JZ36HW6Q7P05S2X4/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db

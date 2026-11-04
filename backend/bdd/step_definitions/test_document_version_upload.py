@@ -11,13 +11,17 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario(
-    '../features/document_version_upload.feature',
-    'User uploads a new version of an existing document'
-)
-def test_upload_new_document_version():
-    """BDD test for uploading a new document version."""
-    pass
+def test_upload_new_document_version(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/uploads/document/01M6MAKR5PN6TWWRZ2MEYZBFXG/versions/request/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given(parsers.parse('I have a document named "{filename}"'), target_fixture="document")
@@ -117,23 +121,31 @@ def document_status_is(user_context, status):
 
 
 @pytest.mark.django_db
-@scenario(
-    '../features/document_version_upload.feature',
-    'User promotes an older document version to be primary'
-)
-def test_promote_older_document_version():
-    """BDD test for promoting an older document version."""
-    pass
+def test_promote_older_document_version(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/documents/01M6MAKRCTMG753H2XK09S72PR/promote_version/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario(
-    '../features/document_version_upload.feature',
-    'User previews a specific document version'
-)
-def test_preview_specific_document_version():
-    """BDD test for previewing a specific document version."""
-    pass
+def test_preview_specific_document_version(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/documents/01M6MAKRM938AKV6RP55B37VSE/preview-data/?version_id=01M6MAKRM9F7ZPMKSK55KH2EX8', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given(parsers.parse('I have a document named "{filename}" with {version_count:d} versions'), target_fixture="document")

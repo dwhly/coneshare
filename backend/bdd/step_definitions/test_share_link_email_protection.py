@@ -9,27 +9,59 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_email_protection.feature', 'A viewer accesses a link that requires email but no verification')
-def test_email_required_no_verification():
-    pass
+def test_email_required_no_verification(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/links/AIlggKGl_rQYemTCTuAxEg/request-access/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_email_protection.feature', 'A viewer accesses a link that requires email verification')
-def test_email_required_with_verification():
-    pass
+def test_email_required_with_verification(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/links/A7P0Vby31s86gUVy949FcQ/request-access/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_email_protection.feature', 'A viewer uses a valid magic link to access a document')
-def test_viewer_uses_magic_link():
-    pass
+def test_viewer_uses_magic_link(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/dncgNIPaAvOojyGHwQtceQ/view-data/?accessToken=hkvPCFzzg5FyXmSV1-DHregfyrAedJT1mHWBpU1NCXc', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_email_protection.feature', "A viewer's email is recorded for a link that requires email")
-def test_viewer_email_is_recorded():
-    pass
+def test_viewer_email_is_recorded(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/view-sessions/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given("I have a document with a share link that requires email", target_fixture="share_link_context")

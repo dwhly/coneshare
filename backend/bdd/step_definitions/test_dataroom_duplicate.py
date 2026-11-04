@@ -9,10 +9,17 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario('../features/dataroom_duplicate.feature',
-          'Duplicating a room copies structure, document references and link settings but no visitor data')
-def test_duplicate_dataroom():
-    pass
+def test_duplicate_dataroom(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/share-links/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given(parsers.parse('a viewer organisation "{name}" with the email domain "{domain}"'), target_fixture="viewer_org")

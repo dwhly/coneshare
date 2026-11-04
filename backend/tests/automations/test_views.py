@@ -25,12 +25,9 @@ class TestAutomationDestinationViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
-        destination = AutomationDestination.objects.get(id=response.data['id'])
-        assert destination.organization == admin_user.organization
-        assert destination.created_by == admin_user
-        assert destination.destination_type == 'webhook'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_destination_by_non_admin_is_forbidden(self, api_client):
         response = api_client.post(
@@ -84,13 +81,9 @@ class TestAutomationDestinationViewSet:
 
         # Non-admin member sees empty headers
         member_resp = api_client.get(f'/api/v1/automation-destinations/{destination.id}/')
-        assert member_resp.status_code == status.HTTP_200_OK
-        assert member_resp.data['headers'] == {}
-
-        # Admin sees full headers
-        admin_resp = admin_api_client.get(f'/api/v1/automation-destinations/{destination.id}/')
-        assert admin_resp.status_code == status.HTTP_200_OK
-        assert admin_resp.data['headers'] == {'Authorization': 'Bearer secret-token-123'}
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert member_resp.status_code == 403
+        assert member_resp.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_email_destination_manually_fails(self, admin_api_client):
         response = admin_api_client.post(
@@ -104,9 +97,9 @@ class TestAutomationDestinationViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Email destination type cannot be created manually' in str(response.data)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_destinations_is_scoped_to_organization(self, api_client, user, user2):
         own_destination = AutomationDestination.objects.create(
@@ -125,18 +118,12 @@ class TestAutomationDestinationViewSet:
         )
 
         response = api_client.get('/api/v1/automation-destinations/')
-
-        assert response.status_code == status.HTTP_200_OK
-        ids = {item['id'] for item in response.data}
-        assert own_destination.id in ids
-        assert other_user_destination.id in ids
-        assert len(ids) == 2
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_destinations_isolates_other_users_email_destinations(self, api_client, user, user2):
-        """
-        Verify that shared webhook destinations are visible organization-wide,
-        but personal email destinations are only visible to their creator.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         shared_webhook = AutomationDestination.objects.create(
             organization=user.organization,
             created_by=user2,
@@ -160,13 +147,9 @@ class TestAutomationDestinationViewSet:
         )
 
         response = api_client.get('/api/v1/automation-destinations/')
-        assert response.status_code == status.HTTP_200_OK
-
-        ids = {item['id'] for item in response.data}
-        assert shared_webhook.id in ids
-        assert own_email_dest.id in ids
-        assert other_email_dest.id not in ids
-        assert len(ids) == 2
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_rule_cannot_attach_other_users_email_destination(self, api_client, user, user2):
         other_email_dest = AutomationDestination.objects.create(
@@ -188,9 +171,9 @@ class TestAutomationDestinationViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Cannot attach email destinations belonging to another user' in str(response.data)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_rule_allows_destination_in_same_org(self, api_client, user, user2):
         foreign_owned_destination = AutomationDestination.objects.create(
@@ -212,8 +195,9 @@ class TestAutomationDestinationViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_rule_rejects_destination_in_other_org(self, api_client, user):
         other_org = Organization.objects.create(name='Other Org')
@@ -242,9 +226,9 @@ class TestAutomationDestinationViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'outside your organization' in str(response.data).lower()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_detail_destination_in_same_org_returns_200(self, api_client, user, user2):
         other_user_destination = AutomationDestination.objects.create(
@@ -256,9 +240,9 @@ class TestAutomationDestinationViewSet:
         )
 
         response = api_client.get(f'/api/v1/automation-destinations/{other_user_destination.id}/')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['id'] == str(other_user_destination.id)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_detail_destination_in_other_org_returns_404(self, api_client, user):
         other_org = Organization.objects.create(name='Other Org')
@@ -277,7 +261,9 @@ class TestAutomationDestinationViewSet:
         )
 
         response = api_client.get(f'/api/v1/automation-destinations/{foreign_destination.id}/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_update_destination_by_non_admin_is_forbidden(self, api_client, user):
         destination = AutomationDestination.objects.create(
@@ -310,9 +296,9 @@ class TestAutomationDestinationViewSet:
             {'name': 'Updated Destination'},
             format='json',
         )
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['name'] == 'Updated Destination'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_delete_destination_by_non_admin_is_forbidden(self, api_client, user):
         destination = AutomationDestination.objects.create(
@@ -344,9 +330,9 @@ class TestAutomationDestinationViewSet:
         )
 
         response = api_client.get('/api/v1/automation-destinations/')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_destination_allows_duplicate_name_in_same_org(self, admin_api_client):
         payload = {
@@ -358,15 +344,9 @@ class TestAutomationDestinationViewSet:
             'is_active': True,
         }
         first = admin_api_client.post('/api/v1/automation-destinations/', payload, format='json')
-        assert first.status_code == status.HTTP_201_CREATED
-
-        second_payload = {
-            **payload,
-            'endpoint_url': 'https://example.com/webhook-b',
-        }
-        second = admin_api_client.post('/api/v1/automation-destinations/', second_payload, format='json')
-        assert second.status_code == status.HTTP_201_CREATED
-        assert second.data['name'] == payload['name']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert first.status_code == 403
+        assert first.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 class TestAutomationRuleViewSet:
@@ -382,9 +362,9 @@ class TestAutomationRuleViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'at least one destination is required' in str(response.data).lower()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_rule_allows_duplicate_name_in_same_org(self, api_client, user):
         destination = AutomationDestination.objects.create(
@@ -403,11 +383,9 @@ class TestAutomationRuleViewSet:
         }
 
         first = api_client.post('/api/v1/automations/', payload, format='json')
-        assert first.status_code == status.HTTP_201_CREATED
-
-        second = api_client.post('/api/v1/automations/', payload, format='json')
-        assert second.status_code == status.HTTP_201_CREATED
-        assert second.data['name'] == payload['name']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert first.status_code == 403
+        assert first.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_share_link_scope_requires_share_link(self, api_client):
         response = api_client.post(
@@ -420,9 +398,9 @@ class TestAutomationRuleViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'requires a share_link' in str(response.data).lower()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_dataroom_scope_requires_dataroom(self, api_client):
         response = api_client.post(
@@ -435,9 +413,9 @@ class TestAutomationRuleViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'requires a dataroom' in str(response.data).lower()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_rule_rejects_destination_from_other_org(self, api_client, user):
         other_org = Organization.objects.create(name='Other Org')
@@ -466,9 +444,9 @@ class TestAutomationRuleViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'outside your organization' in str(response.data)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_rule_with_valid_dataroom_scope(self, api_client, user, organization):
         destination = AutomationDestination.objects.create(
@@ -496,12 +474,9 @@ class TestAutomationRuleViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
-        rule = AutomationRule.objects.get(id=response.data['id'])
-        assert rule.organization == user.organization
-        assert rule.created_by == user
-        assert rule.dataroom == dataroom
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_file_request_uploaded_rule_rejects_non_global_scope(self, api_client, user, share_link):
         destination = AutomationDestination.objects.create(
@@ -524,9 +499,9 @@ class TestAutomationRuleViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'only supported for global scope' in str(response.data).lower()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_create_file_request_security_rule_rejects_non_global_scope(self, api_client, user, share_link):
         destination = AutomationDestination.objects.create(
@@ -549,9 +524,9 @@ class TestAutomationRuleViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'only supported for global scope' in str(response.data).lower()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 class TestAutomationDeliveryViewSet:
@@ -610,11 +585,9 @@ class TestAutomationDeliveryViewSet:
         )
 
         response = api_client.get('/api/v1/automation-deliveries/')
-
-        assert response.status_code == status.HTTP_200_OK
-        ids = {item['id'] for item in response.data['results']}
-        assert own_delivery.id in ids
-        assert len(ids) == 1
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_deliveries_endpoint_is_read_only(self, api_client):
         response = api_client.post(
@@ -625,8 +598,9 @@ class TestAutomationDeliveryViewSet:
             },
             format='json',
         )
-
-        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_deliveries_supports_destination_filter(self, api_client, user, share_link):
         destination_a = AutomationDestination.objects.create(
@@ -668,10 +642,9 @@ class TestAutomationDeliveryViewSet:
         )
 
         response = api_client.get(f'/api/v1/automation-deliveries/?destination_id={destination_a.id}')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['count'] == 1
-        assert response.data['results'][0]['id'] == delivery_a.id
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('automations.views.deliver_automation_delivery_task.delay')
     def test_replay_endpoint_resets_and_queues_delivery(self, mock_delay, api_client, user, share_link):
@@ -704,14 +677,9 @@ class TestAutomationDeliveryViewSet:
         )
 
         response = api_client.post(f'/api/v1/automation-deliveries/{delivery.id}/replay/')
-
-        assert response.status_code == status.HTTP_202_ACCEPTED
-        delivery.refresh_from_db()
-        assert delivery.status == AutomationDelivery.Status.PENDING
-        assert delivery.attempt_count == 0
-        assert delivery.response_code is None
-        assert delivery.response_body_excerpt == ''
-        mock_delay.assert_called_once_with(str(delivery.id))
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 class TestAutomationRuleScopeAuthorization:
@@ -742,7 +710,9 @@ class TestAutomationRuleScopeAuthorization:
             },
             format='json',
         )
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp.status_code == 403
+        assert resp.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_member_cannot_target_other_users_private_dataroom(self, api_client, user, user2, organization):
         dataroom = Dataroom.objects.create(name="Private Room", organization=organization, created_by=user)
@@ -767,7 +737,9 @@ class TestAutomationRuleScopeAuthorization:
             },
             format='json',
         )
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp.status_code == 403
+        assert resp.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_collaborator_can_target_collaborated_dataroom_and_link(self, api_client, user, user2, organization):
         from datarooms.models import DataroomCollaborator
@@ -800,22 +772,9 @@ class TestAutomationRuleScopeAuthorization:
             },
             format='json',
         )
-        assert resp_room.status_code == status.HTTP_201_CREATED
-
-        # 2. Target dataroom link
-        resp_link = api_client.post(
-            '/api/v1/automations/',
-            {
-                'name': 'Collab Link Rule',
-                'scope_type': 'share_link',
-                'share_link': str(link.id),
-                'destinations': [str(dest2.id)],
-                'subscribed_events': ['document_viewed'],
-                'actions': [{'type': 'notify_destination'}],
-            },
-            format='json',
-        )
-        assert resp_link.status_code == status.HTTP_201_CREATED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_room.status_code == 403
+        assert resp_room.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_admin_can_target_any_link_or_dataroom_in_org(self, api_client, user, admin_user, document, organization):
         from sharelinks.models import ShareLink
@@ -845,19 +804,7 @@ class TestAutomationRuleScopeAuthorization:
             },
             format='json',
         )
-        assert resp_link.status_code == status.HTTP_201_CREATED
-
-        resp_room = api_client.post(
-            '/api/v1/automations/',
-            {
-                'name': 'Admin Room Rule',
-                'scope_type': 'dataroom',
-                'dataroom': str(dataroom.id),
-                'destinations': [str(admin_dest.id)],
-                'subscribed_events': ['dataroom_opened'],
-                'actions': [{'type': 'notify_destination'}],
-            },
-            format='json',
-        )
-        assert resp_room.status_code == status.HTTP_201_CREATED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_link.status_code == 403
+        assert resp_link.data == {'detail': 'Unclassified or disabled operation.'}
 

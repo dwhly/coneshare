@@ -8,9 +8,17 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario('../features/document_upload.feature', 'User uploads their first document')
-def test_user_uploads_first_document():
-    pass
+def test_user_uploads_first_document(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/documents/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Staff access is required.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @when(parsers.parse('I upload a new document named "{filename}"'))

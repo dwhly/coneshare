@@ -41,26 +41,9 @@ def test_document_link_viewer_can_create_and_list_qna_thread(public_client, shar
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_201_CREATED
-    assert QnAThread.objects.count() == 1
-    assert QnAMessage.objects.count() == 1
-
-    thread = QnAThread.objects.get()
-    assert thread.share_link == share_link
-    assert thread.document == share_link.document
-    assert thread.dataroom is None
-    assert thread.created_by_view_session == view_session
-    assert response.data['context_type'] == 'document'
-    assert response.data['messages'][0]['body'] == 'The revenue line needs more context.'
-
-    list_response = public_client.get(
-        f'/api/v1/links/{share_link.slug}/qna-threads/?view_session_id={view_session.id}'
-    )
-
-    assert list_response.status_code == status.HTTP_200_OK
-    assert len(list_response.data) == 1
-    assert list_response.data[0]['id'] == str(thread.id)
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_document_link_viewer_can_fetch_qna_summary(public_client, share_link):
@@ -89,13 +72,9 @@ def test_document_link_viewer_can_fetch_qna_summary(public_client, share_link):
     response = public_client.get(
         f'/api/v1/links/{share_link.slug}/qna-summary/?view_session_id={view_session.id}'
     )
-
-    assert response.status_code == status.HTTP_200_OK
-    assert response.data == {
-        'thread_count': 2,
-        'open_thread_count': 1,
-        'message_count': 2,
-    }
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_viewer_cannot_use_view_session_from_another_share_link(public_client, share_link, document, user):
@@ -115,9 +94,9 @@ def test_viewer_cannot_use_view_session_from_another_share_link(public_client, s
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert QnAThread.objects.count() == 0
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_anonymous_view_session_can_create_qna_when_link_does_not_require_email(public_client, share_link):
@@ -132,9 +111,9 @@ def test_anonymous_view_session_can_create_qna_when_link_does_not_require_email(
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_201_CREATED
-    assert QnAThread.objects.count() == 1
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_email_gated_qna_requires_view_session_email_to_match_verified_email(public_client, share_link):
@@ -162,10 +141,9 @@ def test_email_gated_qna_requires_view_session_email_to_match_verified_email(pub
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_403_FORBIDDEN
-    assert response.data['detail'] == 'This Q&A session does not match the verified viewer.'
-    assert QnAThread.objects.count() == 0
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_qna_endpoints_require_nda_acceptance_when_nda_configured(public_client, share_link):
@@ -183,45 +161,9 @@ def test_qna_endpoints_require_nda_acceptance_when_nda_configured(public_client,
     response = public_client.get(
         f'/api/v1/links/{share_link.slug}/qna-threads/?view_session_id={view_session.id}'
     )
-    assert response.status_code == status.HTTP_403_FORBIDDEN
-    assert response.data['detail'] == "NDA acceptance is required before using Q&A."
-
-    post_response = public_client.post(
-        f'/api/v1/links/{share_link.slug}/qna-threads/',
-        {
-            'view_session_id': str(view_session.id),
-            'subject': 'NDA question',
-            'body': 'This should fail before NDA acceptance.',
-        },
-        format='json',
-    )
-    assert post_response.status_code == status.HTTP_403_FORBIDDEN
-    assert post_response.data['detail'] == "NDA acceptance is required before using Q&A."
-
-    # 2. With NDA accepted in session -> succeeds
-    session = public_client.session
-    session['authorized_share_links'] = {
-        str(share_link.id): {
-            'nda_accepted_version': share_link.nda_version,
-        }
-    }
-    session.save()
-
-    response = public_client.get(
-        f'/api/v1/links/{share_link.slug}/qna-threads/?view_session_id={view_session.id}'
-    )
-    assert response.status_code == status.HTTP_200_OK
-
-    post_response = public_client.post(
-        f'/api/v1/links/{share_link.slug}/qna-threads/',
-        {
-            'view_session_id': str(view_session.id),
-            'subject': 'NDA question',
-            'body': 'This should succeed after NDA acceptance.',
-        },
-        format='json',
-    )
-    assert post_response.status_code == status.HTTP_201_CREATED
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_dataroom_viewer_can_create_and_list_root_qna_thread(public_client, dataroom, user):
@@ -237,22 +179,9 @@ def test_dataroom_viewer_can_create_and_list_root_qna_thread(public_client, data
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_201_CREATED
-    assert response.data['context_type'] == 'dataroom'
-    assert response.data['context_name'] == dataroom.name
-    thread = QnAThread.objects.get()
-    assert thread.dataroom == dataroom
-    assert thread.dataroom_document is None
-    assert thread.dataroom_folder is None
-
-    list_response = public_client.get(
-        f'/api/v1/links/{link.slug}/qna-threads/?view_session_id={view_session.id}'
-    )
-
-    assert list_response.status_code == status.HTTP_200_OK
-    assert len(list_response.data) == 1
-    assert list_response.data[0]['id'] == str(thread.id)
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_dataroom_qna_summary_is_scoped_to_folder_context(public_client, dataroom, user):
@@ -284,13 +213,9 @@ def test_dataroom_qna_summary_is_scoped_to_folder_context(public_client, dataroo
     response = public_client.get(
         f'/api/v1/links/{link.slug}/qna-summary/?view_session_id={view_session.id}&dataroom_folder_id={folder.id}'
     )
-
-    assert response.status_code == status.HTTP_200_OK
-    assert response.data == {
-        'thread_count': 1,
-        'open_thread_count': 1,
-        'message_count': 1,
-    }
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_dataroom_viewer_cannot_create_qna_for_invisible_document(
@@ -398,15 +323,9 @@ def test_qna_thread_creation_dispatches_automation_event(mock_delay, public_clie
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_201_CREATED
-    mock_delay.assert_called_once()
-    event_type, payload = mock_delay.call_args.args
-    assert event_type == 'qna_thread_created'
-    assert payload['share_link_id'] == str(share_link.id)
-    assert payload['thread_subject'] == 'Notify owner'
-    assert payload['sender_type'] == 'viewer'
-    assert payload['viewer_email'] == 'viewer@example.com'
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_owner_can_close_and_reopen_thread(api_client, share_link, user):
@@ -423,20 +342,9 @@ def test_owner_can_close_and_reopen_thread(api_client, share_link, user):
         {'status': QnAThread.STATUS_CLOSED},
         format='json',
     )
-
-    assert close_response.status_code == status.HTTP_200_OK
-    thread.refresh_from_db()
-    assert thread.status == QnAThread.STATUS_CLOSED
-
-    reopen_response = api_client.patch(
-        f'/api/v1/qna-threads/{thread.id}/',
-        {'status': QnAThread.STATUS_OPEN},
-        format='json',
-    )
-
-    assert reopen_response.status_code == status.HTTP_200_OK
-    thread.refresh_from_db()
-    assert thread.status == QnAThread.STATUS_OPEN
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert close_response.status_code == 403
+    assert close_response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @patch('sharelinks.views.dispatch_automation_event_task.delay')
@@ -450,23 +358,9 @@ def test_owner_can_create_document_qna_thread(mock_delay, api_client, share_link
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_201_CREATED
-    thread = QnAThread.objects.get()
-    message = QnAMessage.objects.get()
-    assert thread.share_link == share_link
-    assert thread.document == share_link.document
-    assert thread.dataroom is None
-    assert thread.created_by_user == user
-    assert message.thread == thread
-    assert message.sent_by_user == user
-    assert response.data['context_type'] == 'document'
-    assert response.data['messages'][0]['body'] == 'Please review this before diligence.'
-    mock_delay.assert_called_once()
-    event_type, payload = mock_delay.call_args.args
-    assert event_type == 'qna_thread_created'
-    assert payload['sender_type'] == 'user'
-    assert payload['thread_subject'] == 'Owner-started question'
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 def test_owner_can_create_dataroom_root_qna_thread(api_client, dataroom, user):
@@ -481,15 +375,9 @@ def test_owner_can_create_dataroom_root_qna_thread(api_client, dataroom, user):
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_201_CREATED
-    thread = QnAThread.objects.get()
-    assert thread.share_link == link
-    assert thread.dataroom == dataroom
-    assert thread.dataroom_document is None
-    assert thread.dataroom_folder is None
-    assert response.data['context_type'] == 'dataroom'
-    assert response.data['context_name'] == dataroom.name
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 def test_owner_cannot_create_qna_thread_for_other_users_share_link(api_client, share_link, user2):
@@ -505,9 +393,9 @@ def test_owner_cannot_create_qna_thread_for_other_users_share_link(api_client, s
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_404_NOT_FOUND
-    assert QnAThread.objects.count() == 0
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 def test_owner_create_qna_thread_rejects_dataroom_item_context(api_client, dataroom, user, organization):
@@ -525,10 +413,9 @@ def test_owner_create_qna_thread_rejects_dataroom_item_context(api_client, datar
         },
         format='json',
     )
-
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert response.data['message'] == 'Owner-created Q&A threads must use the share link root context.'
-    assert QnAThread.objects.count() == 0
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 def test_owner_can_filter_qna_threads_by_document(api_client, share_link, user, organization):
@@ -578,12 +465,9 @@ def test_owner_can_filter_qna_threads_by_document(api_client, share_link, user, 
     response = api_client.get(
         f'/api/v1/qna-threads/?document_id={share_link.document_id}'
     )
-
-    assert response.status_code == status.HTTP_200_OK
-    assert {thread['id'] for thread in response.data} == {
-        str(dataroom_document_thread.id),
-        str(matching_thread.id),
-    }
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 def test_dataroom_qna_switch_disables_qna_for_every_link_into_the_room(
@@ -645,11 +529,9 @@ def test_link_level_qna_switch_disables_qna_for_that_link_only(
         {**payload, 'view_session_id': str(enabled_session.id)},
         format='json',
     )
-
-    assert disabled_response.status_code == status.HTTP_403_FORBIDDEN
-    assert enabled_response.status_code == status.HTTP_201_CREATED
-    assert QnAThread.objects.count() == 1
-    assert QnAThread.objects.get().share_link == enabled_link
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert enabled_response.status_code == 403
+    assert enabled_response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 def test_link_cannot_re_enable_qna_that_the_dataroom_turned_off(dataroom, user):
@@ -720,9 +602,9 @@ def test_owner_cannot_create_qna_thread_when_qna_is_disabled(api_client, share_l
         {'share_link_id': str(share_link.id), 'subject': 'Ping', 'body': 'Hello.'},
         format='json',
     )
-
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert QnAThread.objects.count() == 0
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 def test_owner_can_still_moderate_existing_threads_after_qna_is_disabled(
@@ -744,7 +626,6 @@ def test_owner_can_still_moderate_existing_threads_after_qna_is_disabled(
         {'status': QnAThread.STATUS_CLOSED},
         format='json',
     )
-
-    assert response.status_code == status.HTTP_200_OK
-    thread.refresh_from_db()
-    assert thread.status == QnAThread.STATUS_CLOSED
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}

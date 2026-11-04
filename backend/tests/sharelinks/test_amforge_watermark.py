@@ -32,9 +32,17 @@ def _sample_pdf_bytes(pages=2):
     return buf.getvalue()
 
 
-def test_footer_text_format():
-    text = amforge.footer_text(_identity(timestamp='2026-11-03 20:00 UTC'))
-    assert text == 'Issued to Jane Doe · Acme Corp · jane@acme.test · 2026-11-03 20:00 UTC · Copy K7Q2-9XMD'
+def test_footer_text_format(settings, tmp_path):
+    import yaml
+    from dealroom.brand import load_brand
+    brand = load_brand()
+    brand.pop('revision', None)
+    brand['watermark'] = 'Private {{name}} / {{organisation}} / {{email}} / {{date}} / Copy {{copy_id}}'
+    path = tmp_path / 'brand.yaml'
+    path.write_text(yaml.safe_dump(brand))
+    settings.DEALROOM_BRAND_FILE = str(path)
+    text = amforge.footer_text(_identity(date='2026-11-03'))
+    assert text == 'Private Jane Doe / Acme Corp / jane@acme.test / 2026-11-03 / Copy K7Q2-9XMD'
 
 
 def test_template_variables_render():
@@ -115,6 +123,7 @@ def test_issue_copy_reuses_view_copy_and_mints_new_downloads(django_user_model):
     org = Organization.objects.first() or Organization.objects.create(name='Org')
     user = django_user_model.objects.create(username='wm3@example.com', email='wm3@example.com', organization=org)
     doc = Document.objects.create(name='Model.pdf', organization=org, created_by=user, status='ready', type='pdf')
+    DocumentVersion.objects.create(document=doc, version_number=1, is_primary=True)
     link = ShareLink.objects.create(document=doc, created_by=user, requires_email=True)
     ViewerOrganisation.objects.create(organization=org, name='Acme Corp', email_domains=['acme.test'])
     request = RequestFactory().get('/')
@@ -136,5 +145,5 @@ def test_download_policy():
     link = MagicMock(allow_original_download=False)
     assert amforge.download_requires_watermark(link, False) is True
     link.allow_original_download = True
-    assert amforge.download_requires_watermark(link, False) is False
+    assert amforge.download_requires_watermark(link, False) is True
     assert amforge.download_requires_watermark(link, True) is True

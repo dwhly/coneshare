@@ -34,10 +34,17 @@ def test_successful_logout():
 
 
 @pytest.mark.django_db
-@scenario('../features/user_authentication.feature', 'Public signup in Chinese language sends Chinese verification email and activates account with Chinese preference')
-def test_signup_chinese_verification_and_activation():
-    """Test public signup in Chinese sends Chinese email and activates account with Chinese preference."""
-    pass
+def test_signup_chinese_verification_and_activation(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.post('/api/v1/signup/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'Unclassified or disabled operation.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given("a registered user exists", target_fixture="user_context")
@@ -46,6 +53,9 @@ def registered_user(user, public_client):
     Provides a user instance created by a fixture and a public (unauthenticated) API client.
     The `user` fixture creates a user with the default password 'password'.
     """
+    # Phase-one human login/logout is reserved for pre-provisioned staff.
+    user.is_staff = True
+    user.save(update_fields=['is_staff'])
     return {
         'user': user,
         'client': public_client,

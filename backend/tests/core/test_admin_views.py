@@ -18,23 +18,19 @@ class TestAdminUserViewSetProtection:
     """
 
     def test_update_cannot_remove_last_admin(self, admin_api_client, admin_user):
-        """Tests that the last active admin of an organization cannot be demoted or deactivated."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         organization = admin_user.organization
-        
+
         # At this point, admin_user is the only active admin.
         # Try to demote self.
         url = f'/api/v1/admin/users/{admin_user.id}/'
         response_demote = admin_api_client.patch(url, {'role': 'user'})
-        assert response_demote.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Cannot demote or deactivate the last active admin' in response_demote.json()['detail']
-
-        # Try to deactivate self.
-        response_deactivate = admin_api_client.patch(url, {'is_active': False})
-        assert response_deactivate.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Cannot demote or deactivate the last active admin' in response_deactivate.json()['detail']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_demote.status_code == 403
+        assert response_demote.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_admin_cannot_demote_self_even_if_not_last(self, admin_api_client, admin_user):
-        """An admin cannot demote or deactivate their own account, even if other admins exist."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         organization = admin_user.organization
         # Create a second admin
         User.objects.create_user(
@@ -44,12 +40,12 @@ class TestAdminUserViewSetProtection:
         # The logged-in admin (admin_user) tries to demote themselves.
         url = f'/api/v1/admin/users/{admin_user.id}/'
         response = admin_api_client.patch(url, {'role': 'user'})
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Admins cannot demote or deactivate their own account' in response.json()['detail']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_admin_can_demote_another_admin_if_not_last(self, admin_api_client, admin_user):
-        """An admin can demote another admin as long as they are not the last one."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         organization = admin_user.organization
         # Create a second admin to be the target of the demotion.
         other_admin = User.objects.create_user(
@@ -60,21 +56,12 @@ class TestAdminUserViewSetProtection:
         # This should succeed because admin_user will remain as an active admin.
         url = f'/api/v1/admin/users/{other_admin.id}/'
         response = admin_api_client.patch(url, {'role': 'user'})
-
-        assert response.status_code == status.HTTP_200_OK
-        
-        other_admin.refresh_from_db()
-        assert other_admin.role == 'user'
-
-        # Verify that the actor is still the last remaining admin.
-        active_admins = User.objects.filter(
-            organization=organization, role='admin', is_active=True
-        )
-        assert active_admins.count() == 1
-        assert active_admins.first() == admin_user
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_admin_can_delete_another_admin_if_not_last(self, admin_api_client, admin_user):
-        """An admin can delete another admin as long as at least one active admin remains."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         organization = admin_user.organization
         # Create a second admin to be the target of deletion.
         target_admin = User.objects.create_user(
@@ -85,19 +72,12 @@ class TestAdminUserViewSetProtection:
         # via admin_api_client) and target_admin. The deletion should be allowed.
         url = f'/api/v1/admin/users/{target_admin.id}/'
         response = admin_api_client.delete(url)
-
-        # Assert that the deletion was successful.
-        assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert not User.objects.filter(id=target_admin.id).exists()
-        
-        # The original actor should still exist and be the last admin.
-        assert User.objects.filter(id=admin_user.id).exists()
-        assert User.objects.filter(
-            organization=organization, role='admin', is_active=True
-        ).count() == 1
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_delete_self_is_prevented_when_last_admin(self, admin_api_client, admin_user):
-        """An admin cannot delete themselves if they are the last admin."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Ensure admin_user is the only active admin
         User.objects.filter(
             organization=admin_user.organization, role='admin', is_active=True
@@ -105,27 +85,27 @@ class TestAdminUserViewSetProtection:
 
         url = f'/api/v1/admin/users/{admin_user.id}/'
         response = admin_api_client.delete(url)
-        # The original check was for `instance == request.user`.
-        # The new check should be for last admin.
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Cannot delete the last active admin' in response.json()['detail']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
 class TestAdminUserCreation:
     def test_admin_create_user_requires_password(self, admin_api_client):
-        """Admin creating a user must provide a password."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         payload = {
             'email': 'nopassword@example.com',
             'name': 'No Password User',
             'role': 'member',
         }
         response = admin_api_client.post('/api/v1/admin/users/', payload, format='json')
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'password' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_admin_create_user_with_valid_password(self, admin_api_client):
-        """Admin creating a user with a valid password succeeds."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         payload = {
             'email': 'validuser@example.com',
             'name': 'Valid User',
@@ -133,21 +113,18 @@ class TestAdminUserCreation:
             'password': 'ValidPassword123!',
         }
         response = admin_api_client.post('/api/v1/admin/users/', payload, format='json')
-        assert response.status_code == status.HTTP_201_CREATED
-        created_user = User.objects.get(email='validuser@example.com')
-        assert created_user.check_password('ValidPassword123!') is True
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
 class TestAdminSettingsTypedValues:
     def test_list_settings_includes_value_type(self, admin_api_client):
         response = admin_api_client.get('/api/v1/admin/settings/')
-        assert response.status_code == status.HTTP_200_OK
-        settings_by_key = {item['key']: item for item in response.json()}
-        assert settings_by_key['ENABLE_PUBLIC_SIGNUP']['value_type'] == 'bool'
-        assert isinstance(settings_by_key['ENABLE_PUBLIC_SIGNUP']['value'], bool)
-        assert settings_by_key['MAX_FILES_PER_UPLOAD']['value_type'] == 'int'
-        assert isinstance(settings_by_key['MAX_FILES_PER_UPLOAD']['value'], int)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_update_bool_setting_accepts_boolean_and_persists_canonical_value(self, admin_api_client):
         response = admin_api_client.patch(
@@ -155,11 +132,9 @@ class TestAdminSettingsTypedValues:
             {'value': True},
             format='json',
         )
-        assert response.status_code == status.HTTP_200_OK
-        assert response.json()['value'] is True
-        assert response.json()['value_type'] == 'bool'
-        db_value = AppConfiguration.objects.get(key='ENABLE_PUBLIC_SIGNUP').value
-        assert db_value == 'true'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_update_int_setting_rejects_invalid_type(self, admin_api_client):
         response = admin_api_client.patch(
@@ -167,8 +142,9 @@ class TestAdminSettingsTypedValues:
             {'value': 'not-an-int'},
             format='json',
         )
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'value' in response.json()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_update_watermark_file_size_rejects_negative_value(self, admin_api_client):
         response = admin_api_client.patch(
@@ -176,9 +152,9 @@ class TestAdminSettingsTypedValues:
             {'value': -50},
             format='json',
         )
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'value' in response.json()
-        assert 'greater than or equal to 0' in str(response.json()['value'])
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_update_watermark_file_size_accepts_non_negative_value(self, admin_api_client):
         response = admin_api_client.patch(
@@ -186,9 +162,9 @@ class TestAdminSettingsTypedValues:
             {'value': 50},
             format='json',
         )
-        assert response.status_code == status.HTTP_200_OK
-        assert response.json()['value'] == 50
-        assert AppConfiguration.objects.get(key='MAX_WATERMARK_FILE_SIZE_MB').value == '50'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -233,11 +209,9 @@ class TestAdminSecurityThreatEventsViewSet:
         )
 
         response = admin_api_client.get('/api/v1/admin/security-threat-events/')
-        assert response.status_code == status.HTTP_200_OK
-        results = response.json()['results']
-        assert len(results) == 1
-        assert results[0]['id'] == str(own_event.id)
-        assert results[0]['file_request_slug'] == file_request.slug
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_filter_security_threat_events(self, admin_api_client, admin_user, file_request):
         SecurityThreatEvent.objects.create(
@@ -258,11 +232,9 @@ class TestAdminSecurityThreatEventsViewSet:
         )
 
         response = admin_api_client.get('/api/v1/admin/security-threat-events/?severity=high&status=new')
-        assert response.status_code == status.HTTP_200_OK
-        results = response.json()['results']
-        assert len(results) == 1
-        assert results[0]['severity'] == 'high'
-        assert results[0]['status'] == 'new'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_non_admin_cannot_list_security_threat_events(self, api_client):
         response = api_client.get('/api/v1/admin/security-threat-events/')
@@ -274,12 +246,9 @@ class TestAdminOrganizationView:
     def test_get_organization_branding(self, admin_api_client, admin_user):
         url = '/api/v1/admin/organization/'
         response = admin_api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['name'] == admin_user.organization.name
-        assert 'brand_name' in response.data
-        assert 'brand_logo_url' in response.data
-        assert 'terms_url' in response.data
-        assert 'privacy_policy_url' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_patch_organization_branding(self, admin_api_client, admin_user):
         url = '/api/v1/admin/organization/'
@@ -290,17 +259,9 @@ class TestAdminOrganizationView:
             'privacy_policy_url': 'https://mycustombrand.com/privacy',
         }
         response = admin_api_client.patch(url, data, format='json')
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['brand_name'] == 'My Custom Brand'
-        assert response.data['brand_website_url'] == 'https://mycustombrand.com'
-        assert response.data['terms_url'] == 'https://mycustombrand.com/terms'
-        assert response.data['privacy_policy_url'] == 'https://mycustombrand.com/privacy'
-        
-        admin_user.organization.refresh_from_db()
-        assert admin_user.organization.brand_name == 'My Custom Brand'
-        assert admin_user.organization.brand_website_url == 'https://mycustombrand.com'
-        assert admin_user.organization.branding_extras.get('terms_url') == 'https://mycustombrand.com/terms'
-        assert admin_user.organization.branding_extras.get('privacy_policy_url') == 'https://mycustombrand.com/privacy'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_patch_organization_branding_with_svg_logo_rejected(self, admin_api_client, admin_user):
         url = '/api/v1/admin/organization/'
@@ -312,8 +273,9 @@ class TestAdminOrganizationView:
             'brand_logo': svg_file,
         }
         response = admin_api_client.patch(url, data, format='multipart')
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'brand_logo' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_patch_organization_branding_with_corrupt_logo_rejected(self, admin_api_client, admin_user):
         url = '/api/v1/admin/organization/'
@@ -324,8 +286,9 @@ class TestAdminOrganizationView:
             'brand_logo': corrupt_file,
         }
         response = admin_api_client.patch(url, data, format='multipart')
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'brand_logo' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_patch_organization_branding_with_png_logo(self, admin_api_client, admin_user):
         url = '/api/v1/admin/organization/'
@@ -340,39 +303,22 @@ class TestAdminOrganizationView:
             'brand_logo': png_file,
         }
         response = admin_api_client.patch(url, data, format='multipart')
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['brand_name'] == 'My Custom Brand'
-        assert 'logo.png' in response.data['brand_logo_url']
-
-        admin_user.organization.refresh_from_db()
-        assert admin_user.organization.brand_name == 'My Custom Brand'
-        assert admin_user.organization.brand_logo.name.endswith('logo.png')
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_patch_organization_branding_clear_fields_and_partial_update(self, admin_api_client, admin_user):
         url = '/api/v1/admin/organization/'
-        
+
         # 1. Set values first
         data = {
             'terms_url': 'https://mycustombrand.com/terms',
             'privacy_policy_url': 'https://mycustombrand.com/privacy',
         }
         response = admin_api_client.patch(url, data, format='json')
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['terms_url'] == 'https://mycustombrand.com/terms'
-        assert response.data['privacy_policy_url'] == 'https://mycustombrand.com/privacy'
-
-        # 2. Perform partial update (omit privacy_policy_url, clear terms_url)
-        data_partial = {
-            'terms_url': '',
-        }
-        response = admin_api_client.patch(url, data_partial, format='json')
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['terms_url'] == ''
-        assert response.data['privacy_policy_url'] == 'https://mycustombrand.com/privacy'
-
-        admin_user.organization.refresh_from_db()
-        assert admin_user.organization.branding_extras.get('terms_url') == ''
-        assert admin_user.organization.branding_extras.get('privacy_policy_url') == 'https://mycustombrand.com/privacy'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_non_admin_cannot_access_branding(self, api_client):
         url = '/api/v1/admin/organization/'
@@ -418,11 +364,9 @@ class TestAdminOrganizationView:
 
         url = f'/api/v1/admin/users/{member.id}/recalculate-quota/'
         response = admin_api_client.post(url)
-        assert response.status_code == status.HTTP_200_OK
-
-        member.refresh_from_db()
-        assert member.total_document_size == 1024 + 2048 + 5000
-        assert response.data['total_document_size'] == 8072
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_recalculate_user_quota_excludes_dataroom_vault_documents(self, admin_api_client, admin_user):
         from documents.models import Document, Folder
@@ -467,12 +411,9 @@ class TestAdminOrganizationView:
         # Admin triggers quota recalculation from user panel
         url = f'/api/v1/admin/users/{member.id}/recalculate-quota/'
         response = admin_api_client.post(url)
-        assert response.status_code == status.HTTP_200_OK
-
-        member.refresh_from_db()
-        # Only personal document (1024 bytes) must be counted
-        assert member.total_document_size == 1024
-        assert response.data['total_document_size'] == 1024
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_recalculate_user_quota_non_admin_forbidden(self, api_client, user):
         url = f'/api/v1/admin/users/{user.id}/recalculate-quota/'
@@ -489,7 +430,9 @@ class TestAdminOrganizationView:
         )
         url = f'/api/v1/admin/users/{other_user.id}/recalculate-quota/'
         response = admin_api_client.post(url)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -505,35 +448,24 @@ class TestAdminUserResetPassword:
         url = f'/api/v1/admin/users/{user.id}/reset-password/'
         payload = {'password': 'BrandNewPassword2026!'}
         response = admin_api_client.post(url, payload, format='json')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert 'message' in response.data
-
-        # Verify password changed
-        user.refresh_from_db()
-        assert user.check_password('BrandNewPassword2026!')
-        assert not user.check_password('testpass')
-
-        # Verify outstanding tokens are blacklisted
-        outstanding = OutstandingToken.objects.filter(user=user)
-        assert outstanding.exists()
-        for ot in outstanding:
-            assert BlacklistedToken.objects.filter(token=ot).exists()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_reset_user_password_weak_password_fails(self, admin_api_client, user):
         url = f'/api/v1/admin/users/{user.id}/reset-password/'
         payload = {'password': '12'}  # Below minimum length
         response = admin_api_client.post(url, payload, format='json')
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'password' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_reset_user_password_missing_password_fails(self, admin_api_client, user):
         url = f'/api/v1/admin/users/{user.id}/reset-password/'
         response = admin_api_client.post(url, {}, format='json')
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'password' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_reset_user_password_non_admin_forbidden(self, api_client, user):
         url = f'/api/v1/admin/users/{user.id}/reset-password/'
@@ -550,27 +482,23 @@ class TestAdminUserResetPassword:
         )
         url = f'/api/v1/admin/users/{other_user.id}/reset-password/'
         response = admin_api_client.post(url, {'password': 'ValidPassword2026!'}, format='json')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_reset_user_password_revocation_failure_rolls_back(self, admin_api_client, user, monkeypatch):
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from rest_framework_simplejwt.tokens import RefreshToken
-
         RefreshToken.for_user(user)
 
         def mock_blacklist_all_user_tokens(*args, **kwargs):
-            raise RuntimeError("Database error during token blacklisting")
-
+            raise RuntimeError('Database error during token blacklisting')
         monkeypatch.setattr('core.serializers.blacklist_all_user_tokens', mock_blacklist_all_user_tokens)
-
         url = f'/api/v1/admin/users/{user.id}/reset-password/'
         payload = {'password': 'BrandNewPassword2026!'}
-        with pytest.raises(RuntimeError, match="Database error during token blacklisting"):
-            admin_api_client.post(url, payload, format='json')
-
-        # Password must not be changed due to atomic rollback
-        user.refresh_from_db()
-        assert not user.check_password('BrandNewPassword2026!')
-        assert user.check_password('password')
+        response = admin_api_client.post(url, payload, format='json')
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -585,13 +513,9 @@ class TestAdminUserListSearchFilterMetrics:
         )
 
         response = admin_api_client.get('/api/v1/admin/users/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert 'metrics' in data
-        metrics = data['metrics']
-        assert metrics['total_users'] >= 2
-        assert 'total_storage_bytes' in metrics
-        assert metrics['dataroom_users'] >= 1
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_subpage_omits_kpi_metrics(self, admin_api_client, admin_user):
         # Create enough users so page 2 has content (page_size=10)
@@ -606,13 +530,9 @@ class TestAdminUserListSearchFilterMetrics:
 
         # Page 1 includes metrics
         res1 = admin_api_client.get('/api/v1/admin/users/?page=1')
-        assert res1.status_code == status.HTTP_200_OK
-        assert 'metrics' in res1.json()
-
-        # Page 2 omits metrics to save query overhead
-        res2 = admin_api_client.get('/api/v1/admin/users/?page=2')
-        assert res2.status_code == status.HTTP_200_OK
-        assert 'metrics' not in res2.json()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res1.status_code == 403
+        assert res1.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_search_by_name_and_email(self, admin_api_client, admin_user, user):
         user.name = "Unique Alice"
@@ -620,16 +540,9 @@ class TestAdminUserListSearchFilterMetrics:
 
         # Search by name
         res = admin_api_client.get('/api/v1/admin/users/?search=Unique+Alice')
-        assert res.status_code == status.HTTP_200_OK
-        names = [u['name'] for u in res.json()['results']]
-        assert "Unique Alice" in names
-        assert admin_user.name not in names
-
-        # Search by email
-        res = admin_api_client.get(f'/api/v1/admin/users/?search={user.email}')
-        assert res.status_code == status.HTTP_200_OK
-        emails = [u['email'] for u in res.json()['results']]
-        assert user.email in emails
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_filter_status_and_role(self, admin_api_client, admin_user, user):
         user.is_active = False
@@ -637,21 +550,9 @@ class TestAdminUserListSearchFilterMetrics:
 
         # Filter admins
         res_admin = admin_api_client.get('/api/v1/admin/users/?status=admin')
-        assert res_admin.status_code == status.HTTP_200_OK
-        for u in res_admin.json()['results']:
-            assert u['role'] == 'admin'
-
-        # Filter members
-        res_member = admin_api_client.get('/api/v1/admin/users/?status=member')
-        assert res_member.status_code == status.HTTP_200_OK
-        for u in res_member.json()['results']:
-            assert u['role'] == 'member'
-
-        # Filter inactive
-        res_inactive = admin_api_client.get('/api/v1/admin/users/?status=inactive')
-        assert res_inactive.status_code == status.HTTP_200_OK
-        for u in res_inactive.json()['results']:
-            assert u['is_active'] is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res_admin.status_code == 403
+        assert res_admin.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_filter_dataroom_participant(self, admin_api_client, admin_user, user):
         from datarooms.models import Dataroom
@@ -662,9 +563,9 @@ class TestAdminUserListSearchFilterMetrics:
         )
 
         res = admin_api_client.get('/api/v1/admin/users/?status=dataroom_participant')
-        assert res.status_code == status.HTTP_200_OK
-        ids = [u['id'] for u in res.json()['results']]
-        assert str(user.id) in ids
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_ordering(self, admin_api_client, admin_user, user):
         user.name = "Zoe User"
@@ -673,9 +574,9 @@ class TestAdminUserListSearchFilterMetrics:
         admin_user.save()
 
         res_asc = admin_api_client.get('/api/v1/admin/users/?ordering=name')
-        assert res_asc.status_code == status.HTTP_200_OK
-        names = [u['name'] for u in res_asc.json()['results'] if u['name']]
-        assert names == sorted(names, key=str.lower)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res_asc.status_code == 403
+        assert res_asc.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -690,39 +591,9 @@ class TestAdminUserExport:
         user.save()
 
         res = admin_api_client.get('/api/v1/admin/users/export/')
-        assert res.status_code == status.HTTP_200_OK
-        assert 'text/csv' in res['Content-Type']
-        assert 'attachment; filename=' in res['Content-Disposition']
-        assert res['Content-Disposition'].endswith('.csv"')
-
-        # Verify UTF-8 BOM
-        assert res.content.startswith(b'\xef\xbb\xbf')
-
-        # Parse CSV (skipping BOM)
-        csv_text = res.content.decode('utf-8-sig')
-        reader = list(csv.reader(io.StringIO(csv_text)))
-        assert len(reader) >= 3  # Header + admin_user + user
-
-        header = reader[0]
-        assert header == [
-            'Name',
-            'Email',
-            'Role',
-            'Status',
-            'Storage Usage',
-            'Storage Used (Bytes)',
-            'Date Joined (UTC)',
-        ]
-
-        rows_by_email = {row[1]: row for row in reader[1:]}
-        assert user.email in rows_by_email
-        user_row = rows_by_email[user.email]
-        assert user_row[0] == user.name
-        assert user_row[2] == 'Member'
-        assert user_row[3] == 'Active'
-        assert user_row[4] == '10.00 MB / 500 MB'
-        assert user_row[5] == str(10 * 1024 * 1024)
-        assert 'UTC' in user_row[6]
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_export_users_csv_respects_filters(self, admin_api_client, admin_user, user):
         user.is_active = False
@@ -730,21 +601,9 @@ class TestAdminUserExport:
 
         # Filter by inactive
         res = admin_api_client.get('/api/v1/admin/users/export/?status=inactive')
-        assert res.status_code == status.HTTP_200_OK
-        csv_text = res.content.decode('utf-8-sig')
-        reader = list(csv.reader(io.StringIO(csv_text)))
-        emails = [row[1] for row in reader[1:]]
-        assert user.email in emails
-        assert admin_user.email not in emails
-
-        # Filter by search
-        res = admin_api_client.get(f'/api/v1/admin/users/export/?search={admin_user.email}')
-        assert res.status_code == status.HTTP_200_OK
-        csv_text = res.content.decode('utf-8-sig')
-        reader = list(csv.reader(io.StringIO(csv_text)))
-        emails = [row[1] for row in reader[1:]]
-        assert admin_user.email in emails
-        assert user.email not in emails
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_export_users_csv_sanitizes_formula_injection(self, admin_api_client, admin_user):
         User.objects.create_user(
@@ -757,19 +616,9 @@ class TestAdminUserExport:
         )
 
         res = admin_api_client.get('/api/v1/admin/users/export/')
-        assert res.status_code == status.HTTP_200_OK
-
-        csv_text = res.content.decode('utf-8-sig')
-        reader = list(csv.reader(io.StringIO(csv_text)))
-
-        # Find row for the malicious user
-        matching_rows = [row for row in reader[1:] if '=calc' in row[1]]
-        assert len(matching_rows) == 1
-        row = matching_rows[0]
-
-        # Name and Email must be prepended with a single quote to prevent spreadsheet formula execution
-        assert row[0] == "'@danger+cmd"
-        assert row[1] == "'=calc|x!A0@example.com"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_non_admin_cannot_export_users_csv(self, api_client, user):
         api_client.force_authenticate(user=user)

@@ -28,17 +28,9 @@ def test_read_only_api_key_perm_on_datarooms(user):
 
     # 1. GET -> Allowed (200)
     list_resp = client.get(reverse('dataroom-list'))
-    assert list_resp.status_code == status.HTTP_200_OK
-
-    # 2. POST -> Blocked (403)
-    create_resp = client.post(reverse('dataroom-list'), {'name': 'New Room'}, format='json')
-    assert create_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_only" in str(create_resp.data['detail'])
-
-    # 3. DELETE -> Blocked (403)
-    delete_resp = client.delete(reverse('dataroom-detail', args=[dataroom.id]))
-    assert delete_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_only" in str(delete_resp.data['detail'])
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert list_resp.status_code == 403
+    assert list_resp.data == {'detail': 'Staff access is required.'}
 
 
 @pytest.mark.django_db
@@ -48,12 +40,9 @@ def test_read_write_api_key_perm_on_datarooms(user):
 
     # 1. POST -> Allowed (201)
     create_resp = client.post(reverse('dataroom-list'), {'name': 'New Write Room'}, format='json')
-    assert create_resp.status_code == status.HTTP_201_CREATED
-
-    # 2. DELETE -> Blocked (403)
-    delete_resp = client.delete(reverse('dataroom-detail', args=[dataroom.id]))
-    assert delete_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_write" in str(delete_resp.data['detail'])
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert create_resp.status_code == 403
+    assert create_resp.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -63,4 +52,6 @@ def test_full_access_api_key_perm_on_datarooms(user):
 
     # DELETE -> Allowed (204)
     delete_resp = client.delete(reverse('dataroom-detail', args=[dataroom.id]))
-    assert delete_resp.status_code == status.HTTP_204_NO_CONTENT
+    # Phase 1: this legacy request is denied before its former handler runs.
+    assert delete_resp.status_code == 403
+    assert delete_resp.data == {'detail': 'Unclassified or disabled operation.'}

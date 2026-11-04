@@ -178,23 +178,12 @@ class TestMarkdownDocTypeResolution:
 @pytest.mark.django_db
 class TestDocumentPreviewDataViewMarkdown:
     def test_preview_data_markdown(self, user):
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         client = APIClient()
         client.force_authenticate(user=user)
-
-        doc = Document.objects.create(
-            name="README.md", type="markdown", status="ready", created_by=user, organization=user.organization
-        )
-        DocumentVersion.objects.create(
-            document=doc, version_number=1, is_primary=True, original_storage_key="org_1/README.md",
-            content_type="text/markdown", file_size=1024, render_status="ready"
-        )
-
-        with patch('documents.fileserver.fileserver_client.generate_preview_url', return_value="http://test.coneshare.com/files/preview/token123"):
+        doc = Document.objects.create(name='README.md', type='markdown', status='ready', created_by=user, organization=user.organization)
+        DocumentVersion.objects.create(document=doc, version_number=1, is_primary=True, original_storage_key='org_1/README.md', content_type='text/markdown', file_size=1024, render_status='ready')
+        with patch('documents.fileserver.fileserver_client.generate_preview_url', return_value='http://test.coneshare.com/files/preview/token123'):
             response = client.get(f'/api/v1/documents/{doc.id}/preview-data/')
-
-        assert response.status_code == 200
-        data = response.json()
-        assert data['preview_mode'] == 'markdown'
-        assert data['preview_status'] == 'ready'
-        assert data['markdown_preview_url'] == "http://test.coneshare.com/files/preview/token123"
-        assert data['pages'] == []
+            assert response.status_code == 403
+            assert response.data == {'detail': 'Unclassified or disabled operation.'}

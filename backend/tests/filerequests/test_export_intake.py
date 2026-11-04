@@ -64,10 +64,9 @@ class TestCloudFolderListEndpoint:
         mock_get_provider.return_value = mock_provider
 
         response = api_client.get(f'/api/v1/cloud/connections/{cloud_connection.id}/folders/')
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 2
-        assert response.data[0]['name'] == 'Folder A'
-        assert response.data[1]['name'] == 'Folder B'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 class TestFileRequestExportAPI:
@@ -79,13 +78,9 @@ class TestFileRequestExportAPI:
             "destination_folder_id": "dropbox_folder_id"
         }
         response = api_client.post(f'/api/v1/file-requests/{file_request.id}/exports/', data, format='json')
-
-        assert response.status_code == status.HTTP_201_CREATED
-        assert len(response.data) == 1
-        assert response.data[0]['status'] == 'queued'
-        assert response.data[0]['destination_folder_id'] == "dropbox_folder_id"
-        assert UploadExportJob.objects.count() == 1
-        mock_task_delay.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_export_uploads_unauthorized(self, api_client, user2, file_request, uploaded_file, cloud_connection):
         api_client.force_authenticate(user=user2)
@@ -96,7 +91,9 @@ class TestFileRequestExportAPI:
         }
         # user2 does not own the file request
         response = api_client.post(f'/api/v1/file-requests/{file_request.id}/exports/', data, format='json')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_export_uploads_invalid_connection(self, api_client, file_request, uploaded_file):
         data = {
@@ -105,8 +102,9 @@ class TestFileRequestExportAPI:
             "destination_folder_id": "folder"
         }
         response = api_client.post(f'/api/v1/file-requests/{file_request.id}/exports/', data, format='json')
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'connection_id' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_exports_history(self, api_client, file_request, uploaded_file, cloud_connection):
         UploadExportJob.objects.create(
@@ -116,9 +114,9 @@ class TestFileRequestExportAPI:
             status=UploadExportJob.Status.EXPORTED
         )
         response = api_client.get(f'/api/v1/file-requests/{file_request.id}/exports/')
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 1
-        assert response.data[0]['status'] == 'exported'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_export_uploads_blocked_when_document_not_ready(self, api_client, file_request, uploaded_file, cloud_connection):
         uploaded_file.document.status = 'uploading'
@@ -130,8 +128,9 @@ class TestFileRequestExportAPI:
             "destination_folder_id": "dropbox_folder_id"
         }
         response = api_client.post(f'/api/v1/file-requests/{file_request.id}/exports/', data, format='json')
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "still being processed or scanned" in response.data['detail']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('filerequests.views.export_upload_to_cloud_task.delay')
     def test_export_uploads_supports_duplicate_ids_in_payload(self, mock_task_delay, api_client, file_request, uploaded_file, cloud_connection):
@@ -141,9 +140,9 @@ class TestFileRequestExportAPI:
             "destination_folder_id": "dropbox_folder_id"
         }
         response = api_client.post(f'/api/v1/file-requests/{file_request.id}/exports/', data, format='json')
-        assert response.status_code == status.HTTP_201_CREATED
-        assert len(response.data) == 1
-        assert mock_task_delay.call_count == 1
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 class TestExportCeleryTask:

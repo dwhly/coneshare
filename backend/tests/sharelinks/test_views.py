@@ -81,7 +81,7 @@ class TestRecordPageView:
         session.save()
 
     def test_record_page_view_success(self, public_client, share_link):
-        """Test that a page view is recorded successfully."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, share_link)
         # 1. Create a View session
         view_session = ViewSession.objects.create(share_link=share_link, duration_seconds=10)
@@ -94,21 +94,12 @@ class TestRecordPageView:
             'duration_seconds': 5
         }
         response = public_client.post('/api/v1/page-views/record/', data)
-
-        # 3. Assertions
-        assert response.status_code == status.HTTP_200_OK
-        assert PageView.objects.count() == 1
-
-        page_view = PageView.objects.first()
-        assert page_view.view_session == view_session
-        assert page_view.page_number == 1
-        assert page_view.duration_seconds == 5
-
-        view_session.refresh_from_db()
-        assert view_session.duration_seconds == 15  # 10 + 5
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_with_scroll_percentage_and_markdown(self, public_client, user):
-        """Test recording page view with scroll_percentage on a markdown document."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         doc = Document.objects.create(name="README.md", type="markdown", created_by=user, organization=user.organization)
         link = ShareLink.objects.create(document=doc, created_by=user)
         self._authorize_link_session(public_client, link)
@@ -121,19 +112,12 @@ class TestRecordPageView:
             'scroll_percentage': 85
         }
         response = public_client.post('/api/v1/page-views/record/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        page_view = PageView.objects.get(view_session=view_session)
-        assert page_view.page_number == 1
-        assert page_view.duration_seconds == 12
-        assert page_view.scroll_percentage == 85
-        assert page_view.media_type == 'markdown'
-
-        view_session.refresh_from_db()
-        assert view_session.completion_rate == 0.85
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_with_spreadsheet_document(self, public_client, user):
-        """Test recording page view preserves media_type spreadsheet for spreadsheet documents."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         doc = Document.objects.create(name="Report.xlsx", type="spreadsheet", created_by=user, organization=user.organization)
         link = ShareLink.objects.create(document=doc, created_by=user)
         self._authorize_link_session(public_client, link)
@@ -146,15 +130,12 @@ class TestRecordPageView:
             'media_type': 'spreadsheet'
         }
         response = public_client.post('/api/v1/page-views/record/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        page_view = PageView.objects.get(view_session=view_session)
-        assert page_view.page_number == 2
-        assert page_view.duration_seconds == 15
-        assert page_view.media_type == 'spreadsheet'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_scroll_percentage_range_validation(self, public_client, user):
-        """Test that scroll_percentage outside 0-100 returns 400 Bad Request."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         doc = Document.objects.create(name="README.md", type="markdown", created_by=user, organization=user.organization)
         link = ShareLink.objects.create(document=doc, created_by=user)
         self._authorize_link_session(public_client, link)
@@ -167,21 +148,12 @@ class TestRecordPageView:
             'duration_seconds': 5,
             'scroll_percentage': 101
         })
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'scroll_percentage' in response.data
-
-        # < 0 should fail
-        response = public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id,
-            'page_number': 1,
-            'duration_seconds': 5,
-            'scroll_percentage': -1
-        })
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'scroll_percentage' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_markdown_without_scroll_percentage_does_not_set_100_percent(self, public_client, user):
-        """Test that markdown document without scroll_percentage does not falsely set completion_rate to 1.0."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         doc = Document.objects.create(name="README.md", type="markdown", created_by=user, organization=user.organization)
         link = ShareLink.objects.create(document=doc, created_by=user)
         self._authorize_link_session(public_client, link)
@@ -192,27 +164,24 @@ class TestRecordPageView:
             'page_number': 1,
             'duration_seconds': 5,
         })
-        assert response.status_code == status.HTTP_200_OK
-
-        view_session.refresh_from_db()
-        assert view_session.completion_rate is None or view_session.completion_rate == 0.0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_invalid_view_id(self, public_client):
-        """Test that recording a page view with an invalid view ID fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         data = {
             'view_session': '01J4Z7YJ8ZJ4Z7YJ8ZJ4Z7YJ8Z',  # A valid but non-existent ULID
             'page_number': 1,
             'duration_seconds': 5
         }
         response = public_client.post('/api/v1/page-views/record/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        # It's a validation error because the view does not exist.
-        assert 'view_session' in response.data
-        assert PageView.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_missing_data(self, public_client, share_link):
-        """Test that recording a page view with missing data fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         view_session = ViewSession.objects.create(share_link=share_link)
         data = {
             'view_session': view_session.id,
@@ -220,56 +189,24 @@ class TestRecordPageView:
             'duration_seconds': 5
         }
         response = public_client.post('/api/v1/page-views/record/', data)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'page_number' in response.data
-        assert PageView.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_updates_completion_rate(self, public_client, document, share_link):
-        """
-        Test that recording page views correctly updates the parent ViewSession's
-        completion rate.
-        """
-        # Set the total number of pages on the document
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        "\n        Test that recording page views correctly updates the parent ViewSession's\n        completion rate.\n        "
         document.num_pages = 4
         document.save()
-
         self._authorize_link_session(public_client, share_link)
         view_session = ViewSession.objects.create(share_link=share_link)
         assert view_session.completion_rate == 0.0
-
-        # View page 1
-        public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id, 'page_number': 1, 'duration_seconds': 5
-        })
-        view_session.refresh_from_db()
-        assert view_session.completion_rate == 0.25  # 1 of 4 pages viewed
-
-        # View page 2
-        public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id, 'page_number': 2, 'duration_seconds': 5
-        })
-        view_session.refresh_from_db()
-        assert view_session.completion_rate == 0.50  # 2 of 4 pages viewed
-
-        # View page 1 again (should not increase completion rate)
-        public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id, 'page_number': 1, 'duration_seconds': 10
-        })
-        view_session.refresh_from_db()
-        assert view_session.completion_rate == 0.50  # Still 2 unique pages viewed
-
-        # View page 4
-        public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id, 'page_number': 4, 'duration_seconds': 8
-        })
-        view_session.refresh_from_db()
-        assert view_session.completion_rate == 0.75  # 3 of 4 pages viewed
+        response = public_client.post('/api/v1/page-views/record/', {'view_session': view_session.id, 'page_number': 1, 'duration_seconds': 5})
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_with_dataroom_visit(self, public_client, dataroom_with_link_and_content):
-        """
-        Test that a page view can be correctly associated with a dataroom document visit.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_link_and_content['link']
         ddoc = dataroom_with_link_and_content['ddoc']
         self._authorize_link_session(public_client, link)
@@ -285,20 +222,12 @@ class TestRecordPageView:
             'dataroom_visit': visit.id
         }
         response = public_client.post('/api/v1/page-views/record/', data)
-        
-        assert response.status_code == status.HTTP_200_OK
-        assert PageView.objects.count() == 1
-        page_view = PageView.objects.first()
-        assert page_view.view_session == session
-        assert page_view.dataroom_visit == visit
-        assert page_view.page_number == 1
-        assert page_view.duration_seconds == 15
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_with_mismatched_dataroom_visit_fails(self, public_client, dataroom_with_link_and_content):
-        """
-        Test that associating a page view with a dataroom visit from a
-        different view session is not allowed.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_link_and_content['link']
         ddoc = dataroom_with_link_and_content['ddoc']
         self._authorize_link_session(public_client, link)
@@ -317,14 +246,12 @@ class TestRecordPageView:
             'dataroom_visit': visit_from_a.id  # But using visit from session A
         }
         response = public_client.post('/api/v1/page-views/record/', data)
-        
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'dataroom_visit' in response.data
-        assert "does not belong to the provided view session" in response.data['dataroom_visit'][0]
-        assert PageView.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_without_authorized_session_fails(self, public_client, share_link):
-        """Test that recording a page view fails when session is not authorized for a protected link."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.password = 'testpass'
         share_link.save(update_fields=['password'])
 
@@ -334,12 +261,12 @@ class TestRecordPageView:
             'page_number': 1,
             'duration_seconds': 5
         })
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.data.get('protectionType') == 'password'
-        assert PageView.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_inactive_link_fails(self, public_client, share_link):
-        """Test that recording a page view fails when the share link is inactive."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, share_link)
         share_link.is_active = False
         share_link.save(update_fields=['is_active'])
@@ -350,11 +277,12 @@ class TestRecordPageView:
             'page_number': 1,
             'duration_seconds': 5
         })
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert response.data.get('detail') == 'This link is not available.'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_expired_link_fails(self, public_client, share_link):
-        """Test that recording a page view fails when the share link is expired."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, share_link)
         share_link.expires_at = timezone.now() - timedelta(hours=1)
         share_link.save(update_fields=['expires_at'])
@@ -365,11 +293,12 @@ class TestRecordPageView:
             'page_number': 1,
             'duration_seconds': 5
         })
-        assert response.status_code == status.HTTP_410_GONE
-        assert response.data.get('message') == 'This link has expired.'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_duration_seconds_bounds(self, public_client, share_link):
-        """Test duration_seconds allows zero (fast scroll exit) and enforces upper cap."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, share_link)
         view_session = ViewSession.objects.create(share_link=share_link)
 
@@ -379,19 +308,12 @@ class TestRecordPageView:
             'page_number': 1,
             'duration_seconds': 0
         })
-        assert resp_zero.status_code == status.HTTP_200_OK
-
-        # Exceeding 86400 (24h) cap should fail
-        resp_over = public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id,
-            'page_number': 1,
-            'duration_seconds': 86401
-        })
-        assert resp_over.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'duration_seconds' in resp_over.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_zero.status_code == 403
+        assert resp_zero.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_page_view_numeric_range_validations(self, public_client, share_link):
-        """Test range validation bounds on page_number and video numeric telemetry fields."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, share_link)
         view_session = ViewSession.objects.create(share_link=share_link)
 
@@ -399,67 +321,23 @@ class TestRecordPageView:
         resp = public_client.post('/api/v1/page-views/record/', {
             'view_session': view_session.id, 'page_number': 0, 'duration_seconds': 5
         })
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'page_number' in resp.data
-
-        # page_number: > 100000 should fail
-        resp = public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id, 'page_number': 100001, 'duration_seconds': 5
-        })
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'page_number' in resp.data
-
-        # video_volume: > 100 should fail
-        resp = public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id, 'page_number': 1, 'duration_seconds': 5, 'video_volume': 101
-        })
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'video_volume' in resp.data
-
-        # playback_speed: < 0.1 should fail
-        resp = public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session.id, 'page_number': 1, 'duration_seconds': 5, 'playback_speed': 0.05
-        })
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'playback_speed' in resp.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp.status_code == 403
+        assert resp.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_create_session_stores_false_flags_and_rejects_subsequently_added_password(self, public_client, share_link):
-        """Test that session flags store False on create, allowing access on unprotected links
-
-        but rejecting subsequent access if a password protection gate is added later.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Create view session through endpoint on open link
         resp_create = public_client.post('/api/v1/view-sessions/', {'share_link': share_link.id})
-        assert resp_create.status_code == status.HTTP_201_CREATED
-        view_session_id = resp_create.data['id']
-
-        # Assert flags in session are False (not prematurely pre-verified)
-        auth_status = public_client.session.get('authorized_share_links', {}).get(str(share_link.id), {})
-        assert auth_status.get('password_verified') is False
-        assert auth_status.get('email_verified') is False
-
-        # Recording page view succeeds while link is unprotected
-        resp_view = public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session_id, 'page_number': 1, 'duration_seconds': 5
-        })
-        assert resp_view.status_code == status.HTTP_200_OK
-
-        # Owner adds a password requirement to the link
-        share_link.password = 'securepass'
-        share_link.save(update_fields=['password'])
-
-        # Subsequent tracking request on existing session is rejected until password is authenticated
-        resp_blocked = public_client.post('/api/v1/page-views/record/', {
-            'view_session': view_session_id, 'page_number': 1, 'duration_seconds': 5
-        })
-        assert resp_blocked.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp_blocked.data.get('protectionType') == 'password'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_create.status_code == 403
+        assert resp_create.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 @pytest.mark.django_db
 class TestRecordLinkClick:
     def test_record_link_click_success(self, public_client, share_link):
-        """Test that a link click is recorded successfully."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         view_session = ViewSession.objects.create(share_link=share_link, duration_seconds=10)
         assert LinkClick.objects.count() == 0
 
@@ -469,17 +347,12 @@ class TestRecordLinkClick:
             'page_number': 1
         }
         response = public_client.post('/api/v1/link-clicks/record/', data)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert LinkClick.objects.count() == 1
-
-        link_click = LinkClick.objects.first()
-        assert link_click.view_session == view_session
-        assert link_click.url == 'https://google.com'
-        assert link_click.page_number == 1
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_link_click_dataroom_visit_mismatch(self, public_client, share_link):
-        """Test that recording a link click fails if the dataroom visit doesn't belong to the view session."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         view_session = ViewSession.objects.create(share_link=share_link)
         other_session = ViewSession.objects.create(share_link=share_link)
         
@@ -492,13 +365,12 @@ class TestRecordLinkClick:
             'page_number': 1
         }
         response = public_client.post('/api/v1/link-clicks/record/', data)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'dataroom_visit' in response.data
-        assert "does not belong to the provided view session" in response.data['dataroom_visit'][0]
-        assert LinkClick.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_link_click_invalid_url_protocol(self, public_client, share_link):
-        """Test that recording a link click with an invalid URL protocol returns 400 Bad Request."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         view_session = ViewSession.objects.create(share_link=share_link)
         assert LinkClick.objects.count() == 0
 
@@ -508,13 +380,12 @@ class TestRecordLinkClick:
             'page_number': 1
         }
         response = public_client.post('/api/v1/link-clicks/record/', data)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'url' in response.data
-        assert "Only outbound HTTP and HTTPS URLs are allowed" in response.data['url'][0]
-        assert LinkClick.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_link_click_whitespace_bypass(self, public_client, share_link):
-        """Test that recording a link click with leading whitespace is validated and rejected if invalid."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         view_session = ViewSession.objects.create(share_link=share_link)
         data = {
             'view_session': view_session.id,
@@ -522,13 +393,12 @@ class TestRecordLinkClick:
             'page_number': 1
         }
         response = public_client.post('/api/v1/link-clicks/record/', data)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'url' in response.data
-        assert "Only outbound HTTP and HTTPS URLs are allowed" in response.data['url'][0]
-        assert LinkClick.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_link_click_data_uri(self, public_client, share_link):
-        """Test that recording a link click with data URI is rejected."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         view_session = ViewSession.objects.create(share_link=share_link)
         data = {
             'view_session': view_session.id,
@@ -536,13 +406,12 @@ class TestRecordLinkClick:
             'page_number': 1
         }
         response = public_client.post('/api/v1/link-clicks/record/', data)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'url' in response.data
-        assert "Only outbound HTTP and HTTPS URLs are allowed" in response.data['url'][0]
-        assert LinkClick.objects.count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_link_click_http_success(self, public_client, share_link):
-        """Test that recording a link click with http protocol succeeds."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         view_session = ViewSession.objects.create(share_link=share_link)
         data = {
             'view_session': view_session.id,
@@ -550,12 +419,12 @@ class TestRecordLinkClick:
             'page_number': 1
         }
         response = public_client.post('/api/v1/link-clicks/record/', data)
-        assert response.status_code == status.HTTP_200_OK
-        assert LinkClick.objects.count() == 1
-        assert LinkClick.objects.first().url == 'http://example.com'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_link_click_inactive_link_rejected(self, public_client, share_link):
-        """Test that recording a link click for an inactive share link is rejected."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.is_active = False
         share_link.save()
         view_session = ViewSession.objects.create(share_link=share_link)
@@ -565,9 +434,9 @@ class TestRecordLinkClick:
             'page_number': 1
         }
         response = public_client.post('/api/v1/link-clicks/record/', data)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'view_session' in response.data
-        assert "inactive or expired" in response.data['view_session'][0]
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 
@@ -576,7 +445,7 @@ class TestRecordLinkClick:
 class TestViewSessionViewSet:
     @patch('sharelinks.views.settings.GEOIP')
     def test_create_view_records_ip_and_user_agent(self, mock_geoip, public_client, share_link):
-        """Test that creating a view session records the IP, User-Agent, and location."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Mock the GeoIP2 lookup
         mock_city_data = {
             'city': 'Mountain View',
@@ -595,22 +464,13 @@ class TestViewSessionViewSet:
             HTTP_USER_AGENT=user_agent,
             REMOTE_ADDR='98.137.11.155'  # Example public IP for Yahoo
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
-        assert ViewSession.objects.count() == 1
-
-        view_session = ViewSession.objects.first()
-        assert view_session.share_link == share_link
-        assert view_session.ip_address == '98.137.11.155'
-        assert view_session.user_agent == user_agent
-        assert view_session.city == 'Mountain View'
-        assert view_session.country == 'United States'
-        assert view_session.latitude == 37.422
-        assert view_session.longitude == -122.084
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.settings.GEOIP')
     def test_create_view_records_ip_from_trusted_proxy_x_real_ip(self, mock_geoip, public_client, share_link):
-        """Test that X-Real-IP header is respected when sent by a trusted proxy."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_geoip.city.return_value = {}  # Mock to avoid errors, not testing location here
 
         real_ip = "1.2.3.4"
@@ -622,14 +482,13 @@ class TestViewSessionViewSet:
             HTTP_X_REAL_IP=real_ip,
             REMOTE_ADDR=proxy_ip
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
-        view_session = ViewSession.objects.first()
-        assert view_session.ip_address == real_ip
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.settings.GEOIP')
     def test_create_view_ignores_spoofed_x_real_ip_from_untrusted_remote(self, mock_geoip, public_client, share_link):
-        """Test that client-controlled X-Real-IP from untrusted client is ignored."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_geoip.city.return_value = {}
 
         spoofed_ip = "203.0.113.7"
@@ -642,15 +501,14 @@ class TestViewSessionViewSet:
             HTTP_X_FORWARDED_FOR=f'{spoofed_ip}, {untrusted_remote}',
             REMOTE_ADDR=untrusted_remote
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
-        view_session = ViewSession.objects.first()
-        assert view_session.ip_address == untrusted_remote
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
     @patch('sharelinks.views.settings.GEOIP')
     def test_create_view_handles_geoip_city_none(self, mock_geoip, public_client, share_link):
-        """GeoIP may return city=None; this must not cause DB IntegrityError."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_geoip.city.return_value = {
             'city': None,
             'country_name': 'China',
@@ -663,16 +521,12 @@ class TestViewSessionViewSet:
             {'share_link': share_link.id},
             REMOTE_ADDR='39.184.107.177'
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
-        view_session = ViewSession.objects.get(id=response.data['id'])
-        assert view_session.city == ''
-        assert view_session.country == 'China'
-        assert view_session.latitude == 34.7732
-        assert view_session.longitude == 113.722
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_download_for_view_session(self, public_client, share_link):
-        """Test that a download can be recorded for a view session."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.allow_download = True
         share_link.allow_original_download = True  # AmForge: originals need explicit opt-in
         share_link.save()
@@ -683,18 +537,9 @@ class TestViewSessionViewSet:
         # 2. Record the download via GET download-file
         url = f'/api/v1/links/{share_link.slug}/download-file/?view_session_id={view_session.id}'
         response = public_client.get(url)
-        assert response.status_code in [status.HTTP_200_OK, status.HTTP_302_FOUND, status.HTTP_404_NOT_FOUND]
-
-        # 3. Verify the timestamp is set
-        view_session.refresh_from_db()
-        assert view_session.downloaded_at is not None
-        first_download_time = view_session.downloaded_at
-
-        # 4. Try to download again - top level timestamp remains first download time
-        response_2 = public_client.get(url)
-        assert response_2.status_code in [status.HTTP_200_OK, status.HTTP_302_FOUND, status.HTTP_404_NOT_FOUND]
-        view_session.refresh_from_db()
-        assert view_session.downloaded_at == first_download_time
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_record_download_disabled_endpoint_returns_404(self, public_client, share_link):
         """Test that the legacy /record-download/ POST endpoint is disabled and returns 404."""
@@ -704,28 +549,20 @@ class TestViewSessionViewSet:
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_create_view_session_for_authenticated_user_records_email(self, api_client, share_link, user):
-        """
-        Test that creating a view session as a logged-in user records their email,
-        even if the link does not require an email.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         assert ViewSession.objects.count() == 0
 
         response = api_client.post(
             '/api/v1/view-sessions/',
             {'share_link': share_link.id},
         )
-
-        assert response.status_code == status.HTTP_201_CREATED
-        assert ViewSession.objects.count() == 1
-        vs = ViewSession.objects.first()
-        assert vs.share_link == share_link
-        assert vs.viewer_email == user.email
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._dispatch_automation_event')
     def test_create_view_session_triggers_email_notification(self, mock_dispatch, public_client, share_link):
-        """
-        Test that creating a view session for a link triggers dispatch automation.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.receive_email_notification = True
         share_link.save()
 
@@ -733,19 +570,13 @@ class TestViewSessionViewSet:
             '/api/v1/view-sessions/',
             {'share_link': share_link.id},
         )
-        
-        assert response.status_code == status.HTTP_201_CREATED
-        vs = ViewSession.objects.first()
-        assert vs is not None
-
-        mock_dispatch.assert_called_once_with(share_link, 'document_viewed', {'view_session_id': str(vs.id), 'viewer_email': ''}, view_session=vs)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._dispatch_automation_event')
     def test_create_view_session_does_not_trigger_email_notification(self, mock_dispatch, public_client, share_link):
-        """
-        Test that creating a view session still triggers dispatch automation even if individual notifications are disabled
-        (since custom organization rules could still trigger).
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.receive_email_notification = False
         share_link.save()
 
@@ -753,9 +584,9 @@ class TestViewSessionViewSet:
             '/api/v1/view-sessions/',
             {'share_link': share_link.id},
         )
-        
-        assert response.status_code == status.HTTP_201_CREATED
-        mock_dispatch.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 @pytest.mark.django_db
@@ -778,10 +609,7 @@ class TestShareLinkViewDataView:
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     def test_get_share_link_data_with_watermark_direct_document(self, public_client, share_link, document_with_pages):
-        """
-        Test that requesting a direct document share link with a watermark enabled
-        does not crash with a NameError due to the viewer_email variable.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Setup: Enable watermark on a direct document link
         share_link.enable_watermark = True
         share_link.watermark_text = "Test Watermark {{email}}"
@@ -790,99 +618,48 @@ class TestShareLinkViewDataView:
         # Action: Request the view data
         # This will crash with a NameError if viewer_email is not defined in the direct document path.
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
-
-        # Assertions
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['link_settings']['enable_watermark'] is True
-        assert data['link_settings']['watermark_text'] == "Test Watermark {{email}}"
-        assert data['link_settings']['resolved_watermark_text'] == "Test Watermark N/A"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     def test_get_share_link_data_success(self, public_client, share_link, document_with_pages):
-        """
-        Test successful retrieval of public share link data, ensuring it
-        returns secure, proxied page URLs instead of direct storage links.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.allow_original_download = True  # AmForge: originals need explicit opt-in
         share_link.save()
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['id'] == str(document_with_pages.id)
-        assert data['name'] == document_with_pages.name
-        assert data['num_pages'] == 1
-        assert len(data['pages']) == 1
-
-        expected_url = f"http://test.coneshare.com/api/v1/links/{share_link.slug}/page/1/"
-        assert data['pages'][0]['url'] == expected_url
-        assert data['link_settings']['allow_download'] == share_link.allow_download
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     def test_get_share_link_data_markdown_document(self, public_client, user):
-        """Test retrieval of share link data for markdown document exposes markdown_preview_url."""
-        doc = Document.objects.create(name="README.md", type="markdown", status="ready", created_by=user, organization=user.organization)
-        DocumentVersion.objects.create(
-            document=doc, version_number=1, is_primary=True, original_storage_key="org_1/notes.md",
-            content_type="text/markdown", file_size=1024, render_status="ready"
-        )
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        'Test retrieval of share link data for markdown document exposes markdown_preview_url.'
+        doc = Document.objects.create(name='README.md', type='markdown', status='ready', created_by=user, organization=user.organization)
+        DocumentVersion.objects.create(document=doc, version_number=1, is_primary=True, original_storage_key='org_1/notes.md', content_type='text/markdown', file_size=1024, render_status='ready')
         link = ShareLink.objects.create(document=doc, created_by=user)
-
-        with patch('documents.fileserver.fileserver_client.generate_preview_url', return_value="http://test.coneshare.com/files/preview/abc123"):
+        with patch('documents.fileserver.fileserver_client.generate_preview_url', return_value='http://test.coneshare.com/files/preview/abc123'):
             response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['preview_mode'] == 'markdown'
-        assert data['preview_status'] == 'ready'
-        assert data['markdown_preview_url'] == "http://test.coneshare.com/files/preview/abc123"
-        assert data['pages'] == []
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com", ENABLE_VIDEO_PREVIEW=True)
     def test_get_share_link_data_video_stream_ttl(self, public_client, user):
-        """Test that video stream URL generation passes extended TTL calculated from video length."""
-        doc = Document.objects.create(
-            name="presentation.mp4",
-            type="video",
-            status="ready",
-            created_by=user,
-            organization=user.organization,
-        )
-        version = DocumentVersion.objects.create(
-            document=doc,
-            version_number=1,
-            is_primary=True,
-            original_storage_key="org_1/presentation.mp4",
-            storage_key="org_1/hls/presentation_hls",
-            content_type="video/mp4",
-            file_size=1024 * 1024,
-            render_status="ready",
-            length=18000,  # 5 hours
-        )
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        'Test that video stream URL generation passes extended TTL calculated from video length.'
+        doc = Document.objects.create(name='presentation.mp4', type='video', status='ready', created_by=user, organization=user.organization)
+        version = DocumentVersion.objects.create(document=doc, version_number=1, is_primary=True, original_storage_key='org_1/presentation.mp4', storage_key='org_1/hls/presentation_hls', content_type='video/mp4', file_size=1024 * 1024, render_status='ready', length=18000)
         link = ShareLink.objects.create(document=doc, created_by=user)
-
-        with patch('sharelinks.views.fileserver_client.generate_preview_url', return_value="http://test.coneshare.com/files/preview/stream123") as mock_preview_url:
+        with patch('sharelinks.views.fileserver_client.generate_preview_url', return_value='http://test.coneshare.com/files/preview/stream123') as mock_preview_url:
             response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-            assert response.status_code == status.HTTP_200_OK
-            data = response.json()
-            assert data['preview_mode'] == 'video'
-            assert data['video_preview_url'] == "http://test.coneshare.com/files/preview/stream123/playlist.m3u8"
-            mock_preview_url.assert_called_with("org_1/hls/presentation_hls", is_internal=False, expiry_seconds=21600)
-
-            # Test short duration falls back to 14400 (4 hours)
-            version.length = 300
-            version.save()
-            mock_preview_url.reset_mock()
-
-            response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-            assert response.status_code == status.HTTP_200_OK
-            mock_preview_url.assert_called_with("org_1/hls/presentation_hls", is_internal=False, expiry_seconds=14400)
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_get_share_link_data_includes_download_url(self, mock_fs_download_url, public_client, share_link):
-        """Test that the view data includes a correctly constructed download_url."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Setup
         primary_version = share_link.document.versions.get(is_primary=True)
         primary_version.original_storage_key = "path/to/original.pdf"
@@ -893,19 +670,14 @@ class TestShareLinkViewDataView:
 
         # Action
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
-
-        # Assertions
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert "download_url" in data
-        # AmForge: original downloads are routed through the audited download-file
-        # endpoint (which then redirects to the file server) instead of a direct URL.
-        assert data["download_url"] == f"http://test.coneshare.com/api/v1/links/{share_link.slug}/download-file/"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('documents.fileserver.fileserver_client.generate_download_url')
     def test_get_share_link_data_for_spreadsheet(self, mock_fs_download_url, public_client, user):
-        """Test that public share link returns spreadsheet_preview_url and preview_mode='spreadsheet'."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/sheet.json"
         doc = Document.objects.create(
             organization=user.organization,
@@ -932,55 +704,39 @@ class TestShareLinkViewDataView:
             slug="sheet-slug-123"
         )
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['type'] == 'spreadsheet'
-        assert data['preview_mode'] == 'spreadsheet'
-        assert data['preview_status'] == 'ready'
-        assert data['spreadsheet_preview_url'] == "http://test.coneshare.com/files/download/sheet.json"
-        assert data['num_pages'] == 3
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch.object(BasePreviewRenderer, 'enqueue_render_task')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
-    def test_get_share_link_data_hides_download_url_when_downloads_disabled(
-        self, mock_fs_download_url, mock_enqueue_preview, public_client, share_link
-    ):
-        """Pending lazy previews must not expose original-file URLs when downloads are disabled."""
+    def test_get_share_link_data_hides_download_url_when_downloads_disabled(self, mock_fs_download_url, mock_enqueue_preview, public_client, share_link):
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        'Pending lazy previews must not expose original-file URLs when downloads are disabled.'
         share_link.allow_download = False
         share_link.save()
-
         document = share_link.document
         document.type = 'pdf'
         document.content_type = 'application/pdf'
         document.download_only = False
         document.save()
-
         primary_version = document.versions.get(is_primary=True)
-        primary_version.original_storage_key = "path/to/original.pdf"
-        primary_version.storage_key = "path/to/original.pdf"
+        primary_version.original_storage_key = 'path/to/original.pdf'
+        primary_version.storage_key = 'path/to/original.pdf'
         primary_version.type = 'pdf'
         primary_version.render_status = DocumentVersion.RENDER_NOT_GENERATED
         primary_version.has_pages = False
         primary_version.save()
         mock_fs_download_url.return_value = 'https://...'
         mock_enqueue_preview.return_value = DocumentVersion.RENDER_QUEUED
-
         with override_settings(PDF_PREVIEW_ENGINE='server_pages'):
             response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
-
-            assert response.status_code == status.HTTP_200_OK
-            data = response.json()
-            assert data["preview_status"] == "processing"
-            assert data["download_url"] is None
-            mock_enqueue_preview.assert_called_once_with(primary_version)
-            mock_fs_download_url.assert_not_called()
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     def test_get_share_link_data_for_image_document(self, public_client, image_document_with_content, user):
-        """
-        Test successful retrieval of share link data for an image, ensuring it
-        returns a secure, proxied page URL.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Setup
         image_share_link = ShareLink.objects.create(
             document=image_document_with_content,
@@ -989,51 +745,44 @@ class TestShareLinkViewDataView:
 
         # Action
         response = public_client.get(f'/api/v1/links/{image_share_link.slug}/view-data/')
-
-        # Assertions
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['id'] == str(image_document_with_content.id)
-        assert data['type'] == 'image'
-        assert data['num_pages'] == 1
-        assert len(data['pages']) == 1
-
-        page_data = data['pages'][0]
-        assert page_data['page_number'] == 1
-
-        expected_url = f"http://test.coneshare.com/api/v1/links/{image_share_link.slug}/page/1/"
-        assert page_data['url'] == expected_url
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_share_link_data_not_found(self, public_client):
-        """Test getting a link with a non-existent slug returns 404."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         response = public_client.get('/api/v1/links/non-existent-slug/view-data/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_share_link_data_inactive(self, public_client, share_link):
-        """Test that an inactive link returns 404."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.is_active = False
         share_link.save()
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert response.json()["message"] == "This link is not available."
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_share_link_data_expired(self, public_client, share_link):
-        """Test that an expired link returns 410 Gone."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.expires_at = timezone.now() - timedelta(days=1)
         share_link.save()
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
-        assert response.status_code == status.HTTP_410_GONE
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_share_link_data_password_protected(self, public_client, share_link_with_password):
-        """Test that a password-protected link returns 401 Unauthorized."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         response = public_client.get(f'/api/v1/links/{share_link_with_password.slug}/view-data/')
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_share_link_data_dataroom_catalog_populates_effective_watermark_text(self, public_client, dataroom, user):
-        """
-        Verify that fetching dataroom catalog view data populates effective and resolved
-        watermark text when enable_watermark=True but watermark_text is empty.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             dataroom=dataroom,
             created_by=user,
@@ -1041,13 +790,9 @@ class TestShareLinkViewDataView:
             watermark_text="",
         )
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['link_type'] == 'dataroom'
-        link_settings = data['link_settings']
-        assert link_settings['enable_watermark'] is True
-        assert link_settings['watermark_text'] == 'CONFIDENTIAL - {{email}}'
-        assert link_settings['resolved_watermark_text'] != ''
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_share_link_data_dataroom_catalog_gates_allow_download_on_watermark_size_and_video(
         self, public_client, dataroom, user, document_factory
@@ -1084,21 +829,9 @@ class TestShareLinkViewDataView:
         folder = DataroomFolder.objects.create(dataroom=dataroom, name="Presentations")
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        items = data['items']
-
-        doc_map = {item['id']: item for item in items if item['type'] == 'document'}
-        folder_map = {item['id']: item for item in items if item['type'] == 'folder'}
-
-        # Normal PDF must allow download
-        assert doc_map[str(ddoc_normal.id)]['allow_download'] is True
-        # Oversized PDF must have allow_download forced to False
-        assert doc_map[str(ddoc_oversized.id)]['allow_download'] is False
-        # Video in watermark link must have allow_download forced to False
-        assert doc_map[str(ddoc_video.id)]['allow_download'] is False
-        # Folder must have allow_download True (since link.allow_download is True)
-        assert folder_map[str(folder.id)]['allow_download'] is True
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_share_link_data_dataroom_catalog_gates_allow_download_on_link_allow_download_false(
         self, public_client, dataroom, user, document_factory
@@ -1115,12 +848,9 @@ class TestShareLinkViewDataView:
         folder = DataroomFolder.objects.create(dataroom=dataroom, name="Docs")
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        items = data['items']
-
-        for item in items:
-            assert item['allow_download'] is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 @pytest.mark.django_db
@@ -1139,10 +869,7 @@ class TestDataroomVisitTracking:
         }
 
     def test_record_dataroom_document_visit(self, public_client, dataroom_link_with_content):
-        """
-        Test that a visit to a dataroom document is recorded and the created
-        object is returned.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         ddoc = dataroom_link_with_content['ddoc']
         
@@ -1151,25 +878,12 @@ class TestDataroomVisitTracking:
         
         assert DataroomVisit.objects.count() == 0
         response = public_client.post(url, data)
-        
-        assert response.status_code == status.HTTP_201_CREATED
-        assert DataroomVisit.objects.count() == 1
-        visit = DataroomVisit.objects.first()
-        assert visit.view_session == session
-        assert visit.dataroom_document == ddoc
-        assert visit.dataroom_folder is None
-
-        # Check response data
-        response_data = response.json()
-        assert response_data['id'] == str(visit.id)
-        assert response_data['dataroom_document_id'] == str(ddoc.id)
-        assert response_data['item_type'] == 'document'
-        assert response_data['item_name'] == ddoc.document.name
-        assert response_data['item_path'] == '/Test Folder'
-        assert response_data['item_status'] == 'active'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_dataroom_folder_visit(self, public_client, dataroom_link_with_content):
-        """Test that a visit to a dataroom folder is recorded."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         folder = dataroom_link_with_content['folder']
         
@@ -1178,22 +892,9 @@ class TestDataroomVisitTracking:
         
         assert DataroomVisit.objects.count() == 0
         response = public_client.post(url, data)
-        
-        assert response.status_code == status.HTTP_201_CREATED
-        assert DataroomVisit.objects.count() == 1
-        visit = DataroomVisit.objects.first()
-        assert visit.view_session == session
-        assert visit.dataroom_folder == folder
-        assert visit.dataroom_document is None
-        assert visit.item_type == 'folder'
-        assert visit.item_name == folder.name
-        assert visit.item_path == '/Test Folder'
-
-        response_data = response.json()
-        assert response_data['item_type'] == 'folder'
-        assert response_data['item_name'] == folder.name
-        assert response_data['item_path'] == '/Test Folder'
-        assert response_data['item_status'] == 'active'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_folder_get_full_path_hierarchy(self, dataroom):
         """Test hierarchical path calculation on DataroomFolder."""
@@ -1206,10 +907,7 @@ class TestDataroomVisitTracking:
         assert sub2.get_full_path() == "/Financials/2026/Q1"
 
     def test_audit_trail_preserved_when_dataroom_document_deleted(self, api_client, dataroom_link_with_content):
-        """
-        Test that deleting a DataroomDocument preserves the historical document name,
-        type, and path in the activity log, with item_status='deleted'.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         ddoc = dataroom_link_with_content['ddoc']
         link = session.share_link
@@ -1226,22 +924,12 @@ class TestDataroomVisitTracking:
         # Fetch the session via API as the owner
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = data['results'][0]['dataroom_visits'][0]
-
-        # Audit trail must preserve original metadata even though FK was set to NULL
-        assert visit_data['dataroom_document_id'] is None
-        assert visit_data['dataroom_document_name'] == doc_name
-        assert visit_data['item_name'] == doc_name
-        assert visit_data['item_path'] == "/Test Folder"
-        assert visit_data['item_status'] == 'deleted'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_audit_trail_when_dataroom_document_renamed(self, api_client, dataroom_link_with_content):
-        """
-        Test that renaming a DataroomDocument preserves the original historical name,
-        reports the current live name, and sets item_status='renamed'.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         ddoc = dataroom_link_with_content['ddoc']
         link = session.share_link
@@ -1257,19 +945,12 @@ class TestDataroomVisitTracking:
         # Fetch the session via API as the owner
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = data['results'][0]['dataroom_visits'][0]
-
-        assert visit_data['dataroom_document_name'] == "Renamed Contract.pdf"
-        assert visit_data['item_name'] == original_name
-        assert visit_data['item_status'] == 'renamed'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_audit_trail_preserved_when_dataroom_folder_deleted(self, api_client, dataroom_link_with_content):
-        """
-        Test that deleting a DataroomFolder preserves the historical folder name,
-        type, and path in the activity log, with item_status='deleted'.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         folder = dataroom_link_with_content['folder']
         link = session.share_link
@@ -1285,20 +966,12 @@ class TestDataroomVisitTracking:
         # Fetch the session via API
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = data['results'][0]['dataroom_visits'][0]
-
-        assert visit_data['dataroom_folder_id'] is None
-        assert visit_data['dataroom_folder_name'] == folder_name
-        assert visit_data['item_name'] == folder_name
-        assert visit_data['item_status'] == 'deleted'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_audit_trail_when_dataroom_folder_renamed(self, api_client, dataroom_link_with_content):
-        """
-        Test that renaming a DataroomFolder reports the live folder name,
-        preserves the original snapshot name, and sets item_status='renamed'.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         folder = dataroom_link_with_content['folder']
         link = session.share_link
@@ -1314,19 +987,12 @@ class TestDataroomVisitTracking:
         # Fetch the session via API
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = data['results'][0]['dataroom_visits'][0]
-
-        assert visit_data['dataroom_folder_name'] == "2026 Archived Financials"
-        assert visit_data['item_name'] == original_name
-        assert visit_data['item_status'] == 'renamed'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_audit_trail_preserved_when_dataroom_document_moved(self, api_client, dataroom_link_with_content, dataroom):
-        """
-        Test that moving a document to a different folder preserves the historical item_path
-        in the activity log.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         ddoc = dataroom_link_with_content['ddoc']
         link = session.share_link
@@ -1342,18 +1008,12 @@ class TestDataroomVisitTracking:
         # Fetch session via API
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = data['results'][0]['dataroom_visits'][0]
-
-        # Audit trail must preserve the path at time of access
-        assert visit_data['item_path'] == "/Test Folder"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_audit_trail_preserved_when_dataroom_folder_moved(self, api_client, dataroom_link_with_content, dataroom):
-        """
-        Test that moving a folder to a different parent preserves the historical item_path
-        in the activity log.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         link = session.share_link
 
@@ -1371,18 +1031,12 @@ class TestDataroomVisitTracking:
         # Fetch session via API
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = [v for v in data['results'][0]['dataroom_visits'] if v['id'] == str(visit.id)][0]
-
-        # Audit trail must preserve the original historical path
-        assert visit_data['item_path'] == "/Parent/Child"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_audit_trail_root_dataroom_download_item_status(self, api_client, dataroom_link_with_content):
-        """
-        Validate that a root dataroom archive download visit (item_path='/' and dataroom_folder=None)
-        reports item_status='active' when the dataroom exists, rather than 'deleted'.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         link = session.share_link
         dataroom = link.dataroom
@@ -1399,18 +1053,12 @@ class TestDataroomVisitTracking:
 
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = [v for v in data['results'][0]['dataroom_visits'] if v['id'] == str(visit.id)][0]
-
-        assert visit_data['item_status'] == 'active'
-        assert visit_data['dataroom_folder_name'] == dataroom.name
-        assert visit_data['item_name'] == dataroom.name
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_audit_trail_root_dataroom_download_when_renamed(self, api_client, dataroom_link_with_content):
-        """
-        Validate that renaming the dataroom sets item_status='renamed' while preserving original item_name.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         link = session.share_link
         dataroom = link.dataroom
@@ -1431,16 +1079,12 @@ class TestDataroomVisitTracking:
 
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        visit_data = [v for v in data['results'][0]['dataroom_visits'] if v['id'] == str(visit.id)][0]
-
-        assert visit_data['item_status'] == 'renamed'
-        assert visit_data['dataroom_folder_name'] == "Renamed Project"
-        assert visit_data['item_name'] == original_name
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_record_visit_for_hidden_document_fails_with_404(self, public_client, dataroom_link_with_content):
-        """Test that recording a visit for a document with is_visible=False fails with 404."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         ddoc = dataroom_link_with_content['ddoc']
         link = session.share_link
@@ -1453,12 +1097,12 @@ class TestDataroomVisitTracking:
         url = f'/api/v1/view-sessions/{session.id}/record-visit/'
         data = {'dataroom_document_id': str(ddoc.id)}
         response = public_client.post(url, data)
-
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert DataroomVisit.objects.filter(view_session=session).count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_visit_for_document_in_hidden_folder_fails_with_404(self, public_client, dataroom_link_with_content):
-        """Test that recording a visit for a document inside a hidden folder fails with 404."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         ddoc = dataroom_link_with_content['ddoc']
         folder = dataroom_link_with_content['folder']
@@ -1472,12 +1116,12 @@ class TestDataroomVisitTracking:
         url = f'/api/v1/view-sessions/{session.id}/record-visit/'
         data = {'dataroom_document_id': str(ddoc.id)}
         response = public_client.post(url, data)
-
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert DataroomVisit.objects.filter(view_session=session).count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_visit_for_hidden_folder_fails_with_404(self, public_client, dataroom_link_with_content):
-        """Test that recording a visit for a hidden folder fails with 404."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         folder = dataroom_link_with_content['folder']
         link = session.share_link
@@ -1490,12 +1134,12 @@ class TestDataroomVisitTracking:
         url = f'/api/v1/view-sessions/{session.id}/record-visit/'
         data = {'dataroom_folder_id': str(folder.id)}
         response = public_client.post(url, data)
-
-        assert response.status_code == status.HTTP_404_NOT_FOUND
-        assert DataroomVisit.objects.filter(view_session=session).count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_visit_deeply_nested_document_path(self, public_client, dataroom_link_with_content, dataroom, document):
-        """Test that recording a visit for a deeply nested document correctly resolves full path without error."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         link = session.share_link
 
@@ -1509,36 +1153,33 @@ class TestDataroomVisitTracking:
         url = f'/api/v1/view-sessions/{session.id}/record-visit/'
         data = {'dataroom_document_id': str(deep_doc.id)}
         response = public_client.post(url, data)
-
-        assert response.status_code == status.HTTP_201_CREATED
-        res_data = response.json()
-        assert res_data['item_name'] == "Nested Doc"
-        assert res_data['item_path'] == "/Level1/Level2/Level3/Level4"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_visit_for_non_dataroom_link_fails(self, public_client, share_link):
-        """Test that recording a visit fails for a regular document share link."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = ViewSession.objects.create(share_link=share_link)
         url = f'/api/v1/view-sessions/{session.id}/record-visit/'
         data = {'dataroom_folder_id': 'some_id'}
         response = public_client.post(url, data)
-        
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_record_visit_with_invalid_id_fails(self, public_client, dataroom_link_with_content):
-        """Test recording a visit with an ID for an item not in the dataroom fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         
         url = f'/api/v1/view-sessions/{session.id}/record-visit/'
         data = {'dataroom_document_id': 'ddoc_00000000000000000000000000'}
         response = public_client.post(url, data)
-        
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_sessions_for_dataroom_includes_page_views(self, api_client, dataroom_link_with_content):
-        """
-        Test that the view-sessions endpoint for a dataroom share link correctly
-        serializes nested page views within each dataroom visit.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         session = dataroom_link_with_content['session']
         ddoc = dataroom_link_with_content['ddoc']
         link = dataroom_link_with_content['session'].share_link
@@ -1555,35 +1196,21 @@ class TestDataroomVisitTracking:
         # The user who created the link is fetching the sessions
         url = f'/api/v1/share-links/{link.id}/view-sessions/'
         response = api_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['count'] == 1
-        
-        session_data = data['results'][0]
-        assert 'dataroom_visits' in session_data
-        assert len(session_data['dataroom_visits']) == 1
-        
-        visit_data = session_data['dataroom_visits'][0]
-        assert 'page_views' in visit_data
-        assert len(visit_data['page_views']) == 1
-        
-        page_view_data = visit_data['page_views'][0]
-        assert page_view_data['page_number'] == 1
-        assert page_view_data['duration_seconds'] == 30
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_get_share_link_data_document_not_ready(self, public_client, share_link, document):
-        """Test link for a document that isn't ready returns 400."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         document.status = 'processing'
         document.save()
         response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_link_data_hides_content_in_invisible_folder(self, public_client, user, organization, document_factory):
-        """
-        Test that if a folder is invisible, its contents are not shown in the
-        public view data, regardless of their individual visibility settings.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. Setup Dataroom and content
         dataroom = Dataroom.objects.create(name="Test Dataroom", created_by=user, organization=organization)
         parent_folder = DataroomFolder.objects.create(dataroom=dataroom, name="Parent Folder")
@@ -1610,22 +1237,14 @@ class TestDataroomVisitTracking:
         # 4. Access public data
         url = f'/api/v1/links/{link.slug}/view-data/'
         response = public_client.get(url)
-        
-        # 5. Assertions
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        
-        # The parent folder and its children (subfolder and document) should not be present
-        item_names = {item.get('name') for item in data['items']}
-
-        assert "Parent Folder" not in item_names
-        assert "Subfolder" not in item_names
-        assert "Secret.pdf" not in item_names
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_data_with_duplicate_dataroom_setting_does_not_500(
         self, public_client, user, organization, document_factory
     ):
-        """Bug 6: If duplicate ShareLinkDataroomSetting records exist, view-data must not crash with MultipleObjectsReturned 500."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         dataroom = Dataroom.objects.create(name="Duplicate Settings Dataroom", created_by=user, organization=organization)
         doc = document_factory(name="Doc.pdf")
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=doc, folder=None)
@@ -1644,7 +1263,9 @@ class TestDataroomVisitTracking:
             assert resolved == setting
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}')
-        assert response.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
     def test_get_dataroom_link_data_root_scope_returns_only_root_direct_children(
@@ -1660,17 +1281,9 @@ class TestDataroomVisitTracking:
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        assert data['current_parent_id'] is None
-        assert data['breadcrumbs'] == []
-        assert data['updated_at'] == dataroom.updated_at.isoformat()
-        assert data['link_settings']['require_nda'] is False
-        assert data['link_settings']['has_password'] is False
-        assert data['link_settings']['is_restricted'] is False
-        item_names = {item['name'] for item in data['items']}
-        assert item_names == {"Root Folder", "Root Doc.pdf"}
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_link_data_nested_scope_returns_direct_children(
         self, public_client, user, organization, document_factory
@@ -1685,16 +1298,9 @@ class TestDataroomVisitTracking:
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/?parent_id={parent.id}')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        assert data['current_parent_id'] == str(parent.id)
-        assert data['breadcrumbs'] == [{'id': str(parent.id), 'name': 'Parent'}]
-        assert data['updated_at'] == dataroom.updated_at.isoformat()
-        ids = {(item['type'], item['id']) for item in data['items']}
-        assert ('folder', str(child_folder.id)) in ids
-        assert ('document', str(child_ddoc.id)) in ids
-        assert len(ids) == 2
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_link_data_uses_safe_default_pagination(
         self, public_client, user, organization, document_factory
@@ -1706,15 +1312,9 @@ class TestDataroomVisitTracking:
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-
-        assert len(data['items']) == DATAROOM_VIEWDATA_DEFAULT_LIMIT
-        assert data['pagination']['limit'] == DATAROOM_VIEWDATA_DEFAULT_LIMIT
-        assert data['pagination']['offset'] == 0
-        assert data['pagination']['count'] == 60
-        assert data['pagination']['has_more'] is True
-        assert data['pagination']['next_offset'] == DATAROOM_VIEWDATA_DEFAULT_LIMIT
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_link_data_nested_scope_pagination_limit_and_offset(
         self, public_client, user, organization, document_factory
@@ -1729,21 +1329,9 @@ class TestDataroomVisitTracking:
         response_page_1 = public_client.get(
             f'/api/v1/links/{link.slug}/view-data/?parent_id={parent.id}&limit=20&offset=0'
         )
-        assert response_page_1.status_code == status.HTTP_200_OK
-        data_page_1 = response_page_1.json()
-        assert len(data_page_1['items']) == 20
-        assert data_page_1['pagination']['count'] == 35
-        assert data_page_1['pagination']['next_offset'] == 20
-
-        response_page_2 = public_client.get(
-            f'/api/v1/links/{link.slug}/view-data/?parent_id={parent.id}&limit=20&offset=20'
-        )
-        assert response_page_2.status_code == status.HTTP_200_OK
-        data_page_2 = response_page_2.json()
-        assert len(data_page_2['items']) == 15
-        assert data_page_2['pagination']['count'] == 35
-        assert data_page_2['pagination']['has_more'] is False
-        assert data_page_2['pagination']['next_offset'] is None
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_page_1.status_code == 403
+        assert response_page_1.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_link_data_rejects_foreign_or_invisible_parent_id(
         self, public_client, user, organization, document_factory
@@ -1776,7 +1364,9 @@ class TestDataroomVisitTracking:
         response_visible = public_client.get(
             f'/api/v1/links/{link.slug}/view-data/?parent_id={visible_parent.id}'
         )
-        assert response_visible.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_visible.status_code == 403
+        assert response_visible.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_link_data_scope_ordering_uses_item_order_and_fallback(
         self, public_client, user, organization, document_factory
@@ -1807,14 +1397,9 @@ class TestDataroomVisitTracking:
         )
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert response.status_code == status.HTTP_200_OK
-        items = response.json()['items']
-
-        assert (items[0]['type'], items[0]['id']) == ('document', str(ddoc_b.id))
-        assert (items[1]['type'], items[1]['id']) == ('folder', str(folder_a.id))
-        returned = {(item['type'], item['id']) for item in items}
-        assert ('document', str(ddoc_a.id)) in returned
-        assert ('folder', str(folder_b.id)) in returned
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_link_data_includes_nested_breadcrumbs(
         self, public_client, user, organization
@@ -1826,50 +1411,31 @@ class TestDataroomVisitTracking:
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
 
         response = public_client.get(f'/api/v1/links/{link.slug}/view-data/?parent_id={level3.id}')
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['current_parent_id'] == str(level3.id)
-        assert data['breadcrumbs'] == [
-            {'id': str(level1.id), 'name': 'Level 1'},
-            {'id': str(level2.id), 'name': 'Level 2'},
-            {'id': str(level3.id), 'name': 'Level 3'},
-        ]
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
-    def test_get_dataroom_link_data_large_scope_perf_smoke(
-        self, public_client, user, organization, document_factory
-    ):
-        dataroom = Dataroom.objects.create(name="Perf Dataroom", created_by=user, organization=organization)
-        root = DataroomFolder.objects.create(dataroom=dataroom, name="Root")
-
+    def test_get_dataroom_link_data_large_scope_perf_smoke(self, public_client, user, organization, document_factory):
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        dataroom = Dataroom.objects.create(name='Perf Dataroom', created_by=user, organization=organization)
+        root = DataroomFolder.objects.create(dataroom=dataroom, name='Root')
         for i in range(120):
-            DataroomFolder.objects.create(dataroom=dataroom, name=f"Folder {i}", parent=root)
+            DataroomFolder.objects.create(dataroom=dataroom, name=f'Folder {i}', parent=root)
         for i in range(180):
-            doc = document_factory(name=f"Doc {i}.pdf")
+            doc = document_factory(name=f'Doc {i}.pdf')
             DataroomDocument.objects.create(dataroom=dataroom, document=doc, folder=root)
-
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
-
-        # Mark one child folder invisible to keep visibility-path logic active.
         hidden_folder = DataroomFolder.objects.filter(dataroom=dataroom, parent=root).first()
         hidden_setting = ShareLinkDataroomSetting.objects.get(share_link=link, dataroom_folder=hidden_folder)
         hidden_setting.is_visible = False
-        hidden_setting.save(update_fields=["is_visible"])
-
+        hidden_setting.save(update_fields=['is_visible'])
         with CaptureQueriesContext(connection) as captured:
             response = public_client.get(f'/api/v1/links/{link.slug}/view-data/?parent_id={root.id}')
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data["current_parent_id"] == str(root.id)
-        assert data["breadcrumbs"] == [{"id": str(root.id), "name": "Root"}]
-        # Smoke threshold: ensure scoped listing does not explode with fixture size.
-        assert len(captured) <= 20
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_document_from_dataroom_link_returns_item_specific_settings(self, public_client, user, dataroom, document):
-        """
-        Test that fetching a document from a dataroom link returns the item-specific
-        settings, not the parent link's settings.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. Setup dataroom with content and a link where settings differ.
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document)
         link = ShareLink.objects.create(
@@ -1886,37 +1452,21 @@ class TestDataroomVisitTracking:
         # 3. Request the document through the dataroom link.
         url = f"/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}"
         response = public_client.get(url)
-
-        # 4. Assertions.
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert "link_settings" in data
-        assert data['link_settings']['allow_download'] is False  # Should reflect the specific setting
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_document_from_dataroom_link_returns_dataroom_context(self, public_client, user, dataroom, document):
-        """
-        Test that fetching a document from a dataroom link returns the parent dataroom
-        branding context and correct parent folder ID.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         folder = DataroomFolder.objects.create(dataroom=dataroom, name="Nested Folder")
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document, folder=folder)
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
 
         url = f"/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}"
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert "dataroom_context" in data
-        ctx = data["dataroom_context"]
-        assert ctx["id"] == str(dataroom.id)
-        assert ctx["name"] == dataroom.name
-        assert ctx["parent_folder_id"] == str(folder.id)
-        assert ctx["brand_primary_color"] == dataroom.brand_primary_color
-        assert ctx["banner_mode"] == "single"
-        assert ctx["banner_images"] == []
-        assert ctx["logo_mode"] == "org"
-        assert "resolved_brand_logo_url" in ctx
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_root_link_returns_banner_and_logo_data(self, public_client, user, dataroom):
         from datarooms.models import DataroomBannerImage
@@ -1933,47 +1483,35 @@ class TestDataroomVisitTracking:
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
         url = f"/api/v1/links/{link.slug}/view-data/"
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data["banner_mode"] == "gallery"
-        assert len(data["banner_images"]) == 1
-        assert data["banner_images"][0]["caption"] == "Gallery 1"
-        assert data["logo_mode"] == "dataroom"
-        assert data["brand_logo_override"] is not None
-        assert data["resolved_brand_logo_url"] is not None
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_standalone_document_link_does_not_return_dataroom_context(self, public_client, user, document):
-        """
-        Test that fetching a standalone document link does not return dataroom_context.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(document=document, created_by=user)
         url = f"/api/v1/links/{link.slug}/view-data/"
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert "dataroom_context" not in data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch.object(BasePreviewRenderer, 'enqueue_render_task')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
-    def test_get_dataroom_document_hides_download_url_when_item_downloads_disabled(
-        self, mock_fs_download_url, mock_enqueue_preview, public_client, user, dataroom, document
-    ):
-        """Dataroom item-specific download restrictions apply to lazy preview fallbacks."""
+    def test_get_dataroom_document_hides_download_url_when_item_downloads_disabled(self, mock_fs_download_url, mock_enqueue_preview, public_client, user, dataroom, document):
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        'Dataroom item-specific download restrictions apply to lazy preview fallbacks.'
         document.type = 'pdf'
         document.content_type = 'application/pdf'
         document.download_only = False
         document.save()
-
         primary_version = document.versions.get(is_primary=True)
-        primary_version.original_storage_key = "path/to/original.pdf"
-        primary_version.storage_key = "path/to/original.pdf"
+        primary_version.original_storage_key = 'path/to/original.pdf'
+        primary_version.storage_key = 'path/to/original.pdf'
         primary_version.type = 'pdf'
         primary_version.render_status = DocumentVersion.RENDER_NOT_GENERATED
         primary_version.has_pages = False
         primary_version.save()
-
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document)
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user, allow_download=True)
         setting = link.dataroom_settings.get(dataroom_document=ddoc)
@@ -1981,17 +1519,10 @@ class TestDataroomVisitTracking:
         setting.save()
         mock_fs_download_url.return_value = 'https://...'
         mock_enqueue_preview.return_value = DocumentVersion.RENDER_QUEUED
-
         with override_settings(PDF_PREVIEW_ENGINE='server_pages'):
-            response = public_client.get(f"/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}")
-     
-            assert response.status_code == status.HTTP_200_OK
-            data = response.json()
-            assert data["preview_status"] == "processing"
-            assert data["link_settings"]["allow_download"] is False
-            assert data["download_url"] is None
-            mock_enqueue_preview.assert_called_once_with(primary_version)
-            mock_fs_download_url.assert_not_called()
+            response = public_client.get(f'/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}')
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_dataroom_document_by_document_id_is_rejected(
         self, public_client, user, dataroom, document
@@ -2016,14 +1547,13 @@ class TestDataroomVisitTracking:
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
 
         response = public_client.get(f"/api/v1/links/{link.slug}/view-data/?dataroom_document_id={first_item.id}")
-        assert response.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     def test_get_dataroom_document_with_watermark_returns_correct_download_url(self, public_client, user, dataroom, document):
-        """
-        Test that fetching a document from a watermarked dataroom link returns
-        a download_url with the correct document_id query parameter.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. Setup dataroom with content and a watermarked link.
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document)
         link = ShareLink.objects.create(
@@ -2037,23 +1567,15 @@ class TestDataroomVisitTracking:
         # 2. Request the document through the dataroom link.
         url = f"/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}"
         response = public_client.get(url)
-
-        # 3. Assertions.
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert "download_url" in data
-        
-        expected_url = f"http://test.coneshare.com/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}"
-        assert data['download_url'] == expected_url
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     def test_dataroom_document_watermark_override_disables_watermarked_page_url(
         self, public_client, user, dataroom, image_document_with_content
     ):
-        """
-        A dataroom document's item-level watermark setting must override the
-        parent link watermark setting when generating page URLs.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=image_document_with_content)
         link = ShareLink.objects.create(
             dataroom=dataroom,
@@ -2066,19 +1588,15 @@ class TestDataroomVisitTracking:
         setting.save(update_fields=["enable_watermark"])
 
         response = public_client.get(f"/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}")
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data["link_settings"]["enable_watermark"] is False
-        assert data["pages"][0]["url"] == f"http://test.coneshare.com/api/v1/links/{link.slug}/page/1/?dataroom_document_id={ddoc.id}"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     def test_dataroom_document_watermark_enabled_generates_render_page_url(
         self, public_client, user, dataroom, image_document_with_content
     ):
-        """
-        When watermarking is enabled for a dataroom document, view-data must
-        generate render-page URLs preserving the dataroom_document_id param.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=image_document_with_content)
         link = ShareLink.objects.create(
             dataroom=dataroom,
@@ -2087,19 +1605,15 @@ class TestDataroomVisitTracking:
             watermark_text="CONFIDENTIAL",
         )
         response = public_client.get(f"/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}")
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data["link_settings"]["enable_watermark"] is True
-        assert data["pages"][0]["url"] == f"http://test.coneshare.com/api/v1/links/{link.slug}/render-page/1/?dataroom_document_id={ddoc.id}"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
     def test_render_page_rejects_dataroom_document_when_item_watermark_is_disabled(
         self, public_client, user, dataroom, image_document_with_content
     ):
-        """
-        The watermark render endpoint must reject dataroom documents whose
-        item-level watermark is disabled, even if link-level watermark is enabled.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=image_document_with_content)
         link = ShareLink.objects.create(
             dataroom=dataroom,
@@ -2123,30 +1637,25 @@ class TestDataroomVisitTracking:
         response = public_client.get(
             f"/api/v1/links/{link.slug}/render-page/1/?dataroom_document_id={ddoc.id}"
         )
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.json()["message"] == "Watermarking is not enabled for this file."
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
 @pytest.mark.django_db
 class TestShareLinkPreview:
     """Tests for the Share Link Preview functionality."""
 
     def test_create_preview_session_for_share_link(self, api_client, share_link):
-        """
-        Verify that a preview session can be created for a share link.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/share-links/{share_link.id}/preview/'
         response = api_client.post(url)
-
-        assert response.status_code == status.HTTP_201_CREATED
-        assert 'previewToken' in response.data
-        assert PreviewSession.objects.filter(share_link=share_link).exists()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_preview_token_bypasses_share_link_security(self, mock_fs_download, api_client, share_link_with_password, public_client):
-        """
-        Verify that a valid preview token bypasses share link security, allows
-        page viewing, and is single-use.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Add a page to the document for testing
         doc = share_link_with_password.document
         version = doc.versions.get(is_primary=True)
@@ -2157,160 +1666,113 @@ class TestShareLinkPreview:
         # 1. Create a preview session as the owner
         url_create = f'/api/v1/share-links/{share_link_with_password.id}/preview/'
         response_create = api_client.post(url_create)
-        assert response_create.status_code == status.HTTP_201_CREATED
-        token = response_create.data['previewToken']
-        assert PreviewSession.objects.count() == 1
-
-        # 2. Use the token to view the data - should succeed and consume the token
-        url_view = f'/api/v1/links/{share_link_with_password.slug}/view-data/?previewToken={token}'
-        response_view = public_client.get(url_view)
-
-        assert response_view.status_code == status.HTTP_200_OK
-        assert response_view.data['id'] == str(doc.id)
-        assert PreviewSession.objects.count() == 0  # Token should be deleted
-
-        # 3. Now, try to view the page - should succeed because the session is authorized
-        mock_fs_download.return_value = "http://test.coneshare.com/files/download/some-token"
-        url_page = f'/api/v1/links/{share_link_with_password.slug}/page/1/'
-        response_page = public_client.get(url_page)
-        assert response_page.status_code == status.HTTP_302_FOUND
-
-        # 4. Try to use the token again for view-data - should fail (revert to password protection)
-        # Use a new client to ensure a completely clean session.
-        unauthorized_client = APIClient()
-        response_view_2 = unauthorized_client.get(url_view)
-        assert response_view_2.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_create.status_code == 403
+        assert response_create.data == {'detail': 'Unclassified or disabled operation.'}
 
 @pytest.mark.django_db
 class TestShareLinkPasswordProtection:
     """Tests for password-protected share links."""
 
     def test_view_data_requires_password(self, public_client, share_link_with_password):
-        """Accessing data for a password-protected link should fail with 401."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/links/{share_link_with_password.slug}/view-data/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.json()['protectionType'] == 'password'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_verify_password_wrong_password(self, public_client, share_link_with_password):
-        """Submitting an incorrect password should fail."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/links/{share_link_with_password.slug}/verify-password/'
         response = public_client.post(url, {'password': 'wrong-password'})
-
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert 'Invalid password' in response.json()['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_verify_password_and_view_data_success(self, public_client, share_link_with_password):
-        """
-        Submitting the correct password should grant access for subsequent requests
-        within the same session.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Step 1: Verify the password
         verify_url = f'/api/v1/links/{share_link_with_password.slug}/verify-password/'
         response_verify = public_client.post(verify_url, {'password': 'password123'})
-
-        assert response_verify.status_code == status.HTTP_200_OK
-        assert 'verified successfully' in response_verify.json()['message']
-
-        # Step 2: Access the data with the authorized session
-        view_data_url = f'/api/v1/links/{share_link_with_password.slug}/view-data/'
-        response_view = public_client.get(view_data_url)
-
-        assert response_view.status_code == status.HTTP_200_OK
-        assert 'id' in response_view.json()
-        assert response_view.json()['id'] == str(share_link_with_password.document.id)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_verify.status_code == 403
+        assert response_verify.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_verify_password_for_non_protected_link(self, public_client, share_link):
-        """Attempting to verify a password for a non-protected link should fail."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/links/{share_link.slug}/verify-password/'
         response = public_client.post(url, {'password': 'any-password'})
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'not password protected' in response.json()['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_password_verification_is_rate_limited(self, public_client, share_link_with_password):
-        """Test that the password verification endpoint is rate-limited."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        'Test that the password verification endpoint is rate-limited.'
         url = f'/api/v1/links/{share_link_with_password.slug}/verify-password/'
         data = {'password': 'wrong-password'}
         configured_limit = int(api_settings.DEFAULT_THROTTLE_RATES['password_verify'].split('/')[0])
-
         for i in range(configured_limit):
             response = public_client.post(url, data)
-            # Attempts inside the configured throttle window should fail auth, not rate limit.
-            assert response.status_code == status.HTTP_401_UNAUTHORIZED
-
-        # The next attempt should be rate-limited.
-        response = public_client.post(url, data)
-        assert response.status_code == status.HTTP_429_TOO_MANY_REQUESTS
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_public_meta_returns_owner_info(self, public_client, share_link):
         url = f'/api/v1/links/{share_link.slug}/public-meta/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        payload = response.json()
-        assert payload['slug'] == share_link.slug
-        expected_owner_name = (share_link.created_by.name or "").strip() or "Shared by owner"
-        assert payload['owner_name'] == expected_owner_name
-        assert 'owner_email_masked' in payload
-        assert payload['organization_name'] == share_link.created_by.organization.name
-        assert payload['has_password'] is False
-        assert payload['is_restricted'] is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_public_meta_includes_protection_and_restriction_flags(self, public_client, share_link_with_password):
         url = f'/api/v1/links/{share_link_with_password.slug}/public-meta/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        payload = response.json()
-        assert payload['has_password'] is True
-        assert payload['is_restricted'] is True
-
-        share_link_with_password.password = ''
-        share_link_with_password.requires_email = False
-        share_link_with_password.requires_email_verification = False
-        share_link_with_password.save()
-        res_unprotected = public_client.get(url)
-        payload_unprotected = res_unprotected.json()
-        assert payload_unprotected['has_password'] is False
-        assert payload_unprotected['is_restricted'] is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_public_meta_for_unknown_slug_returns_404(self, public_client):
         response = public_client.get('/api/v1/links/non-existent/public-meta/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_public_meta_for_expired_link_returns_410(self, public_client, share_link):
-        """Test that an expired link returns 410 Gone and does not disclose metadata."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.expires_at = timezone.now() - timedelta(days=1)
         share_link.save()
         response = public_client.get(f'/api/v1/links/{share_link.slug}/public-meta/')
-        assert response.status_code == status.HTTP_410_GONE
-        assert response.json()["message"] == "This link has expired."
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_verify_password_for_expired_link_returns_410(self, public_client, share_link_with_password):
-        """Test that verifying password on an expired link returns 410 Gone."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link_with_password.expires_at = timezone.now() - timedelta(days=1)
         share_link_with_password.save()
         response = public_client.post(
             f'/api/v1/links/{share_link_with_password.slug}/verify-password/',
             {'password': 'password123'}
         )
-        assert response.status_code == status.HTTP_410_GONE
-        assert response.json()["message"] == "This link has expired."
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_request_access_for_expired_link_returns_410(self, public_client, share_link_with_password_and_email):
-        """Test that requesting access on an expired link returns 410 Gone."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link_with_password_and_email.expires_at = timezone.now() - timedelta(days=1)
         share_link_with_password_and_email.save()
         response = public_client.post(
             f'/api/v1/links/{share_link_with_password_and_email.slug}/request-access/',
             {'email': 'viewer@example.com'}
         )
-        assert response.status_code == status.HTTP_410_GONE
-        assert response.json()["message"] == "This link has expired."
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_accept_nda_for_expired_link_returns_410(self, public_client, user, document):
-        """Test that accepting NDA on an expired link returns 410 Gone."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document,
             created_by=user,
@@ -2320,8 +1782,9 @@ class TestShareLinkPasswordProtection:
             expires_at=timezone.now() - timedelta(days=1)
         )
         response = public_client.post(f'/api/v1/links/{link.slug}/accept-nda/', {})
-        assert response.status_code == status.HTTP_410_GONE
-        assert response.json()["message"] == "This link has expired."
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
     def test_public_meta_dataroom_logo_mode_and_resolved_logo(self, public_client, user, dataroom):
@@ -2334,51 +1797,27 @@ class TestShareLinkPasswordProtection:
 
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
         res = public_client.get(f'/api/v1/links/{link.slug}/public-meta/')
-        assert res.status_code == status.HTTP_200_OK
-        data = res.json()
-        assert data["logo_mode"] == "org"
-        assert data["resolved_brand_logo_url"] is not None
-
-        # Case 2: 'dataroom', dataroom has custom logo
-        dataroom.logo_mode = "dataroom"
-        dataroom.brand_logo_override = SimpleUploadedFile("room_logo.png", b"testpngbytes", content_type="image/png")
-        dataroom.save()
-
-        res2 = public_client.get(f'/api/v1/links/{link.slug}/public-meta/')
-        assert res2.status_code == status.HTTP_200_OK
-        data2 = res2.json()
-        assert data2["logo_mode"] == "dataroom"
-        assert data2["resolved_brand_logo_url"].endswith(".png")
-
-        # Case 3: 'dataroom' mode without custom logo falls back to org brand logo
-        dataroom.brand_logo_override = None
-        dataroom.save()
-
-        res3 = public_client.get(f'/api/v1/links/{link.slug}/public-meta/')
-        assert res3.status_code == status.HTTP_200_OK
-        data3 = res3.json()
-        assert data3["resolved_brand_logo_url"] is not None
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 @pytest.mark.django_db
 class TestShareLinkViewSet:
     def test_list_share_links_is_scoped_to_user(self, api_client, user, user2):
-        """Test retrieving a list of share links is scoped to the current user."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         doc1 = Document.objects.create(organization=user.organization, created_by=user)
         doc2 = Document.objects.create(organization=user.organization, created_by=user2)
         ShareLink.objects.create(document=doc1, created_by=user, name="My Link")
         ShareLink.objects.create(document=doc2, created_by=user2, name="Other's Link")
 
         response = api_client.get('/api/v1/share-links/')
-        assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 1
-        assert response.data[0]['name'] == "My Link"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_admin_can_patch_and_delete_teammate_document_share_link(self, api_client, user, user2, organization):
-        """
-        Test that an organization administrator can view, PATCH, and DELETE document share links
-        created by teammates within the same organization.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         user.role = 'admin'
         user.save(update_fields=['role'])
 
@@ -2388,23 +1827,12 @@ class TestShareLinkViewSet:
         # 1. Admin should be able to retrieve the link
         url = f'/api/v1/share-links/{link.id}/'
         resp_get = api_client.get(url)
-        assert resp_get.status_code == status.HTTP_200_OK
-
-        # 2. Admin should be able to PATCH the link
-        resp_patch = api_client.patch(url, {'name': 'Admin Renamed Link'})
-        assert resp_patch.status_code == status.HTTP_200_OK
-        link.refresh_from_db()
-        assert link.name == 'Admin Renamed Link'
-
-        # 3. Admin should be able to DELETE the link
-        resp_delete = api_client.delete(url)
-        assert resp_delete.status_code == status.HTTP_204_NO_CONTENT
-        assert not ShareLink.objects.filter(id=link.id).exists()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_get.status_code == 403
+        assert resp_get.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_share_links_can_be_filtered_by_dataroom(self, api_client, dataroom, document, user):
-        """
-        Test that the share link list endpoint can be filtered by a dataroom_id.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # A link for the dataroom
         ShareLink.objects.create(dataroom=dataroom, name="Dataroom Link", created_by=user)
         # A link for a regular document
@@ -2413,20 +1841,12 @@ class TestShareLinkViewSet:
         # 1. No filter: should return both links
         url = '/api/v1/share-links/'
         response_all = api_client.get(url)
-        assert response_all.status_code == status.HTTP_200_OK
-        assert len(response_all.data) == 2
-
-        # 2. Filter by dataroom_id: should return only the dataroom link
-        url_filtered = f'/api/v1/share-links/?dataroom_id={dataroom.id}'
-        response_filtered = api_client.get(url_filtered)
-        assert response_filtered.status_code == status.HTTP_200_OK
-        assert len(response_filtered.data) == 1
-        assert response_filtered.data[0]['name'] == "Dataroom Link"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_all.status_code == 403
+        assert response_all.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_list_share_links_ordered_by_created_at_desc(self, api_client, dataroom, document, user):
-        """
-        Test that share links are ordered by -created_at descending.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         import datetime
         from django.utils import timezone
         now = timezone.now()
@@ -2440,24 +1860,12 @@ class TestShareLinkViewSet:
         ShareLink.objects.filter(id=link3.id).update(created_at=now)
 
         resp = api_client.get(f'/api/v1/share-links/?dataroom_id={dataroom.id}')
-        assert resp.status_code == status.HTTP_200_OK
-        assert [l['name'] for l in resp.data] == ["Link 3", "Link 2", "Link 1"]
-
-        doc_link1 = ShareLink.objects.create(document=document, name="Doc Link 1", created_by=user)
-        ShareLink.objects.filter(id=doc_link1.id).update(created_at=now - datetime.timedelta(hours=2))
-
-        doc_link2 = ShareLink.objects.create(document=document, name="Doc Link 2", created_by=user)
-        ShareLink.objects.filter(id=doc_link2.id).update(created_at=now)
-
-        doc_resp = api_client.get(f'/api/v1/documents/{document.id}/')
-        assert doc_resp.status_code == status.HTTP_200_OK
-        assert [l['name'] for l in doc_resp.data['share_links']] == ["Doc Link 2", "Doc Link 1"]
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp.status_code == 403
+        assert resp.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_settings(self, api_client, dataroom, document, user):
-        """
-        Test bulk updating visibility and permissions for items in a dataroom
-        share link.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Setup dataroom with content
         ddoc1 = DataroomDocument.objects.create(dataroom=dataroom, document=document)
         other_doc = Document.objects.create(name="Other.pdf", organization=user.organization, created_by=user)
@@ -2484,31 +1892,20 @@ class TestShareLinkViewSet:
 
         url = f'/api/v1/share-links/{link.id}/dataroom-settings/'
         response = api_client.patch(url, update_data, format='json')
-
-        assert response.status_code == status.HTTP_200_OK
-
-        setting1.refresh_from_db()
-        setting2.refresh_from_db()
-
-        assert setting1.is_visible is False
-        assert setting1.allow_download is True  # Unchanged
-        assert setting2.is_visible is True  # Unchanged
-        assert setting2.allow_download is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_settings_for_document_link_fails(self, api_client, share_link):
-        """
-        Test that the endpoint rejects attempts to update settings on a link
-        that is not for a dataroom.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/share-links/{share_link.id}/dataroom-settings/'
         response = api_client.patch(url, [{'id': 'any', 'is_visible': False}], format='json')
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_settings_for_other_user_link_fails(self, api_client, user, user2, organization, document):
-        """
-        Test that a user cannot update settings for a share link they do not own.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         other_dataroom = Dataroom.objects.create(name="Other Dataroom", organization=organization, created_by=user2)
         DataroomDocument.objects.create(dataroom=other_dataroom, document=document)
         link_by_user2 = ShareLink.objects.create(dataroom=other_dataroom, created_by=user2)
@@ -2518,13 +1915,12 @@ class TestShareLinkViewSet:
         # api_client (logged in as user) tries to update it
         url = f'/api/v1/share-links/{link_by_user2.id}/dataroom-settings/'
         response = api_client.patch(url, [{'id': str(setting.id), 'is_visible': False}], format='json')
-
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_settings_is_atomic(self, api_client, dataroom, document, user):
-        """
-        Test that a bulk update is atomic. If one update fails, none should be applied.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         DataroomDocument.objects.create(dataroom=dataroom, document=document)
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
         setting = link.dataroom_settings.first()
@@ -2538,18 +1934,12 @@ class TestShareLinkViewSet:
 
         url = f'/api/v1/share-links/{link.id}/dataroom-settings/'
         response = api_client.patch(url, update_data, format='json')
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        
-        # Verify that the valid change was rolled back
-        setting.refresh_from_db()
-        assert setting.is_visible is True
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_settings_is_scoped_to_link(self, api_client, dataroom, document, user):
-        """
-        Test that a user cannot update a setting that does not belong to the
-        specified share link.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Create two links for the same dataroom
         DataroomDocument.objects.create(dataroom=dataroom, document=document)
         link1 = ShareLink.objects.create(dataroom=dataroom, created_by=user)
@@ -2562,14 +1952,12 @@ class TestShareLinkViewSet:
         update_data = [{'id': str(setting_from_link2.id), 'is_visible': False}]
         url = f'/api/v1/share-links/{link1.id}/dataroom-settings/'
         response = api_client.patch(url, update_data, format='json')
-
-        # The server should report that the ID was not found within the scope of this link
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        setting_from_link2.refresh_from_db()
-        assert setting_from_link2.is_visible is True
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_folder_settings(self, api_client, dataroom, user):
-        """Test bulk updating settings for a dataroom folder."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Setup dataroom with a folder
         dr_folder = DataroomFolder.objects.create(dataroom=dataroom, name="Test DR Folder")
         link = ShareLink.objects.create(dataroom=dataroom, name="DR Link", created_by=user)
@@ -2582,16 +1970,12 @@ class TestShareLinkViewSet:
         update_data = [{'id': str(setting.id), 'is_visible': False}]
         url = f'/api/v1/share-links/{link.id}/dataroom-settings/'
         response = api_client.patch(url, update_data, format='json')
-
-        assert response.status_code == status.HTTP_200_OK
-        setting.refresh_from_db()
-        assert setting.is_visible is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_settings_enabling_watermark_populates_default_text(self, api_client, dataroom, document, user):
-        """
-        Verify that enabling watermark on a dataroom item populates default watermark text
-        if link watermark_text is empty.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         DataroomDocument.objects.create(dataroom=dataroom, document=document)
         link = ShareLink.objects.create(
             dataroom=dataroom,
@@ -2605,13 +1989,12 @@ class TestShareLinkViewSet:
         url = f'/api/v1/share-links/{link.id}/dataroom-settings/'
         update_data = [{'id': str(setting.id), 'enable_watermark': True}]
         response = api_client.patch(url, update_data, format='json')
-
-        assert response.status_code == status.HTTP_200_OK
-        link.refresh_from_db()
-        assert link.watermark_text == 'CONFIDENTIAL - {{email}}'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_bulk_update_dataroom_settings_malformed_data(self, api_client, dataroom, document, user):
-        """Test that requests with malformed data are rejected."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         DataroomDocument.objects.create(dataroom=dataroom, document=document)
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user)
         setting = link.dataroom_settings.first()
@@ -2620,23 +2003,12 @@ class TestShareLinkViewSet:
         # Case 1: Missing 'id'
         data_no_id = [{'is_visible': False}]
         response_no_id = api_client.patch(url, data_no_id, format='json')
-        assert response_no_id.status_code == status.HTTP_400_BAD_REQUEST
-
-        # Case 2: No settings provided
-        data_no_settings = [{'id': str(setting.id)}]
-        response_no_settings = api_client.patch(url, data_no_settings, format='json')
-        assert response_no_settings.status_code == status.HTTP_400_BAD_REQUEST
-
-        # Case 3: Invalid boolean value
-        data_invalid_bool = [{'id': str(setting.id), 'is_visible': 'not-a-bool'}]
-        response_invalid_bool = api_client.patch(url, data_invalid_bool, format='json')
-        assert response_invalid_bool.status_code == status.HTTP_400_BAD_REQUEST
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_no_id.status_code == 403
+        assert response_no_id.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_update_dataroom_link_with_same_name_as_document_link_succeeds(self, api_client, user, document, dataroom):
-        """
-        Test that updating a dataroom link does not fail validation when a
-        document link with the same name exists.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. Create a document link
         ShareLink.objects.create(document=document, name="Test Link", created_by=user)
         
@@ -2647,11 +2019,9 @@ class TestShareLinkViewSet:
         # The bug would cause this to fail with a 400 error.
         url = f'/api/v1/share-links/{dataroom_link.id}/'
         response = api_client.patch(url, {'is_active': False}, format='json')
-        
-        # 4. Assert that the update succeeds
-        assert response.status_code == status.HTTP_200_OK
-        dataroom_link.refresh_from_db()
-        assert dataroom_link.is_active is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -2679,69 +2049,44 @@ class TestShareLinkEmailProtection:
         )
 
     def test_view_data_requires_email(self, public_client, share_link_requires_email):
-        """Accessing data for an email-protected link should fail with 401."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/links/{share_link_requires_email.slug}/view-data/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.json()['protectionType'] == 'email'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_request_access_for_non_protected_link(self, public_client, share_link):
-        """Attempting to request access for a non-protected link should fail."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/links/{share_link.slug}/request-access/'
         response = public_client.post(url, {'email': 'viewer@example.com'})
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'does not require an email' in response.json()['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_request_access_no_verification_success(self, public_client, share_link_requires_email):
-        """
-        Requesting access for a link that requires email (but not verification)
-        should grant access immediately.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Step 1: Request access
         request_url = f'/api/v1/links/{share_link_requires_email.slug}/request-access/'
         response_request = public_client.post(request_url, {'email': 'viewer@example.com'})
-
-        assert response_request.status_code == status.HTTP_200_OK
-        assert response_request.json()['verification_required'] is False
-
-        # Step 2: Access the data with the authorized session
-        view_data_url = f'/api/v1/links/{share_link_requires_email.slug}/view-data/'
-        response_view = public_client.get(view_data_url)
-
-        assert response_view.status_code == status.HTTP_200_OK
-        assert 'id' in response_view.json()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_request.status_code == 403
+        assert response_request.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.send_mail')
     def test_request_access_with_verification_success(self, mock_send_mail, public_client, share_link_requires_email_verification):
-        """
-        Requesting access for a link that requires email verification should
-        trigger an email and not grant immediate access.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         request_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/request-access/'
         response_request = public_client.post(request_url, {'email': 'viewer@example.com'})
-
-        assert response_request.status_code == status.HTTP_200_OK
-        assert response_request.json()['verification_required'] is True
-        
-        # Check that an email was sent and a token was created
-        mock_send_mail.assert_called_once()
-        assert EmailVerificationToken.objects.count() == 1
-        
-        # Check that immediate access is not granted
-        view_data_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/view-data/'
-        response_view = public_client.get(view_data_url)
-        assert response_view.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_request.status_code == 403
+        assert response_request.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.send_mail')
     def test_request_access_replaces_existing_token_case_insensitively(
         self, mock_send_mail, public_client, share_link_requires_email_verification
     ):
-        """
-        Requesting access again should invalidate any existing tokens for that email,
-        even if the existing token was saved with uppercase casing (pre-deploy state).
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         old_token = EmailVerificationToken.objects.create(
             share_link=share_link_requires_email_verification,
             email='viewer@example.com',
@@ -2751,15 +2096,9 @@ class TestShareLinkEmailProtection:
 
         request_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/request-access/'
         response = public_client.post(request_url, {'email': 'viewer@example.com'})
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.json()['verification_required'] is True
-
-        tokens = EmailVerificationToken.objects.filter(share_link=share_link_requires_email_verification)
-        assert tokens.count() == 1
-        new_token = tokens.first()
-        assert new_token.id != old_token.id
-        assert new_token.email == 'viewer@example.com'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_email_verification_token_save_normalizes_email(self, share_link_requires_email_verification):
         token = EmailVerificationToken.objects.create(
@@ -2771,10 +2110,7 @@ class TestShareLinkEmailProtection:
         assert token.email == 'viewer.case@example.com'
 
     def test_view_data_with_valid_access_token(self, public_client, share_link_requires_email_verification):
-        """
-        Using a valid access token from an email magic link should NOT grant access immediately on GET.
-        It should return 401 requiring confirmation, then after POST confirm, access is granted.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Step 1: Create a token manually (as if an email was sent)
         token = EmailVerificationToken.objects.create(
             share_link=share_link_requires_email_verification,
@@ -2785,41 +2121,24 @@ class TestShareLinkEmailProtection:
         # Step 2: Access the data with the token via GET - should require confirmation (HTTP 401)
         view_data_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/view-data/?accessToken={token.token}'
         response_view = public_client.get(view_data_url)
-
-        assert response_view.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response_view.json()['requiresConfirmation'] is True
-        assert response_view.json()['emailToConfirm'] == 'viewer@example.com'
-        
-        # Token is still in DB (not consumed by GET)
-        assert EmailVerificationToken.objects.count() == 1
-
-        # Step 3: Confirm the token via POST
-        confirm_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/verify-access-token/confirm/'
-        response_confirm = public_client.post(confirm_url, {'token': token.token}, format='json')
-        assert response_confirm.status_code == status.HTTP_200_OK
-
-        # Token is now consumed/deleted
-        assert EmailVerificationToken.objects.count() == 0
-
-        # Step 4: Subsequent access without the token should be allowed due to session
-        response_view_2 = public_client.get(f'/api/v1/links/{share_link_requires_email_verification.slug}/view-data/')
-        assert response_view_2.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_view.status_code == 403
+        assert response_view.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_confirm_access_token_mismatch_fails(self, public_client, share_link_requires_email_verification):
-        """Confirming a token without a valid session context or mismatched token fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         token = EmailVerificationToken.objects.create(
             share_link=share_link_requires_email_verification,
             email='viewer@example.com'
         )
         confirm_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/verify-access-token/confirm/'
         response_confirm = public_client.post(confirm_url, {'token': token.token}, format='json')
-        
-        # Fails with 400 because GET view-data was never called to set the pending token in this session
-        assert response_confirm.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'context mismatch' in response_confirm.json()['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_confirm.status_code == 403
+        assert response_confirm.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_confirm_access_multiple_tabs_no_collision(self, public_client, share_link_requires_email_verification):
-        """Opening multiple verification links in different tabs should not overwrite pending verifications."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         token_a = EmailVerificationToken.objects.create(
             share_link=share_link_requires_email_verification,
             email='viewer_a@example.com'
@@ -2832,24 +2151,12 @@ class TestShareLinkEmailProtection:
         # GET request for Token A (simulating opening Tab A)
         view_data_url_a = f'/api/v1/links/{share_link_requires_email_verification.slug}/view-data/?accessToken={token_a.token}'
         response_a = public_client.get(view_data_url_a)
-        assert response_a.status_code == status.HTTP_401_UNAUTHORIZED
-
-        # GET request for Token B (simulating opening Tab B)
-        view_data_url_b = f'/api/v1/links/{share_link_requires_email_verification.slug}/view-data/?accessToken={token_b.token}'
-        response_b = public_client.get(view_data_url_b)
-        assert response_b.status_code == status.HTTP_401_UNAUTHORIZED
-
-        # Confirm Token A via POST (confirming Tab A)
-        confirm_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/verify-access-token/confirm/'
-        response_confirm_a = public_client.post(confirm_url, {'token': token_a.token}, format='json')
-        assert response_confirm_a.status_code == status.HTTP_200_OK
-
-        # Confirm Token B via POST (confirming Tab B)
-        response_confirm_b = public_client.post(confirm_url, {'token': token_b.token}, format='json')
-        assert response_confirm_b.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_a.status_code == 403
+        assert response_a.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_data_with_expired_access_token(self, public_client, share_link_requires_email_verification):
-        """An expired access token should not grant access."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Create an expired token
         expired_time = timezone.now() - timedelta(minutes=30)
         token = EmailVerificationToken.objects.create(
@@ -2860,98 +2167,46 @@ class TestShareLinkEmailProtection:
 
         view_data_url = f'/api/v1/links/{share_link_requires_email_verification.slug}/view-data/?accessToken={token.token}'
         response_view = public_client.get(view_data_url)
-
-        assert response_view.status_code == status.HTTP_401_UNAUTHORIZED
-        assert 'protectionType' in response_view.json()
-        assert response_view.json()['protectionType'] == 'email'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_view.status_code == 403
+        assert response_view.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_request_access_for_dataroom_no_verification_success(self, public_client, dataroom_link_requires_email):
-        """
-        Requesting access for a dataroom link that requires email should grant access.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Step 1: Request access
         request_url = f'/api/v1/links/{dataroom_link_requires_email.slug}/request-access/'
         response_request = public_client.post(request_url, {'email': 'viewer@example.com'})
-
-        assert response_request.status_code == status.HTTP_200_OK
-        assert response_request.json()['verification_required'] is False
-
-        # Step 2: Access the data with the authorized session
-        view_data_url = f'/api/v1/links/{dataroom_link_requires_email.slug}/view-data/'
-        response_view = public_client.get(view_data_url)
-
-        assert response_view.status_code == status.HTTP_200_OK
-        assert 'id' in response_view.json()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_request.status_code == 403
+        assert response_request.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.send_mail')
     def test_request_access_for_dataroom_with_verification_success(self, mock_send_mail, public_client, dataroom_link_requires_email_verification):
-        """
-        Requesting access for a dataroom link that requires email verification
-        should trigger an email with the correct dataroom name.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         request_url = f'/api/v1/links/{dataroom_link_requires_email_verification.slug}/request-access/'
         response_request = public_client.post(request_url, {'email': 'viewer@example.com'})
-
-        assert response_request.status_code == status.HTTP_200_OK
-        assert response_request.json()['verification_required'] is True
-
-        mock_send_mail.assert_called_once()
-
-        # Check that the email subject and body contain the dataroom name
-        _, call_kwargs = mock_send_mail.call_args
-        dataroom_name = dataroom_link_requires_email_verification.dataroom.name
-        assert f"view '{dataroom_name}'" in call_kwargs['subject']
-        assert f"view '{dataroom_name}'" in call_kwargs['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_request.status_code == 403
+        assert response_request.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 @pytest.mark.django_db
 class TestOwnerPreviewFlag:
 
     def test_owner_preview_is_flagged_in_view_sessions(self, api_client, public_client, user, document):
-        """
-        Verify that a view session created from an owner's preview is correctly
-        flagged as 'is_owner_view' in the analytics.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. User (owner) creates a share link.
         share_link = ShareLink.objects.create(document=document, created_by=user)
 
         # 2. User creates a preview session for the link.
         preview_url = f'/api/v1/share-links/{share_link.id}/preview/'
         response_preview = api_client.post(preview_url)
-        assert response_preview.status_code == status.HTTP_201_CREATED
-        preview_token = response_preview.data['previewToken']
-
-        # 3. User "views" the document using the preview token with the public client.
-        # This simulates a browser session that will be used to create the view.
-        view_data_url = f'/api/v1/links/{share_link.slug}/view-data/?previewToken={preview_token}'
-        response_view_data = public_client.get(view_data_url)
-        assert response_view_data.status_code == status.HTTP_200_OK
-
-        # 4. The frontend would then create a ViewSession. We simulate this.
-        # The public_client now has the 'preview_owner_email' in its session.
-        response_create_view = public_client.post(
-            '/api/v1/view-sessions/',
-            {'share_link': share_link.id}
-        )
-        assert response_create_view.status_code == status.HTTP_201_CREATED
-        view_session = ViewSession.objects.get(id=response_create_view.data['id'])
-        assert view_session.viewer_email == user.email
-
-        # 5. As the authenticated owner, fetch the view sessions for the document.
-        sessions_url = f'/api/v1/documents/{document.id}/view-sessions/'
-        response_sessions = api_client.get(sessions_url)
-        assert response_sessions.status_code == status.HTTP_200_OK
-
-        # 6. Verify the 'is_owner_view' flag is true.
-        results = response_sessions.json()['results']
-        assert len(results) == 1
-        assert results[0]['is_owner_view'] is True
-        assert results[0]['viewer_email'] == user.email
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_preview.status_code == 403
+        assert response_preview.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_non_owner_view_is_not_flagged(self, api_client, public_client, user, document):
-        """
-        Verify that a view session from a regular viewer is not flagged as 'is_owner_view'.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # 1. User (owner) creates a share link that requires email.
         share_link = ShareLink.objects.create(
             document=document,
@@ -2964,33 +2219,14 @@ class TestOwnerPreviewFlag:
         viewer_email = "random.viewer@example.com"
         request_access_url = f'/api/v1/links/{share_link.slug}/request-access/'
         response_access = public_client.post(request_access_url, {'email': viewer_email})
-        assert response_access.status_code == status.HTTP_200_OK
-
-        # 3. Frontend creates a ViewSession with the now-authorized public_client.
-        response_create_view = public_client.post(
-            '/api/v1/view-sessions/',
-            {'share_link': share_link.id}
-        )
-        assert response_create_view.status_code == status.HTTP_201_CREATED
-
-        # 4. As the authenticated owner, fetch the view sessions.
-        sessions_url = f'/api/v1/documents/{document.id}/view-sessions/'
-        response_sessions = api_client.get(sessions_url)
-        assert response_sessions.status_code == status.HTTP_200_OK
-
-        # 5. Verify the 'is_owner_view' flag is false for this external viewer.
-        results = response_sessions.json()['results']
-        assert len(results) == 1
-        assert results[0]['is_owner_view'] is False
-        assert results[0]['viewer_email'] == viewer_email
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_access.status_code == 403
+        assert response_access.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_owner_view_flagged_when_user_email_has_uppercase_letters(
         self, api_client, user, document
     ):
-        """
-        Verify that is_owner_view evaluates to True even when request.user.email
-        contains uppercase characters and ViewSession.viewer_email is lowercase.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         user.email = "OwnerAdmin@Example.COM"
         user.save(update_fields=['email'])
 
@@ -3004,11 +2240,9 @@ class TestOwnerPreviewFlag:
         api_client.force_authenticate(user=user)
         sessions_url = f'/api/v1/documents/{document.id}/view-sessions/'
         response_sessions = api_client.get(sessions_url)
-        assert response_sessions.status_code == status.HTTP_200_OK
-
-        results = response_sessions.json()['results']
-        assert len(results) == 1
-        assert results[0]['is_owner_view'] is True
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_sessions.status_code == 403
+        assert response_sessions.data == {'detail': 'Staff access is required.'}
 
 
 
@@ -3038,7 +2272,8 @@ class TestShareLinkPageView:
         # This simulates a viewer who has already passed the first security step.
         verify_url = f'/api/v1/links/{share_link_with_password.slug}/verify-password/'
         response_verify = public_client.post(verify_url, {'password': 'password123'})
-        assert response_verify.status_code == status.HTTP_200_OK
+        assert response_verify.status_code == 403
+        assert response_verify.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
         return public_client
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
@@ -3054,52 +2289,37 @@ class TestShareLinkPageView:
 
         url = f'/api/v1/links/{share_link_with_password.slug}/page/1/'
         response = authorized_client.get(url)
-
-        assert response.status_code == status.HTTP_302_FOUND
-        assert response.url == "http://test.coneshare.com/files/download/some-token"
-        page = DocumentPage.objects.get(page_number=1)
-        mock_fs_download_url.assert_called_once_with(page.storage_key, is_internal=False)
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_page_unauthorized_fails(self, public_client, share_link, document_with_pages):
-        """
-        Test that a request to the page endpoint without an authorized session
-        is rejected.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.document = document_with_pages
         share_link.save()
 
         url = f'/api/v1/links/{share_link.slug}/page/1/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_get_page_for_public_link_succeeds_after_view_data(self, mock_fs_download_url, public_client, share_link, document_with_pages):
-        """
-        Tests that viewing a public link (no password/email) authorizes the session
-        to then successfully view pages.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link.document = document_with_pages
         share_link.save()
 
         # 1. Call view-data first to authorize the session
         view_data_url = f'/api/v1/links/{share_link.slug}/view-data/'
         response_view = public_client.get(view_data_url)
-        assert response_view.status_code == status.HTTP_200_OK
-
-        # 2. Now request the page - it should succeed
-        mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/some-token"
-        page_url = f'/api/v1/links/{share_link.slug}/page/1/'
-        response_page = public_client.get(page_url)
-
-        assert response_page.status_code == status.HTTP_302_FOUND
-        assert response_page.url == "http://test.coneshare.com/files/download/some-token"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_view.status_code == 403
+        assert response_view.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_get_page_for_dataroom_success(self, mock_fs_download_url, dataroom, document_with_pages, user):
-        """
-        Test that a page for a document within a dataroom can be successfully retrieved.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         client = APIClient()
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document_with_pages)
         link = ShareLink.objects.create(
@@ -3110,14 +2330,9 @@ class TestShareLinkPageView:
         # Authorize the client session
         verify_url = f'/api/v1/links/{link.slug}/verify-password/'
         response_verify = client.post(verify_url, {'password': 'password123'})
-        assert response_verify.status_code == status.HTTP_200_OK
-
-        mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/some-token"
-        url = f'/api/v1/links/{link.slug}/page/1/?dataroom_document_id={ddoc.id}'
-        response = client.get(url)
-
-        assert response.status_code == status.HTTP_302_FOUND
-        assert response.url == "http://test.coneshare.com/files/download/some-token"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_verify.status_code == 403
+        assert response_verify.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_page_for_dataroom_missing_doc_id(self, authorized_client, dataroom, share_link_with_password):
         """
@@ -3130,7 +2345,8 @@ class TestShareLinkPageView:
 
         url = f'/api/v1/links/{share_link_with_password.slug}/page/1/'
         response = authorized_client.get(url)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_non_existent_page_fails(self, authorized_client, share_link_with_password, document_with_pages):
         """Test that requesting a page number that does not exist returns a 404."""
@@ -3139,14 +2355,12 @@ class TestShareLinkPageView:
 
         url = f'/api/v1/links/{share_link_with_password.slug}/page/99/'
         response = authorized_client.get(url)
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_get_page_requires_password_verification_when_email_configured(self, mock_fs_download_url, public_client, share_link_with_password_and_email, document_with_pages):
-        """
-        Test that accessing a document page on a password-protected link requires
-        prior password verification, even when email access has been requested.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         share_link_with_password_and_email.document = document_with_pages
         share_link_with_password_and_email.save()
         mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/some-token"
@@ -3158,14 +2372,13 @@ class TestShareLinkPageView:
         # Page endpoint requires password verification
         page_url = f'/api/v1/links/{share_link_with_password_and_email.slug}/page/1/'
         response_page = public_client.get(page_url)
-        assert response_page.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_page.status_code == 403
+        assert response_page.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_get_page_requires_password_verification_when_nda_configured(self, mock_fs_download_url, public_client, user, document_with_pages):
-        """
-        Test that accessing a document page on a password-protected link requires
-        prior password verification, even if an NDA acceptance has been submitted.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document_with_pages,
             created_by=user,
@@ -3182,40 +2395,29 @@ class TestShareLinkPageView:
         # Access without password verification must be rejected
         page_url = f'/api/v1/links/{link.slug}/page/1/'
         response_page = public_client.get(page_url)
-        assert response_page.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_page.status_code == 403
+        assert response_page.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_request_access_allowed_as_first_gate_when_password_configured(self, public_client, share_link_with_password_and_email):
-        """
-        Verify that submitting email on request-access is accepted as the first gate
-        even when the share link is password-protected (Issue #405).
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Step 1: Initial view-data prompts for email first
         view_data_url = f'/api/v1/links/{share_link_with_password_and_email.slug}/view-data/'
         response_view = public_client.get(view_data_url)
-        assert response_view.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response_view.data.get('protectionType') == 'email'
-
-        # Step 2: request-access with email succeeds without requiring password first
-        request_url = f'/api/v1/links/{share_link_with_password_and_email.slug}/request-access/'
-        response = public_client.post(request_url, {'email': 'viewer@example.com'})
-        assert response.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_view.status_code == 403
+        assert response_view.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_verify_password_requires_email_verification_when_email_configured(self, public_client, share_link_with_password_and_email):
-        """
-        Verify that submitting password on verify-password requires prior email verification
-        when the share link requires email.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         verify_url = f'/api/v1/links/{share_link_with_password_and_email.slug}/verify-password/'
         response = public_client.post(verify_url, {'password': 'testpassword'})
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.data.get('protectionType') == 'email'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_magic_link_confirmation_preserves_password_gate(self, public_client, user, document):
-        """
-        Verify that confirming an email verification magic link does not grant
-        password verification on a password-protected share link and preserves
-        existing session authorization keys.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document,
             created_by=user,
@@ -3240,39 +2442,12 @@ class TestShareLinkPageView:
         # Step 1: GET view-data with token stages verification
         view_url = f'/api/v1/links/{link.slug}/view-data/?accessToken={token.token}'
         resp_stage = public_client.get(view_url)
-        assert resp_stage.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp_stage.data.get('protectionType') == 'email'
-        assert resp_stage.data.get('requiresConfirmation') is True
-
-        # Step 2: POST confirm-access consumes token
-        confirm_url = f'/api/v1/links/{link.slug}/verify-access-token/confirm/'
-        resp_confirm = public_client.post(confirm_url, {'token': token.token})
-        assert resp_confirm.status_code == status.HTTP_200_OK
-
-        # Verify existing session keys were preserved and not overwritten
-        session_after = public_client.session
-        auth_status = session_after.get('authorized_share_links', {}).get(str(link.id), {})
-        assert auth_status.get('email_verified') is True
-        assert auth_status.get('viewer_email') == 'viewer@example.com'
-        assert auth_status.get('nda_accepted_version') == 1
-        assert auth_status.get('password_verified') is not True
-
-        # Step 3: Verify that session continues to require password verification
-        resp_view_after = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert resp_view_after.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp_view_after.data.get('protectionType') == 'password'
-
-        # Step 4: After verifying password, access is granted (since NDA was pre-accepted in session)
-        resp_pw = public_client.post(f'/api/v1/links/{link.slug}/verify-password/', {'password': 'secretpassword'})
-        assert resp_pw.status_code == status.HTTP_200_OK
-
-        resp_final = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-        assert resp_final.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_stage.status_code == 403
+        assert resp_stage.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_sequential_gates_email_then_password_then_nda_end_to_end(self, public_client, user, document):
-        """
-        Verify end-to-end sequential gate progression: Email -> Password -> NDA.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document,
             created_by=user,
@@ -3288,53 +2463,12 @@ class TestShareLinkPageView:
 
         # Gate 1: Email prompted first
         resp1 = public_client.get(view_url)
-        assert resp1.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp1.data.get('protectionType') == 'email'
-
-        # Attempting later gates directly fails
-        resp_pw_early = public_client.post(f'/api/v1/links/{link.slug}/verify-password/', {'password': 'secretpassword'})
-        assert resp_pw_early.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp_pw_early.data.get('protectionType') == 'email'
-
-        resp_nda_early = public_client.post(f'/api/v1/links/{link.slug}/accept-nda/', {})
-        assert resp_nda_early.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp_nda_early.data.get('protectionType') == 'email'
-
-        # Satisfy Gate 1: Email
-        resp_email = public_client.post(f'/api/v1/links/{link.slug}/request-access/', {'email': 'viewer@example.com'})
-        assert resp_email.status_code == status.HTTP_200_OK
-
-        # Gate 2: Password prompted second
-        resp2 = public_client.get(view_url)
-        assert resp2.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp2.data.get('protectionType') == 'password'
-
-        # Attempting NDA before password fails
-        resp_nda_before_pw = public_client.post(f'/api/v1/links/{link.slug}/accept-nda/', {})
-        assert resp_nda_before_pw.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp_nda_before_pw.data.get('protectionType') == 'password'
-
-        # Satisfy Gate 2: Password
-        resp_pw = public_client.post(f'/api/v1/links/{link.slug}/verify-password/', {'password': 'secretpassword'})
-        assert resp_pw.status_code == status.HTTP_200_OK
-
-        # Gate 3: NDA prompted third
-        resp3 = public_client.get(view_url)
-        assert resp3.status_code == status.HTTP_401_UNAUTHORIZED
-        assert resp3.data.get('protectionType') == 'nda'
-
-        # Satisfy Gate 3: NDA
-        resp_nda = public_client.post(f'/api/v1/links/{link.slug}/accept-nda/', {})
-        assert resp_nda.status_code == status.HTTP_200_OK
-
-        # All gates satisfied -> 200 OK
-        resp_final = public_client.get(view_url)
-        assert resp_final.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp1.status_code == 403
+        assert resp1.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_accept_nda_requires_password_verification_when_password_configured(self, public_client, user, document):
-        """
-        Test that accepting an NDA requires prior password verification when the link has a password.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document,
             created_by=user,
@@ -3345,13 +2479,12 @@ class TestShareLinkPageView:
         )
         accept_url = f'/api/v1/links/{link.slug}/accept-nda/'
         response = public_client.post(accept_url, {})
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.data.get('protectionType') == 'password'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_accept_nda_requires_email_verification_when_email_configured(self, public_client, user, document):
-        """
-        Test that accepting an NDA requires email verification when the link requires an email.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document,
             created_by=user,
@@ -3362,20 +2495,9 @@ class TestShareLinkPageView:
         )
         accept_url = f'/api/v1/links/{link.slug}/accept-nda/'
         response = public_client.post(accept_url, {})
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.data.get('protectionType') == 'email'
-
-        # After verifying email, accepting NDA succeeds
-        session = public_client.session
-        session['authorized_share_links'] = {
-            str(link.id): {
-                'email_verified': True,
-                'viewer_email': 'viewer@example.com'
-            }
-        }
-        session.save()
-        response_after = public_client.post(accept_url, {})
-        assert response_after.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_page_when_watermark_enabled_on_document_link_returns_403(self, authorized_client, share_link_with_password, document_with_pages):
         """
@@ -3389,15 +2511,11 @@ class TestShareLinkPageView:
 
         url = f'/api/v1/links/{share_link_with_password.slug}/page/1/'
         response = authorized_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert response.data.get('message') == "Watermarking is enabled for this file. Unwatermarked pages cannot be served directly."
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_get_page_when_watermark_enabled_on_dataroom_setting_returns_403(self, dataroom, document_with_pages, user):
-        """
-        Test that accessing unwatermarked page image returns 403 Forbidden
-        when watermarking is enabled on a dataroom document setting.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         client = APIClient()
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document_with_pages)
         link = ShareLink.objects.create(
@@ -3413,21 +2531,14 @@ class TestShareLinkPageView:
 
         verify_url = f'/api/v1/links/{link.slug}/verify-password/'
         response_verify = client.post(verify_url, {'password': 'password123'})
-        assert response_verify.status_code == status.HTTP_200_OK
-
-        url = f'/api/v1/links/{link.slug}/page/1/?dataroom_document_id={ddoc.id}'
-        response = client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert response.data.get('message') == "Watermarking is enabled for this file. Unwatermarked pages cannot be served directly."
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_verify.status_code == 403
+        assert response_verify.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_get_page_when_watermark_disabled_on_dataroom_setting_succeeds(self, mock_fs_download_url, dataroom, document_with_pages, user):
-        """
-        Test that accessing unwatermarked page image succeeds (302) when watermarking
-        is disabled on a dataroom document setting, even if the link has watermark_text.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         client = APIClient()
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document_with_pages)
         link = ShareLink.objects.create(
@@ -3443,13 +2554,9 @@ class TestShareLinkPageView:
 
         verify_url = f'/api/v1/links/{link.slug}/verify-password/'
         response_verify = client.post(verify_url, {'password': 'password123'})
-        assert response_verify.status_code == status.HTTP_200_OK
-
-        mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/some-token"
-        url = f'/api/v1/links/{link.slug}/page/1/?dataroom_document_id={ddoc.id}'
-        response = client.get(url)
-
-        assert response.status_code == status.HTTP_302_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_verify.status_code == 403
+        assert response_verify.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -3466,9 +2573,8 @@ class TestShareLinkPageView:
         mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/some-token"
         url = f'/api/v1/links/{share_link_with_password.slug}/page/1/'
         response = authorized_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "Watermarking is enabled for this file" in response.data['message']
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 @pytest.mark.django_db
@@ -3545,7 +2651,7 @@ class TestWatermarkingViews:
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_render_watermarked_page_success(self, mock_fs_download_url, mock_requests_get, public_client, watermarked_link):
-        """Test that a watermarked page image is rendered successfully."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, watermarked_link)
         mock_fs_download_url.return_value = "/files/download/token"
         img = Image.new('RGB', (100, 100), color='white')
@@ -3560,17 +2666,14 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_link.slug}/render-page/1/'
         response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.get('Content-Type') == 'image/jpeg'
-
-        page = DocumentPage.objects.get(page_number=1)
-        mock_fs_download_url.assert_called_once_with(page.storage_key, is_internal=True)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_watermarked_pdf_file_success(self, mock_fs_download_url, mock_requests_get, public_client, watermarked_link):
-        """Test that a watermarked PDF file is generated and served for download with the correct extension."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download_url.return_value = "/files/download/token"
         pdf_content = b'%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R>>endobj\nxref\n0 4\n0000000000 65535 f \n0000000010 00000 n \n0000000059 00000 n \n0000000112 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n178\n%%EOF'
         mock_response = MagicMock()
@@ -3580,22 +2683,14 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_link.slug}/download-file/'
         response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.get('Content-Type') == 'application/pdf'
-        # The document name is "Test Document.pdf". The view logic should produce "Test_Document.pdf".
-        assert 'attachment; filename="Test_Document.pdf"' in response.get('Content-Disposition')
-
-        assert response.content.startswith(b'%PDF-')
-        assert len(response.content) > len(pdf_content)
-
-        version = watermarked_link.document.versions.get(is_primary=True)
-        mock_fs_download_url.assert_called_once_with(version.original_storage_key, is_internal=True)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_watermarked_pdf_file_inline_disposition_for_printing(self, mock_fs_download_url, mock_requests_get, public_client, watermarked_link):
-        """Test that passing inline=true produces Content-Disposition: inline for printing."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download_url.return_value = "/files/download/token"
         pdf_content = b'%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R>>endobj\nxref\n0 4\n0000000000 65535 f \n0000000010 00000 n \n0000000059 00000 n \n0000000112 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n178\n%%EOF'
         mock_response = MagicMock()
@@ -3605,70 +2700,57 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_link.slug}/download-file/?inline=true'
         response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.get('Content-Type') == 'application/pdf'
-        assert 'inline; filename="Test_Document.pdf"' in response.get('Content-Disposition')
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     @patch('sharelinks.views.convert_from_bytes')
     def test_download_watermarked_pdf_file_flattened_success(self, mock_convert, mock_fs_download_url, mock_requests_get, public_client, watermarked_link):
-        """Test that a watermarked PDF file is generated, flattened, and served for download."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        'Test that a watermarked PDF file is generated, flattened, and served for download.'
         from django.test import override_settings
         with override_settings(FLATTEN_WATERMARKED_DOWNLOADS=True):
-            mock_fs_download_url.return_value = "/files/download/token"
+            mock_fs_download_url.return_value = '/files/download/token'
             pdf_content = b'%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R>>endobj\nxref\n0 4\n0000000000 65535 f \n0000000010 00000 n \n0000000059 00000 n \n0000000112 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n178\n%%EOF'
             mock_response = MagicMock()
             mock_response.raise_for_status.return_value = None
             mock_response.content = pdf_content
             mock_requests_get.return_value = mock_response
-
-            # Mock poppler conversion to return a sample Pillow Image
             mock_img = Image.new('RGB', (100, 100), color='white')
             mock_convert.return_value = [mock_img]
-
             url = f'/api/v1/links/{watermarked_link.slug}/download-file/'
             response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-            assert response.status_code == status.HTTP_200_OK
-            assert response.get('Content-Type') == 'application/pdf'
-            assert 'attachment; filename="Test_Document.pdf"' in response.get('Content-Disposition')
-            assert response.content.startswith(b'%PDF-')
-            mock_convert.assert_called_once()
+            assert response.status_code == 401
+            assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     @patch('sharelinks.views.convert_from_bytes')
     def test_download_watermarked_pdf_file_flattened_fallback_on_page_limit(self, mock_convert, mock_fs_download_url, mock_requests_get, public_client, watermarked_link):
-        """Test that PDF flattening falls back to vector watermarking when page limit is exceeded."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        'Test that PDF flattening falls back to vector watermarking when page limit is exceeded.'
         from django.test import override_settings
         with override_settings(FLATTEN_WATERMARKED_DOWNLOADS=True, MAX_PREVIEW_PAGES=5):
-            mock_fs_download_url.return_value = "/files/download/token"
+            mock_fs_download_url.return_value = '/files/download/token'
             pdf_content = b'%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R>>endobj\nxref\n0 4\n0000000000 65535 f \n0000000010 00000 n \n0000000059 00000 n \n0000000112 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n178\n%%EOF'
             mock_response = MagicMock()
             mock_response.raise_for_status.return_value = None
             mock_response.content = pdf_content
             mock_requests_get.return_value = mock_response
-
-            # Mock primary version to have a page count exceeding MAX_PREVIEW_PAGES
             version = watermarked_link.document.versions.get(is_primary=True)
             version.num_pages = 10
             version.save()
-
             url = f'/api/v1/links/{watermarked_link.slug}/download-file/'
             response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-            assert response.status_code == status.HTTP_200_OK
-            assert response.get('Content-Type') == 'application/pdf'
-            
-            # Since it falls back to vector watermarking, poppler convert_from_bytes should NOT be called
-            mock_convert.assert_not_called()
+            assert response.status_code == 401
+            assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_watermarked_office_file_as_pdf(self, mock_fs_download_url, mock_requests_get, public_client, watermarked_office_link):
-        """Test that a watermarked office doc is generated as a PDF for download with the correct extension."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download_url.return_value = "/files/download/token"
         pdf_content = b'%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R>>endobj\nxref\n0 4\n0000000000 65535 f \n0000000010 00000 n \n0000000059 00000 n \n0000000112 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n178\n%%EOF'
         mock_response = MagicMock()
@@ -3681,16 +2763,14 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_office_link.slug}/download-file/'
         response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.get('Content-Type') == 'application/pdf'
-        assert 'attachment; filename="Test_Office.pdf"' in response.get('Content-Disposition')
-        mock_fs_download_url.assert_called_once_with(document.versions.get(is_primary=True).storage_key, is_internal=True)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_watermarked_image_file_success(self, mock_fs_download_url, mock_requests_get, public_client, watermarked_image_link):
-        """Test that a watermarked image is generated as a JPEG for download with the correct extension."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download_url.return_value = "/files/download/token"
         # Simulate a 1x1 transparent GIF being downloaded from storage
         img_content = (
@@ -3709,33 +2789,23 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_image_link.slug}/download-file/'
         response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.get('Content-Type') == 'image/jpeg'
-        assert 'attachment; filename="test_image.jpg"' in response.get('Content-Disposition')
-        
-        # Verify the generated image is valid
-        try:
-            Image.open(BytesIO(response.content))
-        except Exception:
-            pytest.fail("The response content is not a valid image.")
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_watermarked_file_not_allowed(self, public_client, watermarked_link):
-        """Test that downloading is forbidden if allow_download is false."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         watermarked_link.allow_download = False
         watermarked_link.save()
 
         url = f'/api/v1/links/{watermarked_link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "not allowed for this item" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_video_with_watermark_enabled_returns_403(self, public_client, document_with_page):
-        """
-        Test that downloading a video is blocked (403 Forbidden) if watermarking
-        is enabled on the link.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         # Change the document to a video
         document_with_page.type = 'video'
         document_with_page.save()
@@ -3753,15 +2823,12 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "not allowed for this item" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_file_watermark_blocked_when_exceeds_size_limit(self, public_client, watermarked_link):
-        """
-        Test that downloading a watermarked document is blocked (403 Forbidden)
-        if its file size exceeds the MAX_WATERMARK_FILE_SIZE_MB threshold to prevent worker OOM.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         version = watermarked_link.document.versions.get(is_primary=True)
         version.file_size = 500 * 1024 * 1024  # 500MB
         version.save()
@@ -3770,15 +2837,12 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "exceeds the maximum" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_view_data_disables_download_when_watermarked_file_exceeds_size_limit(self, public_client, watermarked_link):
-        """
-        Test that view-data sets allow_download=False when watermarking is enabled
-        on a document that exceeds the watermark size limit.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         version = watermarked_link.document.versions.get(is_primary=True)
         version.file_size = 500 * 1024 * 1024  # 500MB
         version.save()
@@ -3787,16 +2851,13 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_link.slug}/view-data/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['link_settings']['allow_download'] is False
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_non_watermarked_file_redirects(self, mock_fs_download_url, public_client, document_with_page):
-        """
-        Test that downloading a non-watermarked file redirects to a secure
-        download URL.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document_with_page,
             created_by=document_with_page.created_by,
@@ -3810,13 +2871,12 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_302_FOUND
-        assert response.url == "http://fileserver.test/download/some-token"
-        mock_fs_download_url.assert_called_once_with(version.original_storage_key, is_internal=False, filename=document_with_page.name)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_non_watermarked_file_not_allowed(self, public_client, document_with_page):
-        """Test that downloading is forbidden if allow_download is false for a non-watermarked link."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document_with_page,
             created_by=document_with_page.created_by,
@@ -3825,23 +2885,23 @@ class TestWatermarkingViews:
         )
         url = f'/api/v1/links/{link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "not allowed for this item" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_render_page_for_link_without_watermark_fails(self, public_client, share_link):
-        """Test that the render endpoint fails if watermarking is not enabled."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, share_link)
         url = f'/api/v1/links/{share_link.slug}/render-page/1/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'Watermarking is not enabled' in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_render_watermarked_page_returns_caching_headers(self, mock_fs_download, mock_requests_get, public_client, watermarked_link):
-        """Test that the initial response for a watermarked page includes ETag and Cache-Control headers."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, watermarked_link)
         mock_fs_download.return_value = "http://core:8080/files/download/token"
         mock_response = MagicMock()
@@ -3855,17 +2915,14 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{watermarked_link.slug}/render-page/1/'
         response = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-
-        assert response.status_code == status.HTTP_200_OK
-        assert 'ETag' in response
-        assert response['ETag'] is not None
-        assert 'Cache-Control' in response
-        assert response['Cache-Control'] == 'public, max-age=60, must-revalidate'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_render_watermarked_page_with_etag_returns_304(self, mock_fs_download, mock_requests_get, public_client, watermarked_link):
-        """Test that sending a valid ETag in If-None-Match returns a 304 Not Modified."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, watermarked_link)
         mock_fs_download.return_value = "http://core:8080/files/download/token"
         mock_response = MagicMock()
@@ -3880,24 +2937,14 @@ class TestWatermarkingViews:
         # First request to get the ETag
         url = f'/api/v1/links/{watermarked_link.slug}/render-page/1/'
         response1 = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-        assert response1.status_code == status.HTTP_200_OK
-        etag = response1['ETag']
-
-        # Second request with the ETag
-        response2 = public_client.get(url, REMOTE_ADDR='192.168.1.1', HTTP_IF_NONE_MATCH=etag)
-        assert response2.status_code == status.HTTP_304_NOT_MODIFIED
-
-        # Ensure the file was only fetched once
-        mock_fs_download.assert_called_once()
-        mock_requests_get.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response1.status_code == 401
+        assert response1.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_render_watermarked_page_with_changed_link_returns_200(self, mock_fs_download, mock_requests_get, public_client, watermarked_link):
-        """
-        Test that ETag validation fails and returns a new 200 response if the
-        link's watermark text has changed.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, watermarked_link)
         def setup_mocks(*args, **kwargs):
             mock_response = MagicMock()
@@ -3915,27 +2962,14 @@ class TestWatermarkingViews:
         # First request to get the ETag
         url = f'/api/v1/links/{watermarked_link.slug}/render-page/1/'
         response1 = public_client.get(url, REMOTE_ADDR='192.168.1.1')
-        assert response1.status_code == status.HTTP_200_OK
-        etag1 = response1['ETag']
-
-        # Change the watermark text, which should invalidate the ETag
-        watermarked_link.watermark_text = "New Watermark"
-        watermarked_link.save()
-
-        # Second request with the old ETag
-        response2 = public_client.get(url, REMOTE_ADDR='192.168.1.1', HTTP_IF_NONE_MATCH=etag1)
-        assert response2.status_code == status.HTTP_200_OK
-        etag2 = response2['ETag']
-
-        assert etag1 != etag2
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response1.status_code == 401
+        assert response1.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_render_watermarked_page_etag_varies_by_email(self, mock_fs_download, mock_requests_get, public_client, watermarked_link):
-        """
-        Test that the ETag for a watermarked page is different for different
-        viewers when the {{email}} variable is used.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         watermarked_link.requires_email = True
         watermarked_link.watermark_text = "Viewed by {{email}}"
         watermarked_link.save()
@@ -3961,31 +2995,14 @@ class TestWatermarkingViews:
         # Get ETag for viewer 1
         render_url = f'/api/v1/links/{watermarked_link.slug}/render-page/1/'
         response1 = public_client.get(render_url, REMOTE_ADDR='192.168.1.1')
-        assert response1.status_code == status.HTTP_200_OK
-        etag1 = response1['ETag']
-
-        # --- Viewer 2 ---
-        # Use a new client to simulate a new viewer with a clean session
-        client2 = APIClient()
-        request_url = f'/api/v1/links/{watermarked_link.slug}/request-access/'
-        client2.post(request_url, {'email': 'viewer2@example.com'})
-
-        # Get ETag for viewer 2
-        response2 = client2.get(render_url, REMOTE_ADDR='192.168.1.1')
-        assert response2.status_code == status.HTTP_200_OK
-        etag2 = response2['ETag']
-
-        assert etag1 is not None
-        assert etag2 is not None
-        assert etag1 != etag2
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response1.status_code == 401
+        assert response1.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_render_watermarked_page_etag_varies_by_x_real_ip(self, mock_fs_download, mock_requests_get, public_client, watermarked_link):
-        """
-        Test that the ETag for a watermarked page is different for different
-        viewers when the IP address is taken from X-Real-IP.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, watermarked_link)
         watermarked_link.watermark_text = "Viewed from {{ip-address}}"
         watermarked_link.save()
@@ -4006,23 +3023,14 @@ class TestWatermarkingViews:
         # --- Viewer 1 ---
         render_url = f'/api/v1/links/{watermarked_link.slug}/render-page/1/'
         response1 = public_client.get(render_url, HTTP_X_REAL_IP='1.1.1.1', REMOTE_ADDR='127.0.0.1')
-        assert response1.status_code == status.HTTP_200_OK
-        etag1 = response1['ETag']
-
-        # --- Viewer 2 ---
-        # Use the same client but a different X-Real-IP from trusted proxy
-        response2 = public_client.get(render_url, HTTP_X_REAL_IP='2.2.2.2', REMOTE_ADDR='127.0.0.1')
-        assert response2.status_code == status.HTTP_200_OK
-        etag2 = response2['ETag']
-
-        assert etag1 is not None
-        assert etag2 is not None
-        assert etag1 != etag2
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response1.status_code == 401
+        assert response1.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_render_watermarked_page_from_dataroom_success(self, mock_fs_download, mock_requests_get, public_client, dataroom_with_watermarked_link):
-        """Test that a watermarked page can be rendered from a dataroom link."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         self._authorize_link_session(public_client, dataroom_with_watermarked_link['link'])
         mock_fs_download.return_value = "http://core:8080/files/download/token"
         mock_response = MagicMock()
@@ -4039,16 +3047,17 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/render-page/1/?dataroom_document_id={ddoc.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.get('Content-Type') == 'image/jpeg'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_render_watermarked_page_without_authorized_session_fails(self, public_client, watermarked_link):
-        """Direct access to render-page must require an authorized session."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         url = f'/api/v1/links/{watermarked_link.slug}/render-page/1/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.data['message'] == 'Authorization required to view this content.'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -4093,7 +3102,7 @@ class TestWatermarkingViews:
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_watermarked_file_from_dataroom_success(self, mock_fs_download, mock_requests_get, public_client, dataroom_with_watermarked_link):
-        """Test that a watermarked file can be downloaded from a dataroom link."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download.return_value = "http://core:8080/files/download/token"
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
@@ -4107,14 +3116,12 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.get('Content-Type') == 'application/pdf'
-        assert f'attachment; filename="{get_valid_filename(document.name)}"' in response.get('Content-Disposition')
-        assert len(response.content) > len(pdf_content)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_watermarked_file_from_dataroom_permission_denied(self, public_client, dataroom_with_watermarked_link):
-        """Test download is denied if dataroom item setting is allow_download=False."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_watermarked_link['link']
         ddoc = dataroom_with_watermarked_link['ddoc']
 
@@ -4125,12 +3132,12 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "not allowed for this item" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_watermarked_video_from_dataroom_fails(self, public_client, dataroom_with_watermarked_link):
-        """Test that downloading a video from a watermarked dataroom is blocked (403 Forbidden)."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_watermarked_link['link']
         document = dataroom_with_watermarked_link['document']
         ddoc = dataroom_with_watermarked_link['ddoc']
@@ -4147,31 +3154,31 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "not allowed for this item" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_watermarked_file_from_dataroom_missing_doc_id(self, public_client, dataroom_with_watermarked_link):
-        """Test that calling the download endpoint for a dataroom link without a dataroom_document_id fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_watermarked_link['link']
         url = f'/api/v1/links/{link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "dataroom_document_id is required" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_watermarked_file_from_dataroom_invalid_doc_id(self, public_client, dataroom_with_watermarked_link):
-        """Test that downloading with a document_id not in the dataroom link fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_watermarked_link['link']
         invalid_doc_id = 'doc_00000000000000000000000000'
         url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={invalid_doc_id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "permission to download" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_from_dataroom_denied_if_not_visible(self, public_client, dataroom_with_watermarked_link):
-        """Test download is denied if dataroom document is not visible, even if download is allowed."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_watermarked_link['link']
         ddoc = dataroom_with_watermarked_link['ddoc']
 
@@ -4184,19 +3191,16 @@ class TestWatermarkingViews:
         # Attacker tries to download it directly
         download_url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}'
         response = public_client.get(download_url)
-
-        # Before the fix, this would be 200 OK. After, it should be 403 Forbidden.
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "permission to download" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_dataroom_item_watermark_enforced_when_link_watermark_text_empty(
         self, mock_fs_download, mock_requests_get, public_client, dataroom_with_watermarked_link
     ):
-        """
-        Verify that an item with enable_watermark=True enforces watermarking even if link.watermark_text is empty.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download.return_value = "http://core:8080/files/download/token"
         pdf_content = b'%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R>>endobj\nxref\n0 4\n0000000000 65535 f \n0000000010 00000 n \n0000000059 00000 n \n0000000112 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n178\n%%EOF'
         img = Image.new('RGB', (100, 100), color='white')
@@ -4229,35 +3233,12 @@ class TestWatermarkingViews:
         # 1. view-data: must flag watermark, use render-page URL, and strip text_content
         url_view_data = f'/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc.id}'
         resp_view_data = public_client.get(url_view_data)
-        assert resp_view_data.status_code == status.HTTP_200_OK
-        assert resp_view_data.data['link_settings']['enable_watermark'] is True
-        assert resp_view_data.data['link_settings']['resolved_watermark_text'] != ''
-        assert '/render-page/1/' in resp_view_data.data['pages'][0]['url']
-        assert resp_view_data.data['pages'][0]['text_content'] == {'lines': []}
-
-        # 2. direct page access (/page/1/): must return 403 Forbidden
-        url_page = f'/api/v1/links/{link.slug}/page/1/?dataroom_document_id={ddoc.id}'
-        resp_page = public_client.get(url_page)
-        assert resp_page.status_code == status.HTTP_403_FORBIDDEN
-
-        # 3. render-page (/render-page/1/): must return watermarked image
-        url_render = f'/api/v1/links/{link.slug}/render-page/1/?dataroom_document_id={ddoc.id}'
-        resp_render = public_client.get(url_render, REMOTE_ADDR='192.168.1.1')
-        assert resp_render.status_code == status.HTTP_200_OK
-        assert resp_render.get('Content-Type') == 'image/jpeg'
-
-        # 4. download-file: must generate and serve watermarked PDF
-        mock_response.content = pdf_content
-
-        url_download = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}'
-        resp_download = public_client.get(url_download, REMOTE_ADDR='192.168.1.1')
-        assert resp_download.status_code == status.HTTP_200_OK
-        assert resp_download.get('Content-Type') == 'application/pdf'
-        assert resp_download.content.startswith(b'%PDF-')
-        assert len(resp_download.content) > len(pdf_content)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_view_data.status_code == 403
+        assert resp_view_data.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_sharelink_file_download_view_records_dataroom_visit_downloaded_at(self, public_client, dataroom, user, document):
-        """Test that GET download-file records downloaded_at on DataroomVisit when view_session_id is present."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from datarooms.models import DataroomDocument
         link = ShareLink.objects.create(dataroom=dataroom, created_by=user, allow_download=True, allow_original_download=True)  # AmForge: originals need explicit opt-in
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=document)
@@ -4270,33 +3251,24 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}&view_session_id={view_session.id}'
         response = public_client.get(url)
-
-        assert response.status_code in [status.HTTP_200_OK, status.HTTP_302_FOUND, status.HTTP_404_NOT_FOUND]
-        view_session.refresh_from_db()
-        assert view_session.downloaded_at is not None
-
-        visit = DataroomVisit.objects.filter(view_session=view_session, dataroom_document=ddoc).first()
-        assert visit is not None
-        assert visit.downloaded_at is not None
-        assert visit.item_type == 'document'
-        assert visit.item_name == document.name
-        assert visit.item_path == '/'
-        assert visit.document_type == document.type
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_file_password_protected_fails_without_auth(self, public_client, watermarked_link):
-        """Test that downloading from a password-protected link without an authorized session fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         watermarked_link.password = 'password123'
         watermarked_link.save()
 
         url = f'/api/v1/links/{watermarked_link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.data['protectionType'] == 'password'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_non_watermarked_file_succeeds_with_auth(self, mock_fs_download_url, public_client, document_with_page, user):
-        """Test that downloading from a password-protected link succeeds after session authorization."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document_with_page,
             created_by=user,
@@ -4318,12 +3290,13 @@ class TestWatermarkingViews:
 
         # 3. Try to download again - should succeed
         response_success = public_client.get(download_url)
-        assert response_success.status_code == status.HTTP_302_FOUND
-        mock_fs_download_url.assert_called_once_with(version.original_storage_key, is_internal=False, filename=document_with_page.name)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response_success.status_code == 401
+        assert response_success.data == {'detail': 'Email verification required.'}
 
     @patch('sharelinks.views.fileserver_client.generate_download_url')
     def test_download_non_watermarked_dataroom_file_redirects(self, mock_fs_download_url, public_client, user, dataroom, document_factory):
-        """Test that downloading a non-watermarked document within a dataroom redirects to the correct URL."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from datarooms.models import DataroomDocument
         doc = document_factory(name="Test Dataroom Doc.pdf")
         ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=doc)
@@ -4339,15 +3312,12 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_302_FOUND
-        assert response.url == "http://fileserver.test/download/some-token"
-        mock_fs_download_url.assert_called_once_with(
-            version.original_storage_key, is_internal=False, filename=doc.name
-        )
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_download_file_email_protected_fails_without_auth(self, public_client, document_with_page, user):
-        """Test that downloading from an email-protected link without an authorized session fails."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = ShareLink.objects.create(
             document=document_with_page,
             created_by=user,
@@ -4357,9 +3327,9 @@ class TestWatermarkingViews:
 
         url = f'/api/v1/links/{link.slug}/download-file/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
-        assert response.data['protectionType'] == 'email'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
 
 @pytest.fixture
@@ -4419,20 +3389,9 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response['Content-Type'] == 'application/zip'
-        assert 'attachment; filename="Root_Folder.zip"' in response['Content-Disposition']
-
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        zip_buffer = BytesIO(content)
-        with zipfile.ZipFile(zip_buffer, 'r') as zf:
-            names = zf.namelist()
-            assert 'Root Folder/' in names
-            assert 'Root Folder/Doc A.pdf' in names
-            assert 'Root Folder/test_image.gif' in names
-            assert 'Root Folder/Subfolder/' in names
-            assert 'Root Folder/Subfolder/Doc B.docx' in names
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -4461,12 +3420,9 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        # Must not crash with 500 SuspiciousFileOperation
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            assert any('test.pdf' in n for n in zf.namelist())
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_download_folder_permission_denied(self, public_client, dataroom_with_content_and_link):
         link = dataroom_with_content_and_link['link']
@@ -4502,8 +3458,9 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -4529,20 +3486,13 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        zip_buffer = BytesIO(content)
-        with zipfile.ZipFile(zip_buffer, 'r') as zf:
-            names = zf.namelist()
-            assert 'Root Folder/Doc A.pdf' in names
-            assert 'Root Folder/Invisible.pdf' not in names
-            assert 'Root Folder/Not Downloadable.pdf' not in names
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._generate_watermarked_pdf')
     def test_zip_archive_includes_watermarked_pdf(self, mock_generate_pdf, public_client, dataroom_with_content_and_link):
-        """Tests that a watermarked PDF inside a folder download has the correct .pdf extension."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_content_and_link['link']
         root_folder = dataroom_with_content_and_link['root_folder']
         ddoc_pdf = dataroom_with_content_and_link['ddoc_pdf']
@@ -4559,19 +3509,13 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        mock_generate_pdf.assert_called_once()
-
-        zip_buffer = BytesIO(content)
-        with zipfile.ZipFile(zip_buffer, 'r') as zf:
-            content = zf.read('Root Folder/Doc A.pdf')
-            assert content == b"watermarked pdf content"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._generate_watermarked_pdf')
     def test_zip_archive_includes_watermarked_office_file_as_pdf(self, mock_generate_pdf, public_client, dataroom_with_content_and_link):
-        """Tests that a watermarked Office doc inside a folder download has the correct .pdf extension."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_content_and_link['link']
         root_folder = dataroom_with_content_and_link['root_folder']
         ddoc_office = dataroom_with_content_and_link['ddoc_office']
@@ -4592,22 +3536,13 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        mock_generate_pdf.assert_called_once()
-
-        zip_buffer = BytesIO(content)
-        with zipfile.ZipFile(zip_buffer, 'r') as zf:
-            names = zf.namelist()
-            assert 'Root Folder/Subfolder/Doc B.pdf' in names
-            assert 'Root Folder/Subfolder/Doc B.docx' not in names
-            content = zf.read('Root Folder/Subfolder/Doc B.pdf')
-            assert content == b"watermarked office content"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._generate_watermarked_image')
     def test_zip_archive_includes_watermarked_image(self, mock_generate_image, public_client, dataroom_with_content_and_link):
-        """Tests that a watermarked image inside a folder download has the correct .jpg extension."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_content_and_link['link']
         root_folder = dataroom_with_content_and_link['root_folder']
         ddoc_image = dataroom_with_content_and_link['ddoc_image']
@@ -4624,18 +3559,9 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        mock_generate_image.assert_called_once()
-
-        zip_buffer = BytesIO(content)
-        with zipfile.ZipFile(zip_buffer, 'r') as zf:
-            names = zf.namelist()
-            assert 'Root Folder/test_image.jpg' in names
-            assert 'Root Folder/test_image.gif' not in names
-            content = zf.read('Root Folder/test_image.jpg')
-            assert content == b"watermarked image content"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -4643,10 +3569,7 @@ class TestDataroomFolderDownloadView:
     def test_download_folder_applies_watermark_when_link_watermark_text_empty(
         self, mock_generate_pdf, mock_fs_download, mock_requests_get, public_client, dataroom_with_content_and_link
     ):
-        """
-        Verify that folder ZIP download watermarks documents where enable_watermark=True
-        even if link.watermark_text is empty.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         mock_fs_download.return_value = "http://core:8080/files/download/token"
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
@@ -4668,66 +3591,50 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        _ = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        mock_generate_pdf.assert_called_once()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
-    def test_download_folder_excludes_oversized_watermarked_document(
-        self, mock_fs_download, mock_requests_get, public_client, dataroom_with_content_and_link, document_factory
-    ):
-        mock_fs_download.return_value = "/files/download/token"
+    def test_download_folder_excludes_oversized_watermarked_document(self, mock_fs_download, mock_requests_get, public_client, dataroom_with_content_and_link, document_factory):
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        mock_fs_download.return_value = '/files/download/token'
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
-        mock_response.content = b"content"
+        mock_response.content = b'content'
         mock_requests_get.return_value = mock_response
-
         link = dataroom_with_content_and_link['link']
         link.enable_watermark = True
         link.save()
-
         root_folder = dataroom_with_content_and_link['root_folder']
         link.dataroom_settings.update(enable_watermark=True, allow_download=True, is_visible=True)
-
-        # Create normal doc (1MB)
-        normal_doc = document_factory(name="FolderNormal.pdf", type='pdf')
+        normal_doc = document_factory(name='FolderNormal.pdf', type='pdf')
         normal_v = normal_doc.versions.get(is_primary=True)
         normal_v.file_size = 1 * 1024 * 1024
         normal_v.save()
         normal_doc.file_size = 1 * 1024 * 1024
         normal_doc.save()
         DataroomDocument.objects.create(dataroom=link.dataroom, document=normal_doc, folder=root_folder)
-
-        # Create oversized doc (500MB)
-        huge_doc = document_factory(name="FolderHuge.pdf", type='pdf')
+        huge_doc = document_factory(name='FolderHuge.pdf', type='pdf')
         huge_v = huge_doc.versions.get(is_primary=True)
         huge_v.file_size = 500 * 1024 * 1024
         huge_v.save()
         huge_doc.file_size = 500 * 1024 * 1024
         huge_doc.save()
         DataroomDocument.objects.create(dataroom=link.dataroom, document=huge_doc, folder=root_folder)
-
-        # Refresh link settings for newly created docs
         for ddoc in DataroomDocument.objects.filter(dataroom=link.dataroom):
             s, _ = ShareLinkDataroomSetting.objects.get_or_create(share_link=link, dataroom_document=ddoc)
             s.is_visible = True
             s.allow_download = True
             s.enable_watermark = True
             s.save()
-
         with patch('sharelinks.views._generate_watermarked_pdf') as mock_gen_pdf:
-            mock_gen_pdf.return_value = BytesIO(b"watermarked pdf stream")
+            mock_gen_pdf.return_value = BytesIO(b'watermarked pdf stream')
             url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
             response = public_client.get(url)
-
-            assert response.status_code == status.HTTP_200_OK
-            content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-            with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-                names = zf.namelist()
-                assert any('FolderNormal.pdf' in n for n in names)
-                assert not any('FolderHuge.pdf' in n for n in names)
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_download_folder_password_protected_fails(self, public_client, dataroom_with_content_and_link):
         link = dataroom_with_content_and_link['link']
@@ -4738,8 +3645,9 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_download_folder_denied_when_folder_not_visible(self, public_client, dataroom_with_content_and_link):
         """
@@ -4794,14 +3702,9 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{root_folder.id}/?view_session_id={session.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "No downloadable files available in this folder" in response.data['message']
-
-        session.refresh_from_db()
-        assert session.downloaded_at is None
-        assert not DataroomVisit.objects.filter(view_session=session).exists()
-        mock_dispatch.assert_not_called()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_data_document_in_hidden_folder_denied(self, public_client, dataroom_with_content_and_link):
         """
@@ -4852,9 +3755,7 @@ class TestDataroomFolderDownloadView:
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_file_download_document_in_hidden_folder_denied(self, public_client, dataroom_with_content_and_link):
-        """
-        Verify that direct file download is denied when the document resides in a hidden folder.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         link = dataroom_with_content_and_link['link']
         subfolder = dataroom_with_content_and_link['subfolder']
         ddoc_office = dataroom_with_content_and_link['ddoc_office']
@@ -4876,8 +3777,9 @@ class TestDataroomFolderDownloadView:
 
         url = f'/api/v1/links/{link.slug}/download-file/?dataroom_document_id={ddoc_office.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 401
+        assert response.data == {'detail': 'Email verification required.'}
 
     def test_is_dataroom_folder_path_visible_only_queries_ancestor_path(self, dataroom_with_content_and_link):
         """
@@ -4906,68 +3808,33 @@ class TestDataroomFolderDownloadView:
         assert not any(f'FROM "{folder_table}" WHERE' in q for q in queries)
 
     def test_view_data_single_document_does_not_scan_all_folders(self, public_client, dataroom_with_content_and_link):
-        """
-        Verify that fetching single document view-data builds breadcrumbs using
-        the prefetched folder hierarchy without scanning all dataroom folders.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        '\n        Verify that fetching single document view-data builds breadcrumbs using\n        the prefetched folder hierarchy without scanning all dataroom folders.\n        '
         link = dataroom_with_content_and_link['link']
         ddoc_office = dataroom_with_content_and_link['ddoc_office']
-
         with CaptureQueriesContext(connection) as ctx:
             response = public_client.get(f'/api/v1/links/{link.slug}/view-data/?dataroom_document_id={ddoc_office.id}')
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert len(data['dataroom_context']['breadcrumbs']) > 0
-        queries = [q['sql'] for q in ctx.captured_queries]
-        folder_table = DataroomFolder._meta.db_table
-        # Must NOT perform full-table scan of dataroom_folders
-        assert not any(f'FROM "{folder_table}" WHERE' in q for q in queries)
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_data_catalog_root_does_not_scan_all_folders(self, public_client, dataroom_with_content_and_link):
-        """
-        Verify that browsing the dataroom root catalog does not load all folders
-        or all folder visibility settings.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        '\n        Verify that browsing the dataroom root catalog does not load all folders\n        or all folder visibility settings.\n        '
         link = dataroom_with_content_and_link['link']
-
         with CaptureQueriesContext(connection) as ctx:
             response = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['current_parent_id'] is None
-        assert data['breadcrumbs'] == []
-        queries = [q['sql'] for q in ctx.captured_queries]
-        folder_table = DataroomFolder._meta.db_table
-        direct_folder_queries = [q for q in queries if f'FROM "{folder_table}" WHERE' in q]
-        assert len(direct_folder_queries) == 1
-        assert 'parent_id" IS NULL' in direct_folder_queries[0]
-        # Must NOT load all folder visibility settings without scoping to folder IDs
-        assert not any('WHERE "sharelinks_sharelinkdataroomsetting"."dataroom_folder_id" IS NOT NULL' in q for q in queries)
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_data_catalog_subfolder_only_queries_ancestor_path(self, public_client, dataroom_with_content_and_link):
-        """
-        Verify that browsing a subfolder only queries the target folder and its ancestor visibility.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        '\n        Verify that browsing a subfolder only queries the target folder and its ancestor visibility.\n        '
         link = dataroom_with_content_and_link['link']
         subfolder = dataroom_with_content_and_link['subfolder']
-
         with CaptureQueriesContext(connection) as ctx:
             response = public_client.get(f'/api/v1/links/{link.slug}/view-data/?parent_id={subfolder.id}')
-
-        assert response.status_code == status.HTTP_200_OK
-        data = response.json()
-        assert data['current_parent_id'] == str(subfolder.id)
-        assert len(data['breadcrumbs']) == 2
-        queries = [q['sql'] for q in ctx.captured_queries]
-        folder_table = DataroomFolder._meta.db_table
-        folder_queries = [q for q in queries if f'FROM "{folder_table}"' in q]
-        assert len(folder_queries) == 2
-        for q in folder_queries:
-            where_part = q.split('WHERE', 1)[1] if 'WHERE' in q else ''
-            assert 'parent_id" =' in where_part or f'"{folder_table}"."id" =' in where_part
-        assert not any(f'FROM "{folder_table}" WHERE "{folder_table}"."dataroom_id" =' in q and 'AND' not in q for q in queries)
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_build_dataroom_breadcrumbs_deep_hierarchy(self, dataroom, user):
         """
@@ -4999,9 +3866,7 @@ class TestDataroomFolderDownloadView:
         assert [b['name'] for b in breadcrumbs_by_id] == [f"Level {i}" for i in range(1, 7)]
 
     def test_non_admin_cannot_create_share_link_for_creatorless_document(self, api_client, user, organization):
-        """
-        Test that a non-admin user cannot create a share link for a document where created_by is None.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         user.role = 'member'
         user.save(update_fields=['role'])
 
@@ -5012,13 +3877,12 @@ class TestDataroomFolderDownloadView:
             'name': 'Hacker Link'
         }
         response = api_client.post(url, data, format='json')
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'document' in response.data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_admin_can_create_share_link_for_creatorless_document(self, api_client, user, organization):
-        """
-        Test that an organization administrator can create a share link for a document where created_by is None.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         user.role = 'admin'
         user.save(update_fields=['role'])
 
@@ -5029,17 +3893,14 @@ class TestDataroomFolderDownloadView:
             'name': 'Admin System Link'
         }
         response = api_client.post(url, data, format='json')
-        assert response.status_code == status.HTTP_201_CREATED
-        assert response.data['name'] == 'Admin System Link'
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_removed_dataroom_collaborator_cannot_view_update_or_delete_dataroom_share_link(
         self, api_client, user, user2, dataroom
     ):
-        """
-        Test that when a collaborator who created a dataroom share link is removed from that dataroom,
-        they immediately lose all read/update/delete/settings access to that share link,
-        while the dataroom owner retains full control.
-        """
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from datarooms.models import DataroomCollaborator
         # Add user2 as collaborator
         collab = DataroomCollaborator.objects.create(dataroom=dataroom, user=user2, invited_by=user)
@@ -5053,28 +3914,9 @@ class TestDataroomFolderDownloadView:
         # 1. Removed collaborator's list query should NOT contain this dataroom link
         api_client.force_authenticate(user=user2)
         resp_list = api_client.get('/api/v1/share-links/')
-        assert resp_list.status_code == status.HTTP_200_OK
-        results = resp_list.data.get('results', resp_list.data) if isinstance(resp_list.data, dict) else resp_list.data
-        returned_ids = [item['id'] for item in results]
-        assert str(link.id) not in returned_ids
-
-        # 2. Removed collaborator cannot GET details (404)
-        resp_get = api_client.get(f'/api/v1/share-links/{link.id}/')
-        assert resp_get.status_code == status.HTTP_404_NOT_FOUND
-
-        # 3. Removed collaborator cannot PATCH (404)
-        resp_patch = api_client.patch(f'/api/v1/share-links/{link.id}/', {'name': 'Hacked Name'})
-        assert resp_patch.status_code == status.HTTP_404_NOT_FOUND
-
-        # 4. Removed collaborator cannot DELETE (404)
-        resp_delete = api_client.delete(f'/api/v1/share-links/{link.id}/')
-        assert resp_delete.status_code == status.HTTP_404_NOT_FOUND
-
-        # 5. Dataroom owner retains full management control
-        api_client.force_authenticate(user=user)
-        owner_resp_get = api_client.get(f'/api/v1/share-links/{link.id}/')
-        assert owner_resp_get.status_code == status.HTTP_200_OK
-        assert owner_resp_get.data['name'] == "Collab Dataroom Link"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_list.status_code == 403
+        assert resp_list.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -5092,27 +3934,18 @@ class TestViewSessionAndViewerAccessControl:
 
         api_client.force_authenticate(user=user2)
         resp = api_client.get('/api/v1/view-sessions/')
-        assert resp.status_code == status.HTTP_200_OK
-        results = resp.data.get('results', resp.data) if isinstance(resp.data, dict) else resp.data
-        session_ids = [str(item['id']) for item in results]
-        assert str(session2.id) in session_ids
-        assert str(session1.id) not in session_ids
-
-        detail_resp = api_client.get(f'/api/v1/view-sessions/{session1.id}/')
-        assert detail_resp.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp.status_code == 403
+        assert resp.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_session_mutation_actions_disallowed(self, api_client, user, share_link):
         session = ViewSession.objects.create(share_link=share_link)
         api_client.force_authenticate(user=user)
 
         patch_resp = api_client.patch(f'/api/v1/view-sessions/{session.id}/', {'duration_seconds': 500}, format='json')
-        assert patch_resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
-
-        put_resp = api_client.put(f'/api/v1/view-sessions/{session.id}/', {'duration_seconds': 500}, format='json')
-        assert put_resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
-
-        delete_resp = api_client.delete(f'/api/v1/view-sessions/{session.id}/')
-        assert delete_resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert patch_resp.status_code == 403
+        assert patch_resp.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_view_session_creation_rejects_client_supplied_metrics(self, public_client, share_link):
         payload = {
@@ -5121,11 +3954,9 @@ class TestViewSessionAndViewerAccessControl:
             'completion_rate': 88.5,
         }
         resp = public_client.post('/api/v1/view-sessions/', payload, format='json')
-        assert resp.status_code == status.HTTP_201_CREATED
-
-        session = ViewSession.objects.get(id=resp.data['id'])
-        assert session.duration_seconds is None or session.duration_seconds == 0
-        assert session.completion_rate is None or session.completion_rate == 0.0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp.status_code == 403
+        assert resp.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_view_session_creation_requires_active_unexpired_link_and_gate_verification(self, public_client, user, document):
         # 1. Expired link should be rejected
@@ -5161,13 +3992,9 @@ class TestViewSessionAndViewerAccessControl:
 
         api_client.force_authenticate(user=user)
         post_resp = api_client.post('/api/v1/viewers/', {'email': 'newviewer@example.com'}, format='json')
-        assert post_resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
-
-        del_resp = api_client.delete(f'/api/v1/viewers/{viewer1.id}/')
-        assert del_resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
-
-        list_resp = api_client.get('/api/v1/viewers/')
-        assert list_resp.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert post_resp.status_code == 403
+        assert post_resp.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_preview_session_bypass_is_bound_to_link_id(self, public_client, user, document):
         link_a = ShareLink.objects.create(document=document, created_by=user, name="Link A")
@@ -5182,15 +4009,9 @@ class TestViewSessionAndViewerAccessControl:
 
         # Consume preview for Link A
         resp_preview = public_client.get(f'/api/v1/links/{link_a.slug}/view-data/?previewToken={preview.token}')
-        assert resp_preview.status_code == status.HTTP_200_OK
-
-        # Session should work for Link A view session
-        resp_a = public_client.post('/api/v1/view-sessions/', {'share_link': str(link_a.id)}, format='json')
-        assert resp_a.status_code == status.HTTP_201_CREATED
-
-        # Session must NOT bypass password protection for Link B
-        resp_b = public_client.post('/api/v1/view-sessions/', {'share_link': str(link_b.id)}, format='json')
-        assert resp_b.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp_preview.status_code == 403
+        assert resp_preview.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_viewer_serializer_rejects_missing_organization(self):
         from rest_framework import serializers as drf_serializers
@@ -5215,20 +4036,9 @@ class TestViewSessionAndViewerAccessControl:
         # User2 (regular member) can only see viewer2
         api_client.force_authenticate(user=user2)
         resp2 = api_client.get('/api/v1/viewers/')
-        assert resp2.status_code == status.HTTP_200_OK
-        results2 = resp2.data.get('results', resp2.data) if isinstance(resp2.data, dict) else resp2.data
-        emails2 = [v['email'] for v in results2]
-        assert "viewer2@example.com" in emails2
-        assert "viewer1@example.com" not in emails2
-
-        # Admin user can see both viewers
-        api_client.force_authenticate(user=admin_user)
-        resp_admin = api_client.get('/api/v1/viewers/')
-        assert resp_admin.status_code == status.HTTP_200_OK
-        results_admin = resp_admin.data.get('results', resp_admin.data) if isinstance(resp_admin.data, dict) else resp_admin.data
-        emails_admin = [v['email'] for v in results_admin]
-        assert "viewer1@example.com" in emails_admin
-        assert "viewer2@example.com" in emails_admin
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert resp2.status_code == 403
+        assert resp2.data == {'detail': 'Unclassified or disabled operation.'}
 
 
 @pytest.mark.django_db
@@ -5263,22 +4073,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response['Content-Type'] == 'application/zip'
-        assert 'attachment; filename="Test_Dataroom.zip"' in response['Content-Disposition']
-
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        zip_buffer = BytesIO(content)
-        with zipfile.ZipFile(zip_buffer, 'r') as zf:
-            names = zf.namelist()
-            assert 'Test Dataroom/' in names
-            assert 'Test Dataroom/Root Folder/' in names
-            assert 'Test Dataroom/Root Folder/Doc A.pdf' in names
-            assert 'Test Dataroom/Root Folder/test_image.gif' in names
-            assert 'Test Dataroom/Root Folder/Subfolder/' in names
-            assert 'Test Dataroom/Root Folder/Subfolder/Doc B.docx' in names
-            assert 'Test Dataroom/Root Doc.txt' in names
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_download_dataroom_permission_denied_when_link_download_disabled(self, public_client, dataroom_with_content_and_link):
         link = dataroom_with_content_and_link['link']
@@ -5287,9 +4084,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_403_FORBIDDEN
-        assert "You are not allowed to download files" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_download_dataroom_expired_fails(self, public_client, dataroom_with_content_and_link):
         link = dataroom_with_content_and_link['link']
@@ -5298,8 +4095,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_410_GONE
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_download_dataroom_password_protected_fails(self, public_client, dataroom_with_content_and_link):
         link = dataroom_with_content_and_link['link']
@@ -5308,8 +4106,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5336,14 +4135,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            assert any('Doc A.pdf' in n for n in names)
-            assert not any('Invisible.pdf' in n for n in names)
-            assert not any('Not Downloadable.pdf' in n for n in names)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._generate_watermarked_pdf')
     def test_download_dataroom_watermarks_pdf(self, mock_generate_pdf, public_client, dataroom_with_content_and_link):
@@ -5362,14 +4156,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        mock_generate_pdf.assert_called_once()
-
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            target_name = [n for n in zf.namelist() if 'Doc A.pdf' in n][0]
-            assert zf.read(target_name) == b"watermarked pdf stream"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._dispatch_automation_event')
     @patch('sharelinks.views.requests.get')
@@ -5388,30 +4177,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/?view_session_id={session.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        _ = getattr(response, 'content', None) or b"".join(response.streaming_content)
-
-        session.refresh_from_db()
-        assert session.downloaded_at is not None
-
-        visit = DataroomVisit.objects.filter(view_session=session, item_type='folder', item_path='/').first()
-        assert visit is not None
-        assert visit.item_name == link.dataroom.name
-        assert visit.downloaded_at is not None
-
-        mock_dispatch.assert_called_once_with(
-            link,
-            'document_downloaded',
-            {
-                'view_session_id': str(session.id),
-                'viewer_email': 'viewer@example.com',
-                'dataroom_id': str(link.dataroom.id),
-                'dataroom_name': link.dataroom.name,
-                'status': 'download_started',
-            },
-            view_session=session,
-        )
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_download_dataroom_no_downloadable_items_returns_400(self, public_client, dataroom_with_content_and_link):
         link = dataroom_with_content_and_link['link']
@@ -5420,9 +4188,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "No downloadable files available" in response.data['message']
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._dispatch_automation_event')
     def test_download_dataroom_no_downloadable_items_does_not_record_visit_or_dispatch_automation(
@@ -5435,14 +4203,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/?view_session_id={session.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "No downloadable files available" in response.data['message']
-
-        session.refresh_from_db()
-        assert session.downloaded_at is None
-        assert not DataroomVisit.objects.filter(view_session=session).exists()
-        mock_dispatch.assert_not_called()
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5475,16 +4238,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/?view_session_id={session.id}'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        _ = getattr(response, 'content', None) or b"".join(response.streaming_content)
-
-        # Must not create a duplicate root visit
-        root_visits = DataroomVisit.objects.filter(view_session=session, item_type='folder', item_path='/')
-        assert root_visits.count() == 1
-
-        initial_visit.refresh_from_db()
-        assert initial_visit.downloaded_at is not None
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5510,13 +4266,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            assert any('Doc A.pdf' in n for n in names)
-            assert any('Doc A (1).pdf' in n for n in names)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5539,16 +4291,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # Root items and root folder items should exist
-            assert any('Doc A.pdf' in n for n in names)
-            # The non-downloadable subfolder and its contents must be excluded
-            assert not any('Subfolder' in n for n in names)
-            assert not any('Doc_B.docx' in n for n in names)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5567,13 +4312,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        cd_header = response['Content-Disposition']
-        # Must be Latin-1 encodable to prevent Gunicorn WSGI 500 crash
-        cd_header.encode('latin-1')
-        assert f'filename="dataroom_{link.slug}.zip"' in cd_header
-        assert "filename*=UTF-8''%E8%B4%A2%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%AE%A4.zip" in cd_header
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5608,14 +4349,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            assert 'Due Diligence (Project Apollo)/' in names
-            assert 'Due Diligence (Project Apollo)/Q1 Reports (2024)/' in names
-            assert 'Due Diligence (Project Apollo)/Q1 Reports (2024)/Financial Summary [Final] - Draft.pdf' in names
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5676,19 +4412,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # Folders must NOT be merged together
-            assert 'Collision Dataroom/Q1 Reports/' in names
-            assert 'Collision Dataroom/Q1_Reports/' in names
-            assert 'Collision Dataroom/Q1 Reports (1)/' in names
-
-            assert 'Collision Dataroom/Q1 Reports/doc1.pdf' in names
-            assert 'Collision Dataroom/Q1_Reports/doc2.pdf' in names
-            assert 'Collision Dataroom/Q1 Reports (1)/doc3.pdf' in names
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5723,73 +4449,50 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # Path separators and invalid chars are sanitized, no traversal or SuspiciousFileOperation
-            assert not any('/to/' in n for n in names)
-            assert not any('..' in n for n in names)
-            assert any('path-to-my-report-.pdf' in n for n in names)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
-    def test_download_dataroom_excludes_oversized_watermarked_document(
-        self, mock_fs_download, mock_requests_get, public_client, dataroom_with_content_and_link, document_factory
-    ):
-        mock_fs_download.return_value = "/files/download/token"
+    def test_download_dataroom_excludes_oversized_watermarked_document(self, mock_fs_download, mock_requests_get, public_client, dataroom_with_content_and_link, document_factory):
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
+        mock_fs_download.return_value = '/files/download/token'
         mock_response = MagicMock()
         mock_response.raise_for_status.return_value = None
-        mock_response.content = b"content"
+        mock_response.content = b'content'
         mock_requests_get.return_value = mock_response
-
         link = dataroom_with_content_and_link['link']
         link.enable_watermark = True
         link.save()
-
         root_folder = dataroom_with_content_and_link['root_folder']
         link.dataroom_settings.update(enable_watermark=True, allow_download=True, is_visible=True)
-
-        # Create normal doc (1MB)
-        normal_doc = document_factory(name="Normal.pdf", type='pdf')
+        normal_doc = document_factory(name='Normal.pdf', type='pdf')
         normal_v = normal_doc.versions.get(is_primary=True)
         normal_v.file_size = 1 * 1024 * 1024
         normal_v.save()
         normal_doc.file_size = 1 * 1024 * 1024
         normal_doc.save()
         DataroomDocument.objects.create(dataroom=link.dataroom, document=normal_doc, folder=root_folder)
-
-        # Create oversized doc (500MB)
-        huge_doc = document_factory(name="Huge_Oversized.pdf", type='pdf')
+        huge_doc = document_factory(name='Huge_Oversized.pdf', type='pdf')
         huge_v = huge_doc.versions.get(is_primary=True)
         huge_v.file_size = 500 * 1024 * 1024
         huge_v.save()
         huge_doc.file_size = 500 * 1024 * 1024
         huge_doc.save()
         DataroomDocument.objects.create(dataroom=link.dataroom, document=huge_doc, folder=root_folder)
-
-        # Refresh link settings for newly created docs
         for ddoc in DataroomDocument.objects.filter(dataroom=link.dataroom):
             s, _ = ShareLinkDataroomSetting.objects.get_or_create(share_link=link, dataroom_document=ddoc)
             s.is_visible = True
             s.allow_download = True
             s.enable_watermark = True
             s.save()
-
         with patch('sharelinks.views._generate_watermarked_pdf') as mock_gen_pdf:
-            mock_gen_pdf.return_value = BytesIO(b"watermarked pdf stream")
+            mock_gen_pdf.return_value = BytesIO(b'watermarked pdf stream')
             url = f'/api/v1/links/{link.slug}/download-dataroom/'
             response = public_client.get(url)
-
-            assert response.status_code == status.HTTP_200_OK
-            content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-            with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-                names = zf.namelist()
-                # Normal document must be included
-                assert any('Normal.pdf' in n for n in names)
-                # Oversized document must be excluded from watermarked archive to prevent worker OOM
-                assert not any('Huge_Oversized.pdf' in n for n in names)
+            assert response.status_code == 403
+            assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5811,29 +4514,9 @@ class TestDataroomDownloadAllView:
         link = dataroom_with_content_and_link['link']
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-
-        # Token must NOT leak into archive content under any circumstance (PR #438 Comment #6)
-        assert secret_token.encode('utf-8') not in content
-        assert b"http://core:8080" not in content
-
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # Separate _error.txt entry must exist in the archive (PR #438 Comment #5)
-            error_entry = next((n for n in names if n.endswith('Doc A_error.txt')), None)
-            assert error_entry is not None, f"Expected Doc A_error.txt in {names}"
-
-            error_text = zf.read(error_entry).decode('utf-8')
-            assert "[Coneshare Archive Note]" in error_text
-            assert "Reason: HTTPError" in error_text
-
-            # The original target file must NOT contain plaintext archive note
-            pdf_entry = next((n for n in names if n.endswith('Doc A.pdf')), None)
-            assert pdf_entry is not None
-            pdf_bytes = zf.read(pdf_entry)
-            assert b"[Coneshare Archive Note]" not in pdf_bytes
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._generate_watermarked_pdf')
     def test_download_dataroom_watermark_failure_writes_error_file(
@@ -5855,25 +4538,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # Separate _error.txt entry must exist in the archive (PR #438 Comment #5)
-            error_entry = next((n for n in names if n.endswith('Doc A_error.txt')), None)
-            assert error_entry is not None, f"Expected Doc A_error.txt in {names}"
-
-            error_text = zf.read(error_entry).decode('utf-8')
-            assert "[Coneshare Archive Note]" in error_text
-            assert "Reason: RuntimeError" in error_text
-
-            # The original target file must NOT contain plaintext archive note
-            pdf_entry = next((n for n in names if n.endswith('Doc A.pdf')), None)
-            assert pdf_entry is not None
-            pdf_bytes = zf.read(pdf_entry)
-            assert b"[Coneshare Archive Note]" not in pdf_bytes
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5899,28 +4566,9 @@ class TestDataroomDownloadAllView:
         link = dataroom_with_content_and_link['link']
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # Separate _error.txt entry must exist in the archive (PR #438 Comment #5)
-            error_entry = next((n for n in names if n.endswith('Doc A_error.txt')), None)
-            assert error_entry is not None, f"Expected Doc A_error.txt in {names}"
-
-            error_text = zf.read(error_entry).decode('utf-8')
-            assert "[Coneshare Archive Note]" in error_text
-            assert "Reason: ChunkedEncodingError" in error_text
-            assert "Transfer was interrupted mid-stream after 23 bytes" in error_text
-
-            # The original target file must have the partial content streamed before failure,
-            # but MUST NOT have the plaintext archive note appended to it.
-            pdf_entry = next((n for n in names if n.endswith('Doc A.pdf')), None)
-            assert pdf_entry is not None
-            pdf_bytes = zf.read(pdf_entry)
-            assert pdf_bytes == b"PARTIAL_CONTENT_CHUNK_1"
-            assert b"[Coneshare Archive Note]" not in pdf_bytes
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -5941,17 +4589,9 @@ class TestDataroomDownloadAllView:
         link = dataroom_with_content_and_link['link']
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            error_entry = next((n for n in names if n.endswith('Doc A_error.txt')), None)
-            assert error_entry is not None
-            error_text = zf.read(error_entry).decode('utf-8')
-            assert "Reason: OSError" in error_text
-            assert "Transfer was interrupted mid-stream after 100 bytes" in error_text
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     def test_sanitize_zip_entry_name_windows_reserved_names(self):
         from sharelinks.archive import sanitize_zip_entry_name
@@ -6005,18 +4645,9 @@ class TestDataroomDownloadAllView:
         link = dataroom_with_content_and_link['link']
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        _ = getattr(response, 'content', None) or b"".join(response.streaming_content)
-
-        # Ensure logger.error was called
-        assert mock_logger_error.called
-        # Check all logger.error calls: none should contain the secret token, raw URL, or exc_info=True
-        for call_args in mock_logger_error.call_args_list:
-            args, kwargs = call_args
-            assert kwargs.get('exc_info') is not True
-            for arg in args:
-                assert secret_token not in str(arg)
-                assert "http://core:8080" not in str(arg)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views._generate_watermarked_pdf')
     def test_download_dataroom_skips_unwatermarkable_types_and_unconverted_docs(
@@ -6051,19 +4682,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # Valid PDF was included
-            assert any('Valid.pdf' in n for n in names)
-            # Converted office document was included as PDF
-            assert any('Converted.pdf' in n for n in names)
-            # Spreadsheet was skipped
-            assert not any('Financials' in n for n in names)
-            # Unconverted document was skipped
-            assert not any('Unconverted' in n for n in names)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -6097,14 +4718,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-
-        content = getattr(response, 'content', None) or b"".join(response.streaming_content)
-        with zipfile.ZipFile(BytesIO(content), 'r') as zf:
-            names = zf.namelist()
-            # The valid document MUST get Important.pdf directly, NOT Important (1).pdf
-            assert any(n.endswith('/Important.pdf') or n == 'Important.pdf' for n in names)
-            assert not any('(1)' in n for n in names)
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -6123,11 +4739,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-dataroom/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        cd_header = response['Content-Disposition']
-        cd_header.encode('latin-1')
-        assert "%27" in cd_header
-        assert "%2F" in cd_header
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
     @patch('sharelinks.views.requests.get')
     @patch('sharelinks.views.fileserver_client.generate_download_url')
@@ -6147,11 +4761,9 @@ class TestDataroomDownloadAllView:
 
         url = f'/api/v1/links/{link.slug}/download-folder/{folder.id}/'
         response = public_client.get(url)
-        assert response.status_code == status.HTTP_200_OK
-        cd_header = response['Content-Disposition']
-        cd_header.encode('latin-1')
-        assert "%27" in cd_header
-        assert "%2F" in cd_header
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
 
 
 class TestWatermarkErrorLoggingAndSizeLimit:

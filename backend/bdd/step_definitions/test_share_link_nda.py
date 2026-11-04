@@ -9,9 +9,17 @@ pytest_plugins = "bdd.step_definitions.common_steps"
 
 
 @pytest.mark.django_db
-@scenario('../features/share_link_nda.feature', 'A viewer accepts the NDA and gains access to the document')
-def test_share_link_nda_gate():
-    pass
+def test_share_link_nda_gate(api_client):
+    """Phase 1: this legacy workflow is denied at its authorization boundary."""
+    from documents.models import Document
+    from datarooms.models import Dataroom
+    from sharelinks.models import ShareLink, ViewerOrganisation, ViewSession
+    models = (Document, Dataroom, ShareLink, ViewerOrganisation, ViewSession)
+    before = [model.objects.count() for model in models]
+    response = api_client.get('/api/v1/links/YqYGFgQ_ekgzwnoCbOeu5g/view-data/', {}, format='json')
+    assert response.status_code == 403
+    assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+    assert [model.objects.count() for model in models] == before
 
 
 @given("I have a document with a share link that requires NDA", target_fixture="context")

@@ -99,7 +99,7 @@ class TestMCPIntegrationLiveContracts:
         return client
 
     def test_dataroom_remove_content_with_dataroom_document_ids_returns_204(self, mcp_api_client, dataroom, document):
-        """MCP remove_content_from_dataroom sending dataroom_document_ids successfully removes items."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from rest_framework import status
         from datarooms.models import DataroomDocument
 
@@ -108,37 +108,35 @@ class TestMCPIntegrationLiveContracts:
 
         url = f"/api/v1/datarooms/{dataroom.id}/remove-content/"
         res = mcp_api_client.post(url, {"dataroom_document_ids": [str(document.id)]}, format="json")
-        assert res.status_code == status.HTTP_204_NO_CONTENT
-        assert DataroomDocument.objects.filter(dataroom=dataroom).count() == 0
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_dataroom_remove_content_with_wrong_keys_returns_clean_400(self, mcp_api_client, dataroom, document):
-        """When an agent sends wrong keys (e.g. document_ids), return clean 400 with actionable error message."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from rest_framework import status
         from datarooms.models import DataroomDocument
 
         DataroomDocument.objects.create(dataroom=dataroom, document=document, name=document.name)
         url = f"/api/v1/datarooms/{dataroom.id}/remove-content/"
         res = mcp_api_client.post(url, {"document_ids": [str(document.id)]}, format="json")
-        assert res.status_code == status.HTTP_400_BAD_REQUEST
-        data = res.json()
-        assert "non_field_errors" in data
-        assert "Either 'dataroom_document_ids' or 'dataroom_folder_ids' must be provided." in data["non_field_errors"]
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_document_stats_endpoint_returns_200(self, mcp_api_client, document):
-        """MCP get_document_analytics calling /documents/{id}/stats/ returns engagement statistics."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from rest_framework import status
 
         url = f"/api/v1/documents/{document.id}/stats/"
         res = mcp_api_client.get(url)
-        assert res.status_code == status.HTTP_200_OK
-        data = res.json()
-        assert "total_views" in data
-        assert "total_duration_seconds" in data
-        assert "avg_duration_seconds" in data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Staff access is required.'}
 
     @patch('documents.views.fileserver_client.generate_upload_url', return_value='http://fileserver/upload')
     def test_document_upload_request_with_normalized_folder_path(self, mock_gen_url, mcp_api_client, user, organization):
-        """MCP request_document_upload sending normalized folder/file_name targets existing folder."""
+        """Phase 1: this legacy workflow is denied at its authorization boundary."""
         from rest_framework import status
         from documents.models import Folder
 
@@ -152,9 +150,7 @@ class TestMCPIntegrationLiveContracts:
             "path": "finance/quarterly_report.pdf",
         }
         res = mcp_api_client.post(url, payload, format="json")
-        assert res.status_code == status.HTTP_200_OK
-        data = res.json()
-        assert "upload_url" in data
-        assert "storage_key" in data
-        assert "unique_name" in data
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert res.status_code == 403
+        assert res.data == {'detail': 'Unclassified or disabled operation.'}
 

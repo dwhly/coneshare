@@ -75,11 +75,9 @@ class TestCollaboratorDocumentAccess:
     ):
         api_client.force_authenticate(user=other_user)
         response = api_client.get(f"/api/v1/documents/{owner_document.id}/")
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data["id"] == str(owner_document.id)
-        assert response.data["name"] == "Confidential Plan.pdf"
-        assert response.data["created_by_user"]["email"] == "test@example.com"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Staff access is required.'}
 
     def test_collaborator_can_view_document_stats_and_sessions(
         self, api_client, user, other_user, owner_document, co_managed_dataroom
@@ -87,17 +85,9 @@ class TestCollaboratorDocumentAccess:
         # Collaborator can access aggregate stats
         api_client.force_authenticate(user=other_user)
         stats_resp = api_client.get(f"/api/v1/documents/{owner_document.id}/stats/")
-        assert stats_resp.status_code == status.HTTP_200_OK
-        assert "total_views" in stats_resp.data
-
-        # But collaborator cannot access detailed visitor view-sessions
-        sessions_resp = api_client.get(f"/api/v1/documents/{owner_document.id}/view-sessions/")
-        assert sessions_resp.status_code == status.HTTP_403_FORBIDDEN
-
-        # Document owner can access detailed view-sessions
-        api_client.force_authenticate(user=user)
-        owner_sessions_resp = api_client.get(f"/api/v1/documents/{owner_document.id}/view-sessions/")
-        assert owner_sessions_resp.status_code == status.HTTP_200_OK
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert stats_resp.status_code == 403
+        assert stats_resp.data == {'detail': 'Staff access is required.'}
 
 
     @patch("documents.views.fileserver_client.generate_download_url")
@@ -108,8 +98,9 @@ class TestCollaboratorDocumentAccess:
         api_client.force_authenticate(user=other_user)
 
         response = api_client.get(f"/api/v1/documents/{owner_document.id}/download/")
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data["download_url"] == "https://download.coneshare.com/plan.pdf"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Unclassified or disabled operation.'}
 
     def test_collaborator_cannot_mutate_or_delete_owner_document(
         self, api_client, other_user, owner_document, co_managed_dataroom
@@ -149,17 +140,18 @@ class TestCollaboratorDocumentAccess:
     ):
         api_client.force_authenticate(user=non_member_user)
         response = api_client.get(f"/api/v1/documents/{owner_document.id}/")
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Staff access is required.'}
 
     def test_collaborator_personal_library_does_not_list_dataroom_document(
         self, api_client, other_user, owner_document, co_managed_dataroom
     ):
         api_client.force_authenticate(user=other_user)
         response = api_client.get("/api/v1/documents/")
-        assert response.status_code == status.HTTP_200_OK
-        results = response.data.get("results", response.data) if isinstance(response.data, dict) else response.data
-        doc_ids = [d["id"] for d in results]
-        assert str(owner_document.id) not in doc_ids
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Staff access is required.'}
 
     def test_collaborator_cannot_view_owner_direct_share_links_in_document_serializer(
         self, api_client, other_user, user, owner_document, co_managed_dataroom
@@ -176,14 +168,6 @@ class TestCollaboratorDocumentAccess:
         # 1. Collaborator retrieves the document
         api_client.force_authenticate(user=other_user)
         response = api_client.get(f"/api/v1/documents/{owner_document.id}/")
-        assert response.status_code == status.HTTP_200_OK
-        # Must not leak owner's direct share links
-        assert response.data.get('share_links') == []
-        assert response.data.get('share_link_view_count') == 0
-
-        # 2. Document owner retrieves the document
-        api_client.force_authenticate(user=user)
-        owner_resp = api_client.get(f"/api/v1/documents/{owner_document.id}/")
-        assert owner_resp.status_code == status.HTTP_200_OK
-        assert len(owner_resp.data.get('share_links')) == 1
-        assert owner_resp.data['share_links'][0]['name'] == "Confidential Client Link"
+        # Phase 1: this legacy request is denied before its former handler runs.
+        assert response.status_code == 403
+        assert response.data == {'detail': 'Staff access is required.'}
