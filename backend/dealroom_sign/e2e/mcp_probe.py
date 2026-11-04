@@ -12,6 +12,7 @@ async def main():
     async with Client(transport) as client:
         names = {tool.name for tool in await client.list_tools()}
         assert {'send_for_signature', 'get_envelope_status', 'who_viewed'} <= names
+        assert not {'recipient_nda_enter', 'recipient_nda_start', 'recipient_nda_status'} & names
         viewed = await client.call_tool('who_viewed', {'room_id': fixture['room_id']})
         assert not viewed.is_error
         envelopes = await client.call_tool('signing_list_envelopes', {'room_id': fixture['room_id']})

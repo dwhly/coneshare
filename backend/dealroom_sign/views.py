@@ -192,8 +192,8 @@ class RecipientNdaView(APIView):
             if existing:
                 return Response({'state': existing.state}, status=201)
             work = command(owner=room.created_by, room=room, version=policy.source_version,
-            recipients=[{'email': member.email, 'name': member.name, 'fields': policy.fields}],
-            idempotency_key=f'nda:{room.pk}:{member.pk}:{policy.revision}', purpose='nda', member=member, policy=policy)
+                recipients=[{'email': member.email, 'name': member.name, 'fields': policy.fields}],
+                idempotency_key=f'nda:{room.pk}:{member.pk}:{policy.revision}', purpose='nda', member=member, policy=policy)
         return Response({'state': work.state}, status=201)
 
 
