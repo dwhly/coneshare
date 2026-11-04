@@ -124,5 +124,8 @@ class Documenso:
             self.request('POST', 'envelope/cancel', json={'envelopeId': envelope_id, 'reason': 'Staff reset of stuck NDA workflow'})
             if self.get(envelope_id)['status'] != 'CANCELLED':
                 raise SignError('cancellation_not_confirmed')
-        elif status not in {'CANCELLED', 'REJECTED'}:
-            raise SignError('completed_envelope_cannot_reset')
+        elif status not in {'CANCELLED', 'REJECTED', 'COMPLETED'}:
+            raise SignError('unknown_sign_status')
+        # COMPLETED cannot be cancelled natively and has no remaining signing
+        # action. Preserve its evidence; reset only supersedes the local failed
+        # workflow and never turns the old completion into an NDA acceptance.

@@ -39,7 +39,7 @@ cases=[
  ('01c','backend/dealroom_sign/views.py','path_conflicts_rejected_for_human_staff',('staff_room',None)),
  ('01b','backend/dealroom_sign/views.py','scoped_workflow_query_uses_actual_target',('scoped_room',None)),
  ('02b','backend/dealroom_sign/policy.py','ordinary_file_cannot_expose_private_executed_folder',('artifact_allowed',None)),
- ('03b','backend/dealroom_sign/client.py','native_reset_invalidates_old_envelope',None),
+ ('03b','backend/dealroom_sign/client.py','native_reset_invalidates_old_envelope or quarantined_completed_envelope_can_restart_without_destroying_evidence',None),
  ('03c','backend/dealroom_sign/serializers.py','stuck_nda_status_identifies_subject_for_staff',None),
 ]
 for number,path,test,func in cases:

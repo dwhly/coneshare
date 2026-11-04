@@ -139,7 +139,7 @@ def test_reset_requires_confirmed_cancellation(fixture, member_context, pdf, hum
     work.refresh_from_db(); assert work.state == 'distributing'
 
 
-@pytest.mark.parametrize('status,route', [('DRAFT', 'delete'), ('PENDING', 'cancel')])
+@pytest.mark.parametrize('status,route', [('DRAFT', 'delete'), ('PENDING', 'cancel'), ('COMPLETED', None)])
 def test_native_reset_invalidates_old_envelope(fixture, status, route):
     calls = []
     def respond(request):
@@ -149,7 +149,7 @@ def test_native_reset_invalidates_old_envelope(fixture, status, route):
         return httpx.Response(200, json={'id': 'env_test', 'teamId': 3, 'externalId': 'correlation', 'status': 'CANCELLED' if len(calls)>1 else status})
     with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
         client.cancel('env_test', 'correlation')
-    assert [r.url.path for r in calls if r.method == 'POST'] == ['/api/v2/envelope/'+route]
+    assert [r.url.path for r in calls if r.method == 'POST'] == (['/api/v2/envelope/'+route] if route else [])
 
 
 def test_staff_page_displays_stuck_nda_recovery():
@@ -358,3 +358,22 @@ def test_path_conflicts_rejected_for_human_staff(fixture, human, route, location
     else:
         response = human.generic('GET', url, json.dumps({'room_id':'conflicting-room'}), content_type='application/json')
     assert response.status_code == 403
+
+
+def test_quarantined_completed_envelope_can_restart_without_destroying_evidence(fixture, member_context, pdf, human):
+    work = nda_work(fixture, member_context, pdf)
+    work.state = 'quarantined'; work.envelope_id = 'env_completed'; work.save()
+    calls = []
+    def respond(request):
+        calls.append(request)
+        assert request.method == 'GET'
+        return httpx.Response(200, json={'id': work.envelope_id, 'teamId': 3,
+            'externalId': work.external_id, 'status': 'COMPLETED'})
+    with patch('dealroom_sign.workflows.Documenso', side_effect=lambda credential: Documenso(credential, httpx.MockTransport(respond))), patch('dealroom_sign.workflows.source_bytes', return_value=pdf):
+        result = human.post(f'/api/v1/dealroom-sign/nda-reset/{fixture.room.pk}/{work.pk}/', {}, format='json')
+    assert result.status_code == 201, result.data
+    assert result.data['state'] == 'queued'
+    assert result.data['id'] != str(work.pk)
+    assert not NdaAcceptance.objects.exists()
+    assert len(calls) == 1 and calls[0].method == 'GET'
+    work.refresh_from_db(); assert work.state == 'cancelled'
