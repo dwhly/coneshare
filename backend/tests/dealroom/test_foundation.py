@@ -297,6 +297,8 @@ def test_original_exception_bounded_approved_and_consumed_once(staff, agent, own
     assert CopyEvidence.objects.get().version_id==version.pk
     exception.refresh_from_db();assert exception.used_count==1
     assert recipient.post(url).status_code==403
+    owner.role='member';owner.save(update_fields=['role'])
+    assert staff.post('/api/v1/dealroom/original-exceptions/',payload,format='json').status_code==403
 
 
 def test_expiry_timezone_encoding_cannot_bypass_widening():

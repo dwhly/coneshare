@@ -35,7 +35,7 @@ class OriginalDownloadView(APIView):
             raise PermissionDenied('Document no longer in room.')
         decision = evaluate(request,link,document_id=str(item.pk),download=True)
         now=timezone.now()
-        if decision.member_id!=str(exception.member_id) or decision.grant_id!=str(exception.grant_id) or decision.effective_download_level!='original' or exception.revoked_at or exception.expires_at<=now or exception.used_count>=exception.max_uses or not exception.approved_by.is_staff:
+        if decision.member_id!=str(exception.member_id) or decision.grant_id!=str(exception.grant_id) or decision.effective_download_level!='original' or exception.revoked_at or exception.expires_at<=now or exception.used_count>=exception.max_uses or not exception.approved_by.is_staff or not (exception.approved_by.is_superuser or exception.approved_by.role == 'admin'):
             raise PermissionDenied('Original exception exhausted, expired or does not match the current policy.')
         # Build on disk under the per-container bound. Source bytes are never modified.
         output=tempfile.TemporaryFile()

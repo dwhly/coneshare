@@ -265,8 +265,8 @@ class OriginalExceptionViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     def perform_create(self, serializer):
         approval = getattr(self.request._request, '_dealroom_approval', None)
         approver = self.request.user if human_staff(self.request) else getattr(approval, 'approved_by', None)
-        if not approver:
-            raise PermissionDenied('Human approval required.')
+        if not approver or not (approver.is_superuser or approver.role == 'admin'):
+            raise PermissionDenied('Human staff administrator approval required.')
         obj = serializer.save(approved_by=approver)
         record('original_exception.approved', organization=self.request.user.organization, actor=self.request.user, room_id=obj.room_id, target_id=obj.pk)
     def perform_destroy(self, instance):
