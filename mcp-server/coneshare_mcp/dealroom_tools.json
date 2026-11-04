@@ -237,6 +237,440 @@
     "human_only": false,
     "method": "GET",
     "multipart": false,
+    "name": "dealroom_sign_SignCredentialView_endpoint_get",
+    "operation_id": "dealroom_sign_SignCredentialView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/credentials/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_sign_SignCredentialView_endpoint_put",
+    "operation_id": "dealroom_sign_SignCredentialView_endpoint_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "team_id": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "token": {
+              "maxLength": 512,
+              "type": "string",
+              "writeOnly": true
+            }
+          },
+          "required": [
+            "team_id",
+            "token"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/credentials/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SigningEnvelopeViewSet_list_get",
+    "operation_id": "dealroom_sign_SigningEnvelopeViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/envelopes/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_sign_SigningEnvelopeViewSet_create_post",
+    "operation_id": "dealroom_sign_SigningEnvelopeViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "idempotency_key": {
+              "maxLength": 200,
+              "type": "string"
+            },
+            "recipients": {
+              "items": {
+                "properties": {
+                  "email": {
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "fields": {
+                    "items": {
+                      "properties": {
+                        "height": {
+                          "format": "double",
+                          "maximum": 100,
+                          "minimum": 0.01,
+                          "type": "number"
+                        },
+                        "identifier": {
+                          "default": 0,
+                          "maximum": 0,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "page": {
+                          "maximum": 500,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "positionX": {
+                          "format": "double",
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "positionY": {
+                          "format": "double",
+                          "maximum": 100,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "type": {
+                          "description": "* `SIGNATURE` - SIGNATURE\n* `FREE_SIGNATURE` - FREE_SIGNATURE\n* `INITIALS` - INITIALS\n* `NAME` - NAME\n* `EMAIL` - EMAIL\n* `DATE` - DATE\n* `TEXT` - TEXT\n* `NUMBER` - NUMBER\n* `RADIO` - RADIO\n* `CHECKBOX` - CHECKBOX\n* `DROPDOWN` - DROPDOWN",
+                          "enum": [
+                            "SIGNATURE",
+                            "FREE_SIGNATURE",
+                            "INITIALS",
+                            "NAME",
+                            "EMAIL",
+                            "DATE",
+                            "TEXT",
+                            "NUMBER",
+                            "RADIO",
+                            "CHECKBOX",
+                            "DROPDOWN"
+                          ],
+                          "type": "string"
+                        },
+                        "width": {
+                          "format": "double",
+                          "maximum": 100,
+                          "minimum": 0.01,
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "height",
+                        "page",
+                        "positionX",
+                        "positionY",
+                        "type",
+                        "width"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "name": {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
+                  "role": {
+                    "allOf": [
+                      {
+                        "description": "* `SIGNER` - SIGNER",
+                        "enum": [
+                          "SIGNER"
+                        ],
+                        "type": "string"
+                      }
+                    ],
+                    "default": "SIGNER"
+                  },
+                  "signingOrder": {
+                    "default": 1,
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "email",
+                  "fields",
+                  "name"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "room_id": {
+              "maxLength": 64,
+              "type": "string"
+            },
+            "version_id": {
+              "maxLength": 64,
+              "type": "string"
+            }
+          },
+          "required": [
+            "idempotency_key",
+            "recipients",
+            "room_id",
+            "version_id"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/envelopes/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SigningEnvelopeViewSet_retrieve_get",
+    "operation_id": "dealroom_sign_SigningEnvelopeViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/envelopes/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SigningNdaPolicyView_endpoint_get",
+    "operation_id": "dealroom_sign_SigningNdaPolicyView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "room_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "room_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/nda-policy/{room_id}/",
+    "path_params": [
+      "room_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_sign_SigningNdaPolicyView_endpoint_put",
+    "operation_id": "dealroom_sign_SigningNdaPolicyView_endpoint_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "enabled": {
+              "default": true,
+              "type": "boolean"
+            },
+            "fields": {
+              "items": {
+                "properties": {
+                  "height": {
+                    "format": "double",
+                    "maximum": 100,
+                    "minimum": 0.01,
+                    "type": "number"
+                  },
+                  "identifier": {
+                    "default": 0,
+                    "maximum": 0,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "page": {
+                    "maximum": 500,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "positionX": {
+                    "format": "double",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "positionY": {
+                    "format": "double",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "type": {
+                    "description": "* `SIGNATURE` - SIGNATURE\n* `FREE_SIGNATURE` - FREE_SIGNATURE\n* `INITIALS` - INITIALS\n* `NAME` - NAME\n* `EMAIL` - EMAIL\n* `DATE` - DATE\n* `TEXT` - TEXT\n* `NUMBER` - NUMBER\n* `RADIO` - RADIO\n* `CHECKBOX` - CHECKBOX\n* `DROPDOWN` - DROPDOWN",
+                    "enum": [
+                      "SIGNATURE",
+                      "FREE_SIGNATURE",
+                      "INITIALS",
+                      "NAME",
+                      "EMAIL",
+                      "DATE",
+                      "TEXT",
+                      "NUMBER",
+                      "RADIO",
+                      "CHECKBOX",
+                      "DROPDOWN"
+                    ],
+                    "type": "string"
+                  },
+                  "width": {
+                    "format": "double",
+                    "maximum": 100,
+                    "minimum": 0.01,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "height",
+                  "page",
+                  "positionX",
+                  "positionY",
+                  "type",
+                  "width"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "version_id": {
+              "maxLength": 64,
+              "type": "string"
+            }
+          },
+          "required": [
+            "fields",
+            "version_id"
+          ],
+          "type": "object"
+        },
+        "room_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "room_id",
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/nda-policy/{room_id}/",
+    "path_params": [
+      "room_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SigningSourceView_endpoint_get",
+    "operation_id": "dealroom_sign_SigningSourceView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "room_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "room_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/sources/{room_id}/",
+    "path_params": [
+      "room_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SigningWhoViewedView_endpoint_get",
+    "operation_id": "dealroom_sign_SigningWhoViewedView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "room_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "room_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/who-viewed/{room_id}/",
+    "path_params": [
+      "room_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
     "name": "dealroom_ActivityViewSet_list_get",
     "operation_id": "dealroom_ActivityViewSet_list_get",
     "parameters": {

@@ -221,3 +221,5 @@ def sweep(limit=20):
     ids = Workflow.objects.exclude(state__in=TERMINAL).filter(next_attempt_at__lte=timezone.now()).order_by('next_attempt_at').values_list('pk', flat=True)[:limit]
     for workflow_id in list(ids):
         process(workflow_id)
+    from .storage import recover_previews
+    recover_previews()

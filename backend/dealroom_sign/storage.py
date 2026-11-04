@@ -1,10 +1,14 @@
 """Immutable core storage staging, then atomic local manifest/version publication."""
 import io
+import logging
 import subprocess
 import tempfile
+from datetime import timedelta
 
 import httpx
 from django.conf import settings
+from django.db.models import Q
+from django.utils import timezone
 from pypdf import PdfReader
 
 from datarooms.models import DataroomDocument, DataroomFolder
@@ -70,13 +74,39 @@ def publish(workflow, staged):
             continue
         document = Document.objects.create(
             organization=room.organization, folder=room.vault_folder, created_by=None,
-            name=f"{item['kind']}-{item['item_id']}.pdf", status='ready',
+            name=f"{workflow.title.removesuffix('.pdf')} — {dict(sealed_pdf='Signed', certificate='Certificate', audit='Audit trail')[item['kind']]}.pdf", status='ready',
             storage_key=item['key'], original_storage_key=item['key'], type='pdf',
             content_type='application/pdf', file_size=item['size'], num_pages=item['pages'],
         )
         version = DocumentVersion.objects.create(document=document, version_number=1, is_primary=True,
             original_storage_key=item['key'], storage_key=item['key'], content_type='application/pdf',
-            type='pdf', storage_type='local', file_size=item['size'], num_pages=item['pages'])
+            type='pdf', storage_type='local', file_size=item['size'], num_pages=item['pages'],
+            render_status=DocumentVersion.RENDER_NOT_GENERATED)
         DataroomDocument.objects.create(dataroom=room, document=document, folder=folder, name=document.name, is_direct_upload=True)
         ExecutedArtifact.objects.create(workflow=workflow, version=version,
             **{k: item[k] for k in ('item_id', 'kind', 'sha256', 'size')})
+
+
+def recover_previews(limit=4):
+    """Dispatch Send's native derivative renderer; never change canonical PDF bytes.
+
+    The manifest is the durable queue, so a crash after publication or a lost
+    Celery message is recovered without publishing a second artifact.
+    """
+    from documents.renderers import get_renderer
+    stale = timezone.now() - timedelta(minutes=15)
+    versions = DocumentVersion.objects.filter(
+        executedartifact__isnull=False, has_pages=False,
+    ).filter(Q(render_status__in=[DocumentVersion.RENDER_NOT_GENERATED, DocumentVersion.RENDER_NOT_APPLICABLE]) |
+             Q(updated_at__lt=stale)).select_related('document').order_by('updated_at')[:limit]
+    for version in versions:
+        if version.updated_at < stale:
+            DocumentVersion.objects.filter(pk=version.pk, has_pages=False,
+                render_status__in=[DocumentVersion.RENDER_FAILED, DocumentVersion.RENDER_QUEUED,
+                                   DocumentVersion.RENDER_PROCESSING]).update(
+                render_status=DocumentVersion.RENDER_NOT_GENERATED)
+            version.refresh_from_db()
+        try:
+            get_renderer(version).enqueue_render_task(version)
+        except Exception:
+            logging.getLogger(__name__).warning('Executed PDF preview dispatch failed; retry scheduled')

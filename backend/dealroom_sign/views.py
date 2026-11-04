@@ -10,13 +10,15 @@ from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from drf_spectacular.utils import extend_schema
+
 from core.models import APIKey
 from datarooms.models import Dataroom, DataroomDocument
 from documents.models import DocumentVersion
 from sharelinks.models import Viewer
 
 from .models import NdaAcceptance, NdaPolicy, SignCredential, Workflow
-from .serializers import NdaPolicySerializer, SendInputSerializer, WorkflowSerializer
+from .serializers import CredentialInputSerializer, NdaPolicyInputSerializer, NdaPolicySerializer, SendInputSerializer, WorkflowSerializer
 from .storage import source_bytes
 from .validation import digest, validate_recipients
 from .workflows import command
@@ -60,6 +62,7 @@ class SigningEnvelopeViewSet(viewsets.ReadOnlyModelViewSet):
     def key_scope_targets(self, request):
         return scoped_room(self, request)
 
+    @extend_schema(request=SendInputSerializer, responses=WorkflowSerializer)
     def create(self, request):
         serializer = SendInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -75,10 +78,12 @@ class SigningEnvelopeViewSet(viewsets.ReadOnlyModelViewSet):
 class SignCredentialView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    @extend_schema(responses=dict)
     def get(self, request):
         credential = SignCredential.objects.filter(owner=request.user).first()
         return Response({'configured': bool(credential), 'enabled': bool(credential and credential.enabled), 'team_id': credential.team_id if credential else None})
 
+    @extend_schema(request=CredentialInputSerializer, responses=dict)
     def put(self, request):
         from dealroom.hooks import human_staff
         if not human_staff(request):
@@ -99,11 +104,13 @@ class SigningNdaPolicyView(APIView):
     def key_scope_targets(self, request):
         return scoped_room(self, request)
 
+    @extend_schema(responses=dict)
     def get(self, request, room_id):
         room = staff_room(request, room_id)
         policy = NdaPolicy.objects.filter(room=room).first()
         return Response(NdaPolicySerializer(policy).data if policy else {'enabled': False})
 
+    @extend_schema(request=NdaPolicyInputSerializer, responses=NdaPolicySerializer)
     def put(self, request, room_id):
         room = staff_room(request, room_id)
         if set(request.data) - {'version_id', 'fields', 'enabled'}:
@@ -143,6 +150,7 @@ class RecipientNdaView(APIView):
         response['Cache-Control'] = 'private, no-store'
         return response
 
+    @extend_schema(responses=dict)
     def get(self, request, room_id):
         room, member = member_context(request, room_id)
         policy = NdaPolicy.objects.filter(room=room, enabled=True).first()
@@ -154,6 +162,7 @@ class RecipientNdaView(APIView):
                          'can_enter': bool(workflow and workflow.state == 'awaiting_signature' and workflow.signing_token and not accepted),
                          'overdue': bool(workflow and workflow.state in {'awaiting_seal', 'quarantined', 'failed'} and (timezone.now() - workflow.created_at).total_seconds() > 60)})
 
+    @extend_schema(request=None, responses=dict)
     def post(self, request, room_id):
         SessionAuthentication().enforce_csrf(request)
         room, member = member_context(request, room_id)
@@ -169,6 +178,7 @@ class RecipientNdaView(APIView):
 class RecipientNdaEnterView(RecipientNdaView):
     http_method_names = ['post', 'options']
 
+    @extend_schema(request=None, responses=dict)
     def post(self, request, room_id):
         SessionAuthentication().enforce_csrf(request)
         room, member = member_context(request, room_id)
@@ -187,6 +197,7 @@ class SigningSourceView(APIView):
     def key_scope_targets(self, request):
         return scoped_room(self, request)
 
+    @extend_schema(responses=dict)
     def get(self, request, room_id):
         room = staff_room(request, room_id)
         versions = DocumentVersion.objects.filter(document__dataroomdocument__dataroom=room,
@@ -200,6 +211,7 @@ class SigningWhoViewedView(APIView):
     def key_scope_targets(self, request):
         return scoped_room(self, request)
 
+    @extend_schema(responses=dict)
     def get(self, request, room_id):
         from django.db.models import Sum, Count, Max
         from sharelinks.models import ViewSession

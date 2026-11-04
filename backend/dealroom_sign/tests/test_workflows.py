@@ -398,3 +398,35 @@ def test_audit_catchup_reads_all_pages(fixture):
     with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
         assert len(client.audit('envelope_test')['data']) == 2
     assert pages == [1, 2]
+
+
+def test_preview_queue_recovers_lost_dispatch_without_touching_canonical(fixture):
+    from dealroom_sign.storage import recover_previews
+    version = fixture.version
+    version.type = 'pdf'
+    version.save(update_fields=['type'])
+    ExecutedArtifact.objects.create(workflow=fixture.work, version=version, item_id='item_test',
+                                    kind='sealed_pdf', sha256='immutable', size=3)
+    original_key = version.original_storage_key
+    with patch('documents.tasks.generate_pdf_pages_task.delay') as dispatch:
+        recover_previews()
+        recover_previews()
+        assert dispatch.call_count == 1
+        DocumentVersion.objects.filter(pk=version.pk).update(updated_at=timezone.now()-timedelta(minutes=16))
+        recover_previews()
+        assert dispatch.call_count == 2
+        DocumentVersion.objects.filter(pk=version.pk).update(has_pages=True)
+        recover_previews()
+        assert dispatch.call_count == 2
+    version.refresh_from_db()
+    assert version.original_storage_key == original_key
+    assert ExecutedArtifact.objects.get(version=version).sha256 == 'immutable'
+
+
+def test_api_schema_does_not_silently_drop_rich_field_requirements(recipients):
+    from dealroom_sign.serializers import SendInputSerializer
+    recipients[0]['fields'][0]['fieldMeta'] = {'required': True}
+    serializer = SendInputSerializer(data={'room_id': 'room', 'version_id': 'version',
+        'idempotency_key': 'key', 'recipients': recipients})
+    assert not serializer.is_valid()
+    assert 'Unsupported input property' in str(serializer.errors)

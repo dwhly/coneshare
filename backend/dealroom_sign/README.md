@@ -9,3 +9,5 @@ Webhooks are authenticated hints; no inbox/payload storage. `manage.py sign_poll
 Configuration: SIGN_INTERNAL_URL, SIGN_PUBLIC_URL, SIGN_DEPLOYMENT_ID, SIGN_WEBHOOK_SECRET. The deployment must include Poppler pdfsig. Recipient exposure defaults off. The sender/agent surface uses Send's registry and approval service. NDA entry requires Send's verified member session and live grant; signing redirect or webhook status cannot grant access.
 
 Known initial slice limits: one PDF source item; SIGNER roles only; caller-supplied basic fields (rich field metadata remains in the native editor); room agreements file staff-only. Native Sign UI may edit an envelope, but changing its recipient identity or pinned source quarantines the integration until reviewed.
+
+Executed artifacts also enter Send's existing PDF preview renderer. The artifact manifest recovers missing derivatives after publication or queue loss; canonical PDF keys and hashes are never rewritten. Failed/stale render jobs retry after 15 minutes, with at most four dispatches per poll.
