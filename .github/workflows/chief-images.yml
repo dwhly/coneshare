@@ -42,7 +42,7 @@ jobs:
           docker build --label org.opencontainers.image.revision="$GITHUB_SHA" -t coneshare:latest -f backend/Dockerfile backend
       - name: Native runtime smoke
         run: |
-          docker run --rm --memory=512m --entrypoint sh coneshare:latest -ec 'libreoffice --headless --version; pdftoppm -v; python -c "import fitz; from PIL import Image; print(fitz.version)"; test -x /home/coneshare/app/core-serv' 
+          docker run --rm --memory=512m --entrypoint sh coneshare:latest -ec 'libreoffice --headless --version; pdftoppm -v; python -c "import fitz; from PIL import Image; print(fitz.version)"; test -x /home/coneshare/app/core-serv'
       - name: Publish architecture image
         env:
           IMAGE: ghcr.io/dwhly/chief-send
