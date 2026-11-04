@@ -1,0 +1,73 @@
+name: Chief native images
+on:
+  push:
+    branches: ['chief/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: chief-images-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify native architecture
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: test "$(docker info --format '{{.Architecture}}')" = "$(test "$ARCH" = arm64 && echo aarch64 || echo x86_64)"
+      - name: Build
+        env:
+          IMAGE: ghcr.io/dwhly/chief-send
+          ARCH: ${{ matrix.arch }}
+        run: |
+          docker build -t coneshare-core:latest -f core/Dockerfile core
+          docker build -t coneshare-frontend:latest --build-arg VITE_APP_VERSION=chief --build-arg VITE_GIT_SHA="$GITHUB_SHA" -f frontend/Dockerfile frontend
+          docker build --label org.opencontainers.image.revision="$GITHUB_SHA" -t coneshare:latest -f backend/Dockerfile backend
+      - name: Native runtime smoke
+        run: |
+          docker run --rm --memory=512m --entrypoint sh coneshare:latest -ec 'libreoffice --headless --version; pdftoppm -v; python -c "import pypdf, reportlab, pdf2image; from PIL import Image; print(pypdf.__version__, reportlab.Version, Image.__version__)"; test -x /home/coneshare/app/core-serv'
+      - name: Publish architecture image
+        env:
+          IMAGE: ghcr.io/dwhly/chief-send
+          ARCH: ${{ matrix.arch }}
+        run: |
+          docker tag coneshare:latest "$IMAGE:$GITHUB_SHA-$ARCH"
+          docker push "$IMAGE:$GITHUB_SHA-$ARCH"
+  manifest:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/setup-buildx-action@v3
+      - name: Publish immutable commit manifest
+        env:
+          IMAGE: ghcr.io/dwhly/chief-send
+        run: |
+          docker buildx imagetools create -t "$IMAGE:$GITHUB_SHA" "$IMAGE:$GITHUB_SHA-amd64" "$IMAGE:$GITHUB_SHA-arm64"
+          docker buildx imagetools inspect "$IMAGE:$GITHUB_SHA" | tee manifest.txt
+          cat manifest.txt >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-manifest
+          path: manifest.txt
