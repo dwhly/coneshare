@@ -1,0 +1,40 @@
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+........................................................................ [ 19%]
+........................................................................ [ 24%]
+........................................................................ [ 29%]
+........................................................................ [ 33%]
+........................................................................ [ 38%]
+........................................................................ [ 43%]
+........................................................................ [ 48%]
+........................................................................ [ 53%]
+........................................................................ [ 58%]
+........................................................................ [ 62%]
+........................................................................ [ 67%]
+........................................................................ [ 72%]
+........................................................................ [ 77%]
+........................................................................ [ 82%]
+........................................................................ [ 87%]
+........................................................................ [ 91%]
+........................................................................ [ 96%]
+...............................................                          [100%]
+=============================== warnings summary ===============================
+tests/sharelinks/test_amforge_watermark.py::test_vector_pdf_has_footer_and_metadata
+tests/sharelinks/test_amforge_watermark.py::test_vector_pdf_has_footer_and_metadata
+tests/sharelinks/test_amforge_watermark.py::test_flattened_pdf_keeps_metadata
+  /usr/local/lib/python3.12/site-packages/pypdf/_page.py:1368: DeprecationWarning: Calling `PageObject.replace_contents()` for pages not assigned to a writer is deprecated and will be removed in pypdf 7.0.0. Attach the page to the writer first or use `PdfWriter(clone_from=...)` directly. The existing approach has proved being unreliable.
+    self.replace_contents(ContentStream(new_content_array, self.pdf))
+
+tests/sharelinks/test_amforge_watermark.py::test_image_watermark_draws_footer_band_and_margin_line
+  /src/backend/tests/sharelinks/test_amforge_watermark.py:61: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert min(footer_marked.getdata()) < 100, 'footer text should be dark'
+
+tests/sharelinks/test_amforge_watermark.py::test_image_watermark_draws_footer_band_and_margin_line
+tests/sharelinks/test_amforge_watermark.py::test_image_watermark_draws_footer_band_and_margin_line
+  /src/backend/tests/sharelinks/test_amforge_watermark.py:62: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(footer_plain.getdata()) != list(footer_marked.getdata())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+---- generated xml file: /src/deploy/chief-send-v1/out/r2-backend-final.xml ----
+1487 passed, 6 warnings in 262.86s (0:04:22)

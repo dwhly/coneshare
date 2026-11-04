@@ -5,6 +5,7 @@ Each code fix was reverted in isolation, its named test run, and the fix restore
 | Finding / mutation | Result | Log |
 |---|---|---|
 | 01-all-edits | 12 failed, 20 passed in 8.69s; restored 32 passed | `r2-01-all-edits-mutation.log` |
+| 01-MCP empty JSON | old 3 failed; reverted fix 3 failed; restored full MCP suite 51 passed + 170 subtests | `r2-mcp-json-{old,mutation}.log`, `r2-mcp-full.log` |
 | 01-scalar | 4 failed in 0.08s | `r2-01-scalar-mutation.log` |
 | 01-transport | 6 failed in 4.31s | `r2-01-transport-mutation.log` |
 | 02 | 1 failed in 2.84s | `r2-02-mutation.log` |
@@ -31,3 +32,5 @@ Each code fix was reverted in isolation, its named test run, and the fix restore
 The #12 policy coverage finding did not identify defective production checks (executed against original policy: 7 passed in 4.71s): the new room-binding, idle-timeout, revocation, deny and minimum-ceiling tests pass with the original checks. Enforcement mutations fail each test. #11 retains the explicit approved EDD rule that visibility for existing grantees does not widen access; reversing that rule fails its existing regression test. Neither is misrepresented as an old-code defect.
 
 CI smoke: the workflow copied unchanged from origin/chief/ci failed with ModuleNotFoundError: fitz; replacing that import with installed pypdf/reportlab/pdf2image/Pillow passed against chief-send-v1:latest. Remote workflow push awaits a credential with workflow-write scope.
+
+Final full backend: 1,487 passed, no failures/errors/skips/xfails; final frontend: 758 passed (UTC, two workers). Complete results and per-inherited-test dispositions are in inherited-test-migration.md.

@@ -1,0 +1,21 @@
+
+> Coneshare-frontend@0.0.0 test
+> vitest --run --maxWorkers=2
+
+
+ RUN  v5.0.5 /Users/dano/code/amforge-forks/send-v1/frontend
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: HTMLMediaElement's load() method
+
+ Test Files  86 passed (86)
+      Tests  758 passed (758)
+   Start at  22:30:54
+   Duration  50.62s (import 43%, tests 39%, environment 16%, setup 2%, transform 1%)
+
+     Import  291 modules were evaluated 1533 times · 40.60s total, 43% of tracked time
+             ~14.92s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+

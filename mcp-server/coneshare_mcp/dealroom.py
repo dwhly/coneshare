@@ -36,8 +36,8 @@ class RegistryTool(Tool):
             data=base64.b64decode(arguments['file_base64'],validate=True)
             if len(data)>50*1024*1024: raise ValueError('Upload too large')
             options.update(files={'file':(arguments['filename'],data)},data={k:v for k,v in (body or {}).items() if k!='file'})
-        elif body is not None:
-            options['json']=body
+        elif body is not None or endpoint['method'] not in ('GET', 'HEAD', 'OPTIONS'):
+            options['json'] = body if body is not None else {}
         base=os.environ.get('CONESHARE_URL','http://localhost:8795').rstrip('/')
         # One client per invocation: no shared recipient cookie jar between callers.
         async with httpx.AsyncClient(timeout=90, follow_redirects=False) as client:

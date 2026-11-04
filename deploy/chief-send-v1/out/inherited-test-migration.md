@@ -20,7 +20,11 @@ For legacy request tests, retain setup and HTTP inputs and replace unsupported h
 
 ## Real suite results
 
-Final full-suite run: pending. Preliminary post-fix diagnostic: 817 failed, 642 passed, 6 errors; not an acceptance result. Focused review suite: 96 passed. BDD after migration: 56 passed. Final numbers will replace this pending line after the complete suite runs.
+Final enforced full backend suite: **1,487 passed, 0 failed, 0 errors, 0 skipped, 0 xfailed**, 262.86s. Command: `./deploy/chief-send-v1/test-backend.sh --junitxml=/src/deploy/chief-send-v1/out/r2-backend-final.xml`. All **823 original failing/error test IDs remain collected and pass** (zero missing IDs). An earlier complete run before the 16 added multipart variants passed 1,471 tests in 263.75s.
+
+Other real results: focused security/health 96 passed before the multipart expansion; all 32 JSON/multipart edit cases passed; BDD 56 passed; frontend **758 passed** with `TZ=UTC` and `--maxWorkers=2` (50.62s); MCP **51 passed, 170 subtests passed** (0.40s); live Chromium/Mailpit **6 passed** and HTTP MCP read-only list_rooms **1 passed** with 94 tools. The default local-time/full-worker frontend diagnostic had 756 pass / 2 fail (UTC-assuming date assertion and timing-sensitive Q&A); the Q&A file independently passed 28/28. No product code was changed to force those frontend outcomes.
+
+Preliminary observation-only migration diagnostic: 817 failed, 642 passed, 6 errors (including a mocked-health teardown error); not an acceptance result. After the first rewrite: 1,404 passed, 6 failed, 5 fixture errors; the remaining session/page fixtures and a query-count ceiling were then corrected before the two green full runs.
 
 ## Per-test disposition
 
