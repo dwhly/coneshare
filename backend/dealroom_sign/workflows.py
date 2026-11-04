@@ -37,6 +37,15 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             member=None, policy=None):
     if not idempotency_key or len(idempotency_key) > 200:
         raise ValidationError('An idempotency key of at most 200 characters is required.')
+    existing = Workflow.objects.filter(owner=owner, idempotency_key=idempotency_key).first()
+    if existing:
+        normalized = validate_recipients(recipients, None, page_count=500)
+        data = {'room': str(room.pk), 'version': str(version.pk), 'sha256': existing.source_sha256,
+                'recipients': normalized, 'purpose': purpose, 'member': str(member.pk) if member else '',
+                'policy': str(policy.revision) if policy else ''}
+        if request_digest(data) != existing.request_sha256 or (member and existing.member_email != member.email.strip().lower()) or (policy and policy.source_sha256 != existing.source_sha256):
+            raise ValidationError('Idempotency key already used with different inputs.')
+        return existing
     pdf = source_bytes(version)
     recipients = validate_recipients(recipients, pdf)
     if purpose == 'nda':
@@ -212,7 +221,11 @@ def process(workflow_id):
         workflow.save(update_fields=['state', 'last_error', 'attempts', 'next_attempt_at'])
     except Exception as exc:
         # Do not log exceptions containing remote credential or recipient tokens.
-        Workflow.objects.filter(pk=workflow.pk).update(last_error='integration_' + type(exc).__name__[:60], next_attempt_at=timezone.now() + timedelta(seconds=15))
+        workflow.refresh_from_db()
+        workflow.attempts += 1
+        Workflow.objects.filter(pk=workflow.pk).update(attempts=workflow.attempts,
+            last_error='integration_' + type(exc).__name__[:60],
+            next_attempt_at=timezone.now() + timedelta(seconds=min(300, 15 * 2 ** min(workflow.attempts, 4))))
     finally:
         Workflow.objects.filter(pk=workflow.pk).update(lease_until=None)
 
@@ -223,3 +236,41 @@ def sweep(limit=20):
         process(workflow_id)
     from .storage import recover_previews
     recover_previews()
+
+
+def reset_nda(workflow):
+    """Serialize reset with member start and leases; never replace a live signer token."""
+    from .models import NdaPolicy
+    from sharelinks.models import Viewer
+    with transaction.atomic():
+        policy = NdaPolicy.objects.select_for_update().get(room=workflow.room)
+        work = Workflow.objects.select_for_update().get(pk=workflow.pk)
+        latest = Workflow.objects.filter(room=work.room, purpose='nda', member_id=work.member_id,
+            policy_revision=work.policy_revision).order_by('-created_at').first()
+        if latest.pk != work.pk:
+            return latest  # retry of a successful reset
+        if work.state not in {'failed', 'quarantined', 'distributing', 'uncertain', 'awaiting_seal'}:
+            raise ValidationError('Only failed or stuck NDA workflows can be reset.')
+        if work.lease_until and work.lease_until > timezone.now():
+            raise ValidationError('Workflow is being reconciled. Retry after its lease expires.')
+        if str(policy.revision) != work.policy_revision:
+            raise ValidationError('The NDA policy has changed; start its current revision.')
+        member = Viewer.objects.get(pk=work.member_id, email=work.member_email)
+        credential = SignCredential.objects.get(owner=work.owner, enabled=True)
+        with Documenso(credential) as client:
+            ids = [work.envelope_id] if work.envelope_id else [e['id'] for e in client.find(work.external_id)]
+            if len(ids) > 1:
+                raise SignError('duplicate_external_id')
+            for envelope_id in ids:
+                client.cancel(envelope_id, work.external_id)
+        generation = Workflow.objects.filter(room=work.room, purpose='nda', member_id=work.member_id,
+            policy_revision=work.policy_revision).count()
+        replacement = command(owner=work.owner, room=work.room, version=policy.source_version,
+            recipients=[{'email': member.email, 'name': member.name, 'fields': policy.fields}],
+            idempotency_key=f'nda:{work.room_id}:{member.pk}:{policy.revision}:g{generation}',
+            purpose='nda', member=member, policy=policy)
+        work.state = 'cancelled'
+        work.signing_token = ''
+        work.save(update_fields=['state', 'signing_token'])
+        record_fact(work, 'nda.reset', str(replacement.pk), {'replacement_id': str(replacement.pk)})
+        return replacement

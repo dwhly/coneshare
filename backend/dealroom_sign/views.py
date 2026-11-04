@@ -37,7 +37,15 @@ def room_version(room, version_id):
 
 
 def scoped_room(view, request):
-    room_id = request.data.get('room_id') or request.query_params.get('room_id') or view.kwargs.get('room_id')
+    room_id = view.kwargs.get('room_id')
+    if room_id is not None:
+        supplied = request.query_params.getlist('room_id')
+        if 'room_id' in request.data:
+            supplied.append(request.data['room_id'])
+        if any(str(value) != str(room_id) for value in supplied):
+            raise PermissionDenied('room_id conflicts with the URL path.')
+    else:
+        room_id = request.data.get('room_id') or request.query_params.get('room_id')
     if not room_id and view.kwargs.get('pk'):
         room_id = str(view.get_object().room_id)
     if not room_id:
@@ -92,6 +100,9 @@ class SignCredentialView(APIView):
         team_id = request.data.get('team_id')
         if not isinstance(token, str) or not token.startswith('api_') or len(token) > 512 or type(team_id) is not int or team_id <= 0:
             raise ValidationError('A team ID and Sign API token are required.')
+        current = SignCredential.objects.filter(owner=request.user).first()
+        if current and current.team_id != team_id and Workflow.objects.filter(owner=request.user).exclude(state__in=['done', 'cancelled', 'declined', 'failed']).exists():
+            raise ValidationError('Changing Sign teams would strand in-flight envelopes. Resolve or reset them first.')
         SignCredential.objects.update_or_create(owner=request.user, defaults={'team_id': team_id, 'token': token, 'enabled': True})
         from dealroom.activity import record
         record('sign.credential_configured', organization=request.user.organization, actor=request.user)
@@ -122,9 +133,15 @@ class SigningNdaPolicyView(APIView):
         enabled = request.data.get('enabled', True)
         if type(enabled) is not bool:
             raise ValidationError('enabled must be a boolean.')
-        policy, _ = NdaPolicy.objects.update_or_create(room=room, defaults={
-            'revision': uuid.uuid4(), 'source_version': version, 'source_sha256': digest(pdf), 'fields': fields, 'enabled': enabled,
-        })
+        from django.db import transaction
+        with transaction.atomic():
+            Dataroom.objects.select_for_update().get(pk=room.pk)
+            policy = NdaPolicy.objects.filter(room=room).first()
+            revision = policy.revision if policy and (policy.source_version_id == version.pk and
+                policy.source_sha256 == digest(pdf) and policy.fields == fields) else uuid.uuid4()
+            policy, _ = NdaPolicy.objects.update_or_create(room=room, defaults={
+                'revision': revision, 'source_version': version, 'source_sha256': digest(pdf), 'fields': fields, 'enabled': enabled,
+            })
         from dealroom.activity import record
         record('nda.policy_updated', organization=request.user.organization, actor=request.auth if isinstance(request.auth, APIKey) else request.user,
                room_id=room.pk, data={'revision': str(policy.revision), 'enabled': enabled})
@@ -157,7 +174,7 @@ class RecipientNdaView(APIView):
         if not policy:
             return Response({'required': False, 'accepted': True})
         accepted = NdaAcceptance.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).exists()
-        workflow = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).first()
+        workflow = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).order_by('-created_at').first()
         return Response({'required': True, 'accepted': accepted, 'state': workflow.state if workflow else 'not_started',
                          'can_enter': bool(workflow and workflow.state == 'awaiting_signature' and workflow.signing_token and not accepted),
                          'overdue': bool(workflow and workflow.state in {'awaiting_seal', 'quarantined', 'failed'} and (timezone.now() - workflow.created_at).total_seconds() > 60)})
@@ -169,7 +186,13 @@ class RecipientNdaView(APIView):
         policy = get_object_or_404(NdaPolicy, room=room, enabled=True)
         if not SignCredential.objects.filter(owner=room.created_by, enabled=True).exists():
             raise ValidationError('Room owner has not configured signing.')
-        work = command(owner=room.created_by, room=room, version=policy.source_version,
+        from django.db import transaction
+        with transaction.atomic():
+            NdaPolicy.objects.select_for_update().get(pk=policy.pk)
+            existing = Workflow.objects.filter(room=room, purpose='nda', member_id=str(member.pk), policy_revision=str(policy.revision)).order_by('-created_at').first()
+            if existing:
+                return Response({'state': existing.state}, status=201)
+            work = command(owner=room.created_by, room=room, version=policy.source_version,
             recipients=[{'email': member.email, 'name': member.name, 'fields': policy.fields}],
             idempotency_key=f'nda:{room.pk}:{member.pk}:{policy.revision}', purpose='nda', member=member, policy=policy)
         return Response({'state': work.state}, status=201)
@@ -183,8 +206,10 @@ class RecipientNdaEnterView(RecipientNdaView):
         SessionAuthentication().enforce_csrf(request)
         room, member = member_context(request, room_id)
         policy = get_object_or_404(NdaPolicy, room=room, enabled=True)
-        work = get_object_or_404(Workflow, room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision))
-        if work.state != 'awaiting_signature' or not work.signing_token or work.signer_projection[0]['email'].strip().lower() != member.email.strip().lower():
+        work = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).order_by('-created_at').first()
+        if not work:
+            raise PermissionDenied('No signing workflow for this member.')
+        if work.state != 'awaiting_signature' or not work.signing_token or not work.signer_projection or work.signer_projection[0]['email'].strip().lower() != member.email.strip().lower():
             raise PermissionDenied('Signing is not ready for this verified member.')
         from .client import identifier
         # Use only configured origin, never an upstream signingUrl or a caller URL.
@@ -221,3 +246,22 @@ class SigningWhoViewedView(APIView):
             observed_seconds=Sum('duration_seconds'), last_seen=Max('viewed_at'))
         return Response({'room_id': str(room.pk), 'members': list(rows),
                          'measurement': 'Observed browser engagement, not proof of reading; missing heartbeats are unknown.'})
+
+
+class SigningNdaResetView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @extend_schema(request=None, responses=WorkflowSerializer)
+    def post(self, request, room_id, workflow_id):
+        from dealroom.hooks import human_staff
+        from .workflows import reset_nda
+        from .client import SignError
+        if not human_staff(request):
+            raise PermissionDenied('Only a human staff JWT may reset an NDA.')
+        room = staff_room(request, room_id)
+        work = get_object_or_404(Workflow, pk=workflow_id, room=room, purpose='nda')
+        try:
+            replacement = reset_nda(work)
+        except SignError as exc:
+            raise ValidationError({'code': exc.code}) from None
+        return Response(WorkflowSerializer(replacement).data, status=201)

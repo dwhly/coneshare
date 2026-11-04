@@ -105,3 +105,24 @@ class Documenso:
 
     def audit_pdf(self, envelope_id):
         return self.pdf(f'envelope/{identifier(envelope_id)}/audit-log/download')
+
+
+    def cancel(self, envelope_id, external_id):
+        try:
+            envelope = self.get(envelope_id)
+        except SignError as exc:
+            if exc.code == 'sign_http_404':
+                return  # already deleted draft on a previous reset attempt
+            raise
+        if envelope.get('externalId') != external_id:
+            raise SignError('envelope_correlation_mismatch')
+        status = envelope['status']
+        if status == 'DRAFT':
+            # Native cancellation accepts PENDING only; delete the unsent draft.
+            self.request('POST', 'envelope/delete', json={'envelopeId': envelope_id})
+        elif status == 'PENDING':
+            self.request('POST', 'envelope/cancel', json={'envelopeId': envelope_id, 'reason': 'Staff reset of stuck NDA workflow'})
+            if self.get(envelope_id)['status'] != 'CANCELLED':
+                raise SignError('cancellation_not_confirmed')
+        elif status not in {'CANCELLED', 'REJECTED'}:
+            raise SignError('completed_envelope_cannot_reset')

@@ -1,7 +1,7 @@
 {
-  "dealroom_sign_RecipientNdaEnterView_endpoint_post": "recipient_nda_enter",
-  "dealroom_sign_RecipientNdaView_endpoint_get": "recipient_nda_status",
-  "dealroom_sign_RecipientNdaView_endpoint_post": "recipient_nda_start",
+  "dealroom_sign_RecipientNdaEnterView_endpoint_post": "recipient-only:not-agent-callable",
+  "dealroom_sign_RecipientNdaView_endpoint_get": "recipient-only:not-agent-callable",
+  "dealroom_sign_RecipientNdaView_endpoint_post": "recipient-only:not-agent-callable",
   "dealroom_sign_SignCredentialView_endpoint_get": "sign_credential_status",
   "dealroom_sign_SignCredentialView_endpoint_put": "sign_credential_configure",
   "dealroom_sign_SigningEnvelopeViewSet_create_post": "send_for_signature",
@@ -9,6 +9,7 @@
   "dealroom_sign_SigningEnvelopeViewSet_retrieve_get": "get_envelope_status",
   "dealroom_sign_SigningNdaPolicyView_endpoint_get": "nda_policy_get",
   "dealroom_sign_SigningNdaPolicyView_endpoint_put": "nda_policy_set",
+  "dealroom_sign_SigningNdaResetView_endpoint_post": "nda_workflow_reset",
   "dealroom_sign_SigningSourceView_endpoint_get": "signing_list_sources",
   "dealroom_sign_SigningWhoViewedView_endpoint_get": "who_viewed"
 }

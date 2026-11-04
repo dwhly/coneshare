@@ -1999,6 +1999,16 @@
     "tier": "read_write",
     "widens_access": "evaluate_change"
   },
+  "dealroom_sign_SigningNdaResetView_endpoint_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_sign_SigningNdaResetView_endpoint_post",
+    "path": "/api/v1/dealroom-sign/nda-reset/{room_id}/{workflow_id}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
   "dealroom_sign_SigningSourceView_endpoint_get": {
     "boundary": "staff",
     "human_only": false,

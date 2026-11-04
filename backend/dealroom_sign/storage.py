@@ -1,6 +1,7 @@
 """Immutable core storage staging, then atomic local manifest/version publication."""
 import io
 import logging
+import re
 import subprocess
 import tempfile
 from datetime import timedelta
@@ -40,7 +41,10 @@ def verify_seal(pdf):
             result = subprocess.run(['pdfsig', tmp.name], capture_output=True, text=True, timeout=10)
         except (OSError, subprocess.TimeoutExpired):
             raise SignError('seal_validator_unavailable') from None
-    if result.returncode or 'Signature Validation: Signature is Valid.' not in result.stdout or 'Total document signed' not in result.stdout:
+    blocks = re.split(r'(?m)^Signature #\d+:', result.stdout)[1:]
+    if (result.returncode or not blocks or
+        any(re.findall(r'Signature Validation: ([^\r\n]+)', block) != ['Signature is Valid.'] for block in blocks) or
+        not any('Total document signed' in block for block in blocks)):
         raise SignError('sealed_signature_invalid')
     return {'signature_valid': True, 'trusted': "Certificate issuer isn't Trusted" not in result.stdout}
 

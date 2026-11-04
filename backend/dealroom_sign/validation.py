@@ -17,9 +17,10 @@ def request_digest(data):
     return digest(json.dumps(data, sort_keys=True, separators=(',', ':')).encode())
 
 
-def validate_recipients(recipients, pdf):
+def validate_recipients(recipients, pdf, *, page_count=None):
     try:
-        page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        if page_count is None:
+            page_count = len(PdfReader(io.BytesIO(pdf)).pages)
     except Exception:
         raise ValidationError('A valid PDF source is required.') from None
     if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
