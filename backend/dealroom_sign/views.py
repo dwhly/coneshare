@@ -38,16 +38,15 @@ def room_version(room, version_id):
 
 def scoped_room(view, request):
     room_id = view.kwargs.get('room_id')
-    if room_id is not None:
-        supplied = request.query_params.getlist('room_id')
-        if 'room_id' in request.data:
-            supplied.append(request.data['room_id'])
-        if any(str(value) != str(room_id) for value in supplied):
-            raise PermissionDenied('room_id conflicts with the URL path.')
-    else:
-        room_id = request.data.get('room_id') or request.query_params.get('room_id')
-    if not room_id and view.kwargs.get('pk'):
+    if room_id is None and view.kwargs.get('pk'):
         room_id = str(view.get_object().room_id)
+    if room_id is None:
+        room_id = request.query_params.get('room_id') if request.method == 'GET' else request.data.get('room_id')
+    supplied = request.query_params.getlist('room_id')
+    if 'room_id' in request.data:
+        supplied.append(request.data['room_id'])
+    if room_id is not None and any(str(value) != str(room_id) for value in supplied):
+        raise PermissionDenied('room_id conflicts with the target room.')
     if not room_id:
         raise PermissionDenied('Scoped signing queries require a room_id.')
     # Recipient-org-restricted keys cannot distribute to arbitrary emails.
@@ -176,7 +175,7 @@ class RecipientNdaView(APIView):
         accepted = NdaAcceptance.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).exists()
         workflow = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).order_by('-created_at').first()
         return Response({'required': True, 'accepted': accepted, 'state': workflow.state if workflow else 'not_started',
-                         'can_enter': bool(workflow and workflow.state == 'awaiting_signature' and workflow.signing_token and not accepted),
+                         'can_enter': bool(workflow and workflow.state == 'awaiting_signature' and workflow.signing_token and workflow.signer_projection and workflow.signer_projection[0].get('email', '').strip().lower() == member.email.strip().lower() and not accepted),
                          'overdue': bool(workflow and workflow.state in {'awaiting_seal', 'quarantined', 'failed'} and (timezone.now() - workflow.created_at).total_seconds() > 60)})
 
     @extend_schema(request=None, responses=dict)
@@ -209,7 +208,7 @@ class RecipientNdaEnterView(RecipientNdaView):
         work = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).order_by('-created_at').first()
         if not work:
             raise PermissionDenied('No signing workflow for this member.')
-        if work.state != 'awaiting_signature' or not work.signing_token or not work.signer_projection or work.signer_projection[0]['email'].strip().lower() != member.email.strip().lower():
+        if work.state != 'awaiting_signature' or not work.signing_token or not work.signer_projection or work.signer_projection[0].get('email', '').strip().lower() != member.email.strip().lower():
             raise PermissionDenied('Signing is not ready for this verified member.')
         from .client import identifier
         # Use only configured origin, never an upstream signingUrl or a caller URL.

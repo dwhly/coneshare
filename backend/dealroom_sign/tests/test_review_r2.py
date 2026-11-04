@@ -36,7 +36,7 @@ def human(fixture):
 
 @pytest.fixture
 def member_context(fixture, recipients):
-    link = ShareLink.objects.create(dataroom=fixture.room, created_by=fixture.user, restrict_to_grants=True)
+    link = ShareLink.objects.create(dataroom=fixture.room, created_by=fixture.user, restrict_to_grants=True, enable_watermark=True)
     RoomPolicy.objects.create(room=fixture.room, entry_link=link)
     member = Viewer.objects.create(organization=fixture.org, email='member@example.test', name='Member', verified_at=timezone.now())
     grant = ShareLinkAccessGrant.objects.create(share_link=link, email=member.email, created_by=fixture.user)
@@ -237,6 +237,7 @@ def test_member_start_can_enter_identity_and_revocation(fixture, member_context,
     assert response.status_code == 200 and response.data['signing_url'].endswith('/sign/recipient_token')
     assert response['Referrer-Policy'] == 'no-referrer'
     work.signer_projection = [{'email': 'other@example.test'}]; work.save()
+    assert ctx.client.get(url).data['can_enter'] is False
     assert ctx.client.post(url+'enter/', {}, format='json').status_code == 403
     work.signer_projection = []; work.save()
     assert ctx.client.post(url+'enter/', {}, format='json').status_code == 403
@@ -245,7 +246,7 @@ def test_member_start_can_enter_identity_and_revocation(fixture, member_context,
     assert ctx.client.post(url+'enter/', {}, format='json').status_code == 403
 
 
-def test_subject_can_open_own_nda_evidence(fixture, member_context, pdf):
+def test_subject_can_open_own_nda_evidence(fixture, member_context, pdf, monkeypatch):
     from dealroom.policy import evaluate
     from rest_framework.exceptions import PermissionDenied
     ctx = member_context
@@ -257,9 +258,26 @@ def test_subject_can_open_own_nda_evidence(fixture, member_context, pdf):
     item = DataroomDocument.objects.get(document=artifact.version.document)
     request = SimpleNamespace(session=ctx.client.session)
     assert evaluate(request, ctx.link, document_id=str(item.pk)).allowed
+    from io import BytesIO
+    from PIL import Image
+    from unittest.mock import MagicMock
+    image = BytesIO(); Image.new('RGB', (400, 500), 'white').save(image, format='PNG')
+    renderer = MagicMock(); renderer.get_page_storage_key.return_value = 'page.png'
+    monkeypatch.setattr('sharelinks.views.get_renderer', lambda version: renderer)
+    monkeypatch.setattr('sharelinks.views.fileserver_client.generate_download_url', lambda *a, **k: 'http://internal/page.png')
+    monkeypatch.setattr('sharelinks.views.requests.get', lambda *a, **k: Mock(content=image.getvalue(), status_code=200))
+    session = ctx.client.session
+    session['authorized_share_links'] = {str(ctx.link.pk): {'email_verified': True, 'email_method': 'verified', 'viewer_email': ctx.member.email, 'viewer_name': ctx.member.name, 'viewer_organisation_name': 'Test'}}
+    session.save()
+    page_url = f'/api/v1/links/{ctx.link.slug}/render-page/1/?dataroom_document_id={item.pk}'
+    response = ctx.client.get(page_url)
+    assert response.status_code == 200, getattr(response, 'data', None)
+    assert response['Content-Type'] == 'image/jpeg'
+    assert response['Cache-Control'] == 'private, no-store'
     ctx.grant.revoked_at=timezone.now(); ctx.grant.save()
     with pytest.raises(PermissionDenied):
         evaluate(request, ctx.link, document_id=str(item.pk))
+    assert ctx.client.get(page_url).status_code == 403
 
 
 def test_approved_nda_edit_takes_effect(fixture, member_context, pdf, human, agent_client):
@@ -273,3 +291,49 @@ def test_approved_nda_edit_takes_effect(fixture, member_context, pdf, human, age
         result = human.post(f'/api/v1/dealroom/approvals/{approval.pk}/approve/', {}, format='json')
     assert result.status_code == 200, result.data
     ctx.policy.refresh_from_db(); assert not ctx.policy.enabled
+
+
+def test_ordinary_file_cannot_expose_private_executed_folder(fixture, member_context, pdf):
+    ctx = member_context
+    ctx.policy.enabled = False; ctx.policy.save()
+    work = nda_work(fixture, ctx, pdf)
+    publish(work, [{'item_id':'item', 'kind':'sealed_pdf', 'sha256':'b'*64, 'size':10, 'key':'own.pdf', 'pages':1}])
+    folder = DataroomDocument.objects.get(document__versions__executedartifact__workflow=work).folder
+    # A staff placement error must not reveal signer identity through an ordinary PDF.
+    fixture.version.is_primary = True; fixture.version.save()
+    item = DataroomDocument.objects.get(document=fixture.version.document)
+    item.folder = folder; item.save()
+    other = Viewer.objects.create(organization=fixture.org, email='other@example.test', verified_at=timezone.now())
+    ShareLinkAccessGrant.objects.create(share_link=ctx.link, email=other.email, created_by=fixture.user)
+    session = ctx.client.session
+    session['dealroom_member'] = {**session['dealroom_member'], 'member_id':str(other.pk), 'email':other.email}
+    session.save()
+    response = ctx.client.get(f'/api/v1/dealroom/recipient/{ctx.link.slug}/room/')
+    assert response.status_code == 200
+    assert response.data['folders'] == []
+    assert response.data['files'] == []
+
+
+def test_different_verified_member_cannot_enter_signing(fixture, member_context, pdf):
+    ctx = member_context
+    work = nda_work(fixture, ctx, pdf)
+    work.state='awaiting_signature'; work.signing_token='subject_token'; work.signer_projection=[{'email':ctx.member.email}]; work.save()
+    other = Viewer.objects.create(organization=fixture.org, email='other@example.test', verified_at=timezone.now())
+    ShareLinkAccessGrant.objects.create(share_link=ctx.link, email=other.email, created_by=fixture.user)
+    session = ctx.client.session
+    session['dealroom_member'] = {**session['dealroom_member'], 'member_id':str(other.pk), 'email':other.email}
+    session.save()
+    response = ctx.client.post(f'/api/v1/dealroom-sign/nda/{fixture.room.pk}/enter/', {}, format='json')
+    assert response.status_code in {403,404}
+    assert 'subject_token' not in str(response.data)
+
+
+@pytest.mark.parametrize('endpoint', ['retrieve', 'list'])
+def test_scoped_workflow_query_uses_actual_target(fixture, agent_client, endpoint):
+    client, key = agent_client
+    allowed = Dataroom.objects.create(organization=fixture.org, created_by=fixture.user, name='Allowed')
+    KeyScope.objects.create(key=key, rooms=[str(allowed.pk)])
+    suffix = f'{fixture.work.pk}/' if endpoint == 'retrieve' else f'?room_id={fixture.room.pk}'
+    response = client.generic('GET', '/api/v1/dealroom-sign/envelopes/'+suffix,
+        json.dumps({'room_id': str(allowed.pk)}), content_type='application/json')
+    assert response.status_code == 403

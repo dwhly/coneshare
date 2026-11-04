@@ -267,6 +267,7 @@
             },
             "token": {
               "maxLength": 512,
+              "minLength": 1,
               "type": "string",
               "writeOnly": true
             }
@@ -318,6 +319,7 @@
           "properties": {
             "idempotency_key": {
               "maxLength": 200,
+              "minLength": 1,
               "type": "string"
             },
             "recipients": {
@@ -325,6 +327,7 @@
                 "properties": {
                   "email": {
                     "format": "email",
+                    "minLength": 1,
                     "type": "string"
                   },
                   "fields": {
@@ -397,6 +400,7 @@
                   },
                   "name": {
                     "maxLength": 200,
+                    "minLength": 1,
                     "type": "string"
                   },
                   "role": {
@@ -429,10 +433,12 @@
             },
             "room_id": {
               "maxLength": 64,
+              "minLength": 1,
               "type": "string"
             },
             "version_id": {
               "maxLength": 64,
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -591,6 +597,7 @@
             },
             "version_id": {
               "maxLength": 64,
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -613,6 +620,37 @@
     "path": "/api/v1/dealroom-sign/nda-policy/{room_id}/",
     "path_params": [
       "room_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_sign_SigningNdaResetView_endpoint_post",
+    "operation_id": "dealroom_sign_SigningNdaResetView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "room_id": {
+          "type": "string"
+        },
+        "workflow_id": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "room_id",
+        "workflow_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/nda-reset/{room_id}/{workflow_id}/",
+    "path_params": [
+      "room_id",
+      "workflow_id"
     ],
     "query_params": [],
     "recipient": false
