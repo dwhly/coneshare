@@ -6,7 +6,7 @@ import { useNavItems } from "./SidebarContent";
 import { DataroomBreadcrumbs } from "../datarooms/DataroomBreadcrumbs";
 import { AmforgeProductSwitcher } from "./AmforgeProductSwitcher";
 
-function Header() {
+function Header({ variant = "bar" }) {
   const { t } = useTranslation();
   const { breadcrumbData } = useBreadcrumb();
   const { pathname } = useLocation();
@@ -59,6 +59,13 @@ function Header() {
     // Default to documents breadcrumbs
     return <Breadcrumbs currentFolder={breadcrumbData} />;
   };
+
+  // Top-bar layout: the title/breadcrumbs become the first row of the page container (no bar chrome).
+  // List pages skip the plain title (the active nav link and the page H1 already name the section).
+  if (variant === "inline") {
+    if (!breadcrumbData) return null;
+    return <div className="flex min-h-8 items-center px-4 pt-2 md:px-6">{renderBreadcrumbs()}</div>;
+  }
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">

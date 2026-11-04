@@ -1,0 +1,48 @@
+# Chief Dealroom layout prototype (DPR: sidebar vs top bar). One extra web container on :8793,
+# attached to the running amforge-send-dev stack's network, DB, redis and volumes. It never runs
+# migrations and has no celery/beat of its own (send-dev's workers pick up queued tasks).
+# Toggle: ?layout=sidebar|topbar (localStorage "dealroom-layout"), or Account menu -> Layout.
+name: chief-send-proto
+
+services:
+  web:
+    image: ${PROTO_IMAGE:-chief-send-proto:latest}
+    env_file: ${SEND_DEV_ENV:-../../../../amforge-wt-send-features/deploy/send-dev/app.local.env}
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      SITE_DOMAIN: http://send-proto.100-110-241-2.sslip.io
+      ALLOWED_HOSTS: 127.0.0.1,localhost,web,send-proto.100-110-241-2.sslip.io,100.110.241.2
+      CSRF_TRUSTED_ORIGINS: http://send-proto.100-110-241-2.sslip.io,http://100.110.241.2:8793
+      GUNICORN_WORKERS: "2"
+      SENTRY_ENVIRONMENT: chief-send-proto
+    mem_limit: ${WEB_MEM:-1024m}
+    restart: unless-stopped
+    logging: { driver: json-file, options: { max-size: "20m", max-file: "3" } }
+    ulimits:
+      nofile: { soft: 4096, hard: 4096 }
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1/api/v1/_health/"]
+      interval: 30s
+      timeout: 30s
+      retries: 10
+      start_period: 20s
+    volumes:
+      - "send-dev-data:/data"
+      - "send-dev-media:/home/coneshare/app/media"
+    networks:
+      send-dev: {}
+      amforge-net: {}
+    ports:
+      - "${PROTO_BIND:-8793}:80/tcp"
+
+volumes:
+  send-dev-data:  { name: amforge-send-dev-data, external: true }
+  send-dev-media: { name: amforge-send-dev-media, external: true }
+
+networks:
+  send-dev:
+    name: amforge-send-dev-net
+    external: true
+  amforge-net:
+    external: true
