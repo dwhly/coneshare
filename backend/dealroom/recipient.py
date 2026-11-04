@@ -159,7 +159,15 @@ class RecipientRoomView(APIView):
             if not version:
                 continue
             files.append({'id': str(item.pk), 'name': item.name or item.document.name, 'folder_id': str(item.folder_id or ''), 'page_count': version.num_pages or 1, 'download_level': file_decision.effective_download_level, 'page_url': f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}', 'download_url': f'/api/v1/links/{slug}/download-file/?dataroom_document_id={item.pk}'})
-        return Response({'id': str(link.dataroom_id), 'name': link.dataroom.name, 'member': {'name': member.name, 'email': member.email, 'org': member.recipient_org.name if member.recipient_org else ''}, 'folders': list(link.dataroom.folders.values('id', 'name')), 'files': files, 'brand': load_brand()})
+        from sharelinks.views import _is_dataroom_folder_path_visible
+        visible_folder_ids = {item['folder_id'] for item in files if item['folder_id']}
+        folders = [
+            {'id': str(folder.pk), 'name': folder.name}
+            for folder in link.dataroom.folders.order_by('name', 'pk')
+            if str(folder.pk) in visible_folder_ids
+            and _is_dataroom_folder_path_visible(link, folder)
+        ]
+        return Response({'id': str(link.dataroom_id), 'name': link.dataroom.name, 'member': {'name': member.name, 'email': member.email, 'org': member.recipient_org.name if member.recipient_org else ''}, 'folders': folders, 'files': files, 'brand': load_brand()})
 
 
 class RecipientLogoutView(APIView):
