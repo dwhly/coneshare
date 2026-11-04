@@ -37,10 +37,15 @@ def enforce(view, request):
         if scope:
             if scope.operations is not None and op['operation_id'] not in scope.operations:
                 raise PermissionDenied('Operation outside key scope.')
-            if scope.parent_id:
+            ancestor = scope
+            seen = {request.auth.pk}
+            while ancestor and ancestor.parent_id:
                 from django.utils import timezone
-                if not scope.parent.user.is_active or (scope.parent.expires_at and scope.parent.expires_at <= timezone.now()):
-                    raise PermissionDenied('Parent key is inactive.')
+                parent = ancestor.parent
+                if parent.pk in seen or not parent.user.is_active or (parent.expires_at and parent.expires_at <= timezone.now()):
+                    raise PermissionDenied('Parent key is inactive or delegation is cyclic.')
+                seen.add(parent.pk)
+                ancestor = KeyScope.objects.filter(key=parent).first()
             if scope.rooms is not None or scope.recipient_orgs is not None:
                 # Scoped keys are fail-closed until the view supplies an explicit target resolver.
                 resolver = getattr(view, 'key_scope_targets', None)
@@ -69,7 +74,7 @@ def install():
             return original_dispatch(self, request, *args, **kwargs)
         from .activity import record
         with transaction.atomic():
-            render = type(self).__name__ in {'WatermarkedPageRenderView', 'ShareLinkFileDownloadView'}
+            render = type(self).__name__ in {'WatermarkedPageRenderView', 'ShareLinkFileDownloadView', 'OriginalDownloadView'}
             if render:
                 RENDER_SEMAPHORE.acquire()
             try:

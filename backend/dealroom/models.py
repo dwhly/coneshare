@@ -104,3 +104,13 @@ class KeyScope(models.Model):
     operations = models.JSONField(null=True, default=None)
     rooms = models.JSONField(null=True, default=None)
     recipient_orgs = models.JSONField(null=True, default=None)
+
+
+class CopyEvidence(models.Model):
+    copy = models.OneToOneField('sharelinks.IssuedCopy', primary_key=True, on_delete=models.PROTECT, related_name='evidence')
+    version = models.ForeignKey('documents.DocumentVersion', on_delete=models.PROTECT)
+    brand_revision = models.CharField(max_length=64)
+    source_sha256 = models.CharField(max_length=64, blank=True)
+    artifact_sha256 = models.CharField(max_length=64, blank=True)
+    receipt_sha256 = models.CharField(max_length=64, blank=True)
+    original_exception = models.ForeignKey(OriginalException, null=True, on_delete=models.PROTECT)

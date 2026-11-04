@@ -18,13 +18,13 @@ describe('GateLayout', () => {
       </GateLayout>
     );
 
-    expect(screen.getAllByText('AmForge Send')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Dealroom')[0]).toBeInTheDocument();
     expect(screen.queryByText('Vault')).not.toBeInTheDocument();
     expect(screen.getByText('Secure File Share')).toBeInTheDocument();
     expect(screen.queryByText('SECURE PORTAL ACCESS')).not.toBeInTheDocument();
     expect(screen.getByTestId('child-content')).toBeInTheDocument();
     expect(screen.getByText('Bob Manager')).toBeInTheDocument();
-    expect(screen.getByText('About AmForge Send')).toBeInTheDocument();
+    expect(screen.getByText('About Dealroom')).toBeInTheDocument();
   });
 
   it('renders custom badgeText when explicitly provided', () => {

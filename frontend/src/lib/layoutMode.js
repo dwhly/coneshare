@@ -13,9 +13,9 @@ const EVENT = "dealroom-layout-change";
 function readStored() {
   try {
     const v = window.localStorage.getItem(LAYOUT_STORAGE_KEY);
-    return LAYOUTS.includes(v) ? v : "sidebar";
+    return LAYOUTS.includes(v) ? v : "topbar";
   } catch {
-    return "sidebar";
+    return "topbar";
   }
 }
 
@@ -48,5 +48,5 @@ function subscribe(cb) {
 }
 
 export function useLayoutMode() {
-  return useSyncExternalStore(subscribe, readStored, () => "sidebar");
+  return useSyncExternalStore(subscribe, readStored, () => "topbar");
 }

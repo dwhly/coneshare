@@ -1,0 +1,2818 @@
+[
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomDocumentViewSet_retrieve_get",
+    "operation_id": "datarooms_DataroomDocumentViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dataroom-documents/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomFolderViewSet_list_get",
+    "operation_id": "datarooms_DataroomFolderViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dataroom-folders/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomFolderViewSet_retrieve_get",
+    "operation_id": "datarooms_DataroomFolderViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dataroom-folders/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomViewSet_list_get",
+    "operation_id": "datarooms_DataroomViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/datarooms/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomViewSet_retrieve_get",
+    "operation_id": "datarooms_DataroomViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/datarooms/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomViewSet_banner_images_get",
+    "operation_id": "datarooms_DataroomViewSet_banner_images_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/datarooms/{id}/banner-images/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomViewSet_collaborators_get",
+    "operation_id": "datarooms_DataroomViewSet_collaborators_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/datarooms/{id}/collaborators/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomViewSet_eligible_collaborators_get",
+    "operation_id": "datarooms_DataroomViewSet_eligible_collaborators_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/datarooms/{id}/eligible-collaborators/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomViewSet_stats_get",
+    "operation_id": "datarooms_DataroomViewSet_stats_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/datarooms/{id}/stats/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "datarooms_DataroomViewSet_view_sessions_get",
+    "operation_id": "datarooms_DataroomViewSet_view_sessions_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/datarooms/{id}/view-sessions/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_ActivityViewSet_list_get",
+    "operation_id": "dealroom_ActivityViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/activity/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_ActivityViewSet_retrieve_get",
+    "operation_id": "dealroom_ActivityViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/activity/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_AgentKeyViewSet_list_get",
+    "operation_id": "dealroom_AgentKeyViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/agent-keys/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_AgentKeyViewSet_create_post",
+    "operation_id": "dealroom_AgentKeyViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "expires_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "last_used_at": {
+              "format": "date-time",
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 100,
+              "type": "string"
+            },
+            "prefix": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "tier": {
+              "description": "* `read_only` - Read Only\n* `read_write` - Read & Write\n* `full_access` - Full Access",
+              "enum": [
+                "read_only",
+                "read_write",
+                "full_access"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "last_used_at",
+            "name",
+            "prefix"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/agent-keys/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_AgentKeyViewSet_retrieve_get",
+    "operation_id": "dealroom_AgentKeyViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/agent-keys/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "DELETE",
+    "multipart": false,
+    "name": "dealroom_AgentKeyViewSet_destroy_delete",
+    "operation_id": "dealroom_AgentKeyViewSet_destroy_delete",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/agent-keys/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_ApprovalViewSet_list_get",
+    "operation_id": "dealroom_ApprovalViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/approvals/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_ApprovalViewSet_retrieve_get",
+    "operation_id": "dealroom_ApprovalViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/approvals/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_ApprovalViewSet_approve_post",
+    "operation_id": "dealroom_ApprovalViewSet_approve_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/approvals/{id}/approve/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_ApprovalViewSet_reject_post",
+    "operation_id": "dealroom_ApprovalViewSet_reject_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/approvals/{id}/reject/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_BrandView_endpoint_get",
+    "operation_id": "dealroom_BrandView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/brand/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_CopyViewSet_list_get",
+    "operation_id": "dealroom_CopyViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/copies/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_CopyViewSet_retrieve_get",
+    "operation_id": "dealroom_CopyViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "copy_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "copy_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/copies/{copy_id}/",
+    "path_params": [
+      "copy_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_DriftViewSet_list_get",
+    "operation_id": "dealroom_DriftViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/drift/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_DriftViewSet_retrieve_get",
+    "operation_id": "dealroom_DriftViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/drift/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_DriftViewSet_acknowledge_post",
+    "operation_id": "dealroom_DriftViewSet_acknowledge_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/drift/{id}/acknowledge/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_FilePolicyViewSet_list_get",
+    "operation_id": "dealroom_FilePolicyViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/file-policies/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_FilePolicyViewSet_retrieve_get",
+    "operation_id": "dealroom_FilePolicyViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/file-policies/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_FilePolicyViewSet_update_put",
+    "operation_id": "dealroom_FilePolicyViewSet_update_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "allow_download": {
+              "type": "boolean"
+            },
+            "dataroom_document": {
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            },
+            "dataroom_folder": {
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            },
+            "download_ceiling": {
+              "maxLength": 16,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "is_visible": {
+              "type": "boolean"
+            },
+            "share_link": {
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "dataroom_document",
+            "dataroom_folder",
+            "id",
+            "share_link"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/file-policies/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_FilePolicyViewSet_partial_update_patch",
+    "operation_id": "dealroom_FilePolicyViewSet_partial_update_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "allow_download": {
+              "type": "boolean"
+            },
+            "dataroom_document": {
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            },
+            "dataroom_folder": {
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            },
+            "download_ceiling": {
+              "maxLength": 16,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "is_visible": {
+              "type": "boolean"
+            },
+            "share_link": {
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/file-policies/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_list_get",
+    "operation_id": "dealroom_GrantViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_create_post",
+    "operation_id": "dealroom_GrantViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "download_ceiling": {
+              "maxLength": 16,
+              "type": "string"
+            },
+            "email": {
+              "format": "email",
+              "maxLength": 254,
+              "type": "string"
+            },
+            "expires_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "revoked_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "room": {
+              "type": "string",
+              "writeOnly": true
+            },
+            "share_link": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "viewer_organisation": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "room",
+            "share_link"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_retrieve_get",
+    "operation_id": "dealroom_GrantViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_update_put",
+    "operation_id": "dealroom_GrantViewSet_update_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "download_ceiling": {
+              "maxLength": 16,
+              "type": "string"
+            },
+            "email": {
+              "format": "email",
+              "maxLength": 254,
+              "type": "string"
+            },
+            "expires_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "revoked_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "room": {
+              "type": "string",
+              "writeOnly": true
+            },
+            "share_link": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "viewer_organisation": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "room",
+            "share_link"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_partial_update_patch",
+    "operation_id": "dealroom_GrantViewSet_partial_update_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "download_ceiling": {
+              "maxLength": 16,
+              "type": "string"
+            },
+            "email": {
+              "format": "email",
+              "maxLength": 254,
+              "type": "string"
+            },
+            "expires_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "revoked_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "room": {
+              "type": "string",
+              "writeOnly": true
+            },
+            "share_link": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "viewer_organisation": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "DELETE",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_destroy_delete",
+    "operation_id": "dealroom_GrantViewSet_destroy_delete",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_MemberViewSet_list_get",
+    "operation_id": "dealroom_MemberViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/members/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_MemberViewSet_create_post",
+    "operation_id": "dealroom_MemberViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "disabled_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "email": {
+              "format": "email",
+              "maxLength": 254,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            },
+            "recipient_org": {
+              "nullable": true,
+              "type": "string"
+            },
+            "verified_at": {
+              "format": "date-time",
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "email",
+            "id",
+            "verified_at"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/members/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_MemberViewSet_retrieve_get",
+    "operation_id": "dealroom_MemberViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/members/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_MemberViewSet_update_put",
+    "operation_id": "dealroom_MemberViewSet_update_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "disabled_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "email": {
+              "format": "email",
+              "maxLength": 254,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            },
+            "recipient_org": {
+              "nullable": true,
+              "type": "string"
+            },
+            "verified_at": {
+              "format": "date-time",
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "email",
+            "id",
+            "verified_at"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/members/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_MemberViewSet_partial_update_patch",
+    "operation_id": "dealroom_MemberViewSet_partial_update_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "disabled_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "email": {
+              "format": "email",
+              "maxLength": 254,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            },
+            "recipient_org": {
+              "nullable": true,
+              "type": "string"
+            },
+            "verified_at": {
+              "format": "date-time",
+              "nullable": true,
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/members/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "DELETE",
+    "multipart": false,
+    "name": "dealroom_MemberViewSet_destroy_delete",
+    "operation_id": "dealroom_MemberViewSet_destroy_delete",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/members/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_OperationViewSet_list_get",
+    "operation_id": "dealroom_OperationViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/operations/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_OperationViewSet_retrieve_get",
+    "operation_id": "dealroom_OperationViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/operations/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_OrgViewSet_list_get",
+    "operation_id": "dealroom_OrgViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/orgs/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_OrgViewSet_create_post",
+    "operation_id": "dealroom_OrgViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "confirm_domains": {
+              "default": false,
+              "type": "boolean",
+              "writeOnly": true
+            },
+            "email_domains": {},
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/orgs/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_OrgViewSet_retrieve_get",
+    "operation_id": "dealroom_OrgViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/orgs/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_OrgViewSet_update_put",
+    "operation_id": "dealroom_OrgViewSet_update_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "confirm_domains": {
+              "default": false,
+              "type": "boolean",
+              "writeOnly": true
+            },
+            "email_domains": {},
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/orgs/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_OrgViewSet_partial_update_patch",
+    "operation_id": "dealroom_OrgViewSet_partial_update_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "confirm_domains": {
+              "default": false,
+              "type": "boolean",
+              "writeOnly": true
+            },
+            "email_domains": {},
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/orgs/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "DELETE",
+    "multipart": false,
+    "name": "dealroom_OrgViewSet_destroy_delete",
+    "operation_id": "dealroom_OrgViewSet_destroy_delete",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/orgs/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_OriginalExceptionViewSet_list_get",
+    "operation_id": "dealroom_OriginalExceptionViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/original-exceptions/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_OriginalExceptionViewSet_create_post",
+    "operation_id": "dealroom_OriginalExceptionViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "expires_at": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "grant": {
+              "type": "string"
+            },
+            "id": {
+              "format": "uuid",
+              "readOnly": true,
+              "type": "string"
+            },
+            "max_uses": {
+              "format": "int64",
+              "maximum": 9223372036854775807,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "member": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "revoked_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "room": {
+              "type": "string"
+            },
+            "used_count": {
+              "readOnly": true,
+              "type": "integer"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "expires_at",
+            "grant",
+            "id",
+            "member",
+            "reason",
+            "room",
+            "used_count",
+            "version"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/original-exceptions/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_OriginalExceptionViewSet_retrieve_get",
+    "operation_id": "dealroom_OriginalExceptionViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/original-exceptions/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "DELETE",
+    "multipart": false,
+    "name": "dealroom_OriginalExceptionViewSet_destroy_delete",
+    "operation_id": "dealroom_OriginalExceptionViewSet_destroy_delete",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/original-exceptions/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RecipientChallengeView_endpoint_get",
+    "operation_id": "dealroom_RecipientChallengeView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/challenge/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RecipientChallengeView_endpoint_post",
+    "operation_id": "dealroom_RecipientChallengeView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "email": {
+              "format": "email",
+              "type": "string"
+            },
+            "name": {
+              "default": "",
+              "maxLength": 255,
+              "type": "string"
+            }
+          },
+          "required": [
+            "email"
+          ],
+          "type": "object"
+        },
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug",
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/challenge/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RecipientConfirmView_endpoint_post",
+    "operation_id": "dealroom_RecipientConfirmView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "challenge_id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "code": {
+              "pattern": "^\\d{6}$",
+              "type": "string"
+            },
+            "token": {
+              "maxLength": 128,
+              "type": "string"
+            }
+          },
+          "required": [
+            "challenge_id"
+          ],
+          "type": "object"
+        },
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug",
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/confirm/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RecipientLogoutView_endpoint_post",
+    "operation_id": "dealroom_RecipientLogoutView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/logout/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_OriginalDownloadView_endpoint_post",
+    "operation_id": "dealroom_OriginalDownloadView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "exception_id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exception_id",
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/original/{exception_id}/",
+    "path_params": [
+      "exception_id",
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RecipientRoomView_endpoint_get",
+    "operation_id": "dealroom_RecipientRoomView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/room/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_list_get",
+    "operation_id": "dealroom_RoomViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_create_post",
+    "operation_id": "dealroom_RoomViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "entry_url": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            }
+          },
+          "required": [
+            "entry_url",
+            "id",
+            "name"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_retrieve_get",
+    "operation_id": "dealroom_RoomViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_update_put",
+    "operation_id": "dealroom_RoomViewSet_update_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "entry_url": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            }
+          },
+          "required": [
+            "entry_url",
+            "id",
+            "name"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_partial_update_patch",
+    "operation_id": "dealroom_RoomViewSet_partial_update_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "entry_url": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "DELETE",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_destroy_delete",
+    "operation_id": "dealroom_RoomViewSet_destroy_delete",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_folders_post",
+    "operation_id": "dealroom_RoomViewSet_folders_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/folders/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_policy_patch",
+    "operation_id": "dealroom_RoomViewSet_policy_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/policy/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": true,
+    "name": "dealroom_RoomViewSet_upload_post",
+    "operation_id": "dealroom_RoomViewSet_upload_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "file": {
+              "format": "binary",
+              "type": "string"
+            },
+            "folder_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "file"
+          ],
+          "type": "object"
+        },
+        "file_base64": {
+          "description": "Base64 bytes of the upload, maximum 50 MiB decoded.",
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "file_base64",
+        "filename"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/upload/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_EntryLinkViewSet_list_get",
+    "operation_id": "dealroom_EntryLinkViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/share-links/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_EntryLinkViewSet_create_post",
+    "operation_id": "dealroom_EntryLinkViewSet_create_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "dataroom": {
+              "nullable": true,
+              "type": "string"
+            },
+            "expires_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "is_active": {
+              "type": "boolean"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            },
+            "slug": {
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "slug"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/share-links/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_EntryLinkViewSet_retrieve_get",
+    "operation_id": "dealroom_EntryLinkViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/share-links/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PUT",
+    "multipart": false,
+    "name": "dealroom_EntryLinkViewSet_update_put",
+    "operation_id": "dealroom_EntryLinkViewSet_update_put",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "dataroom": {
+              "nullable": true,
+              "type": "string"
+            },
+            "expires_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "is_active": {
+              "type": "boolean"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            },
+            "slug": {
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "slug"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/share-links/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_EntryLinkViewSet_partial_update_patch",
+    "operation_id": "dealroom_EntryLinkViewSet_partial_update_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "dataroom": {
+              "nullable": true,
+              "type": "string"
+            },
+            "expires_at": {
+              "format": "date-time",
+              "nullable": true,
+              "type": "string"
+            },
+            "id": {
+              "readOnly": true,
+              "type": "string"
+            },
+            "is_active": {
+              "type": "boolean"
+            },
+            "name": {
+              "maxLength": 255,
+              "type": "string"
+            },
+            "slug": {
+              "readOnly": true,
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/share-links/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "DELETE",
+    "multipart": false,
+    "name": "dealroom_EntryLinkViewSet_destroy_delete",
+    "operation_id": "dealroom_EntryLinkViewSet_destroy_delete",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/share-links/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_DocumentViewSet_list_get",
+    "operation_id": "documents_DocumentViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/documents/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_DocumentViewSet_retrieve_get",
+    "operation_id": "documents_DocumentViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/documents/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_DocumentViewSet_stats_get",
+    "operation_id": "documents_DocumentViewSet_stats_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/documents/{id}/stats/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_DocumentViewSet_status_get",
+    "operation_id": "documents_DocumentViewSet_status_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/documents/{id}/status/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_DocumentViewSet_versions_get",
+    "operation_id": "documents_DocumentViewSet_versions_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/documents/{id}/versions/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_DocumentViewSet_view_sessions_get",
+    "operation_id": "documents_DocumentViewSet_view_sessions_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/documents/{id}/view-sessions/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_FolderViewSet_list_get",
+    "operation_id": "documents_FolderViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/folders/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "documents_FolderViewSet_retrieve_get",
+    "operation_id": "documents_FolderViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/folders/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "sharelinks_ShareLinkFileDownloadView_endpoint_get",
+    "operation_id": "sharelinks_ShareLinkFileDownloadView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/links/{slug}/download-file/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "sharelinks_WatermarkedPageRenderView_endpoint_get",
+    "operation_id": "sharelinks_WatermarkedPageRenderView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "page_number": {
+          "type": "integer"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page_number",
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/links/{slug}/render-page/{page_number}/",
+    "path_params": [
+      "page_number",
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "core_OrganizationViewSet_list_get",
+    "operation_id": "core_OrganizationViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/organizations/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "core_OrganizationViewSet_retrieve_get",
+    "operation_id": "core_OrganizationViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/organizations/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "core_UserViewSet_list_get",
+    "operation_id": "core_UserViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/users/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "core_UserViewSet_retrieve_get",
+    "operation_id": "core_UserViewSet_retrieve_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/users/{id}/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "list_rooms",
+    "operation_id": "dealroom_RoomViewSet_list_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  }
+]

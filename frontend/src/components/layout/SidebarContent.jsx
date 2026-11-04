@@ -23,7 +23,7 @@ export function useNavItems() {
     { href: "/file-requests", label: t('nav.fileRequests'), icon: UploadCloud },
     { href: "/automations", label: t('nav.automations'), icon: Bot },
     { href: "/trash", label: t('nav.trash'), icon: Trash2, hasDivider: true },
-  ];
+  ].filter(item => ['/', '/datarooms'].includes(item.href));
 }
 
 function SidebarContent() {

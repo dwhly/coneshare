@@ -43,7 +43,7 @@ export default function TopBar({ scrolled }) {
         <Link
           to="/"
           className="hidden rounded-md ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:inline"
-          aria-label="AmForge Home"
+          aria-label="Dealroom Home"
         >
           <AmforgeLogo className="h-6 w-auto text-foreground" />
         </Link>

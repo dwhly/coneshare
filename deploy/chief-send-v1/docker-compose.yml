@@ -1,0 +1,77 @@
+name: chief-send-v1
+x-app: &app
+  image: chief-send-v1:latest
+  env_file: app.local.env
+  restart: unless-stopped
+  networks: [default, amforge-net]
+  depends_on:
+    postgres: {condition: service_healthy}
+    redis: {condition: service_healthy}
+    files: {condition: service_started}
+  volumes:
+    - ../../brand.yaml:/etc/dealroom/brand.yaml:ro
+services:
+  web:
+    <<: *app
+    mem_limit: 512m
+    ports: ['8795:80']
+    networks:
+      default: {}
+      amforge-net: {aliases: [chief-send-v1-web]}
+    healthcheck:
+      test: ['CMD', 'curl', '-fsS', 'http://localhost/api/v1/_health/']
+      interval: 30s
+      timeout: 5s
+      retries: 5
+  celery:
+    <<: *app
+    mem_limit: 512m
+    command: ['celery', '-A', 'backend', 'worker', '--loglevel=info', '--concurrency=1', '-Q', 'celery']
+  files:
+    image: amforge-send-dev-core:latest
+    mem_limit: 64m
+    restart: unless-stopped
+    env_file: app.local.env
+    environment:
+      STORAGE_PATH: /data
+      PORT: '8080'
+    volumes: ['files:/data']
+    networks: [default]
+  mcp:
+    image: chief-send-v1-mcp:latest
+    mem_limit: 128m
+    restart: unless-stopped
+    environment:
+      CONESHARE_URL: http://web
+      MCP_PATH: /mcp/
+      MCP_PORT: '8001'
+    networks: [default]
+  postgres:
+    image: postgres:14-bullseye
+    mem_limit: 320m
+    restart: unless-stopped
+    env_file: .env
+    command: ['postgres', '-c', 'shared_buffers=64MB', '-c', 'max_connections=40', '-c', 'work_mem=2MB']
+    volumes: ['postgres:/var/lib/postgresql/data']
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U send -d send']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [default]
+  redis:
+    image: redis:6.2.14-alpine
+    mem_limit: 64m
+    restart: unless-stopped
+    command: ['redis-server', '--maxmemory', '40mb', '--maxmemory-policy', 'noeviction']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [default]
+volumes:
+  files: {}
+  postgres: {}
+networks:
+  amforge-net: {external: true}

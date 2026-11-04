@@ -111,8 +111,17 @@ class CopySerializer(serializers.ModelSerializer):
 class FilePolicySerializer(serializers.ModelSerializer):
     class Meta:
         model = ShareLinkDataroomSetting
-        fields = ['id', 'share_link', 'dataroom_document', 'dataroom_folder', 'is_visible', 'allow_download']
+        fields = ['id', 'share_link', 'dataroom_document', 'dataroom_folder', 'is_visible', 'allow_download', 'download_ceiling']
         read_only_fields = ['id', 'share_link', 'dataroom_document', 'dataroom_folder']
+    def validate(self, data):
+        level = data.get('download_ceiling')
+        if level is not None:
+            if level not in ('none', 'watermarked', 'original'):
+                raise serializers.ValidationError('Invalid download ceiling.')
+            data['allow_download'] = level != 'none'
+        elif 'allow_download' in data:
+            data['download_ceiling'] = 'watermarked' if data['allow_download'] else 'none'
+        return data
 
 
 class OriginalExceptionSerializer(serializers.ModelSerializer):

@@ -39,6 +39,11 @@ class StaffViewSet(viewsets.ModelViewSet):
 
 class RoomViewSet(StaffViewSet):
     serializer_class = RoomSerializer
+    def approval_before(self):
+        if self.action == 'policy':
+            policy = RoomPolicy.objects.get(room=self.get_object())
+            return {'status': policy.status, 'expires_at': policy.expires_at.isoformat() if policy.expires_at else None, 'invitation_mode': policy.invitation_mode}
+        return dict(self.get_serializer(self.get_object()).data) if self.kwargs.get('pk') else {}
     def get_queryset(self):
         return Dataroom.objects.filter(organization=self.request.user.organization).order_by('name')
     def perform_create(self, serializer):
@@ -66,6 +71,21 @@ class RoomViewSet(StaffViewSet):
         policy.save()
         self.fact('room.updated', room)
         return Response({'status': policy.status, 'revision': policy.revision})
+    @extend_schema(request={'multipart/form-data': {'type':'object','properties':{'file':{'type':'string','format':'binary'},'folder_id':{'type':'string'}},'required':['file']}}, responses=dict)
+    @action(detail=True, methods=['post'])
+    def upload(self, request, pk=None):
+        from .uploads import upload
+        if 'file' not in request.FILES:
+            raise ValidationError('file required')
+        item = upload(self.get_object(), request.auth if isinstance(request.auth, APIKey) else request.user, request.FILES['file'], request.data.get('folder_id'))
+        return Response({'id': str(item.pk), 'document_id': str(item.document_id), 'status': 'processing'}, status=201)
+    @extend_schema(request=dict, responses=dict)
+    @action(detail=True, methods=['post'])
+    def folders(self, request, pk=None):
+        from datarooms.models import DataroomFolder
+        name = serializers.CharField(max_length=255).run_validation(request.data.get('name'))
+        folder = DataroomFolder.objects.create(dataroom=self.get_object(), name=name, created_by=request.user)
+        return Response({'id': str(folder.pk), 'name': folder.name}, status=201)
     def perform_destroy(self, instance):
         RoomPolicy.objects.filter(room=instance).update(status='archived')
         self.fact('room.archived', instance)
@@ -149,7 +169,7 @@ class EntryLinkViewSet(StaffViewSet):
         link = serializer.save(created_by=self.request.user, restrict_to_grants=True, requires_email=True, requires_email_verification=True, enable_watermark=True, enable_qna=False)
         canonical = room.roompolicy.entry_link
         for setting in canonical.dataroom_settings.all():
-            ShareLinkDataroomSetting.objects.create(share_link=link, dataroom_document=setting.dataroom_document, dataroom_folder=setting.dataroom_folder, is_visible=setting.is_visible, allow_download=setting.allow_download, enable_watermark=True)
+            ShareLinkDataroomSetting.objects.update_or_create(share_link=link, dataroom_document=setting.dataroom_document, dataroom_folder=setting.dataroom_folder, defaults={'is_visible':setting.is_visible, 'allow_download':setting.allow_download, 'enable_watermark':True})
         self.fact('share_link.created', link)
     def perform_destroy(self, instance):
         instance.is_active = False
@@ -233,7 +253,11 @@ class OriginalExceptionViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     def get_queryset(self):
         return OriginalException.objects.filter(room__organization=self.request.user.organization).order_by('-created_at')
     def perform_create(self, serializer):
-        obj = serializer.save(approved_by=self.request.user)
+        approval = getattr(self.request._request, '_dealroom_approval', None)
+        approver = self.request.user if human_staff(self.request) else getattr(approval, 'approved_by', None)
+        if not approver:
+            raise PermissionDenied('Human approval required.')
+        obj = serializer.save(approved_by=approver)
         record('original_exception.approved', organization=self.request.user.organization, actor=self.request.user, room_id=obj.room_id, target_id=obj.pk)
     def perform_destroy(self, instance):
         instance.revoked_at = timezone.now()

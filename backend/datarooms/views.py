@@ -971,7 +971,6 @@ class DataroomViewSet(viewsets.ModelViewSet):
 
     @extend_schema(
         methods=['delete'],
-        operation_id='v1_datarooms_collaborators_remove',
         parameters=[
             OpenApiParameter('user_id', type=OpenApiTypes.UUID, location=OpenApiParameter.PATH,
                              description='UUID of the collaborator user to remove.'),
@@ -979,7 +978,6 @@ class DataroomViewSet(viewsets.ModelViewSet):
     )
     @extend_schema(
         methods=['post'],
-        operation_id='v1_datarooms_collaborators_leave',
         parameters=[
             OpenApiParameter('user_id', type=OpenApiTypes.UUID, location=OpenApiParameter.PATH,
                              description='UUID of the collaborator user leaving the dataroom.'),

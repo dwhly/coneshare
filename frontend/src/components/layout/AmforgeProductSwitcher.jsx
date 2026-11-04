@@ -13,7 +13,7 @@ const PRODUCTS = [
 export function AmforgeProductSwitcher({ current, className }) {
   return (
     <nav
-      aria-label="AmForge products"
+      aria-label="Dealroom products"
       className={cn("inline-flex h-8 items-center rounded-md bg-muted p-0.5 text-muted-foreground", className)}
     >
       {PRODUCTS.map((product) => {

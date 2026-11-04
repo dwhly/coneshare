@@ -40,8 +40,18 @@ def widens_access(operation, before, after):
             if rank.get(value, 99) > rank.get(old, -1):
                 return True
         elif key in ('expires_at',):
-            if value is None or (old is not None and str(value) > str(old)):
+            if value is None:
                 return True
+            if old is not None:
+                from datetime import datetime, timezone
+                try:
+                    def instant(v):
+                        parsed = datetime.fromisoformat(str(v).replace('Z', '+00:00'))
+                        return parsed.replace(tzinfo=timezone.utc) if parsed.tzinfo is None else parsed
+                    if instant(value) > instant(old):
+                        return True
+                except (ValueError, TypeError):
+                    return True
         elif key in ('revoked_at', 'disabled_at'):
             if value is None:
                 return True
@@ -73,12 +83,12 @@ def widens_access(operation, before, after):
     return False
 
 
-PUBLIC = {'CustomTokenObtainPairView', 'TokenRefreshView', 'LanguagesView', 'PublicSettingsView', 'HealthCheckView', 'BrandView', 'RecipientChallengeView', 'RecipientConfirmView', 'RecipientRoomView', 'RecipientLogoutView'}
+PUBLIC = {'CustomTokenObtainPairView', 'TokenRefreshView', 'LanguagesView', 'PublicSettingsView', 'HealthCheckView', 'BrandView', 'RecipientChallengeView', 'RecipientConfirmView', 'RecipientRoomView', 'RecipientLogoutView', 'OriginalDownloadView'}
 RECIPIENT = {'ShareLinkViewDataView', 'ShareLinkPublicMetaView', 'ShareLinkQnAThreadListCreateView', 'ShareLinkQnASummaryView', 'ShareLinkQnAMessageListCreateView', 'ShareLinkVerifyPasswordView', 'ShareLinkAcceptNDAView', 'ShareLinkRequestAccessView', 'ShareLinkConfirmAccessView', 'ShareLinkPageView', 'WatermarkedPageRenderView', 'ShareLinkFileDownloadView', 'DataroomFolderDownloadView', 'DataroomDownloadAllView', 'RecordPageView', 'RecordLinkClickView', 'ViewSessionViewSet'}
 # All enabled staff surfaces have parity tools; remaining upstream surfaces are denied.
 STAFF = {'RoomViewSet', 'OrgViewSet', 'MemberViewSet', 'GrantViewSet', 'EntryLinkViewSet', 'ApprovalViewSet', 'ActivityViewSet', 'DriftViewSet', 'OperationViewSet', 'CopyViewSet', 'AgentKeyViewSet', 'OriginalExceptionViewSet', 'FilePolicyViewSet'}
 UPSTREAM_READ = {'DataroomViewSet', 'DataroomFolderViewSet', 'DataroomDocumentViewSet', 'DocumentViewSet', 'FolderViewSet', 'OrganizationViewSet', 'UserViewSet'}
-HUMAN_ONLY = {('ApprovalViewSet', 'approve'), ('ApprovalViewSet', 'reject'), ('OriginalExceptionViewSet', 'create')}
+HUMAN_ONLY = {('ApprovalViewSet', 'approve'), ('ApprovalViewSet', 'reject')}
 
 
 def classify(view, method):
@@ -92,6 +102,8 @@ def classify(view, method):
         entry.update(boundary='recipient', reason='Central recipient policy; unsupported legacy actions denied.', widens_access=False)
     elif name in STAFF or (name in UPSTREAM_READ and read):
         entry.update(boundary='staff', reason='Phase-one staff business operation.')
+    if name == 'RoomViewSet' and action in ('upload', 'folders'):
+        entry['widens_access'] = False
     if name in STAFF and action == 'create':
         entry['widens_access'] = name not in {'RoomViewSet'}
     if name in {'ApprovalViewSet', 'AgentKeyViewSet', 'OriginalExceptionViewSet'} and not read:

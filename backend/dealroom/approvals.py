@@ -24,13 +24,15 @@ def digest(method, path, payload):
 
 
 def gate(request, view, operation):
-    if request.method in ('GET', 'HEAD', 'OPTIONS'):
+    if request.method in ('GET', 'HEAD', 'OPTIONS') or operation.get('widens_access') is False:
         return
     if hasattr(view, 'validate_approval'):
         view.validate_approval(request)
     payload = dict(request.data)
     before = {}
-    if getattr(view, 'kwargs', {}).get('pk') and hasattr(view, 'get_object'):
+    if hasattr(view, 'approval_before'):
+        before = view.approval_before()
+    elif getattr(view, 'kwargs', {}).get('pk') and hasattr(view, 'get_object'):
         before = dict(view.get_serializer(view.get_object()).data)
     if not widens_access(operation, before, payload):
         return

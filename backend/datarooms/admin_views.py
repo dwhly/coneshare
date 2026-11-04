@@ -361,7 +361,6 @@ class AdminDataroomViewSet(viewsets.ModelViewSet):
         }, status=status.HTTP_201_CREATED)
 
     @extend_schema(
-        operation_id='v1_admin_datarooms_collaborators_remove',
         parameters=[
             OpenApiParameter('user_id', type=OpenApiTypes.UUID, location=OpenApiParameter.PATH,
                              description='UUID of the collaborator user to remove.'),

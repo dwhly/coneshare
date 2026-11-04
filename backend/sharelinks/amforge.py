@@ -158,6 +158,7 @@ def issue_copy(share_link, request, document, kind, dataroom_document=None, auth
     ip_address = get_client_ip(request) or ''
     session_key = _session_key(request)
     copy = None
+    version = document.versions.filter(is_primary=True).first()
     if kind == IssuedCopy.KIND_VIEW:
         lookup = IssuedCopy.objects.filter(
             share_link=share_link, kind=kind, document=document, session_key=session_key,
@@ -165,6 +166,9 @@ def issue_copy(share_link, request, document, kind, dataroom_document=None, auth
         )
         if dataroom_document is not None:
             lookup = lookup.filter(dataroom_document=dataroom_document)
+        if getattr(settings, 'DEALROOM_ENABLED', False):
+            from dealroom.brand import load_brand
+            lookup = lookup.filter(evidence__version=version, evidence__brand_revision=load_brand()['revision'])
         copy = lookup.order_by('-created_at').first() if session_key else None
     if copy is None:
         copy = IssuedCopy.objects.create(
@@ -179,6 +183,13 @@ def issue_copy(share_link, request, document, kind, dataroom_document=None, auth
             viewer_organisation_name=ident['organisation'],
             ip_address=ip_address or None,
         )
+        if getattr(settings, 'DEALROOM_ENABLED', False):
+            from dealroom.activity import record
+            from dealroom.models import CopyEvidence
+            from dealroom.brand import load_brand
+            if version:
+                CopyEvidence.objects.create(copy=copy, version=version, brand_revision=load_brand()['revision'], source_sha256=version.metadata.get('source_sha256', ''))
+            record('copy.issued', organization=share_link.organization, actor=ident['view_session'].viewer if ident['view_session'] else ident['email'], room_id=share_link.dataroom_id, target_id=copy.copy_id, data={'kind': kind})
         if kind == IssuedCopy.KIND_ORIGINAL:
             logger.warning(
                 "AUDIT original-file download link=%s document=%s copy=%s email=%s ip=%s",
@@ -222,6 +233,9 @@ def render_watermark_template(template_string: str, identity: dict) -> str:
 def footer_text(identity: dict) -> str:
     """'Issued to {name} · {organisation} · {email} · {UTC timestamp} · Copy {copy_id}'."""
     name = identity.get('name') or identity.get('email') or 'Unidentified viewer'
+    from dealroom.brand import load_brand
+    if getattr(settings, 'DEALROOM_ENABLED', False):
+        return render_watermark_template(load_brand()['watermark'], identity)
     parts = [f"Issued to {name}"]
     if identity.get('organisation'):
         parts.append(identity['organisation'])
@@ -234,7 +248,8 @@ def footer_text(identity: dict) -> str:
 
 
 def margin_text(identity: dict) -> str:
-    bits = ['AmForge']
+    from dealroom.brand import load_brand
+    bits = [load_brand()['name']]
     if identity.get('copy_id'):
         bits.append(f"Copy {identity['copy_id']}")
     if identity.get('email'):
@@ -411,7 +426,7 @@ def apply_pdf_metadata(writer, identity: dict):
         '/AmForge-Issued-To': issued_to_string(identity),
         '/AmForge-Issued-At': issued_at.isoformat(),
         '/Subject': footer_text(identity),
-        '/Producer': 'AmForge Send (Coneshare)',
+        '/Producer': __import__('dealroom.brand', fromlist=['load_brand']).load_brand()['name'] + ' Send',
     })
     try:
         stream = StreamObject()
@@ -449,7 +464,7 @@ def download_requires_watermark(share_link, item_watermark_enabled: bool) -> boo
     Every download is a watermarked copy unless the admin explicitly allowed
     original-file downloads on the link AND the item itself is not watermarked.
     """
-    if item_watermark_enabled:
+    if getattr(settings, 'DEALROOM_ENABLED', False) or item_watermark_enabled:
         return True
     return not bool(getattr(share_link, 'allow_original_download', False))
 

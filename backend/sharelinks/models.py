@@ -255,6 +255,7 @@ class PreviewSession(BaseModel):
 
 
 class ShareLinkDataroomSetting(BaseModel):
+    download_ceiling = models.CharField(max_length=16, default='none')
     share_link = models.ForeignKey('ShareLink', on_delete=models.CASCADE, related_name='dataroom_settings')
     dataroom_document = models.ForeignKey('datarooms.DataroomDocument', on_delete=models.CASCADE, null=True, blank=True)
     dataroom_folder = models.ForeignKey('datarooms.DataroomFolder', on_delete=models.CASCADE, null=True, blank=True)

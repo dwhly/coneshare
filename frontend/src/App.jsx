@@ -23,7 +23,8 @@ const ErrorPage = lazyNamed(() => import('./pages/ErrorPage'), 'ErrorPage');
 const NotFoundPage = lazyNamed(() => import('./pages/NotFoundPage'), 'NotFoundPage');
 
 // Authenticated app routes
-const HomePage = lazy(() => import('./pages/HomePage'));
+const HomePage = lazy(() => import('./pages/DealroomConsole'));
+const DealroomRecipient = lazy(() => import('./pages/DealroomRecipient'));
 const DocumentsPage = lazy(() => import('./pages/DocumentsPage'));
 const DocumentPage = lazyNamed(() => import('./pages/DocumentPage'), 'DocumentPage');
 const DocumentVersionsPage = lazyNamed(() => import('./pages/DocumentVersionsPage'), 'DocumentVersionsPage');
@@ -68,7 +69,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/signup/verify" element={<SignupVerifyPage />} />
-                <Route path="/view/:slug" element={<ShareLinkViewerPage />} />
+                <Route path="/view/:slug" element={<DealroomRecipient />} />
                 <Route path="/upload/:slug" element={<PublicUploadPage />} />
                 <Route path="/500" element={<ErrorPage />} />
                 <Route element={<AuthGuard />}>
@@ -81,8 +82,8 @@ function App() {
                     <Route path="/documents/:documentId/versions" element={<DocumentVersionsPage />} />
                     <Route path="/documents/:documentId/links/:linkId" element={<ShareLinkAnalyticsPage />} />
                     <Route path="/trash" element={<TrashPage />} />
-                    <Route path="/datarooms" element={<DataroomsPage />} />
-                    <Route path="/datarooms/:dataroomId" element={<DataroomPage />} />
+                    <Route path="/datarooms" element={<HomePage />} />
+                    <Route path="/datarooms/:dataroomId" element={<HomePage />} />
                     <Route path="/file-requests" element={<FileRequestsPage />} />
                     <Route path="/file-requests/:requestId" element={<FileRequestDetailPage />} />
                     <Route path="/analytics/links" element={<AllLinksPage />} />

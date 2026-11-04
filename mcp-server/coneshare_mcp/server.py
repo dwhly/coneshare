@@ -17,11 +17,8 @@ logging.basicConfig(
 
 mcp = FastMCP("coneshare")
 
-register_document_tools(mcp)
-register_dataroom_tools(mcp)
-register_share_link_tools(mcp)
-register_analytics_tools(mcp)
-register_admin_tools(mcp)
+from coneshare_mcp.dealroom import register
+register(mcp)
 
 
 def main() -> None:

@@ -2562,7 +2562,7 @@ class WatermarkedPageRenderView(APIView):
 
         # Check against the If-None-Match header from the client.
         if_none_match = request.META.get('HTTP_IF_NONE_MATCH')
-        if if_none_match and quote_etag(etag) == if_none_match:
+        if not getattr(settings, "DEALROOM_ENABLED", False) and if_none_match and quote_etag(etag) == if_none_match:
             return HttpResponse(status=304)
 
         # Render watermark
@@ -2584,11 +2584,14 @@ class WatermarkedPageRenderView(APIView):
             response = HttpResponse(buffer.getvalue(), content_type="image/jpeg")
             response["Content-Length"] = str(len(buffer.getvalue()))
             response["Content-Disposition"] = f'inline; filename="{document.id}_page_{page_number}.jpg"'
+            image.close()
+            watermarked_image.close()
             response["X-AmForge-Copy-ID"] = identity['copy_id']
+            response["X-Dealroom-Copy-ID"] = identity['copy_id']
 
             # Set caching headers with the new ETag
             response['ETag'] = quote_etag(etag)
-            response['Cache-Control'] = 'public, max-age=60, must-revalidate'
+            response['Cache-Control'] = 'private, no-store'
 
             return response
 

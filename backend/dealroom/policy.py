@@ -59,8 +59,8 @@ def evaluate(request, link, *, document_id=None, download=False):
             raise PermissionDenied('Document is not visible to this recipient.')
         if setting.dataroom_document.document.deleted_at:
             raise PermissionDenied('Document is unavailable.')
-        if not setting.allow_download:
-            level = 'none'
+        file_level = setting.download_ceiling if setting.allow_download else 'none'
+        level = min((level, file_level), key=lambda v: LEVELS.get(v, 0))
     if download and level == 'none':
         raise PermissionDenied('Downloads are disabled.')
     proof['last_seen'] = now
