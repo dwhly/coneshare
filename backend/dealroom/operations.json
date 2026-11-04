@@ -1719,6 +1719,26 @@
     "tier": "read_only",
     "widens_access": false
   },
+  "dealroom_PreferencesView_endpoint_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_PreferencesView_endpoint_get",
+    "path": "/api/v1/dealroom/preferences/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_PreferencesView_endpoint_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_PreferencesView_endpoint_patch",
+    "path": "/api/v1/dealroom/preferences/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
   "dealroom_RecipientChallengeView_endpoint_get": {
     "boundary": "public",
     "human_only": false,

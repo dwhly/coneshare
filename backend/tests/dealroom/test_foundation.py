@@ -309,3 +309,92 @@ def test_room_expiry_patch_uses_room_policy_before_image(staff, agent):
     result=agent.patch(f'/api/v1/dealroom/rooms/{room_id}/policy/', {'expires_at':(timezone.now()+timedelta(days=1)).isoformat()},format='json')
     assert result.status_code==202,result.data
     assert RoomPolicy.objects.get(room_id=room_id).expires_at < timezone.now()+timedelta(hours=2)
+
+
+def test_recipient_email_domain_uses_idna_alabel():
+    from sharelinks.models import ViewerOrganisation
+    assert ViewerOrganisation.normalize_domain('jane@bücher.test') == 'xn--bcher-kva.test'
+
+
+def test_no_served_view_can_override_the_central_drf_hook():
+    from rest_framework.views import APIView
+    from drf_spectacular.generators import SchemaGenerator
+    generator=SchemaGenerator();generator._initialise_endpoints()
+    for _,_,_,callback in generator.endpoints:
+        cls=callback.cls
+        assert cls.initial is APIView.initial,cls
+        assert cls.dispatch is APIView.dispatch,cls
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('case', ['grant_ceiling','grant_expiry_extend','grant_expiry_clear','grant_restore','member_email','member_org','org_domain','room_restore','invitation_loosen','link_restore','link_expiry_clear','link_password','link_scope','automation_destination','webhook_destination','file_original'])
+def test_each_edit_to_widen_cannot_bypass_the_http_gate(case,staff,agent,owner):
+    from sharelinks.models import ShareLink,ShareLinkAccessGrant,Viewer,ViewerOrganisation,ShareLinkDataroomSetting
+    from datarooms.models import DataroomDocument
+    from documents.models import Document
+    from dealroom.models import RoomPolicy
+    room_id,slug=setup_recipient(staff)
+    link=ShareLink.objects.get(slug=slug)
+    grant=ShareLinkAccessGrant.objects.get(share_link=link,email='jane@acme.test')
+    expected=202
+    if case.startswith('grant_'):
+        url=f'/api/v1/dealroom/grants/{grant.pk}/'
+        if case=='grant_ceiling':data={'download_ceiling':'watermarked'}
+        elif case=='grant_restore':grant.revoked_at=timezone.now();grant.save();data={'revoked_at':None}
+        else:
+            grant.expires_at=timezone.now()+timedelta(hours=1);grant.save()
+            data={'expires_at':None if case=='grant_expiry_clear' else (timezone.now()+timedelta(days=1)).isoformat()}
+    elif case.startswith('member_'):
+        member=Viewer.objects.create(organization=owner.organization,email='jane@acme.test')
+        org=ViewerOrganisation.objects.create(organization=owner.organization,name='Other',email_domains=['other.test'])
+        url=f'/api/v1/dealroom/members/{member.pk}/'
+        data={'email':'rebound@other.test'} if case=='member_email' else {'recipient_org':str(org.pk)}
+    elif case=='org_domain':
+        org=ViewerOrganisation.objects.create(organization=owner.organization,name='Acme',email_domains=['acme.test'])
+        url=f'/api/v1/dealroom/orgs/{org.pk}/';data={'email_domains':['acme.test','other.test'],'confirm_domains':True}
+    elif case in ('room_restore','invitation_loosen'):
+        RoomPolicy.objects.filter(room_id=room_id).update(status='archived')
+        url=f'/api/v1/dealroom/rooms/{room_id}/policy/'
+        data={'status':'active'} if case=='room_restore' else {'invitation_mode':'automatic_same_org'}
+    elif case.startswith('link_'):
+        link.is_active=False;link.expires_at=timezone.now()+timedelta(hours=1);link.save()
+        if case in ('link_password','link_scope'):
+            url=f'/api/v1/share-links/{link.pk}/';data={'password':None} if case=='link_password' else {'dataroom':room_id};expected=403
+        else:
+            url=f'/api/v1/dealroom/share-links/{link.pk}/';data={'is_active':True} if case=='link_restore' else {'expires_at':None}
+    elif case in ('automation_destination','webhook_destination'):
+        from django.urls import resolve
+        entries=[entry for entry in registry().values() if entry['operation_id'].startswith('automations_') and entry['method']=='PATCH']
+        assert entries
+        entry=entries[0];url=entry['path'].replace('{id}',str(link.pk)).replace('{id_2}',str(link.pk));data={'url':'https://outside.test'};expected=403
+    else:
+        doc=Document.objects.create(organization=owner.organization,created_by=owner,name='Ceiling.pdf',type='pdf',content_type='application/pdf')
+        item=DataroomDocument.objects.create(dataroom_id=room_id,document=doc)
+        policy=ShareLinkDataroomSetting.objects.get(share_link=link,dataroom_document=item)
+        url=f'/api/v1/dealroom/file-policies/{policy.pk}/';data={'download_ceiling':'original'}
+    result=agent.patch(url,data,format='json')
+    assert result.status_code==expected,(case,result.data)
+    if expected==202:
+        assert AccessApproval.objects.get(pk=result.data['approval_id']).status=='pending_approval'
+
+
+@pytest.mark.django_db
+def test_layout_preference_has_ui_mcp_parity_and_defaults_topbar(staff):
+    url='/api/v1/dealroom/preferences/'
+    assert staff.get(url).data=={'layout':'topbar'}
+    assert staff.patch(url,{'layout':'sidebar'},format='json').data=={'layout':'sidebar'}
+    assert staff.get(url).data=={'layout':'sidebar'}
+    assert staff.patch(url,{'layout':'unsafe'},format='json').status_code==400
+
+
+@pytest.mark.django_db
+def test_issuance_ip_cap_aggregates_emails_and_ignores_untrusted_spoof(staff,settings):
+    room_id,slug=setup_recipient(staff)
+    recipient=APIClient()
+    settings.TRUSTED_PROXIES=['127.0.0.1']
+    base=f'/api/v1/dealroom/recipient/{slug}/challenge/'
+    for index in range(20):
+        response=recipient.post(base,{'email':f'viewer{index}@other.test'},format='json',REMOTE_ADDR='198.51.100.8',HTTP_X_FORWARDED_FOR=f'203.0.113.{index}')
+        assert response.status_code==200,response.data
+    response=recipient.post(base,{'email':'different@other.test'},format='json',REMOTE_ADDR='198.51.100.8',HTTP_X_FORWARDED_FOR='203.0.113.250')
+    assert response.status_code==429

@@ -19,7 +19,7 @@ function readStored() {
   }
 }
 
-export function setLayoutMode(mode) {
+export function setLayoutMode(mode, persist = true) {
   if (!LAYOUTS.includes(mode)) return;
   try {
     window.localStorage.setItem(LAYOUT_STORAGE_KEY, mode);
@@ -27,6 +27,8 @@ export function setLayoutMode(mode) {
     /* private mode: fall through, the event still updates this tab */
   }
   window.dispatchEvent(new Event(EVENT));
+  const token = window.localStorage.getItem('access_token');
+  if (persist && token) fetch('/api/v1/dealroom/preferences/', { method: 'PATCH', headers: {'Content-Type':'application/json', Authorization:`Bearer ${token}`}, body:JSON.stringify({layout:mode}) }).catch(() => {});
 }
 
 /** Apply `?layout=` from the current URL (called at boot and on navigation). */
@@ -49,4 +51,14 @@ function subscribe(cb) {
 
 export function useLayoutMode() {
   return useSyncExternalStore(subscribe, readStored, () => "topbar");
+}
+
+export async function hydrateLayoutMode() {
+  if (new URLSearchParams(window.location.search).has('layout')) return;
+  const token = window.localStorage.getItem('access_token');
+  if (!token) return;
+  try {
+    const response = await fetch('/api/v1/dealroom/preferences/', {headers:{Authorization:`Bearer ${token}`}});
+    if (response.ok) setLayoutMode((await response.json()).layout, false);
+  } catch { /* retain cached preference while offline */ }
 }

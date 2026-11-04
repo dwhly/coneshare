@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.pagination import CursorPagination
 from drf_spectacular.utils import extend_schema
 from core.models import APIKey
 from core.authentication import generate_raw_api_key
@@ -26,7 +27,13 @@ class BrandView(APIView):
         return Response(load_brand())
 
 
+class BoundedPagination(CursorPagination):
+    page_size = 50
+    ordering = '-created_at'
+
+
 class StaffViewSet(viewsets.ModelViewSet):
+    pagination_class = BoundedPagination
     def fact(self, event, instance):
         record(event, organization=self.request.user.organization, actor=self.request.auth if isinstance(self.request.auth, APIKey) else self.request.user, target_id=instance.pk)
     def perform_update(self, serializer):
@@ -178,6 +185,7 @@ class EntryLinkViewSet(StaffViewSet):
 
 
 class ApprovalViewSet(viewsets.ReadOnlyModelViewSet):
+    pagination_class = BoundedPagination
     serializer_class = ApprovalSerializer
     def get_queryset(self):
         return AccessApproval.objects.filter(agent_key__user__organization=self.request.user.organization).order_by('-created_at')
@@ -203,6 +211,7 @@ class ApprovalViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ActivityViewSet(viewsets.ReadOnlyModelViewSet):
+    pagination_class = BoundedPagination
     serializer_class = ActivitySerializer
     def get_queryset(self):
         return Activity.objects.filter(organization=self.request.user.organization)
@@ -234,6 +243,7 @@ class OperationViewSet(viewsets.ViewSet):
 
 
 class CopyViewSet(viewsets.ReadOnlyModelViewSet):
+    pagination_class = BoundedPagination
     serializer_class = CopySerializer
     lookup_field = 'copy_id'
     def get_queryset(self):
@@ -297,3 +307,21 @@ class AgentKeyViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.C
     def perform_destroy(self, instance):
         instance.expires_at = timezone.now()
         instance.save(update_fields=['expires_at'])
+
+
+class PreferenceSerializer(serializers.Serializer):
+    layout = serializers.ChoiceField(choices=['topbar','sidebar'])
+
+
+class PreferencesView(APIView):
+    @extend_schema(responses=PreferenceSerializer)
+    def get(self, request):
+        from .models import StaffPreference
+        preference, _ = StaffPreference.objects.get_or_create(user=request.user)
+        return Response({'layout':preference.layout})
+    @extend_schema(request=PreferenceSerializer, responses=PreferenceSerializer)
+    def patch(self, request):
+        from .models import StaffPreference
+        serializer=PreferenceSerializer(data=request.data);serializer.is_valid(raise_exception=True)
+        preference,_=StaffPreference.objects.update_or_create(user=request.user,defaults=serializer.validated_data)
+        return Response({'layout':preference.layout})

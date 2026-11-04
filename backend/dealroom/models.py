@@ -114,3 +114,8 @@ class CopyEvidence(models.Model):
     artifact_sha256 = models.CharField(max_length=64, blank=True)
     receipt_sha256 = models.CharField(max_length=64, blank=True)
     original_exception = models.ForeignKey(OriginalException, null=True, on_delete=models.PROTECT)
+
+
+class StaffPreference(models.Model):
+    user = models.OneToOneField('core.User', primary_key=True, on_delete=models.CASCADE)
+    layout = models.CharField(max_length=16, default='topbar', choices=[('topbar','Top bar'),('sidebar','Sidebar')])

@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema
 from sharelinks.models import ShareLink, Viewer, ViewSession, ShareLinkDataroomSetting
+from backend.utils import get_client_ip
 from .models import Challenge, IssuanceBudget
 from .policy import select_grant, evaluate
 from .brand import load_brand
@@ -79,7 +80,7 @@ class RecipientChallengeView(APIView):
         email = data.validated_data['email'].strip().lower()
         with transaction.atomic():
             # Lock in consistent order; REMOTE_ADDR comes from the private edge, not caller XFF.
-            reserve_budget('ip:' + request.META.get('REMOTE_ADDR', ''), 20)
+            reserve_budget('ip:' + (get_client_ip(request) or ''), 20)
             reserve_budget(f'email:{link.dataroom_id}:{email}', 5)
             challenge = Challenge(room=link.dataroom, email=email, name=data.validated_data['name'], expires_at=timezone.now() + timedelta(minutes=10))
             code, token = f'{secrets.randbelow(1000000):06d}', secrets.token_urlsafe(32)

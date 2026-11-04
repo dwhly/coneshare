@@ -6,6 +6,7 @@ router = DefaultRouter()
 for name, cls in [('rooms', views.RoomViewSet), ('orgs', views.OrgViewSet), ('members', views.MemberViewSet), ('grants', views.GrantViewSet), ('share-links', views.EntryLinkViewSet), ('approvals', views.ApprovalViewSet), ('activity', views.ActivityViewSet), ('drift', views.DriftViewSet), ('operations', views.OperationViewSet), ('copies', views.CopyViewSet), ('agent-keys', views.AgentKeyViewSet), ('file-policies', views.FilePolicyViewSet), ('original-exceptions', views.OriginalExceptionViewSet)]:
     router.register(name, cls, basename='dealroom-' + name)
 urlpatterns = [
+    path('preferences/', views.PreferencesView.as_view(), name='dealroom-preferences'),
     path('recipient/<slug:slug>/original/<uuid:exception_id>/', downloads.OriginalDownloadView.as_view(), name='dealroom-original-download'),
     path('brand/', views.BrandView.as_view(), name='dealroom-brand'),
     path('recipient/<slug:slug>/challenge/', recipient.RecipientChallengeView.as_view(), name='dealroom-challenge'),

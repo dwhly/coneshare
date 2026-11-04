@@ -24,7 +24,7 @@ async function codeFor(email) {
  await page.getByRole('heading',{name:'Project Atlas'}).waitFor();
  await page.locator('img[alt^="Personalized page"]').waitFor();
  await page.waitForFunction(()=>{const img=document.querySelector('img[alt^="Personalized page"]');return img && img.complete && img.naturalWidth>0;});
- await page.screenshot({path:shots+'/B-recipient-jane.png',fullPage:true}); console.log('PASS jane OTP and watermarked page');
+ await page.screenshot({path:shots+'/B-recipient-jane.png',fullPage:true}); console.log('PASS jane OTP and watermarked page'); await page.context().storageState({path:'/tmp/chief-send-v1-jane-session.json'});
  const response=await page.request.get(base+'/api/v1/dealroom/recipient/project-atlas/room/');const room=await response.json();
  const image=await page.request.get(base+room.files[0].page_url);
  if(image.headers()['cache-control']!=='private, no-store'||!image.headers()['x-dealroom-copy-id']) throw Error('personalized headers missing');
@@ -39,12 +39,14 @@ async function codeFor(email) {
  const headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'};
  const rejected=await fetch(base+'/api/v1/dealroom/orgs/',{method:'POST',headers,body:JSON.stringify({name:'Bad Gmail',email_domains:['gmail.com'],confirm_domains:true})});if(rejected.status!==400)throw Error('gmail org not rejected');console.log('PASS gmail org refused');
  const key=await (await fetch(base+'/api/v1/dealroom/agent-keys/',{method:'POST',headers,body:JSON.stringify({name:'e2e agent',tier:'full_access'})})).json();
- const pending=await (await fetch(base+'/api/v1/dealroom/grants/',{method:'POST',headers:{...headers,Authorization:'Bearer '+key.key},body:JSON.stringify({room:room.id,email:'reviewed@other.test'})})).json();if(pending.status!=='pending_approval')throw Error(JSON.stringify(pending));
+ const approvedEmail=`reviewed+${Date.now()}@other.test`;
+ const pending=await (await fetch(base+'/api/v1/dealroom/grants/',{method:'POST',headers:{...headers,Authorization:'Bearer '+key.key},body:JSON.stringify({room:room.id,email:approvedEmail})})).json();if(pending.status!=='pending_approval')throw Error(JSON.stringify(pending));
  await staff.reload();await staff.getByRole('button',{name:'Approve access'}).last().click();await delay(500);
  const approvals=await (await fetch(base+'/api/v1/dealroom/approvals/'+pending.approval_id+'/',{headers})).json();if(approvals.status!=='approved')throw Error(JSON.stringify(approvals));console.log('PASS agent pending -> staff approves');
+ const admitted=await browser.newPage(); await admitted.goto(base+'/view/project-atlas'); await admitted.getByLabel('Your name').fill('Approved recipient'); await admitted.getByLabel('Email address').fill(approvedEmail); await admitted.getByRole('button',{name:'Send verification code'}).click(); await admitted.getByLabel('Verification code').waitFor(); await admitted.getByLabel('Verification code').fill(await codeFor(approvedEmail)); await admitted.getByRole('button',{name:'Confirm access'}).click(); await admitted.getByRole('heading',{name:'Project Atlas'}).waitFor(); await admitted.screenshot({path:shots+'/B-approved-recipient.png'}); console.log('PASS approved grant takes effect for new recipient');
  await staff.screenshot({path:shots+'/B-approved.png',fullPage:true});
  const readkey=await (await fetch(base+'/api/v1/dealroom/agent-keys/',{method:'POST',headers,body:JSON.stringify({name:'e2e read only',tier:'read_only'})})).json();
  fs.writeFileSync('/tmp/chief-send-v1-read-key',readkey.key,{mode:0o600});
  await staff.goto(base+'/?layout=sidebar');await staff.getByRole('heading',{name:'Your deal rooms'}).waitFor();await staff.screenshot({path:shots+'/B-staff-sidebar.png',fullPage:true});
- await browser.close(); console.log('E2E 5 checks passed; MCP separately');
+ await browser.close(); console.log('E2E 6 checks passed; MCP separately');
 })().catch(e=>{console.error(e);process.exit(1)});

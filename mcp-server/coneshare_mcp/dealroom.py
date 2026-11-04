@@ -1,5 +1,6 @@
 import base64
 import json
+from http.cookies import SimpleCookie
 import os
 from pathlib import Path
 from urllib.parse import quote
@@ -48,7 +49,9 @@ class RegistryTool(Tool):
         else:
             result={'content_type':response.headers.get('content-type'),'base64':base64.b64encode(response.content).decode()}
         if endpoint['recipient']:
-            result={'result':result,'recipient_session':'; '.join(f'{k}={v}' for k,v in response.cookies.items()) or arguments.get('recipient_session','')}
+            cookies=SimpleCookie(); cookies.load(arguments.get('recipient_session',''))
+            for key,value in response.cookies.items(): cookies[key]=value
+            result={'result':result,'recipient_session':'; '.join(f'{k}={m.value}' for k,m in cookies.items())}
         return ToolResult(content=json.dumps(result))
 
 

@@ -241,13 +241,19 @@
     "operation_id": "dealroom_ActivityViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/activity/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -308,22 +314,9 @@
               "nullable": true,
               "type": "string"
             },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
-            "last_used_at": {
-              "format": "date-time",
-              "nullable": true,
-              "readOnly": true,
-              "type": "string"
-            },
             "name": {
               "maxLength": 100,
-              "type": "string"
-            },
-            "prefix": {
-              "readOnly": true,
+              "minLength": 1,
               "type": "string"
             },
             "tier": {
@@ -337,10 +330,7 @@
             }
           },
           "required": [
-            "id",
-            "last_used_at",
-            "name",
-            "prefix"
+            "name"
           ],
           "type": "object"
         }
@@ -413,13 +403,19 @@
     "operation_id": "dealroom_ApprovalViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/approvals/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -522,13 +518,19 @@
     "operation_id": "dealroom_CopyViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/copies/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -679,38 +681,15 @@
             "allow_download": {
               "type": "boolean"
             },
-            "dataroom_document": {
-              "nullable": true,
-              "readOnly": true,
-              "type": "string"
-            },
-            "dataroom_folder": {
-              "nullable": true,
-              "readOnly": true,
-              "type": "string"
-            },
             "download_ceiling": {
               "maxLength": 16,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
+              "minLength": 1,
               "type": "string"
             },
             "is_visible": {
               "type": "boolean"
-            },
-            "share_link": {
-              "readOnly": true,
-              "type": "string"
             }
           },
-          "required": [
-            "dataroom_document",
-            "dataroom_folder",
-            "id",
-            "share_link"
-          ],
           "type": "object"
         },
         "id": {
@@ -743,30 +722,13 @@
             "allow_download": {
               "type": "boolean"
             },
-            "dataroom_document": {
-              "nullable": true,
-              "readOnly": true,
-              "type": "string"
-            },
-            "dataroom_folder": {
-              "nullable": true,
-              "readOnly": true,
-              "type": "string"
-            },
             "download_ceiling": {
               "maxLength": 16,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
+              "minLength": 1,
               "type": "string"
             },
             "is_visible": {
               "type": "boolean"
-            },
-            "share_link": {
-              "readOnly": true,
-              "type": "string"
             }
           },
           "type": "object"
@@ -795,13 +757,19 @@
     "operation_id": "dealroom_GrantViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/grants/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -817,6 +785,7 @@
           "properties": {
             "download_ceiling": {
               "maxLength": 16,
+              "minLength": 1,
               "type": "string"
             },
             "email": {
@@ -829,32 +798,24 @@
               "nullable": true,
               "type": "string"
             },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "revoked_at": {
               "format": "date-time",
               "nullable": true,
               "type": "string"
             },
             "room": {
+              "minLength": 1,
               "type": "string",
               "writeOnly": true
             },
-            "share_link": {
-              "readOnly": true,
-              "type": "string"
-            },
             "viewer_organisation": {
+              "minLength": 1,
               "nullable": true,
               "type": "string"
             }
           },
           "required": [
-            "id",
-            "room",
-            "share_link"
+            "room"
           ],
           "type": "object"
         }
@@ -907,6 +868,7 @@
           "properties": {
             "download_ceiling": {
               "maxLength": 16,
+              "minLength": 1,
               "type": "string"
             },
             "email": {
@@ -919,32 +881,24 @@
               "nullable": true,
               "type": "string"
             },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "revoked_at": {
               "format": "date-time",
               "nullable": true,
               "type": "string"
             },
             "room": {
+              "minLength": 1,
               "type": "string",
               "writeOnly": true
             },
-            "share_link": {
-              "readOnly": true,
-              "type": "string"
-            },
             "viewer_organisation": {
+              "minLength": 1,
               "nullable": true,
               "type": "string"
             }
           },
           "required": [
-            "id",
-            "room",
-            "share_link"
+            "room"
           ],
           "type": "object"
         },
@@ -978,6 +932,7 @@
           "properties": {
             "download_ceiling": {
               "maxLength": 16,
+              "minLength": 1,
               "type": "string"
             },
             "email": {
@@ -990,24 +945,18 @@
               "nullable": true,
               "type": "string"
             },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "revoked_at": {
               "format": "date-time",
               "nullable": true,
               "type": "string"
             },
             "room": {
+              "minLength": 1,
               "type": "string",
               "writeOnly": true
             },
-            "share_link": {
-              "readOnly": true,
-              "type": "string"
-            },
             "viewer_organisation": {
+              "minLength": 1,
               "nullable": true,
               "type": "string"
             }
@@ -1063,13 +1012,19 @@
     "operation_id": "dealroom_MemberViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/members/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -1091,10 +1046,7 @@
             "email": {
               "format": "email",
               "maxLength": 254,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
+              "minLength": 1,
               "type": "string"
             },
             "name": {
@@ -1102,20 +1054,13 @@
               "type": "string"
             },
             "recipient_org": {
+              "minLength": 1,
               "nullable": true,
-              "type": "string"
-            },
-            "verified_at": {
-              "format": "date-time",
-              "nullable": true,
-              "readOnly": true,
               "type": "string"
             }
           },
           "required": [
-            "email",
-            "id",
-            "verified_at"
+            "email"
           ],
           "type": "object"
         }
@@ -1174,10 +1119,7 @@
             "email": {
               "format": "email",
               "maxLength": 254,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
+              "minLength": 1,
               "type": "string"
             },
             "name": {
@@ -1185,20 +1127,13 @@
               "type": "string"
             },
             "recipient_org": {
+              "minLength": 1,
               "nullable": true,
-              "type": "string"
-            },
-            "verified_at": {
-              "format": "date-time",
-              "nullable": true,
-              "readOnly": true,
               "type": "string"
             }
           },
           "required": [
-            "email",
-            "id",
-            "verified_at"
+            "email"
           ],
           "type": "object"
         },
@@ -1238,10 +1173,7 @@
             "email": {
               "format": "email",
               "maxLength": 254,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
+              "minLength": 1,
               "type": "string"
             },
             "name": {
@@ -1249,13 +1181,8 @@
               "type": "string"
             },
             "recipient_org": {
+              "minLength": 1,
               "nullable": true,
-              "type": "string"
-            },
-            "verified_at": {
-              "format": "date-time",
-              "nullable": true,
-              "readOnly": true,
               "type": "string"
             }
           },
@@ -1352,13 +1279,19 @@
     "operation_id": "dealroom_OrgViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/orgs/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -1378,17 +1311,13 @@
               "writeOnly": true
             },
             "email_domains": {},
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "name": {
               "maxLength": 255,
+              "minLength": 1,
               "type": "string"
             }
           },
           "required": [
-            "id",
             "name"
           ],
           "type": "object"
@@ -1446,17 +1375,13 @@
               "writeOnly": true
             },
             "email_domains": {},
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "name": {
               "maxLength": 255,
+              "minLength": 1,
               "type": "string"
             }
           },
           "required": [
-            "id",
             "name"
           ],
           "type": "object"
@@ -1495,12 +1420,9 @@
               "writeOnly": true
             },
             "email_domains": {},
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "name": {
               "maxLength": 255,
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -1580,11 +1502,7 @@
               "type": "string"
             },
             "grant": {
-              "type": "string"
-            },
-            "id": {
-              "format": "uuid",
-              "readOnly": true,
+              "minLength": 1,
               "type": "string"
             },
             "max_uses": {
@@ -1594,9 +1512,11 @@
               "type": "integer"
             },
             "member": {
+              "minLength": 1,
               "type": "string"
             },
             "reason": {
+              "minLength": 1,
               "type": "string"
             },
             "revoked_at": {
@@ -1605,24 +1525,20 @@
               "type": "string"
             },
             "room": {
+              "minLength": 1,
               "type": "string"
             },
-            "used_count": {
-              "readOnly": true,
-              "type": "integer"
-            },
             "version": {
+              "minLength": 1,
               "type": "string"
             }
           },
           "required": [
             "expires_at",
             "grant",
-            "id",
             "member",
             "reason",
             "room",
-            "used_count",
             "version"
           ],
           "type": "object"
@@ -1692,6 +1608,54 @@
     "human_only": false,
     "method": "GET",
     "multipart": false,
+    "name": "dealroom_PreferencesView_endpoint_get",
+    "operation_id": "dealroom_PreferencesView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/preferences/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_PreferencesView_endpoint_patch",
+    "operation_id": "dealroom_PreferencesView_endpoint_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "layout": {
+              "description": "* `topbar` - topbar\n* `sidebar` - sidebar",
+              "enum": [
+                "topbar",
+                "sidebar"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/preferences/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
     "name": "dealroom_RecipientChallengeView_endpoint_get",
     "operation_id": "dealroom_RecipientChallengeView_endpoint_get",
     "parameters": {
@@ -1733,6 +1697,7 @@
           "properties": {
             "email": {
               "format": "email",
+              "minLength": 1,
               "type": "string"
             },
             "name": {
@@ -1786,11 +1751,13 @@
               "type": "string"
             },
             "code": {
+              "minLength": 1,
               "pattern": "^\\d{6}$",
               "type": "string"
             },
             "token": {
               "maxLength": 128,
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -1933,13 +1900,19 @@
     "operation_id": "dealroom_RoomViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/rooms/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -1953,22 +1926,13 @@
       "properties": {
         "body": {
           "properties": {
-            "entry_url": {
-              "readOnly": true,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "name": {
               "maxLength": 255,
+              "minLength": 1,
               "type": "string"
             }
           },
           "required": [
-            "entry_url",
-            "id",
             "name"
           ],
           "type": "object"
@@ -2020,22 +1984,13 @@
       "properties": {
         "body": {
           "properties": {
-            "entry_url": {
-              "readOnly": true,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "name": {
               "maxLength": 255,
+              "minLength": 1,
               "type": "string"
             }
           },
           "required": [
-            "entry_url",
-            "id",
             "name"
           ],
           "type": "object"
@@ -2068,16 +2023,9 @@
       "properties": {
         "body": {
           "properties": {
-            "entry_url": {
-              "readOnly": true,
-              "type": "string"
-            },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "name": {
               "maxLength": 255,
+              "minLength": 1,
               "type": "string"
             }
           },
@@ -2239,13 +2187,19 @@
     "operation_id": "dealroom_EntryLinkViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/share-links/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   },
   {
@@ -2260,6 +2214,7 @@
         "body": {
           "properties": {
             "dataroom": {
+              "minLength": 1,
               "nullable": true,
               "type": "string"
             },
@@ -2268,26 +2223,14 @@
               "nullable": true,
               "type": "string"
             },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "is_active": {
               "type": "boolean"
             },
             "name": {
               "maxLength": 255,
               "type": "string"
-            },
-            "slug": {
-              "readOnly": true,
-              "type": "string"
             }
           },
-          "required": [
-            "id",
-            "slug"
-          ],
           "type": "object"
         }
       },
@@ -2336,6 +2279,7 @@
         "body": {
           "properties": {
             "dataroom": {
+              "minLength": 1,
               "nullable": true,
               "type": "string"
             },
@@ -2344,26 +2288,14 @@
               "nullable": true,
               "type": "string"
             },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "is_active": {
               "type": "boolean"
             },
             "name": {
               "maxLength": 255,
               "type": "string"
-            },
-            "slug": {
-              "readOnly": true,
-              "type": "string"
             }
           },
-          "required": [
-            "id",
-            "slug"
-          ],
           "type": "object"
         },
         "id": {
@@ -2394,6 +2326,7 @@
         "body": {
           "properties": {
             "dataroom": {
+              "minLength": 1,
               "nullable": true,
               "type": "string"
             },
@@ -2402,19 +2335,11 @@
               "nullable": true,
               "type": "string"
             },
-            "id": {
-              "readOnly": true,
-              "type": "string"
-            },
             "is_active": {
               "type": "boolean"
             },
             "name": {
               "maxLength": 255,
-              "type": "string"
-            },
-            "slug": {
-              "readOnly": true,
               "type": "string"
             }
           },
@@ -2806,13 +2731,19 @@
     "operation_id": "dealroom_RoomViewSet_list_get",
     "parameters": {
       "additionalProperties": false,
-      "properties": {},
+      "properties": {
+        "cursor": {
+          "type": "string"
+        }
+      },
       "required": [],
       "type": "object"
     },
     "path": "/api/v1/dealroom/rooms/",
     "path_params": [],
-    "query_params": [],
+    "query_params": [
+      "cursor"
+    ],
     "recipient": false
   }
 ]

@@ -297,6 +297,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
     'TITLE': 'ConeShare API',
     'DESCRIPTION': 'OpenAPI schema for the ConeShare backend API.',
     'VERSION': '1.11.0',

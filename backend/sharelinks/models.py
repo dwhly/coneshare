@@ -56,7 +56,10 @@ class ViewerOrganisation(BaseModel):
         value = (value or '').strip().lower()
         if '@' in value:
             value = value.rsplit('@', 1)[1]
-        return value.lstrip('.').rstrip('.')
+        from dealroom.domains import canonical_domain
+        if not value:
+            return ''
+        return canonical_domain(value)[0]
 
     def save(self, *args, **kwargs):
         seen = []

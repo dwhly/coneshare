@@ -42,7 +42,7 @@ def select_grant(link, email):
     return policy, grant, member
 
 
-def evaluate(request, link, *, document_id=None, download=False):
+def evaluate(request, link, *, document_id=None, download=False, skip_nda=False):
     proof = request.session.get('dealroom_member', {})
     now = timezone.now().timestamp()
     if (proof.get('room_id') != str(link.dataroom_id) or now > proof.get('expires', 0) or now - proof.get('last_seen', 0) > 1800):
@@ -50,6 +50,11 @@ def evaluate(request, link, *, document_id=None, download=False):
     policy, grant, member = select_grant(link, proof.get('email', ''))
     if member is None or str(member.pk) != proof.get('member_id') or not member.verified_at:
         raise PermissionDenied('Recipient identity has changed; verify again.')
+    from django.apps import apps
+    sign_enabled = apps.is_installed('dealroom_sign')
+    if sign_enabled and not skip_nda:
+        from dealroom_sign.policy import check_nda
+        check_nda(policy.room, member)
     level = grant.download_ceiling
     if document_id:
         from sharelinks.models import ShareLinkDataroomSetting
@@ -57,6 +62,10 @@ def evaluate(request, link, *, document_id=None, download=False):
         setting = ShareLinkDataroomSetting.objects.select_related('dataroom_document__document', 'dataroom_document__folder').filter(share_link=link, dataroom_document_id=document_id, dataroom_document__dataroom_id=link.dataroom_id, is_visible=True).first()
         if not setting or not _is_dataroom_folder_path_visible(link, setting.dataroom_document.folder):
             raise PermissionDenied('Document is not visible to this recipient.')
+        if sign_enabled:
+            from dealroom_sign.policy import artifact_allowed
+            if artifact_allowed(setting.dataroom_document.document_id, member) is False:
+                raise PermissionDenied('Execution artifact is private to its subject.')
         if setting.dataroom_document.document.deleted_at:
             raise PermissionDenied('Document is unavailable.')
         file_level = setting.download_ceiling if setting.allow_download else 'none'

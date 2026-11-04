@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import permissions
 from core.models import APIKey
 
@@ -31,6 +32,8 @@ class APIKeyTierPermission(permissions.BasePermission):
     message = "API key tier permissions do not permit this operation."
 
     def has_permission(self, request, view):
+        if getattr(settings, 'DEALROOM_ENABLED', False):
+            return True  # dealroom.hooks is the single operation-ID tier boundary.
         if not isinstance(request.auth, APIKey):
             return True  # Request not authenticated via API Key (e.g. Session/JWT)
 

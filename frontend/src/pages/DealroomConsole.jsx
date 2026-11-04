@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
+import { hydrateLayoutMode } from '../lib/layoutMode';
 
 export default function DealroomConsole() {
   const [rooms,setRooms]=useState([]), [approvals,setApprovals]=useState([]), [orgs,setOrgs]=useState([]), [activity,setActivity]=useState([]);
@@ -10,7 +11,7 @@ export default function DealroomConsole() {
     const [r,a,o,e]=await Promise.all(['rooms','approvals','orgs','activity'].map(x=>api.get(`/dealroom/${x}/`)));
     setRooms(items(r.data));setApprovals(items(a.data));setOrgs(items(o.data));setActivity(items(e.data));setRoomId(id=>id||items(r.data)[0]?.id||'');
   }
-  useEffect(()=>{refresh().catch(e=>setError(JSON.stringify(e.response?.data||e.message)))},[]);
+  useEffect(()=>{hydrateLayoutMode();refresh().catch(e=>setError(JSON.stringify(e.response?.data||e.message)))},[]);
   async function act(fn){try{setError('');await fn();await refresh()}catch(e){setError(JSON.stringify(e.response?.data||e.message))}}
   const input='border rounded-md px-3 py-2 bg-white text-sm'; const button='rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium';
   return <div className="mx-auto max-w-6xl p-6 space-y-8"><div><p className="text-sm text-slate-500">Send / Deal rooms</p><h1 className="text-3xl font-semibold mt-2">Your deal rooms</h1><p className="text-slate-500 mt-2">Manage access, review agent requests, and follow the activity trail.</p></div>{error&&<p role="alert" className="bg-red-50 text-red-700 p-4 rounded">{error}</p>}
