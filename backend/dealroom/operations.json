@@ -1,0 +1,2832 @@
+{
+  "analytics_AllLinksView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "analytics_AllLinksView_endpoint_get",
+    "path": "/api/v1/analytics/links/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "analytics_AllViewSessionsView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "analytics_AllViewSessionsView_endpoint_get",
+    "path": "/api/v1/analytics/view-sessions/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "analytics_DailyVisitsView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "analytics_DailyVisitsView_endpoint_get",
+    "path": "/api/v1/analytics/daily-visits/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "analytics_DashboardSummaryView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "analytics_DashboardSummaryView_endpoint_get",
+    "path": "/api/v1/analytics/dashboard/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "analytics_ViewSessionDetailView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "analytics_ViewSessionDetailView_endpoint_get",
+    "path": "/api/v1/analytics/view-sessions/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationAssignmentViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationAssignmentViewSet_list_get",
+    "path": "/api/v1/automation-assignments/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationAssignmentViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationAssignmentViewSet_retrieve_get",
+    "path": "/api/v1/automation-assignments/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationDeliveryViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationDeliveryViewSet_list_get",
+    "path": "/api/v1/automation-deliveries/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationDeliveryViewSet_replay_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "automations_AutomationDeliveryViewSet_replay_post",
+    "path": "/api/v1/automation-deliveries/{pk}/replay/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "automations_AutomationDeliveryViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationDeliveryViewSet_retrieve_get",
+    "path": "/api/v1/automation-deliveries/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationDestinationViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "automations_AutomationDestinationViewSet_create_post",
+    "path": "/api/v1/automation-destinations/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "automations_AutomationDestinationViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "automations_AutomationDestinationViewSet_destroy_delete",
+    "path": "/api/v1/automation-destinations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "automations_AutomationDestinationViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationDestinationViewSet_list_get",
+    "path": "/api/v1/automation-destinations/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationDestinationViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "automations_AutomationDestinationViewSet_partial_update_patch",
+    "path": "/api/v1/automation-destinations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "automations_AutomationDestinationViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationDestinationViewSet_retrieve_get",
+    "path": "/api/v1/automation-destinations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationDestinationViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "automations_AutomationDestinationViewSet_update_put",
+    "path": "/api/v1/automation-destinations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "automations_AutomationRuleViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "automations_AutomationRuleViewSet_create_post",
+    "path": "/api/v1/automations/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "automations_AutomationRuleViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "automations_AutomationRuleViewSet_destroy_delete",
+    "path": "/api/v1/automations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "automations_AutomationRuleViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationRuleViewSet_list_get",
+    "path": "/api/v1/automations/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationRuleViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "automations_AutomationRuleViewSet_partial_update_patch",
+    "path": "/api/v1/automations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "automations_AutomationRuleViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "automations_AutomationRuleViewSet_retrieve_get",
+    "path": "/api/v1/automations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "automations_AutomationRuleViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "automations_AutomationRuleViewSet_update_put",
+    "path": "/api/v1/automations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "cloudfiles_CloudCallbackView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "cloudfiles_CloudCallbackView_endpoint_post",
+    "path": "/api/v1/cloud/callback/{provider_name}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "cloudfiles_CloudConnectView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "cloudfiles_CloudConnectView_endpoint_get",
+    "path": "/api/v1/cloud/connect/{provider_name}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "cloudfiles_CloudConnectionDetailView_endpoint_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "cloudfiles_CloudConnectionDetailView_endpoint_delete",
+    "path": "/api/v1/cloud/connections/{connection_id}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "cloudfiles_CloudConnectionListView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "cloudfiles_CloudConnectionListView_endpoint_get",
+    "path": "/api/v1/cloud/connections/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "cloudfiles_CloudFileListView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "cloudfiles_CloudFileListView_endpoint_get",
+    "path": "/api/v1/cloud/connections/{connection_id}/list/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "cloudfiles_CloudFolderListView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "cloudfiles_CloudFolderListView_endpoint_get",
+    "path": "/api/v1/cloud/connections/{connection_id}/folders/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "cloudfiles_CloudImportVersionView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "cloudfiles_CloudImportVersionView_endpoint_post",
+    "path": "/api/v1/cloud/documents/{document_id}/import_version/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "cloudfiles_CloudImportView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "cloudfiles_CloudImportView_endpoint_post",
+    "path": "/api/v1/cloud/connections/{connection_id}/import/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "cloudfiles_CloudProviderListView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "cloudfiles_CloudProviderListView_endpoint_get",
+    "path": "/api/v1/cloud/providers/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "cloudfiles_CloudRefreshView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "cloudfiles_CloudRefreshView_endpoint_post",
+    "path": "/api/v1/cloud/documents/{document_id}/refresh/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_APIKeyViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_APIKeyViewSet_create_post",
+    "path": "/api/v1/api-keys/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_APIKeyViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "core_APIKeyViewSet_destroy_delete",
+    "path": "/api/v1/api-keys/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "core_APIKeyViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_APIKeyViewSet_list_get",
+    "path": "/api/v1/api-keys/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminLoginActivityViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminLoginActivityViewSet_list_get",
+    "path": "/api/v1/admin/login-activities/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminLoginActivityViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminLoginActivityViewSet_retrieve_get",
+    "path": "/api/v1/admin/login-activities/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminOrganizationView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminOrganizationView_endpoint_get",
+    "path": "/api/v1/admin/organization/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminOrganizationView_endpoint_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "core_AdminOrganizationView_endpoint_patch",
+    "path": "/api/v1/admin/organization/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminSecurityThreatEventViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminSecurityThreatEventViewSet_list_get",
+    "path": "/api/v1/admin/security-threat-events/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminSecurityThreatEventViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminSecurityThreatEventViewSet_retrieve_get",
+    "path": "/api/v1/admin/security-threat-events/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminSettingsViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_AdminSettingsViewSet_create_post",
+    "path": "/api/v1/admin/settings/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminSettingsViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "core_AdminSettingsViewSet_destroy_delete",
+    "path": "/api/v1/admin/settings/{key}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "core_AdminSettingsViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminSettingsViewSet_list_get",
+    "path": "/api/v1/admin/settings/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminSettingsViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "core_AdminSettingsViewSet_partial_update_patch",
+    "path": "/api/v1/admin/settings/{key}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminSettingsViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminSettingsViewSet_retrieve_get",
+    "path": "/api/v1/admin/settings/{key}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminSettingsViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "core_AdminSettingsViewSet_update_put",
+    "path": "/api/v1/admin/settings/{key}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminUserViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_AdminUserViewSet_create_post",
+    "path": "/api/v1/admin/users/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminUserViewSet_datarooms_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminUserViewSet_datarooms_get",
+    "path": "/api/v1/admin/users/{pk}/datarooms/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminUserViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "core_AdminUserViewSet_destroy_delete",
+    "path": "/api/v1/admin/users/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "core_AdminUserViewSet_export_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminUserViewSet_export_get",
+    "path": "/api/v1/admin/users/export/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminUserViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminUserViewSet_list_get",
+    "path": "/api/v1/admin/users/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminUserViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "core_AdminUserViewSet_partial_update_patch",
+    "path": "/api/v1/admin/users/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminUserViewSet_recalculate_quota_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_AdminUserViewSet_recalculate_quota_post",
+    "path": "/api/v1/admin/users/{pk}/recalculate-quota/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminUserViewSet_reset_password_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_AdminUserViewSet_reset_password_post",
+    "path": "/api/v1/admin/users/{pk}/reset-password/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_AdminUserViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminUserViewSet_retrieve_get",
+    "path": "/api/v1/admin/users/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminUserViewSet_share_links_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_AdminUserViewSet_share_links_get",
+    "path": "/api/v1/admin/users/{pk}/share-links/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_AdminUserViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "core_AdminUserViewSet_update_put",
+    "path": "/api/v1/admin/users/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_CustomTokenObtainPairView_endpoint_post": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_CustomTokenObtainPairView_endpoint_post",
+    "path": "/api/v1/token/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "core_HealthCheckView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_HealthCheckView_endpoint_get",
+    "path": "/api/v1/_health/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_LanguagesView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_LanguagesView_endpoint_get",
+    "path": "/api/v1/languages/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_LogoutView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_LogoutView_endpoint_post",
+    "path": "/api/v1/logout/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_OrganizationViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_OrganizationViewSet_list_get",
+    "path": "/api/v1/organizations/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_OrganizationViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_OrganizationViewSet_retrieve_get",
+    "path": "/api/v1/organizations/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_PublicSettingsView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_PublicSettingsView_endpoint_get",
+    "path": "/api/v1/public/settings/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_SetPasswordView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_SetPasswordView_endpoint_post",
+    "path": "/api/v1/users/set-password/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_SignupRequestView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_SignupRequestView_endpoint_post",
+    "path": "/api/v1/signup/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_SignupVerifyView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "core_SignupVerifyView_endpoint_post",
+    "path": "/api/v1/signup/verify/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_UserViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_UserViewSet_list_get",
+    "path": "/api/v1/users/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_UserViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "core_UserViewSet_partial_update_patch",
+    "path": "/api/v1/users/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "core_UserViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "core_UserViewSet_retrieve_get",
+    "path": "/api/v1/users/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "core_UserViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "core_UserViewSet_update_put",
+    "path": "/api/v1/users/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_AdminDataroomViewSet_collaborators_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_AdminDataroomViewSet_collaborators_get",
+    "path": "/api/v1/admin/datarooms/{pk}/collaborators/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_AdminDataroomViewSet_collaborators_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_AdminDataroomViewSet_collaborators_post",
+    "path": "/api/v1/admin/datarooms/{pk}/collaborators/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_AdminDataroomViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_AdminDataroomViewSet_create_post",
+    "path": "/api/v1/admin/datarooms/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_AdminDataroomViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "datarooms_AdminDataroomViewSet_destroy_delete",
+    "path": "/api/v1/admin/datarooms/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "datarooms_AdminDataroomViewSet_eligible_collaborators_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_AdminDataroomViewSet_eligible_collaborators_get",
+    "path": "/api/v1/admin/datarooms/{pk}/eligible-collaborators/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_AdminDataroomViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_AdminDataroomViewSet_list_get",
+    "path": "/api/v1/admin/datarooms/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_AdminDataroomViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "datarooms_AdminDataroomViewSet_partial_update_patch",
+    "path": "/api/v1/admin/datarooms/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_AdminDataroomViewSet_remove_collaborator_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "datarooms_AdminDataroomViewSet_remove_collaborator_delete",
+    "path": "/api/v1/admin/datarooms/{pk}/collaborators/{user_id}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "datarooms_AdminDataroomViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_AdminDataroomViewSet_retrieve_get",
+    "path": "/api/v1/admin/datarooms/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_AdminDataroomViewSet_transfer_ownership_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_AdminDataroomViewSet_transfer_ownership_post",
+    "path": "/api/v1/admin/datarooms/{pk}/transfer-ownership/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_AdminDataroomViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "datarooms_AdminDataroomViewSet_update_put",
+    "path": "/api/v1/admin/datarooms/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_AdminDataroomViewSet_upgrade_storage_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_AdminDataroomViewSet_upgrade_storage_post",
+    "path": "/api/v1/admin/datarooms/{pk}/upgrade-storage/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomDocumentViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "datarooms_DataroomDocumentViewSet_partial_update_patch",
+    "path": "/api/v1/dataroom-documents/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomDocumentViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomDocumentViewSet_retrieve_get",
+    "path": "/api/v1/dataroom-documents/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomDocumentViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "datarooms_DataroomDocumentViewSet_update_put",
+    "path": "/api/v1/dataroom-documents/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomFolderViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomFolderViewSet_create_post",
+    "path": "/api/v1/dataroom-folders/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomFolderViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "datarooms_DataroomFolderViewSet_destroy_delete",
+    "path": "/api/v1/dataroom-folders/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "datarooms_DataroomFolderViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomFolderViewSet_list_get",
+    "path": "/api/v1/dataroom-folders/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomFolderViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "datarooms_DataroomFolderViewSet_partial_update_patch",
+    "path": "/api/v1/dataroom-folders/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomFolderViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomFolderViewSet_retrieve_get",
+    "path": "/api/v1/dataroom-folders/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomFolderViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "datarooms_DataroomFolderViewSet_update_put",
+    "path": "/api/v1/dataroom-folders/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_add_content_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_add_content_post",
+    "path": "/api/v1/datarooms/{pk}/add-content/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_banner_image_detail_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "datarooms_DataroomViewSet_banner_image_detail_delete",
+    "path": "/api/v1/datarooms/{pk}/banner-images/{banner_id}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_banner_image_detail_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "datarooms_DataroomViewSet_banner_image_detail_patch",
+    "path": "/api/v1/datarooms/{pk}/banner-images/{banner_id}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_banner_images_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomViewSet_banner_images_get",
+    "path": "/api/v1/datarooms/{pk}/banner-images/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_banner_images_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_banner_images_post",
+    "path": "/api/v1/datarooms/{pk}/banner-images/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_collaborators_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomViewSet_collaborators_get",
+    "path": "/api/v1/datarooms/{pk}/collaborators/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_collaborators_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_collaborators_post",
+    "path": "/api/v1/datarooms/{pk}/collaborators/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_create_post",
+    "path": "/api/v1/datarooms/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "datarooms_DataroomViewSet_destroy_delete",
+    "path": "/api/v1/datarooms/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_duplicate_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_duplicate_post",
+    "path": "/api/v1/datarooms/{pk}/duplicate/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_eligible_collaborators_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomViewSet_eligible_collaborators_get",
+    "path": "/api/v1/datarooms/{pk}/eligible-collaborators/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_ensure_paths_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_ensure_paths_post",
+    "path": "/api/v1/datarooms/{pk}/ensure-paths/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomViewSet_list_get",
+    "path": "/api/v1/datarooms/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_move_content_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_move_content_post",
+    "path": "/api/v1/datarooms/{pk}/move-content/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "datarooms_DataroomViewSet_partial_update_patch",
+    "path": "/api/v1/datarooms/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_remove_collaborator_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "datarooms_DataroomViewSet_remove_collaborator_delete",
+    "path": "/api/v1/datarooms/{pk}/collaborators/{user_id}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_remove_collaborator_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_remove_collaborator_post",
+    "path": "/api/v1/datarooms/{pk}/collaborators/{user_id}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_remove_content_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_remove_content_post",
+    "path": "/api/v1/datarooms/{pk}/remove-content/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_reorder_banner_images_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_reorder_banner_images_post",
+    "path": "/api/v1/datarooms/{pk}/banner-images/reorder/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_reorder_items_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_reorder_items_post",
+    "path": "/api/v1/datarooms/{pk}/reorder-items/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomViewSet_retrieve_get",
+    "path": "/api/v1/datarooms/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_stats_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomViewSet_stats_get",
+    "path": "/api/v1/datarooms/{pk}/stats/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "datarooms_DataroomViewSet_transfer_ownership_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_transfer_ownership_post",
+    "path": "/api/v1/datarooms/{pk}/transfer-ownership/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "datarooms_DataroomViewSet_update_put",
+    "path": "/api/v1/datarooms/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_upgrade_storage_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_upgrade_storage_post",
+    "path": "/api/v1/datarooms/{pk}/upgrade-storage/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_upload_finalize_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_upload_finalize_post",
+    "path": "/api/v1/datarooms/{pk}/uploads/finalize/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_upload_request_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "datarooms_DataroomViewSet_upload_request_post",
+    "path": "/api/v1/datarooms/{pk}/uploads/request/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "datarooms_DataroomViewSet_view_sessions_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "datarooms_DataroomViewSet_view_sessions_get",
+    "path": "/api/v1/datarooms/{pk}/view-sessions/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_ActivityViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_ActivityViewSet_list_get",
+    "path": "/api/v1/dealroom/activity/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_ActivityViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_ActivityViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/activity/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_AgentKeyViewSet_create_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_AgentKeyViewSet_create_post",
+    "path": "/api/v1/dealroom/agent-keys/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "full_access",
+    "widens_access": true
+  },
+  "dealroom_AgentKeyViewSet_destroy_delete": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "dealroom_AgentKeyViewSet_destroy_delete",
+    "path": "/api/v1/dealroom/agent-keys/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "full_access",
+    "widens_access": false
+  },
+  "dealroom_AgentKeyViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_AgentKeyViewSet_list_get",
+    "path": "/api/v1/dealroom/agent-keys/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_AgentKeyViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_AgentKeyViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/agent-keys/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_ApprovalViewSet_approve_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_ApprovalViewSet_approve_post",
+    "path": "/api/v1/dealroom/approvals/{pk}/approve/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "full_access",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_ApprovalViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_ApprovalViewSet_list_get",
+    "path": "/api/v1/dealroom/approvals/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_ApprovalViewSet_reject_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_ApprovalViewSet_reject_post",
+    "path": "/api/v1/dealroom/approvals/{pk}/reject/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "full_access",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_ApprovalViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_ApprovalViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/approvals/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_BrandView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_BrandView_endpoint_get",
+    "path": "/api/v1/dealroom/brand/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_CopyViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_CopyViewSet_list_get",
+    "path": "/api/v1/dealroom/copies/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_CopyViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_CopyViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/copies/{copy_id}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_DriftViewSet_acknowledge_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_DriftViewSet_acknowledge_post",
+    "path": "/api/v1/dealroom/drift/{pk}/acknowledge/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_DriftViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_DriftViewSet_list_get",
+    "path": "/api/v1/dealroom/drift/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_DriftViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_DriftViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/drift/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_EntryLinkViewSet_create_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_EntryLinkViewSet_create_post",
+    "path": "/api/v1/dealroom/share-links/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": true
+  },
+  "dealroom_EntryLinkViewSet_destroy_delete": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "dealroom_EntryLinkViewSet_destroy_delete",
+    "path": "/api/v1/dealroom/share-links/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_EntryLinkViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_EntryLinkViewSet_list_get",
+    "path": "/api/v1/dealroom/share-links/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_EntryLinkViewSet_partial_update_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_EntryLinkViewSet_partial_update_patch",
+    "path": "/api/v1/dealroom/share-links/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_EntryLinkViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_EntryLinkViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/share-links/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_EntryLinkViewSet_update_put": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "dealroom_EntryLinkViewSet_update_put",
+    "path": "/api/v1/dealroom/share-links/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_FilePolicyViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_FilePolicyViewSet_list_get",
+    "path": "/api/v1/dealroom/file-policies/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_FilePolicyViewSet_partial_update_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_FilePolicyViewSet_partial_update_patch",
+    "path": "/api/v1/dealroom/file-policies/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_FilePolicyViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_FilePolicyViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/file-policies/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_FilePolicyViewSet_update_put": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "dealroom_FilePolicyViewSet_update_put",
+    "path": "/api/v1/dealroom/file-policies/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_GrantViewSet_create_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_GrantViewSet_create_post",
+    "path": "/api/v1/dealroom/grants/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": true
+  },
+  "dealroom_GrantViewSet_destroy_delete": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "dealroom_GrantViewSet_destroy_delete",
+    "path": "/api/v1/dealroom/grants/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_GrantViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_GrantViewSet_list_get",
+    "path": "/api/v1/dealroom/grants/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_GrantViewSet_partial_update_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_GrantViewSet_partial_update_patch",
+    "path": "/api/v1/dealroom/grants/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_GrantViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_GrantViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/grants/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_GrantViewSet_update_put": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "dealroom_GrantViewSet_update_put",
+    "path": "/api/v1/dealroom/grants/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_MemberViewSet_create_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_MemberViewSet_create_post",
+    "path": "/api/v1/dealroom/members/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": true
+  },
+  "dealroom_MemberViewSet_destroy_delete": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "dealroom_MemberViewSet_destroy_delete",
+    "path": "/api/v1/dealroom/members/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_MemberViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_MemberViewSet_list_get",
+    "path": "/api/v1/dealroom/members/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_MemberViewSet_partial_update_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_MemberViewSet_partial_update_patch",
+    "path": "/api/v1/dealroom/members/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_MemberViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_MemberViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/members/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_MemberViewSet_update_put": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "dealroom_MemberViewSet_update_put",
+    "path": "/api/v1/dealroom/members/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_OperationViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_OperationViewSet_list_get",
+    "path": "/api/v1/dealroom/operations/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_OperationViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_OperationViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/operations/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_OrgViewSet_create_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_OrgViewSet_create_post",
+    "path": "/api/v1/dealroom/orgs/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": true
+  },
+  "dealroom_OrgViewSet_destroy_delete": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "dealroom_OrgViewSet_destroy_delete",
+    "path": "/api/v1/dealroom/orgs/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_OrgViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_OrgViewSet_list_get",
+    "path": "/api/v1/dealroom/orgs/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_OrgViewSet_partial_update_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_OrgViewSet_partial_update_patch",
+    "path": "/api/v1/dealroom/orgs/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_OrgViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_OrgViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/orgs/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_OrgViewSet_update_put": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "dealroom_OrgViewSet_update_put",
+    "path": "/api/v1/dealroom/orgs/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_OriginalExceptionViewSet_create_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_OriginalExceptionViewSet_create_post",
+    "path": "/api/v1/dealroom/original-exceptions/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "full_access",
+    "widens_access": true
+  },
+  "dealroom_OriginalExceptionViewSet_destroy_delete": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "dealroom_OriginalExceptionViewSet_destroy_delete",
+    "path": "/api/v1/dealroom/original-exceptions/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "full_access",
+    "widens_access": false
+  },
+  "dealroom_OriginalExceptionViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_OriginalExceptionViewSet_list_get",
+    "path": "/api/v1/dealroom/original-exceptions/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_OriginalExceptionViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_OriginalExceptionViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/original-exceptions/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_RecipientChallengeView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RecipientChallengeView_endpoint_get",
+    "path": "/api/v1/dealroom/recipient/{slug}/challenge/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_RecipientChallengeView_endpoint_post": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_RecipientChallengeView_endpoint_post",
+    "path": "/api/v1/dealroom/recipient/{slug}/challenge/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_RecipientConfirmView_endpoint_post": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_RecipientConfirmView_endpoint_post",
+    "path": "/api/v1/dealroom/recipient/{slug}/confirm/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_RecipientLogoutView_endpoint_post": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_RecipientLogoutView_endpoint_post",
+    "path": "/api/v1/dealroom/recipient/{slug}/logout/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_RecipientRoomView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RecipientRoomView_endpoint_get",
+    "path": "/api/v1/dealroom/recipient/{slug}/room/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_create_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_RoomViewSet_create_post",
+    "path": "/api/v1/dealroom/rooms/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_destroy_delete": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "dealroom_RoomViewSet_destroy_delete",
+    "path": "/api/v1/dealroom/rooms/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RoomViewSet_list_get",
+    "path": "/api/v1/dealroom/rooms/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_partial_update_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_RoomViewSet_partial_update_patch",
+    "path": "/api/v1/dealroom/rooms/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_RoomViewSet_policy_patch": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "dealroom_RoomViewSet_policy_patch",
+    "path": "/api/v1/dealroom/rooms/{pk}/policy/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "dealroom_RoomViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RoomViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/rooms/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_update_put": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "dealroom_RoomViewSet_update_put",
+    "path": "/api/v1/dealroom/rooms/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentDownloadView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentDownloadView_endpoint_get",
+    "path": "/api/v1/documents/{document_id}/download/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_DocumentPreviewDataView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentPreviewDataView_endpoint_get",
+    "path": "/api/v1/documents/{document_id}/preview-data/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_DocumentUploadFinalizeView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentUploadFinalizeView_endpoint_post",
+    "path": "/api/v1/uploads/document/finalize/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentUploadRequestView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentUploadRequestView_endpoint_post",
+    "path": "/api/v1/uploads/document/request/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentVersionUploadFinalizeView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentVersionUploadFinalizeView_endpoint_post",
+    "path": "/api/v1/uploads/document/{document_id}/versions/finalize/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentVersionUploadRequestView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentVersionUploadRequestView_endpoint_post",
+    "path": "/api/v1/uploads/document/{document_id}/versions/request/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentViewSet_copy_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentViewSet_copy_post",
+    "path": "/api/v1/documents/{pk}/copy/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentViewSet_create_post",
+    "path": "/api/v1/documents/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "documents_DocumentViewSet_destroy_delete",
+    "path": "/api/v1/documents/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "documents_DocumentViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentViewSet_list_get",
+    "path": "/api/v1/documents/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_DocumentViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "documents_DocumentViewSet_partial_update_patch",
+    "path": "/api/v1/documents/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentViewSet_promote_version_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentViewSet_promote_version_post",
+    "path": "/api/v1/documents/{pk}/promote_version/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentViewSet_rebuild_preview_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_DocumentViewSet_rebuild_preview_post",
+    "path": "/api/v1/documents/{pk}/rebuild-preview/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentViewSet_retrieve_get",
+    "path": "/api/v1/documents/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_DocumentViewSet_stats_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentViewSet_stats_get",
+    "path": "/api/v1/documents/{pk}/stats/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_DocumentViewSet_status_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentViewSet_status_get",
+    "path": "/api/v1/documents/{pk}/status/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_DocumentViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "documents_DocumentViewSet_update_put",
+    "path": "/api/v1/documents/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_DocumentViewSet_versions_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentViewSet_versions_get",
+    "path": "/api/v1/documents/{pk}/versions/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_DocumentViewSet_view_sessions_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_DocumentViewSet_view_sessions_get",
+    "path": "/api/v1/documents/{pk}/view-sessions/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_EnsureFolderPathsView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_EnsureFolderPathsView_endpoint_post",
+    "path": "/api/v1/folders/ensure-paths/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_FolderViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_FolderViewSet_create_post",
+    "path": "/api/v1/folders/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_FolderViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "documents_FolderViewSet_destroy_delete",
+    "path": "/api/v1/folders/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "documents_FolderViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_FolderViewSet_list_get",
+    "path": "/api/v1/folders/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_FolderViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "documents_FolderViewSet_partial_update_patch",
+    "path": "/api/v1/folders/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_FolderViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_FolderViewSet_retrieve_get",
+    "path": "/api/v1/folders/{pk}/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_FolderViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "documents_FolderViewSet_update_put",
+    "path": "/api/v1/folders/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_MoveItemsView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_MoveItemsView_endpoint_post",
+    "path": "/api/v1/actions/move/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "documents_RootFolderView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_RootFolderView_endpoint_get",
+    "path": "/api/v1/folders/root/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_TrashViewSet_empty_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "documents_TrashViewSet_empty_delete",
+    "path": "/api/v1/trash/empty/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "documents_TrashViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "documents_TrashViewSet_list_get",
+    "path": "/api/v1/trash/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "documents_TrashViewSet_permanent_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "documents_TrashViewSet_permanent_delete",
+    "path": "/api/v1/trash/{pk}/permanent/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "documents_TrashViewSet_restore_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "documents_TrashViewSet_restore_post",
+    "path": "/api/v1/trash/{pk}/restore/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "drf_spectacular_SpectacularAPIView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "drf_spectacular_SpectacularAPIView_endpoint_get",
+    "path": "/api/schema/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "drf_spectacular_SpectacularSwaggerView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "drf_spectacular_SpectacularSwaggerView_endpoint_get",
+    "path": "/api/schema/swagger/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "filerequests_FileRequestUploadFinalizeView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "filerequests_FileRequestUploadFinalizeView_endpoint_post",
+    "path": "/api/v1/public/file-requests/{slug}/finalize-upload/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "filerequests_FileRequestUploadRequestView_endpoint_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "filerequests_FileRequestUploadRequestView_endpoint_post",
+    "path": "/api/v1/public/file-requests/{slug}/request-upload/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "filerequests_FileRequestViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "filerequests_FileRequestViewSet_create_post",
+    "path": "/api/v1/file-requests/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "filerequests_FileRequestViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "filerequests_FileRequestViewSet_destroy_delete",
+    "path": "/api/v1/file-requests/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "filerequests_FileRequestViewSet_handle_exports_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "filerequests_FileRequestViewSet_handle_exports_get",
+    "path": "/api/v1/file-requests/{pk}/exports/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "filerequests_FileRequestViewSet_handle_exports_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "filerequests_FileRequestViewSet_handle_exports_post",
+    "path": "/api/v1/file-requests/{pk}/exports/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "filerequests_FileRequestViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "filerequests_FileRequestViewSet_list_get",
+    "path": "/api/v1/file-requests/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "filerequests_FileRequestViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "filerequests_FileRequestViewSet_partial_update_patch",
+    "path": "/api/v1/file-requests/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "filerequests_FileRequestViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "filerequests_FileRequestViewSet_retrieve_get",
+    "path": "/api/v1/file-requests/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "filerequests_FileRequestViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "filerequests_FileRequestViewSet_update_put",
+    "path": "/api/v1/file-requests/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "filerequests_PublicFileRequestView_endpoint_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "filerequests_PublicFileRequestView_endpoint_get",
+    "path": "/api/v1/public/file-requests/{slug}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "rest_framework_simplejwt_TokenRefreshView_endpoint_post": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "rest_framework_simplejwt_TokenRefreshView_endpoint_post",
+    "path": "/api/v1/token/refresh/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_DataroomDownloadAllView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_DataroomDownloadAllView_endpoint_get",
+    "path": "/api/v1/links/{slug}/download-dataroom/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_DataroomFolderDownloadView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_DataroomFolderDownloadView_endpoint_get",
+    "path": "/api/v1/links/{slug}/download-folder/{folder_id}/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_QnAThreadViewSet_create_message_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_QnAThreadViewSet_create_message_post",
+    "path": "/api/v1/qna-threads/{pk}/messages/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_QnAThreadViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_QnAThreadViewSet_create_post",
+    "path": "/api/v1/qna-threads/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_QnAThreadViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_QnAThreadViewSet_list_get",
+    "path": "/api/v1/qna-threads/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_QnAThreadViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "sharelinks_QnAThreadViewSet_partial_update_patch",
+    "path": "/api/v1/qna-threads/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_QnAThreadViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_QnAThreadViewSet_retrieve_get",
+    "path": "/api/v1/qna-threads/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_RecordLinkClickView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_RecordLinkClickView_endpoint_post",
+    "path": "/api/v1/link-clicks/record/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_RecordPageView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_RecordPageView_endpoint_post",
+    "path": "/api/v1/page-views/record/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkAcceptNDAView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkAcceptNDAView_endpoint_post",
+    "path": "/api/v1/links/{slug}/accept-nda/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkConfirmAccessView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkConfirmAccessView_endpoint_post",
+    "path": "/api/v1/links/{slug}/verify-access-token/confirm/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkFileDownloadView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkFileDownloadView_endpoint_get",
+    "path": "/api/v1/links/{slug}/download-file/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkPageView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkPageView_endpoint_get",
+    "path": "/api/v1/links/{slug}/page/{page_number}/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkPublicMetaView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkPublicMetaView_endpoint_get",
+    "path": "/api/v1/links/{slug}/public-meta/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkQnAMessageListCreateView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkQnAMessageListCreateView_endpoint_get",
+    "path": "/api/v1/links/{slug}/qna-threads/{thread_id}/messages/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkQnAMessageListCreateView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkQnAMessageListCreateView_endpoint_post",
+    "path": "/api/v1/links/{slug}/qna-threads/{thread_id}/messages/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkQnASummaryView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkQnASummaryView_endpoint_get",
+    "path": "/api/v1/links/{slug}/qna-summary/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkQnAThreadListCreateView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkQnAThreadListCreateView_endpoint_get",
+    "path": "/api/v1/links/{slug}/qna-threads/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkQnAThreadListCreateView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkQnAThreadListCreateView_endpoint_post",
+    "path": "/api/v1/links/{slug}/qna-threads/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkRequestAccessView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkRequestAccessView_endpoint_post",
+    "path": "/api/v1/links/{slug}/request-access/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkTemplateViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkTemplateViewSet_create_post",
+    "path": "/api/v1/share-link-templates/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkTemplateViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "sharelinks_ShareLinkTemplateViewSet_destroy_delete",
+    "path": "/api/v1/share-link-templates/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkTemplateViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkTemplateViewSet_list_get",
+    "path": "/api/v1/share-link-templates/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkTemplateViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "sharelinks_ShareLinkTemplateViewSet_partial_update_patch",
+    "path": "/api/v1/share-link-templates/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkTemplateViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkTemplateViewSet_retrieve_get",
+    "path": "/api/v1/share-link-templates/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkTemplateViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "sharelinks_ShareLinkTemplateViewSet_update_put",
+    "path": "/api/v1/share-link-templates/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkVerifyPasswordView_endpoint_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkVerifyPasswordView_endpoint_post",
+    "path": "/api/v1/links/{slug}/verify-password/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewDataView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkViewDataView_endpoint_get",
+    "path": "/api/v1/links/{slug}/view-data/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewSet_access_grants_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkViewSet_access_grants_get",
+    "path": "/api/v1/share-links/{pk}/access-grants/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewSet_access_grants_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkViewSet_access_grants_post",
+    "path": "/api/v1/share-links/{pk}/access-grants/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkViewSet_create_post",
+    "path": "/api/v1/share-links/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkViewSet_create_preview_session_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ShareLinkViewSet_create_preview_session_post",
+    "path": "/api/v1/share-links/{pk}/preview/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkViewSet_dataroom_settings_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "sharelinks_ShareLinkViewSet_dataroom_settings_patch",
+    "path": "/api/v1/share-links/{pk}/dataroom-settings/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "sharelinks_ShareLinkViewSet_destroy_delete",
+    "path": "/api/v1/share-links/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewSet_issued_copies_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkViewSet_issued_copies_get",
+    "path": "/api/v1/share-links/{pk}/issued-copies/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkViewSet_list_get",
+    "path": "/api/v1/share-links/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "sharelinks_ShareLinkViewSet_partial_update_patch",
+    "path": "/api/v1/share-links/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkViewSet_remove_access_grant_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "sharelinks_ShareLinkViewSet_remove_access_grant_delete",
+    "path": "/api/v1/share-links/{pk}/access-grants/{grant_id}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkViewSet_retrieve_get",
+    "path": "/api/v1/share-links/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ShareLinkViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "sharelinks_ShareLinkViewSet_update_put",
+    "path": "/api/v1/share-links/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ShareLinkViewSet_view_sessions_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ShareLinkViewSet_view_sessions_get",
+    "path": "/api/v1/share-links/{pk}/view-sessions/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ViewSessionViewSet_create_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ViewSessionViewSet_create_post",
+    "path": "/api/v1/view-sessions/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ViewSessionViewSet_list_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ViewSessionViewSet_list_get",
+    "path": "/api/v1/view-sessions/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ViewSessionViewSet_record_visit_post": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ViewSessionViewSet_record_visit_post",
+    "path": "/api/v1/view-sessions/{pk}/record-visit/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ViewSessionViewSet_retrieve_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ViewSessionViewSet_retrieve_get",
+    "path": "/api/v1/view-sessions/{pk}/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ViewerOrganisationViewSet_create_post": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "sharelinks_ViewerOrganisationViewSet_create_post",
+    "path": "/api/v1/viewer-organisations/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ViewerOrganisationViewSet_destroy_delete": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "DELETE",
+    "operation_id": "sharelinks_ViewerOrganisationViewSet_destroy_delete",
+    "path": "/api/v1/viewer-organisations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "sharelinks_ViewerOrganisationViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ViewerOrganisationViewSet_list_get",
+    "path": "/api/v1/viewer-organisations/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ViewerOrganisationViewSet_partial_update_patch": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PATCH",
+    "operation_id": "sharelinks_ViewerOrganisationViewSet_partial_update_patch",
+    "path": "/api/v1/viewer-organisations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ViewerOrganisationViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ViewerOrganisationViewSet_retrieve_get",
+    "path": "/api/v1/viewer-organisations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ViewerOrganisationViewSet_update_put": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "PUT",
+    "operation_id": "sharelinks_ViewerOrganisationViewSet_update_put",
+    "path": "/api/v1/viewer-organisations/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
+  "sharelinks_ViewerViewSet_list_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ViewerViewSet_list_get",
+    "path": "/api/v1/viewers/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_ViewerViewSet_retrieve_get": {
+    "boundary": "denied",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_ViewerViewSet_retrieve_get",
+    "path": "/api/v1/viewers/{pk}/",
+    "reason": "Deferred or operator-only surface; phase 1.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "sharelinks_WatermarkedPageRenderView_endpoint_get": {
+    "boundary": "recipient",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "sharelinks_WatermarkedPageRenderView_endpoint_get",
+    "path": "/api/v1/links/{slug}/render-page/{page_number}/",
+    "reason": "Central recipient policy; unsupported legacy actions denied.",
+    "tier": "read_only",
+    "widens_access": false
+  }
+}

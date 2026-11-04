@@ -22,11 +22,11 @@ def generate_raw_api_key() -> tuple[str, str, str]:
     """
     Generates a raw API key, display prefix, and HMAC-SHA256 hash.
     Format: cs_live_<32 hex chars> (128 bits entropy)
-    Prefix: cs_live_XXXX (12 chars - limits entropy leakage to 16 bits)
+    Prefix: cs_live_XXXXXXXX (8 random hex characters)
     """
     random_part = secrets.token_hex(16)
     raw_key = f"cs_live_{random_part}"
-    prefix = raw_key[:12]
+    prefix = raw_key[:16]
     hashed_key = hash_api_key(raw_key)
     return raw_key, prefix, hashed_key
 
@@ -61,7 +61,7 @@ class APIKeyAuthentication(authentication.BaseAuthentication):
         if not raw_key.startswith('cs_live_'):
             return None
 
-        prefix = raw_key[:12]
+        prefix = raw_key[:16]
         try:
             api_key = APIKey.objects.select_related('user').get(prefix=prefix)
         except APIKey.DoesNotExist:

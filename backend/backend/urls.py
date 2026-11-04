@@ -27,8 +27,9 @@ from core.views import (CustomTokenObtainPairView, LanguagesView, LogoutView, Pu
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api/v1/dealroom/', include('dealroom.urls')),
+
+
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     # path('api/v1/register/', RegisterView.as_view(), name='register'),

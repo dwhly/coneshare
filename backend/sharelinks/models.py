@@ -81,6 +81,9 @@ class ShareLinkAccessGrant(BaseModel):
     domain) or to one explicit email address. Enforced only when
     ShareLink.restrict_to_grants is True.
     """
+    download_ceiling = models.CharField(max_length=16, default='none')
+    expires_at = models.DateTimeField(null=True, blank=True)
+    revoked_at = models.DateTimeField(null=True, blank=True)
     share_link = models.ForeignKey('ShareLink', on_delete=models.CASCADE, related_name='access_grants')
     viewer_organisation = models.ForeignKey(ViewerOrganisation, on_delete=models.CASCADE, null=True, blank=True, related_name='grants')
     email = models.EmailField(blank=True, default='')
@@ -394,6 +397,10 @@ class Viewer(models.Model):
     email = models.EmailField()
     # AmForge: last full name the viewer gave at the email step.
     name = models.CharField(max_length=255, blank=True, default='')
+
+    recipient_org = models.ForeignKey(ViewerOrganisation, null=True, blank=True, on_delete=models.SET_NULL)
+    verified_at = models.DateTimeField(null=True, blank=True)
+    disabled_at = models.DateTimeField(null=True, blank=True)
 
     objects = ViewerManager()
 

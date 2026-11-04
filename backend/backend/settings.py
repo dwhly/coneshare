@@ -236,6 +236,7 @@ INSTALLED_APPS = [
     'cloudfiles',
     'filerequests',
     'automations',
+    'dealroom.apps.DealroomConfig',
 ]
 
 MIDDLEWARE = [
@@ -275,7 +276,7 @@ REST_FRAMEWORK = {
         'core.authentication.APIKeyAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'dealroom.registry.OperationSchema',
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
         'core.permissions.APIKeyTierPermission',
@@ -578,3 +579,12 @@ except ImportError:
 else:
     load_local_settings(local_settings)
     del local_settings
+
+# Chief Dealroom phase-one boundaries are enabled for this release.
+DEALROOM_ENABLED = True
+DEALROOM_BRAND_FILE = os.environ.get("DEALROOM_BRAND_FILE", str(BASE_DIR.parent / "brand.yaml"))
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE = os.environ.get("DEALROOM_HTTPS", "false").lower() == "true"
+SESSION_COOKIE_AGE = 8 * 60 * 60
+MIDDLEWARE.insert(0, "dealroom.middleware.PrivateRecipientResponses")
