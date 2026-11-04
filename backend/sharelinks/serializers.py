@@ -12,7 +12,8 @@ from datarooms.models import Dataroom
 from .models import (DataroomVisit, PageView, ShareLink,
                      QnAMessage, QnAThread,
                      ShareLinkDataroomSetting, ShareLinkTemplate, Viewer,
-                     ViewSession, LinkClick, NDAAcceptance)
+                     ViewSession, LinkClick, NDAAcceptance,
+                     IssuedCopy, ShareLinkAccessGrant, ViewerOrganisation)
 from .services import (_get_unique_dataroom_share_link_name,
                        _get_unique_share_link_name)
 
@@ -176,13 +177,15 @@ class ViewSessionSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'share_link', 'viewer', 'viewer_email', 'share_link_name', 'document_id', 'document_name', 'document_type',
             'dataroom_id', 'dataroom_name', 'ip_address', 'user_agent', 'country', 'city', 'latitude', 'longitude', 'duration_seconds',
-            'completion_rate', 'viewed_at', 'page_views', 'dataroom_visits', 'link_clicks', 'is_owner_view', 'downloaded_at', 'email_verification_method'
+            'completion_rate', 'viewed_at', 'page_views', 'dataroom_visits', 'link_clicks', 'is_owner_view', 'downloaded_at', 'email_verification_method',
+            'viewer_name', 'viewer_organisation', 'viewer_organisation_name',
         ]
         read_only_fields = [
             'id', 'viewer', 'duration_seconds', 'completion_rate', 'viewed_at', 'ip_address', 'user_agent',
             'share_link_name', 'document_id', 'document_name', 'document_type', 'dataroom_id', 'dataroom_name',
             'country', 'city', 'latitude', 'longitude', 'page_views', 'dataroom_visits', 'link_clicks',
-            'is_owner_view', 'downloaded_at', 'email_verification_method'
+            'is_owner_view', 'downloaded_at', 'email_verification_method',
+            'viewer_name', 'viewer_organisation', 'viewer_organisation_name',
         ]
     
     def get_is_owner_view(self, obj) -> bool:
@@ -219,7 +222,7 @@ class ViewSessionSerializer(serializers.ModelSerializer):
 class ViewerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Viewer
-        fields = ['id', 'organization', 'email', 'created_at']
+        fields = ['id', 'organization', 'email', 'name', 'created_at']
         read_only_fields = ['id', 'organization', 'created_at']
 
     def create(self, validated_data):
@@ -343,6 +346,7 @@ class ShareLinkSerializer(serializers.ModelSerializer):
         queryset=Dataroom.objects.all(), required=False, allow_null=True
     )
     dataroom_settings = ShareLinkDataroomSettingSerializer(many=True, read_only=True)
+    access_grants = serializers.SerializerMethodField()
     has_password = serializers.SerializerMethodField()
     view_count = serializers.SerializerMethodField()
     recent_view_sessions = serializers.SerializerMethodField()
@@ -433,6 +437,18 @@ class ShareLinkSerializer(serializers.ModelSerializer):
             if document.is_download_only:
                 data['allow_download'] = True
 
+        # AmForge: watermark is ON by default for new data-room links unless the
+        # caller explicitly sends enable_watermark.
+        if not self.instance and dataroom and 'enable_watermark' not in getattr(self, 'initial_data', {}):
+            data['enable_watermark'] = True
+            enable_watermark = True
+
+        # AmForge: organisation/email grants only make sense on verified identities.
+        restrict = data.get('restrict_to_grants', self.instance.restrict_to_grants if self.instance else False)
+        if restrict:
+            data['requires_email'] = True
+            data['requires_email_verification'] = True
+
         if enable_watermark:
             watermark_text = data.get('watermark_text', self.instance.watermark_text if self.instance else '')
             if not watermark_text or not watermark_text.strip():
@@ -479,10 +495,12 @@ class ShareLinkSerializer(serializers.ModelSerializer):
             'id', 'document', 'dataroom', 'document_name', 'document_type', 'dataroom_name', 'dataroom_settings', 'created_by', 'created_by_user', 'name', 'slug', 'url', 'expires_at',
             'has_password', 'password', 'requires_email', 'requires_email_verification', 'allow_download', 'enable_qna',
             'enable_watermark', 'watermark_text', 'receive_email_notification', 'is_active', 'created_at', 'updated_at',
-            'view_count', 'recent_view_sessions', 'last_viewed_at', 'require_nda', 'nda_text', 'nda_version', 'has_accepted_current_nda'
+            'view_count', 'recent_view_sessions', 'last_viewed_at', 'require_nda', 'nda_text', 'nda_version', 'has_accepted_current_nda',
+            'restrict_to_grants', 'allow_original_download', 'access_grants',
         ]
         read_only_fields = [
-            'id', 'created_by', 'created_by_user', 'slug', 'url', 'created_at', 'updated_at', 'document_name', 'document_type', 'nda_version', 'has_accepted_current_nda'
+            'id', 'created_by', 'created_by_user', 'slug', 'url', 'created_at', 'updated_at', 'document_name', 'document_type', 'nda_version', 'has_accepted_current_nda',
+            'access_grants',
         ]
         extra_kwargs = {
             'name': {'required': True, 'allow_blank': True},
@@ -505,6 +523,10 @@ class ShareLinkSerializer(serializers.ModelSerializer):
     def get_has_password(self, obj) -> bool:
         """Returns True if the link is password-protected."""
         return bool(obj.password)
+
+    @extend_schema_field(serializers.ListField(child=serializers.DictField()))
+    def get_access_grants(self, obj) -> list:
+        return ShareLinkAccessGrantSerializer(obj.access_grants.select_related('viewer_organisation'), many=True).data
 
     def get_view_count(self, obj) -> int:
         """Returns the number of view sessions for the link."""
@@ -567,6 +589,82 @@ class ShareLinkSerializer(serializers.ModelSerializer):
 class ShareLinkEmailSerializer(serializers.Serializer):
     """Serializer for the email submission form."""
     email = serializers.EmailField()
+    # AmForge: viewer full name (required when the link restricts access to grants).
+    name = serializers.CharField(required=False, allow_blank=True, max_length=255, default='')
+
+
+class ViewerOrganisationSerializer(serializers.ModelSerializer):
+    """AmForge: external counterparty organisation identified by email domains."""
+    email_domains = serializers.ListField(child=serializers.CharField(max_length=253), allow_empty=True, required=False)
+
+    class Meta:
+        model = ViewerOrganisation
+        fields = ['id', 'name', 'email_domains', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+
+    def validate_email_domains(self, value):
+        cleaned = []
+        for raw in value or []:
+            domain = ViewerOrganisation.normalize_domain(raw)
+            if not domain:
+                continue
+            if '.' not in domain or ' ' in domain or not re.match(r'^[a-z0-9.-]+$', domain):
+                raise serializers.ValidationError(f"'{raw}' is not a valid email domain.")
+            if domain not in cleaned:
+                cleaned.append(domain)
+        return cleaned
+
+    def validate_name(self, value):
+        value = (value or '').strip()
+        if not value:
+            raise serializers.ValidationError('Name is required.')
+        request = self.context.get('request')
+        org = getattr(getattr(request, 'user', None), 'organization', None)
+        qs = ViewerOrganisation.objects.filter(organization=org, name__iexact=value)
+        if self.instance:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise serializers.ValidationError('An organisation with this name already exists.')
+        return value
+
+
+class ShareLinkAccessGrantSerializer(serializers.ModelSerializer):
+    """AmForge: grant of a share link to an organisation or one email."""
+    viewer_organisation_name = serializers.CharField(source='viewer_organisation.name', read_only=True, default=None)
+    viewer_organisation_domains = serializers.ListField(
+        source='viewer_organisation.email_domains', read_only=True, default=list, child=serializers.CharField()
+    )
+
+    class Meta:
+        model = ShareLinkAccessGrant
+        fields = ['id', 'viewer_organisation', 'viewer_organisation_name', 'viewer_organisation_domains', 'email', 'created_at']
+        read_only_fields = ['id', 'created_at']
+        extra_kwargs = {'viewer_organisation': {'required': False, 'allow_null': True}, 'email': {'required': False}}
+
+    def validate(self, data):
+        org = data.get('viewer_organisation')
+        email = (data.get('email') or '').strip().lower()
+        if bool(org) == bool(email):
+            raise serializers.ValidationError('Provide exactly one of viewer_organisation or email.')
+        share_link = self.context.get('share_link')
+        if org and share_link is not None and org.organization_id != share_link.organization_id:
+            raise serializers.ValidationError({'viewer_organisation': 'Unknown organisation.'})
+        if share_link is not None:
+            qs = ShareLinkAccessGrant.objects.filter(share_link=share_link)
+            if org and qs.filter(viewer_organisation=org).exists():
+                raise serializers.ValidationError({'viewer_organisation': 'Already granted.'})
+            if email and qs.filter(email=email).exists():
+                raise serializers.ValidationError({'email': 'Already granted.'})
+        data['email'] = email
+        return data
+
+
+class IssuedCopySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IssuedCopy
+        fields = ['id', 'copy_id', 'kind', 'share_link', 'view_session', 'document', 'dataroom_document',
+                  'viewer_email', 'viewer_name', 'viewer_organisation_name', 'ip_address', 'created_at']
+        read_only_fields = fields
 
 
 class ShareLinkTemplateSerializer(serializers.ModelSerializer):

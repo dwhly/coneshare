@@ -23,6 +23,7 @@ import { DocumentsList } from '../components/documents/DocumentsList';
 import { SelectionActionBar } from '../components/documents/SelectionActionBar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/Tabs';
 import { LinkSheet } from '../components/links/LinkSheet';
+import { DuplicateDataroomCard } from '../components/datarooms/DuplicateDataroomCard';
 import { ConfirmationDialog } from '../components/dialogs/ConfirmationDialog';
 import { Stats } from '../components/documents/Stats';
 import { LinksTable } from '../components/documents/LinksTable';
@@ -1821,6 +1822,8 @@ export function DataroomPage() {
                 />
               </div>
             </div>
+
+            {(canManage || isCollaborator) && <DuplicateDataroomCard dataroom={dataroom} />}
 
             {canManage && (
               <div className="rounded-lg border border-red-200 bg-red-50/60 p-5 dark:border-red-900/60 dark:bg-red-950/20 space-y-4">

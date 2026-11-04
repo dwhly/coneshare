@@ -54,7 +54,8 @@ describe('LinkSheet', () => {
       expect(screen.getByText('Create New Link')).toBeInTheDocument();
       expect(screen.getByLabelText(/Name/)).toHaveValue('');
       expect(screen.getByLabelText(/Password protection/)).not.toBeChecked();
-      expect(screen.getByLabelText(/Allow download/)).toBeChecked();
+      // AmForge: downloads are OFF by default for new links.
+      expect(screen.getByLabelText(/Allow download/)).not.toBeChecked();
     });
 
     it('should call createShareLink with correct data when password is not enabled', async () => {

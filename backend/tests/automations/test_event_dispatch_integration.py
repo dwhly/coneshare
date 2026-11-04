@@ -56,6 +56,7 @@ class TestEventDispatchIntegration:
     @patch('sharelinks.views.dispatch_automation_event_task.delay')
     def test_record_download_dispatches_document_downloaded(self, mock_delay, public_client, share_link):
         share_link.allow_download = True
+        share_link.allow_original_download = True  # AmForge: originals are opt-in
         share_link.save()
         view_session = ViewSession.objects.create(share_link=share_link)
 
@@ -90,6 +91,7 @@ class TestEventDispatchIntegration:
             created_by=user,
             name='Dataroom Link',
             allow_download=True,
+            allow_original_download=True,  # AmForge: originals are opt-in
         )
         setting, _ = ShareLinkDataroomSetting.objects.get_or_create(
             share_link=link,
@@ -303,6 +305,8 @@ class TestEventDispatchIntegration:
             dataroom=dataroom,
             created_by=user,
             name='Download Link',
+            allow_download=True,
+            allow_original_download=True,  # AmForge: originals are opt-in
         )
         view_session = ViewSession.objects.create(share_link=link)
 
@@ -337,6 +341,8 @@ class TestEventDispatchIntegration:
             dataroom=dataroom,
             created_by=user,
             name='Download Link',
+            allow_download=True,
+            allow_original_download=True,  # AmForge: originals are opt-in
         )
         view_session = ViewSession.objects.create(
             share_link=link,

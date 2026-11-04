@@ -126,7 +126,7 @@ def _make_raw_file_generator(download_url: str, expected_size: Optional[int] = N
     return generator
 
 
-def _make_watermarked_file_generator(doc, primary_version, watermark_text, request, viewer_email):
+def _make_watermarked_file_generator(doc, primary_version, watermark_text, request, viewer_email, identity=None):
     """
     Creates a generator that renders a watermarked image or PDF on-the-fly and yields its buffer.
     Pillow Image objects and BytesIO buffers are explicitly closed in finally blocks.
@@ -141,7 +141,7 @@ def _make_watermarked_file_generator(doc, primary_version, watermark_text, reque
     def generator():
         if doc.type == 'image':
             image_buffer, _ = _generate_watermarked_image(
-                doc, primary_version, watermark_text, request, viewer_email
+                doc, primary_version, watermark_text, request, viewer_email, identity=identity
             )
             try:
                 yield image_buffer.getvalue()
@@ -155,11 +155,11 @@ def _make_watermarked_file_generator(doc, primary_version, watermark_text, reque
 
             if flatten_active:
                 pdf_buffer = _generate_flattened_watermarked_pdf(
-                    doc, primary_version, watermark_text, request, viewer_email
+                    doc, primary_version, watermark_text, request, viewer_email, identity=identity
                 )
             else:
                 pdf_buffer = _generate_watermarked_pdf(
-                    doc, primary_version, watermark_text, request, viewer_email
+                    doc, primary_version, watermark_text, request, viewer_email, identity=identity
                 )
             try:
                 yield pdf_buffer.getvalue()
@@ -243,6 +243,8 @@ def generate_dataroom_archive_stream(
     and returns (ZipStream, downloadable_item_count).
     """
     from .views import get_effective_watermark_text
+    from . import amforge
+    from .models import IssuedCopy
 
     dataroom = link.dataroom
     if not dataroom:
@@ -323,8 +325,11 @@ def generate_dataroom_archive_stream(
             if not primary_version:
                 continue
 
+            # AmForge: archive entries are watermarked copies unless originals are explicitly allowed.
+            use_watermark = amforge.download_requires_watermark(link, setting.enable_watermark)
+
             # Per security policy: documents that cannot be watermarked must not be downloaded when watermark is enabled
-            if setting.enable_watermark:
+            if use_watermark:
                 is_watermarkable = (
                     (doc.type in {'image', 'pdf'} and bool(primary_version.storage_key or primary_version.original_storage_key)) or
                     (doc.type == 'document' and bool(primary_version.storage_key))
@@ -348,7 +353,7 @@ def generate_dataroom_archive_stream(
             target_ext = posixpath.splitext(display_name)[1]
 
             # Adjust extension for watermarked image/document
-            if setting.enable_watermark:
+            if use_watermark:
                 if doc.type == 'image':
                     target_ext = '.jpg'
                 else:
@@ -362,9 +367,10 @@ def generate_dataroom_archive_stream(
 
             file_expected_size = primary_version.file_size or getattr(doc, 'file_size', None)
 
-            if setting.enable_watermark:
+            if use_watermark:
+                identity = amforge.issue_copy(link, request, doc, IssuedCopy.KIND_DOWNLOAD, dataroom_document=child_doc)
                 gen_fn = _make_watermarked_file_generator(
-                    doc, primary_version, effective_watermark_text, request, viewer_email
+                    doc, primary_version, effective_watermark_text, request, viewer_email, identity=identity
                 )
                 zs.add(
                     _make_resilient_generator(
@@ -379,6 +385,7 @@ def generate_dataroom_archive_stream(
                 )
                 downloadable_count += 1
             else:
+                amforge.issue_copy(link, request, doc, IssuedCopy.KIND_ORIGINAL, dataroom_document=child_doc)
                 download_url = fileserver_client.generate_download_url(
                     primary_version.original_storage_key, is_internal=True
                 )

@@ -1234,5 +1234,43 @@
     "parseFailed": "Failed to parse markdown content.",
     "unsupportedFormat": "Document is not a markdown file.",
     "notFound": "Markdown preview URL not found."
+  },
+  "amforge": {
+    "grants": {
+      "restrict": "Restrict to approved organisations & people",
+      "restrictSubtitle": "Only verified emails you list, or whose domain belongs to an approved organisation, can open this link.",
+      "empty": "No one is approved yet. Add an organisation or an email address.",
+      "organisation": "Organisation",
+      "selectOrganisation": "Select an organisation…",
+      "newOrganisation": "+ New organisation",
+      "orgNamePlaceholder": "Organisation name",
+      "orgDomainsPlaceholder": "Email domains, e.g. acme.com",
+      "create": "Create",
+      "orgCreated": "Organisation {{name}} created",
+      "person": "Individual email",
+      "add": "Add",
+      "remove": "Remove",
+      "verificationNote": "Email verification is required while this is on. Removing an entry revokes access on the viewer's next request."
+    },
+    "downloads": {
+      "allowOriginal": "Allow original file download",
+      "allowOriginalSubtitle": "Off: every download is a watermarked copy with a unique copy ID. On: viewers get the untouched original (each download is logged)."
+    },
+    "watermark": {
+      "footerNote": "Every page also carries a footer “Issued to name · organisation · email · time · Copy ID” and a margin line."
+    },
+    "viewer": {
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Jane Doe",
+      "watermarkNotice": "Your name, organisation and email are watermarked on every page and copy, and access is logged."
+    },
+    "duplicate": {
+      "title": "Duplicate room",
+      "notice": "Create a copy of this room with the same folders, documents, ordering and settings. Files are reused, not re-uploaded. Visitors and analytics are not copied.",
+      "includeLinks": "Copy share-link settings",
+      "includeLinksHelp": "Recreate this room's links (permissions, watermark, approved organisations) as inactive links in the copy.",
+      "button": "Duplicate room",
+      "success": "Created {{name}} ({{folders}} folders, {{documents}} documents)"
+    }
   }
 }

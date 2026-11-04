@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Mail, Info, ArrowRight } from 'lucide-react';
+import { Mail, Info, ArrowRight, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { requestShareLinkAccess, confirmShareLinkEmailAccess } from '../../services/api';
 import { getLocalizedErrorMessage } from '../../utils/errorTranslator';
@@ -19,6 +19,8 @@ export function EmailForm({
 }) {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
+  // AmForge: full name is captured with the email and burned into the watermark.
+  const [fullName, setFullName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -27,7 +29,10 @@ export function EmailForm({
     setIsLoading(true);
 
     try {
-      const response = await requestShareLinkAccess(slug, email);
+      const name = fullName.trim();
+      const response = name
+        ? await requestShareLinkAccess(slug, email, name)
+        : await requestShareLinkAccess(slug, email);
       toast.success(getLocalizedErrorMessage(response.data.message));
 
       if (response.data.verification_required) {
@@ -146,6 +151,25 @@ export function EmailForm({
 
         <form onSubmit={handleSubmit} className="space-y-3.5">
           <div className="space-y-1.5">
+            <Label htmlFor="full-name" className="block text-xs font-medium text-gray-700 dark:text-zinc-300">
+              {t('amforge.viewer.fullName', { defaultValue: 'Full name' })}
+            </Label>
+            <div className="relative">
+              <User className="absolute left-3 top-3 h-4 w-4 text-gray-400 dark:text-zinc-500" />
+              <Input
+                id="full-name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="pl-10"
+                placeholder={t('amforge.viewer.fullNamePlaceholder', { defaultValue: 'Jane Doe' })}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
             <Label htmlFor="email" className="block text-xs font-medium text-gray-700 dark:text-zinc-300">
               {t('auth.email')}
             </Label>
@@ -169,8 +193,8 @@ export function EmailForm({
           <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-zinc-800/80 border border-gray-200/70 dark:border-zinc-700 text-[11px] text-gray-500 dark:text-zinc-400 leading-normal flex items-start gap-2">
             <Info className="w-3.5 h-3.5 text-gray-400 dark:text-zinc-500 shrink-0 mt-0.5" />
             <span>
-              {t('viewer.watermarkNotice', {
-                defaultValue: 'Your email is used to dynamically watermark and log access to this dataroom.',
+              {t('amforge.viewer.watermarkNotice', {
+                defaultValue: 'Your name, organisation and email are watermarked on every page and copy, and access is logged.',
               })}
             </span>
           </div>

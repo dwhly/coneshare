@@ -361,8 +361,8 @@ export const verifyShareLinkPassword = (slug, password) =>
 export const acceptShareLinkNda = (slug, data) =>
   api.post(`/links/${slug}/accept-nda/`, data);
 
-export const requestShareLinkAccess = (slug, email) =>
-  api.post(`/links/${slug}/request-access/`, { email });
+export const requestShareLinkAccess = (slug, email, name = '') =>
+  api.post(`/links/${slug}/request-access/`, { email, name });
 
 export const confirmShareLinkEmailAccess = (slug, token) =>
   api.post(`/links/${slug}/verify-access-token/confirm/`, { token });

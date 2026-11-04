@@ -49,7 +49,9 @@ from automations.tasks import dispatch_automation_event_task
 from .models import (DataroomVisit, EmailVerificationToken, PreviewSession,
                      QnAMessage, QnAThread, ShareLink,
                      ShareLinkDataroomSetting, ShareLinkTemplate, Viewer,
-                     ViewSession, NDAAcceptance)
+                     ViewSession, NDAAcceptance,
+                     IssuedCopy, ShareLinkAccessGrant, ViewerOrganisation)
+from . import amforge
 from .serializers import (DataroomVisitSerializer, PageViewRecordSerializer,
                           LinkClickRecordSerializer, RecordVisitSerializer,
                           QnAMessageCreateSerializer, QnAMessageSerializer,
@@ -59,7 +61,9 @@ from .serializers import (DataroomVisitSerializer, PageViewRecordSerializer,
                           ShareLinkDataroomSettingUpdateSerializer,
                           ShareLinkEmailSerializer, ShareLinkPasswordSerializer,
                           ShareLinkTemplateSerializer, ShareLinkSerializer,
-                          ViewerSerializer, ViewSessionSerializer)
+                          ViewerSerializer, ViewSessionSerializer,
+                          ShareLinkAccessGrantSerializer, ViewerOrganisationSerializer,
+                          IssuedCopySerializer)
 from .services import (
     can_user_edit_share_link,
     can_user_manage_share_link,
@@ -246,10 +250,11 @@ try:
 except ImportError:
     Image = None
 try:
-    from pypdf import PdfReader, PdfWriter
+    from pypdf import PdfReader, PdfWriter, Transformation
 except ImportError:
     PdfReader = None
     PdfWriter = None
+    Transformation = None
 try:
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import letter
@@ -570,6 +575,21 @@ def _verify_share_link_session_authorization(
             status=status.HTTP_401_UNAUTHORIZED
         ), None
 
+    # AmForge: organisation / email grants. Re-checked on every request so that
+    # revoking a grant takes effect immediately for existing sessions.
+    if link.restrict_to_grants and not amforge.grants_bypassed(auth_status_dict):
+        if not auth_status_dict.get('email_verified') or auth_status_dict.get('email_method') != 'verified':
+            return Response(
+                {"message": "This link requires a verified email address to view.", "protectionType": "email"},
+                status=status.HTTP_401_UNAUTHORIZED
+            ), None
+        if not amforge.is_email_granted(link, auth_status_dict.get('viewer_email')):
+            return Response(
+                {"message": "Your email address is not authorised to access this link.",
+                 "protectionType": "email", "accessDenied": True},
+                status=status.HTTP_403_FORBIDDEN
+            ), None
+
     if link.password and not auth_status_dict.get('password_verified'):
         return Response(
             {"message": "This link is password-protected. Please enter the password to continue.", "protectionType": "password"},
@@ -743,6 +763,46 @@ class ShareLinkViewSet(viewsets.ModelViewSet):
         serializer = ViewSessionSerializer(view_queryset, many=True, context=self.get_serializer_context())
         return Response(serializer.data)
 
+    @action(detail=True, methods=['get', 'post'], url_path='access-grants')
+    def access_grants(self, request, pk=None):
+        """AmForge: list or add organisation / email grants for this link."""
+        share_link = self.get_object()
+        if request.method == 'GET':
+            grants = amforge.access_grant_queryset_for_link(share_link)
+            return Response(ShareLinkAccessGrantSerializer(grants, many=True).data)
+
+        if not can_user_edit_share_link(request.user, share_link):
+            raise PermissionDenied("You do not have permission to change access for this share link.")
+        serializer = ShareLinkAccessGrantSerializer(data=request.data, context={'share_link': share_link, 'request': request})
+        serializer.is_valid(raise_exception=True)
+        grant = serializer.save(share_link=share_link, created_by=request.user)
+        return Response(ShareLinkAccessGrantSerializer(grant).data, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=['delete'], url_path=r'access-grants/(?P<grant_id>[^/.]+)')
+    def remove_access_grant(self, request, pk=None, grant_id=None):
+        """AmForge: revoke one grant. Existing sessions lose access on their next request."""
+        share_link = self.get_object()
+        if not can_user_edit_share_link(request.user, share_link):
+            raise PermissionDenied("You do not have permission to change access for this share link.")
+        deleted, _ = ShareLinkAccessGrant.objects.filter(share_link=share_link, id=grant_id).delete()
+        if not deleted:
+            return Response({"detail": "Grant not found."}, status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['get'], url_path='issued-copies')
+    def issued_copies(self, request, pk=None):
+        """AmForge: audit trail of watermarked copies (views/downloads) issued by this link."""
+        share_link = self.get_object()
+        qs = share_link.issued_copies.all()
+        copy_id = request.query_params.get('copy_id')
+        if copy_id:
+            qs = qs.filter(copy_id__iexact=copy_id.strip())
+        paginator = StandardResultsSetPagination()
+        page = paginator.paginate_queryset(qs, request, view=self)
+        if page is not None:
+            return paginator.get_paginated_response(IssuedCopySerializer(page, many=True).data)
+        return Response(IssuedCopySerializer(qs, many=True).data)
+
     @action(detail=True, methods=['post'], url_path='preview')
     def create_preview_session(self, request, pk=None):
         """
@@ -819,6 +879,25 @@ class ShareLinkViewSet(viewsets.ModelViewSet):
 
 
 @extend_schema(tags=['sharelinks'])
+@extend_schema(tags=['sharelinks'])
+class ViewerOrganisationViewSet(viewsets.ModelViewSet):
+    """
+    AmForge: CRUD for external counterparty organisations (name + email domains),
+    scoped to the requesting user's tenant organization.
+    """
+    serializer_class = ViewerOrganisationSerializer
+    queryset = ViewerOrganisation.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        if not user or not user.is_authenticated:
+            return ViewerOrganisation.objects.none()
+        return ViewerOrganisation.objects.filter(organization=user.organization).order_by('name')
+
+    def perform_create(self, serializer):
+        serializer.save(organization=self.request.user.organization, created_by=self.request.user)
+
+
 class ShareLinkViewDataView(APIView):
     """
     Provides the data needed for a public viewer to render a document from a share link.
@@ -1046,14 +1125,24 @@ class ShareLinkViewDataView(APIView):
                 allow_download = dataroom_setting.allow_download
                 enable_watermark = dataroom_setting.enable_watermark
 
+            # AmForge: downloads are watermarked copies unless originals are explicitly allowed.
+            download_watermarked = amforge.download_requires_watermark(link, enable_watermark)
+
             # Forcefully disable video downloading if watermarking is enabled
-            if document.type == 'video' and enable_watermark:
+            if document.type == 'video' and download_watermarked:
                 allow_download = False
 
             # Forcefully disable downloading if watermarking is enabled but file exceeds watermark size limit
             max_watermark_mb = get_max_watermark_file_size_mb()
             file_size = (primary_version.file_size if primary_version else 0) or getattr(document, 'file_size', 0) or 0
-            if enable_watermark and file_size > (max_watermark_mb * 1024 * 1024):
+            if download_watermarked and file_size > (max_watermark_mb * 1024 * 1024):
+                allow_download = False
+            # AmForge-forced watermark (item not watermarked, originals not allowed):
+            # hide the download for types that cannot be watermarked.
+            if download_watermarked and not enable_watermark and not (
+                document.type in {'image', 'pdf'} or
+                (document.type == 'document' and bool(primary_version and primary_version.storage_key))
+            ):
                 allow_download = False
 
             # Watermarking is not supported for video previews
@@ -1078,7 +1167,8 @@ class ShareLinkViewDataView(APIView):
             effective_watermark_text = get_effective_watermark_text(link)
             is_watermarked = bool(enable_watermark)
             if allow_download:
-                if is_watermarked:
+                # AmForge: always route through download-file so every copy is issued + logged.
+                if download_watermarked or link.allow_original_download:
                     base_url = f"/api/v1/links/{link.slug}/download-file/"
                     if link.dataroom:
                         download_url = urljoin(
@@ -1142,8 +1232,14 @@ class ShareLinkViewDataView(APIView):
             # Resolve watermark template tokens for the frontend CSS overlay.
             # The raw template (e.g. "{{ip-address}} {{email}}") is resolved here so
             # the client does not need to know the viewer's email or IP.
+            view_identity = None
+            if is_watermarked:
+                view_identity = amforge.issue_copy(
+                    link, request, document, IssuedCopy.KIND_VIEW,
+                    dataroom_document=dataroom_setting.dataroom_document if dataroom_setting else None,
+                )
             resolved_watermark_text = (
-                _render_watermark_text(effective_watermark_text, request, viewer_email=viewer_email)
+                _render_watermark_text(effective_watermark_text, request, viewer_email=viewer_email, identity=view_identity)
                 if is_watermarked else ''
             )
 
@@ -1174,11 +1270,15 @@ class ShareLinkViewDataView(APIView):
                     "watermark_text": effective_watermark_text if is_watermarked else link.watermark_text,
                     # Interpolated final text (with {{email}}, {{ip-address}}, etc.) for client-side visual overlays (PDF.js, Markdown, Spreadsheet).
                     "resolved_watermark_text": resolved_watermark_text,
+                    # AmForge: structured footer for client-side overlays + the copy id.
+                    "watermark_footer": amforge.footer_text(view_identity) if view_identity else '',
+                    "copy_id": view_identity['copy_id'] if view_identity else '',
                     "require_nda": link.require_nda,
                     "has_password": bool(link.password),
                     "requires_email": bool(link.requires_email),
                     "requires_email_verification": bool(link.requires_email_verification),
                     "is_restricted": bool(link.password or link.requires_email or link.requires_email_verification),
+                    "restrict_to_grants": bool(link.restrict_to_grants),
                 }
             }
             if dataroom_context:
@@ -1286,7 +1386,7 @@ class ShareLinkViewDataView(APIView):
                 doc_effective_download = bool(doc_row['allow_download'])
                 doc_watermark = doc_row['enable_watermark']
 
-                if doc_effective_download and doc_watermark:
+                if doc_effective_download and amforge.download_requires_watermark(link, doc_watermark):
                     d = doc.document
                     if not d or d.type == 'video':
                         doc_effective_download = False
@@ -1404,6 +1504,9 @@ class ShareLinkViewDataView(APIView):
                     'requires_email': bool(link.requires_email),
                     'requires_email_verification': bool(link.requires_email_verification),
                     'is_restricted': bool(link.password or link.requires_email or link.requires_email_verification),
+                    'restrict_to_grants': bool(link.restrict_to_grants),
+                    'viewer_name': auth_status.get('viewer_name', ''),
+                    'viewer_organisation_name': auth_status.get('viewer_organisation_name', ''),
                 }
             }
             return Response(response_data, status=status.HTTP_200_OK)
@@ -2085,6 +2188,18 @@ class ShareLinkRequestAccessView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         email = serializer.validated_data['email']
+        viewer_name = (serializer.validated_data.get('name') or '').strip()
+
+        # AmForge: grant-restricted links need a full name and a granted email.
+        if link.restrict_to_grants:
+            if not viewer_name:
+                return Response({"name": ["Please enter your full name."]}, status=status.HTTP_400_BAD_REQUEST)
+            if not amforge.is_email_granted(link, email):
+                logger.info("Access request denied by grants for link %s (domain=%s)", link.id, amforge.email_domain(email))
+                return Response(
+                    {"message": "This email address is not authorised to access this link.", "accessDenied": True},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
 
         # Ensure viewer record exists for tracking purposes
         if link.document:
@@ -2100,10 +2215,13 @@ class ShareLinkRequestAccessView(APIView):
             )
 
         email = email.strip().lower()
-        Viewer.objects.get_or_create(
+        viewer, _created = Viewer.objects.get_or_create(
             organization=organization,
             email=email
         )
+        if viewer_name and viewer.name != viewer_name and not link.requires_email_verification:
+            viewer.name = viewer_name
+            viewer.save(update_fields=['name'])
 
         if not link.requires_email_verification:
             # Just authorize the session and grant access immediately.
@@ -2113,6 +2231,10 @@ class ShareLinkRequestAccessView(APIView):
             authorized_links[str(link.id)]['email_verified'] = True
             authorized_links[str(link.id)]['viewer_email'] = email
             authorized_links[str(link.id)]['email_method'] = 'self_reported'
+            authorized_links[str(link.id)]['viewer_name'] = viewer_name
+            viewer_org = amforge.resolve_viewer_organisation(organization, email, link)
+            authorized_links[str(link.id)]['viewer_organisation_id'] = str(viewer_org.id) if viewer_org else ''
+            authorized_links[str(link.id)]['viewer_organisation_name'] = viewer_org.name if viewer_org else ''
             request.session['authorized_share_links'] = authorized_links
             _dispatch_automation_event(
                 link,
@@ -2124,7 +2246,7 @@ class ShareLinkRequestAccessView(APIView):
             # To prevent database bloat and user confusion from multiple valid links,
             # atomically delete any existing tokens for this email and link before creating a new one.
             EmailVerificationToken.objects.filter(share_link=link, email__iexact=email).delete()
-            verification = EmailVerificationToken.objects.create(share_link=link, email=email)
+            verification = EmailVerificationToken.objects.create(share_link=link, email=email, name=viewer_name)
             
             # Construct magic link URL
             access_url = urljoin(
@@ -2210,12 +2332,27 @@ class ShareLinkConfirmAccessView(APIView):
                 if verification.is_expired() or verification.share_link != link:
                     return Response({"message": "The verification link has expired or is invalid."}, status=status.HTTP_400_BAD_REQUEST)
 
+                if link.restrict_to_grants and not amforge.is_email_granted(link, verification.email):
+                    verification.delete()
+                    return Response(
+                        {"message": "This email address is not authorised to access this link.", "accessDenied": True},
+                        status=status.HTTP_403_FORBIDDEN,
+                    )
+
                 # Authorize the session for email verification only
                 authorized_links = request.session.get('authorized_share_links', {})
                 current_status = authorized_links.get(str(link.id), {})
                 current_status['email_verified'] = True
                 current_status['viewer_email'] = verification.email
                 current_status['email_method'] = 'verified'
+                # AmForge: carry the viewer's name and resolved organisation.
+                current_status['viewer_name'] = verification.name or current_status.get('viewer_name', '')
+                tenant_org = link.organization
+                viewer_org = amforge.resolve_viewer_organisation(tenant_org, verification.email, link)
+                current_status['viewer_organisation_id'] = str(viewer_org.id) if viewer_org else ''
+                current_status['viewer_organisation_name'] = viewer_org.name if viewer_org else ''
+                if verification.name and tenant_org is not None:
+                    Viewer.objects.filter(organization=tenant_org, email=verification.email).update(name=verification.name)
                 authorized_links[str(link.id)] = current_status
                 request.session['authorized_share_links'] = authorized_links
                 
@@ -2255,14 +2392,16 @@ def _calculate_watermark_grid_params(page_width, page_height, rotated_tile_width
     }
 
 
-def _render_watermark_text(template_string: str, request, viewer_email: str = '') -> str:
-    """Renders a watermark template string with dynamic variables."""
-    ip_address = get_client_ip(request) or 'N/A'
-    email = viewer_email or 'N/A'
-    # Add more variables here in the future if needed
-    rendered_text = template_string.replace('{{ip-address}}', ip_address)
-    rendered_text = rendered_text.replace('{{email}}', email)
-    return rendered_text
+def _render_watermark_text(template_string: str, request, viewer_email: str = '', identity: dict | None = None) -> str:
+    """
+    Renders a watermark template string with dynamic variables:
+    {{email}}, {{ip-address}} and (AmForge) {{name}}, {{organisation}}, {{copy_id}}, {{date}}.
+    """
+    if identity is None:
+        identity = amforge.anonymous_identity(request, viewer_email)
+    elif viewer_email and not identity.get('email'):
+        identity = {**identity, 'email': viewer_email}
+    return amforge.render_watermark_template(template_string, identity)
 
 
 @extend_schema(tags=['sharelinks'])
@@ -2406,10 +2545,19 @@ class WatermarkedPageRenderView(APIView):
 
         viewer_email = auth_status.get('viewer_email', '')
         effective_watermark_text = get_effective_watermark_text(link)
+        # AmForge: one stable 'view' copy per document per browser session.
+        identity = amforge.issue_copy(
+            link, request, document, IssuedCopy.KIND_VIEW,
+            dataroom_document=setting.dataroom_document if link.dataroom else None,
+            auth_status=auth_status,
+        )
 
         # Generate an ETag based on factors that would change the output image.
         ip_address = get_client_ip(request) or ''
-        etag_source = f"{source_image_key}-{link.updated_at.isoformat()}-{effective_watermark_text}-{ip_address}-{viewer_email}"
+        etag_source = (
+            f"{source_image_key}-{link.updated_at.isoformat()}-{effective_watermark_text}-{ip_address}-{viewer_email}"
+            f"-{identity['copy_id']}-{identity['name']}-{identity['organisation']}"
+        )
         etag = hashlib.md5(etag_source.encode()).hexdigest()
 
         # Check against the If-None-Match header from the client.
@@ -2424,9 +2572,9 @@ class WatermarkedPageRenderView(APIView):
             response.raise_for_status()
             image = Image.open(BytesIO(response.content)).convert("RGBA")
 
-            watermark_text = _render_watermark_text(effective_watermark_text, request, viewer_email=viewer_email)
-            
-            watermarked_image = _apply_watermark_to_image(image, watermark_text)
+            watermark_text = _render_watermark_text(effective_watermark_text, request, viewer_email=viewer_email, identity=identity)
+
+            watermarked_image = _apply_watermark_to_image(image, watermark_text, identity=identity)
 
             # Save to buffer and return as response
             buffer = BytesIO()
@@ -2436,6 +2584,7 @@ class WatermarkedPageRenderView(APIView):
             response = HttpResponse(buffer.getvalue(), content_type="image/jpeg")
             response["Content-Length"] = str(len(buffer.getvalue()))
             response["Content-Disposition"] = f'inline; filename="{document.id}_page_{page_number}.jpg"'
+            response["X-AmForge-Copy-ID"] = identity['copy_id']
 
             # Set caching headers with the new ETag
             response['ETag'] = quote_etag(etag)
@@ -2451,9 +2600,11 @@ class WatermarkedPageRenderView(APIView):
             )
 
 
-def _apply_watermark_to_image(image: Image, watermark_text: str) -> Image:
+def _apply_watermark_to_image(image: Image, watermark_text: str, identity: dict | None = None) -> Image:
     """
     Applies a tiled, rotated watermark to a given Pillow Image object.
+    AmForge: when ``identity`` is given, also draws the structured
+    'Issued to …' footer and the vertical margin line.
     """
     txt_layer = Image.new('RGBA', image.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(txt_layer)
@@ -2490,10 +2641,13 @@ def _apply_watermark_to_image(image: Image, watermark_text: str) -> Image:
         for y in grid_params['y_range']:
             txt_layer.alpha_composite(rotated_tile, (x, y))
 
-    return Image.alpha_composite(image, txt_layer)
+    result = Image.alpha_composite(image, txt_layer)
+    if identity is not None:
+        result = amforge.draw_footer_on_image(result, identity)
+    return result
 
 
-def _generate_watermarked_image(document, primary_version, watermark_text_template, request, viewer_email):
+def _generate_watermarked_image(document, primary_version, watermark_text_template, request, viewer_email, identity=None):
     """
     Generates a watermarked image in-memory and returns it as a BytesIO buffer and content type.
     """
@@ -2516,13 +2670,18 @@ def _generate_watermarked_image(document, primary_version, watermark_text_templa
         response.raise_for_status()
         image = Image.open(BytesIO(response.content)).convert("RGBA")
 
-        watermark_text = _render_watermark_text(watermark_text_template, request, viewer_email=viewer_email)
-        
-        watermarked_image = _apply_watermark_to_image(image, watermark_text)
+        watermark_text = _render_watermark_text(watermark_text_template, request, viewer_email=viewer_email, identity=identity)
+
+        watermarked_image = _apply_watermark_to_image(image, watermark_text, identity=identity)
 
         # Save to buffer. Using JPEG to be consistent with page rendering.
         buffer = BytesIO()
-        watermarked_image.convert("RGB").save(buffer, format="JPEG", quality=WATERMARK_JPEG_QUALITY)
+        save_kwargs = {'format': 'JPEG', 'quality': WATERMARK_JPEG_QUALITY}
+        if identity is not None:
+            exif_bytes = amforge.jpeg_exif_for(identity)
+            if exif_bytes:
+                save_kwargs['exif'] = exif_bytes
+        watermarked_image.convert("RGB").save(buffer, **save_kwargs)
         content_type = 'image/jpeg'
         buffer.seek(0)
 
@@ -2533,7 +2692,7 @@ def _generate_watermarked_image(document, primary_version, watermark_text_templa
         raise WatermarkingError("An error occurred while generating the watermarked image file.") from e
 
 
-def _generate_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email):
+def _generate_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email, identity=None):
     """
     Generates a watermarked PDF in-memory and returns it as a BytesIO buffer.
     """
@@ -2567,16 +2726,8 @@ def _generate_watermarked_pdf(document, primary_version, watermark_text, request
         if not reader.pages:
             raise InvalidDocumentForWatermarkingError("Cannot apply watermark to an empty PDF.")
 
-        rendered_watermark_text = _render_watermark_text(watermark_text, request, viewer_email)
+        rendered_watermark_text = _render_watermark_text(watermark_text, request, viewer_email, identity=identity)
 
-        # Create a watermark page in memory
-        watermark_buffer = BytesIO()
-        first_page_box = reader.pages[0].mediabox
-        page_width, page_height = (float(first_page_box.width), float(first_page_box.height))
-
-        # --- Logic mirrored from Pillow implementation ---
-        font_size = max(WATERMARK_MIN_FONT_SIZE, int(page_width / WATERMARK_FONT_SIZE_RATIO))
-        
         # Register the font for reportlab
         font_name = 'WatermarkFont'
         try:
@@ -2588,49 +2739,67 @@ def _generate_watermarked_pdf(document, primary_version, watermark_text, request
             logger.warning(f"Could not register TTF font for PDF watermarking: {e}. Falling back to Helvetica.")
             font_name = 'Helvetica'
 
-        # Use a temporary canvas to get text dimensions
-        temp_canvas = canvas.Canvas(BytesIO())
-        temp_canvas.setFont(font_name, font_size)
-        text_width = temp_canvas.stringWidth(rendered_watermark_text, font_name, font_size)
-        text_height = font_size  # Approximation
+        def _build_watermark_page(page_width, page_height):
+            # --- Logic mirrored from Pillow implementation ---
+            font_size = max(WATERMARK_MIN_FONT_SIZE, int(page_width / WATERMARK_FONT_SIZE_RATIO))
 
-        # Calculate bounding box of rotated text
-        rad_angle = 45 * (math.pi / 180)
-        cos_a = math.cos(rad_angle)
-        sin_a = math.sin(rad_angle)
-        rotated_width = text_width * cos_a + text_height * sin_a
-        rotated_height = text_width * sin_a + text_height * cos_a
+            # Use a temporary canvas to get text dimensions
+            temp_canvas = canvas.Canvas(BytesIO())
+            temp_canvas.setFont(font_name, font_size)
+            text_width = temp_canvas.stringWidth(rendered_watermark_text, font_name, font_size)
+            text_height = font_size  # Approximation
 
-        grid_params = _calculate_watermark_grid_params(
-            page_width=page_width,
-            page_height=page_height,
-            rotated_tile_width=rotated_width,
-            rotated_tile_height=rotated_height
-        )
+            # Calculate bounding box of rotated text
+            rad_angle = 45 * (math.pi / 180)
+            cos_a = math.cos(rad_angle)
+            sin_a = math.sin(rad_angle)
+            rotated_width = text_width * cos_a + text_height * sin_a
+            rotated_height = text_width * sin_a + text_height * cos_a
 
-        # --- Create the actual watermark page ---
-        p = canvas.Canvas(watermark_buffer, pagesize=(page_width, page_height))
-        p.setFont(font_name, font_size)
-        p.setFillColor(colors.black, alpha=WATERMARK_PDF_ALPHA)
+            grid_params = _calculate_watermark_grid_params(
+                page_width=page_width,
+                page_height=page_height,
+                rotated_tile_width=rotated_width,
+                rotated_tile_height=rotated_height
+            )
 
-        # Draw rotated text at each grid position
-        for x in grid_params['x_range']:
-            for y in grid_params['y_range']:
-                p.saveState()
-                p.translate(x, y)
-                p.rotate(WATERMARK_ROTATION_ANGLE)
-                p.drawCentredString(0, 0, rendered_watermark_text)
-                p.restoreState()
-        p.save()
-        watermark_buffer.seek(0)
-        
-        watermark_pdf = PdfReader(watermark_buffer)
-        watermark_page = watermark_pdf.pages[0]
-        
-        # Merge watermark onto each page
+            # --- Create the actual watermark page ---
+            watermark_buffer = BytesIO()
+            p = canvas.Canvas(watermark_buffer, pagesize=(page_width, page_height))
+            p.setFont(font_name, font_size)
+            p.setFillColor(colors.black, alpha=WATERMARK_PDF_ALPHA)
+
+            # Draw rotated text at each grid position
+            for x in grid_params['x_range']:
+                for y in grid_params['y_range']:
+                    p.saveState()
+                    p.translate(x, y)
+                    p.rotate(WATERMARK_ROTATION_ANGLE)
+                    p.drawCentredString(0, 0, rendered_watermark_text)
+                    p.restoreState()
+            # AmForge: structured footer + vertical margin line.
+            if identity is not None:
+                amforge.draw_footer_on_canvas(p, page_width, page_height, identity)
+            p.save()
+            watermark_buffer.seek(0)
+            return PdfReader(watermark_buffer).pages[0]
+
+        # Merge watermark onto each page (one overlay per distinct page size).
+        overlays = {}
         for page in reader.pages:
-            page.merge_page(watermark_page)
+            box = page.mediabox
+            size_key = (round(float(box.width), 2), round(float(box.height), 2))
+            if size_key not in overlays:
+                overlays[size_key] = _build_watermark_page(*size_key)
+            left, bottom = float(box.left), float(box.bottom)
+            if left or bottom:
+                page.merge_transformed_page(overlays[size_key], Transformation().translate(left, bottom))
+            else:
+                page.merge_page(overlays[size_key])
             writer.add_page(page)
+
+        if identity is not None:
+            amforge.apply_pdf_metadata(writer, identity)
 
         output_buffer = BytesIO()
         writer.write(output_buffer)
@@ -2641,7 +2810,7 @@ def _generate_watermarked_pdf(document, primary_version, watermark_text, request
         raise WatermarkingError("An error occurred while generating the watermarked file.") from e
 
 
-def _generate_flattened_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email):
+def _generate_flattened_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email, identity=None):
     """
     Generates a flattened, watermarked PDF (rasterized to JPEGs and recompiled to PDF).
     """
@@ -2652,10 +2821,10 @@ def _generate_flattened_watermarked_pdf(document, primary_version, watermark_tex
             f"Document {document.id} has {primary_version.num_pages} pages, "
             f"exceeding MAX_PREVIEW_PAGES ({max_pages}). Falling back to vector watermarking."
         )
-        return _generate_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email)
+        return _generate_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email, identity=identity)
 
     # 1. Generate standard vector watermarked PDF
-    vector_pdf_buffer = _generate_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email)
+    vector_pdf_buffer = _generate_watermarked_pdf(document, primary_version, watermark_text, request, viewer_email, identity=identity)
     
     # 2. Rasterize pages to JPEGs using poppler
     pages = []
@@ -2675,6 +2844,9 @@ def _generate_flattened_watermarked_pdf(document, primary_version, watermark_tex
         flattened_buffer = BytesIO()
         converted_images[0].save(flattened_buffer, format="PDF", save_all=True, append_images=converted_images[1:])
         flattened_buffer.seek(0)
+        if identity is not None:
+            # Rasterising drops the vector PDF's metadata; stamp it again.
+            return amforge.stamp_pdf_bytes(flattened_buffer.getvalue(), identity)
         return flattened_buffer
     except Exception as e:
         logger.error("Failed to flatten watermarked PDF: %s", type(e).__name__)
@@ -2737,6 +2909,7 @@ class ShareLinkFileDownloadView(APIView):
         document = None
         allow_download = False
         enable_watermark = False
+        setting = None
 
         if link.dataroom:
             dataroom_document_id = request.query_params.get('dataroom_document_id')
@@ -2774,6 +2947,11 @@ class ShareLinkFileDownloadView(APIView):
 
         if not allow_download:
             return Response({"message": "Download is not allowed for this item."}, status=status.HTTP_403_FORBIDDEN)
+
+        # AmForge: every download is a watermarked copy unless the admin explicitly
+        # allowed original-file downloads for this link (and the item isn't watermarked).
+        use_watermark = amforge.download_requires_watermark(link, enable_watermark)
+        dataroom_document_obj = setting.dataroom_document if setting is not None else None
 
         primary_version = document.versions.filter(is_primary=True).first()
 
@@ -2839,7 +3017,7 @@ class ShareLinkFileDownloadView(APIView):
         if not primary_version:
             return Response({"message": "Document version not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        if enable_watermark:
+        if use_watermark:
             max_watermark_mb = get_max_watermark_file_size_mb()
             file_size = (primary_version.file_size if primary_version else 0) or getattr(document, 'file_size', 0) or 0
             if file_size > (max_watermark_mb * 1024 * 1024):
@@ -2867,27 +3045,33 @@ class ShareLinkFileDownloadView(APIView):
                 or request.query_params.get('disposition', '').lower() == 'inline'
             )
             disposition_type = 'inline' if is_inline else 'attachment'
+            identity = amforge.issue_copy(
+                link, request, document, IssuedCopy.KIND_DOWNLOAD,
+                dataroom_document=dataroom_document_obj, auth_status=auth_status,
+            )
             try:
                 if document.type == 'image':
                     image_buffer, content_type = _generate_watermarked_image(
-                        document, primary_version, effective_watermark_text, request, viewer_email
+                        document, primary_version, effective_watermark_text, request, viewer_email, identity=identity
                     )
                     response = HttpResponse(image_buffer, content_type=content_type)
                     # Ensure filename has .jpg extension since we're creating a JPEG
                     safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
                     response['Content-Disposition'] = f'{disposition_type}; filename="{safe_filename}.jpg"'
+                    response['X-AmForge-Copy-ID'] = identity['copy_id']
                     return response
 
                 # Fallback for PDF and Office documents which become PDF
                 flatten_active = get_dynamic_setting('FLATTEN_WATERMARKED_DOWNLOADS')
                 if flatten_active:
-                    pdf_buffer = _generate_flattened_watermarked_pdf(document, primary_version, effective_watermark_text, request, viewer_email)
+                    pdf_buffer = _generate_flattened_watermarked_pdf(document, primary_version, effective_watermark_text, request, viewer_email, identity=identity)
                 else:
-                    pdf_buffer = _generate_watermarked_pdf(document, primary_version, effective_watermark_text, request, viewer_email)
+                    pdf_buffer = _generate_watermarked_pdf(document, primary_version, effective_watermark_text, request, viewer_email, identity=identity)
                 response = HttpResponse(pdf_buffer, content_type='application/pdf')
                 # Ensure filename has .pdf extension
                 safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
                 response['Content-Disposition'] = f'{disposition_type}; filename="{safe_filename}.pdf"'
+                response['X-AmForge-Copy-ID'] = identity['copy_id']
                 return response
             except WatermarkingDependenciesMissingError as e:
                 return Response({"message": str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
@@ -2901,9 +3085,14 @@ class ShareLinkFileDownloadView(APIView):
                 )
         else:
             # Serve the original, non-watermarked file by redirecting to a secure download URL.
+            # AmForge: only reachable when link.allow_original_download is set; audited.
             if not primary_version.original_storage_key:
                 return Response({"message": "Original file not found for download."}, status=status.HTTP_404_NOT_FOUND)
-            
+            amforge.issue_copy(
+                link, request, document, IssuedCopy.KIND_ORIGINAL,
+                dataroom_document=dataroom_document_obj,
+            )
+
             try:
                 download_url = fileserver_client.generate_download_url(
                     primary_version.original_storage_key, is_internal=False, filename=document.name
@@ -3442,6 +3631,7 @@ class ViewSessionViewSet(
 
         viewer_email = ''
         email_method = ''
+        viewer_name = ''
         if preview_owner_email:
             viewer_email = preview_owner_email
             is_owner = bool(share_link and share_link.created_by and preview_owner_email == share_link.created_by.email)
@@ -3455,6 +3645,7 @@ class ViewSessionViewSet(
                 if auth_status.get('email_verified'):
                     viewer_email = auth_status.get('viewer_email')
                     email_method = auth_status.get('email_method', '')
+                    viewer_name = auth_status.get('viewer_name', '') or ''
 
         # If no email is found from the above flows, check if the request is from an
         # authenticated user and record their email.
@@ -3464,6 +3655,7 @@ class ViewSessionViewSet(
             email_method = 'owner' if is_owner else 'account'
 
         viewer = None
+        viewer_org = None
         if viewer_email and share_link:
             organization = share_link.document.organization if share_link.document else share_link.dataroom.organization
             if organization:
@@ -3471,6 +3663,12 @@ class ViewSessionViewSet(
                     organization=organization,
                     email=viewer_email.strip().lower(),
                 )
+                if not viewer_name and viewer.name:
+                    viewer_name = viewer.name
+                if not viewer_name and self.request.user.is_authenticated:
+                    viewer_name = getattr(self.request.user, 'name', '') or ''
+                # AmForge: resolve the counterparty organisation from the email domain.
+                viewer_org = amforge.resolve_viewer_organisation(organization, viewer_email, share_link)
 
         # GeoIP lookup
         location_data = {}
@@ -3488,11 +3686,24 @@ class ViewSessionViewSet(
             viewer=viewer,
             viewer_email=viewer_email,
             email_verification_method=email_method if viewer_email else '',
+            viewer_name=viewer_name or '',
+            viewer_organisation=viewer_org,
+            viewer_organisation_name=viewer_org.name if viewer_org else '',
             country=location_data.get('country_name') or '',
             city=location_data.get('city') or '',
             latitude=location_data.get('latitude'),
             longitude=location_data.get('longitude')
         )
+
+        # AmForge: remember the current view session so page renders / downloads
+        # can attribute their issued copies to it.
+        if instance.share_link:
+            authorized_links = self.request.session.get('authorized_share_links', {})
+            entry = authorized_links.get(str(instance.share_link_id))
+            if entry is not None:
+                entry['view_session_id'] = str(instance.id)
+                authorized_links[str(instance.share_link_id)] = entry
+                self.request.session['authorized_share_links'] = authorized_links
 
         if instance.share_link:
             base_payload = {
