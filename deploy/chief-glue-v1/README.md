@@ -22,3 +22,10 @@ Limitations: one PDF item and basic SIGNER fields in this slice; rich field meta
 The inherited full Send backend gate remains B's responsibility; it is not replaced by this focused suite. Independent manager review and multi-architecture/release gates remain outstanding.
 
 Edge caveat on h-mini2: the running Caddy container still binds the old renamed repo path. `/etc/caddy/Caddyfile` may be stale; loading the current product config via stdin preserves all sibling blocks. D must repair the mount during an authorized edge lifecycle change. Do not restart existing containers to work around it.
+
+
+Gate 3 r2 regression proof: `python3 deploy/chief-glue-v1/review_mutations.py` temporarily restores one r1 implementation at a time, requires its targeted test to fail, restores the implementation in `finally`, then requires a pass. Run from a quiescent worktree; never alongside builds or other tests. `--only 01` selects one check; `--base` overrides the reviewed r1 commit. Logs remain under ignored `.local/r2/`.
+
+The web listener binds only `100.110.241.2:8797`. C's edge hostname forwards to that address (the existing edge container is not on `amforge-net`). Recipient/staff origins are still shared on this internal demo; separate origins remain a coordinated deployment follow-up.
+
+`e2e/review_guards.cjs` verifies two real OTP members have disjoint NDA folders and private evidence pages. `e2e/reset_stuck.cjs` requires a fresh named grant and `MEMBER_EMAIL=r2-…`; it verifies real OTP, creates a native draft, explicitly injects the persisted lost-distribution state, and uses the human staff page to reset it. It checks actual draft deletion and fresh workflow creation. Then run `e2e/flows.cjs` with the same email to sign the replacement and verify access. The fault fixture simulates only the stuck distribution state; signatures, sealing and acceptance remain native and authoritative.

@@ -347,3 +347,14 @@ def test_stuck_nda_status_identifies_subject_for_staff(fixture, member_context, 
     assert response.data['member_email'] == member_context.member.email
     page = (ROOT/'backend/dealroom_sign/templates/dealroom_sign/staff.html').read_text()
     assert 'env.member_email' in page
+
+
+@pytest.mark.parametrize('route', ['who-viewed', 'sources', 'nda-policy'])
+@pytest.mark.parametrize('location', ['query', 'body'])
+def test_path_conflicts_rejected_for_human_staff(fixture, human, route, location):
+    url = f'/api/v1/dealroom-sign/{route}/{fixture.room.pk}/'
+    if location == 'query':
+        response = human.get(url, {'room_id': 'conflicting-room'})
+    else:
+        response = human.generic('GET', url, json.dumps({'room_id':'conflicting-room'}), content_type='application/json')
+    assert response.status_code == 403

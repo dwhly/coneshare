@@ -25,6 +25,7 @@ from .workflows import command
 
 
 def staff_room(request, room_id):
+    reject_room_conflicts(request, room_id)
     return get_object_or_404(Dataroom, pk=room_id, organization=request.user.organization, created_by=request.user)
 
 
@@ -36,17 +37,21 @@ def room_version(room, version_id):
     return version
 
 
+def reject_room_conflicts(request, room_id):
+    supplied = request.query_params.getlist('room_id')
+    if 'room_id' in request.data:
+        supplied.append(request.data['room_id'])
+    if room_id is not None and any(str(value) != str(room_id) for value in supplied):
+        raise PermissionDenied('room_id conflicts with the target room.')
+
+
 def scoped_room(view, request):
     room_id = view.kwargs.get('room_id')
     if room_id is None and view.kwargs.get('pk'):
         room_id = str(view.get_object().room_id)
     if room_id is None:
         room_id = request.query_params.get('room_id') if request.method == 'GET' else request.data.get('room_id')
-    supplied = request.query_params.getlist('room_id')
-    if 'room_id' in request.data:
-        supplied.append(request.data['room_id'])
-    if room_id is not None and any(str(value) != str(room_id) for value in supplied):
-        raise PermissionDenied('room_id conflicts with the target room.')
+    reject_room_conflicts(request, room_id)
     if not room_id:
         raise PermissionDenied('Scoped signing queries require a room_id.')
     # Recipient-org-restricted keys cannot distribute to arbitrary emails.
