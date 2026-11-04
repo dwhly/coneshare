@@ -601,7 +601,7 @@
     "recipient": false
   },
   {
-    "human_only": false,
+    "human_only": true,
     "method": "POST",
     "multipart": false,
     "name": "dealroom_DriftViewSet_acknowledge_post",
@@ -1001,6 +1001,50 @@
     "path_params": [
       "id"
     ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_deny_member_post",
+    "operation_id": "dealroom_GrantViewSet_deny_member_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/deny-member/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_GrantViewSet_restore_member_post",
+    "operation_id": "dealroom_GrantViewSet_restore_member_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/grants/restore-member/",
+    "path_params": [],
     "query_params": [],
     "recipient": false
   },

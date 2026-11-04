@@ -220,7 +220,7 @@ def test_member_rebinding_and_grant_expiry_edit_cannot_bypass_http_approval(staf
 
 
 @pytest.mark.django_db
-def test_personalized_pages_private_no_store_success_and_warm_cache(staff, owner, monkeypatch):
+def test_personalized_pages_private_no_store_success_and_warm_cache(staff, owner, monkeypatch, django_capture_on_commit_callbacks):
     from PIL import Image
     from io import BytesIO
     from sharelinks.models import ShareLink, Viewer, ShareLinkDataroomSetting
@@ -240,9 +240,9 @@ def test_personalized_pages_private_no_store_success_and_warm_cache(staff, owner
     monkeypatch.setattr('sharelinks.views.fileserver_client.generate_download_url',lambda *a,**k:'http://internal/page.png')
     response=MagicMock();response.content=image.getvalue()
     monkeypatch.setattr('sharelinks.views.requests.get',lambda *a,**k:response)
-    recipient=APIClient();session=recipient.session;now=timezone.now().timestamp()
-    session['dealroom_member']={'room_id':room_id,'member_id':str(member.pk),'email':member.email,'expires':now+3600,'last_seen':now}
-    session['authorized_share_links']={str(link.pk):{'email_verified':True,'email_method':'verified','viewer_email':member.email,'viewer_name':'Jane','viewer_organisation_name':'Acme'}};session.save()
+    from tests.dealroom.test_review_r2 import verify
+    recipient, confirmed = verify(staff, slug, django_capture_on_commit_callbacks)
+    assert confirmed.data['status'] == 'verified'
     path=f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}'
     first=recipient.get(path)
     assert first.status_code==200, getattr(first,'data',None)
@@ -253,7 +253,7 @@ def test_personalized_pages_private_no_store_success_and_warm_cache(staff, owner
     assert warm['X-Dealroom-Copy-ID']==first['X-Dealroom-Copy-ID']
 
 @pytest.mark.django_db
-def test_original_exception_bounded_approved_and_consumed_once(staff, agent, owner, monkeypatch):
+def test_original_exception_bounded_approved_and_consumed_once(staff, agent, owner, monkeypatch, django_capture_on_commit_callbacks):
     from unittest.mock import MagicMock
     from sharelinks.models import ShareLink, ShareLinkAccessGrant, Viewer, ShareLinkDataroomSetting
     from datarooms.models import DataroomDocument
@@ -281,14 +281,14 @@ def test_original_exception_bounded_approved_and_consumed_once(staff, agent, own
     assert exception.approved_by==owner
     bad={**payload,'expires_at':(timezone.now()+timedelta(days=8)).isoformat()}
     assert staff.post('/api/v1/dealroom/original-exceptions/',bad,format='json').status_code==400
-    recipient=APIClient();session=recipient.session;now=timezone.now().timestamp()
-    session['dealroom_member']={'room_id':room_id,'member_id':str(member.pk),'email':member.email,'expires':now+3600,'last_seen':now}
-    session['authorized_share_links']={str(link.pk):{'email_verified':True,'email_method':'verified','viewer_email':member.email,'viewer_name':'Jane'}};session.save()
+    from tests.dealroom.test_review_r2 import verify
+    recipient, confirmed = verify(staff, slug, django_capture_on_commit_callbacks)
+    assert confirmed.data['status'] == 'verified'
     monkeypatch.setattr('dealroom.downloads.fileserver_client.generate_download_url',lambda *a,**k:'http://internal/source.pdf')
     response=MagicMock();response.__enter__.return_value=response;response.iter_content.return_value=[b'unchanged original bytes']
     monkeypatch.setattr('dealroom.downloads.requests.get',lambda *a,**k:response)
     url=f'/api/v1/dealroom/recipient/{slug}/original/{exception.pk}/'
-    delivered=recipient.post(url)
+    delivered=recipient.post(url, HTTP_X_CSRFTOKEN=recipient.cookies['csrftoken'].value)
     assert delivered.status_code==200,getattr(delivered,'data',None)
     bundle=zipfile.ZipFile(io.BytesIO(b''.join(delivered.streaming_content)))
     assert bundle.read('original.pdf')==b'unchanged original bytes'
@@ -296,7 +296,7 @@ def test_original_exception_bounded_approved_and_consumed_once(staff, agent, own
     assert CopyEvidence.objects.get().receipt_sha256==hashlib.sha256(receipt).hexdigest()
     assert CopyEvidence.objects.get().version_id==version.pk
     exception.refresh_from_db();assert exception.used_count==1
-    assert recipient.post(url).status_code==403
+    assert recipient.post(url, HTTP_X_CSRFTOKEN=recipient.cookies['csrftoken'].value).status_code==403
     owner.role='member';owner.save(update_fields=['role'])
     assert staff.post('/api/v1/dealroom/original-exceptions/',payload,format='json').status_code==403
 

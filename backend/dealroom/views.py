@@ -121,6 +121,11 @@ class OrgViewSet(StaffViewSet):
             alabel, unicode_domain = guarded_domain(domain)
             DomainConfirmation.objects.create(domain=alabel, unicode_domain=unicode_domain, organization=org, confirmed_by=staff)
         self.fact('org.updated', org)
+    def perform_destroy(self, instance):
+        instance.archived_at = timezone.now()
+        instance.save(update_fields=['archived_at'])
+        instance.grants.filter(revoked_at__isnull=True).update(revoked_at=instance.archived_at)
+        self.fact('org.archived', instance)
     perform_create = save_org
     perform_update = save_org
 
@@ -146,6 +151,28 @@ class GrantViewSet(StaffViewSet):
     serializer_class = GrantSerializer
     def get_queryset(self):
         return ShareLinkAccessGrant.objects.filter(share_link__dataroom__organization=self.request.user.organization).order_by('created_at')
+    def member_target(self, request):
+        from django.shortcuts import get_object_or_404
+        room = get_object_or_404(Dataroom, pk=request.data.get('room'), organization=request.user.organization)
+        member = get_object_or_404(Viewer, pk=request.data.get('member'), organization=request.user.organization)
+        return room, member
+
+    @extend_schema(request=dict, responses=dict)
+    @action(detail=False, methods=['post'], url_path='deny-member')
+    def deny_member(self, request):
+        room, member = self.member_target(request)
+        MemberDeny.objects.get_or_create(room=room, member=member)
+        record('member.denied', organization=request.user.organization, actor=request.auth if isinstance(request.auth, APIKey) else request.user, room_id=room.pk, target_id=member.pk)
+        return Response({'status': 'denied'})
+
+    @extend_schema(request=dict, responses=dict)
+    @action(detail=False, methods=['post'], url_path='restore-member')
+    def restore_member(self, request):
+        room, member = self.member_target(request)
+        MemberDeny.objects.filter(room=room, member=member).delete()
+        record('member.restored', organization=request.user.organization, actor=request.auth if isinstance(request.auth, APIKey) else request.user, room_id=room.pk, target_id=member.pk)
+        return Response({'status': 'restored'})
+
     def perform_create(self, serializer):
         room = serializer.validated_data.pop('room')
         policy = RoomPolicy.objects.get(room=room)
@@ -158,10 +185,6 @@ class GrantViewSet(StaffViewSet):
     def perform_destroy(self, instance):
         instance.revoked_at = timezone.now()
         instance.save(update_fields=['revoked_at'])
-        if instance.email:
-            member = Viewer.objects.filter(organization=self.request.user.organization, email=instance.email).first()
-            if member:
-                MemberDeny.objects.get_or_create(room=instance.share_link.dataroom, member=member)
         self.fact('grant.revoked', instance)
 
 

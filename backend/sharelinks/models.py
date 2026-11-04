@@ -41,6 +41,7 @@ class ViewerOrganisation(BaseModel):
     """
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='viewer_organisations')
     name = models.CharField(max_length=255)
+    archived_at = models.DateTimeField(null=True, blank=True)
     # Lower-cased bare domains, e.g. ["acme.com", "acme.co.uk"].
     email_domains = models.JSONField(default=list, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='viewer_organisations_created')
@@ -104,12 +105,12 @@ class ShareLinkAccessGrant(BaseModel):
             ),
             models.UniqueConstraint(
                 fields=['share_link', 'viewer_organisation'],
-                condition=Q(viewer_organisation__isnull=False),
+                condition=Q(viewer_organisation__isnull=False, revoked_at__isnull=True),
                 name='uq_sharelink_grant_org',
             ),
             models.UniqueConstraint(
                 fields=['share_link', 'email'],
-                condition=~Q(email=''),
+                condition=~Q(email='') & Q(revoked_at__isnull=True),
                 name='uq_sharelink_grant_email',
             ),
         ]

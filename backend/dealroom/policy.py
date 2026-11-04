@@ -30,8 +30,8 @@ def select_grant(link, email):
     member = Viewer.objects.filter(organization=link.organization, email=email).first()
     if member and (member.disabled_at or MemberDeny.objects.filter(room=policy.room, member=member).exists()):
         raise PermissionDenied('Member access is revoked.')
-    grants = list(policy.entry_link.access_grants.select_related('viewer_organisation').filter(revoked_at__isnull=True))
-    grants = [g for g in grants if not g.expires_at or g.expires_at > now]
+    grants = list(policy.entry_link.access_grants.select_related('viewer_organisation').filter(revoked_at__isnull=True).order_by('created_at', 'pk'))
+    grants = [g for g in grants if (not g.expires_at or g.expires_at > now) and (not g.viewer_organisation or not g.viewer_organisation.archived_at)]
     named = [g for g in grants if g.email == email]
     orgs = [g for g in grants if g.viewer_organisation and g.viewer_organisation.matches_email(email)]
     if len(orgs) > 1:

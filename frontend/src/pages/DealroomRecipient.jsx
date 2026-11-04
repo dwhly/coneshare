@@ -9,7 +9,8 @@ export default function DealroomRecipient() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
-  const params = new URLSearchParams(window.location.search);
+  const [params] = useState(() => new URLSearchParams(window.location.hash.slice(1)));
+  useEffect(() => { window.history.replaceState({}, '', window.location.pathname); }, []);
   const [challenge, setChallenge] = useState(params.get('challenge') || '');
   const [room, setRoom] = useState(null);
   const [selected, setSelected] = useState(null);

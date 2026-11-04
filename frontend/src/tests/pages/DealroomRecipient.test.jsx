@@ -11,8 +11,10 @@ beforeEach(()=>{
 afterEach(()=>vi.unstubAllGlobals());
 function mount(){render(<MemoryRouter initialEntries={['/view/atlas']}><Routes><Route path="/view/:slug" element={<DealroomRecipient/>}/></Routes></MemoryRouter>)}
 test('scanner GET never redeems a link without explicit confirmation',async()=>{
-  window.history.replaceState({},'', '/view/atlas?challenge=123&token=secret');
+  window.history.replaceState({},'', '/view/atlas#challenge=123&token=secret');
   mount();await screen.findByRole('button',{name:'Confirm access'});
+  expect(window.location.hash).toBe('');
+  expect(window.location.search).toBe('');
   expect(fetch.mock.calls.every(([,options])=>!options?.method||options.method==='GET')).toBe(true);
   fireEvent.click(screen.getByRole('button',{name:'Confirm access'}));
   await waitFor(()=>expect(fetch.mock.calls.some(([url,options])=>url.endsWith('/confirm/')&&options.method==='POST'&&JSON.parse(options.body).token==='secret')).toBe(true));

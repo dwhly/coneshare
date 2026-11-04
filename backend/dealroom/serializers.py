@@ -21,8 +21,8 @@ class OrgSerializer(serializers.ModelSerializer):
     confirm_domains = serializers.BooleanField(write_only=True, default=False)
     class Meta:
         model = ViewerOrganisation
-        fields = ['id', 'name', 'email_domains', 'confirm_domains']
-        read_only_fields = ['id']
+        fields = ['id', 'name', 'email_domains', 'confirm_domains', 'archived_at']
+        read_only_fields = ['id', 'archived_at']
     def validate_email_domains(self, values):
         return [guarded_domain(value)[0] for value in values]
 
@@ -47,6 +47,8 @@ class GrantSerializer(serializers.ModelSerializer):
         fields = ['id', 'room', 'share_link', 'viewer_organisation', 'email', 'download_ceiling', 'expires_at', 'revoked_at']
         read_only_fields = ['id', 'share_link']
         validators = []
+    def validate_email(self, value):
+        return value.strip().lower()
     def validate(self, data):
         tenant = self.context['request'].user.organization_id
         room = data.get('room')
@@ -60,8 +62,18 @@ class GrantSerializer(serializers.ModelSerializer):
         email = data.get('email', getattr(self.instance, 'email', ''))
         if bool(org) == bool(email):
             raise serializers.ValidationError('Specify exactly one recipient org or email.')
+        if org and org.archived_at:
+            raise serializers.ValidationError('Recipient organization is archived.')
         if org and org.organization_id != tenant:
             raise serializers.ValidationError('Wrong recipient organization.')
+        link_id = self.instance.share_link_id if self.instance else room.roompolicy.entry_link_id
+        active = data.get('revoked_at', getattr(self.instance, 'revoked_at', None)) is None
+        duplicates = ShareLinkAccessGrant.objects.filter(share_link_id=link_id, revoked_at__isnull=True)
+        duplicates = duplicates.filter(viewer_organisation=org) if org else duplicates.filter(email=email)
+        if self.instance:
+            duplicates = duplicates.exclude(pk=self.instance.pk)
+        if active and duplicates.exists():
+            raise serializers.ValidationError('An active grant already exists for this room and subject.')
         if data.get('download_ceiling', 'none') not in ('none', 'watermarked', 'original'):
             raise serializers.ValidationError('Invalid download ceiling.')
         return data
@@ -81,9 +93,28 @@ class EntryLinkSerializer(serializers.ModelSerializer):
 
 
 class ApprovalSerializer(serializers.ModelSerializer):
+    current_state = serializers.SerializerMethodField()
+    def get_current_state(self, obj):
+        from django.urls import resolve
+        from django.http import Http404
+        from rest_framework.exceptions import APIException
+        match = resolve(obj.path)
+        view = match.func.cls()
+        view.request = self.context['request']
+        view.kwargs = match.kwargs
+        view.format_kwarg = None
+        view.action = getattr(match.func, 'actions', {}).get(obj.method.lower())
+        try:
+            if hasattr(view, 'approval_before'):
+                return view.approval_before()
+            if match.kwargs.get('pk') and hasattr(view, 'get_object'):
+                return dict(view.get_serializer(view.get_object()).data)
+            return {}
+        except (Http404, APIException):
+            return {'unavailable': True}
     class Meta:
         model = AccessApproval
-        fields = ['id', 'operation_id', 'method', 'path', 'payload', 'payload_hash', 'status', 'created_at', 'expires_at', 'result']
+        fields = ['id', 'operation_id', 'method', 'path', 'payload', 'current_state', 'payload_hash', 'status', 'created_at', 'expires_at', 'result']
         read_only_fields = fields
 
 

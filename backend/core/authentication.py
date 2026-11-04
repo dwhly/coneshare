@@ -62,13 +62,10 @@ class APIKeyAuthentication(authentication.BaseAuthentication):
             return None
 
         prefix = raw_key[:16]
-        try:
-            api_key = APIKey.objects.select_related('user').get(prefix=prefix)
-        except APIKey.DoesNotExist:
-            raise exceptions.AuthenticationFailed('Invalid API key.')
-
         computed_hash = hash_api_key(raw_key)
-        if not hmac.compare_digest(api_key.hashed_key, computed_hash):
+        candidates = APIKey.objects.select_related('user').filter(prefix__in=[prefix, raw_key[:12]])
+        api_key = next((key for key in candidates if hmac.compare_digest(key.hashed_key, computed_hash)), None)
+        if api_key is None:
             raise exceptions.AuthenticationFailed('Invalid API key.')
 
         if not api_key.user.is_active:

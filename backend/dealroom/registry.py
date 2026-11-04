@@ -33,6 +33,8 @@ def widens_access(operation, before, after):
     rank = {'none': 0, 'watermarked': 1, 'original': 2}
     invitation = {'off': 0, 'owner_approved': 1, 'automatic_same_org': 2}
     for key, value in after.items():
+        if isinstance(value, (list, dict, tuple, set)):
+            return True
         old = before.get(key)
         if old == value or key in SAFE_EDITS:
             continue
@@ -114,7 +116,10 @@ def classify(view, method):
         entry['tier'] = 'full_access'
     if name == 'ApprovalViewSet' or (name, action) in HUMAN_ONLY:
         entry['human_only'] = True
+    if name == 'GrantViewSet' and action in ('deny_member', 'restore_member'):
+        entry['widens_access'] = True
     if name == 'DriftViewSet' and action == 'acknowledge':
+        entry['human_only'] = True
         entry['widens_access'] = False
     if name == 'AgentKeyViewSet' and action in ('create', 'rotate'):
         # Key material is returned only in a staff JWT response. Agents can request a bounded child via approval.

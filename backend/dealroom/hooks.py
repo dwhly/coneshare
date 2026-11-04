@@ -31,6 +31,10 @@ def enforce(view, request):
     if op['human_only'] and not human_staff(request):
         raise PermissionDenied('This operation requires a human staff JWT, never an API key.')
     if isinstance(request.auth, APIKey):
+        if request.method not in ('GET', 'HEAD', 'OPTIONS') and not (type(view).__name__ == 'RoomViewSet' and getattr(view, 'action', None) == 'upload'):
+            if request.content_type.split(';', 1)[0].strip().lower() != 'application/json':
+                from rest_framework.exceptions import UnsupportedMediaType
+                raise UnsupportedMediaType(request.content_type, detail='Agent mutations require application/json; only room upload accepts multipart.')
         if not request.auth.user.is_staff or TIERS.get(request.auth.tier, -1) < TIERS[op['tier']]:
             raise PermissionDenied('Agent key tier does not permit this operation.')
         scope = KeyScope.objects.filter(key=request.auth).first()
@@ -70,11 +74,12 @@ def install():
 
     @wraps(original_dispatch)
     def dispatch(self, request, *args, **kwargs):
-        if not settings.DEALROOM_ENABLED:
+        if not settings.DEALROOM_ENABLED or type(self).__name__ == 'HealthCheckView':
             return original_dispatch(self, request, *args, **kwargs)
         from .activity import record
-        with transaction.atomic():
-            render = type(self).__name__ in {'WatermarkedPageRenderView', 'ShareLinkFileDownloadView', 'OriginalDownloadView'}
+        from contextlib import nullcontext
+        with (nullcontext() if type(self).__name__ == 'OriginalDownloadView' else transaction.atomic()):
+            render = type(self).__name__ in {'WatermarkedPageRenderView', 'ShareLinkFileDownloadView'}
             if render:
                 RENDER_SEMAPHORE.acquire()
             try:
@@ -84,7 +89,8 @@ def install():
                 if response.status_code >= 400:
                     # API errors should never leave partial mutations. OTP attempts intentionally
                     # return a 200 state=refused so failed attempts commit and cannot be reset.
-                    transaction.set_rollback(True)
+                    if type(self).__name__ != 'OriginalDownloadView':
+                        transaction.set_rollback(True)
                 elif isinstance(auth, APIKey) and op:
                     record('agent.action', organization=auth.user.organization, actor=auth, data={'operation_id': op['operation_id'], 'status': response.status_code})
                 if response.status_code == 200 and type(self).__name__ in {'WatermarkedPageRenderView', 'ShareLinkFileDownloadView'}:
@@ -102,10 +108,35 @@ def install():
                         if downloaded:
                             CopyEvidence.objects.filter(copy=copy).update(artifact_sha256=artifact_hash)
                         response['X-Dealroom-Copy-ID'] = copy_id
-                return response
             finally:
                 if render:
                     RENDER_SEMAPHORE.release()
+        if response.status_code in (401, 403):
+            audit_denial(self, response)
+        return response
 
     APIView.initial, APIView.dispatch = initial, dispatch
     APIView._dealroom_installed = True
+
+
+def audit_denial(view, response):
+    """Persist a safe access-attempt fact after the failed mutation has rolled back."""
+    from .activity import record
+    request = view.request
+    actor = request.auth if isinstance(request.auth, APIKey) else request.user
+    organization = getattr(request.user, 'organization', None)
+    room_id = ''
+    slug = getattr(view, 'kwargs', {}).get('slug')
+    if slug:
+        from sharelinks.models import ShareLink, Viewer
+        link = ShareLink.objects.filter(slug=slug).first()
+        if link:
+            organization, room_id = link.organization, link.dataroom_id
+            proof = request.session.get('dealroom_member', {})
+            actor = Viewer.objects.filter(pk=proof.get('member_id'), organization=organization).first()
+    if organization:
+        op = getattr(request, 'dealroom_operation', {})
+        data = {'operation_id': op.get('operation_id', ''), 'status': response.status_code}
+        record('access.denied', organization=organization, actor=actor or 'anonymous', room_id=room_id, data=data)
+        if isinstance(request.auth, APIKey):
+            record('agent.action', organization=organization, actor=request.auth, room_id=room_id, data=data)

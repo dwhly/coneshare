@@ -89,7 +89,7 @@ class RecipientChallengeView(APIView):
             challenge.save()
             brand = load_brand()
             origin = getattr(settings, 'SITE_DOMAIN', '').rstrip('/')
-            message = f'Your {brand["name"]} verification code is {code}. It expires in 10 minutes.\n\nConfirm explicitly at {origin}/view/{slug}?challenge={challenge.id}&token={token}\nOpening this link does not sign you in.'
+            message = f'Your {brand["name"]} verification code is {code}. It expires in 10 minutes.\n\nConfirm explicitly at {origin}/view/{slug}#challenge={challenge.id}&token={token}\nOpening this link does not sign you in.'
             transaction.on_commit(lambda: send_mail(f'{brand["name"]}: your verification code', message, brand['email_sender'], [email]))
         # Same response and delivery whether or not the email currently has a grant.
         return Response({'status': 'code_sent', 'challenge_id': str(challenge.pk)})

@@ -4,6 +4,7 @@ import tempfile
 import zipfile
 import requests
 from django.http import FileResponse
+from django.db import transaction
 from django.utils import timezone
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -24,6 +25,7 @@ class OriginalDownloadView(APIView):
     authentication_classes = []
 
     @extend_schema(request=None, responses={(200,'application/zip'):bytes})
+    @transaction.atomic
     def post(self, request, slug, exception_id):
         csrf(request)
         link = get_link(slug)
