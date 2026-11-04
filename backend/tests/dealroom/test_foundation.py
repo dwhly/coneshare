@@ -332,7 +332,8 @@ def test_no_served_view_can_override_the_central_drf_hook():
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('case', ['grant_ceiling','grant_expiry_extend','grant_expiry_clear','grant_restore','member_email','member_org','org_domain','room_restore','invitation_loosen','link_restore','link_expiry_clear','link_password','link_scope','automation_destination','webhook_destination','file_original'])
-def test_each_edit_to_widen_cannot_bypass_the_http_gate(case,staff,agent,owner):
+@pytest.mark.parametrize('encoding', ['json', 'multipart'])
+def test_each_edit_to_widen_cannot_bypass_the_http_gate(case,staff,agent,owner,encoding):
     from sharelinks.models import ShareLink,ShareLinkAccessGrant,Viewer,ViewerOrganisation,ShareLinkDataroomSetting
     from datarooms.models import DataroomDocument
     from documents.models import Document
@@ -376,7 +377,11 @@ def test_each_edit_to_widen_cannot_bypass_the_http_gate(case,staff,agent,owner):
         item=DataroomDocument.objects.create(dataroom_id=room_id,document=doc)
         policy=ShareLinkDataroomSetting.objects.get(share_link=link,dataroom_document=item)
         url=f'/api/v1/dealroom/file-policies/{policy.pk}/';data={'download_ceiling':'original'}
-    result=agent.patch(url,data,format='json')
+    if encoding == 'multipart':
+        data = {key: '' if value is None else value for key, value in data.items()}
+        if expected == 202:
+            expected = 415
+    result=agent.patch(url,data,format=encoding)
     assert result.status_code==expected,(case,result.data)
     if expected==202:
         assert AccessApproval.objects.get(pk=result.data['approval_id']).status=='pending_approval'
