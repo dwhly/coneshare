@@ -146,7 +146,7 @@ def _identity_dict(copy: IssuedCopy, ip_address: str) -> dict:
     }
 
 
-def issue_copy(share_link, request, document, kind, dataroom_document=None, auth_status=None) -> dict:
+def issue_copy(share_link, request, document, kind, dataroom_document=None, auth_status=None, version_override=None) -> dict:
     """
     Return the watermark identity for one copy of ``document``.
 
@@ -158,7 +158,7 @@ def issue_copy(share_link, request, document, kind, dataroom_document=None, auth
     ip_address = get_client_ip(request) or ''
     session_key = _session_key(request)
     copy = None
-    version = document.versions.filter(is_primary=True).first()
+    version = version_override or document.versions.filter(is_primary=True).first()
     if kind == IssuedCopy.KIND_VIEW:
         lookup = IssuedCopy.objects.filter(
             share_link=share_link, kind=kind, document=document, session_key=session_key,
@@ -188,7 +188,8 @@ def issue_copy(share_link, request, document, kind, dataroom_document=None, auth
             from dealroom.models import CopyEvidence
             from dealroom.brand import load_brand
             if version:
-                CopyEvidence.objects.create(copy=copy, version=version, brand_revision=load_brand()['revision'], source_sha256=version.metadata.get('source_sha256', ''))
+                decision = getattr(request, 'dealroom_decision', None)
+                CopyEvidence.objects.create(copy=copy, version=version, brand_revision=load_brand()['revision'], source_sha256=version.metadata.get('source_sha256', ''), grant_id=decision.grant_id if decision else None, policy_revision=decision.policy_revision if decision else 1)
             record('copy.issued', organization=share_link.organization, actor=ident['view_session'].viewer if ident['view_session'] else ident['email'], room_id=share_link.dataroom_id, target_id=copy.copy_id, data={'kind': kind})
         if kind == IssuedCopy.KIND_ORIGINAL:
             logger.warning(

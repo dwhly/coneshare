@@ -48,8 +48,13 @@ class OriginalDownloadView(APIView):
                 if total>50*1024*1024:
                     source.close();output.close();raise ValidationError('Original exceeds the 50 MiB bound.')
                 source_hash.update(chunk);source.write(chunk)
+        expected_hash = exception.version.metadata.get('source_sha256')
+        if expected_hash and expected_hash != source_hash.hexdigest():
+            source.close(); output.close()
+            raise ValidationError('Immutable source hash mismatch.')
         source.seek(0)
-        identity=issue_copy(link,request,exception.version.document,IssuedCopy.KIND_ORIGINAL,dataroom_document=item)
+        request.dealroom_decision = decision
+        identity=issue_copy(link,request,exception.version.document,IssuedCopy.KIND_ORIGINAL,dataroom_document=item,version_override=exception.version)
         receipt={'copy_id':identity['copy_id'],'issued_to':exception.member.email,'version_id':str(exception.version_id),'exception_id':str(exception.pk),'source_sha256':source_hash.hexdigest(),'reason':exception.reason,'issued_at':now.isoformat(),'notice':'Original — unwatermarked exception; Copy ID records issuance, not proof of disclosure.'}
         receipt_bytes=json.dumps(receipt,sort_keys=True).encode()
         with zipfile.ZipFile(output,'w',compression=zipfile.ZIP_STORED) as bundle:

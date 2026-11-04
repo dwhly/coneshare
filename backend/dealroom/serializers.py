@@ -101,9 +101,13 @@ class DriftSerializer(serializers.ModelSerializer):
 
 class CopySerializer(serializers.ModelSerializer):
     issued_to = serializers.SerializerMethodField()
+    lineage = serializers.SerializerMethodField()
     class Meta:
         model = IssuedCopy
-        fields = ['copy_id', 'issued_to', 'kind', 'document', 'created_at']
+        fields = ['copy_id', 'issued_to', 'kind', 'document', 'created_at', 'lineage']
+    def get_lineage(self, obj):
+        evidence = getattr(obj, 'evidence', None)
+        return {'version_id': str(evidence.version_id), 'grant_id': str(evidence.grant_id), 'policy_revision': evidence.policy_revision, 'brand_revision': evidence.brand_revision, 'source_sha256': evidence.source_sha256, 'artifact_sha256': evidence.artifact_sha256, 'receipt_sha256': evidence.receipt_sha256} if evidence else None
     def get_issued_to(self, obj):
         return {'name': obj.viewer_name, 'email': obj.viewer_email, 'org': obj.viewer_organisation_name, 'meaning': 'issued to; not proof of who disclosed it'}
 

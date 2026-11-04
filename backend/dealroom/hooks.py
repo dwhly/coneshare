@@ -87,6 +87,21 @@ def install():
                     transaction.set_rollback(True)
                 elif isinstance(auth, APIKey) and op:
                     record('agent.action', organization=auth.user.organization, actor=auth, data={'operation_id': op['operation_id'], 'status': response.status_code})
+                if response.status_code == 200 and type(self).__name__ in {'WatermarkedPageRenderView', 'ShareLinkFileDownloadView'}:
+                    import hashlib
+                    from sharelinks.models import IssuedCopy, Viewer
+                    from .models import CopyEvidence
+                    copy_id = response.get('X-AmForge-Copy-ID')
+                    copy = IssuedCopy.objects.select_related('share_link').filter(copy_id=copy_id).first()
+                    if copy:
+                        member_id = self.request.session.get('dealroom_member', {}).get('member_id')
+                        member = Viewer.objects.get(pk=member_id)
+                        downloaded = type(self).__name__ == 'ShareLinkFileDownloadView'
+                        artifact_hash = hashlib.sha256(response.content).hexdigest()
+                        record('document.downloaded' if downloaded else 'document.viewed', organization=copy.share_link.organization, actor=member, room_id=copy.share_link.dataroom_id, target_id=copy.document_id, data={'copy_id':copy_id,'level':'watermarked' if downloaded else 'view','page':self.kwargs.get('page_number'),'artifact_sha256':artifact_hash})
+                        if downloaded:
+                            CopyEvidence.objects.filter(copy=copy).update(artifact_sha256=artifact_hash)
+                        response['X-Dealroom-Copy-ID'] = copy_id
                 return response
             finally:
                 if render:

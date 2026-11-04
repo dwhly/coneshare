@@ -267,7 +267,8 @@ def test_original_exception_bounded_approved_and_consumed_once(staff, agent, own
     grant=ShareLinkAccessGrant.objects.get(share_link=link,email=member.email)
     grant.download_ceiling='original';grant.save()
     doc=Document.objects.create(organization=owner.organization,created_by=owner,name='Original.pdf',type='pdf',content_type='application/pdf')
-    version=DocumentVersion.objects.create(document=doc,version_number=1,is_primary=True,original_storage_key='source.pdf',type='pdf')
+    version=DocumentVersion.objects.create(document=doc,version_number=1,is_primary=False,original_storage_key='source.pdf',type='pdf')
+    DocumentVersion.objects.create(document=doc,version_number=2,is_primary=True,original_storage_key='new.pdf',type='pdf')
     item=DataroomDocument.objects.create(dataroom_id=room_id,document=doc)
     ShareLinkDataroomSetting.objects.filter(share_link=link,dataroom_document=item).update(allow_download=True,download_ceiling='original',enable_watermark=True)
     payload={'room':room_id,'version':str(version.pk),'member':str(member.pk),'grant':str(grant.pk),'reason':'Approved diligence source','expires_at':(timezone.now()+timedelta(days=1)).isoformat(),'max_uses':1}
@@ -293,6 +294,7 @@ def test_original_exception_bounded_approved_and_consumed_once(staff, agent, own
     assert bundle.read('original.pdf')==b'unchanged original bytes'
     receipt=bundle.read('receipt.json')
     assert CopyEvidence.objects.get().receipt_sha256==hashlib.sha256(receipt).hexdigest()
+    assert CopyEvidence.objects.get().version_id==version.pk
     exception.refresh_from_db();assert exception.used_count==1
     assert recipient.post(url).status_code==403
 

@@ -107,6 +107,8 @@ class KeyScope(models.Model):
 
 
 class CopyEvidence(models.Model):
+    grant = models.ForeignKey('sharelinks.ShareLinkAccessGrant', null=True, on_delete=models.PROTECT)
+    policy_revision = models.PositiveIntegerField(default=1)
     copy = models.OneToOneField('sharelinks.IssuedCopy', primary_key=True, on_delete=models.PROTECT, related_name='evidence')
     version = models.ForeignKey('documents.DocumentVersion', on_delete=models.PROTECT)
     brand_revision = models.CharField(max_length=64)
