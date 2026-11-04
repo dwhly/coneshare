@@ -1,0 +1,15 @@
+{
+  "exposure_default": "off",
+  "listener": "recipient-only (never publish the staff/MCP listener)",
+  "served_routes": [
+    {"method": "GET", "path": "/view/{slug}", "target": "/signing/room/{slug}", "kind": "nginx_alias"},
+    {"method": "GET", "path": "/signing/room/{slug}", "kind": "html"},
+    {"method": "GET", "path": "/signing/nda/{room_id}", "kind": "html"},
+    {"method": "GET", "path": "/api/v1/dealroom-sign/nda/{room_id}/", "kind": "member_session"},
+    {"method": "POST", "path": "/api/v1/dealroom-sign/nda/{room_id}/", "kind": "member_session_csrf"},
+    {"method": "POST", "path": "/api/v1/dealroom-sign/nda/{room_id}/enter/", "kind": "member_session_csrf"}
+  ],
+  "assets": "Inline CSS/JS; no third-party assets. Existing Send OTP/room/render routes are in B's recipient inventory.",
+  "private_only": ["/signing/", "/api/v1/dealroom-sign/envelopes/", "/api/v1/dealroom-sign/credentials/", "/api/v1/dealroom-sign/nda-policy/", "/api/v1/dealroom-sign/webhook/", "/api/v1/dealroom-sign/sources/", "/api/v1/dealroom-sign/who-viewed/", "/mcp"],
+  "sign_routes": "Use A's method/procedure inventory on its own recipient listener; never publish all /api/trpc or /api/files."
+}

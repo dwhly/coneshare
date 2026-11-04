@@ -26,9 +26,11 @@ def record_fact(workflow, kind, source_id, data=None):
     from dealroom.activity import record
     _, created = ObservedSignEvent.objects.get_or_create(workflow=workflow, source_id=str(source_id), kind=kind)
     if created:
-        record(kind, organization=workflow.room.organization, actor=workflow.owner,
+        recipient_event = kind in {'envelope.viewed', 'envelope.signed', 'nda.signed'}
+        actor = (workflow.member_id or 'sign:' + digest(str((data or {}).get('email', '')).encode())[:50]) if recipient_event else workflow.owner
+        record(kind, organization=workflow.room.organization, actor=actor, actor_kind='recipient' if recipient_event else 'staff',
                room_id=workflow.room_id, target_id=workflow.envelope_id or str(workflow.pk),
-               data={'workflow_id': str(workflow.pk), 'member_id': workflow.member_id, **(data or {})})
+               data={'workflow_id': str(workflow.pk), 'member_id': workflow.member_id, 'source': 'sign', 'source_record_id': str(source_id), **(data or {})})
 
 
 def command(*, owner, room, version, recipients, idempotency_key, purpose='room_document',
@@ -138,11 +140,18 @@ def reconcile(workflow, client, envelope=None):
         workflow.signing_token = recipients[0].get('token', '')
     audit = client.audit(workflow.envelope_id)
     audit_rows = audit if isinstance(audit, list) else audit.get('data', audit.get('logs', []))
+    completion_id = next((f['id'] for f in audit_rows if f.get('type') == 'DOCUMENT_COMPLETED' and f.get('id')), None)
     staged = []
     seal = None
     if status == 'COMPLETED':
+        for item_id in workflow.item_ids:
+            original = client.pdf(f'envelope/item/{item_id}/download', params={'version': 'original'})
+            if digest(original) != workflow.source_sha256:
+                raise SignError('source_hash_changed')
         if not envelope.get('completedAt') or any(r.get('signingStatus') != 'SIGNED' for r in recipients):
             raise SignError('completion_evidence_incomplete')
+        if not completion_id:
+            raise SignError('completion_audit_pending')
         for item_id in workflow.item_ids:
             pdf = client.signed_item(item_id)
             seal = verify_seal(pdf)
@@ -157,18 +166,20 @@ def reconcile(workflow, client, envelope=None):
         workflow.signer_projection = projection
         workflow.reconciled_at = timezone.now()
         workflow.state = {'COMPLETED': 'done', 'REJECTED': 'declined', 'CANCELLED': 'cancelled'}.get(status, 'awaiting_signature')
+        if status == 'PENDING' and all(r.get('signingStatus') == 'SIGNED' for r in recipients):
+            workflow.state = 'awaiting_seal'
         for fact in audit_rows:
             kind = AUDIT_KINDS.get(fact.get('type', fact.get('event')))
             if kind and fact.get('id'):
-                record_fact(workflow, kind, fact['id'])
+                record_fact(workflow, kind, fact['id'], {'email': fact.get('email', ''), 'name': fact.get('name', ''), 'occurred_at': fact.get('createdAt')})
         if staged:
             publish(workflow, staged)
             workflow.completed_at = timezone.now()
             if workflow.purpose == 'nda':
                 NdaAcceptance.objects.get_or_create(room=workflow.room, member_id=workflow.member_id,
                     policy_revision=workflow.policy_revision, defaults={'member_email': workflow.member_email, 'workflow': workflow})
-                record_fact(workflow, 'nda.signed', f'nda:{workflow.pk}')
-            record_fact(workflow, 'fileback.completed', f'fileback:{workflow.pk}', seal)
+                record_fact(workflow, 'nda.signed', completion_id, {'email': workflow.member_email})
+            record_fact(workflow, 'fileback.completed', completion_id, seal)
         elif status == 'PENDING':
             record_fact(workflow, 'nda.sent' if workflow.purpose == 'nda' else 'envelope.sent', f'sent:{workflow.pk}')
         workflow.last_error = ''
@@ -191,7 +202,7 @@ def process(workflow_id):
             execute(workflow, client)
     except SignError as exc:
         workflow.refresh_from_db()
-        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch'}:
+        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch'}:
             workflow.state = 'quarantined'
         elif not workflow.envelope_id and workflow.state == 'creating':
             workflow.state = 'uncertain' if exc.uncertain else 'failed'
@@ -199,9 +210,9 @@ def process(workflow_id):
         workflow.attempts += 1
         workflow.next_attempt_at = timezone.now() + timedelta(seconds=min(300, 15 * 2 ** min(workflow.attempts, 4)))
         workflow.save(update_fields=['state', 'last_error', 'attempts', 'next_attempt_at'])
-    except Exception:
+    except Exception as exc:
         # Do not log exceptions containing remote credential or recipient tokens.
-        Workflow.objects.filter(pk=workflow.pk).update(last_error='integration_retry_required', next_attempt_at=timezone.now() + timedelta(seconds=15))
+        Workflow.objects.filter(pk=workflow.pk).update(last_error='integration_' + type(exc).__name__[:60], next_attempt_at=timezone.now() + timedelta(seconds=15))
     finally:
         Workflow.objects.filter(pk=workflow.pk).update(lease_until=None)
 

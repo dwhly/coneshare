@@ -8,31 +8,37 @@ const shots=process.env.SHOTS||'/Users/dano/code/chief-dealroom/docs/status/shot
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function mail(to,predicate){for(let n=0;n<40;n++){const list=await fetch('http://100.110.241.2:8785/api/v1/search?query='+encodeURIComponent('to:'+to)).then(r=>r.json());for(const m of (list.messages||[]).slice(0,8)){const full=await fetch('http://100.110.241.2:8785/api/v1/message/'+m.ID).then(r=>r.json());const value=predicate(full);if(value)return value;}await sleep(1000);}throw Error('No matching Mailpit delivery');}
 async function sign(p,name){
- await p.locator('[data-testid="signature-pad-dialog-button"]').first().waitFor({timeout:30000});
- await p.locator('[data-testid="signature-pad-dialog-button"]').first().click();
- const d=p.getByRole('dialog');await d.getByText('Type',{exact:true}).click();await d.locator('input').first().fill(name);
- await d.getByRole('button',{name:'Next',exact:true}).click();await p.waitForTimeout(800);
- if(await p.getByRole('button',{name:'Next Field',exact:true}).count())await p.getByRole('button',{name:'Next Field',exact:true}).first().click();
- await p.waitForTimeout(500);
- const c=await p.locator('canvas').evaluateAll(cs=>{const c=cs.filter(c=>c.getBoundingClientRect().width>300).sort((a,b)=>b.width*b.height-a.width*a.height)[0];if(!c)return null;const r=c.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}});
- if(c)await p.mouse.click(c.x+c.w*.275,c.y+c.h*.74);
- await p.waitForTimeout(1000);
+ await p.waitForLoadState('networkidle');
+ await p.getByTestId('signature-pad-dialog-button').waitFor({timeout:30000});
+ await p.getByTestId('signature-pad-dialog-button').click();
+ await p.getByRole('tab',{name:'Type',exact:true}).click();
+ await p.getByTestId('signature-pad-type-input').fill(name);
+ await p.getByRole('button',{name:'Next',exact:true}).click();
+ const canvas=p.locator('.konva-container').first();const bounds=await canvas.boundingBox();
+ const signed=p.waitForResponse(r=>r.url().includes('/api/trpc/')&&r.url().includes('envelope.field.sign'));
+ await canvas.click({position:{x:bounds.width*.275,y:bounds.height*.74}});
+ const response=await signed;if(!response.ok()){console.log('Sign error body:',(await response.text()).replace(/api_[A-Za-z0-9_]+/g,'[redacted]').slice(0,400));throw Error('Sign field RPC HTTP '+response.status());}
  await p.screenshot({path:shots+'/C-signing-fields.png'});
- await p.getByRole('button',{name:'Complete',exact:true}).first().click();
- await p.getByRole('dialog').getByRole('button',{name:'Sign',exact:true}).last().click();
+ await p.getByRole('button',{name:'Complete',exact:true}).click();
+ await p.getByRole('button',{name:'Sign',exact:true}).click();
  return Date.now();
 }
 (async()=>{
  const browser=await chromium.launch();
- const context=await browser.newContext({viewport:{width:1360,height:950}}),p=await context.newPage();
+ const statePath=root+'/deploy/chief-glue-v1/.local/member-state.json';
+ const context=await browser.newContext({viewport:{width:1360,height:950},...(fs.existsSync(statePath)?{storageState:statePath}:{})}),p=await context.newPage();
  p.on('pageerror',e=>console.log('PAGE ERROR:',e.message));
+ p.on('request',r=>{if(r.url().includes('/api/trpc/envelope.field.sign')){const d=r.postDataJSON();const visit=o=>{if(o&&typeof o==='object')for(const[k,v]of Object.entries(o)){if(['authOptions','actionAuth','globalActionAuth','signatureLevel'].includes(k))console.log('sign auth shape',k,JSON.stringify(v));visit(v)}};visit(d)}});
+ p.on('response',async r=>{if(r.status()>=400&&r.url().includes('/api/trpc/'))console.log('Sign RPC error',r.status(),new URL(r.url()).pathname)});
  try {
   await p.goto(base+'/view/'+fixture.slug,{waitUntil:'networkidle'});
+  if(!fs.existsSync(statePath)){
   await p.locator('#name').fill('Jane Acme');await p.locator('#email').fill('member@acme.test');
   await p.getByRole('button',{name:'Send verification code'}).click();
   await p.locator('#code-form').waitFor({state:'visible'});
   const code=await mail('member@acme.test',m=>m.Text.match(/verification code is (\d{6})/)?.[1]);
   await p.locator('#code').fill(code);await p.getByRole('button',{name:'Continue',exact:true}).click();
+  await p.locator('#nda').waitFor({state:'visible'});await context.storageState({path:statePath});}
   await p.locator('#nda').waitFor({state:'visible'});await p.screenshot({path:shots+'/C-nda-gate.png'});
   if(await p.locator('#start').isVisible())await p.locator('#start').click();
   await p.getByRole('button',{name:'Review and sign NDA'}).waitFor({timeout:60000});

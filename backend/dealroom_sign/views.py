@@ -151,8 +151,8 @@ class RecipientNdaView(APIView):
         accepted = NdaAcceptance.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).exists()
         workflow = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).first()
         return Response({'required': True, 'accepted': accepted, 'state': workflow.state if workflow else 'not_started',
-                         'can_enter': bool(workflow and workflow.signing_token and not accepted),
-                         'overdue': bool(workflow and workflow.source_status == 'COMPLETED' and not accepted and workflow.reconciled_at and (timezone.now() - workflow.reconciled_at).total_seconds() > 60)})
+                         'can_enter': bool(workflow and workflow.state == 'awaiting_signature' and workflow.signing_token and not accepted),
+                         'overdue': bool(workflow and workflow.state in {'awaiting_seal', 'quarantined', 'failed'} and (timezone.now() - workflow.created_at).total_seconds() > 60)})
 
     def post(self, request, room_id):
         SessionAuthentication().enforce_csrf(request)
@@ -178,7 +178,7 @@ class RecipientNdaEnterView(RecipientNdaView):
             raise PermissionDenied('Signing is not ready for this verified member.')
         from .client import identifier
         # Use only configured origin, never an upstream signingUrl or a caller URL.
-        return HttpResponseRedirect(settings.SIGN_PUBLIC_URL.rstrip('/') + '/sign/' + identifier(work.signing_token))
+        return Response({'signing_url': settings.SIGN_PUBLIC_URL.rstrip('/') + '/sign/' + identifier(work.signing_token)})
 
 
 class SigningSourceView(APIView):

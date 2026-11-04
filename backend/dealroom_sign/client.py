@@ -1,6 +1,7 @@
 """Bounded v2 envelope transport. No response bodies/tokens in errors or logs."""
 import json
 import re
+import time
 
 import httpx
 from django.conf import settings
@@ -23,6 +24,7 @@ class Documenso:
     def __init__(self, credential, transport=None):
         if not credential.enabled:
             raise SignError('sign_credential_disabled')
+        self.team_id = credential.team_id
         self.http = httpx.Client(
             base_url=settings.SIGN_INTERNAL_URL.rstrip('/') + '/api/v2/',
             headers={'Authorization': credential.token, 'Accept': 'application/json'},
@@ -45,12 +47,16 @@ class Documenso:
         return response
 
     def get(self, envelope_id):
-        return self.request('GET', f'envelope/{identifier(envelope_id)}').json()
+        envelope = self.request('GET', f'envelope/{identifier(envelope_id)}').json()
+        if envelope.get('teamId') != self.team_id:
+            raise SignError('sign_team_mismatch')
+        return envelope
 
     def find(self, external_id):
         # externalId is correlation, NOT an upstream uniqueness guarantee.
         matches = []
         page = 1
+        deadline = time.monotonic() + 40
         while True:
             data = self.request('GET', 'envelope', params={'page': page, 'perPage': 100}).json()
             rows = data.get('data', [])
@@ -58,7 +64,7 @@ class Documenso:
             if page * 100 >= data.get('count', len(rows)):
                 return matches
             page += 1
-            if page > 100:
+            if page > 100 or time.monotonic() > deadline:
                 raise SignError('discovery_limit_requires_operator')
 
     def create(self, workflow, pdf):
@@ -86,7 +92,16 @@ class Documenso:
         return self.pdf(f'envelope/{identifier(envelope_id)}/certificate/download')
 
     def audit(self, envelope_id):
-        return self.request('GET', f'envelope/{identifier(envelope_id)}/audit-log').json()
+        rows = []
+        deadline = time.monotonic() + 40
+        for page in range(1, 101):
+            data = self.request('GET', f'envelope/{identifier(envelope_id)}/audit-log', params={'page': page, 'perPage': 100}).json()
+            rows.extend(data['data'])
+            if len(rows) >= data['count']:
+                return {'data': rows}
+            if time.monotonic() > deadline:
+                break
+        raise SignError('audit_pagination_incomplete')
 
     def audit_pdf(self, envelope_id):
         return self.pdf(f'envelope/{identifier(envelope_id)}/audit-log/download')

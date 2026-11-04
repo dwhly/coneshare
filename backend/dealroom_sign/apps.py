@@ -6,6 +6,9 @@ class DealroomSignConfig(AppConfig):
     name = 'dealroom_sign'
 
     def ready(self):
+        import logging
+        logging.getLogger("httpx").setLevel(logging.WARNING)
+        logging.getLogger("httpcore").setLevel(logging.WARNING)
         from django.apps import apps
         if apps.is_installed("dealroom"):
             from .operations import install

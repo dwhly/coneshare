@@ -164,12 +164,13 @@ def test_rebound_signer_quarantines_before_acceptance(fixture):
     assert not ExecutedArtifact.objects.exists()
 
 
-def test_partial_signer_cannot_complete(fixture):
+def test_partial_signer_cannot_complete(fixture, pdf):
     work = linked(fixture)
     env = envelope(work, 'COMPLETED')
     env['recipients'][0]['signingStatus'] = 'NOT_SIGNED'
     client = Mock()
-    client.audit.return_value = []
+    client.audit.return_value = [{'id': 'audit-complete', 'type': 'DOCUMENT_COMPLETED'}]
+    client.pdf.return_value = pdf
     with pytest.raises(SignError, match='completion_evidence_incomplete'):
         reconcile(work, client, env)
     assert not NdaAcceptance.objects.exists()
@@ -188,8 +189,8 @@ def test_duplicate_completion_files_once_and_accepts_atomically(fixture, pdf):
     work.purpose, work.member_id, work.member_email, work.policy_revision = 'nda', 'member', 'member@example.test', 'revision'
     work.save()
     client = Mock()
-    client.audit.return_value = []
-    client.signed_item.return_value = client.certificate.return_value = client.audit_pdf.return_value = pdf
+    client.audit.return_value = [{'id': 'audit-complete', 'type': 'DOCUMENT_COMPLETED'}]
+    client.pdf.return_value = client.signed_item.return_value = client.certificate.return_value = client.audit_pdf.return_value = pdf
     with patch('dealroom_sign.workflows.verify_seal', return_value={'signature_valid': True, 'trusted': False}), \
          patch('dealroom_sign.storage.fileserver_client.upload_file'), patch('dealroom_sign.workflows.record_fact'):
         reconcile(work, client, envelope(work, 'COMPLETED'))
@@ -203,8 +204,8 @@ def test_duplicate_completion_files_once_and_accepts_atomically(fixture, pdf):
 def test_certificate_failure_keeps_gate_closed(fixture, pdf):
     work = linked(fixture)
     client = Mock()
-    client.audit.return_value = []
-    client.signed_item.return_value = pdf
+    client.audit.return_value = [{'id': 'audit-complete', 'type': 'DOCUMENT_COMPLETED'}]
+    client.pdf.return_value = client.signed_item.return_value = pdf
     client.certificate.side_effect = SignError('sign_http_503')
     with patch('dealroom_sign.workflows.verify_seal', return_value={}), patch('dealroom_sign.storage.fileserver_client.upload_file'), pytest.raises(SignError):
         reconcile(work, client, envelope(work, 'COMPLETED'))
@@ -341,3 +342,59 @@ def test_revoke_after_signature_still_denies_access(fixture):
     grant.revoked_at = timezone.now(); grant.save()
     with pytest.raises(PermissionDenied):
         evaluate(request, link)
+
+
+def test_every_served_glue_operation_has_a_tool_and_mutation_classification():
+    import json
+    from pathlib import Path
+    from dealroom.registry import registry
+    from dealroom_sign import __file__ as app_file
+    mapping = json.loads(Path(app_file).with_name('tool_map.json').read_text())
+    operations = {k:v for k,v in registry().items() if k.startswith('dealroom_sign_')}
+    assert set(operations) == set(mapping)
+    for operation in operations.values():
+        if operation['method'] not in {'GET', 'HEAD', 'OPTIONS'}:
+            assert operation['widens_access'] in {True, False, 'evaluate_change'}
+    assert operations['dealroom_sign_SignCredentialView_endpoint_put']['human_only']
+
+
+def test_recipient_allowlist_is_built_from_served_routes():
+    import json
+    from pathlib import Path
+    from django.urls import resolve
+    from dealroom_sign import __file__ as app_file
+    manifest = json.loads(Path(app_file).with_name('recipient_routes.json').read_text())
+    assert manifest['exposure_default'] == 'off'
+    for route in manifest['served_routes']:
+        path = route.get('target', route['path']).replace('{slug}', 'test').replace('{room_id}', 'test')
+        match = resolve(path)
+        assert match.func.__module__.startswith('dealroom_sign') or match.func.view_class.__module__.startswith('dealroom_sign')
+    assert '/api/v1/dealroom-sign/webhook/' in manifest['private_only']
+
+
+def test_same_item_replaced_in_sign_does_not_accept_new_source(fixture, pdf):
+    work = linked(fixture)
+    client = Mock()
+    client.audit.return_value = [{'id': 'audit-complete', 'type': 'DOCUMENT_COMPLETED'}]
+    client.pdf.return_value = pdf + b'changed source bytes'
+    with pytest.raises(SignError, match='source_hash_changed'):
+        reconcile(work, client, envelope(work, 'COMPLETED'))
+    assert not NdaAcceptance.objects.exists()
+    assert not ExecutedArtifact.objects.exists()
+
+
+def test_sign_credential_team_binding_checked(fixture):
+    transport = httpx.MockTransport(lambda r: httpx.Response(200, json={'teamId': 999}))
+    with Documenso(fixture.credential, transport) as client, pytest.raises(SignError, match='sign_team_mismatch'):
+        client.get('envelope_test')
+
+
+def test_audit_catchup_reads_all_pages(fixture):
+    pages = []
+    def respond(request):
+        page = int(request.url.params['page'])
+        pages.append(page)
+        return httpx.Response(200, json={'data': [{'id': page}], 'count': 2})
+    with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
+        assert len(client.audit('envelope_test')['data']) == 2
+    assert pages == [1, 2]
