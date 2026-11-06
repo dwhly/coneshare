@@ -1,6 +1,6 @@
 import pytest
 import requests
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import patch, mock_open, MagicMock, call
 from datetime import timedelta
 from rest_framework.test import APIClient
 
@@ -673,6 +673,24 @@ class TestShareLinkViewDataView:
         # Phase 1: this legacy request is denied before its former handler runs.
         assert response.status_code == 403
         assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+
+    @patch('sharelinks.views.fileserver_client.generate_download_url')
+    def test_get_share_link_data_uses_version_filename_when_different_from_doc_name(
+        self, mock_fs_download_url, public_client, share_link
+    ):
+        """Test that download_url uses the active version's file name rather than parent document name."""
+        primary_version = share_link.document.versions.get(is_primary=True)
+        primary_version.original_storage_key = "path/to/video.mp4"
+        primary_version.type = "video"
+        primary_version.metadata = {"file_name": "clip.mp4"}
+        primary_version.save()
+        mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/video-token"
+
+        response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
+        assert response.status_code == status.HTTP_200_OK
+        assert mock_fs_download_url.call_args == call(
+            "path/to/video.mp4", is_internal=False, filename="clip.mp4"
+        )
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('documents.fileserver.fileserver_client.generate_download_url')

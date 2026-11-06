@@ -1183,7 +1183,7 @@ class ShareLinkViewDataView(APIView):
                 elif primary_version and primary_version.original_storage_key:
                     try:
                         download_url = fileserver_client.generate_download_url(
-                            primary_version.original_storage_key, is_internal=False, filename=document.name
+                            primary_version.original_storage_key, is_internal=False, filename=primary_version.get_filename()
                         )
                     except APIException:
                         # If file server is down, we can't generate a download URL.
@@ -3060,7 +3060,10 @@ class ShareLinkFileDownloadView(APIView):
                     response = HttpResponse(image_buffer, content_type=content_type)
                     # Ensure filename has .jpg extension since we're creating a JPEG
                     safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
-                    response['Content-Disposition'] = f'{disposition_type}; filename="{safe_filename}.jpg"'
+                    raw_ascii = safe_filename.replace(' ', '_').encode('ascii', 'ignore').decode('ascii').strip('._- ')
+                    ascii_name = raw_ascii or "image"
+                    utf8_name = quote(f"{safe_filename}.jpg", safe='')
+                    response['Content-Disposition'] = f'{disposition_type}; filename="{ascii_name}.jpg"; filename*=UTF-8\'\'{utf8_name}'
                     response['X-AmForge-Copy-ID'] = identity['copy_id']
                     return response
 
@@ -3073,7 +3076,10 @@ class ShareLinkFileDownloadView(APIView):
                 response = HttpResponse(pdf_buffer, content_type='application/pdf')
                 # Ensure filename has .pdf extension
                 safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
-                response['Content-Disposition'] = f'{disposition_type}; filename="{safe_filename}.pdf"'
+                raw_ascii = safe_filename.replace(' ', '_').encode('ascii', 'ignore').decode('ascii').strip('._- ')
+                ascii_name = raw_ascii or "document"
+                utf8_name = quote(f"{safe_filename}.pdf", safe='')
+                response['Content-Disposition'] = f'{disposition_type}; filename="{ascii_name}.pdf"; filename*=UTF-8\'\'{utf8_name}'
                 response['X-AmForge-Copy-ID'] = identity['copy_id']
                 return response
             except WatermarkingDependenciesMissingError as e:
@@ -3098,7 +3104,7 @@ class ShareLinkFileDownloadView(APIView):
 
             try:
                 download_url = fileserver_client.generate_download_url(
-                    primary_version.original_storage_key, is_internal=False, filename=document.name
+                    primary_version.original_storage_key, is_internal=False, filename=primary_version.get_filename()
                 )
                 return HttpResponseRedirect(download_url)
             except APIException as e:
