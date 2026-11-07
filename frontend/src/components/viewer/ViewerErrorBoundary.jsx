@@ -32,15 +32,15 @@ export class ViewerErrorBoundary extends React.Component {
       }
 
       return (
-        <div className="flex min-h-[400px] h-full w-full flex-col items-center justify-center p-8 text-center bg-gray-50/50 dark:bg-gray-900/50">
-          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700 text-center animate-fadeIn">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400 ring-8 ring-red-50/50 dark:ring-red-950/50">
+        <div className="flex min-h-[400px] h-full w-full flex-col items-center justify-center p-8 text-center bg-muted/50">
+          <div className="w-full max-w-md rounded-2xl bg-card p-8 shadow-xl shadow-foreground/50 dark:shadow-none border border-border text-center animate-fadeIn">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-danger-subtle text-danger ring-8 ring-danger-border">
               <AlertCircle className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-semibold text-foreground">
               {this.props.title || 'Failed to load viewer'}
             </h3>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm text-muted-foreground">
               {this.props.description || 'A network error occurred while loading this view. This might happen if a new version was deployed or your connection was interrupted.'}
             </p>
             <div className="mt-6">

@@ -20,7 +20,7 @@ function buildWatermarkSvg(text) {
     .replace(/"/g, '&quot;');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="340" height="180" viewBox="0 0 340 180">
     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-      transform="rotate(-25 170 90)" fill="#000000" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+      transform="rotate(-25 170 90)" fill="black" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
       font-size="14" font-weight="500" letter-spacing="0.5">${safe}</text>
   </svg>`;
 }
@@ -156,7 +156,7 @@ export const MarkdownViewer = forwardRef(({
       return sanitizeMarkdownHtml(rawHtml);
     } catch (err) {
       console.error('Failed to parse markdown:', err);
-      return `<p class="text-red-500">${t('errors.parseFailed', 'Failed to parse markdown content.')}</p>`;
+      return `<p class="text-danger">${t('errors.parseFailed', 'Failed to parse markdown content.')}</p>`;
     }
   }, [content, t]);
 
@@ -336,7 +336,7 @@ export const MarkdownViewer = forwardRef(({
       ref={containerRef}
       onScroll={handleScroll}
       onCopy={handleCopy}
-      className={`relative h-full w-full overflow-y-auto bg-white ${
+      className={`relative h-full w-full overflow-y-auto bg-card ${
         isProtected ? 'select-none' : ''
       }`}
       tabIndex={0}
@@ -347,18 +347,18 @@ export const MarkdownViewer = forwardRef(({
       {loading && (
         <div className="flex h-full min-h-[400px] w-full flex-col items-center justify-center p-8 text-center">
           <Loader2 className="mb-3 h-8 w-8 animate-spin text-primary" />
-          <p className="text-sm text-gray-500">{t('viewer.loadingMarkdown', 'Loading Markdown document...')}</p>
+          <p className="text-sm text-muted-foreground">{t('viewer.loadingMarkdown', 'Loading Markdown document...')}</p>
         </div>
       )}
 
       {/* Error state */}
       {!loading && error && (
         <div className="flex h-full min-h-[400px] w-full flex-col items-center justify-center p-8 text-center">
-          <div className="mb-3 rounded-full bg-red-50 p-3 text-red-600">
+          <div className="mb-3 rounded-full bg-danger-subtle p-3 text-danger">
             <AlertTriangle className="h-6 w-6" />
           </div>
-          <p className="mb-1 text-base font-medium text-gray-900">{t('viewer.previewFailed', 'Preview unavailable')}</p>
-          <p className="text-sm text-gray-500">{error}</p>
+          <p className="mb-1 text-base font-medium text-foreground">{t('viewer.previewFailed', 'Preview unavailable')}</p>
+          <p className="text-sm text-muted-foreground">{error}</p>
         </div>
       )}
 
@@ -371,7 +371,7 @@ export const MarkdownViewer = forwardRef(({
           className="mx-auto max-w-4xl px-6 py-8 sm:px-12 sm:py-12"
         >
           <article
-            className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 hover:prose-a:underline prose-img:rounded-lg prose-table:overflow-x-auto"
+            className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-brand hover:prose-a:underline prose-img:rounded-lg prose-table:overflow-x-auto"
             dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
           />
         </div>

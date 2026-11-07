@@ -11,7 +11,7 @@ import {
 } from "../ui/Tooltip";
 
 import { useBranding } from "../../contexts/BrandingProvider";
-import { AmforgeLogo, AmforgeMark } from "./AmforgeLogo";
+import { FleetLockup, FleetMark } from "./FleetChrome";
 
 function SidebarHeader() {
   const { t } = useTranslation();
@@ -20,10 +20,11 @@ function SidebarHeader() {
 
   // AmForge shell: the app chrome always shows the AmForge mark/wordmark; the product name lives in
   // the product switcher (Header). Per-dataroom/org branding still applies to visitor-facing pages.
+  // Staff chrome = the Fleet lockup (DESIGN.md §8); tenant branding applies to visitor pages only.
   const logoContent = isCollapsed ? (
-    <AmforgeMark className="h-6 w-6" />
+    <FleetMark className="fds-lockup__mark" />
   ) : (
-    <AmforgeLogo className="h-6 w-auto text-foreground" />
+    <FleetLockup as="span" />
   );
 
   return (

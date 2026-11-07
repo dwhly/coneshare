@@ -233,7 +233,7 @@ export const PdfJsViewer = forwardRef(({
 
   if (loading) {
     return (
-      <div className="flex h-full w-full flex-col gap-4 p-8 bg-gray-100 dark:bg-gray-800">
+      <div className="flex h-full w-full flex-col gap-4 p-8 bg-muted">
         <Skeleton className="h-12 w-1/2 mx-auto" />
         <Skeleton className="h-[70vh] w-[600px] mx-auto rounded-md" />
       </div>
@@ -242,10 +242,10 @@ export const PdfJsViewer = forwardRef(({
 
   if (error) {
     return (
-      <div className="flex h-full w-full items-center justify-center p-4 text-center text-red-500 bg-gray-100 dark:bg-gray-800 animate-fadeIn">
+      <div className="flex h-full w-full items-center justify-center p-4 text-center text-danger bg-muted animate-fadeIn">
         <div>
           <p className="font-semibold text-lg">Failed to load preview</p>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-muted-foreground mt-2">
             {error.message || 'An error occurred while loading the PDF document.'}
           </p>
           {allowDownload && !isWatermarked && !watermarkText && (
@@ -253,7 +253,7 @@ export const PdfJsViewer = forwardRef(({
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500"
+              className="inline-block mt-4 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
             >
               Download the PDF
             </a>
@@ -268,7 +268,7 @@ export const PdfJsViewer = forwardRef(({
       {/* Scrollable page container */}
       <div
         ref={scrollContainerCallbackRef}
-        className="h-full overflow-y-auto bg-gray-100 dark:bg-gray-800"
+        className="h-full overflow-y-auto bg-muted"
       >
         <div className="mx-auto flex w-fit flex-col items-center space-y-4 p-4 pb-24">
           {Array.from({ length: numPages }, (_, i) => {
@@ -308,7 +308,7 @@ export const PdfJsViewer = forwardRef(({
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute cursor-pointer hover:bg-blue-500/10 transition-colors duration-150 rounded"
+                    className="absolute cursor-pointer hover:bg-info/10 transition-colors duration-150 rounded"
                     style={{
                       left: `${link.bbox.left}%`,
                       top: `${link.bbox.top}%`,
@@ -361,7 +361,7 @@ function buildWatermarkSvg(text) {
       font-size="14"
       font-weight="500"
       letter-spacing="0.5"
-      fill="#000000"
+      fill="black"
       text-anchor="middle"
       dominant-baseline="middle"
       transform="rotate(-25 170 90)"

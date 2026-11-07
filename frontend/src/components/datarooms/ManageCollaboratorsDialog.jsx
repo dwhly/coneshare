@@ -199,9 +199,9 @@ export function ManageCollaboratorsDialog({
 
           <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
             {dataroom?.storage_version === 1 && (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3.5 text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/20 dark:text-amber-300 flex items-start justify-between gap-3">
+              <div className="rounded-lg border border-warning-border bg-warning-subtle p-3.5 text-xs text-warning flex items-start justify-between gap-3">
                 <div className="flex items-start gap-2.5 min-w-0">
-                  <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                  <AlertTriangle className="h-4 w-4 text-warning shrink-0 mt-0.5" />
                   <div>
                     <p className="font-semibold">{t('datarooms.legacyStorageTitle')}</p>
                     <p className="mt-0.5 leading-relaxed">{t('datarooms.upgradeRequiredForCollaboration')}</p>
@@ -212,7 +212,7 @@ export function ManageCollaboratorsDialog({
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="shrink-0 h-7 px-2.5 text-xs border-amber-300 bg-amber-100/50 text-amber-900 hover:bg-amber-100 dark:border-amber-800 dark:bg-amber-900/40 dark:text-amber-200"
+                    className="shrink-0 h-7 px-2.5 text-xs border-warning-border bg-warning-subtle/50 text-warning hover:bg-warning-subtle"
                     onClick={() => {
                       onOpenChange(false);
                       navigate(`/datarooms/${dataroom.id}?tab=settings`);
@@ -336,13 +336,13 @@ export function ManageCollaboratorsDialog({
                     <div className="flex items-center justify-between p-3">
                       <div className="flex items-center gap-3 min-w-0">
                         <div className="relative">
-                          <Avatar className="h-9 w-9 rounded-full border border-amber-500/50">
+                          <Avatar className="h-9 w-9 rounded-full border border-warning/50">
                             {owner.avatar_url && <AvatarImage src={owner.avatar_url} />}
-                            <AvatarFallback className="bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200 text-xs font-semibold">
+                            <AvatarFallback className="bg-warning-subtle text-warning text-xs font-semibold">
                               {getAvatarInitial(owner.name, owner.email)}
                             </AvatarFallback>
                           </Avatar>
-                          <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-white">
+                          <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-warning text-warning-foreground">
                             <Crown className="h-2.5 w-2.5" />
                           </span>
                         </div>
@@ -362,7 +362,7 @@ export function ManageCollaboratorsDialog({
                           )}
                         </div>
                       </div>
-                      <Badge className="border-amber-500/30 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 text-xs font-medium gap-1">
+                      <Badge className="border-warning/30 bg-warning-subtle text-warning text-xs font-medium gap-1">
                         <Crown className="h-3 w-3" />
                         {t('datarooms.ownerRole')}
                       </Badge>

@@ -122,10 +122,10 @@ function UserSettingsPage() {
         <SettingsTabs />
         {isLoading ? (
           <div className="flex h-64 items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-info" />
           </div>
         ) : !user ? (
-          <div className="text-center py-8 text-red-500">{t('common.error')}</div>
+          <div className="text-center py-8 text-danger">{t('common.error')}</div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -135,7 +135,7 @@ function UserSettingsPage() {
                 type="email"
                 value={user.email}
                 readOnly
-                className="bg-gray-100 dark:bg-gray-800"
+                className="bg-muted"
               />
             </div>
             <div className="space-y-2">

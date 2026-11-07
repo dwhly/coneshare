@@ -318,7 +318,7 @@ export function AdminBrandingPage() {
                 >
                   {logoFile ? (
                     <div className="flex flex-col items-center text-center">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400 mb-2">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-info-subtle text-info mb-2">
                         <ImageIcon className="h-5 w-5" />
                       </div>
                       <p className="text-sm font-semibold text-foreground">
@@ -333,7 +333,7 @@ export function AdminBrandingPage() {
                           e.stopPropagation();
                           removeLogo();
                         }}
-                        className="mt-3 text-xs text-red-600 hover:text-red-500 font-medium underline"
+                        className="mt-3 text-xs text-danger hover:text-danger font-medium underline"
                       >
                         {t('common.remove')}
                       </button>

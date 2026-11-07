@@ -98,7 +98,7 @@ export function AutomationBuilder({
     <form onSubmit={handleSubmit} className="space-y-5 rounded-lg border p-5">
       <div>
         <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="text-sm text-gray-500">{description}</p>
+        <p className="text-sm text-muted-foreground">{description}</p>
       </div>
 
       <div>
@@ -117,7 +117,7 @@ export function AutomationBuilder({
         <Label htmlFor="scope-type">{t('analytics.scope')}</Label>
         <select
           id="scope-type"
-          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+          className="h-10 w-full rounded-md border border-input px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
           value={scopeType}
           onChange={(e) => setScopeType(e.target.value)}
           disabled={loading}
@@ -133,7 +133,7 @@ export function AutomationBuilder({
           <Label htmlFor="share-link">{t('shareLinks.title')}</Label>
           <select
             id="share-link"
-            className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-10 w-full rounded-md border border-input px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
             value={shareLinkId}
             onChange={(e) => setShareLinkId(e.target.value)}
             disabled={loading}
@@ -154,7 +154,7 @@ export function AutomationBuilder({
           <Label htmlFor="dataroom">{t('datarooms.title')}</Label>
           <select
             id="dataroom"
-            className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-10 w-full rounded-md border border-input px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
             value={dataroomId}
             onChange={(e) => setDataroomId(e.target.value)}
             disabled={loading}
@@ -193,12 +193,12 @@ export function AutomationBuilder({
       <div>
         <div className="flex items-center justify-between">
           <Label>{t('automations.destinations')}</Label>
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-muted-foreground">
             Selected: {selectedDestinationIds.length}
           </span>
         </div>
         <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {destinations.length === 0 && <p className="text-sm text-gray-500">{t('automations.createDestinationFirst')}</p>}
+          {destinations.length === 0 && <p className="text-sm text-muted-foreground">{t('automations.createDestinationFirst')}</p>}
           {destinations.map((destination) => (
             <label key={destination.id} className="flex items-center gap-2 rounded border px-2 py-1 text-sm">
               <input
@@ -212,7 +212,7 @@ export function AutomationBuilder({
           ))}
         </div>
         {destinations.length > 0 && selectedDestinationIds.length === 0 && (
-          <p className="mt-2 text-xs text-amber-700">{t('automations.selectDestinationWarning')}</p>
+          <p className="mt-2 text-xs text-warning">{t('automations.selectDestinationWarning')}</p>
         )}
       </div>
 

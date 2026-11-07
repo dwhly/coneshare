@@ -44,37 +44,20 @@ function normalizeType(type) {
 export function FileTypeIcon({ type, className = "h-5 w-5", palette = "default" }) {
   const normalized = normalizeType(type);
 
+  // Fleet design system: file type = IDENTITY, so icons take a tag hue (never a status colour);
+  // folders/unknown stay neutral or follow the room's own palette.
+  const TYPE_TAG = {
+    pdf: "hsl(var(--tag-2))",
+    document: "hsl(var(--tag-3))",
+    spreadsheet: "hsl(var(--tag-4))",
+    image: "hsl(var(--tag-5))",
+    video: "hsl(var(--tag-1))",
+    markdown: "hsl(var(--tag-6))",
+  };
   const paletteVars = {
-    viewer: {
-      folder: "var(--viewer-accent)",
-      pdf: "#b91c1c",
-      document: "#1d4ed8",
-      spreadsheet: "#15803d",
-      image: "#0f766e",
-      video: "#8a2be2",
-      markdown: "#0284c7",
-      unknown: "var(--viewer-secondary)",
-    },
-    dataroom: {
-      folder: "var(--dataroom-secondary)",
-      pdf: "#b91c1c",
-      document: "#1d4ed8",
-      spreadsheet: "#15803d",
-      image: "#0f766e",
-      video: "#8a2be2",
-      markdown: "#0284c7",
-      unknown: "var(--dataroom-secondary)",
-    },
-    default: {
-      folder: "#6b7280",
-      pdf: "#b91c1c",
-      document: "#1d4ed8",
-      spreadsheet: "#15803d",
-      image: "#0f766e",
-      video: "#8a2be2",
-      markdown: "#0284c7",
-      unknown: "#6b7280",
-    },
+    viewer: { ...TYPE_TAG, folder: "var(--viewer-accent)", unknown: "var(--viewer-secondary)" },
+    dataroom: { ...TYPE_TAG, folder: "var(--dataroom-secondary)", unknown: "var(--dataroom-secondary)" },
+    default: { ...TYPE_TAG, folder: "hsl(var(--muted-foreground))", unknown: "hsl(var(--muted-foreground))" },
   };
 
   const colors = paletteVars[palette] || paletteVars.default;
@@ -105,23 +88,7 @@ export function FileTypeIcon({ type, className = "h-5 w-5", palette = "default" 
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function getDocumentBadgeStyle(type = '') {
-  const normalized = normalizeType(type);
-  switch (normalized) {
-    case 'pdf':
-      return 'bg-rose-50 text-rose-700 border-rose-100/80';
-    case 'image':
-      return 'bg-teal-50 text-teal-700 border-teal-100/80';
-    case 'document':
-      return 'bg-blue-50 text-blue-700 border-blue-100/80';
-    case 'spreadsheet':
-      return 'bg-emerald-50 text-emerald-700 border-emerald-100/80';
-    case 'markdown':
-      return 'bg-sky-50 text-sky-700 border-sky-100/80';
-    case 'video':
-      return 'bg-violet-50 text-violet-700 border-violet-100/80';
-    default:
-      return 'bg-gray-100 text-gray-700 border-gray-200/60';
-  }
+export function getDocumentBadgeStyle() {
+  // Identity, not status: every file tile is the same neutral chip; the icon inside carries the tag hue.
+  return 'bg-secondary text-secondary-foreground border-border';
 }
-

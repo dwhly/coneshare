@@ -46,14 +46,14 @@ export function CollaboratorsAvatarGroup({
               className="relative transition-transform hover:scale-110 hover:z-20"
               title={`${member.name || member.email}${member.isOwner ? ` (${t('datarooms.ownerRole')})` : ` (${t('datarooms.collaboratorRole')})`}`}
             >
-              <Avatar className={`h-8 w-8 rounded-full border-2 border-background ring-1 ${member.isOwner ? 'ring-amber-500/50' : 'ring-border'}`}>
+              <Avatar className={`h-8 w-8 rounded-full border-2 border-background ring-1 ${member.isOwner ? 'ring-warning/50' : 'ring-border'}`}>
                 {member.avatar_url && <AvatarImage src={member.avatar_url} alt={member.name || member.email} />}
-                <AvatarFallback className={`text-[10px] font-medium ${member.isOwner ? 'bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200' : 'bg-muted text-muted-foreground'}`}>
+                <AvatarFallback className={`text-[10px] font-medium ${member.isOwner ? 'bg-warning-subtle text-warning ' : 'bg-muted text-muted-foreground'}`}>
                   {initial}
                 </AvatarFallback>
               </Avatar>
               {member.isOwner && (
-                <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-amber-500 text-white shadow-xs">
+                <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-warning text-warning-foreground shadow-xs">
                   <Crown className="h-2 w-2" />
                 </span>
               )}

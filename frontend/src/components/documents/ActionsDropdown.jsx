@@ -36,7 +36,7 @@ export function ActionsDropdown({
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="z-[9999] w-48 origin-top-right rounded-md bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800"
+          className="z-[9999] w-48 origin-top-right rounded-md bg-card p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           sideOffset={5}
           align="end"
           // Prevent focus from returning to trigger, which can re-trigger card navigation.
@@ -47,7 +47,7 @@ export function ActionsDropdown({
               e.stopPropagation();
               onRename(item);
             }}
-            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
           >
             <Edit className="h-4 w-4" aria-hidden="true" />
             <span>{t('documents.rename')}</span>
@@ -59,7 +59,7 @@ export function ActionsDropdown({
                 e.stopPropagation();
                 onCopy(item);
               }}
-              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
             >
               <Copy className="h-4 w-4" aria-hidden="true" />
               <span>{t('documents.copy')}</span>
@@ -72,7 +72,7 @@ export function ActionsDropdown({
                 e.stopPropagation();
                 onShare(item);
               }}
-              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
              >
               <Share2 className="h-4 w-4" aria-hidden="true" />
               <span>{t('documents.getLink')}</span>
@@ -85,7 +85,7 @@ export function ActionsDropdown({
                 e.stopPropagation();
                 onDownload(item);
               }}
-              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
             >
               <Download className="h-4 w-4" aria-hidden="true" />
               <span>{t('documents.download')}</span>
@@ -98,21 +98,21 @@ export function ActionsDropdown({
                 e.stopPropagation();
                 onRequestFiles(item);
               }}
-              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+              className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
             >
               <UploadCloud className="h-4 w-4" aria-hidden="true" />
               <span>{t('documents.requestFiles')}</span>
             </DropdownMenu.Item>
           )}
 
-          <DropdownMenu.Separator className="my-1 h-px bg-gray-200 dark:bg-gray-700" />
+          <DropdownMenu.Separator className="my-1 h-px bg-border" />
           
           <DropdownMenu.Item
             onSelect={(e) => {
               e.stopPropagation();
               onDelete(item);
             }}
-            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-700 focus:outline-none dark:text-red-500 dark:hover:bg-red-900/20 dark:focus:bg-red-900/20"
+            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-danger hover:bg-danger-subtle focus:bg-danger-subtle focus:text-danger focus:outline-none"
           >
             <Trash2 className="h-4 w-4" aria-hidden="true" />
             <span>{deleteLabel || t('common.delete')}</span>

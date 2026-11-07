@@ -216,7 +216,7 @@ function SettingCard({ setting, onSave }) {
         )}
 
         {validationError && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-400">{validationError}</p>
+          <p className="mt-2 text-sm text-danger">{validationError}</p>
         )}
       </div>
 

@@ -53,7 +53,7 @@ function CopyableLink({ slug, isExpired, expires_at }) {
       <Tooltip>
         <TooltipTrigger asChild>
           <div
-            className="relative w-full max-w-[220px] cursor-not-allowed rounded px-1 py-0.5 text-left text-sm text-gray-400"
+            className="relative w-full max-w-[220px] cursor-not-allowed rounded px-1 py-0.5 text-left text-sm text-muted-foreground"
             title={url}
           >
             <span className="block truncate">{displayUrl}</span>
@@ -74,7 +74,7 @@ function CopyableLink({ slug, isExpired, expires_at }) {
       <TooltipTrigger asChild>
         <div
           onClick={handleCopy}
-          className="w-full max-w-[220px] cursor-pointer rounded px-1 py-0.5 text-left text-sm text-gray-600 transition-colors hover:bg-gray-100"
+          className="w-full max-w-[220px] cursor-pointer rounded px-1 py-0.5 text-left text-sm text-muted-foreground transition-colors hover:bg-accent"
           title={url}
           data-testid={`copyable-link-div-${slug}`}
         >
@@ -128,7 +128,7 @@ export function LinksTable({
     return (
       <div>
         {!isDashboardWidget && <h2 className="text-xl font-semibold">{t('analytics.shareLinks')}</h2>}
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-muted-foreground">
           {contextType === 'dataroom'
             ? t('analytics.noLinksDataroom')
             : t('analytics.noLinksDocument')}
@@ -173,7 +173,7 @@ export function LinksTable({
                       {hasViews && (
                         <button
                           onClick={() => setExpandedRowId(isExpanded ? null : link.id)}
-                          className="flex items-center justify-center rounded-full p-1 hover:bg-gray-100"
+                          className="flex items-center justify-center rounded-full p-1 hover:bg-accent"
                           aria-expanded={isExpanded}
                           aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
                         >
@@ -191,7 +191,7 @@ export function LinksTable({
                           {link.name || t('links.untitledLink')}
                         </span>
                         {isExpired && (
-                          <span className="shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700">
+                          <span className="shrink-0 rounded-full bg-danger-subtle px-2 py-0.5 text-xs font-semibold text-danger">
                             {t('analytics.expired')}
                           </span>
                         )}
@@ -221,11 +221,11 @@ export function LinksTable({
                             className="inline-flex items-center gap-1.5 max-w-full hover:underline"
                             title={link.dataroom_name}
                           >
-                            <FolderIcon className="h-4 w-4 text-blue-500 shrink-0" />
+                            <FolderIcon className="h-4 w-4 text-info shrink-0" />
                             <span className="truncate">{link.dataroom_name}</span>
                           </Link>
                         ) : (
-                          <span className="text-gray-400">—</span>
+                          <span className="text-muted-foreground">—</span>
                         )}
                       </TableCell>
                     )}
@@ -272,7 +272,7 @@ export function LinksTable({
                     )}
                   </TableRow>
                   {isExpanded && hasViews && (
-                    <TableRow className="bg-gray-50 hover:bg-gray-50">
+                    <TableRow className="bg-muted hover:bg-accent">
                       <TableCell colSpan={isDashboardWidget ? 8 : 9} className="p-4">
                         <div className="p-2">
                           <Table>
@@ -298,7 +298,7 @@ export function LinksTable({
                                       <div className="flex items-center gap-2 font-medium">
                                         <span>{view.viewer_email || t('viewSessions.anonymous')}</span>
                                         {view.is_owner_view && (
-                                          <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
+                                          <span className="rounded-full bg-info-subtle px-2 py-0.5 text-xs font-semibold text-info">
                                             {t('viewSessions.you')}
                                           </span>
                                         )}
@@ -344,7 +344,7 @@ export function LinksTable({
                             <div className="mt-2 text-center">
                               <Link
                                 to={`/documents/${link.document}/links/${link.id}`}
-                                className="text-sm font-medium text-blue-600 hover:underline"
+                                className="text-sm font-medium text-brand hover:underline"
                               >
                                 {t('analytics.viewAllSessions', { count: link.view_count })}
                               </Link>

@@ -20,7 +20,7 @@ export function PageViewsChart({ pageViews, documentType }) {
   const { t } = useTranslation();
 
   if (!pageViews || pageViews.length === 0) {
-    return <p className="text-sm text-gray-500">{t('viewSessions.noPageViewData')}</p>;
+    return <p className="text-sm text-muted-foreground">{t('viewSessions.noPageViewData')}</p>;
   }
 
   const isVideo = documentType === 'video' || pageViews[0]?.media_type === 'video';
@@ -37,13 +37,13 @@ export function PageViewsChart({ pageViews, documentType }) {
 
     return (
       <div className="space-y-3">
-        <p className="text-sm font-medium text-gray-700">
+        <p className="text-sm font-medium text-foreground">
           {t('viewSessions.totalTimeWatched', { duration: formatDuration(totalVideoDuration) })}
         </p>
         <div className="overflow-x-auto rounded border">
-          <table className="min-w-full divide-y divide-gray-200 text-xs text-gray-700">
+          <table className="min-w-full divide-y divide-border text-xs text-foreground">
             <thead>
-              <tr className="bg-gray-50 text-gray-500 uppercase font-semibold text-[10px] tracking-wider">
+              <tr className="bg-muted text-muted-foreground uppercase font-semibold text-[10px] tracking-wider">
                 <th className="px-3 py-2 text-left">{t('viewSessions.eventTime')}</th>
                 <th className="px-3 py-2 text-left">{t('viewSessions.playbackTimespan')}</th>
                 <th className="px-3 py-2 text-right">{t('viewSessions.duration')}</th>
@@ -52,9 +52,9 @@ export function PageViewsChart({ pageViews, documentType }) {
                 <th className="px-3 py-2 text-center">{t('viewSessions.speed')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 bg-white">
+            <tbody className="divide-y divide-border bg-card">
               {pageViews.map((view, idx) => (
-                <tr key={view.id || idx} className="hover:bg-gray-50">
+                <tr key={view.id || idx} className="hover:bg-muted">
                   <td className="px-3 py-2 whitespace-nowrap">{formatDate(view.created_at, 'PP p')}</td>
                   <td className="px-3 py-2 whitespace-nowrap font-mono">
                     {formatTime(view.video_start_time)} - {formatTime(view.video_end_time)}
@@ -64,18 +64,18 @@ export function PageViewsChart({ pageViews, documentType }) {
                   </td>
                   <td className="px-3 py-2 whitespace-nowrap text-center">
                     {view.video_volume === 0 ? (
-                      <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-0.5 text-red-700 font-medium">{t('viewSessions.muted')}</span>
+                      <span className="inline-flex items-center rounded-full bg-danger-subtle px-2 py-0.5 text-danger font-medium">{t('viewSessions.muted')}</span>
                     ) : (
-                      <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-0.5 text-green-700 font-medium">
+                      <span className="inline-flex items-center rounded-full bg-success-subtle px-2 py-0.5 text-success font-medium">
                         {view.video_volume != null ? `${view.video_volume}%` : t('viewSessions.soundOn')}
                       </span>
                     )}
                   </td>
                   <td className="px-3 py-2 whitespace-nowrap text-center">
                     {view.is_fullscreen ? (
-                      <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-blue-700 font-medium">{t('viewSessions.fullscreen')}</span>
+                      <span className="inline-flex items-center rounded-full bg-info-subtle px-2 py-0.5 text-info font-medium">{t('viewSessions.fullscreen')}</span>
                     ) : (
-                      <span className="text-gray-400">{t('viewSessions.standard')}</span>
+                      <span className="text-muted-foreground">{t('viewSessions.standard')}</span>
                     )}
                   </td>
                   <td className="px-3 py-2 whitespace-nowrap text-center font-mono">
@@ -120,7 +120,7 @@ export function PageViewsChart({ pageViews, documentType }) {
   return (
     <TooltipProvider>
       <div className="space-y-2">
-        <p className="text-sm font-medium text-gray-700">
+        <p className="text-sm font-medium text-foreground">
           {t('viewSessions.totalTimeSpent', { duration: formatDuration(totalDuration) })}
         </p>
         <div className="space-y-1">
@@ -128,7 +128,7 @@ export function PageViewsChart({ pageViews, documentType }) {
             .sort((a, b) => a.page_number - b.page_number)
             .map((view) => (
               <div key={view.page_number} className="flex items-center gap-4 text-sm">
-                <span className="w-20 flex-shrink-0 text-right text-gray-500 truncate" title={isMarkdown ? (view.scroll_percentage != null ? `${t('viewSessions.readingDepth', { defaultValue: 'Read depth' })} ${view.scroll_percentage}%` : t('viewSessions.document', { defaultValue: 'Document' })) : t('viewSessions.pageNumber', { number: view.page_number })}>
+                <span className="w-20 flex-shrink-0 text-right text-muted-foreground truncate" title={isMarkdown ? (view.scroll_percentage != null ? `${t('viewSessions.readingDepth', { defaultValue: 'Read depth' })} ${view.scroll_percentage}%` : t('viewSessions.document', { defaultValue: 'Document' })) : t('viewSessions.pageNumber', { number: view.page_number })}>
                   {isMarkdown ? (
                     view.scroll_percentage != null ? `${view.scroll_percentage}%` : t('viewSessions.document', { defaultValue: 'Document' })
                   ) : (
@@ -137,9 +137,9 @@ export function PageViewsChart({ pageViews, documentType }) {
                 </span>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="h-4 flex-grow cursor-pointer rounded bg-gray-200">
+                    <div className="h-4 flex-grow cursor-pointer rounded bg-border">
                       <div
-                        className="h-4 rounded bg-blue-500"
+                        className="h-4 rounded bg-info"
                         style={{
                           width: maxDuration > 0 ? `${(view.duration_seconds / maxDuration) * 100}%` : '0%',
                         }}
@@ -160,7 +160,7 @@ export function PageViewsChart({ pageViews, documentType }) {
                     </TooltipContent>
                   )}
                 </Tooltip>
-                <span className="w-16 flex-shrink-0 text-left font-medium text-gray-800">
+                <span className="w-16 flex-shrink-0 text-left font-medium text-foreground">
                   {formatDuration(view.duration_seconds)}
                 </span>
               </div>

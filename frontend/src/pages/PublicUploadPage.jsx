@@ -253,7 +253,7 @@ export function PublicUploadPage() {
   }
 
   if (error) {
-    return <div className="flex h-screen items-center justify-center text-red-500">{error}</div>;
+    return <div className="flex h-screen items-center justify-center text-danger">{error}</div>;
   }
 
   const allowedExtensions = getAllowedExtensions(fileRequest?.allowed_file_types);
@@ -278,7 +278,7 @@ export function PublicUploadPage() {
       <div key={field.id}>
         <Label htmlFor={fieldId}>
           {field.label}
-          {field.required ? <span className="text-red-500"> *</span> : null}
+          {field.required ? <span className="text-danger"> *</span> : null}
         </Label>
         {field.type === 'textarea' ? (
           <Textarea
@@ -323,7 +323,7 @@ export function PublicUploadPage() {
             disabled={isUploading}
           />
         )}
-        {errorText && <p className="mt-1 text-xs text-red-600">{errorText}</p>}
+        {errorText && <p className="mt-1 text-xs text-danger">{errorText}</p>}
       </div>
     );
   };
@@ -333,18 +333,18 @@ export function PublicUploadPage() {
       data-testid="public-upload-shell"
       className={cn(
         'flex flex-col items-center justify-center p-4',
-        isEmbedMode ? 'min-h-0 bg-transparent p-2' : 'min-h-screen bg-gray-50 dark:bg-gray-900'
+        isEmbedMode ? 'min-h-0 bg-transparent p-2' : 'min-h-screen bg-muted '
       )}
     >
       <Toaster richColors />
-      <div className={cn('w-full max-w-lg rounded-2xl bg-white p-8 dark:bg-gray-800 border border-gray-100/80', !isEmbedMode && 'shadow-lg')}>
+      <div className={cn('w-full max-w-lg rounded-2xl bg-card p-8 border border-border/80', !isEmbedMode && 'shadow-lg')}>
         {!isEmbedMode && (
           <div className="flex flex-col items-center justify-center mb-8">
             <div className="flex items-center gap-2">
               <img src={brandLogoUrl} alt={`${brandName} Logo`} className="h-8 w-8 object-contain" />
-              <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{brandName}</span>
+              <span className="text-xl font-bold tracking-tight text-foreground">{brandName}</span>
             </div>
-            <p className="mt-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+            <p className="mt-1.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
               Secure File Share
             </p>
           </div>
@@ -352,8 +352,8 @@ export function PublicUploadPage() {
 
         {uploadSuccess ? (
           <div className="text-center py-6">
-            <CheckCircle className="mx-auto h-12 w-12 text-green-500 animate-scaleIn" />
-            <h1 className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">Upload Complete!</h1>
+            <CheckCircle className="mx-auto h-12 w-12 text-success animate-scaleIn" />
+            <h1 className="mt-4 text-2xl font-bold text-foreground">Upload Complete!</h1>
             <p className="mt-2 text-muted-foreground text-sm">Your files have been successfully submitted.</p>
           </div>
         ) : (
@@ -362,11 +362,11 @@ export function PublicUploadPage() {
               <p className="text-muted-foreground text-sm">
                 {fileRequest.owner_name || 'Someone'} has invited you to upload files for:
               </p>
-              <h1 className="mt-2 text-xl font-bold text-gray-900 dark:text-white">
+              <h1 className="mt-2 text-xl font-bold text-foreground">
                 {fileRequest.name}
               </h1>
               {fileRequest.message && (
-                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 leading-relaxed bg-gray-50/50 dark:bg-gray-900/10 p-3 rounded-lg border border-gray-100/50 dark:border-gray-800/40 text-left">
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed bg-muted/50 p-3 rounded-lg border border-border/50 text-left">
                   {fileRequest.message}
                 </p>
               )}
@@ -404,7 +404,7 @@ export function PublicUploadPage() {
               )}
 
               <div>
-                <Label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <Label htmlFor="file-upload" className="block text-sm font-medium text-foreground">
                   Files
                 </Label>
                 <div
@@ -412,16 +412,16 @@ export function PublicUploadPage() {
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
                   className={cn(
-                    'mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6 transition-colors dark:border-gray-600',
-                    isDragging && 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/10'
+                    'mt-1 flex justify-center rounded-md border-2 border-dashed border-input px-6 pt-5 pb-6 transition-colors ',
+                    isDragging && 'border-info bg-info-subtle '
                   )}
                 >
                   <div className="space-y-1 text-center">
-                    <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
-                    <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                    <UploadCloud className="mx-auto h-12 w-12 text-muted-foreground" />
+                    <div className="flex text-sm text-muted-foreground">
                       <label
                         htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500 dark:bg-transparent"
+                        className="relative cursor-pointer rounded-md bg-card font-medium text-info focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 hover:text-info"
                       >
                         <span>Choose files</span>
                         <input id="file-upload" name="file-upload" type="file" multiple accept={fileInputAccept || undefined} className="sr-only" onChange={handleFileChange} disabled={isUploading} />
@@ -429,10 +429,10 @@ export function PublicUploadPage() {
                       <p className="pl-1">or drag and drop</p>
                     </div>
                     {fileRequest.max_file_size && (
-                      <p className="text-xs text-gray-500">Max file size: {formatBytes(fileRequest.max_file_size)}</p>
+                      <p className="text-xs text-muted-foreground">Max file size: {formatBytes(fileRequest.max_file_size)}</p>
                     )}
                     {allowedExtensions.length > 0 && (
-                      <p className="text-xs text-gray-500">Allowed file types: {allowedExtensions.join(', ')}</p>
+                      <p className="text-xs text-muted-foreground">Allowed file types: {allowedExtensions.join(', ')}</p>
                     )}
                   </div>
                 </div>
@@ -445,12 +445,12 @@ export function PublicUploadPage() {
                     const progress = uploadProgress[fileId];
                     return (
                       <div key={index} className="flex items-center gap-3 rounded-md border p-2">
-                        <FileIcon className="h-6 w-6 text-gray-500" />
+                        <FileIcon className="h-6 w-6 text-muted-foreground" />
                         <div className="flex-1">
                           <p className="truncate text-sm font-medium">{file.name}</p>
                           <p className="text-xs text-muted-foreground">{formatBytes(file.size)}</p>
                           {isUploading && progress !== 'error' && <Progress value={progress || 0} className="mt-1 h-1.5" />}
-                          {progress === 'error' && <p className="text-xs text-red-500">{uploadErrors[fileId] || 'Upload failed'}</p>}
+                          {progress === 'error' && <p className="text-xs text-danger">{uploadErrors[fileId] || 'Upload failed'}</p>}
                         </div>
                         {!isUploading && (
                           <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeFile(file)}>
@@ -473,37 +473,37 @@ export function PublicUploadPage() {
 
       {/* Footer Links */}
       {!isEmbedMode && (
-        <div className="mt-6 flex flex-col items-center justify-center gap-2 text-xs text-gray-400">
+        <div className="mt-6 flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-3">
             <a
               href={brandWebsiteUrl || "https://www.coneshare.com/about"}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-muted-foreground transition-colors"
             >
               {brandWebsiteUrl ? `About ${brandName}` : "About Coneshare"}
             </a>
-            <span className="text-gray-300">&bull;</span>
+            <span className="text-muted-foreground/70">&bull;</span>
             <a
               href={termsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-muted-foreground transition-colors"
             >
               Terms
             </a>
-            <span className="text-gray-300">&bull;</span>
+            <span className="text-muted-foreground/70">&bull;</span>
             <a
               href={privacyPolicyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-muted-foreground transition-colors"
             >
               Privacy Policy
             </a>
           </div>
-          <div className="text-[11px] text-gray-400/80">
-            Powered by <a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-700 dark:text-gray-100 dark:hover:text-gray-300 font-semibold underline transition-colors">Coneshare</a>
+          <div className="text-[11px] text-muted-foreground/80">
+            Powered by <a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-foreground font-semibold underline transition-colors">Coneshare</a>
           </div>
         </div>
       )}

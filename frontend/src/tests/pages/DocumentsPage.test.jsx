@@ -766,11 +766,11 @@ describe('DocumentsPage', () => {
         const folderCard = await screen.findByText('Folder One');
         const itemRow = folderCard.closest('[data-testid^="draggable-item-"]');
         
-        expect(itemRow).not.toHaveClass('bg-blue-100');
+        expect(itemRow).not.toHaveClass('bg-info-subtle');
 
         await user.click(itemRow);
         
-        expect(itemRow).toHaveClass('bg-blue-100');
+        expect(itemRow).toHaveClass('bg-info-subtle');
     });
 
     it('should select a range of items with shift-click', async () => {
@@ -792,7 +792,7 @@ describe('DocumentsPage', () => {
         const actionBar = screen.getByRole('button', { name: 'Clear Selection' }).closest('div');
         expect(actionBar).toHaveTextContent(/3 selected/i);
 
-        expect(folderOneRow).toHaveClass('bg-blue-100');
+        expect(folderOneRow).toHaveClass('bg-info-subtle');
     });
 
     it('should handle bulk delete action', async () => {

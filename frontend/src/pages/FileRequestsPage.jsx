@@ -149,7 +149,7 @@ export function FileRequestsPage() {
       </div>
 
       <div className="rounded-lg border">
-        <div className="flex items-center border-b bg-gray-50 px-4 py-3 text-sm font-medium text-muted-foreground dark:bg-gray-900/50">
+        <div className="flex items-center border-b bg-muted px-4 py-3 text-sm font-medium text-muted-foreground">
           <div className="w-[30%] pl-8">{t('analytics.name')}</div>
           <div className="w-[25%]">{t('fileRequests.destinationFolder')}</div>
           <div className="w-[10%]">{t('fileRequests.uploaded')}</div>
@@ -177,13 +177,13 @@ export function FileRequestsPage() {
                     if (e.defaultPrevented) return;
                     navigate(`/file-requests/${request.id}`);
                   }}                  
-                  className="flex w-full cursor-pointer items-center border-b px-4 py-2 text-sm transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50"
+                  className="flex w-full cursor-pointer items-center border-b px-4 py-2 text-sm transition-colors hover:bg-accent"
                 >
                   <div className="w-8" />
                   <div className="w-[30%] flex items-center gap-2 font-medium">
                     <span className="truncate">{request.name || 'Untitled Request'}</span>
                     {isExpired && (
-                      <span className="flex-shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700">
+                      <span className="flex-shrink-0 rounded-full bg-danger-subtle px-2 py-0.5 text-xs font-semibold text-danger">
                         {t('analytics.expired')}
                       </span>
                     )}
@@ -243,19 +243,19 @@ export function FileRequestsPage() {
                         <DropdownMenu.Portal>
                           <DropdownMenu.Content
                             align="end"
-                            className="z-[9999] w-48 rounded-md bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800"
+                            className="z-[9999] w-48 rounded-md bg-card p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             onCloseAutoFocus={(e) => e.preventDefault()}
                           >
-                            <DropdownMenu.Item onSelect={() => handleCopyLink(request.slug)} className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700">
+                            <DropdownMenu.Item onSelect={() => handleCopyLink(request.slug)} className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted">
                               <Copy className="h-4 w-4" />
                               <span>{t('fileRequests.copyLink')}</span>
                             </DropdownMenu.Item>
-                            <DropdownMenu.Item onSelect={() => handleEditRequest(request)} className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700">
+                            <DropdownMenu.Item onSelect={() => handleEditRequest(request)} className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted">
                               <Edit className="h-4 w-4" />
                               <span>{t('common.edit')}</span>
                             </DropdownMenu.Item>
-                            <DropdownMenu.Separator className="my-1 h-px bg-gray-200 dark:bg-gray-700" />
-                            <DropdownMenu.Item onSelect={() => handleDeleteRequest(request)} className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 focus:text-red-700 dark:text-red-500 dark:hover:bg-red-900/20">
+                            <DropdownMenu.Separator className="my-1 h-px bg-border" />
+                            <DropdownMenu.Item onSelect={() => handleDeleteRequest(request)} className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-danger hover:bg-danger-subtle focus:text-danger">
                               <Trash2 className="h-4 w-4" />
                               <span>{t('common.delete')}</span>
                             </DropdownMenu.Item>

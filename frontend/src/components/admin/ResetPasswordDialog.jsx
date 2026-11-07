@@ -113,7 +113,7 @@ export function ResetPasswordDialog({
       <DialogContent className="sm:max-w-[460px]">
         <DialogHeader>
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10 text-amber-500 dark:bg-amber-500/20">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning/10 text-warning">
               <Key className="h-5 w-5" />
             </div>
             <div>
@@ -182,7 +182,7 @@ export function ResetPasswordDialog({
                   disabled={isSubmitting || !password}
                   title={t('common.copy')}
                 >
-                  {isCopied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+                  {isCopied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
                 </Button>
               </div>
             </div>

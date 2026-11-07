@@ -26,8 +26,8 @@ export function DataroomFeaturedGrid({
     <section aria-label={t('viewer.featuredResources', { defaultValue: 'Featured Resources' })} className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-gray-900 flex items-center gap-1.5">
-            <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
+          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-foreground flex items-center gap-1.5">
+            <Star className="h-3.5 w-3.5 fill-warning text-warning" />
             {t('viewer.featuredResources', { defaultValue: 'Featured Resources' })} ({items.length})
           </span>
         </div>
@@ -42,12 +42,12 @@ export function DataroomFeaturedGrid({
             <div
               key={item.id}
               data-testid={`featured-card-${item.id}`}
-              className="group rounded-xl border border-gray-200/80 bg-white p-4 shadow-2xs hover:shadow-xs hover:border-gray-300 transition-all flex flex-col justify-between gap-3.5 relative"
+              className="group rounded-xl border border-border/80 bg-card p-4 shadow-2xs hover:shadow-xs hover:border-input transition-all flex flex-col justify-between gap-3.5 relative"
             >
               {/* Top Row: File/Folder Icon on the left, File Type Badge on the right */}
               <div className="flex items-center justify-between gap-2">
                 {isFolder ? (
-                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center shrink-0 text-gray-600 group-hover:text-gray-900 group-hover:bg-gray-200/70 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0 text-muted-foreground group-hover:text-foreground group-hover:bg-accent/70 transition-colors">
                     <Folder className="h-5 w-5" />
                   </div>
                 ) : (
@@ -56,7 +56,7 @@ export function DataroomFeaturedGrid({
                   </div>
                 )}
 
-                <span className="px-2 py-0.5 rounded bg-gray-100 font-mono text-[10px] font-semibold text-gray-600 uppercase tracking-wide shrink-0">
+                <span className="px-2 py-0.5 rounded bg-muted font-mono text-[10px] font-semibold text-muted-foreground uppercase tracking-wide shrink-0">
                   {isFolder
                     ? t('documents.folders', { defaultValue: 'Folder' })
                     : item.document_type || 'FILE'}
@@ -67,12 +67,12 @@ export function DataroomFeaturedGrid({
               <div className="min-w-0 flex-1">
                 <h4
                   onClick={() => (isFolder ? onFolderClick?.(item) : onItemClick?.(item))}
-                  className="text-sm font-semibold text-gray-900 truncate group-hover:text-primary transition-colors cursor-pointer"
+                  className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors cursor-pointer"
                   title={item.name}
                 >
                   {item.name}
                 </h4>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1 flex-wrap">
+                <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-1 flex-wrap">
                   {!isFolder && typeof item.file_size === 'number' && (
                     <span>{formatBytes(item.file_size)}</span>
                   )}
@@ -85,7 +85,7 @@ export function DataroomFeaturedGrid({
                   {item.enable_watermark && (
                     <>
                       <span>•</span>
-                      <span className="inline-flex items-center gap-0.5 text-gray-500 dark:text-gray-400">
+                      <span className="inline-flex items-center gap-0.5 text-muted-foreground">
                         <Lock className="h-3 w-3" />
                         <span>{t('viewer.watermarked', { defaultValue: 'Watermarked' })}</span>
                       </span>
@@ -100,7 +100,7 @@ export function DataroomFeaturedGrid({
                   <Button
                     variant="outline"
                     size="sm"
-                    className="w-full h-8 px-3 text-xs font-medium gap-1.5 rounded-lg border-gray-200 hover:bg-gray-50 text-gray-800 shadow-2xs transition-all flex items-center justify-center"
+                    className="w-full h-8 px-3 text-xs font-medium gap-1.5 rounded-lg border-border hover:bg-accent text-foreground shadow-2xs transition-all flex items-center justify-center"
                     onClick={() => onFolderClick?.(item)}
                   >
                     <span>{t('viewer.openFolder', { defaultValue: 'Open Folder' })}</span>
@@ -109,7 +109,7 @@ export function DataroomFeaturedGrid({
                 ) : (
                   <Button
                     size="sm"
-                    className="w-full h-8 px-3 text-xs font-medium gap-1.5 rounded-lg bg-gray-950 hover:bg-gray-800 text-white shadow-xs transition-all flex items-center justify-center"
+                    className="w-full h-8 px-3 text-xs font-medium gap-1.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs transition-all flex items-center justify-center"
                     onClick={() => onItemClick?.(item)}
                   >
                     <Eye className="h-3.5 w-3.5" />

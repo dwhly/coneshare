@@ -37,11 +37,11 @@ export function DuplicateDataroomCard({ dataroom }) {
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-sm font-semibold">{t('amforge.duplicate.title')}</h3>
       </div>
-      <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">{t('amforge.duplicate.notice')}</p>
-      <div className="flex items-center justify-between rounded border border-gray-200 p-3 dark:border-gray-700">
+      <p className="mb-4 text-sm text-muted-foreground">{t('amforge.duplicate.notice')}</p>
+      <div className="flex items-center justify-between rounded border border-border p-3">
         <div>
           <p className="text-sm font-medium">{t('amforge.duplicate.includeLinks')}</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{t('amforge.duplicate.includeLinksHelp')}</p>
+          <p className="text-xs text-muted-foreground">{t('amforge.duplicate.includeLinksHelp')}</p>
         </div>
         <Switch
           checked={includeLinks}

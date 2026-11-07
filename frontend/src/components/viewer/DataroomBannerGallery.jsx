@@ -24,9 +24,9 @@ function BannerMetadataOverlay({ dataroomName, updatedAt: _updatedAt, isNdaProte
         {isNdaProtected && (
           <span
             data-testid="banner-nda-pill"
-            className="inline-flex items-center gap-1.5 rounded-full bg-slate-950/70 backdrop-blur-md px-3 py-1 text-xs font-medium text-emerald-200 border border-emerald-400/30 shadow-xs"
+            data-theme="dark" className="inline-flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-md px-3 py-1 text-xs font-medium text-success border border-success-border shadow-xs"
           >
-            <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+            <ShieldCheck className="h-3.5 w-3.5 text-success" />
             <span>{t('viewer.ndaActive', { defaultValue: 'NDA Active' })}</span>
           </span>
         )}
@@ -80,7 +80,7 @@ export function DataroomBannerGallery({
   if (bannerMode === 'single') {
     if (!singleBannerUrl) return null;
     return (
-      <section className={`relative flex-shrink-0 rounded-2xl border border-gray-200/60 bg-white dark:bg-zinc-950 overflow-hidden shadow-sm ${className}`}>
+      <section className={`relative flex-shrink-0 rounded-2xl border border-border/60 bg-card overflow-hidden shadow-sm ${className}`}>
         <img
           src={singleBannerUrl}
           alt={`${dataroomName} banner`}
@@ -89,9 +89,9 @@ export function DataroomBannerGallery({
         {updatedAt && (
           <div
             data-testid="banner-updated-time"
-            className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 rounded-full bg-slate-950/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-[#c6c6cd] border border-white/10 shadow-xs select-none pointer-events-auto"
+            data-theme="dark" className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-muted-foreground border border-white/10 shadow-xs select-none pointer-events-auto"
           >
-            <Clock className="h-3.5 w-3.5 text-gray-400" />
+            <Clock className="h-3.5 w-3.5 text-muted-foreground" />
             <span>{t('common.updated', { defaultValue: 'Updated' })} {formatRelativeTime(updatedAt)}</span>
           </div>
         )}
@@ -116,7 +116,7 @@ export function DataroomBannerGallery({
   if (validImages.length === 1) {
     const single = validImages[0];
     return (
-      <section className={`relative flex-shrink-0 rounded-2xl border border-gray-200/60 bg-white dark:bg-zinc-950 overflow-hidden shadow-sm ${className}`}>
+      <section className={`relative flex-shrink-0 rounded-2xl border border-border/60 bg-card overflow-hidden shadow-sm ${className}`}>
         <img
           src={single.image}
           alt={single.caption || `${dataroomName} banner`}
@@ -125,9 +125,9 @@ export function DataroomBannerGallery({
         {updatedAt && (
           <div
             data-testid="banner-updated-time"
-            className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 rounded-full bg-slate-950/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-[#c6c6cd] border border-white/10 shadow-xs select-none pointer-events-auto"
+            data-theme="dark" className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-muted-foreground border border-white/10 shadow-xs select-none pointer-events-auto"
           >
-            <Clock className="h-3.5 w-3.5 text-gray-400" />
+            <Clock className="h-3.5 w-3.5 text-muted-foreground" />
             <span>{t('common.updated', { defaultValue: 'Updated' })} {formatRelativeTime(updatedAt)}</span>
           </div>
         )}
@@ -172,7 +172,7 @@ export function DataroomBannerGallery({
 
   return (
     <section
-      className={`flex-shrink-0 rounded-2xl border border-gray-200/60 bg-neutral-900 overflow-hidden relative select-none shadow-sm ${className}`}
+      className={`flex-shrink-0 rounded-2xl border border-border/60 bg-muted overflow-hidden relative select-none shadow-sm ${className}`}
       aria-label={`${dataroomName} banner gallery`}
     >
       {/* Top Left: Security Pills */}
@@ -183,9 +183,9 @@ export function DataroomBannerGallery({
         >
           <span
             data-testid="banner-nda-pill"
-            className="inline-flex items-center gap-1.5 rounded-full bg-slate-950/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-emerald-200 border border-emerald-400/30 shadow-xs pointer-events-auto"
+            data-theme="dark" className="inline-flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-success border border-success-border shadow-xs pointer-events-auto"
           >
-            <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+            <ShieldCheck className="h-3.5 w-3.5 text-success" />
             <span>{t('viewer.ndaActive', { defaultValue: 'NDA Active' })}</span>
           </span>
         </div>
@@ -195,9 +195,9 @@ export function DataroomBannerGallery({
       {updatedAt && (
         <div
           data-testid="banner-updated-time"
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 rounded-full bg-slate-950/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-[#c6c6cd] border border-white/10 shadow-xs select-none pointer-events-auto"
+          data-theme="dark" className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-xs font-medium text-muted-foreground border border-white/10 shadow-xs select-none pointer-events-auto"
         >
-          <Clock className="h-3.5 w-3.5 text-gray-400" />
+          <Clock className="h-3.5 w-3.5 text-muted-foreground" />
           <span>{t('common.updated', { defaultValue: 'Updated' })} {formatRelativeTime(updatedAt)}</span>
         </div>
       )}
@@ -281,7 +281,7 @@ export function DataroomBannerGallery({
           {validImages.map((img, index) => (
             <div
               key={img.id || index}
-              className="relative shrink-0 w-[85%] snap-center rounded-xl overflow-hidden shadow-md aspect-[16/9] max-h-[280px] bg-neutral-800"
+              className="relative shrink-0 w-[85%] snap-center rounded-xl overflow-hidden shadow-md aspect-[16/9] max-h-[280px] bg-muted"
             >
               <img
                 src={img.image}

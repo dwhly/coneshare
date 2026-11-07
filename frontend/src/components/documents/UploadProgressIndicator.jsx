@@ -49,8 +49,8 @@ export function UploadProgressIndicator() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 w-full max-w-sm rounded-lg bg-white shadow-lg dark:bg-gray-800">
-      <div className="flex items-center p-3 border-b border-gray-200 dark:border-gray-700">
+    <div className="fixed bottom-4 right-4 z-50 w-full max-w-sm rounded-lg bg-card shadow-lg">
+      <div className="flex items-center p-3 border-b border-border">
         <div className="flex items-center gap-2 flex-1">
             <UploadCloud className="h-5 w-5" />
             <span className="font-semibold text-sm">{getStatusText()}</span>
@@ -71,26 +71,26 @@ export function UploadProgressIndicator() {
         <div className="p-3 max-h-60 overflow-y-auto">
           {activeUploads.map((upload) => (
             <div key={upload.id} className="flex items-center gap-3 mb-2 last:mb-0">
-              <File className="h-6 w-6 flex-shrink-0 text-gray-500" />
+              <File className="h-6 w-6 flex-shrink-0 text-muted-foreground" />
               <div className="flex-1 overflow-hidden">
                 <div className="text-sm truncate">{upload.file.name}</div>
-                <div className="text-xs text-gray-500">{formatBytes(upload.file.size)}</div>
+                <div className="text-xs text-muted-foreground">{formatBytes(upload.file.size)}</div>
                 {upload.status === 'error' && (
-                  <div className="text-xs text-red-500 truncate">{upload.error}</div>
+                  <div className="text-xs text-danger truncate">{upload.error}</div>
                 )}
                 <Progress value={upload.progress} className="h-1 mt-1" />
               </div>
               <div className="flex-shrink-0">
-                {upload.status === 'uploading' && <Loader2 className="h-5 w-5 animate-spin text-gray-500" />}
-                {upload.status === 'complete' && <CheckCircle2 className="h-5 w-5 text-green-500" />}
-                {upload.status === 'error' && <XCircle className="h-5 w-5 text-red-500" />}
+                {upload.status === 'uploading' && <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />}
+                {upload.status === 'complete' && <CheckCircle2 className="h-5 w-5 text-success" />}
+                {upload.status === 'error' && <XCircle className="h-5 w-5 text-danger" />}
               </div>
             </div>
           ))}
         </div>
       )}
 
-      <div className="p-3 border-t border-gray-200 dark:border-gray-700">
+      <div className="p-3 border-t border-border">
         <div className="flex justify-between text-xs mb-1 font-medium">
             <span>{t('uploads.overallProgress')}</span>
             <span>{Math.round(totalProgress)}%</span>

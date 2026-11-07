@@ -230,32 +230,32 @@ export function DataroomsPage() {
                           </Button>
                         </DropdownMenu.Trigger>
                         <DropdownMenu.Content
-                          className="z-50 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800"
+                          className="z-50 w-48 origin-top-right rounded-md bg-card py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                           sideOffset={5}
                           align="end"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <DropdownMenu.Item
                             onClick={() => setDataroomToRename(dataroom)}
-                            className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                            className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                           >
                             <Pencil className="h-4 w-4" />
                             <span>{t('documents.rename')}</span>
                           </DropdownMenu.Item>
                           <DropdownMenu.Item
                             onClick={() => navigate(`/datarooms/${dataroom.id}?tab=links&openCreateLink=true`)}
-                            className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                            className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                           >
                             <Share2 className="h-4 w-4" />
                             <span>{t('documents.share')}</span>
                           </DropdownMenu.Item>
 
-                          <DropdownMenu.Separator className="my-1 h-px bg-gray-200 dark:bg-gray-700" />
+                          <DropdownMenu.Separator className="my-1 h-px bg-border" />
 
                           {canDelete ? (
                             <DropdownMenu.Item
                               onClick={() => setDataroomToDelete(dataroom)}
-                              className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 focus:bg-red-50 focus:outline-none dark:text-red-400 hover:dark:bg-red-900/50 focus:dark:bg-red-900/50"
+                              className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-danger hover:bg-danger-subtle focus:bg-danger-subtle focus:outline-none"
                             >
                               <Trash2 className="h-4 w-4" />
                               <span>{t('common.delete')}</span>
@@ -263,7 +263,7 @@ export function DataroomsPage() {
                           ) : (
                             <DropdownMenu.Item
                               onClick={() => setDataroomToLeave(dataroom)}
-                              className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 focus:bg-red-50 focus:outline-none dark:text-red-400 hover:dark:bg-red-900/50 focus:dark:bg-red-900/50"
+                              className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-danger hover:bg-danger-subtle focus:bg-danger-subtle focus:outline-none"
                             >
                               <LogOut className="h-4 w-4" />
                               <span>{t('datarooms.leaveDataroom')}</span>
@@ -322,18 +322,18 @@ export function DataroomsPage() {
                       variant="outline"
                       className={`text-[11px] font-normal ${
                         isOwner
-                          ? 'border-amber-500/30 bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
-                          : 'border-indigo-500/30 bg-indigo-50 text-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-300'
+                          ? 'border-warning/30 bg-warning-subtle text-warning '
+                          : 'border-info/30 bg-info-subtle text-info '
                       }`}
                     >
                       {isOwner ? (
                         <>
-                          <Crown className="h-3 w-3 mr-1 text-amber-600 dark:text-amber-400" />
+                          <Crown className="h-3 w-3 mr-1 text-warning" />
                           {t('datarooms.ownerRole')}
                         </>
                       ) : (
                         <>
-                          <Users className="h-3 w-3 mr-1 text-indigo-600 dark:text-indigo-400" />
+                          <Users className="h-3 w-3 mr-1 text-info" />
                           {t('datarooms.collaboratorRole')}
                         </>
                       )}

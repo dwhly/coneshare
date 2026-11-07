@@ -56,11 +56,11 @@ export function SignupVerifyPage() {
   }, [navigate, searchParams])
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-900">
+    <div className="flex min-h-screen items-center justify-center bg-muted px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
-        <div className="rounded-md bg-white p-6 shadow dark:bg-gray-800">
+        <div className="rounded-md bg-card p-6 shadow">
           {brandLogoUrl ? (
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white p-2 shadow-sm border border-gray-100 dark:bg-gray-700 dark:border-gray-600">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-card p-2 shadow-sm border border-border">
               <img
                 src={brandLogoUrl}
                 alt={`${brandName} logo`}
@@ -68,13 +68,13 @@ export function SignupVerifyPage() {
               />
             </div>
           ) : null}
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Email Verification</h1>
-          <p className={`mt-3 text-sm ${status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-gray-600 dark:text-gray-300'}`}>
+          <h1 className="text-2xl font-bold text-foreground">Email Verification</h1>
+          <p className={`mt-3 text-sm ${status === 'error' ? 'text-danger ' : 'text-muted-foreground '}`}>
             {message}
           </p>
           {status === 'error' && (
             <p className="mt-4 text-sm">
-              <Link className="font-medium text-indigo-600 hover:text-indigo-500" to="/signup">
+              <Link className="font-medium text-brand hover:underline" to="/signup">
                 Request a new verification email
               </Link>
             </p>
@@ -82,37 +82,37 @@ export function SignupVerifyPage() {
         </div>
 
         {/* Footer Links */}
-        <div className="mt-8 flex flex-col items-center justify-center gap-2 text-xs text-gray-400">
+        <div className="mt-8 flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-3">
             <a
               href={brandWebsiteUrl || "https://www.coneshare.com/about"}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-muted-foreground transition-colors"
             >
               {brandWebsiteUrl ? `About ${brandName}` : "About Coneshare"}
             </a>
-            <span className="text-gray-300">&bull;</span>
+            <span className="text-muted-foreground/70">&bull;</span>
             <a
               href={termsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-muted-foreground transition-colors"
             >
               Terms
             </a>
-            <span className="text-gray-300">&bull;</span>
+            <span className="text-muted-foreground/70">&bull;</span>
             <a
               href={privacyPolicyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-muted-foreground transition-colors"
             >
               Privacy Policy
             </a>
           </div>
-          <div className="text-[11px] text-gray-400/80">
-            Powered by <a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-700 dark:text-gray-100 dark:hover:text-gray-300 font-semibold underline transition-colors">Coneshare</a>
+          <div className="text-[11px] text-muted-foreground/80">
+            Powered by <a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-foreground font-semibold underline transition-colors">Coneshare</a>
           </div>
         </div>
       </div>

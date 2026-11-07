@@ -60,10 +60,10 @@ export function NDAForm({ slug, onSuccess, publicMeta = null }) {
     <GateLayout publicMeta={publicMeta} maxWidth="max-w-lg">
       <div className="space-y-4 pt-1">
         {/* NDA Warning Banner */}
-        <div className="flex items-start gap-2.5 rounded-lg bg-indigo-50/90 dark:bg-indigo-950/30 p-3 text-xs text-indigo-950 dark:text-indigo-200 border border-indigo-200/80 dark:border-indigo-900/50">
-          <ShieldAlert className="h-4 w-4 shrink-0 text-indigo-600 dark:text-indigo-400 mt-0.5" />
+        <div className="flex items-start gap-2.5 rounded-lg bg-info-subtle/90 p-3 text-xs text-info border border-info-border">
+          <ShieldAlert className="h-4 w-4 shrink-0 text-info mt-0.5" />
           <div className="leading-relaxed">
-            <span className="font-semibold text-[11px] block uppercase tracking-wider text-indigo-900 dark:text-indigo-300">
+            <span className="font-semibold text-[11px] block uppercase tracking-wider text-info">
               {t('viewer.ndaRequired')}
             </span>
             {t('viewer.ndaNotice')}
@@ -72,7 +72,7 @@ export function NDAForm({ slug, onSuccess, publicMeta = null }) {
 
         {/* Legal Agreement Viewer Box */}
         <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-[11px] font-medium text-gray-500 dark:text-zinc-400 px-0.5">
+          <div className="flex items-center justify-between text-[11px] font-medium text-muted-foreground px-0.5">
             <span>
               {versionString
                 ? t('viewer.confidentialityAgreementWithVersion', {
@@ -86,10 +86,10 @@ export function NDAForm({ slug, onSuccess, publicMeta = null }) {
           </div>
           <div
             className={cn(
-              'max-h-52 overflow-y-auto overflow-x-hidden rounded-xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-900/50 p-4 text-xs leading-relaxed shadow-inner nda-scroll whitespace-pre-line break-words',
+              'max-h-52 overflow-y-auto overflow-x-hidden rounded-xl border border-border bg-muted p-4 text-xs leading-relaxed shadow-inner nda-scroll whitespace-pre-line break-words',
               hasNdaText
-                ? 'text-gray-700 dark:text-zinc-300'
-                : 'text-amber-800 dark:text-amber-400/90 italic bg-amber-50/40 dark:bg-amber-950/10 border-amber-200/70 dark:border-amber-900/40'
+                ? 'text-foreground '
+                : 'text-warning italic bg-warning-subtle/40 border-warning-border '
             )}
           >
             {ndaText}
@@ -106,12 +106,12 @@ export function NDAForm({ slug, onSuccess, publicMeta = null }) {
           >
             <input
               type="checkbox"
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-800 dark:focus:ring-offset-zinc-900 cursor-pointer disabled:cursor-not-allowed"
+              className="mt-0.5 h-4 w-4 rounded border-input text-info focus:ring-ring cursor-pointer disabled:cursor-not-allowed"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
               disabled={isLoading || !hasNdaText}
             />
-            <span className="text-xs text-gray-600 dark:text-zinc-400 group-hover:text-gray-900 dark:group-hover:text-zinc-200 transition-colors leading-normal">
+            <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors leading-normal">
               {t('viewer.ndaAgreeCheckbox')}
             </span>
           </label>
@@ -120,7 +120,7 @@ export function NDAForm({ slug, onSuccess, publicMeta = null }) {
             <Button
               type="submit"
               size="lg"
-              className="w-full flex items-center justify-center gap-2 active:scale-[0.98] transition-all bg-gray-900 hover:bg-black text-white dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+              className="w-full flex items-center justify-center gap-2 active:scale-[0.98] transition-all bg-primary hover:bg-black text-primary-foreground"
               disabled={isLoading || !agreed || !hasNdaText}
             >
               <span>{isLoading ? t('viewer.processing') : t('viewer.acceptAndView')}</span>
@@ -132,7 +132,7 @@ export function NDAForm({ slug, onSuccess, publicMeta = null }) {
         <div className="text-center pt-1">
           <a
             href={brandWebsiteUrl || 'https://www.coneshare.com'}
-            className="text-[11px] text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300 transition-colors"
+            className="text-[11px] text-muted-foreground hover:text-muted-foreground transition-colors"
           >
             {t('viewer.declineNda', { defaultValue: 'Decline and leave' })}
           </a>

@@ -128,11 +128,11 @@ export function AdminUserDetailPage() {
   const quotaBytes = quotaMB * 1024 * 1024;
   const usagePercentage = quotaMB > 0 ? Math.min((usageBytes / quotaBytes) * 100, 100) : 0;
 
-  let indicatorColor = 'bg-emerald-500';
+  let indicatorColor = 'bg-success';
   if (usagePercentage > 90) {
-    indicatorColor = 'bg-rose-500';
+    indicatorColor = 'bg-danger';
   } else if (usagePercentage > 70) {
-    indicatorColor = 'bg-amber-500';
+    indicatorColor = 'bg-warning';
   }
 
   return (
@@ -164,12 +164,12 @@ export function AdminUserDetailPage() {
           <div className="flex items-center gap-2">
             <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
               user.is_active 
-                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' 
-                : 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400'
+                ? 'bg-success-subtle text-success ' 
+                : 'bg-danger-subtle text-danger '
             }`}>
               {user.is_active ? t('common.active') : t('common.inactive')}
             </span>
-            <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 capitalize">
+            <span className="inline-flex items-center rounded-full bg-info-subtle px-2.5 py-0.5 text-xs font-semibold text-info capitalize">
               {user.role === 'admin' ? t('admin.roleAdmin') : user.role === 'member' ? t('admin.roleMember') : user.role}
             </span>
           </div>
@@ -318,8 +318,8 @@ export function AdminUserDetailPage() {
                     <TableCell>
                       <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
                         link.is_active 
-                          ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' 
-                          : 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400'
+                          ? 'bg-success-subtle text-success ' 
+                          : 'bg-danger-subtle text-danger '
                       }`}>
                         {link.is_active ? t('common.active') : t('common.inactive')}
                       </span>

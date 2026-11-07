@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 import { Toaster } from 'sonner';
-import './App.css';
 import MainLayout from './components/layout/MainLayout';
 import AuthGuard from './components/auth/AuthGuard';
 import { UploadProvider } from './contexts/UploadProvider';
@@ -51,8 +50,8 @@ const AdminSecurityAlertsPage = lazyNamed(() => import('./pages/AdminSecurityAle
 
 function RouteLoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent" />
+    <div className="min-h-screen flex items-center justify-center bg-muted">
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-info border-t-transparent" />
     </div>
   );
 }

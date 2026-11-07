@@ -5,6 +5,21 @@ from django.views.decorators.http import require_GET
 from sharelinks.models import ShareLink
 
 
+def _brand():
+    # Visitor pages show the TENANT brand (brand.yaml); staff pages show the Fleet lockup.
+    from dealroom.brand import load_brand
+    try:
+        brand = load_brand()
+    except Exception:  # a broken brand file must not take the room offline
+        brand = {}
+    return {'name': brand.get('name') or 'Data room', 'logo': brand.get('logo') or '/fds/marks/fleet.svg'}
+
+
+def _sign_url():
+    from django.conf import settings
+    return (getattr(settings, 'SIGN_PUBLIC_URL', '') or '').rstrip('/')
+
+
 @require_GET
 @ensure_csrf_cookie
 def room(request, slug=None, room_id=None):
@@ -14,7 +29,7 @@ def room(request, slug=None, room_id=None):
         link = policy.entry_link
     else:
         link = get_object_or_404(ShareLink, slug=slug, dataroom__isnull=False)
-    response = render(request, 'dealroom_sign/room.html', {'slug': link.slug, 'room_id': str(link.dataroom_id)})
+    response = render(request, 'dealroom_sign/room.html', {'slug': link.slug, 'room_id': str(link.dataroom_id), 'brand': _brand()})
     response['Cache-Control'] = 'private, no-store'
     response['Referrer-Policy'] = 'no-referrer'
     return response
@@ -22,4 +37,4 @@ def room(request, slug=None, room_id=None):
 
 @require_GET
 def staff(request):
-    return render(request, 'dealroom_sign/staff.html')
+    return render(request, 'dealroom_sign/staff.html', {'sign_url': _sign_url()})

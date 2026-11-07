@@ -29,8 +29,8 @@ const renderExportStatus = (file, t) => {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className="inline-flex items-center gap-x-1.5 rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-600/20 dark:bg-slate-900/30 dark:text-slate-400">
-            <RefreshCw className="h-3 w-3 animate-spin text-slate-500" />
+          <span className="inline-flex items-center gap-x-1.5 rounded-full bg-muted px-2 py-1 text-xs font-medium text-foreground ring-1 ring-inset ring-foreground/20">
+            <RefreshCw className="h-3 w-3 animate-spin text-muted-foreground" />
             {t('viewer.processing')}
           </span>
         </TooltipTrigger>
@@ -55,14 +55,14 @@ const renderExportStatus = (file, t) => {
   switch (status) {
     case 'queued':
       return (
-        <span className="inline-flex items-center gap-x-1.5 rounded-full bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-950/20 dark:text-yellow-400">
-          <span className="h-1.5 w-1.5 rounded-full bg-yellow-500 animate-pulse" />
+        <span className="inline-flex items-center gap-x-1.5 rounded-full bg-warning-subtle px-2 py-1 text-xs font-medium text-warning ring-1 ring-inset ring-warning/20">
+          <span className="h-1.5 w-1.5 rounded-full bg-warning animate-pulse" />
           {t('fileRequests.queued')}
         </span>
       );
     case 'exporting':
       return (
-        <span className="inline-flex items-center gap-x-1.5 rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-800 ring-1 ring-inset ring-blue-600/20 dark:bg-blue-950/20 dark:text-blue-400">
+        <span className="inline-flex items-center gap-x-1.5 rounded-full bg-info-subtle px-2 py-1 text-xs font-medium text-info ring-1 ring-inset ring-ring">
           <RefreshCw className="h-3 w-3 animate-spin" />
           {t('fileRequests.exporting')}
         </span>
@@ -71,8 +71,8 @@ const renderExportStatus = (file, t) => {
       return (
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-950/20 dark:text-green-400">
-              <CheckCircle className="h-3.5 w-3.5 text-green-600 dark:text-green-500" />
+            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-success-subtle px-2 py-1 text-xs font-medium text-success ring-1 ring-inset ring-success/20">
+              <CheckCircle className="h-3.5 w-3.5 text-success" />
               {t('fileRequests.exported')}
             </span>
           </TooltipTrigger>
@@ -85,8 +85,8 @@ const renderExportStatus = (file, t) => {
       return (
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 dark:bg-red-950/20 dark:text-red-400 cursor-help">
-              <XCircle className="h-3.5 w-3.5 text-red-600 dark:text-red-500" />
+            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-danger-subtle px-2 py-1 text-xs font-medium text-danger ring-1 ring-inset ring-danger/10 cursor-help">
+              <XCircle className="h-3.5 w-3.5 text-danger" />
               {t('fileRequests.failed')}
             </span>
           </TooltipTrigger>
@@ -106,8 +106,8 @@ const renderExportStatus = (file, t) => {
       return (
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 dark:bg-red-950/20 dark:text-red-400 cursor-help">
-              <AlertCircle className="h-3.5 w-3.5 text-red-600 dark:text-red-500" />
+            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-danger-subtle px-2 py-1 text-xs font-medium text-danger ring-1 ring-inset ring-danger/10 cursor-help">
+              <AlertCircle className="h-3.5 w-3.5 text-danger" />
               {t('fileRequests.blockedScan')}
             </span>
           </TooltipTrigger>
@@ -127,8 +127,8 @@ const renderExportStatus = (file, t) => {
       return (
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-600/10 dark:bg-gray-950/20 dark:text-gray-400 cursor-help">
-              <AlertCircle className="h-3.5 w-3.5 text-gray-500" />
+            <span className="inline-flex items-center gap-x-1.5 rounded-full bg-muted px-2 py-1 text-xs font-medium text-foreground ring-1 ring-inset ring-foreground/10 cursor-help">
+              <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
               {t('fileRequests.blockedPolicy')}
             </span>
           </TooltipTrigger>
@@ -256,7 +256,7 @@ export function FileRequestDetailPage() {
           <div className="flex items-center gap-4">
             <h2 className="text-xl font-semibold">{t('fileRequests.uploadedFiles', { count: fileRequest?.uploaded_files?.length || 0 })}</h2>
             {isExpired && (
-              <span className="flex-shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700">
+              <span className="flex-shrink-0 rounded-full bg-danger-subtle px-2 py-0.5 text-xs font-semibold text-danger">
                 {t('analytics.expired')}
               </span>
             )}
@@ -278,7 +278,7 @@ export function FileRequestDetailPage() {
                 </TooltipContent>
               </Tooltip>
               {selectedFileIds.length > 0 && (
-                <Button onClick={() => handleOpenExportDialog()} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                <Button onClick={() => handleOpenExportDialog()} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                   <CloudUpload className="mr-2 h-4 w-4" />
                   {t('fileRequests.exportSelected', { count: selectedFileIds.length })}
                 </Button>
@@ -291,7 +291,7 @@ export function FileRequestDetailPage() {
           )}
         </div>
       <div className="rounded-lg border">
-        <div className="flex items-center border-b bg-gray-50 px-4 py-3 text-sm font-medium text-muted-foreground dark:bg-gray-900/50">
+        <div className="flex items-center border-b bg-muted px-4 py-3 text-sm font-medium text-muted-foreground">
           <div className="w-[5%]">
             <input
               type="checkbox"
@@ -301,7 +301,7 @@ export function FileRequestDetailPage() {
                 selectedFileIds.length === fileRequest?.uploaded_files?.filter(f => !f.document_status || f.document_status === 'ready').length
               }
               onChange={handleSelectAll}
-              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              className="rounded border-input text-info focus:ring-ring"
             />
           </div>
           <div className="w-[25%]">{t('fileRequests.fileName')}</div>
@@ -333,7 +333,7 @@ export function FileRequestDetailPage() {
                         checked={selectedFileIds.includes(file.id)}
                         disabled={!isReady}
                         onChange={() => handleSelectFile(file.id)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="rounded border-input text-info focus:ring-ring disabled:opacity-40 disabled:cursor-not-allowed"
                       />
                     </div>
                     <div className="w-[25%] truncate font-medium">

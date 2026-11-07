@@ -78,11 +78,11 @@ export function AdjustStorageQuotaDialog({
   const currentQuotaBytes = currentQuotaMb * 1024 * 1024;
   const usagePercentage = currentQuotaBytes > 0 ? Math.min((currentUsedBytes / currentQuotaBytes) * 100, 100) : 0;
 
-  let progressColor = 'bg-emerald-500';
+  let progressColor = 'bg-success';
   if (usagePercentage > 90) {
-    progressColor = 'bg-rose-500';
+    progressColor = 'bg-danger';
   } else if (usagePercentage > 70) {
-    progressColor = 'bg-amber-500';
+    progressColor = 'bg-warning';
   }
 
   return (

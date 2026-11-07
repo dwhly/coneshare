@@ -52,7 +52,7 @@ export function LinkActionsDropdown({
         >
           <Copy className="mr-2 h-4 w-4" /> <span>{t('links.copyLink')}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => onDelete(link)} className="text-red-600 focus:text-red-600">
+        <DropdownMenuItem onSelect={() => onDelete(link)} className="text-danger focus:text-danger">
           <Trash2 className="mr-2 h-4 w-4" /> <span>{t('common.delete')}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -152,7 +152,7 @@ export function ViewerToolbar({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="flex items-center gap-2 rounded-xl border border-gray-200/80 bg-white/90 p-1.5 shadow-lg backdrop-blur-md dark:border-gray-800/80 dark:bg-gray-950/90">
+      <div className="flex items-center gap-2 rounded-xl border border-border/80 bg-white/90 p-1.5 shadow-lg backdrop-blur-md">
         
         {/* Group 1: Page Navigation */}
         {previewMode !== 'spreadsheet' && previewMode !== 'markdown' ? (
@@ -164,9 +164,9 @@ export function ViewerToolbar({
                 onClick={onPrevSibling} 
                 disabled={!hasPrevSibling}
                 title={t('viewer.previousFile')}
-                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="h-8 w-8 hover:bg-accent"
               >
-                <ChevronsLeft className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                <ChevronsLeft className="h-4 w-4 text-muted-foreground" />
               </Button>
             )}
 
@@ -176,9 +176,9 @@ export function ViewerToolbar({
               onClick={() => onPageChange(currentPage - 1)} 
               disabled={currentPage <= 1}
               title={t('viewer.previousPage')}
-              className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="h-8 w-8 hover:bg-accent"
             >
-              <ChevronLeft className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <ChevronLeft className="h-4 w-4 text-muted-foreground" />
             </Button>
             
             <div className="flex items-center gap-1.5">
@@ -188,9 +188,9 @@ export function ViewerToolbar({
                 onChange={handleInputChange}
                 onBlur={handleInputBlurOrSubmit}
                 onKeyDown={handleKeyDown}
-                className="w-10 rounded border border-gray-200 bg-white py-0.5 text-center text-sm font-semibold text-gray-700 focus:border-gray-400 focus:ring-1 focus:ring-gray-400 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+                className="w-10 rounded border border-border bg-card py-0.5 text-center text-sm font-semibold text-foreground focus:border-ring focus:ring-1 focus:ring-ring focus:outline-none"
               />
-              <span className="text-sm font-medium text-gray-500 whitespace-nowrap">
+              <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                 / {totalPages}
               </span>
             </div>
@@ -201,9 +201,9 @@ export function ViewerToolbar({
               onClick={() => onPageChange(currentPage + 1)} 
               disabled={currentPage >= totalPages}
               title={t('viewer.nextPage')}
-              className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="h-8 w-8 hover:bg-accent"
             >
-              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
             </Button>
 
             {onNextSibling && (
@@ -213,9 +213,9 @@ export function ViewerToolbar({
                 onClick={onNextSibling} 
                 disabled={!hasNextSibling}
                 title={t('viewer.nextFile')}
-                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="h-8 w-8 hover:bg-accent"
               >
-                <ChevronsRight className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                <ChevronsRight className="h-4 w-4 text-muted-foreground" />
               </Button>
             )}
           </div>
@@ -228,9 +228,9 @@ export function ViewerToolbar({
                 onClick={onPrevSibling} 
                 disabled={!hasPrevSibling}
                 title={t('viewer.previousFile')}
-                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="h-8 w-8 hover:bg-accent"
               >
-                <ChevronsLeft className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                <ChevronsLeft className="h-4 w-4 text-muted-foreground" />
               </Button>
             )}
             {onNextSibling && (
@@ -240,15 +240,15 @@ export function ViewerToolbar({
                 onClick={onNextSibling} 
                 disabled={!hasNextSibling}
                 title={t('viewer.nextFile')}
-                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="h-8 w-8 hover:bg-accent"
               >
-                <ChevronsRight className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                <ChevronsRight className="h-4 w-4 text-muted-foreground" />
               </Button>
             )}
           </div>
         ) : null}
         {((previewMode !== 'spreadsheet' && previewMode !== 'markdown') || onPrevSibling || onNextSibling) && (
-          <div className="h-6 w-px bg-gray-200 dark:bg-gray-800" />
+          <div className="h-6 w-px bg-border" />
         )}
 
         {/* Group 2: Zoom Controls */}
@@ -259,12 +259,12 @@ export function ViewerToolbar({
             onClick={onZoomOut} 
             disabled={zoomLevel <= 0.5}
             title={t('viewer.zoomOut')}
-            className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="h-8 w-8 hover:bg-accent"
           >
-            <Minus className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <Minus className="h-4 w-4 text-muted-foreground" />
           </Button>
 
-          <span className="hidden min-w-[3rem] text-center text-sm font-semibold text-gray-700 dark:text-gray-300 md:inline-block">
+          <span className="hidden min-w-[3rem] text-center text-sm font-semibold text-foreground md:inline-block">
             {Math.round(zoomLevel * 100)}%
           </span>
 
@@ -274,9 +274,9 @@ export function ViewerToolbar({
             onClick={onZoomIn} 
             disabled={zoomLevel >= 3.0}
             title={t('viewer.zoomIn')}
-            className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="h-8 w-8 hover:bg-accent"
           >
-            <Plus className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <Plus className="h-4 w-4 text-muted-foreground" />
           </Button>
 
           <Button 
@@ -284,12 +284,12 @@ export function ViewerToolbar({
             size="icon" 
             onClick={onFitWidth} 
             title={t('viewer.fitToWidth')}
-            className="hidden h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800 md:inline-flex"
+            className="hidden h-8 w-8 hover:bg-accent md:inline-flex"
           >
-            <Expand className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <Expand className="h-4 w-4 text-muted-foreground" />
           </Button>
         </div>
-        <div className="h-6 w-px bg-gray-200 dark:bg-gray-800" />
+        <div className="h-6 w-px bg-border" />
 
         {/* Group 3: Actions */}
         <div className="flex items-center gap-1 pl-1.5">
@@ -299,9 +299,9 @@ export function ViewerToolbar({
               size="icon" 
               onClick={handleDownload} 
               title={t('viewer.downloadFile')}
-              className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="h-8 w-8 hover:bg-accent"
             >
-              <Download className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <Download className="h-4 w-4 text-muted-foreground" />
             </Button>
           )}
 
@@ -311,9 +311,9 @@ export function ViewerToolbar({
               size="icon" 
               onClick={onPrint} 
               title={t('viewer.printDocument')}
-              className="hidden h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800 md:inline-flex"
+              className="hidden h-8 w-8 hover:bg-accent md:inline-flex"
             >
-              <Printer className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+              <Printer className="h-4 w-4 text-muted-foreground" />
             </Button>
           )}
 
@@ -322,9 +322,9 @@ export function ViewerToolbar({
             size="icon" 
             onClick={onFullScreen} 
             title={t('viewer.toggleFullscreen')}
-            className="hidden h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800 md:inline-flex"
+            className="hidden h-8 w-8 hover:bg-accent md:inline-flex"
           >
-            <Maximize className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+            <Maximize className="h-4 w-4 text-muted-foreground" />
           </Button>
         </div>
 

@@ -11,7 +11,7 @@ function Sidebar() {
     <aside
       data-collapsed={isCollapsed}
       className={cn(
-        "hidden flex-col border-r bg-gray-100/40 transition-all dark:bg-gray-800/40 md:flex data-[collapsed=true]:w-16 data-[collapsed=false]:w-64"
+        "hidden flex-col border-r bg-muted/40 transition-all md:flex data-[collapsed=true]:w-16 data-[collapsed=false]:w-64"
       )}
     >
       <SidebarHeader />

@@ -14,7 +14,7 @@ export function DroppableFolder({ id, children, disabledFolder, path }) {
       ref={setNodeRef}
       className={cn(
         "rounded-lg transition-all duration-200",
-        isOver && !isDisabled && "bg-blue-100 ring-2 ring-blue-500 dark:bg-blue-900/50",
+        isOver && !isDisabled && "bg-info-subtle ring-2 ring-ring ",
         isDisabled && "opacity-50"
       )}
     >

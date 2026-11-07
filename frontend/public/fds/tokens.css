@@ -1,0 +1,184 @@
+/* ==========================================================================
+   fleet-design-system — tokens.css  (v0.1.0)
+   The SOURCE OF TRUTH for colour, type, space and radius across every fleet
+   product (Chief console, task board, wiki, reports, deal suite, new apps).
+
+   Layers (each may only override the layer above it in the listed slots):
+     1. base      — this file: neutral palette, semantic roles, status, tags,
+                    type, radius.  Light on :root, dark on [data-theme="dark"].
+     2. brand     — brands/*.css: ONLY --brand*, --brand-scale-*, --font-display,
+                    logo.  Never text, surface or status colours.
+     3. density   — [data-density="compact|comfortable|spacious"] below.
+
+   Values are bare HSL channels ("H S% L%") so consumers write
+   hsl(var(--x)) or hsl(var(--x) / 0.5).  Tailwind: tailwind.preset.cjs.
+   No-build consumers: link this file + components.css.
+
+   Colour meanings (fixed across products — see DESIGN.md):
+     danger  red    broken / act now          warning amber  attention soon
+     success green  healthy / done            info    blue   informational / in progress
+     neutral grey   later / inactive          tag-1..6       identity (people, sources,
+     brand          links, focus, selection                  projects) — never status
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- surfaces & text ---- */
+  --canvas: 220 20% 97%;            /* page behind cards */
+  --background: 0 0% 100%;          /* main surface */
+  --foreground: 222 22% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 22% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 22% 11%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 38%;   /* ≥ 4.5:1 on background and muted */
+  --secondary: 220 14% 95%;
+  --secondary-foreground: 222 22% 11%;
+  --accent: 220 14% 94%;            /* hover / selected row surface (shadcn meaning) */
+  --accent-foreground: 222 22% 11%;
+  --border: 220 13% 88%;
+  --input: 220 13% 82%;
+
+  /* ---- selected state (segmented controls, filters, active tab): NEUTRAL, never brand or status ---- */
+  --selected: 220 14% 90%;
+  --selected-foreground: 222 22% 11%;
+  --selected-border: 222 22% 11%;
+
+  /* ---- primary action = ink (brand is NOT the primary button) ---- */
+  --primary: 222 22% 11%;
+  --primary-foreground: 0 0% 100%;
+
+  /* ---- brand slots (brands/*.css overrides ONLY these) ---- */
+  --brand: 221 83% 50%;
+  --brand-foreground: 0 0% 100%;
+  --brand-subtle: 221 90% 96%;
+  --brand-muted: var(--brand-subtle);              /* deal-suite compat */
+  --brand-muted-foreground: 221 75% 38%;
+  --ring: var(--brand);
+
+  /* ---- status: solid is text-safe (≥4.5:1) on background AND its subtle ---- */
+  --danger: 0 72% 40%;
+  --danger-foreground: 0 0% 100%;
+  --danger-subtle: 0 86% 97%;
+  --danger-border: 0 75% 85%;
+  --warning: 28 90% 36%;
+  --warning-foreground: 0 0% 100%;
+  --warning-subtle: 40 95% 95%;
+  --warning-border: 38 85% 78%;
+  --success: 152 68% 27%;
+  --success-foreground: 0 0% 100%;
+  --success-subtle: 145 60% 95%;
+  --success-border: 148 45% 78%;
+  --info: 199 89% 30%;
+  --info-foreground: 0 0% 100%;
+  --info-subtle: 199 90% 95%;
+  --info-border: 199 75% 80%;
+  --neutral: 220 9% 38%;
+  --neutral-foreground: 0 0% 100%;
+  --neutral-subtle: 220 14% 95%;
+  --neutral-border: 220 13% 85%;
+  --destructive: var(--danger);                    /* shadcn compat */
+  --destructive-foreground: var(--danger-foreground);
+
+  /* ---- identity tags (people, sources, projects): a neutral chip + coloured DOT.
+     Shape, not hue, separates identity from status; --tag-N colours only the dot. ---- */
+  --tag-1: 262 52% 45%;  --tag-1-subtle: 262 80% 96%;   /* violet */
+  --tag-2: 330 60% 40%;  --tag-2-subtle: 330 80% 96%;   /* pink   */
+  --tag-3: 239 50% 47%;  --tag-3-subtle: 239 85% 96%;   /* indigo */
+  --tag-4: 190 75% 28%;  --tag-4-subtle: 190 70% 94%;   /* cyan   */
+  --tag-5: 25 35% 35%;   --tag-5-subtle: 30 40% 94%;    /* stone  */
+  --tag-6: 215 20% 35%;  --tag-6-subtle: 215 25% 94%;   /* slate  */
+
+  /* ---- neutral scale (for rare cases a role doesn't cover) ---- */
+  --gray-50: 220 20% 98%;  --gray-100: 220 14% 96%; --gray-200: 220 13% 91%;
+  --gray-300: 216 12% 84%; --gray-400: 218 11% 65%; --gray-500: 220 9% 46%;
+  --gray-600: 215 14% 34%; --gray-700: 217 19% 27%; --gray-800: 215 28% 17%;
+  --gray-900: 221 39% 11%; --gray-950: 224 71% 4%;
+
+  /* ---- type ---- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-sans);                /* brand slot */
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;  --text-sm: 0.8125rem; --text-md: 0.875rem;
+  --text-lg: 1rem;     --text-xl: 1.25rem;   --text-2xl: 1.5rem;
+
+  /* ---- shape ---- */
+  --radius: 0.5rem;
+  /* Control roundness: buttons, pills, chips, tabs, inputs. "In between" — not square, not oval.
+     Small pills use calc(var(--radius-control) * 0.75) so a 20px pill and a 32px button read as one family. */
+  --radius-control: 6px;
+  --shell-height: 3.5rem;
+
+  /* ---- density defaults = comfortable ---- */
+  --text-base: var(--text-md);
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+  --space-4: 1rem;    --space-6: 1.5rem; --space-8: 2rem;
+  --row-pad-y: 0.625rem;
+  --card-pad: 1rem;
+  --gap: 0.75rem;
+}
+
+/* ---- dark: explicit opt-in, and OS preference unless the page forces light ---- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: 224 24% 5%;
+  --background: 222 22% 7%;
+  --foreground: 220 15% 92%;
+  --card: 222 18% 10%;
+  --card-foreground: 220 15% 92%;
+  --popover: 222 18% 11%;
+  --popover-foreground: 220 15% 92%;
+  --muted: 222 15% 14%;
+  --muted-foreground: 220 10% 66%;
+  --secondary: 222 15% 15%;
+  --secondary-foreground: 220 15% 92%;
+  --accent: 222 15% 16%;
+  --accent-foreground: 220 15% 92%;
+  --border: 222 13% 20%;
+  --input: 222 13% 26%;
+  --selected: 222 14% 22%;
+  --selected-foreground: 220 15% 96%;
+  --selected-border: 220 15% 80%;
+  --primary: 220 15% 92%;
+  --primary-foreground: 222 22% 9%;
+  --brand: 217 91% 66%;
+  --brand-foreground: 222 22% 9%;
+  --brand-subtle: 217 50% 15%;
+  --brand-muted-foreground: 217 91% 76%;
+  --danger: 0 84% 66%;    --danger-foreground: 222 22% 9%;  --danger-subtle: 0 45% 13%;   --danger-border: 0 45% 30%;
+  --warning: 38 92% 60%;  --warning-foreground: 222 22% 9%; --warning-subtle: 35 60% 11%;  --warning-border: 35 55% 28%;
+  --success: 150 55% 55%; --success-foreground: 222 22% 9%; --success-subtle: 150 40% 10%; --success-border: 150 35% 25%;
+  --info: 199 89% 62%;    --info-foreground: 222 22% 9%;    --info-subtle: 200 55% 12%;    --info-border: 200 50% 28%;
+  --neutral: 220 10% 66%; --neutral-foreground: 222 22% 9%; --neutral-subtle: 222 15% 15%; --neutral-border: 222 13% 25%;
+  --tag-1: 262 80% 78%; --tag-1-subtle: 262 35% 16%;
+  --tag-2: 330 75% 76%; --tag-2-subtle: 330 35% 15%;
+  --tag-3: 239 80% 78%; --tag-3-subtle: 239 35% 17%;
+  --tag-4: 190 70% 62%; --tag-4-subtle: 190 45% 12%;
+  --tag-5: 30 35% 70%;  --tag-5-subtle: 30 20% 14%;
+  --tag-6: 215 20% 72%; --tag-6-subtle: 215 18% 16%;
+}
+
+/* ---- density ---- */
+[data-density="compact"] {
+  --text-base: var(--text-sm);
+  --row-pad-y: 0.375rem;
+  --card-pad: 0.75rem;
+  --gap: 0.5rem;
+  --radius: 0.375rem;
+}
+[data-density="spacious"] {
+  --text-base: var(--text-lg);
+  --row-pad-y: 0.875rem;
+  --card-pad: 1.5rem;
+  --gap: 1rem;
+  --radius: 0.625rem;
+}
+
+/* ---- LAB knobs (prototype only; fds-lab.js sets these from ?radius=) ---- */
+[data-radius="4"]    { --radius-control: 4px; }
+[data-radius="6"]    { --radius-control: 6px; }
+[data-radius="8"]    { --radius-control: 8px; }
+[data-radius="10"]   { --radius-control: 10px; }
+[data-radius="pill"] { --radius-control: 999px; }

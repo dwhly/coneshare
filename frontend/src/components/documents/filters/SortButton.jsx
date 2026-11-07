@@ -24,13 +24,13 @@ export function SortButton({ onSort, sortConfig }) {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content
         align="end"
-        className="w-48 rounded-md bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800"
+        className="w-48 rounded-md bg-card p-1 shadow-lg ring-1 ring-black ring-opacity-5"
       >
         {sortOptions.map((option) => (
           <DropdownMenu.Item
             key={option.value}
             onSelect={() => onSort(option.value)}
-            className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="flex cursor-pointer items-center justify-between rounded-md px-2 py-1.5 text-sm hover:bg-accent"
           >
             <span>{option.label}</span>
             {sortConfig.key === option.value && <Check className="h-4 w-4" />}

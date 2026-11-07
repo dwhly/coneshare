@@ -62,8 +62,8 @@ export function CloudAuthCallbackPage() {
   if (!config) {
     // Render an error state if the provider is invalid right away.
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-            <div className="w-full max-w-md rounded-lg bg-white p-8 text-center shadow-md dark:bg-gray-800">
+        <div className="flex min-h-screen items-center justify-center bg-muted">
+            <div className="w-full max-w-md rounded-lg bg-card p-8 text-center shadow-md">
                 <h2 className="text-xl font-semibold text-destructive">Configuration Error</h2>
                 <p className="mt-2 text-muted-foreground">{error}</p>
                 <Link to="/documents" className="mt-6 inline-block text-primary hover:underline">
@@ -75,8 +75,8 @@ export function CloudAuthCallbackPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-      <div className="w-full max-w-md rounded-lg bg-white p-8 text-center shadow-md dark:bg-gray-800">
+    <div className="flex min-h-screen items-center justify-center bg-muted">
+      <div className="w-full max-w-md rounded-lg bg-card p-8 text-center shadow-md">
         {status === 'loading' && (
           <>
             <Loader2 className="mx-auto h-12 w-12 animate-spin text-primary" />
@@ -86,7 +86,7 @@ export function CloudAuthCallbackPage() {
         )}
         {status === 'success' && (
           <>
-            <h2 className="text-xl font-semibold text-green-600">Successfully Connected!</h2>
+            <h2 className="text-xl font-semibold text-success">Successfully Connected!</h2>
             <p className="mt-2 text-muted-foreground">You will be redirected back to your documents shortly.</p>
           </>
         )}

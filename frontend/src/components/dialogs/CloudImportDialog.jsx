@@ -119,7 +119,7 @@ export function CloudImportDialog({ isOpen, onOpenChange, provider, connection, 
       <div className="mt-4 h-[400px] overflow-y-auto rounded-md border">
         {loading ? (
           <div className="flex h-full items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           </div>
         ) : error ? (
           <div className="flex h-full flex-col items-center justify-center p-4 text-center">
@@ -144,9 +144,9 @@ export function CloudImportDialog({ isOpen, onOpenChange, provider, connection, 
                   <TableCell>
                     <div className="flex items-center gap-x-2">
                       {item.type === 'folder' ? (
-                        <FolderIcon className="h-5 w-5 text-blue-500" />
+                        <FolderIcon className="h-5 w-5 text-info" />
                       ) : (
-                        <FileIcon className="h-5 w-5 text-gray-500" />
+                        <FileIcon className="h-5 w-5 text-muted-foreground" />
                       )}
                       {item.type === 'folder' ? (
                         <button

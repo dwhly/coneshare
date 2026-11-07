@@ -25,22 +25,22 @@ function Breadcrumbs({ currentFolder, onNavigate }) {
   const { t } = useTranslation();
 
   return (
-    <nav className="flex flex-wrap items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-zinc-400 min-w-0" aria-label="Breadcrumb">
+    <nav className="flex flex-wrap items-center gap-1.5 text-xs font-medium text-muted-foreground min-w-0" aria-label="Breadcrumb">
       <button
         type="button"
         onClick={() => onNavigate(null)}
-        className="flex items-center gap-1 hover:text-slate-900 dark:hover:text-zinc-100 flex-shrink-0"
+        className="flex items-center gap-1 hover:text-foreground flex-shrink-0"
       >
         <Home className="h-3.5 w-3.5" />
         <span>{t('datarooms.home')}</span>
       </button>
       {currentFolder?.ancestors?.map((ancestor) => (
         <div key={ancestor.id} className="flex items-center gap-1.5 min-w-0">
-          <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-slate-400 dark:text-zinc-500" />
+          <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground" />
           <button
             type="button"
             onClick={() => onNavigate(ancestor.id, ancestor.name)}
-            className="truncate max-w-[120px] sm:max-w-[160px] hover:text-slate-900 dark:hover:text-zinc-100"
+            className="truncate max-w-[120px] sm:max-w-[160px] hover:text-foreground"
             title={ancestor.name}
           >
             {ancestor.name}
@@ -49,9 +49,9 @@ function Breadcrumbs({ currentFolder, onNavigate }) {
       ))}
       {currentFolder && (
         <div className="flex items-center gap-1.5 min-w-0">
-          <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-slate-400 dark:text-zinc-500" />
+          <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground" />
           <span
-            className="font-semibold text-slate-900 dark:text-zinc-100 truncate max-w-[140px] sm:max-w-[200px]"
+            className="font-semibold text-foreground truncate max-w-[140px] sm:max-w-[200px]"
             title={currentFolder.name}
           >
             {currentFolder.name}
@@ -199,57 +199,57 @@ export function MoveDestinationDialog({
         }}
       >
         <DialogContent className="sm:max-w-xl max-h-[88vh] flex flex-col p-6 overflow-hidden">
-          <DialogHeader className="pb-3 border-b border-gray-100 dark:border-gray-800">
+          <DialogHeader className="pb-3 border-b border-border">
             <div className="flex items-center space-x-2">
-              <DialogTitle className="text-lg font-semibold text-slate-900 dark:text-zinc-100 tracking-tight flex items-center space-x-2">
+              <DialogTitle className="text-lg font-semibold text-foreground tracking-tight flex items-center space-x-2">
                 <span>{dialogTitle}</span>
                 {selectedCount > 0 && (
-                  <span className="text-xs font-medium bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 py-0.5 px-2 rounded-full border border-slate-200 dark:border-zinc-700">
+                  <span className="text-xs font-medium bg-muted text-muted-foreground py-0.5 px-2 rounded-full border border-border">
                     {t('documents.selectedCount', { count: selectedCount })}
                   </span>
                 )}
               </DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-slate-500 dark:text-zinc-400 mt-1">
+            <DialogDescription className="text-xs text-muted-foreground mt-1">
               {dialogDescription}
             </DialogDescription>
           </DialogHeader>
 
           {/* Folder Tree Directory Listing */}
           <div className="py-3 flex-1 min-h-0">
-            <div className="border border-slate-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-900 shadow-xs flex flex-col h-full">
+            <div className="border border-border rounded-xl overflow-hidden bg-card shadow-xs flex flex-col h-full">
               {/* Root Level or Breadcrumb Header */}
               {!currentFolderId ? (
                 <button
                   type="button"
                   aria-pressed={selectedDestination?.id === null}
                   onClick={() => setSelectedDestination({ id: null })}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left border-b border-slate-100 dark:border-zinc-800 border-l-4 transition-colors group ${
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left border-b border-border border-l-4 transition-colors group ${
                     selectedDestination?.id === null
-                      ? 'bg-slate-900/5 dark:bg-zinc-800/60 border-l-slate-900 dark:border-l-zinc-100'
-                      : 'border-l-transparent hover:bg-slate-50 dark:hover:bg-zinc-800/40'
+                      ? 'bg-foreground/5 border-l-foreground '
+                      : 'border-l-transparent hover:bg-accent '
                   }`}
                 >
                   <div className="flex items-center space-x-2.5 min-w-0">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                       selectedDestination?.id === null
-                        ? 'bg-slate-200/80 dark:bg-zinc-700/80 text-slate-900 dark:text-zinc-100'
-                        : 'bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300'
+                        ? 'bg-border/80 text-foreground '
+                        : 'bg-muted text-foreground '
                     }`}>
                       <Home className="w-4 h-4" strokeWidth={2} />
                     </div>
-                    <span className="text-sm font-medium text-slate-700 dark:text-zinc-200 truncate">
+                    <span className="text-sm font-medium text-foreground truncate">
                       {t('datarooms.homeDirectory')}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     {selectedDestination?.id === null && (
                       isCurrentDirectory ? (
-                        <span className="text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 rounded px-1.5 py-0.5 border border-slate-200 dark:border-zinc-700">
+                        <span className="text-[10px] font-medium bg-muted text-muted-foreground rounded px-1.5 py-0.5 border border-border">
                           {t('datarooms.currentLocation')}
                         </span>
                       ) : (
-                        <span className="text-[10px] font-medium bg-slate-900 text-white dark:bg-zinc-100 dark:text-zinc-900 rounded px-1.5 py-0.5">
+                        <span className="text-[10px] font-medium bg-primary text-primary-foreground rounded px-1.5 py-0.5">
                           {t('common.selected')}
                         </span>
                       )
@@ -257,23 +257,23 @@ export function MoveDestinationDialog({
                   </div>
                 </button>
               ) : (
-                <div className="px-3.5 py-2.5 bg-slate-50/70 dark:bg-zinc-800/40 border-b border-slate-100 dark:border-zinc-800">
+                <div className="px-3.5 py-2.5 bg-muted/70 border-b border-border">
                   <Breadcrumbs currentFolder={currentFolderInfo} onNavigate={handleNavigate} />
                 </div>
               )}
 
               {/* Scrollable Subfolder List */}
-              <div className="h-60 overflow-y-auto divide-y divide-slate-100 dark:divide-zinc-800/60 min-h-[160px]">
+              <div className="h-60 overflow-y-auto divide-y divide-border min-h-[160px]">
                 {loading ? (
                   <div className="p-3 space-y-2">
                     <p className="sr-only">{t('documents.loadingFolders')}</p>
-                    <div className="h-10 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
-                    <div className="h-10 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
-                    <div className="h-10 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
+                    <div className="h-10 bg-muted rounded-lg animate-pulse" />
+                    <div className="h-10 bg-muted rounded-lg animate-pulse" />
+                    <div className="h-10 bg-muted rounded-lg animate-pulse" />
                   </div>
                 ) : fetchError ? (
-                  <div className="flex flex-col h-full items-center justify-center p-8 text-center text-sm text-slate-400 dark:text-zinc-500 gap-2">
-                    <AlertCircle className="w-5 h-5 text-rose-500 dark:text-rose-400" />
+                  <div className="flex flex-col h-full items-center justify-center p-8 text-center text-sm text-muted-foreground gap-2">
+                    <AlertCircle className="w-5 h-5 text-danger" />
                     <span>{t('common.errorOccurred')}</span>
                     <Button
                       type="button"
@@ -298,8 +298,8 @@ export function MoveDestinationDialog({
                         key={folder.id}
                         className={`flex items-center justify-between px-3.5 py-2 border-l-4 transition-colors ${
                           isSelected
-                            ? 'bg-slate-900/5 dark:bg-zinc-800/60 border-l-slate-900 dark:border-l-zinc-100'
-                            : 'border-l-transparent hover:bg-slate-50 dark:hover:bg-zinc-800/40'
+                            ? 'bg-foreground/5 border-l-foreground '
+                            : 'border-l-transparent hover:bg-accent '
                         } ${isFolderDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                       >
                         <button
@@ -320,37 +320,37 @@ export function MoveDestinationDialog({
                         >
                           <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                             isSelected
-                              ? 'bg-slate-200/80 dark:bg-zinc-700/80 text-slate-900 dark:text-zinc-100'
-                              : 'bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300'
+                              ? 'bg-border/80 text-foreground '
+                              : 'bg-muted text-foreground '
                           }`}>
                             <FolderIcon className="w-4 h-4" strokeWidth={2} />
                           </div>
                           <span className={`text-sm truncate max-w-[260px] ${
                             isSelected
-                              ? 'font-semibold text-slate-900 dark:text-zinc-100'
-                              : 'font-medium text-slate-700 dark:text-zinc-300 group-hover:text-slate-900 dark:group-hover:text-zinc-100'
+                              ? 'font-semibold text-foreground '
+                              : 'font-medium text-foreground group-hover:text-foreground '
                           }`}>
                             {folder.name}
                           </span>
                         </button>
                         <div className="flex items-center space-x-2 shrink-0">
                           {itemCount !== null && (
-                            <span className="text-[11px] text-slate-400 dark:text-zinc-500 font-normal">
+                            <span className="text-[11px] text-muted-foreground font-normal">
                               {t('documents.itemCount', { count: itemCount })}
                             </span>
                           )}
                           {!isSelected && isCurrent && (
-                            <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-normal">
+                            <span className="text-[10px] text-muted-foreground font-normal">
                               ({t('datarooms.currentLocation')})
                             </span>
                           )}
                           {isSelected && (
                             isCurrent ? (
-                              <span className="text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 rounded px-1.5 py-0.5 border border-slate-200 dark:border-zinc-700">
+                              <span className="text-[10px] font-medium bg-muted text-muted-foreground rounded px-1.5 py-0.5 border border-border">
                                 {t('datarooms.currentLocation')}
                               </span>
                             ) : (
-                              <span className="text-[10px] font-medium bg-slate-900 text-white dark:bg-zinc-100 dark:text-zinc-900 rounded px-1.5 py-0.5">
+                              <span className="text-[10px] font-medium bg-primary text-primary-foreground rounded px-1.5 py-0.5">
                                 {t('common.selected')}
                               </span>
                             )
@@ -363,7 +363,7 @@ export function MoveDestinationDialog({
                             onClick={() => {
                               handleNavigate(folder.id, folder.name);
                             }}
-                            className="h-7 w-7 text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200"
+                            className="h-7 w-7 text-muted-foreground hover:text-foreground"
                             title={t('datarooms.openFolder', { name: folder.name })}
                             aria-label={t('datarooms.openFolder', { name: folder.name })}
                           >
@@ -374,7 +374,7 @@ export function MoveDestinationDialog({
                     );
                   })
                 ) : (
-                  <div className="flex h-full items-center justify-center p-8 text-sm text-slate-400 dark:text-zinc-500">
+                  <div className="flex h-full items-center justify-center p-8 text-sm text-muted-foreground">
                     {t('documents.noSubfolders')}
                   </div>
                 )}
@@ -382,16 +382,16 @@ export function MoveDestinationDialog({
             </div>
           </div>
 
-          <DialogFooter className="flex flex-row items-center justify-between sm:justify-between sm:space-x-0 w-[calc(100%+3rem)] py-3 bg-slate-50/70 dark:bg-zinc-800/40 border-t border-slate-100 dark:border-zinc-800/80 mt-2 -mx-6 -mb-6 px-6">
+          <DialogFooter className="flex flex-row items-center justify-between sm:justify-between sm:space-x-0 w-[calc(100%+3rem)] py-3 bg-muted/70 border-t border-border mt-2 -mx-6 -mb-6 px-6">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => setIsAddFolderOpen(true)}
               disabled={isConfirming}
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-700 dark:text-zinc-300"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-foreground"
             >
-              <FolderPlus className="w-3.5 h-3.5 text-slate-500 dark:text-zinc-400" />
+              <FolderPlus className="w-3.5 h-3.5 text-muted-foreground" />
               <span>{t('documents.createFolder')}</span>
             </Button>
             <div className="flex items-center space-x-2">

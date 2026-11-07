@@ -213,11 +213,11 @@ function UserStorageUsage({ user }) {
   const quotaBytes = quotaMB * 1024 * 1024;
   const usagePercentage = quotaMB > 0 ? Math.min((usageBytes / quotaBytes) * 100, 100) : 0;
 
-  let indicatorColor = 'bg-emerald-500';
+  let indicatorColor = 'bg-success';
   if (usagePercentage > 90) {
-    indicatorColor = 'bg-rose-500';
+    indicatorColor = 'bg-danger';
   } else if (usagePercentage > 70) {
-    indicatorColor = 'bg-amber-500';
+    indicatorColor = 'bg-warning';
   }
 
   return (
@@ -595,7 +595,7 @@ export function AdminUsersPage() {
               <p className="text-2xl font-bold text-foreground">{formatBytes(kpiMetrics.totalStorageBytes)}</p>
             )}
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10 text-warning">
             <HardDrive className="h-5 w-5" />
           </div>
         </div>
@@ -612,7 +612,7 @@ export function AdminUsersPage() {
               <p className="text-2xl font-bold text-foreground">{kpiMetrics.dataroomUsers}</p>
             )}
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-info/10 text-info">
             <Folder className="h-5 w-5" />
           </div>
         </div>
@@ -801,8 +801,8 @@ export function AdminUsersPage() {
                         <span
                           className={`rounded-full px-2 py-1 text-xs font-medium ${
                             user.is_active
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-red-100 text-red-800'
+                              ? 'bg-success-subtle text-success'
+                              : 'bg-danger-subtle text-danger'
                           }`}
                         >
                           {user.is_active ? t('common.active') : t('common.inactive')}

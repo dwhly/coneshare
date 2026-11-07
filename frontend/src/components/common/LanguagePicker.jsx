@@ -29,7 +29,7 @@ export function LanguagePicker({ className = '' }) {
         value={currentLang}
         onChange={handleLanguageChange}
         aria-label={t('settings.language')}
-        className="bg-transparent text-xs cursor-pointer border-none focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-1 text-muted-foreground hover:text-foreground transition-colors rounded"
+        className="bg-transparent text-xs cursor-pointer border-none focus:outline-none focus:ring-1 focus:ring-ring focus:ring-offset-1 text-muted-foreground hover:text-foreground transition-colors rounded"
       >
         {SUPPORTED_LANGUAGES.map((lang) => (
           <option key={lang.code} value={lang.code} className="bg-background text-foreground">

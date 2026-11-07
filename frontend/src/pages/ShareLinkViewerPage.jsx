@@ -67,13 +67,13 @@ function PreviewBanner({ onClose }) {
 
   return (
     <div className="fixed top-4 left-1/2 z-50 w-full max-w-xl -translate-x-1/2 px-4 animate-fadeIn">
-      <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50/95 p-3 shadow-lg backdrop-blur-sm dark:border-amber-900/50 dark:bg-amber-950/90">
-        <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
-        <div className="flex-1 text-xs leading-relaxed text-amber-800 dark:text-amber-300">
+      <div className="flex items-start gap-3 rounded-xl border border-warning-border bg-warning-subtle/95 p-3 shadow-lg backdrop-blur-sm">
+        <Info className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
+        <div className="flex-1 text-xs leading-relaxed text-warning">
           <span className="font-semibold">{t('viewer.ownerPreviewMode')}</span> {t('viewer.ownerPreviewDesc')}{' '}
           <button
             onClick={handleCopy}
-            className="font-semibold underline hover:text-amber-950 dark:hover:text-white"
+            className="font-semibold underline hover:text-warning"
           >
             {copied ? t('viewer.copied') : t('viewer.copyCleanLink')}
           </button>{' '}
@@ -81,7 +81,7 @@ function PreviewBanner({ onClose }) {
         </div>
         <button
           onClick={onClose}
-          className="rounded-md p-0.5 text-amber-800/60 hover:bg-amber-100 hover:text-amber-800 dark:text-amber-300/60 dark:hover:bg-amber-900/50 dark:hover:text-amber-300"
+          className="rounded-md p-0.5 text-warning/60 hover:bg-warning-subtle hover:text-warning"
           title={t('viewer.dismissBanner')}
         >
           <X className="h-4 w-4" />
@@ -432,7 +432,7 @@ export function ShareLinkViewerPage() {
       return <DataroomLoadingProgress publicMeta={publicMeta} />;
     }
     return (
-      <div className="h-screen w-screen bg-gray-50 p-8">
+      <div className="h-screen w-screen bg-muted p-8">
         <div className="mx-auto max-w-4xl space-y-4">
           <Skeleton className="h-12 w-1/2" />
           <Skeleton className="h-96 w-full" />
@@ -486,16 +486,16 @@ export function ShareLinkViewerPage() {
       return (
         <GateLayout publicMeta={publicMeta} showAccessOwnerCard={false} maxWidth="max-w-md">
           <div className="text-center py-6 space-y-3">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-warning-subtle text-warning">
               <Clock className="h-6 w-6" />
             </div>
-            <h1 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h1 className="text-lg font-bold text-foreground">
               {t('viewer.linkExpiredTitle')}
             </h1>
-            <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed max-w-xs mx-auto">
+            <p className="text-xs text-muted-foreground leading-relaxed max-w-xs mx-auto">
               {t('viewer.linkExpiredDescription')}
             </p>
-            <p className="text-xs text-gray-400 dark:text-zinc-500">
+            <p className="text-xs text-muted-foreground">
               {t('viewer.linkExpiredHint')}
             </p>
           </div>
@@ -506,13 +506,13 @@ export function ShareLinkViewerPage() {
     return (
       <GateLayout publicMeta={publicMeta} showAccessOwnerCard={false} maxWidth="max-w-md">
         <div className="text-center py-6 space-y-3">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-danger-subtle text-danger">
             <AlertCircle className="h-6 w-6" />
           </div>
-          <h1 className="text-lg font-bold text-gray-900 dark:text-white">
+          <h1 className="text-lg font-bold text-foreground">
             {t('viewer.linkErrorTitle')}
           </h1>
-          <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed max-w-xs mx-auto">
+          <p className="text-xs text-muted-foreground leading-relaxed max-w-xs mx-auto">
             {getLocalizedErrorMessage(error)}
           </p>
         </div>
@@ -584,7 +584,7 @@ export function ShareLinkViewerPage() {
       viewData.download_only;
 
     return (
-      <div className="relative flex flex-col h-screen w-screen overflow-hidden bg-gray-50">
+      <div className="relative flex flex-col h-screen w-screen overflow-hidden bg-muted">
         {previewToken && showPreviewBanner && (
           <PreviewBanner onClose={() => setShowPreviewBanner(false)} />
         )}
@@ -599,25 +599,25 @@ export function ShareLinkViewerPage() {
           hasViewSession={Boolean(viewId)}
         />
         <div className="flex-1 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="w-full max-w-xl rounded-2xl bg-white border border-gray-200/80 p-8 sm:p-10 text-center shadow-xl shadow-gray-200/50">
+          <div className="w-full max-w-xl rounded-2xl bg-card border border-border/80 p-8 sm:p-10 text-center shadow-xl shadow-foreground/50">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
               {isWatermarkedVideoBlocked ? (
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 ring-8 ring-amber-50/50">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-warning-subtle text-warning ring-8 ring-warning-border">
                   <AlertTriangle className="h-8 w-8" />
                 </div>
               ) : (
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 text-gray-600 ring-8 ring-gray-100/60">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-muted text-muted-foreground ring-8 ring-border/60">
                   <FileDown className="h-8 w-8" />
                 </div>
               )}
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 truncate" title={viewData.name}>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground truncate" title={viewData.name}>
               {viewData.name}
             </h1>
             {viewData.file_size ? (
-              <p className="mt-1 text-sm font-medium text-gray-500">{formatBytes(viewData.file_size)}</p>
+              <p className="mt-1 text-sm font-medium text-muted-foreground">{formatBytes(viewData.file_size)}</p>
             ) : null}
-            <p className="mt-3 mb-6 text-sm text-gray-600 leading-relaxed max-w-sm mx-auto">
+            <p className="mt-3 mb-6 text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
               {isWatermarkedVideoBlocked
                 ? t('viewer.watermarkedVideoBlockedNotice')
                 : t('viewer.previewNotAvailableNotice')}
@@ -639,7 +639,7 @@ export function ShareLinkViewerPage() {
                   <FileDown className="h-4 w-4" />
                   <span>{t('viewer.download')}</span>
                 </Button>
-                <p className="mt-2.5 text-xs text-gray-500">
+                <p className="mt-2.5 text-xs text-muted-foreground">
                   {t('viewer.downloadDisabledNotice')}
                 </p>
               </div>
@@ -654,7 +654,7 @@ export function ShareLinkViewerPage() {
     const isQnaVisible = isQnaEnabled && isPreviewFailed(viewData);
 
     return (
-      <div className={`relative flex flex-col h-screen w-screen overflow-hidden bg-gray-50 transition-[padding] duration-200 ${isQnaOpen ? 'lg:pr-[34rem] xl:pr-[38rem]' : ''}`}>
+      <div className={`relative flex flex-col h-screen w-screen overflow-hidden bg-muted transition-[padding] duration-200 ${isQnaOpen ? 'lg:pr-[34rem] xl:pr-[38rem]' : ''}`}>
         {previewToken && showPreviewBanner && (
           <PreviewBanner onClose={() => setShowPreviewBanner(false)} />
         )}
@@ -677,7 +677,7 @@ export function ShareLinkViewerPage() {
             <Suspense
               fallback={
                 <div className="flex h-full w-full items-center justify-center p-8">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent" />
+                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-info border-t-transparent" />
                 </div>
               }
             >
@@ -707,7 +707,7 @@ export function ShareLinkViewerPage() {
   return (
     <div
       ref={viewerRef}
-      className={`relative flex flex-col h-screen w-screen overflow-hidden transition-colors duration-300 ${isVideoMode ? 'bg-zinc-900' : 'bg-gray-50'} transition-[padding] duration-200 ${isQnaOpen ? 'lg:pr-[34rem] xl:pr-[38rem]' : ''}`}
+      className={`relative flex flex-col h-screen w-screen overflow-hidden transition-colors duration-300 ${isVideoMode ? 'bg-primary' : 'bg-muted'} transition-[padding] duration-200 ${isQnaOpen ? 'lg:pr-[34rem] xl:pr-[38rem]' : ''}`}
     >
       {previewToken && showPreviewBanner && (
         <PreviewBanner onClose={() => setShowPreviewBanner(false)} />
@@ -751,7 +751,7 @@ export function ShareLinkViewerPage() {
             <Suspense
               fallback={
                 <div className="flex h-full w-full items-center justify-center p-8">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent" />
+                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-info border-t-transparent" />
                 </div>
               }
             >

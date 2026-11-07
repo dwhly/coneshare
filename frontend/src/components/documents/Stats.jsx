@@ -24,7 +24,7 @@ export function Stats({ stats, loading = false, expectedColumns = 4 }) {
         <h2 className="text-xl font-semibold">{t('analytics.title')}</h2>
         <div className={`mt-4 grid grid-cols-1 gap-5 ${colClass}`}>
           {Array.from({ length: expectedColumns }).map((_, i) => (
-            <div key={i} className="overflow-hidden rounded-lg border bg-white px-4 py-5 shadow-sm sm:p-6 dark:border-gray-800 dark:bg-gray-900">
+            <div key={i} className="overflow-hidden rounded-lg border bg-card px-4 py-5 shadow-sm sm:p-6">
               <Skeleton className="h-4 w-24 mb-2" />
               <Skeleton className="h-8 w-16" />
             </div>
@@ -51,9 +51,9 @@ export function Stats({ stats, loading = false, expectedColumns = 4 }) {
       <h2 className="text-xl font-semibold">{t('analytics.title')}</h2>
       <dl className={`mt-4 grid grid-cols-1 gap-5 ${statItems.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3'}`}>
         {statItems.map((stat) => (
-          <div key={stat.name} className="overflow-hidden rounded-lg border bg-white px-4 py-5 shadow-sm sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">{stat.name}</dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+          <div key={stat.name} className="overflow-hidden rounded-lg border bg-card px-4 py-5 shadow-sm sm:p-6">
+            <dt className="truncate text-sm font-medium text-muted-foreground">{stat.name}</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-foreground">
               {stat.value}
             </dd>
           </div>

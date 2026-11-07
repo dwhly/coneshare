@@ -21,11 +21,11 @@ export function DataroomDocumentCard({
   return (
     <article
       data-testid={`document-card-${item.id}`}
-      className="flex flex-col justify-between p-4 rounded-xl bg-white border border-gray-200/60 shadow-2xs hover:shadow-xs hover:border-gray-300 transition-all gap-4"
+      className="flex flex-col justify-between p-4 rounded-xl bg-card border border-border/60 shadow-2xs hover:shadow-xs hover:border-input transition-all gap-4"
     >
       <div className="flex items-start gap-3 min-w-0">
         {showIndex && indexLabel && (
-          <span className="font-mono text-xs text-gray-400 shrink-0 mt-0.5">
+          <span className="font-mono text-xs text-muted-foreground shrink-0 mt-0.5">
             {indexLabel}
           </span>
         )}
@@ -36,18 +36,18 @@ export function DataroomDocumentCard({
           <div className="flex items-center gap-2 flex-wrap">
             <h4
               onClick={() => onItemClick(item)}
-              className="text-sm font-medium text-gray-900 truncate hover:text-primary transition-colors cursor-pointer"
+              className="text-sm font-medium text-foreground truncate hover:text-primary transition-colors cursor-pointer"
               title={item.name || item.document_name}
             >
               {item.name || item.document_name}
             </h4>
             {item.document_type && (
-              <span className="px-1.5 py-0.5 rounded bg-gray-100 font-mono text-[10px] text-gray-600 uppercase">
+              <span className="px-1.5 py-0.5 rounded bg-muted font-mono text-[10px] text-muted-foreground uppercase">
                 {item.document_type}
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2 text-xs text-gray-500 mt-1 flex-wrap">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1 flex-wrap">
             {typeof item.file_size === 'number' && (
               <span>{formatBytes(item.file_size)}</span>
             )}
@@ -60,7 +60,7 @@ export function DataroomDocumentCard({
             {item.enable_watermark && (
               <>
                 <span>•</span>
-                <span className="inline-flex items-center gap-0.5 text-gray-500 dark:text-gray-400">
+                <span className="inline-flex items-center gap-0.5 text-muted-foreground">
                   <Lock className="h-3 w-3" />
                   <span>{t('viewer.watermarked', { defaultValue: 'Watermarked' })}</span>
                 </span>
@@ -75,7 +75,7 @@ export function DataroomDocumentCard({
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-gray-500 hover:text-gray-900"
+            className="h-8 w-8 text-muted-foreground hover:text-foreground"
             title={t('qna.askQuestion', { defaultValue: 'Ask question' })}
             onClick={() => onQnaClick(item)}
           >
@@ -86,7 +86,7 @@ export function DataroomDocumentCard({
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-gray-500 hover:text-gray-900"
+            className="h-8 w-8 text-muted-foreground hover:text-foreground"
             title={t('viewer.download', { defaultValue: 'Download' })}
             onClick={() => onDownloadClick(item)}
           >
@@ -95,7 +95,7 @@ export function DataroomDocumentCard({
         )}
         <Button
           size="sm"
-          className="h-8 px-3 text-xs font-medium gap-1.5 rounded-lg bg-gray-950 hover:bg-gray-800 text-white shadow-xs transition-all"
+          className="h-8 px-3 text-xs font-medium gap-1.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs transition-all"
           onClick={() => onItemClick(item)}
         >
           <Eye className="h-3.5 w-3.5" />

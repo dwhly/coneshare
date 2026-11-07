@@ -23,7 +23,7 @@ function DailyVisitsChart({ data, loading }) {
         <XAxis dataKey="date" tickFormatter={(str) => format(parseISO(str), 'MMM d')} />
         <YAxis />
         <Tooltip name={t('dashboard.visits')} />
-        <Bar dataKey="visits" name={t('dashboard.visits')} fill="#8884d8" />
+        <Bar dataKey="visits" name={t('dashboard.visits')} fill="hsl(var(--info))" />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -58,13 +58,13 @@ function HomePage() {
     <div className="space-y-8 p-4 sm:p-6">
       <h1 className="text-3xl font-bold">{t('dashboard.title')}</h1>
 
-      <div className="rounded-lg border bg-white p-6 shadow-sm dark:bg-gray-900">
+      <div className="rounded-lg border bg-card p-6 shadow-sm">
         <h2 className="mb-4 text-xl font-semibold">{t('dashboard.dailyVisits')}</h2>
         <DailyVisitsChart data={visitsData} loading={loading} />
       </div>
 
       <div className="space-y-8">
-        <div className="rounded-lg border bg-white p-6 shadow-sm dark:bg-gray-900">
+        <div className="rounded-lg border bg-card p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">{t('dashboard.latestViewSessions')}</h2>
             <Button asChild variant="link">
@@ -86,7 +86,7 @@ function HomePage() {
             )}
           </div>
         </div>
-        <div className="rounded-lg border bg-white p-6 shadow-sm dark:bg-gray-900">
+        <div className="rounded-lg border bg-card p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">{t('dashboard.recentActiveLinks')}</h2>
             <Button asChild variant="link">

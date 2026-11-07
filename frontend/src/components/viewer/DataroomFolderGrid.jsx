@@ -27,16 +27,16 @@ export function DataroomFolderGrid({
     return (
       <section aria-label={t('documents.folders', { defaultValue: 'Folders' })} className="space-y-3">
         <div className="flex items-center justify-between">
-          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-gray-900">
+          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-foreground">
             {t('documents.folders', { defaultValue: 'Folders' })} (0)
           </span>
         </div>
 
-        <div className="rounded-xl border border-gray-200/60 bg-white dark:bg-zinc-950 p-6 flex flex-col items-center justify-center text-center shadow-2xs">
-          <div className="w-9 h-9 rounded-full bg-gray-100 dark:bg-zinc-900 flex items-center justify-center text-gray-400 mb-2">
+        <div className="rounded-xl border border-border/60 bg-card p-6 flex flex-col items-center justify-center text-center shadow-2xs">
+          <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground mb-2">
             <Folder className="h-4 w-4" />
           </div>
-          <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
+          <p className="text-xs font-medium text-muted-foreground">
             {emptyMessage || t('viewer.noFolders', { defaultValue: 'No folders in this directory' })}
           </p>
         </div>
@@ -50,11 +50,11 @@ export function DataroomFolderGrid({
     <section aria-label={t('documents.folders', { defaultValue: 'Folders' })} className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-gray-900">
+          <span className="font-mono text-xs uppercase tracking-wider font-semibold text-foreground">
             {t('documents.folders', { defaultValue: 'Folders' })} ({folders.length})
           </span>
           {folders.length > maxInitialCount && !isExpanded && (
-            <span className="px-1.5 py-0.5 rounded bg-gray-100 font-mono text-[11px] text-gray-500 hidden sm:inline">
+            <span className="px-1.5 py-0.5 rounded bg-muted font-mono text-[11px] text-muted-foreground hidden sm:inline">
               {t('common.showingCount', { count: maxInitialCount, defaultValue: `Showing ${maxInitialCount}` })}
             </span>
           )}
@@ -63,7 +63,7 @@ export function DataroomFolderGrid({
           <button
             type="button"
             onClick={() => setIsExpanded((prev) => !prev)}
-            className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
             <span>
               {isExpanded
@@ -92,21 +92,21 @@ export function DataroomFolderGrid({
                 }
               }}
               data-testid={`folder-card-${folder.id}`}
-              className="group rounded-xl bg-white p-3.5 shadow-2xs hover:shadow-xs hover:border-gray-300 hover:bg-gray-50/50 transition-all flex flex-col justify-between cursor-pointer border border-gray-200/60"
+              className="group rounded-xl bg-card p-3.5 shadow-2xs hover:shadow-xs hover:border-input hover:bg-accent transition-all flex flex-col justify-between cursor-pointer border border-border/60"
             >
               {/* Top Row: Icon, Folder Name, and Actions */}
               <div className="flex items-center justify-between gap-2 min-w-0">
                 <div className="flex items-center gap-2.5 min-w-0 flex-1 pr-1">
                   {showIndex && (
-                    <span className="font-mono text-[11px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded shrink-0 self-center">
+                    <span className="font-mono text-[11px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded shrink-0 self-center">
                       {indexLabel}
                     </span>
                   )}
-                  <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center shrink-0 text-gray-500 group-hover:text-gray-900 group-hover:bg-gray-200/70 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0 text-muted-foreground group-hover:text-foreground group-hover:bg-accent/70 transition-colors">
                     <Folder className="h-4 w-4" />
                   </div>
                   <span
-                    className="text-sm font-medium text-gray-900 truncate block group-hover:text-primary transition-colors flex-1"
+                    className="text-sm font-medium text-foreground truncate block group-hover:text-primary transition-colors flex-1"
                     title={folder.name}
                   >
                     {folder.name}
@@ -119,7 +119,7 @@ export function DataroomFolderGrid({
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-7 w-7 text-gray-500 hover:text-gray-900 hover:bg-gray-200/60"
+                      className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-accent/60"
                       title={t('qna.folderQna', { defaultValue: 'Folder Q&A' })}
                       onClick={(e) => {
                         e.stopPropagation();
@@ -134,7 +134,7 @@ export function DataroomFolderGrid({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-7 w-7 text-gray-500 hover:text-gray-900 hover:bg-gray-200/60"
+                        className="h-7 w-7 text-muted-foreground hover:text-foreground hover:bg-accent/60"
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
@@ -145,7 +145,7 @@ export function DataroomFolderGrid({
                     </DropdownMenu.Trigger>
                     <DropdownMenu.Portal>
                       <DropdownMenu.Content
-                        className="z-[9999] w-40 origin-top-right rounded-md bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        className="z-[9999] w-40 origin-top-right rounded-md bg-card p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                         sideOffset={5}
                         align="end"
                         onCloseAutoFocus={(e) => e.preventDefault()}
@@ -155,7 +155,7 @@ export function DataroomFolderGrid({
                             e.stopPropagation();
                             onFolderClick?.(folder);
                           }}
-                          className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                          className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                         >
                           <Eye className="h-4 w-4" aria-hidden="true" />
                           <span>{t('viewer.view')}</span>
@@ -166,7 +166,7 @@ export function DataroomFolderGrid({
                               e.stopPropagation();
                               onDownloadClick(folder);
                             }}
-                            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                           >
                             <DownloadIcon className="h-4 w-4" aria-hidden="true" />
                             <span>{t('viewer.download')}</span>
@@ -178,7 +178,7 @@ export function DataroomFolderGrid({
                               e.stopPropagation();
                               onQnaClick?.(folder);
                             }}
-                            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                            className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                           >
                             <MessageCircle className="h-4 w-4" aria-hidden="true" />
                             <span>{t('qna.title', { defaultValue: 'Q&A' })}</span>
@@ -191,17 +191,17 @@ export function DataroomFolderGrid({
               </div>
 
               {/* Divider & Bottom Row: Update Time + Right Arrow */}
-              <div className="pt-2.5 mt-2.5 border-t border-gray-100 dark:border-zinc-800/80 flex items-center justify-between gap-2 text-[11px] text-gray-400">
+              <div className="pt-2.5 mt-2.5 border-t border-border flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
                 <div className="truncate min-w-0">
                   {folder.updated_at ? (
                     <span className="font-normal truncate block">
                       {t('common.updated', { defaultValue: 'Updated' })} {formatRelativeTime(folder.updated_at)}
                     </span>
                   ) : (
-                    <span className="text-gray-300 dark:text-zinc-600">—</span>
+                    <span className="text-muted-foreground/70">—</span>
                   )}
                 </div>
-                <ChevronRight className="h-3.5 w-3.5 text-gray-400 group-hover:text-gray-700 group-hover:translate-x-0.5 transition-all shrink-0" />
+                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 transition-all shrink-0" />
               </div>
             </div>
           );

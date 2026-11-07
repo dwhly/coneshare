@@ -123,10 +123,10 @@ export function DocumentVersionsPage() {
 
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold leading-6 text-gray-900">
+          <h1 className="text-2xl font-bold leading-6 text-foreground">
             {t('documents.versionHistoryFor', { name: document.name })}
           </h1>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-muted-foreground">
             {t('documents.versionHistorySubtitle')}
           </p>
         </div>

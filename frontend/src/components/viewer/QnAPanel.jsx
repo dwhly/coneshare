@@ -131,17 +131,17 @@ export function QnAPanel({
 
   return (
     <aside
-      className="fixed inset-y-0 right-0 z-30 flex w-full flex-col border-l bg-white shadow-xl sm:max-w-xl lg:w-[34rem] lg:max-w-none xl:w-[38rem]"
+      className="fixed inset-y-0 right-0 z-30 flex w-full flex-col border-l bg-card shadow-xl sm:max-w-xl lg:w-[34rem] lg:max-w-none xl:w-[38rem]"
       aria-label={t('qna.panelLabel', { defaultValue: 'Q&A panel' })}
     >
       <header className="border-b px-5 py-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+            <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
               <MessageCircle className="h-5 w-5" />
               {t('qna.title')}
             </h2>
-            <p className="truncate text-sm text-gray-500">{contextLabel}</p>
+            <p className="truncate text-sm text-muted-foreground">{contextLabel}</p>
           </div>
           <Button
             type="button"
@@ -188,9 +188,9 @@ export function QnAPanel({
           <section className="grid min-h-0 grid-cols-1 border-b md:grid-cols-[190px,1fr]">
             <div className="max-h-56 overflow-y-auto border-b md:max-h-none md:border-b-0 md:border-r">
               {isLoading ? (
-                <div className="p-4 text-sm text-gray-500">{t('qna.loading')}</div>
+                <div className="p-4 text-sm text-muted-foreground">{t('qna.loading')}</div>
               ) : threads.length === 0 ? (
-                <div className="p-4 text-sm text-gray-500">{t('qna.noQuestionsYet')}</div>
+                <div className="p-4 text-sm text-muted-foreground">{t('qna.noQuestionsYet')}</div>
               ) : (
                 <div className="divide-y">
                   {threads.map((thread) => (
@@ -198,10 +198,10 @@ export function QnAPanel({
                       key={thread.id}
                       type="button"
                       onClick={() => setSelectedThreadId(thread.id)}
-                      className={`block w-full px-4 py-3 text-left text-sm hover:bg-gray-50 ${selectedThread?.id === thread.id ? 'bg-gray-50' : ''}`}
+                      className={`block w-full px-4 py-3 text-left text-sm hover:bg-accent ${selectedThread?.id === thread.id ? 'bg-muted' : ''}`}
                     >
-                      <div className="truncate font-medium text-gray-900">{thread.subject}</div>
-                      <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
+                      <div className="truncate font-medium text-foreground">{thread.subject}</div>
+                      <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{formatRelativeTime(thread.updated_at || thread.created_at)}</span>
                         {thread.status === 'closed' && <Lock className="h-3 w-3" />}
                       </div>
@@ -213,25 +213,25 @@ export function QnAPanel({
 
             <div className="min-h-0 overflow-y-auto p-4">
               {!selectedThread ? (
-                <div className="flex h-full items-center justify-center text-sm text-gray-500">
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
                   {t('qna.selectQuestionNotice')}
                 </div>
               ) : (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="truncate text-sm font-semibold text-gray-900">{selectedThread.subject}</h3>
-                    <Badge className={isClosed ? 'border-gray-300 text-gray-600' : 'border-emerald-200 text-emerald-700'}>
+                    <h3 className="truncate text-sm font-semibold text-foreground">{selectedThread.subject}</h3>
+                    <Badge className={isClosed ? 'border-input text-muted-foreground' : 'border-success-border text-success'}>
                       {isClosed ? t('qna.closed') : t('qna.open')}
                     </Badge>
                   </div>
                   <div className="space-y-3">
                     {(selectedThread.messages || []).map((message) => (
-                      <article key={message.id} className="rounded-md border bg-white p-3">
-                        <div className="flex items-center justify-between gap-3 text-xs text-gray-500">
-                          <span className="truncate font-medium text-gray-700">{messageSenderLabel(message, t)}</span>
+                      <article key={message.id} className="rounded-md border bg-card p-3">
+                        <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+                          <span className="truncate font-medium text-foreground">{messageSenderLabel(message, t)}</span>
                           <span className="shrink-0">{formatRelativeTime(message.created_at)}</span>
                         </div>
-                        <p className="mt-2 whitespace-pre-wrap break-words text-sm text-gray-800 [overflow-wrap:anywhere]">{message.body}</p>
+                        <p className="mt-2 whitespace-pre-wrap break-words text-sm text-foreground [overflow-wrap:anywhere]">{message.body}</p>
                       </article>
                     ))}
                   </div>
@@ -242,7 +242,7 @@ export function QnAPanel({
 
           <section className="p-4">
             {isClosed ? (
-              <div className="flex items-center gap-2 rounded-md border bg-gray-50 p-3 text-sm text-gray-600">
+              <div className="flex items-center gap-2 rounded-md border bg-muted p-3 text-sm text-muted-foreground">
                 <CheckCircle2 className="h-4 w-4" />
                 {t('qna.threadIsClosed')}
               </div>

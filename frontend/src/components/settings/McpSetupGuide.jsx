@@ -103,13 +103,13 @@ export function McpSetupGuide({ rawKey = null }) {
   const displayContent = isCliActive ? currentAgent.cliCmd : jsonConfig;
 
   return (
-    <div className="space-y-4 text-sm text-gray-700 dark:text-gray-300">
-      <p className="pt-1 text-gray-600 dark:text-gray-400">
+    <div className="space-y-4 text-sm text-foreground">
+      <p className="pt-1 text-muted-foreground">
         {t("settings.mcpSetupGuideSubtitle", "Select your AI tool below to get pre-configured settings to connect to the Remote MCP Server.")}
       </p>
 
       {/* Agent Selector Tabs */}
-      <div className="flex flex-wrap gap-1 border-b border-gray-200 dark:border-gray-700 pb-2">
+      <div className="flex flex-wrap gap-1 border-b border-border pb-2">
         {agentTabs.map((tab) => (
           <button
             key={tab.id}
@@ -122,7 +122,7 @@ export function McpSetupGuide({ rawKey = null }) {
             className={`px-3 py-1.5 rounded-md font-medium text-xs transition-colors ${
               activeTab === tab.id
                 ? "bg-primary text-primary-foreground shadow-sm"
-                : "bg-gray-100 dark:bg-gray-750 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                : "bg-muted text-muted-foreground hover:bg-accent "
             }`}
           >
             {tab.label}
@@ -133,8 +133,8 @@ export function McpSetupGuide({ rawKey = null }) {
       {/* Mode Switcher (CLI vs JSON) for CLI-supported agents */}
       {currentAgent.hasCli && (
         <div className="flex items-center justify-between pt-1">
-          <span className="text-xs text-gray-500 font-medium">{t("settings.mcpConfigMode", "Configuration Mode")}:</span>
-          <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700">
+          <span className="text-xs text-muted-foreground font-medium">{t("settings.mcpConfigMode", "Configuration Mode")}:</span>
+          <div className="flex items-center gap-1 bg-muted p-0.5 rounded-lg border border-border">
             <button
               type="button"
               onClick={() => {
@@ -143,8 +143,8 @@ export function McpSetupGuide({ rawKey = null }) {
               }}
               className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
                 mode === "cli"
-                  ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
-                  : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-200"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground "
               }`}
             >
               <Terminal className="h-3.5 w-3.5" />
@@ -158,8 +158,8 @@ export function McpSetupGuide({ rawKey = null }) {
               }}
               className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
                 mode === "json"
-                  ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
-                  : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-200"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground "
               }`}
             >
               <FileCode className="h-3.5 w-3.5" />
@@ -170,14 +170,14 @@ export function McpSetupGuide({ rawKey = null }) {
       )}
 
       {/* Target Path / Info Line */}
-      <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">
+      <div className="text-xs text-muted-foreground font-mono">
         <span className="font-semibold">{t("settings.mcpConfigLocation", "Target File / Location")}:</span>{" "}
         {currentAgent.path}
       </div>
 
       {/* Code Snippet Box */}
       <div className="relative group">
-        <pre className="p-3 bg-gray-900 text-gray-100 rounded-lg font-mono text-xs overflow-x-auto border border-gray-800 leading-relaxed">
+        <pre className="p-3 bg-muted text-foreground rounded-lg font-mono text-xs overflow-x-auto border border-border leading-relaxed">
           {displayContent}
         </pre>
         <Button
@@ -185,14 +185,14 @@ export function McpSetupGuide({ rawKey = null }) {
           variant="outline"
           aria-label={t("common.copy", "Copy configuration")}
           onClick={() => copyToClipboard(displayContent)}
-          className="absolute top-2 right-2 bg-gray-800/90 text-gray-200 border-gray-700 hover:bg-gray-700 hover:text-white"
+          className="absolute top-2 right-2 bg-background text-foreground border-input hover:bg-accent"
         >
-          {copied ? <Check className="h-3.5 w-3.5 text-green-400" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
         </Button>
       </div>
 
       {/* Permissions Tier Warning */}
-      <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-800 dark:text-amber-300 rounded-lg border border-amber-200 dark:border-amber-800 text-xs">
+      <div className="flex items-start gap-2 p-3 bg-warning-subtle text-warning rounded-lg border border-warning-border text-xs">
         <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
         <span>
           {t(
@@ -203,7 +203,7 @@ export function McpSetupGuide({ rawKey = null }) {
       </div>
 
       {/* Skill Integration Footer */}
-      <div className="pt-2 border-t border-gray-200 dark:border-gray-700 text-xs">
+      <div className="pt-2 border-t border-border text-xs">
         <a
           href="https://www.coneshare.com/agents"
           target="_blank"

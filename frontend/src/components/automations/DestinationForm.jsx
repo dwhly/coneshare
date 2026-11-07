@@ -55,7 +55,7 @@ export function DestinationForm({
     <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border p-5">
       <div>
         <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="text-sm text-gray-500">{description}</p>
+        <p className="text-sm text-muted-foreground">{description}</p>
       </div>
 
       <div>
@@ -75,7 +75,7 @@ export function DestinationForm({
           <Label htmlFor="destination-type">{t('fileRequests.fieldType')}</Label>
           <select
             id="destination-type"
-            className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-10 w-full rounded-md border border-input px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
             value={destinationType}
             onChange={(e) => setDestinationType(e.target.value)}
             disabled={loading}
@@ -92,7 +92,7 @@ export function DestinationForm({
           <Label htmlFor="http-method">{t('automations.httpMethod')}</Label>
           <select
             id="http-method"
-            className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-10 w-full rounded-md border border-input px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
             value={httpMethod}
             onChange={(e) => setHttpMethod(e.target.value)}
             disabled={loading}

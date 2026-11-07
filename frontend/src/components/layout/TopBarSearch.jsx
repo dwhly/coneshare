@@ -119,7 +119,7 @@ export function TopBarSearch({ open, onOpenChange }) {
   );
 }
 
-export function TopBarSearchButton({ onClick }) {
+export function TopBarSearchButton({ onClick, className }) {
   const { t } = useTranslation();
   const [modifierKey, setModifierKey] = useState("Ctrl");
   useEffect(() => {
@@ -128,15 +128,16 @@ export function TopBarSearchButton({ onClick }) {
   return (
     <Button
       variant="outline"
-      className="flex w-full max-w-96 items-center justify-between rounded-lg text-muted-foreground"
+      size="sm"
+      className={cn("w-56 items-center justify-between gap-3 font-normal text-muted-foreground", className)}
       onClick={onClick}
     >
       <div className="flex items-center">
-        <Search className="mr-2 h-5 w-5" />
+        <Search className="mr-2 h-4 w-4" />
         {t("nav.globalSearch", "Search")}
       </div>
       <div>
-        <div className="flex items-center rounded-md bg-muted px-1.5 py-0.5 text-xs tracking-wider text-muted-foreground">
+        <div className="flex items-center rounded-sm border border-border bg-muted px-1.5 text-xs text-muted-foreground">
           {modifierKey}+K
         </div>
       </div>

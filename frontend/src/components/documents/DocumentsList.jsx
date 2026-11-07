@@ -13,7 +13,7 @@ import { TooltipProvider } from "../ui/Tooltip";
 
 function ReadOnlyHeader({ showIndex = false }) {
   return (
-    <div className="flex w-full items-center border-b border-gray-200 px-4 py-2 text-xs font-medium uppercase text-gray-500 dark:border-gray-800 dark:text-gray-400">
+    <div className="flex w-full items-center border-b border-border px-4 py-2 text-xs font-medium uppercase text-muted-foreground">
       {showIndex && <div className="w-12">#</div>}
       <div className="w-[34%]">Name</div>
       <div className="w-[18%]">Owner</div>
@@ -233,7 +233,7 @@ export function DocumentsList({
       <div
         {...getRootProps({
           className:
-            "relative border-t border-gray-200 dark:border-gray-800 min-h-[400px] pb-8",
+            "relative border-t border-border min-h-[400px] pb-8",
           onClick: handleContainerClick,
         })}
       >
@@ -258,7 +258,7 @@ export function DocumentsList({
             />
           )}
           {loading ? (
-            <div className="divide-y divide-gray-200 dark:divide-gray-800 border-b border-gray-200 dark:border-gray-800">
+            <div className="divide-y divide-border border-b border-border">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex h-[53px] items-center px-4">
                   <Skeleton className="h-4 w-4" />
@@ -275,7 +275,7 @@ export function DocumentsList({
               </div>
             )
           ) : (
-            <div className="divide-y divide-gray-200 dark:divide-gray-800 border-b border-gray-200 dark:border-gray-800">
+            <div className="divide-y divide-border border-b border-border">
               {allItems.map((item) => (
                 <DraggableItem
                   key={item.id}

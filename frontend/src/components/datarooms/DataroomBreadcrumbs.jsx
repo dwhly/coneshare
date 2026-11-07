@@ -24,7 +24,7 @@ export function DataroomBreadcrumbs({ dataroomName, currentFolder, onNavigate })
         {path.map((folder) => (
           <li key={folder.id}>
             <div className="flex items-center">
-              <ChevronRight className="h-5 w-5 flex-shrink-0 text-gray-400" />
+              <ChevronRight className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
               <button
                 onClick={() => handleNavigate(folder.id)}
                 className="ml-2 hover:underline"

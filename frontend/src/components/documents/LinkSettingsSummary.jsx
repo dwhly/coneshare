@@ -26,7 +26,7 @@ export function LinkSettingsSummary({ link, onClick }) {
     settings.push(
       <LinkSetting
         key="password"
-        icon={<ShieldCheck className="h-4 w-4 text-gray-500" />}
+        icon={<ShieldCheck className="h-4 w-4 text-muted-foreground" />}
         text={t('links.passwordProtected')}
       />
     );
@@ -36,7 +36,7 @@ export function LinkSettingsSummary({ link, onClick }) {
     settings.push(
       <LinkSetting
         key="email"
-        icon={<Mail className="h-4 w-4 text-gray-500" />}
+        icon={<Mail className="h-4 w-4 text-muted-foreground" />}
         text={t('links.requiresEmail')}
       />
     );
@@ -47,7 +47,7 @@ export function LinkSettingsSummary({ link, onClick }) {
     settings.push(
       <LinkSetting
         key="expires"
-        icon={<CalendarOff className="h-4 w-4 text-gray-500" />}
+        icon={<CalendarOff className="h-4 w-4 text-muted-foreground" />}
         text={t('links.expiresOn', { date: formattedDateTime })}
       />
     );    
@@ -57,7 +57,7 @@ export function LinkSettingsSummary({ link, onClick }) {
     settings.push(
       <LinkSetting
         key="download"
-        icon={<Download className="h-4 w-4 text-gray-500" />}
+        icon={<Download className="h-4 w-4 text-muted-foreground" />}
         text={t('links.downloadEnabled')}
       />
     );
@@ -67,14 +67,14 @@ export function LinkSettingsSummary({ link, onClick }) {
     settings.push(
       <LinkSetting
         key="watermark"
-        icon={<Droplets className="h-4 w-4 text-gray-500" />}
+        icon={<Droplets className="h-4 w-4 text-muted-foreground" />}
         text={t('links.watermarkEnabled')}
       />
     );
   }
 
   if (settings.length === 0) {
-    return <span className="text-sm text-gray-500">—</span>;
+    return <span className="text-sm text-muted-foreground">—</span>;
   }
 
   return (

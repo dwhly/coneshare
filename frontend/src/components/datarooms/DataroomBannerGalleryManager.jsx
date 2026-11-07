@@ -210,7 +210,7 @@ export function DataroomBannerGalleryManager({
               defaultValue: 'Supports JPG, PNG, WebP up to 5 MB per image.',
             })}
           </p>
-          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+          <span className="text-xs font-semibold text-foreground">
             {images.length} / {MAX_BANNER_IMAGES} {t('common.images', { defaultValue: 'images' })}
           </span>
         </div>
@@ -287,7 +287,7 @@ export function DataroomBannerGalleryManager({
                 }`}
               >
                 {/* Image Preview Container */}
-                <div className="relative aspect-[16/9] w-full bg-neutral-900 overflow-hidden">
+                <div className="relative aspect-[16/9] w-full bg-primary overflow-hidden">
                   <img
                     src={img.image_url || img.image}
                     alt={img.caption || `Banner ${index + 1}`}
@@ -305,7 +305,7 @@ export function DataroomBannerGalleryManager({
                         type="button"
                         size="icon"
                         variant="secondary"
-                        className="h-7 w-7 rounded-full bg-white/90 dark:bg-zinc-900/90 text-red-600 hover:bg-red-50 hover:text-red-700 shadow-xs"
+                        className="h-7 w-7 rounded-full bg-white/90 text-danger hover:bg-danger-subtle hover:text-danger shadow-xs"
                         onClick={() => setImageToDelete(img)}
                         title={t('common.delete')}
                         aria-label={`Delete banner image ${index + 1}`}

@@ -20,8 +20,26 @@ export function BrandingProvider({ children }) {
       const brand = await fetch('/api/v1/dealroom/brand/').then(r => r.json());
       data.brand_name = brand.name;
       data.brand_logo_url = brand.logo;
-      Object.entries(brand.tokens || {}).forEach(([key, value]) => document.documentElement.style.setProperty(`--${key}`, value));
-      document.title = `${brand.name} Send`;
+      // Fleet design system: a tenant may override BRAND slots only (DESIGN.md §2). brand.yaml's `primary`
+      // is the tenant accent, so it becomes --brand (links/focus); the primary button stays ink.
+      // Text, surface, radius and status keys are ignored.
+      // The tenant gives one (light-mode) accent, so it is scoped to light; dark keeps the token's dark brand.
+      const ignored = [];
+      const slots = [];
+      Object.entries(brand.tokens || {}).forEach(([key, value]) => {
+        const slot = key === "primary" ? "brand" : key;
+        if (/^brand(-|$)/.test(slot) && /^[\d.]+ [\d.]+% [\d.]+%$/.test(String(value).trim())) slots.push(`--${slot}: ${String(value).trim()};`);
+        else ignored.push(key);
+      });
+      let tenantStyle = document.getElementById("fds-tenant-brand");
+      if (!tenantStyle) {
+        tenantStyle = document.createElement("style");
+        tenantStyle.id = "fds-tenant-brand";
+        document.head.appendChild(tenantStyle);
+      }
+      tenantStyle.textContent = slots.length ? `:root:not([data-theme="dark"]) { ${slots.join(" ")} }` : "";
+      if (ignored.length) console.warn(`[fds] tenant tokens ignored (brand slots only): ${ignored.join(", ")}`);
+      data.sign_url = brand.sign_url;
       const websiteUrl = data?.brand_website_url;
       const terms = data?.terms_url;
       const privacy = data?.privacy_policy_url;
@@ -32,6 +50,7 @@ export function BrandingProvider({ children }) {
         brandWebsiteUrl: (websiteUrl && isSafeUrl(websiteUrl)) ? websiteUrl : "",
         termsUrl: (terms && isSafeUrl(terms)) ? terms : "https://www.coneshare.com/terms",
         privacyPolicyUrl: (privacy && isSafeUrl(privacy)) ? privacy : "https://www.coneshare.com/privacy-policy",
+        signUrl: (data?.sign_url && isSafeUrl(data.sign_url)) ? data.sign_url : "",
       });
     } catch (error) {
       console.error("Failed to fetch public settings/branding:", error);

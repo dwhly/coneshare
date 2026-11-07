@@ -16,7 +16,7 @@ export function SelectionActionBar({
   const actualDeleteText = deleteText || t('common.delete');
 
   return (
-    <div className="flex items-center justify-between rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
+    <div className="flex items-center justify-between rounded-lg bg-muted p-2">
       <div className="flex items-center gap-x-4">
         <span className="ml-2 text-sm font-medium">{selectionText}</span>
         <Button variant="ghost" size="sm" onClick={onClearSelection}>

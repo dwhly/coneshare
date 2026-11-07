@@ -450,7 +450,7 @@ export function DocumentPage() {
   return (
     <div className="container mx-auto p-4 sm:p-6">
       {(isProcessing || isError) && (
-        <div className={`mb-6 rounded-md p-4 ${isError ? 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400' : 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400'}`}>
+        <div className={`mb-6 rounded-md p-4 ${isError ? 'bg-danger-subtle text-danger ' : 'bg-info-subtle text-info '}`}>
           <div className="flex">
             <div className="flex-shrink-0">
               {isProcessing ? (
@@ -510,16 +510,16 @@ export function DocumentPage() {
             <OwnerQnAManager documentId={documentId} shareLinks={document.share_links || []} />
           </>
         ) : (
-          <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-6 dark:border-blue-900/50 dark:bg-blue-950/20">
+          <div className="rounded-xl border border-info-border bg-info-subtle/50 p-6">
             <div className="flex items-start gap-4">
-              <div className="rounded-full bg-blue-100 p-2.5 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400">
+              <div className="rounded-full bg-info-subtle p-2.5 text-info">
                 <Shield className="h-5 w-5" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-200">
+                <h3 className="text-sm font-semibold text-info">
                   {t('documents.collaboratorAccessNoticeTitle', { defaultValue: 'Dataroom Shared Document' })}
                 </h3>
-                <p className="text-sm text-blue-700 dark:text-blue-300">
+                <p className="text-sm text-info">
                   {t('documents.collaboratorAccessNoticeDesc', {
                     defaultValue: 'You have view-only collaborator access to this document via a shared Dataroom. Direct share links, visitor tracking logs, and link security settings are managed exclusively by the document owner or organization administrators.',
                   })}

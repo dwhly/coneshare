@@ -36,14 +36,14 @@ function SidebarContent() {
       {navItems.map((item) => (
         <React.Fragment key={item.href}>
           {item.hasDivider && (
-            <hr className="my-1.5 border-t border-gray-200 dark:border-gray-800" />
+            <hr className="my-1.5 border-t border-border" />
           )}
           <Link
             to={item.href}
             className={cn(
-              "flex items-center gap-3 rounded-lg py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50",
+              "flex items-center gap-3 rounded-lg py-2 text-muted-foreground transition-all hover:text-foreground ",
               (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)) &&
-                "bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-50",
+                "bg-border text-foreground ",
               isCollapsed ? "justify-center px-0 h-10 w-10" : "px-3"
             )}
           >

@@ -124,15 +124,15 @@ export function CloudExportDialog({ isOpen, onOpenChange, requestId, selectedFil
 
         {loadingConnections ? (
           <div className="flex h-40 items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           </div>
         ) : connections.length === 0 ? (
-          <div className="my-6 rounded-md border border-yellow-200 bg-yellow-50 p-4 text-center dark:border-yellow-900/30 dark:bg-yellow-950/20">
-            <AlertTriangle className="mx-auto mb-2 h-8 w-8 text-yellow-600 dark:text-yellow-500" />
-            <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+          <div className="my-6 rounded-md border border-warning-border bg-warning-subtle p-4 text-center">
+            <AlertTriangle className="mx-auto mb-2 h-8 w-8 text-warning" />
+            <p className="text-sm font-medium text-warning">
               {t('cloudExport.noConnections')}
             </p>
-            <p className="mt-1 text-xs text-yellow-700 dark:text-yellow-400">
+            <p className="mt-1 text-xs text-warning">
               {t('cloudExport.noConnectionsNotice')}
             </p>
           </div>
@@ -177,7 +177,7 @@ export function CloudExportDialog({ isOpen, onOpenChange, requestId, selectedFil
             <div className="h-[280px] overflow-y-auto rounded-md border">
               {loadingFolders ? (
                 <div className="flex h-full items-center justify-center">
-                  <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+                  <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
                 </div>
               ) : error ? (
                 <div className="flex h-full flex-col items-center justify-center p-4 text-center">
@@ -211,7 +211,7 @@ export function CloudExportDialog({ isOpen, onOpenChange, requestId, selectedFil
                             className="flex w-full items-center gap-x-2 text-left hover:underline"
                             onClick={() => handleFolderClick(folder)}
                           >
-                            <FolderIcon className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                            <FolderIcon className="h-5 w-5 text-info flex-shrink-0" />
                             <span className="truncate">{folder.name}</span>
                           </button>
                         </TableCell>

@@ -314,13 +314,13 @@ export function AutomationsPage() {
     <div className="container mx-auto space-y-8 p-4 sm:p-6">
       <section className="space-y-2">
         <h1 className="text-2xl font-bold">{t('automations.title')}</h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-muted-foreground">
           {t('automations.subtitle')}
         </p>
       </section>
 
       {isInitialLoading ? (
-        <div className="rounded-lg border p-4 text-sm text-gray-500">{t('automations.loading')}</div>
+        <div className="rounded-lg border p-4 text-sm text-muted-foreground">{t('automations.loading')}</div>
       ) : (
         <>
           <Dialog open={isCreateRuleOpen} onOpenChange={(open) => {
@@ -455,19 +455,19 @@ export function AutomationsPage() {
               </Button>
             </div>
             <div>
-              <p className="text-sm text-gray-500">{automationCountText}</p>
+              <p className="text-sm text-muted-foreground">{automationCountText}</p>
             </div>
             <div className="space-y-2">
               {automations.length === 0 && (
-                <p className="text-sm text-gray-500">{t('automations.noRulesYet')}</p>
+                <p className="text-sm text-muted-foreground">{t('automations.noRulesYet')}</p>
               )}
               {automations.map((automation) => (
                 <div
                   key={automation.id}
                   className={`flex items-start justify-between gap-3 rounded-md border p-3 transition-colors ${
                     automation.is_active
-                      ? 'border-emerald-200 bg-emerald-50/40'
-                      : 'border-gray-200 bg-gray-50 opacity-80'
+                      ? 'border-success-border bg-success-subtle/40'
+                      : 'border-border bg-muted opacity-80'
                   }`}
                 >
                   <div className="min-w-0 flex-1">
@@ -476,15 +476,15 @@ export function AutomationsPage() {
                       <span
                         className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
                           automation.is_active
-                            ? 'bg-emerald-100 text-emerald-700'
-                            : 'bg-gray-200 text-gray-600'
+                            ? 'bg-success-subtle text-success'
+                            : 'bg-border text-muted-foreground'
                         }`}
                       >
                         {automation.is_active ? t('automations.enabled') : t('automations.disabled')}
                       </span>
                     </div>
                     <p
-                      className={`truncate text-xs ${automation.is_active ? 'text-gray-600' : 'text-gray-500'}`}
+                      className={`truncate text-xs ${automation.is_active ? 'text-muted-foreground' : 'text-muted-foreground'}`}
                       title={`${t('analytics.scope')}: ${automation.scope_type} | ${t('automations.event')}: ${(automation.subscribed_events || []).join(', ') || '-'}`}
                     >
                       {t('analytics.scope')}: {automation.scope_type} | {t('automations.event')}: {(automation.subscribed_events || []).join(', ') || '-'}
@@ -521,7 +521,7 @@ export function AutomationsPage() {
               <div>
                 <h2 className="text-lg font-semibold">{t('automations.destinations')}</h2>
                 {!isOrgAdmin && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     {t('automations.destinationsManagedByAdmin', 'Managed by organization administrators.')}
                   </p>
                 )}
@@ -533,12 +533,12 @@ export function AutomationsPage() {
               )}
             </div>
             <div className="space-y-2">
-              {destinations.length === 0 && <p className="text-sm text-gray-500">{t('automations.noDestinationsYet')}</p>}
+              {destinations.length === 0 && <p className="text-sm text-muted-foreground">{t('automations.noDestinationsYet')}</p>}
               {destinations.map((destination) => (
                 <div key={destination.id} className="flex items-start justify-between gap-3 rounded-md border p-3">
                   <div className="min-w-0 flex-1">
                     <p className="font-medium">{destination.name}</p>
-                    <p className="truncate text-xs text-gray-500" title={`${destination.destination_type} | ${destination.endpoint_url}`}>
+                    <p className="truncate text-xs text-muted-foreground" title={`${destination.destination_type} | ${destination.endpoint_url}`}>
                       {destination.destination_type} | {destination.endpoint_url}
                     </p>
                   </div>
@@ -572,14 +572,14 @@ export function AutomationsPage() {
           <section className="space-y-3">
             <div>
               <h2 className="text-lg font-semibold">{t('automations.deliveryLogs')}</h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted-foreground">
                 {t('automations.deliveryLogsSubtitle')}
               </p>
-              <p className="text-xs text-gray-500">{logsRangeText}</p>
+              <p className="text-xs text-muted-foreground">{logsRangeText}</p>
             </div>
             {(selectedRule || selectedDestination) && (
-              <div className="flex flex-wrap items-center gap-2 rounded-md border bg-gray-50 p-2 text-xs">
-                <span className="text-gray-500">Active filters:</span>
+              <div className="flex flex-wrap items-center gap-2 rounded-md border bg-muted p-2 text-xs">
+                <span className="text-muted-foreground">Active filters:</span>
                 {selectedRule && (
                   <button
                     type="button"
@@ -587,7 +587,7 @@ export function AutomationsPage() {
                       setSelectedRuleIdForLogs(null);
                       setLogsCurrentPage(1);
                     }}
-                    className="rounded-full border bg-white px-2 py-1 hover:bg-gray-100"
+                    className="rounded-full border bg-card px-2 py-1 hover:bg-accent"
                   >
                     Rule: {selectedRule.name} ×
                   </button>
@@ -599,7 +599,7 @@ export function AutomationsPage() {
                       setSelectedDestinationIdForLogs(null);
                       setLogsCurrentPage(1);
                     }}
-                    className="rounded-full border bg-white px-2 py-1 hover:bg-gray-100"
+                    className="rounded-full border bg-card px-2 py-1 hover:bg-accent"
                   >
                     Destination: {selectedDestination.name} ×
                   </button>

@@ -31,21 +31,21 @@ export function PasswordForm({ slug, onSuccess, publicMeta = null }) {
     <GateLayout publicMeta={publicMeta} maxWidth="max-w-md">
       <div className="space-y-4 pt-1">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white tracking-tight">
+          <h2 className="text-lg font-semibold text-foreground tracking-tight">
             {t('viewer.enterPassword', { defaultValue: 'Enter Access Password' })}
           </h2>
-          <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 leading-relaxed">
+          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
             {t('viewer.passwordSubtitle')}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3.5">
           <div className="space-y-1.5">
-            <Label htmlFor="password" className="block text-xs font-medium text-gray-700 dark:text-zinc-300">
+            <Label htmlFor="password" className="block text-xs font-medium text-foreground">
               {t('auth.password')}
             </Label>
             <div className="relative">
-              <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400 dark:text-zinc-500 z-10 pointer-events-none" />
+              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground z-10 pointer-events-none" />
               <PasswordInput
                 id="password"
                 name="password"
@@ -63,7 +63,7 @@ export function PasswordForm({ slug, onSuccess, publicMeta = null }) {
             <Button
               type="submit"
               size="lg"
-              className="w-full flex items-center justify-center gap-2 active:scale-[0.98] transition-all bg-gray-900 hover:bg-black text-white dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200"
+              className="w-full flex items-center justify-center gap-2 active:scale-[0.98] transition-all bg-primary hover:bg-black text-primary-foreground"
               disabled={isLoading}
             >
               <span>{isLoading ? t('viewer.verifying') : t('viewer.continue', { defaultValue: 'Continue' })}</span>

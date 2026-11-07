@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
 from rest_framework import viewsets, mixins, serializers, permissions
@@ -24,7 +25,8 @@ class BrandView(APIView):
     permission_classes = [permissions.AllowAny]
     @extend_schema(responses=dict)
     def get(self, request):
-        return Response(load_brand())
+        # sign_url: the header's "Signatures" tab links to the Sign staff app (public URL, not a secret).
+        return Response({**load_brand(), 'sign_url': getattr(settings, 'SIGN_PUBLIC_URL', '')})
 
 
 class BoundedPagination(CursorPagination):

@@ -117,7 +117,7 @@ export function FolderBrowser({ onCurrentFolderChange, initialFolderId = null, d
                 className="flex w-full min-w-0 items-center gap-2 rounded p-2 text-left hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                 title={folder.name}
               >
-                <FolderIcon className="h-5 w-5 flex-shrink-0 text-gray-400" />
+                <FolderIcon className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
                 <span className="truncate min-w-0 flex-1">{folder.name}</span>
               </button>
             );

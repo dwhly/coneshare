@@ -97,7 +97,7 @@ export function RenameItemDialog({ isOpen, onOpenChange, item, onSuccess, contex
                 required
               />
             </div>
-            {error && <p className="text-center text-sm text-red-500">{error}</p>}
+            {error && <p className="text-center text-sm text-danger">{error}</p>}
           </div>
           <DialogFooter>
             <Button

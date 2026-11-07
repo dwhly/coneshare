@@ -48,16 +48,16 @@ describe('DocumentViewerHeader', () => {
 
   it('applies --viewer-primary CSS variable styling to brand link and title', () => {
     render(
-      <div style={{ '--viewer-primary': '#0f766e' }}>
+      <div style={{ '--viewer-primary': 'teal' }}>
         <DocumentViewerHeader {...defaultProps} />
       </div>
     );
 
     const brandLink = screen.getByText('Acme Corp').closest('a');
-    expect(brandLink).toHaveStyle({ color: 'var(--viewer-primary, #111827)' });
+    expect(brandLink).toHaveStyle({ color: 'var(--viewer-primary, hsl(var(--foreground)))' });
 
     const titleEl = screen.getByRole('heading', { name: 'Test Document.pdf' });
-    expect(titleEl).toHaveStyle({ color: 'var(--viewer-primary, #374151)' });
+    expect(titleEl).toHaveStyle({ color: 'var(--viewer-primary, hsl(var(--foreground)))' });
   });
 
   it('renders Q&A button, fires onToggleQna, and reflects aria-pressed', () => {
@@ -85,7 +85,7 @@ describe('DocumentViewerHeader', () => {
       />
     );
     expect(qnaButton).toHaveAttribute('aria-pressed', 'true');
-    expect(qnaButton).toHaveClass('bg-gray-100');
+    expect(qnaButton).toHaveClass('bg-muted');
   });
 
   it('disables Q&A button when hasViewSession is false', () => {

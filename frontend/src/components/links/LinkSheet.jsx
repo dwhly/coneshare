@@ -222,7 +222,7 @@ export function LinkSheet({
               />
             </div>
             {(requiresEmail || restrictToGrants) && (
-              <div className="flex items-center justify-between rounded-md border bg-gray-50 p-4 dark:bg-gray-800/50">
+              <div className="flex items-center justify-between rounded-md border bg-muted p-4">
                 <Label htmlFor="verify-email" className="flex flex-col space-y-1">
                   <span>{t('linkSheet.verifyEmail')}</span>
                   <span className="text-sm font-normal text-muted-foreground">
@@ -320,7 +320,7 @@ export function LinkSheet({
                 required
               />
               {isEditing && currentLink?.require_nda && (
-                <p className="text-xs text-amber-600 dark:text-amber-400">
+                <p className="text-xs text-warning">
                   {t('linkSheet.ndaWarning')}
                 </p>
               )}
@@ -343,7 +343,7 @@ export function LinkSheet({
             />
           </div>
           {allowDownload && (
-            <div className="flex items-center justify-between rounded-md border bg-gray-50 p-4 dark:bg-gray-800/50">
+            <div className="flex items-center justify-between rounded-md border bg-muted p-4">
               <Label htmlFor="allow-original-download" className="flex flex-col space-y-1">
                 <span>{t('amforge.downloads.allowOriginal')}</span>
                 <span className="text-sm font-normal text-muted-foreground">

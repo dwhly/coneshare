@@ -49,13 +49,14 @@ import {
   DialogTitle,
 } from '../components/ui/Dialog';
 
+// Room branding presets are TENANT DATA (stored per room), not product styling.
 const BRAND_PRESETS = [
-  { name: 'Default', primary: '#111827', secondary: '#4b5563', accent: '#1f2937' },
-  { name: 'Ocean', primary: '#0f4c81', secondary: '#2a6f9e', accent: '#0b3559' },
-  { name: 'Forest', primary: '#1f6f5f', secondary: '#3d8d7a', accent: '#174f44' },
-  { name: 'Sunset', primary: '#b45309', secondary: '#d97706', accent: '#7c2d12' },
-  { name: 'Rose', primary: '#9f1239', secondary: '#be185d', accent: '#881337' },
-  { name: 'Indigo', primary: '#3730a3', secondary: '#4f46e5', accent: '#312e81' },
+  { name: 'Default', primary: '#111827', secondary: '#4b5563', accent: '#1f2937' }, // fds-allow: tenant colour data
+  { name: 'Ocean', primary: '#0f4c81', secondary: '#2a6f9e', accent: '#0b3559' }, // fds-allow: tenant colour data
+  { name: 'Forest', primary: '#1f6f5f', secondary: '#3d8d7a', accent: '#174f44' }, // fds-allow: tenant colour data
+  { name: 'Sunset', primary: '#b45309', secondary: '#d97706', accent: '#7c2d12' }, // fds-allow: tenant colour data
+  { name: 'Rose', primary: '#9f1239', secondary: '#be185d', accent: '#881337' }, // fds-allow: tenant colour data
+  { name: 'Indigo', primary: '#3730a3', secondary: '#4f46e5', accent: '#312e81' }, // fds-allow: tenant colour data
 ];
 
 const MAX_STORAGE_QUOTA_MB = 1048576; // 1 TB (1,048,576 MB)
@@ -931,12 +932,12 @@ export function DataroomPage() {
             <TabsTrigger value="links">{t('datarooms.tabLinks')}</TabsTrigger>
           </TabsList>
           <TabsContent value="documents" className="mt-6">
-            <div className="border-y border-gray-200 dark:border-gray-800">
-              <div className="flex h-[45px] items-center border-b border-gray-200 px-4 dark:border-gray-800">
+            <div className="border-y border-border">
+              <div className="flex h-[45px] items-center border-b border-border px-4">
                 <Skeleton className="h-5 w-5" />
                 <Skeleton className="ml-4 h-5 w-1/4" />
               </div>
-              <div className="divide-y divide-gray-200 dark:divide-gray-800">
+              <div className="divide-y divide-border">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex h-[53px] items-center px-4">
                     <Skeleton className="h-4 w-4" />
@@ -983,9 +984,9 @@ export function DataroomPage() {
     (bannerMode === 'gallery' && effectiveBannerImages.length > 0);
 
   const dataroomThemeStyle = {
-    '--dataroom-primary': dataroom.brand_primary_color || '#111827',
-    '--dataroom-secondary': dataroom.brand_secondary_color || '#4b5563',
-    '--dataroom-accent': dataroom.brand_accent_color || '#1f2937',
+    '--dataroom-primary': dataroom.brand_primary_color || 'hsl(var(--foreground))',
+    '--dataroom-secondary': dataroom.brand_secondary_color || 'hsl(var(--muted-foreground))',
+    '--dataroom-accent': dataroom.brand_accent_color || 'hsl(var(--primary))',
   };
 
   return (
@@ -999,18 +1000,18 @@ export function DataroomPage() {
                 variant="outline"
                 className={`text-xs ${
                   isOwner
-                    ? 'border-amber-500/40 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300'
-                    : 'border-indigo-500/40 bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300'
+                    ? 'border-warning/40 bg-warning-subtle text-warning '
+                    : 'border-info/40 bg-info-subtle text-info '
                 }`}
               >
                 {isOwner ? (
                   <>
-                    <Crown className="h-3 w-3 mr-1 text-amber-600 dark:text-amber-400" />
+                    <Crown className="h-3 w-3 mr-1 text-warning" />
                     {t('datarooms.ownerRole')}
                   </>
                 ) : (
                   <>
-                    <Users className="h-3 w-3 mr-1 text-indigo-600 dark:text-indigo-400" />
+                    <Users className="h-3 w-3 mr-1 text-info" />
                     {t('datarooms.collaboratorRole')}
                   </>
                 )}
@@ -1061,19 +1062,19 @@ export function DataroomPage() {
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                   <DropdownMenu.Content
-                    className="z-[9999] w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800"
+                    className="z-[9999] w-40 origin-top-right rounded-md bg-card py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     sideOffset={8}
                   >
                     <DropdownMenu.Item
                       onSelect={handleFileSelect}
-                      className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                      className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                     >
                       <DocumentPlusIcon className="h-5 w-5" aria-hidden="true" />
                       <span>{t('documents.files')}</span>
                     </DropdownMenu.Item>
                     <DropdownMenu.Item
                       onSelect={handleFolderSelect}
-                      className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                      className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                     >
                       <FolderPlusIcon className="h-5 w-5" aria-hidden="true" />
                       <span>{t('documents.folder')}</span>
@@ -1093,7 +1094,7 @@ export function DataroomPage() {
       </header>
 
       {hasBanner && (
-        <div className="mb-6 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+        <div className="mb-6 overflow-hidden rounded-lg border border-border">
           <DataroomBannerGallery
             images={effectiveBannerImages}
             bannerMode={bannerMode}
@@ -1220,7 +1221,7 @@ export function DataroomPage() {
         </TabsContent>
         <TabsContent value="qna" className="mt-6">
           {!enableQna && (
-            <p className="mb-4 rounded border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/20 dark:text-amber-300">
+            <p className="mb-4 rounded border border-warning-border bg-warning-subtle p-3 text-sm text-warning">
               {t('datarooms.qnaDisabledNotice')}
             </p>
           )}
@@ -1228,14 +1229,14 @@ export function DataroomPage() {
         </TabsContent>
         <TabsContent value="settings" className="mt-6">
           <section className="space-y-8">
-            <div className="pb-6 border-b border-gray-200 dark:border-gray-800">
+            <div className="pb-6 border-b border-border">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-sm font-semibold">{t('datarooms.generalSettings')}</h3>
                 <Button size="sm" onClick={handleSaveGeneral} disabled={isSavingGeneral}>
                   {isSavingGeneral ? t('common.saving') : t('common.save')}
                 </Button>
               </div>
-              <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">{t('datarooms.renameDataroomNotice')}</p>
+              <p className="mb-3 text-sm text-muted-foreground">{t('datarooms.renameDataroomNotice')}</p>
               <div className="max-w-md">
                 <Label htmlFor="dataroom-name">{t('datarooms.dataroomName')}</Label>
                 <Input
@@ -1248,7 +1249,7 @@ export function DataroomPage() {
             </div>
 
             {/* Logo Settings Section */}
-            <div className="pb-6 border-b border-gray-200 dark:border-gray-800">
+            <div className="pb-6 border-b border-border">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-sm font-semibold">{t('datarooms.logoMode')}</h3>
                 {logoMode === 'dataroom' && (
@@ -1258,7 +1259,7 @@ export function DataroomPage() {
                   </Button>
                 )}
               </div>
-              <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
+              <p className="mb-3 text-sm text-muted-foreground">
                 {t('datarooms.logoModeDescription')}
               </p>
 
@@ -1372,7 +1373,7 @@ export function DataroomPage() {
             </div>
 
             {/* Banner Settings Section */}
-            <div className="pb-6 border-b border-gray-200 dark:border-gray-800">
+            <div className="pb-6 border-b border-border">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-sm font-semibold">{t('datarooms.bannerMode')}</h3>
                 {bannerMode === 'single' && (
@@ -1382,7 +1383,7 @@ export function DataroomPage() {
                   </Button>
                 )}
               </div>
-              <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
+              <p className="mb-3 text-sm text-muted-foreground">
                 {t('datarooms.bannerModeDescription')}
               </p>
 
@@ -1436,11 +1437,11 @@ export function DataroomPage() {
                       >
                         {t('datarooms.uploadBanner')}
                       </Button>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[200px]">
+                      <span className="text-xs text-muted-foreground truncate max-w-[200px]">
                         {brandingBannerFile ? brandingBannerFile.name : t('datarooms.noFileSelected')}
                       </span>
                     </div>
-                    <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="mt-2 text-xs text-muted-foreground">
                       {t('datarooms.bannerRecommendation')}
                     </p>
                     {(dataroom?.branding_banner || brandingBannerFile) && (
@@ -1461,9 +1462,9 @@ export function DataroomPage() {
                   </div>
                   <div>
                     <Label>{t('datarooms.preview')}</Label>
-                    <div className="mt-2 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
+                    <div className="mt-2 overflow-hidden rounded-md border border-border">
                       {removeBrandingBanner ? (
-                        <div className="flex h-28 items-center justify-center text-xs text-gray-500">
+                        <div className="flex h-28 items-center justify-center text-xs text-muted-foreground">
                           {t('datarooms.bannerWillBeRemoved')}
                         </div>
                       ) : (brandingBannerFile || dataroom?.branding_banner) ? (
@@ -1473,7 +1474,7 @@ export function DataroomPage() {
                           className="h-28 w-full object-cover"
                         />
                       ) : (
-                        <div className="flex h-28 items-center justify-center text-xs text-gray-500">
+                        <div className="flex h-28 items-center justify-center text-xs text-muted-foreground">
                           {t('datarooms.noBannerUploaded')}
                         </div>
                       )}
@@ -1502,14 +1503,14 @@ export function DataroomPage() {
               )}
             </div>
 
-            <div className="pb-6 border-b border-gray-200 dark:border-gray-800">
+            <div className="pb-6 border-b border-border">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-sm font-semibold">{t('datarooms.brandCustomization')}</h3>
                 <Button size="sm" onClick={handleSaveColors} disabled={isSavingColors}>
                   {isSavingColors ? t('common.saving') : t('common.save')}
                 </Button>
               </div>
-              <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
+              <p className="mb-3 text-sm text-muted-foreground">
                 {t('datarooms.brandColorsNotice')}
               </p>
               <div className="mb-4">
@@ -1519,7 +1520,7 @@ export function DataroomPage() {
                     <button
                       key={preset.name}
                       type="button"
-                      className="flex items-center gap-2 rounded border border-gray-300 px-2 py-1 text-xs dark:border-gray-700"
+                      className="flex items-center gap-2 rounded border border-input px-2 py-1 text-xs"
                       onClick={() => handleApplyPreset(preset)}
                       title={`Apply ${preset.name}`}
                     >
@@ -1539,12 +1540,12 @@ export function DataroomPage() {
                     id="brand-primary-picker"
                     type="color"
                     className="mb-2 h-10 p-1"
-                    value={brandingForm.brandPrimaryColor || '#111827'}
+                    value={brandingForm.brandPrimaryColor || '#111827' /* fds-allow: <input type=color> needs hex */}
                     onChange={(e) => handleBrandColorChange('brandPrimaryColor', e.target.value)}
                   />
                   <Input
                     id="brand-primary"
-                    placeholder="#112233"
+                    placeholder={"#112233" /* fds-allow: example value */}
                     value={brandingForm.brandPrimaryColor}
                     onChange={(e) => handleBrandColorChange('brandPrimaryColor', e.target.value)}
                   />
@@ -1555,12 +1556,12 @@ export function DataroomPage() {
                     id="brand-secondary-picker"
                     type="color"
                     className="mb-2 h-10 p-1"
-                    value={brandingForm.brandSecondaryColor || '#4b5563'}
+                    value={brandingForm.brandSecondaryColor || '#4b5563' /* fds-allow: <input type=color> needs hex */}
                     onChange={(e) => handleBrandColorChange('brandSecondaryColor', e.target.value)}
                   />
                   <Input
                     id="brand-secondary"
-                    placeholder="#445566"
+                    placeholder={"#445566" /* fds-allow: example value */}
                     value={brandingForm.brandSecondaryColor}
                     onChange={(e) => handleBrandColorChange('brandSecondaryColor', e.target.value)}
                   />
@@ -1571,12 +1572,12 @@ export function DataroomPage() {
                     id="brand-accent-picker"
                     type="color"
                     className="mb-2 h-10 p-1"
-                    value={brandingForm.brandAccentColor || '#1f2937'}
+                    value={brandingForm.brandAccentColor || '#1f2937' /* fds-allow: <input type=color> needs hex */}
                     onChange={(e) => handleBrandColorChange('brandAccentColor', e.target.value)}
                   />
                   <Input
                     id="brand-accent"
-                    placeholder="#778899AA"
+                    placeholder={"#778899AA" /* fds-allow: example value */}
                     value={brandingForm.brandAccentColor}
                     onChange={(e) => handleBrandColorChange('brandAccentColor', e.target.value)}
                   />
@@ -1585,15 +1586,15 @@ export function DataroomPage() {
 
               <div className="mt-6">
                 <Label>{t('datarooms.livePreview')}</Label>
-                <div className="mt-2 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+                <div className="mt-2 overflow-hidden rounded-lg border border-border">
                   <div
                     className="px-4 py-3"
-                    style={{ backgroundColor: brandingForm.brandPrimaryColor || '#111827', color: '#ffffff' }}
+                    style={{ backgroundColor: brandingForm.brandPrimaryColor || 'hsl(var(--primary))', color: 'white' }}
                   >
                     {t('datarooms.previewHeader')}
                   </div>
                   <div className="p-4">
-                    <p style={{ color: brandingForm.brandSecondaryColor || '#4b5563' }}>
+                    <p style={{ color: brandingForm.brandSecondaryColor || 'hsl(var(--muted-foreground))' }}>
                       {t('datarooms.secondaryTextPreview')}
                     </p>
                     <Button
@@ -1601,8 +1602,8 @@ export function DataroomPage() {
                       size="sm"
                       className="mt-3"
                       style={{
-                        backgroundColor: brandingForm.brandAccentColor || '#1f2937',
-                        color: '#ffffff',
+                        backgroundColor: brandingForm.brandAccentColor || 'hsl(var(--primary))',
+                        color: 'white',
                       }}
                     >
                       {t('datarooms.accentButton')}
@@ -1613,15 +1614,15 @@ export function DataroomPage() {
             </div>
 
             {dataroom?.storage_version === 1 && (
-              <div className="pb-6 border-b border-amber-200 dark:border-amber-900/50">
-                <div className="rounded-lg border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/50 dark:bg-amber-950/20">
+              <div className="pb-6 border-b border-warning-border">
+                <div className="rounded-lg border border-warning-border bg-warning-subtle/70 p-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                      <h3 className="text-sm font-semibold text-amber-900 dark:text-amber-200 flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                      <h3 className="text-sm font-semibold text-warning flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-warning shrink-0" />
                         {t('datarooms.legacyStorageTitle')}
                       </h3>
-                      <p className="mt-1 text-xs sm:text-sm text-amber-800 dark:text-amber-300">
+                      <p className="mt-1 text-xs sm:text-sm text-warning">
                         {t('datarooms.legacyStorageNotice')}
                       </p>
                     </div>
@@ -1630,7 +1631,7 @@ export function DataroomPage() {
                         size="sm"
                         onClick={() => setIsUpgradeStorageDialogOpen(true)}
                         disabled={isUpgradingStorage}
-                        className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white"
+                        className="shrink-0 bg-warning hover:bg-warning/90 text-warning-foreground"
                       >
                         {isUpgradingStorage ? t('datarooms.upgradingStorage') : t('datarooms.upgradeToModernStorage')}
                       </Button>
@@ -1640,7 +1641,7 @@ export function DataroomPage() {
               </div>
             )}
 
-            <div className="pb-6 border-b border-gray-200 dark:border-gray-800 space-y-4">
+            <div className="pb-6 border-b border-border space-y-4">
               <div>
                 <h3 className="text-sm font-semibold">
                   {t('datarooms.storageQuotaTitle')}
@@ -1677,10 +1678,10 @@ export function DataroomPage() {
                         variant="outline"
                         className={`font-semibold text-xs ${
                           activeUsageRatio > 0.9
-                            ? 'border-red-500/30 bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-300'
+                            ? 'border-danger/30 bg-danger-subtle text-danger '
                             : activeUsageRatio > 0.75
-                            ? 'border-amber-500/30 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300'
-                            : 'border-emerald-500/30 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300'
+                            ? 'border-warning/30 bg-warning-subtle text-warning '
+                            : 'border-success/30 bg-success-subtle text-success '
                         }`}
                       >
                         {activeUsagePercent}% {t('admin.used')}
@@ -1697,16 +1698,16 @@ export function DataroomPage() {
                 </div>
 
                 {/* Visual Progress Bar */}
-                <div className="w-full bg-muted/60 dark:bg-muted/40 h-2.5 rounded-full overflow-hidden p-0.5 border border-border/50">
+                <div className="w-full bg-muted/60 h-2.5 rounded-full overflow-hidden p-0.5 border border-border/50">
                   <div
                     className={`h-full rounded-full transition-all duration-300 ${
                       activeQuotaMb > 0
                         ? activeUsageRatio > 0.9
-                          ? 'bg-rose-500'
+                          ? 'bg-danger'
                           : activeUsageRatio > 0.75
-                          ? 'bg-amber-500'
-                          : 'bg-emerald-500'
-                        : 'bg-emerald-500/40 w-full'
+                          ? 'bg-warning'
+                          : 'bg-success'
+                        : 'bg-success/40 w-full'
                     }`}
                     style={{
                       width: activeQuotaMb > 0 ? `${activeUsagePercent}%` : '100%',
@@ -1799,20 +1800,20 @@ export function DataroomPage() {
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-sm font-semibold">{t('datarooms.displaySettings')}</h3>
               </div>
-              <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
+              <p className="mb-4 text-sm text-muted-foreground">
                 {t('datarooms.displayNotice')}
               </p>
-              <div className="flex items-center justify-between rounded border border-gray-200 p-3 dark:border-gray-700">
+              <div className="flex items-center justify-between rounded border border-border p-3">
                 <div>
                   <p className="text-sm font-medium">{t('datarooms.showFileIndex')}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{t('datarooms.showFileIndexHelp')}</p>
+                  <p className="text-xs text-muted-foreground">{t('datarooms.showFileIndexHelp')}</p>
                 </div>
                 <Switch checked={showFileIndex} onCheckedChange={handleToggleShowFileIndex} />
               </div>
-              <div className="mt-3 flex items-center justify-between rounded border border-gray-200 p-3 dark:border-gray-700">
+              <div className="mt-3 flex items-center justify-between rounded border border-border p-3">
                 <div>
                   <p className="text-sm font-medium">{t('datarooms.enableQna')}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{t('datarooms.enableQnaHelp')}</p>
+                  <p className="text-xs text-muted-foreground">{t('datarooms.enableQnaHelp')}</p>
                 </div>
                 <Switch
                   checked={enableQna}
@@ -1826,14 +1827,14 @@ export function DataroomPage() {
             {(canManage || isCollaborator) && <DuplicateDataroomCard dataroom={dataroom} />}
 
             {canManage && (
-              <div className="rounded-lg border border-red-200 bg-red-50/60 p-5 dark:border-red-900/60 dark:bg-red-950/20 space-y-4">
-                <h3 className="text-sm font-semibold text-red-800 dark:text-red-300">{t('datarooms.dangerZone')}</h3>
+              <div className="rounded-lg border border-danger-border bg-danger-subtle/60 p-5 space-y-4">
+                <h3 className="text-sm font-semibold text-danger">{t('datarooms.dangerZone')}</h3>
 
                 {/* Transfer Ownership Row */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-red-200/80 dark:border-red-900/40">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-danger-border">
                   <div className="space-y-0.5">
-                    <p className="text-sm font-medium text-red-900 dark:text-red-200">{t('datarooms.transferOwnership')}</p>
-                    <p className="text-xs text-red-700/80 dark:text-red-300/80">
+                    <p className="text-sm font-medium text-danger">{t('datarooms.transferOwnership')}</p>
+                    <p className="text-xs text-danger/80">
                       {t('datarooms.transferOwnershipDangerNotice')}
                     </p>
                   </div>
@@ -1849,10 +1850,10 @@ export function DataroomPage() {
                 </div>
 
                 {/* Delete Dataroom Row */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-red-200/80 dark:border-red-900/40">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-danger-border">
                   <div className="space-y-0.5">
-                    <p className="text-sm font-medium text-red-900 dark:text-red-200">{t('datarooms.deleteDataroomTitle')}</p>
-                    <p className="text-xs text-red-700/80 dark:text-red-300/80">
+                    <p className="text-sm font-medium text-danger">{t('datarooms.deleteDataroomTitle')}</p>
+                    <p className="text-xs text-danger/80">
                       {t('datarooms.deleteDataroomNotice')}
                     </p>
                   </div>

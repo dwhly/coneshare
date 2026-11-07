@@ -90,7 +90,7 @@ export function TransferOwnershipDialog({
       <DialogContent className="max-w-md p-0 overflow-hidden">
         <DialogHeader className="p-6 pb-4 border-b">
           <DialogTitle className="flex items-center gap-2 text-xl font-semibold">
-            <ArrowRightLeft className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            <ArrowRightLeft className="h-5 w-5 text-warning" />
             {t('datarooms.transferOwnershipTitle')}
           </DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground mt-1">
@@ -163,8 +163,8 @@ export function TransferOwnershipDialog({
           </div>
 
           {selectedUser && (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 p-3.5 text-xs text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200 flex items-start gap-2.5">
-              <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <div className="rounded-lg border border-warning-border bg-warning-subtle p-3.5 text-xs text-warning flex items-start gap-2.5">
+              <AlertTriangle className="h-4 w-4 text-warning shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold">{t('datarooms.transferOwnershipConfirm')}</p>
                 <p className="mt-0.5">

@@ -114,11 +114,11 @@ export default function ApiKeysSettingsPage() {
   const getTierBadge = (tierType) => {
     switch (tierType) {
       case "full_access":
-        return <span className="px-2 py-0.5 text-xs font-semibold rounded bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">{t('settings.fullAccess')}</span>;
+        return <span className="px-2 py-0.5 text-xs font-semibold rounded bg-danger-subtle text-danger">{t('settings.fullAccess')}</span>;
       case "read_write":
-        return <span className="px-2 py-0.5 text-xs font-semibold rounded bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">{t('settings.readWrite')}</span>;
+        return <span className="px-2 py-0.5 text-xs font-semibold rounded bg-warning-subtle text-warning">{t('settings.readWrite')}</span>;
       default:
-        return <span className="px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">{t('settings.readOnly')}</span>;
+        return <span className="px-2 py-0.5 text-xs font-semibold rounded bg-info-subtle text-info">{t('settings.readOnly')}</span>;
     }
   };
 
@@ -129,22 +129,22 @@ export default function ApiKeysSettingsPage() {
         <SettingsTabs />
 
         {/* Collapsible MCP Setup Guide */}
-        <div className="mb-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm">
+        <div className="mb-6 bg-card rounded-lg border border-border overflow-hidden shadow-sm">
           <button
             type="button"
             aria-expanded={isGuideOpen}
             aria-controls="mcp-setup-guide-container"
             onClick={() => setIsGuideOpen(!isGuideOpen)}
-            className="w-full p-4 text-left flex items-center justify-between font-semibold hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+            className="w-full p-4 text-left flex items-center justify-between font-semibold hover:bg-accent transition-colors"
           >
-            <div className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+            <div className="flex items-center gap-2 text-foreground">
               <Sparkles className="h-5 w-5 text-primary" />
               <span>{t('settings.mcpSetupGuideTitle', 'How to connect your AI agent to Coneshare MCP')}</span>
             </div>
-            {isGuideOpen ? <ChevronUp className="h-5 w-5 text-gray-500" /> : <ChevronDown className="h-5 w-5 text-gray-500" />}
+            {isGuideOpen ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
           </button>
           {isGuideOpen && (
-            <div id="mcp-setup-guide-container" className="p-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div id="mcp-setup-guide-container" className="p-4 pt-4 border-t border-border">
               <McpSetupGuide />
             </div>
           )}
@@ -152,9 +152,9 @@ export default function ApiKeysSettingsPage() {
 
         {/* Newly Created Key Alert Banner */}
         {createdRawKey && (
-          <div className="mb-6 p-4 border border-green-300 bg-green-50 dark:bg-green-900/20 dark:border-green-800 rounded-lg space-y-4 shadow-sm">
+          <div className="mb-6 p-4 border border-success-border bg-success-subtle rounded-lg space-y-4 shadow-sm">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-green-800 dark:text-green-300 font-semibold">
+              <div className="flex items-center gap-2 text-success font-semibold">
                 <Key className="h-5 w-5" />
                 <span>{t('settings.apiKeyCreatedAlert')}</span>
               </div>
@@ -162,29 +162,29 @@ export default function ApiKeysSettingsPage() {
                 {t('common.done')}
               </Button>
             </div>
-            <p className="text-sm text-green-700 dark:text-green-400">
+            <p className="text-sm text-success">
               {t('settings.apiKeyCreatedWarning')}
             </p>
             <div className="flex items-center gap-2">
               <Input
                 readOnly
                 value={createdRawKey}
-                className="font-mono text-sm bg-white dark:bg-gray-900"
+                className="font-mono text-sm bg-card"
               />
               <Button onClick={() => copyToClipboard(createdRawKey)} variant="outline">
-                {copiedKey ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+                {copiedKey ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
               </Button>
             </div>
 
             {/* Embedded Live Secret Setup Snippets */}
-            <div className="pt-3 border-t border-green-200 dark:border-green-800">
+            <div className="pt-3 border-t border-success-border">
               <McpSetupGuide rawKey={createdRawKey} />
             </div>
           </div>
         )}
 
         {/* Create API Key Form */}
-        <div className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 space-y-4">
+        <div className="mb-8 p-6 bg-card rounded-lg border border-border space-y-4">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <Plus className="h-5 w-5 text-primary" /> {t('settings.createApiKeyTitle')}
           </h2>
@@ -227,20 +227,20 @@ export default function ApiKeysSettingsPage() {
         </div>
 
         {/* Active Keys List */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="bg-card rounded-lg border border-border">
+          <div className="p-4 border-b border-border">
             <h2 className="text-lg font-semibold">{t('settings.activeApiKeysTitle')}</h2>
-            <p className="text-sm text-gray-500">{t('settings.apiKeySubtitle')}</p>
+            <p className="text-sm text-muted-foreground">{t('settings.apiKeySubtitle')}</p>
           </div>
 
           {isLoading ? (
-            <div className="p-6 text-center text-gray-500">{t('common.loading')}</div>
+            <div className="p-6 text-center text-muted-foreground">{t('common.loading')}</div>
           ) : keys.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-muted-foreground">
               {t('settings.noApiKeys')}
             </div>
           ) : (
-            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="divide-y divide-border">
               {keys.map((k) => (
                 <div key={k.id} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="space-y-1">
@@ -248,10 +248,10 @@ export default function ApiKeysSettingsPage() {
                       <span className="font-semibold">{k.name}</span>
                       {getTierBadge(k.tier)}
                     </div>
-                    <div className="text-sm font-mono text-gray-500 dark:text-gray-400">
-                      {t('settings.prefix')}: <span className="font-bold text-gray-700 dark:text-gray-300">{k.prefix}****</span>
+                    <div className="text-sm font-mono text-muted-foreground">
+                      {t('settings.prefix')}: <span className="font-bold text-foreground">{k.prefix}****</span>
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-muted-foreground">
                       {t('settings.created')}: {new Date(k.created_at).toLocaleDateString()}
                       {k.last_used_at ? ` • ${t('settings.lastUsed')}: ${new Date(k.last_used_at).toLocaleDateString()}` : ` • ${t('settings.neverUsed')}`}
                     </div>
@@ -261,7 +261,7 @@ export default function ApiKeysSettingsPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-red-600 hover:text-red-700 dark:text-red-400"
+                      className="text-danger hover:text-danger"
                       onClick={() => setDeleteTarget(k)}
                     >
                       <Trash2 className="h-4 w-4 mr-1" /> {t('settings.revoke')}
@@ -276,11 +276,11 @@ export default function ApiKeysSettingsPage() {
         {/* Delete Confirmation Modal */}
         {deleteTarget && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full space-y-4 shadow-xl border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-2 font-semibold text-lg text-red-600 dark:text-red-400">
+            <div className="bg-card rounded-lg p-6 max-w-md w-full space-y-4 shadow-xl border border-border">
+              <div className="flex items-center gap-2 font-semibold text-lg text-danger">
                 <ShieldAlert className="h-5 w-5" /> {t('settings.revokeKeyTitle')}
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-muted-foreground">
                 {t('settings.revokeKeyDescription', { name: deleteTarget.name })}
               </p>
               <div className="flex justify-end gap-2">

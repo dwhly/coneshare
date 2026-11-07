@@ -66,11 +66,11 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
   return (
     <article
       data-testid={`document-row-${item.id}`}
-      className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 rounded-xl bg-white hover:bg-gray-50/70 border border-gray-200/60 shadow-2xs hover:shadow-xs hover:border-gray-300 transition-all gap-3"
+      className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 rounded-xl bg-card hover:bg-accent border border-border/60 shadow-2xs hover:shadow-xs hover:border-input transition-all gap-3"
     >
       <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
         {showIndex && indexLabel && (
-          <span className="font-mono text-xs text-gray-400 font-bold shrink-0 mt-0.5 sm:mt-0">
+          <span className="font-mono text-xs text-muted-foreground font-bold shrink-0 mt-0.5 sm:mt-0">
             {indexLabel}
           </span>
         )}
@@ -86,18 +86,18 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
             <button
               type="button"
               onClick={() => onItemClick(item)}
-              className="truncate text-left text-sm sm:text-base font-medium text-gray-900 hover:text-primary transition-colors"
+              className="truncate text-left text-sm sm:text-base font-medium text-foreground hover:text-primary transition-colors"
               title={item.name || item.document_name}
             >
               {item.name || item.document_name}
             </button>
             {!isFolder && item.document_type && (
-              <span className="px-1.5 py-0.5 rounded bg-gray-100 font-mono text-[10px] text-gray-600 uppercase font-semibold">
+              <span className="px-1.5 py-0.5 rounded bg-muted font-mono text-[10px] text-muted-foreground uppercase font-semibold">
                 {item.document_type}
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5 flex-wrap">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5 flex-wrap">
             {!isFolder && typeof item.file_size === 'number' && (
               <span>{formatBytes(item.file_size)}</span>
             )}
@@ -110,7 +110,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
             {item.enable_watermark && (
               <>
                 <span>•</span>
-                <span className="inline-flex items-center gap-0.5 text-gray-500 dark:text-gray-400">
+                <span className="inline-flex items-center gap-0.5 text-muted-foreground">
                   <Lock className="h-3 w-3" />
                   <span>{t('viewer.watermarked', { defaultValue: 'Watermarked' })}</span>
                 </span>
@@ -125,7 +125,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
           <Button
             variant="ghost"
             size="icon"
-            className="hidden sm:inline-flex h-8 w-8 text-gray-500 hover:text-gray-900"
+            className="hidden sm:inline-flex h-8 w-8 text-muted-foreground hover:text-foreground"
             title={t('qna.askQuestion', { defaultValue: 'Ask question' })}
             onClick={(e) => {
               e.stopPropagation();
@@ -139,7 +139,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
           <Button
             variant="ghost"
             size="icon"
-            className="hidden sm:inline-flex h-8 w-8 text-gray-500 hover:text-gray-900"
+            className="hidden sm:inline-flex h-8 w-8 text-muted-foreground hover:text-foreground"
             title={t('viewer.download', { defaultValue: 'Download' })}
             onClick={(e) => {
               e.stopPropagation();
@@ -151,7 +151,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
         )}
         <Button
           size="sm"
-          className="h-8 px-3 text-xs font-medium gap-1.5 shrink-0 rounded-lg bg-gray-950 hover:bg-gray-800 text-white shadow-xs transition-all"
+          className="h-8 px-3 text-xs font-medium gap-1.5 shrink-0 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs transition-all"
           onClick={(e) => {
             e.stopPropagation();
             onItemClick(item);
@@ -169,7 +169,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
             <Button
               variant="ghost"
               size="icon"
-              className="sm:hidden h-8 w-8 text-gray-500 hover:text-gray-900 shrink-0"
+              className="sm:hidden h-8 w-8 text-muted-foreground hover:text-foreground shrink-0"
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -180,7 +180,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content
-              className="z-[9999] w-40 origin-top-right rounded-md bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              className="z-[9999] w-40 origin-top-right rounded-md bg-card p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               sideOffset={5}
               align="end"
               onCloseAutoFocus={(e) => e.preventDefault()}
@@ -190,7 +190,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
                   e.stopPropagation();
                   onItemClick(item);
                 }}
-                className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
               >
                 <Eye className="h-4 w-4" aria-hidden="true" />
                 <span>{t('viewer.view')}</span>
@@ -201,7 +201,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
                     e.stopPropagation();
                     onDownloadClick(item);
                   }}
-                  className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                  className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                 >
                   <DownloadIcon className="h-4 w-4" aria-hidden="true" />
                   <span>{t('viewer.download')}</span>
@@ -213,7 +213,7 @@ function ListItem({ item, onItemClick, onDownloadClick, onQnaClick, qnaEnabled =
                     e.stopPropagation();
                     onQnaClick(item);
                   }}
-                  className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                  className="flex w-full cursor-pointer items-center gap-x-2 rounded-sm px-3 py-1.5 text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                 >
                   <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   <span>{t('qna.title')}</span>
@@ -910,9 +910,9 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
   };
 
   const themeStyle = {
-    '--viewer-primary': scopeData.brand_primary_color || '#111827',
-    '--viewer-secondary': scopeData.brand_secondary_color || '#4b5563',
-    '--viewer-accent': scopeData.brand_accent_color || '#1f2937',
+    '--viewer-primary': scopeData.brand_primary_color || 'hsl(var(--foreground))',
+    '--viewer-secondary': scopeData.brand_secondary_color || 'hsl(var(--muted-foreground))',
+    '--viewer-accent': scopeData.brand_accent_color || 'hsl(var(--primary))',
   };
 
   const isDocActive = showDocumentViewer;
@@ -1052,7 +1052,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
 
   return (
     <div
-      className={`flex h-screen w-screen flex-col bg-gray-50 transition-[padding] duration-200 ${isQnaEnabled && qnaContext ? 'lg:pr-[34rem] xl:pr-[38rem]' : ''}`}
+      className={`flex h-screen w-screen flex-col bg-muted transition-[padding] duration-200 ${isQnaEnabled && qnaContext ? 'lg:pr-[34rem] xl:pr-[38rem]' : ''}`}
       style={themeStyle}
     >
       <DocumentViewerHeader
@@ -1076,7 +1076,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
       />
       {showDocumentViewer ? (
         <>
-          <nav className="flex-shrink-0 border-b bg-white px-3 py-2 sm:px-4 flex items-center justify-between gap-2">
+          <nav className="flex-shrink-0 border-b bg-card px-3 py-2 sm:px-4 flex items-center justify-between gap-2">
             <ol className="flex items-center space-x-2 overflow-x-auto whitespace-nowrap text-sm min-w-0 flex-1" style={{ color: 'var(--viewer-secondary)' }}>
               <li>
                 <button
@@ -1167,35 +1167,35 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
               activePathFolderIds={activePathFolderIds}
             />
             {isDocumentLoading ? (
-              <div className="flex-1 flex items-center justify-center bg-gray-50">
+              <div className="flex-1 flex items-center justify-center bg-muted">
                 <div className="text-center">
-                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-primary mx-auto mb-4" />
-                  <p className="text-gray-500 text-sm">Loading document...</p>
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-input border-t-primary mx-auto mb-4" />
+                  <p className="text-muted-foreground text-sm">Loading document...</p>
                 </div>
               </div>
             ) : documentViewData ? (
-              <div className="flex-1 flex flex-col relative h-full bg-gray-100 overflow-hidden" ref={viewerRef}>
+              <div className="flex-1 flex flex-col relative h-full bg-muted overflow-hidden" ref={viewerRef}>
                 {documentViewData.download_only || !isPreviewable ? (
-                  <div className="flex h-full items-center justify-center p-4 w-full bg-gray-50">
-                    <div className="w-full max-w-xl rounded-2xl bg-white border border-gray-200/80 p-8 sm:p-10 text-center shadow-xl shadow-gray-200/50">
+                  <div className="flex h-full items-center justify-center p-4 w-full bg-muted">
+                    <div className="w-full max-w-xl rounded-2xl bg-card border border-border/80 p-8 sm:p-10 text-center shadow-xl shadow-foreground/50">
                       <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
                         {documentViewData.type === 'video' && documentViewData.link_settings?.enable_watermark && documentViewData.download_only ? (
-                          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 ring-8 ring-amber-50/50">
+                          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-warning-subtle text-warning ring-8 ring-warning-border">
                             <AlertTriangle className="h-8 w-8" />
                           </div>
                         ) : (
-                          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 text-gray-600 ring-8 ring-gray-100/60">
+                          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-muted text-muted-foreground ring-8 ring-border/60">
                             <DownloadIcon className="h-8 w-8" />
                           </div>
                         )}
                       </div>
-                      <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 truncate" title={documentViewData.name}>
+                      <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground truncate" title={documentViewData.name}>
                         {documentViewData.name}
                       </h1>
                       {documentViewData.file_size ? (
-                        <p className="mt-1 text-sm font-medium text-gray-500">{formatBytes(documentViewData.file_size)}</p>
+                        <p className="mt-1 text-sm font-medium text-muted-foreground">{formatBytes(documentViewData.file_size)}</p>
                       ) : null}
-                      <p className="mt-3 mb-6 text-sm text-gray-600 leading-relaxed max-w-sm mx-auto">
+                      <p className="mt-3 mb-6 text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
                         {documentViewData.type === 'video' && documentViewData.link_settings?.enable_watermark && documentViewData.download_only
                           ? t('viewer.watermarkedVideoBlockedNotice')
                           : t('viewer.previewNotAvailableNotice')}
@@ -1217,7 +1217,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                             <DownloadIcon className="h-4 w-4" />
                             <span>{t('viewer.download')}</span>
                           </Button>
-                          <p className="mt-2.5 text-xs text-gray-500">
+                          <p className="mt-2.5 text-xs text-muted-foreground">
                             {t('viewer.downloadDisabledNotice')}
                           </p>
                         </div>
@@ -1225,7 +1225,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     </div>
                   </div>
                 ) : showPreviewState ? (
-                  <div className="flex-1 flex items-center justify-center bg-gray-50 h-full w-full">
+                  <div className="flex-1 flex items-center justify-center bg-muted h-full w-full">
                     <PreviewStatePanel
                       documentData={documentViewData}
                       allowDownload={canDownload}
@@ -1259,13 +1259,13 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     )}
                     <Suspense
                       fallback={
-                        <div className="flex-1 flex items-center justify-center p-8 bg-zinc-900 h-full w-full">
-                          <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent" />
+                        <div className="flex-1 flex items-center justify-center p-8 bg-primary h-full w-full">
+                          <div className="h-8 w-8 animate-spin rounded-full border-2 border-info border-t-transparent" />
                         </div>
                       }
                     >
                       {documentViewData.preview_mode === 'video' ? (
-                        <div className="flex-1 flex items-center justify-center p-8 bg-zinc-900 h-full w-full">
+                        <div className="flex-1 flex items-center justify-center p-8 bg-primary h-full w-full">
                           <VideoViewer
                             ref={viewerComponentRef}
                             videoUrl={documentViewData.video_preview_url}
@@ -1348,14 +1348,14 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                 )}
               </div>
             ) : (
-              <div className="flex-1 flex items-center justify-center bg-gray-50">
-                <p className="text-gray-500">No document view data available.</p>
+              <div className="flex-1 flex items-center justify-center bg-muted">
+                <p className="text-muted-foreground">No document view data available.</p>
               </div>
             )}
           </main>
         </>
       ) : (
-        <main className="flex-1 overflow-y-auto bg-gray-50/60 py-6">
+        <main className="flex-1 overflow-y-auto bg-muted/60 py-6">
           <div className="max-w-[1400px] mx-auto w-full px-4 sm:px-6 space-y-6">
             {/* 1. Hero Banner Card */}
             {hasCustomBanner ? (
@@ -1383,7 +1383,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
             ) : null}
 
             {/* 2. Unified Breadcrumbs & Controls Toolbar Card */}
-            <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white p-3 sm:p-4 rounded-xl shadow-2xs border border-gray-200/60">
+            <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-card p-3 sm:p-4 rounded-xl shadow-2xs border border-border/60">
               {/* Breadcrumb Trail (Left) */}
               <div className="flex items-center gap-1.5 flex-wrap min-w-0">
                 <button
@@ -1398,14 +1398,14 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     setSearchParams(nextParams);
                     clearDocumentView();
                   }}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <HomeIcon className="h-4 w-4" />
                   <span>{t('viewer.home')}</span>
                 </button>
                 {breadcrumbs.map((crumb) => (
                   <div key={crumb.id} className="flex items-center gap-1.5">
-                    <ChevronRight className="h-4 w-4 text-gray-400" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
                     <button
                       type="button"
                       onClick={() => {
@@ -1418,7 +1418,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                         setSearchParams(nextParams);
                         clearDocumentView();
                       }}
-                      className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                      className="text-sm font-medium text-foreground hover:text-foreground transition-colors"
                     >
                       {crumb.name}
                     </button>
@@ -1430,7 +1430,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
               <div className="flex items-center gap-2.5 w-full sm:w-auto shrink-0 justify-between sm:justify-end">
                 {/* Search */}
                 <div className="relative flex-1 sm:w-64">
-                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                   <input
                     ref={searchInputRef}
                     type="text"
@@ -1439,9 +1439,9 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     placeholder={t('viewer.filterPlaceholder')}
                     aria-label={t('viewer.filterPlaceholder')}
                     aria-keyshortcuts="Control+K Meta+K"
-                    className="w-full pl-8 pr-10 py-1.5 text-xs sm:text-sm bg-gray-100/70 border-0 rounded-lg placeholder:text-gray-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-gray-300 transition-all"
+                    className="w-full pl-8 pr-10 py-1.5 text-xs sm:text-sm bg-muted/70 border-0 rounded-lg placeholder:text-muted-foreground focus:outline-none focus:bg-card focus:ring-1 focus:ring-ring transition-all"
                   />
-                  <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 text-[10px] font-mono text-gray-400 bg-gray-100 border border-gray-200 rounded hidden sm:inline-block pointer-events-none">
+                  <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground bg-muted border border-border rounded hidden sm:inline-block pointer-events-none">
                     {shortcutHint}
                   </kbd>
                 </div>
@@ -1450,7 +1450,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                 <div
                   role="group"
                   aria-label={t('viewer.viewMode', { defaultValue: 'View Mode' })}
-                  className="inline-flex items-center p-0.5 rounded-lg bg-gray-100 border-0 shrink-0"
+                  className="inline-flex items-center p-0.5 rounded-lg bg-muted border-0 shrink-0"
                 >
                   <button
                     type="button"
@@ -1459,8 +1459,8 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     aria-pressed={viewMode === 'grid'}
                     className={`p-1.5 rounded-md transition-all cursor-pointer ${
                       viewMode === 'grid'
-                        ? 'bg-white text-gray-900 shadow-2xs'
-                        : 'text-gray-500 hover:text-gray-900'
+                        ? 'bg-card text-foreground shadow-2xs'
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
                     <LayoutGrid className="h-4 w-4" />
@@ -1472,8 +1472,8 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     aria-pressed={viewMode === 'list'}
                     className={`p-1.5 rounded-md transition-all cursor-pointer ${
                       viewMode === 'list'
-                        ? 'bg-white text-gray-900 shadow-2xs'
-                        : 'text-gray-500 hover:text-gray-900'
+                        ? 'bg-card text-foreground shadow-2xs'
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
                     <ListIcon className="h-4 w-4" />
@@ -1486,14 +1486,14 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     variant="outline"
                     size="sm"
                     onClick={handleCurrentScopeQnaClick}
-                    className="h-8 px-2.5 text-xs gap-1.5 text-gray-800 bg-gray-100 border border-gray-200/60 shadow-2xs hover:bg-gray-200/80 shrink-0 transition-colors"
+                    className="h-8 px-2.5 text-xs gap-1.5 text-foreground bg-muted border border-border/60 shadow-2xs hover:bg-accent/80 shrink-0 transition-colors"
                     title={currentScopeQnaButtonLabel}
                     aria-label={currentScopeQnaButtonLabel}
                   >
-                    <MessageCircle className="h-3.5 w-3.5 text-gray-700" />
+                    <MessageCircle className="h-3.5 w-3.5 text-foreground" />
                     <span className="hidden md:inline font-medium">{t('qna.title', { defaultValue: 'Q&A' })}</span>
                     {currentScopeQnaThreadCount > 0 && (
-                      <span className="px-1.5 py-0.2 rounded-full bg-gray-200 text-gray-800 font-mono text-[10px] font-semibold">
+                      <span className="px-1.5 py-0.2 rounded-full bg-border text-foreground font-mono text-[10px] font-semibold">
                         {currentScopeQnaThreadCount}
                       </span>
                     )}
@@ -1506,11 +1506,11 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
             {isNavigating ? (
               <div className="space-y-3">
                 {Array.from({ length: 4 }).map((_, idx) => (
-                  <div key={idx} className="h-16 rounded-xl bg-white border border-gray-200/80 p-4 animate-pulse flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-lg bg-gray-200" />
+                  <div key={idx} className="h-16 rounded-xl bg-card border border-border/80 p-4 animate-pulse flex items-center gap-4">
+                    <div className="w-8 h-8 rounded-lg bg-border" />
                     <div className="flex-1 space-y-2">
-                      <div className="h-4 w-1/3 rounded bg-gray-200" />
-                      <div className="h-3 w-1/4 rounded bg-gray-100" />
+                      <div className="h-4 w-1/3 rounded bg-border" />
+                      <div className="h-3 w-1/4 rounded bg-muted" />
                     </div>
                   </div>
                 ))}
@@ -1519,7 +1519,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
               <>
                 {/* Empty State: Search yielded no matches across both folders and documents */}
                 {allItems.length > 0 && filteredItems.length === 0 ? (
-                  <div className="rounded-xl border border-dashed border-gray-300 bg-white p-12 text-center text-sm text-gray-500">
+                  <div className="rounded-xl border border-dashed border-input bg-card p-12 text-center text-sm text-muted-foreground">
                     {t('viewer.noMatchingFiles', { defaultValue: 'No files or folders match your filter.' })}
                   </div>
                 ) : (
@@ -1553,7 +1553,7 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                     {/* Documents Section (Always rendered) */}
                     <section aria-label={t('documents.documents', { defaultValue: 'Documents' })} className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs uppercase tracking-wider font-semibold text-gray-900">
+                        <span className="font-mono text-xs uppercase tracking-wider font-semibold text-foreground">
                           {t('documents.documentsWithCount', { count: documentItems.length, defaultValue: `DOCUMENTS (${documentItems.length})` })}
                         </span>
                       </div>
@@ -1591,11 +1591,11 @@ export function DataroomViewer({ data, slug, viewId, publicMeta }) {
                           </div>
                         )
                       ) : (
-                        <div className="rounded-xl border border-gray-200/60 bg-white dark:bg-zinc-950 p-6 flex flex-col items-center justify-center text-center shadow-2xs mb-6">
-                          <div className="w-9 h-9 rounded-full bg-gray-100 dark:bg-zinc-900 flex items-center justify-center text-gray-400 mb-2">
+                        <div className="rounded-xl border border-border/60 bg-card p-6 flex flex-col items-center justify-center text-center shadow-2xs mb-6">
+                          <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground mb-2">
                             <FileText className="h-4 w-4" />
                           </div>
-                          <p className="text-xs font-medium text-gray-600 dark:text-gray-400">
+                          <p className="text-xs font-medium text-muted-foreground">
                             {searchQuery.trim()
                               ? t('viewer.noMatchingDocuments', { defaultValue: 'No documents match your filter' })
                               : t('viewer.noDocuments', { defaultValue: 'No documents in this directory' })}

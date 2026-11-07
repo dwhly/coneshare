@@ -162,7 +162,7 @@ export function PdfPage({ pdfDoc, pageNumber, scale, scrollContainer, dimensions
     <div
       ref={containerRef}
       style={placeholderStyle}
-      className="relative mx-auto rounded-md shadow-md bg-white overflow-hidden"
+      className="relative mx-auto rounded-md shadow-md bg-card overflow-hidden"
     >
       {isVisible && page ? (
         <canvas
@@ -170,11 +170,11 @@ export function PdfPage({ pdfDoc, pageNumber, scale, scrollContainer, dimensions
           className="mx-auto block rounded-md"
         />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-700">
+        <div className="absolute inset-0 flex items-center justify-center bg-muted">
           <Skeleton className="h-full w-full" />
           {loading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-white/50 dark:bg-gray-800/50">
-              <span className="text-sm font-medium text-gray-500">Loading page {pageNumber}...</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-white/50">
+              <span className="text-sm font-medium text-muted-foreground">Loading page {pageNumber}...</span>
             </div>
           )}
         </div>

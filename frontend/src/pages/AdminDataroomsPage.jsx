@@ -257,7 +257,7 @@ export function AdminDataroomsPage() {
                 <p className="text-2xl font-bold text-foreground">{formatBytes(kpiMetrics.totalStorageBytes)}</p>
               )}
             </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10 text-warning">
               <HardDrive className="h-5 w-5" />
             </div>
           </div>
@@ -274,7 +274,7 @@ export function AdminDataroomsPage() {
                 <p className="text-2xl font-bold text-foreground">{kpiMetrics.totalActiveLinks}</p>
               )}
             </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-info/10 text-info">
               <Link2 className="h-5 w-5" />
             </div>
           </div>
@@ -372,11 +372,11 @@ export function AdminDataroomsPage() {
                     const usagePercentage = quotaBytes > 0 ? Math.min((usedBytes / quotaBytes) * 100, 100) : 0;
                     const isLegacyV1 = (dataroom.storage_version ?? 2) < 2;
 
-                    let indicatorColor = 'bg-emerald-500';
+                    let indicatorColor = 'bg-success';
                     if (usagePercentage > 90) {
-                      indicatorColor = 'bg-rose-500';
+                      indicatorColor = 'bg-danger';
                     } else if (usagePercentage > 70) {
-                      indicatorColor = 'bg-amber-500';
+                      indicatorColor = 'bg-warning';
                     }
 
                     return (
@@ -400,8 +400,8 @@ export function AdminDataroomsPage() {
                               </Link>
                               {isLegacyV1 && (
                                 <div className="flex items-center gap-1.5">
-                                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-amber-500/40 bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300">
-                                    <AlertTriangle className="h-2.5 w-2.5 mr-1 text-amber-600" />
+                                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-warning/40 bg-warning-subtle text-warning">
+                                    <AlertTriangle className="h-2.5 w-2.5 mr-1 text-warning" />
                                     {t('admin.v1Legacy')}
                                   </Badge>
                                 </div>
@@ -452,7 +452,7 @@ export function AdminDataroomsPage() {
                         {/* Active Links */}
                         <td className="p-4 w-32 whitespace-nowrap">
                           <div className="flex items-center gap-1.5 text-xs font-medium text-foreground whitespace-nowrap">
-                            <Link2 className="h-3.5 w-3.5 text-blue-500 shrink-0" />
+                            <Link2 className="h-3.5 w-3.5 text-brand shrink-0" />
                             <span>{dataroom.active_links_count || 0}</span>
                           </div>
                         </td>
@@ -509,13 +509,13 @@ export function AdminDataroomsPage() {
                               </Button>
                             </DropdownMenu.Trigger>
                             <DropdownMenu.Content
-                              className="z-50 w-52 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800"
+                              className="z-50 w-52 origin-top-right rounded-md bg-card py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                               sideOffset={5}
                               align="end"
                             >
                               <DropdownMenu.Item
                                 onClick={() => navigate(`/datarooms/${dataroom.id}`)}
-                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                               >
                                 <ExternalLink className="h-4 w-4 text-muted-foreground" />
                                 <span>{t('admin.openWorkspace')}</span>
@@ -523,7 +523,7 @@ export function AdminDataroomsPage() {
 
                               <DropdownMenu.Item
                                 onClick={() => setDataroomForQuota(dataroom)}
-                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                               >
                                 <Sliders className="h-4 w-4 text-muted-foreground" />
                                 <span>{t('admin.adjustQuotaAction')}</span>
@@ -531,37 +531,37 @@ export function AdminDataroomsPage() {
 
                               <DropdownMenu.Item
                                 onClick={() => setDataroomForTransfer(dataroom)}
-                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                               >
-                                <ArrowRightLeft className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                                <ArrowRightLeft className="h-4 w-4 text-warning" />
                                 <span>{t('datarooms.transferOwnershipTitle')}</span>
                               </DropdownMenu.Item>
 
                               <DropdownMenu.Item
                                 onClick={() => setDataroomForCollaborators(dataroom)}
-                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                               >
-                                <Users className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                                <Users className="h-4 w-4 text-info" />
                                 <span>{t('datarooms.manageCollaborators')}</span>
                               </DropdownMenu.Item>
 
                               {isLegacyV1 && (
                                 <DropdownMenu.Item
                                   onClick={() => setDataroomToUpgrade(dataroom)}
-                                  className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-emerald-600 hover:bg-emerald-50 focus:bg-emerald-50 focus:outline-none dark:text-emerald-400 hover:dark:bg-emerald-950/40"
+                                  className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-success hover:bg-success-subtle focus:bg-success-subtle focus:outline-none"
                                 >
-                                  <Layers className="h-4 w-4 text-emerald-600" />
+                                  <Layers className="h-4 w-4 text-success" />
                                   <span>{t('admin.upgradeToVault')}</span>
                                 </DropdownMenu.Item>
                               )}
 
-                              <DropdownMenu.Separator className="my-1 h-px bg-gray-200 dark:bg-gray-700" />
+                              <DropdownMenu.Separator className="my-1 h-px bg-border" />
 
                               <DropdownMenu.Item
                                 onClick={() => setDataroomToDelete(dataroom)}
-                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 focus:bg-red-50 focus:outline-none dark:text-red-400 hover:dark:bg-red-900/50 focus:dark:bg-red-900/50"
+                                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-danger hover:bg-danger-subtle focus:bg-danger-subtle focus:outline-none"
                               >
-                                <Trash2 className="h-4 w-4 text-red-600" />
+                                <Trash2 className="h-4 w-4 text-danger" />
                                 <span>{t('common.delete')}</span>
                               </DropdownMenu.Item>
                             </DropdownMenu.Content>

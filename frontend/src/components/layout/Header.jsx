@@ -4,13 +4,14 @@ import { Breadcrumbs } from "../documents/Breadcrumbs";
 import { useBreadcrumb } from "./BreadcrumbProvider";
 import { useNavItems } from "./SidebarContent";
 import { DataroomBreadcrumbs } from "../datarooms/DataroomBreadcrumbs";
-import { AmforgeProductSwitcher } from "./AmforgeProductSwitcher";
+import { ThemeToggle, useSignaturesUrl } from "./FleetChrome";
 
 function Header({ variant = "bar" }) {
   const { t } = useTranslation();
   const { breadcrumbData } = useBreadcrumb();
   const { pathname } = useLocation();
   const navItems = useNavItems();
+  const signaturesUrl = useSignaturesUrl();
 
   // Find the current nav item. Reverse to match more specific paths first (e.g., /documents before /)
   const currentNavItem = navItems.slice()
@@ -68,10 +69,16 @@ function Header({ variant = "bar" }) {
   }
 
   return (
-    <header className="flex h-14 items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
-      <AmforgeProductSwitcher current="send" className="hidden md:inline-flex" />
+    <header className="fds-header gap-6 px-6">
+      <nav className="fds-nav hidden md:flex" aria-label={t("nav.products", "Dealroom apps")}>
+        <Link to="/datarooms" aria-current="page">{t("nav.rooms", "Rooms")}</Link>
+        <a href={signaturesUrl || undefined}>{t("nav.signatures", "Signatures")}</a>
+      </nav>
       <div className="hidden h-6 w-px bg-border md:block" aria-hidden="true" />
       {renderBreadcrumbs()}
+      <div className="fds-header__utils">
+        <ThemeToggle />
+      </div>
     </header>
   );
 }

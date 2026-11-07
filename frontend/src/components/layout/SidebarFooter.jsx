@@ -26,7 +26,7 @@ function SidebarFooter() {
         target="_blank"
         rel="noopener noreferrer"
         className={cn(
-          "flex items-center gap-3 rounded-lg py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50",
+          "flex items-center gap-3 rounded-lg py-2 text-muted-foreground transition-all hover:text-foreground ",
           isCollapsed ? "justify-center px-0 h-10 w-10" : "px-3"
         )}
       >
@@ -55,7 +55,7 @@ function SidebarFooter() {
         </div>
       )}
       {APP_DISPLAY_VERSION && (
-        <div className={cn("px-2 text-xs text-gray-500 dark:text-gray-400", isCollapsed && "hidden")}>
+        <div className={cn("px-2 text-xs text-muted-foreground ", isCollapsed && "hidden")}>
           {`ver-${APP_DISPLAY_VERSION}`}
         </div>
       )}

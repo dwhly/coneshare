@@ -204,7 +204,7 @@ export function DocumentPreviewModal({ documentId, versionId = null, isOpen, onO
               <Skeleton className="h-48 w-full" />
             </div>
           )}
-          {error && <p className="text-center text-red-500">{error}</p>}
+          {error && <p className="text-center text-danger">{error}</p>}
           {documentData && (hasRenderablePages(documentData) || documentData.preview_mode === 'client_pdf' || documentData.preview_mode === 'spreadsheet' || documentData.preview_mode === 'markdown') && !isLoading && !error && (
             <ViewerToolbar
               allowDownload={Boolean(documentData.download_url)}
@@ -263,7 +263,7 @@ export function DocumentPreviewModal({ documentId, versionId = null, isOpen, onO
             />
           )}
           {documentData && documentData.preview_mode === 'video' && (
-            <div className="flex h-full w-full items-center justify-center p-4 bg-zinc-900 rounded-xl">
+            <div className="flex h-full w-full items-center justify-center p-4 bg-primary rounded-xl">
               <VideoViewer
                 ref={viewerComponentRef}
                 videoUrl={documentData.video_preview_url}

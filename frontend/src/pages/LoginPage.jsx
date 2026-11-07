@@ -7,7 +7,8 @@ import { APP_DISPLAY_VERSION } from '../lib/constants'
 import { Button } from '../components/ui/Button'
 import { useBranding } from '../contexts/BrandingProvider'
 import { LanguagePicker } from '../components/common/LanguagePicker'
-import { AmforgeLogo } from '../components/layout/AmforgeLogo'
+import { FleetLockup, ThemeToggle } from '../components/layout/FleetChrome'
+import { pageTitle } from '../hooks/usePageTitle'
 
 function LoginPage() {
   const navigate = useNavigate()
@@ -39,8 +40,8 @@ function LoginPage() {
   }, [])
 
   useEffect(() => {
-    document.title = `${t('auth.signIn')} - ${brandName}`;
-  }, [brandName, t])
+    document.title = pageTitle(t('auth.signIn'));
+  }, [t])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -68,21 +69,27 @@ function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
-      <div className="w-full max-w-md space-y-8">
-        <div className="flex flex-col items-center">
-          <AmforgeLogo product="send" className="mb-10 h-7 w-auto text-foreground" />
-          <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+    <div className="flex min-h-screen flex-col bg-canvas">
+      <header className="fds-header md:px-8">
+        <FleetLockup href="/login" />
+        <div className="fds-header__utils">
+          <ThemeToggle />
+        </div>
+      </header>
+      <main className="flex flex-1 flex-col items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md rounded-lg border border-border bg-card p-card shadow-sm">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
             {t('auth.signIn')}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-            {t('auth.welcomeBack', { brandName })}
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            {t('auth.welcomeBack', { brandName: 'Fleet Dealroom' })}
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <div className="space-y-4 rounded-md shadow-sm">
-            <div>
-              <label htmlFor="email" className="sr-only">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <label htmlFor="email" className="text-sm font-medium text-foreground">
                 {t('auth.email')}
               </label>
               <input
@@ -90,14 +97,14 @@ function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 placeholder="you@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
+            <div className="space-y-1.5">
+              <label htmlFor="password" className="text-sm font-medium text-foreground">
                 {t('auth.password')}
               </label>
               <input
@@ -105,7 +112,7 @@ function LoginPage() {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -114,75 +121,69 @@ function LoginPage() {
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 dark:text-red-400">{t(error)}</p>
+            <p className="rounded-md border border-danger-border bg-danger-subtle px-3 py-2 text-sm text-danger">{t(error)}</p>
           )}
 
-          <div>
-            <Button
-              type="submit"
-              size="lg"
-              disabled={isLoading}
-              className="w-full active:scale-[0.98] transition-transform"
-            >
-              {isLoading ? t('auth.signingIn') : t('auth.signIn')}
-            </Button>
-          </div>
+          <Button type="submit" disabled={isLoading} className="w-full">
+            {isLoading ? t('auth.signingIn') : t('auth.signIn')}
+          </Button>
         </form>
         {showSignupLink && (
-          <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-6 text-sm text-muted-foreground">
             {t('auth.newTo', { brandName })}{' '}
-            <Link className="font-medium text-indigo-600 hover:text-indigo-500" to="/signup">
+            <Link className="font-medium text-brand underline-offset-2 hover:underline" to="/signup">
               {t('auth.signUp')}
             </Link>
           </p>
         )}
 
       </div>
+      </main>
 
       {/* Footer Links */}
-      <div className="mt-auto pt-8 flex flex-col items-center justify-center gap-2 text-xs text-gray-400">
+      <footer className="flex flex-col items-center justify-center gap-2 pb-8 text-xs text-muted-foreground">
         <div className="flex items-center gap-3">
           <a
             href={brandWebsiteUrl || "https://www.coneshare.com/about"}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-600 transition-colors"
+            className="transition-colors hover:text-foreground"
           >
             {t('auth.aboutBrand', { brandName: brandName || 'Coneshare' })}
           </a>
-          <span className="text-gray-300">&bull;</span>
+          <span className="text-muted-foreground/70">&bull;</span>
           <a
             href={termsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-600 transition-colors"
+            className="transition-colors hover:text-foreground"
           >
             {t('auth.terms')}
           </a>
-          <span className="text-gray-300">&bull;</span>
+          <span className="text-muted-foreground/70">&bull;</span>
           <a
             href={privacyPolicyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-600 transition-colors"
+            className="transition-colors hover:text-foreground"
           >
             {t('auth.privacy')}
           </a>
         </div>
-        <div className="flex items-center gap-1.5 text-[11px] text-gray-400/80">
+        <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/80">
           <span>
-            {t('viewer.poweredBy')}{' '}<a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-700 dark:text-gray-100 dark:hover:text-gray-300 font-semibold underline transition-colors">Coneshare</a>
+            {t('viewer.poweredBy')}{' '}<a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="font-medium text-brand underline underline-offset-2">Coneshare</a>
           </span>
           {APP_DISPLAY_VERSION && (
             <>
-              <span className="text-gray-300 select-none">&bull;</span>
+              <span className="text-muted-foreground/70 select-none">&bull;</span>
               <span>{`ver-${APP_DISPLAY_VERSION}`}</span>
             </>
           )}
-          <span className="text-gray-300 select-none">&bull;</span>
+          <span className="text-muted-foreground/70 select-none">&bull;</span>
           <LanguagePicker />
         </div>
-      </div>
+      </footer>
     </div>
   )
 }

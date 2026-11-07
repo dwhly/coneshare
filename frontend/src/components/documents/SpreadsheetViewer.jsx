@@ -15,7 +15,7 @@ function buildWatermarkSvg(text) {
     .replace(/"/g, '&quot;');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="340" height="180" viewBox="0 0 340 180">
     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-      transform="rotate(-25 170 90)" fill="#000000" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+      transform="rotate(-25 170 90)" fill="black" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
       font-size="14" font-weight="500" letter-spacing="0.5">${safe}</text>
   </svg>`;
 }
@@ -446,7 +446,7 @@ export const SpreadsheetViewer = forwardRef(({
             {selectedCell || (activeSheet?.row_count > 0 ? 'A1' : '-')}
           </span>
           {activeSheet?.is_truncated && (
-            <div className="flex items-center text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-900 text-[11px]">
+            <div className="flex items-center text-warning bg-warning-subtle px-2 py-0.5 rounded border border-warning-border text-[11px]">
               <AlertTriangle className="h-3 w-3 mr-1" />
               <span>{t('viewer.truncatedSpreadsheetNotice', 'Showing first 2,000 rows. Download full file for complete data.')}</span>
             </div>
@@ -669,9 +669,9 @@ export const SpreadsheetViewer = forwardRef(({
                       isSelected
                         ? 'ring-2 ring-primary ring-inset z-20 bg-primary/5'
                         : isCurrentMatch
-                        ? 'ring-2 ring-amber-500 ring-inset z-20 bg-amber-300 dark:bg-amber-600/70 text-amber-950 dark:text-amber-50 font-semibold shadow-xs'
+                        ? 'ring-2 ring-warning ring-inset z-20 bg-warning-border text-warning font-semibold shadow-xs'
                         : isMatch
-                        ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100 font-medium'
+                        ? 'bg-warning-subtle text-warning font-medium'
                         : 'hover:bg-muted/30'
                     }`}
                     style={{

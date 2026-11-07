@@ -71,12 +71,12 @@ export function DocumentHeader({
 
   return (
     <TooltipProvider>
-      <div className="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between">
+      <div className="border-b border-border pb-5 sm:flex sm:items-center sm:justify-between">
         <div className="flex-1 min-w-0 mr-4">
           {isEditing && canManage ? (
             <input
               type="text"
-              className="text-2xl font-bold leading-6 text-gray-900 border-b border-gray-900 focus:outline-none bg-transparent w-full focus:border-b-2 py-0"
+              className="text-2xl font-bold leading-6 text-foreground border-b border-foreground focus:outline-none bg-transparent w-full focus:border-b-2 py-0"
               value={editedName}
               onChange={(e) => setEditedName(e.target.value)}
               onBlur={handleSave}
@@ -86,7 +86,7 @@ export function DocumentHeader({
           ) : (
             <div className="flex items-center gap-2 group max-w-full">
               <h1 
-                className={`text-2xl font-bold leading-6 text-gray-900 truncate rounded px-1 -mx-1 ${canManage ? 'cursor-pointer hover:bg-gray-100/50' : ''}`}
+                className={`text-2xl font-bold leading-6 text-foreground truncate rounded px-1 -mx-1 ${canManage ? 'cursor-pointer hover:bg-accent' : ''}`}
                 onClick={canManage ? handleStartEdit : undefined}
                 title={canManage ? "Click to rename" : undefined}
               >
@@ -96,7 +96,7 @@ export function DocumentHeader({
                 <button
                   onClick={handleStartEdit}
                   disabled={isProcessing}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-gray-600 focus:opacity-100 disabled:pointer-events-none"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-muted-foreground hover:text-muted-foreground focus:opacity-100 disabled:pointer-events-none"
                   title="Rename Document"
                   aria-label="Rename Document"
                 >
@@ -107,12 +107,12 @@ export function DocumentHeader({
           )}
           <div className="mt-2 flex flex-wrap items-center gap-2">
             {!canManage && (
-              <Badge variant="outline" className="border-indigo-500/30 bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300">
+              <Badge variant="outline" className="border-info/30 bg-info-subtle text-info">
                 {document.created_by_user ? `Owner: ${document.created_by_user.name || document.created_by_user.email}` : t('datarooms.collaboratorRole')}
               </Badge>
             )}
             {document.updated_at && (
-              <span className="text-xs text-gray-500 mr-1">
+              <span className="text-xs text-muted-foreground mr-1">
                 {t('documents.lastUpdated', { date: formatDate(document.updated_at, 'PP p') })}
               </span>
             )}
@@ -125,25 +125,25 @@ export function DocumentHeader({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span>
-                    <Badge className="bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/20 dark:text-sky-400 dark:border-sky-850 cursor-help">
+                    <Badge className="bg-info-subtle text-info border-info-border cursor-help">
                       ☁️ Imported from {document.cloud_import.provider_display}
                     </Badge>
                   </span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <div className="space-y-1.5 p-1 text-xs">
-                    <div className="font-semibold border-b border-gray-700/50 pb-1 mb-1">
+                    <div className="font-semibold border-b border-muted-foreground/50 pb-1 mb-1">
                       Cloud Import Details
                     </div>
                     <div>
-                      <span className="text-gray-400">Provider:</span> {document.cloud_import.provider_display}
+                      <span className="text-muted-foreground">Provider:</span> {document.cloud_import.provider_display}
                     </div>
                     <div>
-                      <span className="text-gray-400">Source Path:</span> <code className="bg-gray-800 dark:bg-gray-750 px-1 rounded break-all">{document.cloud_import.file_id || 'N/A'}</code>
+                      <span className="text-muted-foreground">Source Path:</span> <code className="bg-primary px-1 rounded break-all">{document.cloud_import.file_id || 'N/A'}</code>
                     </div>
                     {document.cloud_import.etag_or_rev && (
                       <div>
-                        <span className="text-gray-400">Revision:</span> <code className="bg-gray-800 dark:bg-gray-750 px-1 rounded break-all">{document.cloud_import.etag_or_rev}</code>
+                        <span className="text-muted-foreground">Revision:</span> <code className="bg-primary px-1 rounded break-all">{document.cloud_import.etag_or_rev}</code>
                       </div>
                     )}
                   </div>
@@ -226,7 +226,7 @@ export function DocumentHeader({
                 <DropdownMenuItem onSelect={onUploadNewVersion}>
                   {t('documents.uploadFromComputer')}
                 </DropdownMenuItem>
-                {cloudProviders.length > 0 && <div className="my-1 h-px bg-gray-100 dark:bg-gray-800" />}
+                {cloudProviders.length > 0 && <div className="my-1 h-px bg-muted" />}
                 {cloudProviders.map((provider) => (
                   <DropdownMenuItem key={provider.name} onSelect={() => onImportVersionFromCloud(provider)}>
                     {t('documents.importFrom', { provider: provider.display_name })} {provider.is_connected ? '' : t('documents.connect')}
@@ -256,7 +256,7 @@ export function DocumentHeader({
               {canManage && (
                 <DropdownMenuItem
                   onSelect={onDelete}
-                  className="text-red-600 hover:!text-red-600 hover:!bg-red-50 focus:!text-red-600 focus:!bg-red-50"
+                  className="text-danger hover:!text-danger hover:!bg-danger-subtle focus:!text-danger focus:!bg-danger-subtle"
                 >
                   {t('common.delete')}
                 </DropdownMenuItem>

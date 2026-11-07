@@ -13,7 +13,7 @@ export function DeliveryLogsTable({ deliveries, onReplay, replayingId = null }) 
   return (
     <div className="overflow-x-auto rounded-lg border">
       <table className="min-w-full text-sm">
-        <thead className="bg-gray-50 text-left">
+        <thead className="bg-muted text-left">
           <tr>
             <th className="px-3 py-2">{t('automations.event')}</th>
             <th className="px-3 py-2">{t('automations.status')}</th>
@@ -27,7 +27,7 @@ export function DeliveryLogsTable({ deliveries, onReplay, replayingId = null }) 
         <tbody>
           {deliveries.length === 0 && (
             <tr>
-              <td colSpan={7} className="px-3 py-4 text-center text-gray-500">
+              <td colSpan={7} className="px-3 py-4 text-center text-muted-foreground">
                 {t('automations.noLogs')}
               </td>
             </tr>
@@ -40,8 +40,8 @@ export function DeliveryLogsTable({ deliveries, onReplay, replayingId = null }) 
               <td className="max-w-xl px-3 py-2 align-top">
                 {delivery.response_body_excerpt ? (
                   <details>
-                    <summary className="cursor-pointer text-xs text-gray-600">{t('automations.viewResponse')}</summary>
-                    <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-words rounded border bg-gray-50 p-2 text-xs">
+                    <summary className="cursor-pointer text-xs text-muted-foreground">{t('automations.viewResponse')}</summary>
+                    <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-words rounded border bg-muted p-2 text-xs">
                       {delivery.response_body_excerpt}
                     </pre>
                   </details>

@@ -244,15 +244,15 @@ export default function TrashPage() {
 
         {/* Floating Action Bar for Multi-Selection */}
         {selectedCount > 0 && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl border border-gray-800 animate-in fade-in slide-in-from-bottom-4 duration-200">
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 bg-primary text-primary-foreground px-6 py-3 rounded-full shadow-2xl border border-foreground animate-in fade-in slide-in-from-bottom-4 duration-200">
             <span className="text-sm font-medium">{t('trash.itemsSelected', { count: selectedCount })}</span>
-            <div className="h-4 w-px bg-gray-700" />
+            <div className="h-4 w-px bg-primary" />
             <Button
               variant="outline"
               size="sm"
               disabled={restoringId !== null}
               onClick={() => setIsBulkRestoreOpen(true)}
-              className="gap-1.5 bg-gray-800 text-white border-gray-700 hover:bg-gray-700 hover:text-white"
+              className="gap-1.5 bg-primary text-primary-foreground border-muted-foreground hover:bg-primary/90 hover:text-white"
             >
               <RefreshCw className="h-3.5 w-3.5" />
               {t('trash.restoreSelected')}
@@ -270,7 +270,7 @@ export default function TrashPage() {
             <button
               onClick={() => setSelectedKeys(new Set())}
               disabled={restoringId !== null}
-              className="text-gray-400 hover:text-white p-1 rounded-full hover:bg-gray-800 transition-colors ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-muted-foreground hover:text-white p-1 rounded-full hover:bg-primary/90 transition-colors ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <X className="h-4 w-4" />
             </button>

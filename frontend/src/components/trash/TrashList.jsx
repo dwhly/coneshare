@@ -50,12 +50,12 @@ export function TrashList({
   return (
     <div className="rounded-lg border overflow-hidden">
       <table className="w-full text-left text-sm">
-        <thead className="bg-gray-50 border-b text-xs font-medium text-muted-foreground dark:bg-gray-900/50">
+        <thead className="bg-muted border-b text-xs font-medium text-muted-foreground">
           <tr>
             <th className="w-10 px-4 py-3">
               <input
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                className="h-4 w-4 rounded border-input text-info focus:ring-ring cursor-pointer"
                 checked={allSelected}
                 ref={(el) => {
                   if (el) el.indeterminate = someSelected && !allSelected;
@@ -79,8 +79,8 @@ export function TrashList({
             return (
               <tr
                 key={itemKey}
-                className={`group border-b transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50 cursor-pointer ${
-                  isSelected ? 'bg-gray-100/60 dark:bg-gray-800/60' : ''
+                className={`group border-b transition-colors hover:bg-accent cursor-pointer ${
+                  isSelected ? 'bg-muted/60 ' : ''
                 }`}
                 onClick={(e) => {
                   if (
@@ -96,7 +96,7 @@ export function TrashList({
                 <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                   <input
                     type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                    className="h-4 w-4 rounded border-input text-info focus:ring-ring cursor-pointer"
                     checked={isSelected}
                     onChange={() => onToggleSelect(itemKey)}
                   />

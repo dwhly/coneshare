@@ -446,7 +446,7 @@ function DocumentsPage() {
 
   return (
     <TooltipProvider>
-      <div className="sticky top-0 mb-4 rounded-lg bg-white p-4 dark:bg-gray-900 sm:mx-4 sm:pt-8">
+      <div className="sticky top-0 mb-4 rounded-lg bg-card p-4 sm:mx-4 sm:pt-8">
         <Toaster richColors />
         <FileRequestSheet
           isOpen={isFileRequestSheetOpen}
@@ -524,29 +524,29 @@ function DocumentsPage() {
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content
-              className="z-50 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800"
+              className="z-50 w-48 origin-top-right rounded-md bg-card py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               sideOffset={8}
             >
               <DropdownMenu.Item
                 onSelect={handleFileSelect}
-                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
               >
                 <DocumentPlusIcon className="h-5 w-5" aria-hidden="true" />
                 <span>{t('documents.files')}</span>
               </DropdownMenu.Item>
               <DropdownMenu.Item
                 onSelect={handleFolderSelect}
-                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
               >
                 <FolderPlusIcon className="h-5 w-5" aria-hidden="true" />
                 <span>{t('documents.folder')}</span>
               </DropdownMenu.Item>
-              {cloudProviders.length > 0 && <DropdownMenu.Separator className="my-1 h-px bg-gray-200 dark:bg-gray-700" />}
+              {cloudProviders.length > 0 && <DropdownMenu.Separator className="my-1 h-px bg-border" />}
               {cloudProviders.map((provider) => (
                 <DropdownMenu.Item
                   key={provider.name}
                   onSelect={() => handleCloudProviderClick(provider)}
-                  className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-gray-200 hover:dark:bg-gray-700 focus:dark:bg-gray-700"
+                  className="flex w-full cursor-pointer items-center gap-x-2 px-4 py-2 text-left text-sm text-foreground hover:bg-accent focus:bg-muted focus:outline-none"
                 >
                   <Cloud className="h-5 w-5" aria-hidden="true" />
                   <span>{provider.display_name}</span>
@@ -587,7 +587,7 @@ function DocumentsPage() {
         )}
       </div>
 
-      {/* <Separator className="mb-5 bg-gray-200 dark:bg-gray-800" /> */}
+      {/* <Separator className="mb-5 bg-border" /> */}
 
       <DocumentsList
         allItems={allItems}

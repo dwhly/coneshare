@@ -20,12 +20,12 @@ export function GateLayout({
   const resolvedLogoUrl = rawLogoUrl && isSafeUrl(rawLogoUrl) ? rawLogoUrl : null;
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-950 dark:bg-zinc-950 dark:text-zinc-50 flex flex-col justify-between relative selection:bg-slate-900 selection:text-white">
+    <div className="min-h-screen bg-muted text-foreground flex flex-col justify-between relative selection:bg-primary selection:text-white">
       {/* Radial Dot Grid Pattern Header Overlay */}
       <div className="absolute inset-x-0 top-0 h-96 pointer-events-none gate-dot-pattern [mask-image:radial-gradient(ellipse_60%_70%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       {/* Top Minimal Utility Bar */}
-      <header className="relative z-10 w-full px-6 py-4 flex items-center justify-between border-b border-gray-200/60 dark:border-zinc-800/80 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md">
+      <header className="relative z-10 w-full px-6 py-4 flex items-center justify-between border-b border-border/60 bg-white/70 backdrop-blur-md">
         <div className="flex items-center gap-2.5">
           {resolvedLogoUrl ? (
             <img
@@ -35,7 +35,7 @@ export function GateLayout({
               className="h-7 w-7 object-contain rounded-md"
             />
           ) : (
-            <div className="w-7 h-7 rounded-lg bg-gray-900 dark:bg-zinc-800 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-xs shadow-sm">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2" />
                 <polyline points="2 17 12 22 22 17" />
@@ -43,7 +43,7 @@ export function GateLayout({
               </svg>
             </div>
           )}
-          <span className="font-semibold text-sm tracking-tight text-gray-900 dark:text-white">
+          <span className="font-semibold text-sm tracking-tight text-foreground">
             {displayBrandName}
           </span>
         </div>
@@ -58,12 +58,12 @@ export function GateLayout({
           {/* Center Elevated Card */}
           <div
             className={cn(
-              'bg-white dark:bg-zinc-900 rounded-2xl border border-gray-200 dark:border-zinc-800 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06),0_1px_3px_rgba(15,23,42,0.04)] overflow-hidden',
+              'bg-card rounded-2xl border border-border shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06),0_1px_3px_rgba(15,23,42,0.04)] overflow-hidden',
               cardClassName
             )}
           >
             {/* Card Brand & Security Header */}
-            <div className="p-6 pb-4 border-b border-gray-100 dark:border-zinc-800/80">
+            <div className="p-6 pb-4 border-b border-border">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5 min-w-0">
                   {resolvedLogoUrl ? (
@@ -73,24 +73,24 @@ export function GateLayout({
                         brandName: displayBrandName,
                         defaultValue: `${displayBrandName} Logo`,
                       })}
-                      className="w-8 h-8 rounded-lg object-contain bg-white p-0.5 border border-gray-200 dark:border-zinc-700 shadow-sm shrink-0"
+                      className="w-8 h-8 rounded-lg object-contain bg-card p-0.5 border border-border shadow-sm shrink-0"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-lg bg-gray-950 dark:bg-zinc-800 flex items-center justify-center text-white font-semibold text-sm shadow-sm ring-2 ring-gray-100 dark:ring-zinc-700 shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-semibold text-sm shadow-sm ring-2 ring-border shrink-0">
                       {displayBrandName.slice(0, 1).toUpperCase()}
                     </div>
                   )}
                   <div className="min-w-0">
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white truncate block">
+                    <span className="text-sm font-semibold text-foreground truncate block">
                       {displayBrandName}
                     </span>
-                    <p className="text-[11px] text-gray-500 dark:text-zinc-400 truncate">
+                    <p className="text-[11px] text-muted-foreground truncate">
                       {t('viewer.secureFileShare', { defaultValue: 'Secure File Share' })}
                     </p>
                   </div>
                 </div>
                 {badgeText && (
-                  <span className="font-mono text-[10px] tracking-wider uppercase font-semibold px-2 py-1 rounded-md bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-300 border border-gray-200/80 dark:border-zinc-700 shrink-0">
+                  <span className="font-mono text-[10px] tracking-wider uppercase font-semibold px-2 py-1 rounded-md bg-muted text-muted-foreground border border-border/80 shrink-0">
                     {badgeText}
                   </span>
                 )}
@@ -110,12 +110,12 @@ export function GateLayout({
 
           {/* Trust Badges & Footer Links Below Card */}
           <div className="mt-6 text-center space-y-3">
-            <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-zinc-400 font-medium">
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground font-medium">
               <a
                 href={brandWebsiteUrl || 'https://www.coneshare.com/about'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="hover:text-foreground transition-colors"
               >
                 {t('auth.aboutBrand', { brandName: displayBrandName })}
               </a>
@@ -124,7 +124,7 @@ export function GateLayout({
                 href={termsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="hover:text-foreground transition-colors"
               >
                 {t('auth.terms')}
               </a>
@@ -133,19 +133,19 @@ export function GateLayout({
                 href={privacyPolicyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="hover:text-foreground transition-colors"
               >
                 {t('auth.privacy')}
               </a>
             </div>
-            <div className="flex items-center justify-center gap-1.5 text-[11px] text-gray-400 dark:text-zinc-500">
+            <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
               <span>
                 {t('viewer.poweredBy')}{' '}
                 <a
                   href="https://github.com/coneshare/coneshare"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold text-gray-700 dark:text-zinc-300 hover:underline"
+                  className="font-semibold text-foreground hover:underline"
                 >
                   Coneshare
                 </a>

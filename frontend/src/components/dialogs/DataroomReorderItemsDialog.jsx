@@ -62,23 +62,23 @@ function ReorderRow({
       onDragStart={onDragStart}
       onDragOver={(e) => e.preventDefault()}
       onDrop={onDrop}
-      className="group flex items-center justify-between px-3 py-2.5 bg-slate-50/70 hover:bg-slate-100/70 dark:bg-zinc-900/40 dark:hover:bg-zinc-900/80 border border-slate-200/80 dark:border-zinc-800 rounded-xl transition duration-150 gap-2"
+      className="group flex items-center justify-between px-3 py-2.5 bg-muted/70 hover:bg-accent border border-border/80 rounded-xl transition duration-150 gap-2"
     >
       <div className="flex items-center gap-3 min-w-0 flex-1">
         <button
           type="button"
-          className="cursor-grab active:cursor-grabbing text-slate-400 group-hover:text-slate-600 dark:text-zinc-500 p-0.5"
+          className="cursor-grab active:cursor-grabbing text-muted-foreground group-hover:text-muted-foreground p-0.5"
           title={t('datarooms.dragToReorder')}
           tabIndex={-1}
         >
           <GripVertical className="h-4 w-4" />
         </button>
-        <span className="font-mono text-xs font-semibold text-slate-600 dark:text-zinc-300 bg-white dark:bg-zinc-800 border border-slate-200/80 dark:border-zinc-700 px-2 py-0.5 rounded shadow-xs shrink-0">
+        <span className="font-mono text-xs font-semibold text-muted-foreground bg-card border border-border/80 px-2 py-0.5 rounded shadow-xs shrink-0">
           {String(index + 1).padStart(2, '0')}
         </span>
         {isFolder ? (
-          <div className="w-7 h-7 rounded-lg bg-amber-100/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 flex items-center justify-center text-amber-700 dark:text-amber-400 shrink-0">
-            <Folder className="w-4 h-4 fill-amber-700/20" />
+          <div className="w-7 h-7 rounded-lg bg-warning-subtle/70 border border-warning-border flex items-center justify-center text-warning shrink-0">
+            <Folder className="w-4 h-4 fill-warning/20" />
           </div>
         ) : (
           <div className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 ${getDocumentBadgeStyle(docType)}`}>
@@ -88,20 +88,20 @@ function ReorderRow({
         <div className="truncate min-w-0 flex-1">
           {isFolder ? (
             <div className="flex items-baseline gap-2 truncate">
-              <span className="text-sm font-medium text-slate-900 dark:text-zinc-100 truncate">
+              <span className="text-sm font-medium text-foreground truncate">
                 {item.name}
               </span>
-              <span className="text-[11px] text-slate-400 dark:text-zinc-500 font-normal shrink-0 hidden md:inline">
+              <span className="text-[11px] text-muted-foreground font-normal shrink-0 hidden md:inline">
                 {t('datarooms.cardPosition', { position: index + 1 })}
               </span>
             </div>
           ) : (
             <>
-              <span className="text-sm font-medium text-slate-900 dark:text-zinc-100 truncate block">
+              <span className="text-sm font-medium text-foreground truncate block">
                 {item.name}
               </span>
               {(typeof item.file_size === 'number' || item.updated_at) && (
-                <span className="text-[11px] text-slate-400 dark:text-zinc-500 font-normal flex items-center gap-1.5 mt-0.5">
+                <span className="text-[11px] text-muted-foreground font-normal flex items-center gap-1.5 mt-0.5">
                   {typeof item.file_size === 'number' && <span>{formatBytes(item.file_size)}</span>}
                   {typeof item.file_size === 'number' && item.updated_at && <span>•</span>}
                   {item.updated_at && <span>{formatRelativeTime(item.updated_at)}</span>}
@@ -116,7 +116,7 @@ function ReorderRow({
           type="button"
           size="icon"
           variant="ghost"
-          className="h-7 w-7 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-zinc-700"
+          className="h-7 w-7 rounded-lg border border-border bg-card text-muted-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-accent"
           disabled={isFirst || isSaving}
           onClick={onMoveUp}
           aria-label={t('datarooms.moveItemUp', { name: item.name })}
@@ -127,7 +127,7 @@ function ReorderRow({
           type="button"
           size="icon"
           variant="ghost"
-          className="h-7 w-7 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-zinc-700"
+          className="h-7 w-7 rounded-lg border border-border bg-card text-muted-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-accent"
           disabled={isLast || isSaving}
           onClick={onMoveDown}
           aria-label={t('datarooms.moveItemDown', { name: item.name })}
@@ -208,9 +208,9 @@ export function DataroomReorderItemsDialog({
       }
     }}>
       <DialogContent className="sm:max-w-2xl max-h-[88vh] flex flex-col p-6">
-        <DialogHeader className="pb-3 border-b border-gray-100 dark:border-gray-800">
+        <DialogHeader className="pb-3 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 dark:bg-zinc-800 dark:text-zinc-300 flex items-center justify-center border border-slate-200/60 dark:border-zinc-700 shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-muted text-foreground flex items-center justify-center border border-border/60 shrink-0">
               <ArrowUpDown className="w-4 h-4" />
             </div>
             <div className="space-y-0.5 min-w-0">
@@ -224,7 +224,7 @@ export function DataroomReorderItemsDialog({
 
         <div className="flex-1 overflow-y-auto max-h-[60vh] py-3 px-0.5 space-y-6">
           {!hasItems ? (
-            <div className="p-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="p-8 text-center text-sm text-muted-foreground">
               {t('datarooms.noItemsToReorder')}
             </div>
           ) : (
@@ -235,15 +235,15 @@ export function DataroomReorderItemsDialog({
                     <div className="flex items-center gap-2">
                       <h3
                         id="reorder-folders-heading"
-                        className="text-xs font-bold tracking-wider uppercase text-slate-700 dark:text-zinc-300"
+                        className="text-xs font-bold tracking-wider uppercase text-foreground"
                       >
                         {t('datarooms.foldersOrder')}
                       </h3>
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-muted text-muted-foreground border border-border">
                         {t('datarooms.countFolders', { count: orderedFolders.length })}
                       </span>
                     </div>
-                    <span className="text-[11px] text-slate-500 dark:text-zinc-400 font-normal hidden sm:inline">
+                    <span className="text-[11px] text-muted-foreground font-normal hidden sm:inline">
                       {t('datarooms.foldersOrderHint')}
                     </span>
                   </div>
@@ -270,7 +270,7 @@ export function DataroomReorderItemsDialog({
               )}
 
               {hasFolders && hasDocs && (
-                <div className="border-t border-slate-200/90 dark:border-zinc-800 my-4" />
+                <div className="border-t border-border/90 my-4" />
               )}
 
               {hasDocs && (
@@ -279,11 +279,11 @@ export function DataroomReorderItemsDialog({
                     <div className="flex items-center gap-2">
                       <h3
                         id="reorder-documents-heading"
-                        className="text-xs font-bold tracking-wider uppercase text-slate-700 dark:text-zinc-300"
+                        className="text-xs font-bold tracking-wider uppercase text-foreground"
                       >
                         {t('datarooms.documentsOrder')}
                       </h3>
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-muted text-muted-foreground border border-border">
                         {t('datarooms.countDocuments', { count: orderedDocs.length })}
                       </span>
                     </div>
@@ -313,11 +313,11 @@ export function DataroomReorderItemsDialog({
           )}
         </div>
 
-        <DialogFooter className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800">
+        <DialogFooter className="flex items-center justify-between pt-3 border-t border-border">
           <Button
             type="button"
             variant="ghost"
-            className="mr-auto inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            className="mr-auto inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
             onClick={() => {
               if (!isSaving) {
                 handleResetOrder();
@@ -325,7 +325,7 @@ export function DataroomReorderItemsDialog({
             }}
             disabled={isSaving || !hasItems}
           >
-            <RotateCcw className="h-3.5 w-3.5 text-slate-500 dark:text-zinc-400" />
+            <RotateCcw className="h-3.5 w-3.5 text-muted-foreground" />
             {t('datarooms.resetOrder')}
           </Button>
           <div className="flex items-center gap-2">

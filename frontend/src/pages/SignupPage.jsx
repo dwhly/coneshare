@@ -38,11 +38,11 @@ export function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-900">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-muted px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div className="flex flex-col items-center">
           {brandLogoUrl ? (
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white p-2 shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-card p-2 shadow-sm border border-border">
               <img
                 src={brandLogoUrl}
                 alt={`${brandName} logo`}
@@ -50,16 +50,16 @@ export function SignupPage() {
               />
             </div>
           ) : null}
-          <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+          <h2 className="text-center text-3xl font-extrabold text-foreground">
             {t('auth.createAccount')}
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-center text-sm text-muted-foreground">
             {t('auth.signUpSubtitle')}
           </p>
         </div>
 
         {submitted ? (
-          <div className="rounded-md border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+          <div className="rounded-md border border-success-border bg-success-subtle p-4 text-sm text-success">
             {t('auth.verificationSent')}
           </div>
         ) : (
@@ -73,7 +73,7 @@ export function SignupPage() {
                   id="name"
                   type="text"
                   autoComplete="name"
-                  className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  className="relative block w-full appearance-none rounded-md border border-input px-3 py-2 text-foreground placeholder-muted-foreground focus:z-10 focus:border-ring focus:outline-none focus:ring-ring sm:text-sm"
                   placeholder={t('auth.name')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -88,7 +88,7 @@ export function SignupPage() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  className="relative block w-full appearance-none rounded-md border border-input px-3 py-2 text-foreground placeholder-muted-foreground focus:z-10 focus:border-ring focus:outline-none focus:ring-ring sm:text-sm"
                   placeholder="you@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +103,7 @@ export function SignupPage() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  className="relative block w-full appearance-none rounded-md border border-input px-3 py-2 text-foreground placeholder-muted-foreground focus:z-10 focus:border-ring focus:outline-none focus:ring-ring sm:text-sm"
                   placeholder={t('auth.createPasswordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -112,7 +112,7 @@ export function SignupPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <p className="text-sm text-danger">{error}</p>
             )}
 
             <div>
@@ -128,55 +128,55 @@ export function SignupPage() {
           </form>
         )}
 
-        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-center text-sm text-muted-foreground">
           {t('auth.alreadyHaveAccount')}{' '}
-          <Link className="font-medium text-indigo-600 hover:text-indigo-500" to="/login">
+          <Link className="font-medium text-brand hover:underline" to="/login">
             {t('auth.signIn')}
           </Link>
         </p>
       </div>
 
       {/* Footer Links */}
-      <div className="mt-auto pt-8 flex flex-col items-center justify-center gap-2 text-xs text-gray-400">
+      <div className="mt-auto pt-8 flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground">
         <div className="flex items-center gap-3">
           <a
             href={brandWebsiteUrl || "https://www.coneshare.com/about"}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-600 transition-colors"
+            className="hover:text-muted-foreground transition-colors"
           >
             {t('auth.aboutBrand', { brandName: brandName || 'Coneshare' })}
           </a>
-          <span className="text-gray-300">&bull;</span>
+          <span className="text-muted-foreground/70">&bull;</span>
           <a
             href={termsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-600 transition-colors"
+            className="hover:text-muted-foreground transition-colors"
           >
             {t('auth.terms')}
           </a>
-          <span className="text-gray-300">&bull;</span>
+          <span className="text-muted-foreground/70">&bull;</span>
           <a
             href={privacyPolicyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-gray-600 transition-colors"
+            className="hover:text-muted-foreground transition-colors"
           >
             {t('auth.privacy')}
           </a>
         </div>
-        <div className="flex items-center gap-1.5 text-[11px] text-gray-400/80">
+        <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/80">
           <span>
-            {t('viewer.poweredBy')}{' '}<a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-700 dark:text-gray-100 dark:hover:text-gray-300 font-semibold underline transition-colors">Coneshare</a>
+            {t('viewer.poweredBy')}{' '}<a href="https://github.com/coneshare/coneshare" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-foreground font-semibold underline transition-colors">Coneshare</a>
           </span>
           {APP_DISPLAY_VERSION && (
             <>
-              <span className="text-gray-300 select-none">&bull;</span>
+              <span className="text-muted-foreground/70 select-none">&bull;</span>
               <span>{`ver-${APP_DISPLAY_VERSION}`}</span>
             </>
           )}
-          <span className="text-gray-300 select-none">&bull;</span>
+          <span className="text-muted-foreground/70 select-none">&bull;</span>
           <LanguagePicker />
         </div>
       </div>

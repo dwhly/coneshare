@@ -36,19 +36,19 @@ import {
 const PROVIDER_CONFIG = {
   google_drive: {
     displayName: 'Google Drive',
-    icon: <HardDrive className="h-8 w-8 text-green-500" />,
+    icon: <HardDrive className="h-8 w-8 text-success" />,
     getConnectUrl: getGoogleDriveConnectUrl,
     descriptionKey: 'settings.publicCloudStorage',
   },
   dropbox: {
     displayName: 'Dropbox',
-    icon: <Database className="h-8 w-8 text-blue-500" />,
+    icon: <Database className="h-8 w-8 text-info" />,
     getConnectUrl: getDropboxConnectUrl,
     descriptionKey: 'settings.publicCloudStorage',
   },
   nextcloud: {
     displayName: 'Nextcloud',
-    icon: <Cloud className="h-8 w-8 text-cyan-500" />,
+    icon: <Cloud className="h-8 w-8 text-tag-4" />,
     getConnectUrl: getNextcloudConnectUrl,
     descriptionKey: 'settings.nextcloudDescription',
   },
@@ -129,7 +129,7 @@ export function IntegrationsSettingsPage() {
   };
 
   const getProviderIcon = (name) => {
-    return PROVIDER_CONFIG[name]?.icon || <Cloud className="h-8 w-8 text-gray-500" />;
+    return PROVIDER_CONFIG[name]?.icon || <Cloud className="h-8 w-8 text-muted-foreground" />;
   };
 
   const getProviderDisplayName = (name) => {
@@ -144,13 +144,13 @@ export function IntegrationsSettingsPage() {
 
         {isLoading ? (
           <div className="flex h-64 items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-info" />
           </div>
         ) : (
           <div className="space-y-6">
             <div>
-              <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">{t('settings.cloudIntegrationsTitle')}</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <h2 className="text-lg font-medium text-foreground">{t('settings.cloudIntegrationsTitle')}</h2>
+            <p className="text-sm text-muted-foreground mt-1">
               {t('settings.cloudIntegrationsSubtitle')}
             </p>
           </div>
@@ -161,7 +161,7 @@ export function IntegrationsSettingsPage() {
               const isConnected = !!connection;
 
               return (
-                <Card key={provider.name} className="overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm transition-all duration-200 hover:shadow-md">
+                <Card key={provider.name} className="overflow-hidden border border-border shadow-sm transition-all duration-200 hover:shadow-md">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
                     <div className="flex items-center gap-3">
                       {getProviderIcon(provider.name)}
@@ -178,12 +178,12 @@ export function IntegrationsSettingsPage() {
                     </div>
                     <div>
                       {isConnected ? (
-                        <Badge className="bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">
+                        <Badge className="bg-success-subtle text-success border-success-border">
                           <CheckCircle2 className="mr-1 h-3.5 w-3.5" />
                           {t('settings.connected')}
                         </Badge>
                       ) : (
-                        <Badge className="bg-gray-100 text-gray-600 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700">
+                        <Badge className="bg-muted text-muted-foreground border-border">
                           {t('settings.notConnected')}
                         </Badge>
                       )}
@@ -191,19 +191,19 @@ export function IntegrationsSettingsPage() {
                   </CardHeader>
                   <CardContent className="pb-4">
                     {isConnected ? (
-                      <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800/80">
+                      <div className="space-y-2 text-sm text-muted-foreground bg-muted p-3 rounded-lg border border-border">
                         <div className="flex justify-between items-center py-0.5">
-                          <span className="text-gray-500">{t('settings.account')}:</span>
-                          <span className="font-medium text-gray-900 dark:text-gray-200">{connection.email || t('settings.connectedAccount')}</span>
+                          <span className="text-muted-foreground">{t('settings.account')}:</span>
+                          <span className="font-medium text-foreground">{connection.email || t('settings.connectedAccount')}</span>
                         </div>
                         <div className="flex justify-between items-center py-0.5">
-                          <span className="text-gray-500 flex items-center gap-1">
+                          <span className="text-muted-foreground flex items-center gap-1">
                             <Calendar className="h-3.5 w-3.5" /> {t('settings.connectedOn')}:
                           </span>
                           <span>{new Date(connection.created_at).toLocaleDateString()}</span>
                         </div>
                         <div className="flex justify-between items-center py-0.5">
-                          <span className="text-gray-500 flex items-center gap-1">
+                          <span className="text-muted-foreground flex items-center gap-1">
                             <Clock className="h-3.5 w-3.5" /> {t('settings.lastAccessed')}:
                           </span>
                           <span>
@@ -214,16 +214,16 @@ export function IntegrationsSettingsPage() {
                         </div>
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         {t('settings.linkAccountNotice', { provider: getProviderDisplayName(provider.name) })}
                       </p>
                     )}
                   </CardContent>
-                  <CardFooter className="flex justify-end border-t border-gray-100 dark:border-gray-800/80 pt-4 bg-gray-50/50 dark:bg-gray-900/20">
+                  <CardFooter className="flex justify-end border-t border-border pt-4 bg-muted/50">
                     {isConnected ? (
                       <Button
                         variant="outline"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-950/30 dark:border-red-900/50"
+                        className="text-danger hover:text-danger hover:bg-danger-subtle border-danger-border"
                         onClick={() => setSelectedConnection(connection)}
                       >
                         <Trash2 className="mr-1.5 h-4 w-4" />
@@ -248,7 +248,7 @@ export function IntegrationsSettingsPage() {
       <Dialog open={!!selectedConnection} onOpenChange={(open) => !open && setSelectedConnection(null)}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-red-600 dark:text-red-400">
+            <DialogTitle className="flex items-center gap-2 text-danger">
               <AlertTriangle className="h-5 w-5" />
               {t('settings.disconnectTitle')}
             </DialogTitle>
@@ -256,7 +256,7 @@ export function IntegrationsSettingsPage() {
               {t('settings.disconnectDescription', { provider: selectedConnection ? getProviderDisplayName(selectedConnection.provider) : '' })}
             </DialogDescription>
           </DialogHeader>
-          <div className="py-2 text-sm text-gray-500 dark:text-gray-400">
+          <div className="py-2 text-sm text-muted-foreground">
             {t('settings.disconnectNotice')}
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
@@ -268,7 +268,7 @@ export function IntegrationsSettingsPage() {
               {t('common.cancel')}
             </Button>
             <Button
-              className="bg-red-600 hover:bg-red-700 text-white dark:bg-red-600 dark:hover:bg-red-700"
+              className="bg-danger hover:bg-danger/90 text-danger-foreground"
               onClick={handleDisconnectConfirm}
               disabled={isDisconnecting}
             >

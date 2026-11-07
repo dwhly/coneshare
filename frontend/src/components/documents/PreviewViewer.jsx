@@ -188,7 +188,7 @@ export const PreviewViewer = forwardRef(({ documentData, zoomLevel, onPageChange
   return (
     <div
       ref={scrollContainerCallbackRef}
-      className="h-full overflow-y-auto bg-gray-100 dark:bg-gray-800"
+      className="h-full overflow-y-auto bg-muted"
     >
       <div
         className="mx-auto flex w-fit origin-top flex-col items-center space-y-4 p-4 pb-24 transition-transform duration-200"
@@ -243,7 +243,7 @@ export const PreviewViewer = forwardRef(({ documentData, zoomLevel, onPageChange
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute cursor-pointer hover:bg-blue-500/10 transition-colors duration-150 rounded"
+                className="absolute cursor-pointer hover:bg-info/10 transition-colors duration-150 rounded"
                 style={{
                   left: `${link.bbox.left}%`,
                   top: `${link.bbox.top}%`,

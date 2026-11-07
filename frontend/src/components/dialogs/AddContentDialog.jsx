@@ -29,23 +29,23 @@ function Breadcrumbs({ path, onNavigate }) {
   const { t } = useTranslation();
 
   return (
-    <nav className="flex items-center space-x-1.5 text-xs text-slate-500 dark:text-zinc-400 font-medium min-w-0" aria-label="Breadcrumb">
+    <nav className="flex items-center space-x-1.5 text-xs text-muted-foreground font-medium min-w-0" aria-label="Breadcrumb">
       <button
         type="button"
         onClick={() => onNavigate(null)}
-        className="hover:text-slate-900 dark:hover:text-zinc-100 flex items-center space-x-1 transition-colors shrink-0"
+        className="hover:text-foreground flex items-center space-x-1 transition-colors shrink-0"
       >
-        <Home className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500" />
+        <Home className="w-3.5 h-3.5 text-muted-foreground" />
         <span>{t('datarooms.home')}</span>
       </button>
       {path.map((folder, index) => {
         const isCurrent = index === path.length - 1;
         return (
           <div key={folder.id} className="flex items-center space-x-1.5 min-w-0">
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 shrink-0" />
+            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
             {isCurrent ? (
               <span
-                className="truncate max-w-[120px] sm:max-w-[160px] font-semibold text-slate-800 dark:text-zinc-100"
+                className="truncate max-w-[120px] sm:max-w-[160px] font-semibold text-foreground"
                 aria-current="page"
                 title={folder.name}
               >
@@ -55,7 +55,7 @@ function Breadcrumbs({ path, onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate(folder.id)}
-                className="truncate max-w-[120px] sm:max-w-[160px] text-slate-500 hover:text-slate-700 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors"
+                className="truncate max-w-[120px] sm:max-w-[160px] text-muted-foreground hover:text-foreground transition-colors"
                 title={folder.name}
               >
                 {folder.name}
@@ -183,22 +183,22 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
       <DialogContent className="sm:max-w-xl max-h-[88vh] flex flex-col p-0 gap-0 overflow-hidden">
         <DialogHeader className="px-6 pt-5 pb-4 shrink-0 sm:text-left">
           <div className="flex items-center space-x-2">
-            <DialogTitle className="text-lg font-semibold text-slate-900 dark:text-zinc-100 tracking-tight flex items-center space-x-2">
+            <DialogTitle className="text-lg font-semibold text-foreground tracking-tight flex items-center space-x-2">
               <span>{t('datarooms.addContentTitle')}</span>
               {selectedCount > 0 && (
-                <span className="text-xs font-medium bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 py-0.5 px-2 rounded-full border border-slate-200 dark:border-zinc-700">
+                <span className="text-xs font-medium bg-muted text-muted-foreground py-0.5 px-2 rounded-full border border-border">
                   {t('documents.selectedCount', { count: selectedCount })}
                 </span>
               )}
             </DialogTitle>
           </div>
-          <DialogDescription className="text-xs text-slate-500 dark:text-zinc-400 mt-1">
+          <DialogDescription className="text-xs text-muted-foreground mt-1">
             {t('datarooms.addContentDescription')}
           </DialogDescription>
         </DialogHeader>
 
         {/* Filter and Search Toolbar */}
-        <div className="px-6 py-2.5 bg-slate-50/70 dark:bg-zinc-800/40 border-b border-slate-100 dark:border-zinc-800 flex items-center justify-between gap-3 text-sm shrink-0">
+        <div className="px-6 py-2.5 bg-muted/70 border-b border-border flex items-center justify-between gap-3 text-sm shrink-0">
           <Breadcrumbs path={breadcrumbPath} onNavigate={handleNavigate} />
           <div className="flex items-center space-x-2 shrink-0">
             <div className="relative">
@@ -207,25 +207,25 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('datarooms.filterCurrentList')}
-                className="w-36 sm:w-44 pl-7 pr-2.5 py-1 text-xs bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-md text-slate-800 dark:text-zinc-200 placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none focus:border-slate-400 dark:focus:border-zinc-500 focus:ring-1 focus:ring-slate-400 dark:focus:ring-zinc-500 shadow-xs"
+                className="w-36 sm:w-44 pl-7 pr-2.5 py-1 text-xs bg-card border border-border rounded-md text-foreground placeholder-muted-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring shadow-xs"
               />
-              <Search className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500 absolute left-2 top-2 pointer-events-none" />
+              <Search className="w-3.5 h-3.5 text-muted-foreground absolute left-2 top-2 pointer-events-none" />
             </div>
           </div>
         </div>
 
         {/* Content File & Folder List */}
-        <div className="px-4 py-2 flex-1 min-h-[220px] max-h-[380px] overflow-y-auto divide-y divide-slate-100 dark:divide-zinc-800/60">
+        <div className="px-4 py-2 flex-1 min-h-[220px] max-h-[380px] overflow-y-auto divide-y divide-border">
           {loading ? (
             <div className="p-3 space-y-2">
               <p className="sr-only">{t('documents.loadingFolders')}</p>
-              <div className="h-10 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
-              <div className="h-10 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
-              <div className="h-10 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
+              <div className="h-10 bg-muted rounded-lg animate-pulse" />
+              <div className="h-10 bg-muted rounded-lg animate-pulse" />
+              <div className="h-10 bg-muted rounded-lg animate-pulse" />
             </div>
           ) : fetchError ? (
-            <div className="flex flex-col h-full items-center justify-center p-8 text-center text-sm text-slate-400 dark:text-zinc-500 gap-2">
-              <AlertCircle className="w-5 h-5 text-rose-500 dark:text-rose-400" />
+            <div className="flex flex-col h-full items-center justify-center p-8 text-center text-sm text-muted-foreground gap-2">
+              <AlertCircle className="w-5 h-5 text-danger" />
               <span>{t('common.errorOccurred')}</span>
               <Button
                 type="button"
@@ -239,11 +239,11 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
               </Button>
             </div>
           ) : !hasItems ? (
-            <div className="flex h-full items-center justify-center p-8 text-sm text-slate-400 dark:text-zinc-500">
+            <div className="flex h-full items-center justify-center p-8 text-sm text-muted-foreground">
               {t('datarooms.folderEmpty')}
             </div>
           ) : !hasFilteredItems ? (
-            <div className="flex h-full items-center justify-center p-8 text-sm text-slate-400 dark:text-zinc-500">
+            <div className="flex h-full items-center justify-center p-8 text-sm text-muted-foreground">
               {t('viewer.noMatchingFiles')}
             </div>
           ) : (
@@ -263,8 +263,8 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
                     onDoubleClick={() => handleNavigate(folder.id)}
                     className={`group flex items-center justify-between py-2 px-2 rounded-lg transition-colors cursor-pointer select-none ${
                       isChecked
-                        ? 'bg-slate-50/90 dark:bg-zinc-800/60 border border-slate-200/80 dark:border-zinc-700'
-                        : 'hover:bg-slate-50 dark:hover:bg-zinc-800/40 border border-transparent'
+                        ? 'bg-muted/90 border border-border/80 '
+                        : 'hover:bg-muted border border-transparent'
                     }`}
                   >
                     <div className="flex items-center space-x-3 min-w-0 flex-1">
@@ -274,15 +274,15 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
                         onCheckedChange={() => handleItemSelect(folder.id, 'folders')}
                         aria-label={folder.name}
                       />
-                      <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 flex items-center justify-center shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-muted text-muted-foreground flex items-center justify-center shrink-0">
                         <FolderIcon className="w-4 h-4" strokeWidth={2} />
                       </div>
                       <div className="truncate flex-1">
-                        <p className={`text-sm truncate ${isChecked ? 'font-semibold text-slate-900 dark:text-zinc-100' : 'font-medium text-slate-800 dark:text-zinc-200 group-hover:text-slate-900 dark:group-hover:text-zinc-100'}`}>
+                        <p className={`text-sm truncate ${isChecked ? 'font-semibold text-foreground ' : 'font-medium text-foreground group-hover:text-foreground '}`}>
                           {folder.name}
                         </p>
                         {itemCount !== null && (
-                          <p className="text-xs text-slate-400 dark:text-zinc-500 font-normal">
+                          <p className="text-xs text-muted-foreground font-normal">
                             {t('documents.itemCount', { count: itemCount })}
                           </p>
                         )}
@@ -290,7 +290,7 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
                     </div>
                     <div className="flex items-center space-x-2 shrink-0 ml-4">
                       {folder.updated_at && (
-                        <span className="text-xs text-slate-400 dark:text-zinc-500 font-normal hidden sm:inline">
+                        <span className="text-xs text-muted-foreground font-normal hidden sm:inline">
                           {formatRelativeTime(folder.updated_at)}
                         </span>
                       )}
@@ -302,7 +302,7 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
                           e.stopPropagation();
                           handleNavigate(folder.id);
                         }}
-                        className="h-7 w-7 text-slate-400 hover:text-slate-700 dark:hover:text-zinc-200"
+                        className="h-7 w-7 text-muted-foreground hover:text-foreground"
                         title={t('datarooms.openFolder', { name: folder.name })}
                         aria-label={t('datarooms.openFolder', { name: folder.name })}
                       >
@@ -327,8 +327,8 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
                     }}
                     className={`group flex items-center justify-between py-2 px-2 rounded-lg transition-colors cursor-pointer select-none ${
                       isChecked
-                        ? 'bg-slate-50/90 dark:bg-zinc-800/60 border border-slate-200/80 dark:border-zinc-700'
-                        : 'hover:bg-slate-50 dark:hover:bg-zinc-800/40 border border-transparent'
+                        ? 'bg-muted/90 border border-border/80 '
+                        : 'hover:bg-muted border border-transparent'
                     }`}
                   >
                     <div className="flex items-center space-x-3 min-w-0 flex-1">
@@ -342,18 +342,18 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
                         <FileTypeIcon type={docType} className="h-4 w-4 shrink-0" palette="viewer" />
                       </div>
                       <div className="truncate flex-1">
-                        <p className={`text-sm truncate ${isChecked ? 'font-semibold text-slate-900 dark:text-zinc-100' : 'font-medium text-slate-800 dark:text-zinc-200 group-hover:text-slate-900 dark:group-hover:text-zinc-100'}`}>
+                        <p className={`text-sm truncate ${isChecked ? 'font-semibold text-foreground ' : 'font-medium text-foreground group-hover:text-foreground '}`}>
                           {doc.name}
                         </p>
                         {typeof doc.file_size === 'number' && (
-                          <p className="text-xs text-slate-400 dark:text-zinc-500 font-normal">
+                          <p className="text-xs text-muted-foreground font-normal">
                             {formatBytes(doc.file_size)}
                           </p>
                         )}
                       </div>
                     </div>
                     {doc.updated_at && (
-                      <span className="text-xs text-slate-400 dark:text-zinc-500 shrink-0 ml-4 font-normal hidden sm:inline">
+                      <span className="text-xs text-muted-foreground shrink-0 ml-4 font-normal hidden sm:inline">
                         {formatRelativeTime(doc.updated_at)}
                       </span>
                     )}
@@ -365,13 +365,13 @@ export function AddContentDialog({ isOpen, onOpenChange, onConfirm }) {
         </div>
 
         {/* Footer */}
-        <DialogFooter className="px-6 py-3 bg-slate-50/70 dark:bg-zinc-800/40 border-t border-slate-100 dark:border-zinc-800/80 flex flex-row items-center justify-between sm:justify-between sm:space-x-0 shrink-0">
+        <DialogFooter className="px-6 py-3 bg-muted/70 border-t border-border flex flex-row items-center justify-between sm:justify-between sm:space-x-0 shrink-0">
           <div className="flex items-center space-x-2">
             {selectedCount > 0 && (
               <button
                 type="button"
                 onClick={handleClearSelection}
-                className="text-xs text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200 underline transition-colors"
+                className="text-xs text-muted-foreground hover:text-foreground underline transition-colors"
               >
                 {t('documents.clearSelection')}
               </button>

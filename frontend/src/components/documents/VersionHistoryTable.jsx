@@ -49,7 +49,7 @@ export function VersionHistoryTable({
     return (
       <div>
         <h2 className="text-xl font-semibold">{t('documents.versions')}</h2>
-        <p className="mt-2 text-sm text-gray-500">{t('documents.noVersions')}</p>
+        <p className="mt-2 text-sm text-muted-foreground">{t('documents.noVersions')}</p>
       </div>
     );
   }
@@ -72,7 +72,7 @@ export function VersionHistoryTable({
       badges.push(
         <Tooltip key="failed">
           <TooltipTrigger asChild>
-            <span className="inline-flex cursor-help items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+            <span className="inline-flex cursor-help items-center rounded-full bg-danger-subtle px-2 py-1 text-xs font-medium text-danger ring-1 ring-inset ring-danger/10">
               {t('documents.errorStatus')}
             </span>
           </TooltipTrigger>
@@ -85,13 +85,13 @@ export function VersionHistoryTable({
       );
     } else if (version.render_status === 'processing' || version.render_status === 'queued') {
       badges.push(
-        <span key="processing" className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+        <span key="processing" className="inline-flex items-center rounded-full bg-info-subtle px-2 py-1 text-xs font-medium text-info ring-1 ring-inset ring-ring">
           {t('documents.processingStatus')}
         </span>
       );
     } else if (version.render_status === 'ready') {
       badges.push(
-        <span key="ready" className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800 ring-1 ring-inset ring-gray-500/20">
+        <span key="ready" className="inline-flex items-center rounded-full bg-muted px-2 py-1 text-xs font-medium text-foreground ring-1 ring-inset ring-foreground/20">
           {t('documents.readyStatus')}
         </span>
       );
@@ -101,7 +101,7 @@ export function VersionHistoryTable({
         ? version.render_status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
         : 'Unknown';
       badges.push(
-        <span key="other" className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+        <span key="other" className="inline-flex items-center rounded-full bg-muted px-2 py-1 text-xs font-medium text-muted-foreground ring-1 ring-inset ring-foreground/10">
           {statusLabel}
         </span>
       );
@@ -113,7 +113,7 @@ export function VersionHistoryTable({
           {badges}
         </div>
         {version.render_status === 'failed' && version.render_error && (
-          <span className="text-xs text-red-500 max-w-[200px] truncate" title={version.render_error}>
+          <span className="text-xs text-danger max-w-[200px] truncate" title={version.render_error}>
             {version.render_error}
           </span>
         )}
@@ -144,7 +144,7 @@ export function VersionHistoryTable({
                     <div className="flex items-center gap-2">
                       <span>v{version.version_number}</span>
                       {version.is_primary && (
-                        <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                        <span className="inline-flex items-center rounded-full bg-success-subtle px-2 py-0.5 text-xs font-medium text-success ring-1 ring-inset ring-success/20">
                           {t('documents.activeStatus')}
                         </span>
                       )}
@@ -153,8 +153,8 @@ export function VersionHistoryTable({
                   <TableCell>
                     {formatDate(version.created_at, 'PP p')}
                   </TableCell>
-                  <TableCell className="text-gray-600">{getSourceDisplay(version)}</TableCell>
-                  <TableCell className="text-gray-600">
+                  <TableCell className="text-muted-foreground">{getSourceDisplay(version)}</TableCell>
+                  <TableCell className="text-muted-foreground">
                     {version.file_size != null ? formatBytes(version.file_size) : '—'}
                   </TableCell>
                   <TableCell>{getStatusBadge(version)}</TableCell>
@@ -175,7 +175,7 @@ export function VersionHistoryTable({
                           variant="outline"
                           size="sm"
                           onClick={() => onPromoteVersion(version)}
-                          className="inline-flex items-center gap-1 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+                          className="inline-flex items-center gap-1 border-info-border text-info hover:bg-info-subtle hover:text-info"
                           title={t('documents.restore')}
                         >
                           <RefreshCw className="h-4 w-4" />

@@ -26,7 +26,7 @@ import { formatDate } from '../../utils/formatters';
 function EmailVerificationBadge({ view, youLabel }) {
   if (view.is_owner_view) {
     return (
-      <span className="shrink-0 rounded-full bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 text-xs font-semibold text-blue-800 dark:text-blue-300">
+      <span className="shrink-0 rounded-full bg-info-subtle px-2 py-0.5 text-xs font-semibold text-info">
         {youLabel}
       </span>
     );
@@ -38,25 +38,25 @@ function EmailVerificationBadge({ view, youLabel }) {
   switch (method) {
     case 'verified':
       return (
-        <span className="shrink-0 rounded-full bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+        <span className="shrink-0 rounded-full bg-success-subtle px-2 py-0.5 text-xs font-semibold text-success">
           Verified
         </span>
       );
     case 'self_reported':
       return (
-        <span className="shrink-0 rounded-full bg-amber-100 dark:bg-amber-950/60 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:text-amber-300">
+        <span className="shrink-0 rounded-full bg-warning-subtle px-2 py-0.5 text-xs font-semibold text-warning">
           Self-reported
         </span>
       );
     case 'account':
       return (
-        <span className="shrink-0 rounded-full bg-purple-100 dark:bg-purple-950/60 px-2 py-0.5 text-xs font-semibold text-purple-800 dark:text-purple-300">
+        <span className="shrink-0 rounded-full bg-tag-1-subtle px-2 py-0.5 text-xs font-semibold text-tag-1">
           Account
         </span>
       );
     case 'owner':
       return (
-        <span className="shrink-0 rounded-full bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 text-xs font-semibold text-blue-800 dark:text-blue-300">
+        <span className="shrink-0 rounded-full bg-info-subtle px-2 py-0.5 text-xs font-semibold text-info">
           Owner
         </span>
       );
@@ -98,7 +98,7 @@ function DataroomVisitRow({ visit }) {
           {isExpandable && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="rounded p-1 hover:bg-gray-200 dark:hover:bg-gray-700"
+              className="rounded p-1 hover:bg-accent"
               aria-expanded={isExpanded}
               aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
             >
@@ -135,7 +135,7 @@ function DataroomVisitRow({ visit }) {
         )}
 
         {isDeleted && (
-          <span className="rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-[10px] font-medium text-gray-600 dark:text-gray-300 flex-shrink-0">
+          <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground flex-shrink-0">
             {t('viewSessions.statusDeleted')}
           </span>
         )}
@@ -143,7 +143,7 @@ function DataroomVisitRow({ visit }) {
         {isRenamed && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <span className="rounded bg-amber-100 dark:bg-amber-950/60 px-1.5 py-0.5 text-[10px] font-medium text-amber-800 dark:text-amber-300 cursor-help flex-shrink-0">
+              <span className="rounded bg-warning-subtle px-1.5 py-0.5 text-[10px] font-medium text-warning cursor-help flex-shrink-0">
                 {t('viewSessions.statusRenamed')}
               </span>
             </TooltipTrigger>
@@ -156,7 +156,7 @@ function DataroomVisitRow({ visit }) {
         )}
 
         {visit.downloaded_at && (
-          <span className="rounded bg-green-100 dark:bg-green-950/60 px-1.5 py-0.5 text-[10px] font-medium text-green-800 dark:text-green-300 flex-shrink-0">
+          <span className="rounded bg-success-subtle px-1.5 py-0.5 text-[10px] font-medium text-success flex-shrink-0">
             {t('viewSessions.downloaded')}
           </span>
         )}
@@ -171,7 +171,7 @@ function DataroomVisitRow({ visit }) {
           )}
           {hasLinkClicks && (
             <div className="mt-2 text-xs">
-              <h5 className="font-semibold text-gray-600 mb-1">{t('viewSessions.clickedLinks')}:</h5>
+              <h5 className="font-semibold text-muted-foreground mb-1">{t('viewSessions.clickedLinks')}:</h5>
               <ul className="space-y-1">
                 {visit.link_clicks.map((click) => (
                   <li key={click.id} className="flex items-center gap-1">
@@ -181,7 +181,7 @@ function DataroomVisitRow({ visit }) {
                         href={click.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline truncate max-w-[300px] sm:max-w-[400px]"
+                        className="text-brand hover:underline truncate max-w-[300px] sm:max-w-[400px]"
                         title={click.url}
                       >
                         {click.url}
@@ -285,7 +285,7 @@ export function ViewSessionsTable({ views, totalCount, loading, currentPage, onP
                         {isExpandable && (
                           <button
                             onClick={() => setExpandedRowId(isExpanded ? null : view.id)}
-                            className="flex items-center justify-center rounded-full p-1 hover:bg-gray-100"
+                            className="flex items-center justify-center rounded-full p-1 hover:bg-accent"
                             aria-expanded={isExpanded}
                             aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
                           >
@@ -347,11 +347,11 @@ export function ViewSessionsTable({ views, totalCount, loading, currentPage, onP
                               className="inline-flex items-center gap-1.5 max-w-full hover:underline"
                               title={view.dataroom_name}
                             >
-                              <FolderIcon className="h-4 w-4 text-blue-500 shrink-0" />
+                              <FolderIcon className="h-4 w-4 text-info shrink-0" />
                               <span className="truncate">{view.dataroom_name}</span>
                             </Link>
                           ) : (
-                            <span className="text-gray-400">—</span>
+                            <span className="text-muted-foreground">—</span>
                           )}
                         </TableCell>
                       )}
@@ -371,7 +371,7 @@ export function ViewSessionsTable({ views, totalCount, loading, currentPage, onP
                       </TableCell>
                     </TableRow>
                     {isExpanded && isExpandable && (
-                      <TableRow className="bg-gray-50 hover:bg-gray-50">
+                      <TableRow className="bg-muted hover:bg-accent">
                         <TableCell colSpan={isDashboardWidget ? 8 : 7}>
                           {hasDataroomVisits ? (
                             <div className="p-4">
@@ -399,7 +399,7 @@ export function ViewSessionsTable({ views, totalCount, loading, currentPage, onP
                                             href={click.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-blue-600 hover:underline truncate max-w-[300px] sm:max-w-[400px]"
+                                            className="text-brand hover:underline truncate max-w-[300px] sm:max-w-[400px]"
                                             title={click.url}
                                           >
                                             {click.url}

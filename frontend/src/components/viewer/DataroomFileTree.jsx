@@ -77,7 +77,7 @@ function SidebarItem({ item, selectedDocumentId, onItemClick, isCollapsed, onTog
         } ${
           isActive
             ? 'bg-[var(--viewer-row-active-bg)] text-[var(--viewer-primary)]'
-            : 'text-gray-700 hover:bg-gray-50'
+            : 'text-foreground hover:bg-accent'
         }`}
         title={displayName}
         style={{
@@ -87,9 +87,9 @@ function SidebarItem({ item, selectedDocumentId, onItemClick, isCollapsed, onTog
       >
         <div className={`flex items-center shrink-0 ${isCollapsed ? 'w-8 justify-center' : 'gap-1'}`}>
           {isFolder && !isCollapsed && (
-            <div className="mr-1 text-gray-400">
+            <div className="mr-1 text-muted-foreground">
               {isLoading ? (
-                <div className="h-3 w-3 animate-spin rounded-full border-2 border-gray-300 border-t-gray-500" />
+                <div className="h-3 w-3 animate-spin rounded-full border-2 border-input border-t-muted-foreground" />
               ) : isExpanded ? (
                 <ChevronDown className="h-3.5 w-3.5" />
               ) : (
@@ -101,7 +101,7 @@ function SidebarItem({ item, selectedDocumentId, onItemClick, isCollapsed, onTog
           <FileTypeIcon
             type={isFolder ? 'folder' : item.document_type}
             className={`h-4 w-4 shrink-0 ${
-              isActive ? 'text-[var(--viewer-primary)]' : 'text-gray-400'
+              isActive ? 'text-[var(--viewer-primary)]' : 'text-muted-foreground'
             }`}
             palette="viewer"
           />
@@ -135,7 +135,7 @@ function SidebarItem({ item, selectedDocumentId, onItemClick, isCollapsed, onTog
           ))}
           {childrenItems.length === 0 && (
             <div 
-              className="py-2 text-xs text-gray-400 text-left italic"
+              className="py-2 text-xs text-muted-foreground text-left italic"
               style={{ paddingLeft: `${((level + 1) * 16) + 12 + 32}px` }}
             >
               {t('viewer.emptyFolder')}
@@ -161,7 +161,7 @@ export function DataroomFileTree({
   const { t } = useTranslation();
   return (
     <aside
-      className={`group/sidebar flex flex-col border-r bg-white transition-all duration-300 h-full shrink-0 relative ${
+      className={`group/sidebar flex flex-col border-r bg-card transition-all duration-300 h-full shrink-0 relative ${
         isCollapsed ? 'w-12' : 'w-64'
       }`}
     >
@@ -169,13 +169,13 @@ export function DataroomFileTree({
         isCollapsed ? 'justify-center px-0' : 'justify-between px-3'
       }`}>
         {!isCollapsed && (
-          <span className="truncate text-xs font-semibold uppercase tracking-wider text-gray-400 select-none">
+          <span className="truncate text-xs font-semibold uppercase tracking-wider text-muted-foreground select-none">
             {currentFolderName || t('viewer.folderContents', { defaultValue: 'Folder Contents' })}
           </span>
         )}
         <button
           onClick={onToggleCollapse}
-          className="rounded-lg p-1.5 hover:bg-gray-100 text-gray-500 hover:text-gray-900"
+          className="rounded-lg p-1.5 hover:bg-accent text-muted-foreground hover:text-foreground"
           title={isCollapsed ? t('viewer.expandSidebar', { defaultValue: 'Expand Sidebar' }) : t('viewer.collapseSidebar', { defaultValue: 'Collapse Sidebar' })}
         >
           {isCollapsed ? (
@@ -204,7 +204,7 @@ export function DataroomFileTree({
         ))}
         
         {items.length === 0 && !isCollapsed && (
-          <div className="py-8 text-center text-xs text-gray-400">
+          <div className="py-8 text-center text-xs text-muted-foreground">
             {t('viewer.noOtherItemsInFolder', { defaultValue: 'No other items in this folder' })}
           </div>
         )}

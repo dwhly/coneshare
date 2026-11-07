@@ -154,7 +154,7 @@ export function AccessGrantsSection({
         />
       </div>
       {restrictToGrants && (
-        <div className="space-y-4 rounded-md border bg-gray-50 p-4 dark:bg-gray-800/50">
+        <div className="space-y-4 rounded-md border bg-muted p-4">
           {shownGrants.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('amforge.grants.empty')}</p>
           ) : (

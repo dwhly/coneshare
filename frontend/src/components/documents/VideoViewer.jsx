@@ -337,7 +337,7 @@ export const VideoViewer = forwardRef(({
                 className={`flex w-full items-center justify-center rounded px-2 py-1 text-xs font-semibold font-mono transition-colors ${
                   playbackSpeed === speed
                     ? 'bg-white/20 text-white'
-                    : 'text-zinc-300 hover:bg-white/10 hover:text-white'
+                    : 'text-muted-foreground/70 hover:bg-white/10 hover:text-white'
                 }`}
               >
                 {speed.toFixed(2).replace(/\.00$/, '')}x

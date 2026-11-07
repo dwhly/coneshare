@@ -189,16 +189,16 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900">{t('qna.title')}</h2>
-          <p className="text-sm text-gray-500">{t('qna.subtitle')}</p>
+          <h2 className="text-lg font-semibold text-foreground">{t('qna.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('qna.subtitle')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="inline-flex rounded-md border bg-white p-1">
+          <div className="inline-flex rounded-md border bg-card p-1">
             {statusFilters.map((filter) => (
               <button
                 key={filter.value}
                 type="button"
-                className={`rounded px-3 py-1 text-sm ${statusFilter === filter.value ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-100'}`}
+                className={`rounded px-3 py-1 text-sm ${statusFilter === filter.value ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-accent'}`}
                 onClick={() => setStatusFilter(filter.value)}
               >
                 {filter.label}
@@ -232,10 +232,10 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
       </div>
 
       {isCreateOpen ? (
-        <form id="owner-qna-create-form" className="space-y-3 rounded-md border bg-white p-4" onSubmit={handleCreateThread}>
+        <form id="owner-qna-create-form" className="space-y-3 rounded-md border bg-card p-4" onSubmit={handleCreateThread}>
           <div className="grid gap-3 md:grid-cols-[220px,1fr]">
             <div>
-              <label htmlFor="owner-qna-share-link" className="mb-1 block text-xs font-medium text-gray-600">
+              <label htmlFor="owner-qna-share-link" className="mb-1 block text-xs font-medium text-muted-foreground">
                 {t('qna.shareLink')}
               </label>
               <Select
@@ -257,7 +257,7 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
               </Select>
             </div>
             <div>
-              <label htmlFor="owner-qna-subject" className="mb-1 block text-xs font-medium text-gray-600">
+              <label htmlFor="owner-qna-subject" className="mb-1 block text-xs font-medium text-muted-foreground">
                 {t('qna.subject')}
               </label>
               <Input
@@ -294,12 +294,12 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
         </form>
       ) : null}
 
-      <div className="grid min-h-[440px] overflow-hidden rounded-md border bg-white md:grid-cols-[280px,1fr]">
+      <div className="grid min-h-[440px] overflow-hidden rounded-md border bg-card md:grid-cols-[280px,1fr]">
         <div className="border-b md:border-b-0 md:border-r">
           {isLoading ? (
-            <div className="p-4 text-sm text-gray-500">{t('qna.loading')}</div>
+            <div className="p-4 text-sm text-muted-foreground">{t('qna.loading')}</div>
           ) : threads.length === 0 ? (
-            <div className="flex h-full min-h-[220px] items-center justify-center p-6 text-center text-sm text-gray-500">
+            <div className="flex h-full min-h-[220px] items-center justify-center p-6 text-center text-sm text-muted-foreground">
               {t('qna.noThreadsFound')}
             </div>
           ) : (
@@ -309,14 +309,14 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
                   key={thread.id}
                   type="button"
                   onClick={() => setSelectedThreadId(thread.id)}
-                  className={`block w-full px-4 py-3 text-left hover:bg-gray-50 ${selectedThread?.id === thread.id ? 'bg-gray-50' : ''}`}
+                  className={`block w-full px-4 py-3 text-left hover:bg-accent ${selectedThread?.id === thread.id ? 'bg-muted' : ''}`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="truncate text-sm font-medium text-gray-900">{thread.subject}</span>
-                    {thread.status === 'closed' ? <Lock className="h-3.5 w-3.5 text-gray-400" /> : null}
+                    <span className="truncate text-sm font-medium text-foreground">{thread.subject}</span>
+                    {thread.status === 'closed' ? <Lock className="h-3.5 w-3.5 text-muted-foreground" /> : null}
                   </div>
-                  <div className="mt-1 truncate text-xs text-gray-500">{contextLabel(thread, t)}</div>
-                  <div className="mt-1 text-xs text-gray-400">
+                  <div className="mt-1 truncate text-xs text-muted-foreground">{contextLabel(thread, t)}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">
                     {formatRelativeTime(thread.updated_at || thread.created_at)}
                   </div>
                 </button>
@@ -327,7 +327,7 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
 
         <div className="flex min-h-0 flex-col">
           {!selectedThread ? (
-            <div className="flex min-h-[300px] flex-1 items-center justify-center text-sm text-gray-500">
+            <div className="flex min-h-[300px] flex-1 items-center justify-center text-sm text-muted-foreground">
               <MessageCircle className="mr-2 h-4 w-4" />
               {t('qna.selectThread')}
             </div>
@@ -336,11 +336,11 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
               <div className="border-b p-4">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <h3 className="truncate text-base font-semibold text-gray-900">{selectedThread.subject}</h3>
-                    <p className="mt-1 text-sm text-gray-500">{contextLabel(selectedThread, t)}</p>
+                    <h3 className="truncate text-base font-semibold text-foreground">{selectedThread.subject}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{contextLabel(selectedThread, t)}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge className={selectedThread.status === 'closed' ? 'border-gray-300 text-gray-600' : 'border-emerald-200 text-emerald-700'}>
+                    <Badge className={selectedThread.status === 'closed' ? 'border-input text-muted-foreground' : 'border-success-border text-success'}>
                       {selectedThread.status === 'closed' ? t('qna.closed') : t('qna.open')}
                     </Badge>
                     {selectedThread.status === 'closed' ? (
@@ -359,12 +359,12 @@ export function OwnerQnAManager({ documentId = null, dataroomId = null, shareLin
 
               <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
                 {(selectedThread.messages || []).map((message) => (
-                  <article key={message.id} className="rounded-md border bg-white p-3">
-                    <div className="flex items-center justify-between gap-3 text-xs text-gray-500">
-                      <span className="truncate font-medium text-gray-700">{senderLabel(message)}</span>
+                  <article key={message.id} className="rounded-md border bg-card p-3">
+                    <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+                      <span className="truncate font-medium text-foreground">{senderLabel(message)}</span>
                       <span className="shrink-0">{formatRelativeTime(message.created_at)}</span>
                     </div>
-                    <p className="mt-2 whitespace-pre-wrap break-words text-sm text-gray-800 [overflow-wrap:anywhere]">{message.body}</p>
+                    <p className="mt-2 whitespace-pre-wrap break-words text-sm text-foreground [overflow-wrap:anywhere]">{message.body}</p>
                   </article>
                 ))}
               </div>

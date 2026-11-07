@@ -38,22 +38,22 @@ export function DataroomLoadingProgress({ publicMeta = null, targetName = null }
   const effectiveTitle = targetName || publicMeta?.target_name || t('viewer.loadingDataroom', { defaultValue: 'Entering Dataroom...' });
 
   return (
-    <div className="flex min-h-screen w-screen flex-col items-center justify-center bg-gray-50/80 dark:bg-gray-900/80 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700 text-center animate-fadeIn">
+    <div className="flex min-h-screen w-screen flex-col items-center justify-center bg-muted/80 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-card p-8 shadow-xl shadow-foreground/50 dark:shadow-none border border-border text-center animate-fadeIn">
         {/* Brand / Secure Shield Icon */}
-        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 ring-8 ring-indigo-50/50 dark:bg-indigo-950 dark:text-indigo-400 dark:ring-indigo-950/50">
+        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-info-subtle text-info ring-8 ring-ring">
           {effectiveLogoUrl ? (
             <img src={effectiveLogoUrl} alt={brandName} className="h-8 w-8 object-contain" />
           ) : (
-            <ShieldCheck className="h-7 w-7 text-indigo-600 dark:text-indigo-400" />
+            <ShieldCheck className="h-7 w-7 text-info" />
           )}
         </div>
 
         {/* Title */}
-        <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white truncate" title={effectiveTitle}>
+        <h2 className="text-xl font-bold tracking-tight text-foreground truncate" title={effectiveTitle}>
           {effectiveTitle}
         </h2>
-        <p className="mt-1 text-xs text-gray-400 dark:text-gray-500 font-medium">
+        <p className="mt-1 text-xs text-muted-foreground font-medium">
           {publicMeta?.owner_name ? `${publicMeta.owner_name} • ${brandName}` : brandName}
         </p>
 
@@ -63,19 +63,19 @@ export function DataroomLoadingProgress({ publicMeta = null, targetName = null }
             <span
               role="status"
               aria-live="polite"
-              className="text-gray-600 dark:text-gray-300 font-medium truncate pr-2 transition-all duration-300"
+              className="text-muted-foreground font-medium truncate pr-2 transition-all duration-300"
             >
               {currentStage?.message}
             </span>
-            <span className="font-mono text-xs font-semibold text-indigo-600 dark:text-indigo-400 shrink-0">
+            <span className="font-mono text-xs font-semibold text-info shrink-0">
               {Math.min(99, Math.round(progress))}%
             </span>
           </div>
 
           <Progress
             value={progress}
-            className="h-2 w-full bg-gray-100 dark:bg-gray-700"
-            indicatorClassName="bg-indigo-600 dark:bg-indigo-500 transition-all duration-150 ease-out"
+            className="h-2 w-full bg-muted"
+            indicatorClassName="bg-info transition-all duration-150 ease-out"
           />
         </div>
       </div>

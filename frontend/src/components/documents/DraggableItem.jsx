@@ -113,8 +113,8 @@ export function DraggableItem({
       data-testid={`draggable-item-${id}`}
       className={cn(
         "flex w-full cursor-pointer items-center px-4 py-2 text-sm transition-colors",
-        !themed && !isSelected && "hover:bg-gray-50 dark:hover:bg-gray-900/50",
-        !themed && isSelected && "bg-blue-100 dark:bg-blue-900/40"
+        !themed && !isSelected && "hover:bg-muted ",
+        !themed && isSelected && "bg-info-subtle "
       )}
       style={themed ? {
         backgroundColor: isSelected
@@ -125,7 +125,7 @@ export function DraggableItem({
       } : undefined}
     >
       {showIndex && (
-        <div className="w-12 text-xs text-gray-500">
+        <div className="w-12 text-xs text-muted-foreground">
           {itemIndex}
         </div>
       )}
@@ -155,8 +155,8 @@ export function DraggableItem({
           >
             <Star
               className={cn(
-                "h-4 w-4 text-gray-400",
-                item.is_starred && "fill-yellow-400 text-yellow-500"
+                "h-4 w-4 text-muted-foreground",
+                item.is_starred && "fill-warning text-warning"
               )}
             />
           </button>

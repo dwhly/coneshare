@@ -35,7 +35,7 @@ function LayoutToggle() {
       <div
         role="radiogroup"
         aria-label={t("nav.layout", "Layout")}
-        className="inline-flex h-7 items-center rounded-md bg-muted p-0.5 text-muted-foreground"
+        className="inline-flex h-7 items-center rounded-md border border-input p-0.5 text-muted-foreground"
       >
         {options.map((o) => (
           <button
@@ -46,7 +46,7 @@ function LayoutToggle() {
             onClick={() => setLayoutMode(o.id)}
             className={cn(
               "inline-flex h-6 items-center rounded-sm px-2 text-xs font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-              mode === o.id ? "bg-background text-foreground shadow-sm" : "hover:text-foreground"
+              mode === o.id ? "bg-selected font-semibold text-selected-foreground" : "hover:text-foreground"
             )}
           >
             {o.label}
@@ -86,12 +86,9 @@ function NavUser({ variant = "sidebar" }) {
   if (!user) {
     if (isTopbar) {
       return (
-        <div className="flex h-12 items-center gap-2 md:px-2">
-          <Skeleton className="h-10 w-10 shrink-0 rounded-full" />
-          <div className="hidden gap-1.5 lg:grid">
-            <Skeleton className="h-3.5 w-24" />
-            <Skeleton className="h-2.5 w-32" />
-          </div>
+        <div className="flex h-9 items-center gap-2 md:px-2">
+          <Skeleton className="h-7 w-7 shrink-0 rounded-full" />
+          <Skeleton className="hidden h-3.5 w-24 lg:block" />
         </div>
       );
     }
@@ -116,19 +113,16 @@ function NavUser({ variant = "sidebar" }) {
     <button
       type="button"
       data-testid="menu-switcher"
-      className="relative flex h-12 flex-row items-center px-0 py-2 ring-0 focus:outline-none focus-visible:ring-0 md:px-2"
+      className="relative flex h-9 flex-row items-center rounded-md px-1 ring-offset-background hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:px-2"
     >
       <div className="flex w-full max-w-xs items-center gap-2">
-        <Avatar className="h-10 w-10 border-2 border-solid border-white dark:border-border">
+        <Avatar className="h-7 w-7">
           <AvatarImage src={user.avatar_url || ""} alt={user.name || ""} />
-          <AvatarFallback className="text-xs text-gray-400">{getAvatarInitial(user.name, user.email)}</AvatarFallback>
+          <AvatarFallback className="text-xs text-muted-foreground">{getAvatarInitial(user.name, user.email)}</AvatarFallback>
         </Avatar>
-        <div className="hidden max-w-[8rem] flex-col truncate text-left text-sm font-normal lg:flex">
-          <span className="truncate text-foreground">{user.name || user.email}</span>
-          <span className="truncate text-xs text-muted-foreground">
-            {user.role === "admin" ? t("nav.roleAdmin", "Admin") : t("nav.roleMember", "Member")}
-          </span>
-        </div>
+        <span className="hidden max-w-[10rem] truncate text-left text-sm font-medium text-foreground lg:inline">
+          {user.name || user.email}
+        </span>
         <ChevronsUpDown className="ml-auto h-4 w-4 text-muted-foreground" />
       </div>
     </button>
@@ -148,7 +142,7 @@ function NavUser({ variant = "sidebar" }) {
         className={cn("grid flex-1 text-left", isCollapsed && "hidden")}
       >
         <span className="truncate text-sm font-semibold">{user.name || user.email}</span>
-        <span className="truncate text-xs text-gray-500">
+        <span className="truncate text-xs text-muted-foreground">
           {user.email}
         </span>
       </div>

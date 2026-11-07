@@ -27,7 +27,7 @@ export function DocumentsListHeader({
 
   return (
     <div
-      className="flex items-center border-b border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-500 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-400"
+      className="flex items-center border-b border-border bg-card px-4 py-2 text-sm font-medium text-muted-foreground"
       style={themed ? { color: "var(--dataroom-secondary)" } : undefined}
     >
       {showIndex && <div className="w-12">#</div>}
@@ -51,7 +51,7 @@ export function DocumentsListHeader({
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  className="ml-1 rounded p-1 text-gray-400 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary dark:hover:text-gray-200"
+                  className="ml-1 rounded p-1 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   aria-label="About Views"
                 >
                   <Info className="h-3.5 w-3.5" />

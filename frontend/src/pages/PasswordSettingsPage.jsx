@@ -65,7 +65,7 @@ function PasswordSettingsPage() {
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
             />
-            {errors.currentPassword && <p className="text-sm text-red-500">{errors.currentPassword}</p>}
+            {errors.currentPassword && <p className="text-sm text-danger">{errors.currentPassword}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="new-password">{t('settings.newPassword')}</Label>
@@ -76,7 +76,7 @@ function PasswordSettingsPage() {
               onChange={(e) => setNewPassword(e.target.value)}
               required
             />
-            {errors.newPassword && <p className="text-sm text-red-500">{errors.newPassword}</p>}
+            {errors.newPassword && <p className="text-sm text-danger">{errors.newPassword}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="confirm-password">{t('settings.confirmPassword')}</Label>
@@ -87,7 +87,7 @@ function PasswordSettingsPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            {errors.confirmPassword && <p className="text-sm text-red-500">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && <p className="text-sm text-danger">{errors.confirmPassword}</p>}
           </div>
           <Button type="submit" disabled={isSaving}>
             {isSaving ? t('common.saving') : t('settings.savePassword')}
