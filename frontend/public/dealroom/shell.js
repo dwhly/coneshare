@@ -63,6 +63,7 @@
     const panel = h("div", { class: "dr-menu__panel", role: "menu" },
       h("div", { class: "dr-menu__label", text: user.email }), h("div", { class: "dr-menu__sep", role: "separator" }),
       h("a", { class: "dr-menu__item", role: "menuitem", href: "/settings", text: "Settings" }),
+      h("div", { class: "dr-menu__sep", role: "separator" }),
       h("button", { type: "button", class: "dr-menu__item", role: "menuitem", text: "Sign out", onclick: onSignOut }));
     slot.replaceChildren(h("div", { class: "dr-menu" }, button, panel));
     slot.hidden = false;

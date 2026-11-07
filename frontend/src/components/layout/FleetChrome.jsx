@@ -77,12 +77,13 @@ export function AccountMenu({ user, onSignOut, settingsHref = "/settings" }) {
           <ChevronDown className="dr-account__chevron" aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-60">
+      <DropdownMenuContent align="end" className="w-56">
         <div className="dr-menu__label">{user.email}</div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link to={settingsHref}><Settings className="mr-2 h-4 w-4" aria-hidden="true" />Settings</Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={onSignOut}>
           <LogOut className="mr-2 h-4 w-4" aria-hidden="true" />Sign out
         </DropdownMenuItem>

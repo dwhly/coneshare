@@ -41,7 +41,6 @@
   </section>
 
   <section id="viewer" hidden aria-live="polite">
-    <div class="dr-filterbar"><span class="fds-pill fds-pill--neutral">Watermarked copy · issued to you</span></div>
     <div id="pages" class="pages"></div>
   </section>
 </div>
@@ -65,13 +64,13 @@ function showList(){head('Documents',files.length?'Every copy you open is waterm
     const open=h('a',{class:'dr-btn dr-btn--sm',href:f.page_url,rel:'noreferrer',text:'View',onclick:e=>{e.preventDefault();view(f)}});
     tr.append(h('td',{},h('span',{class:'name dr-strong',text:f.name})),h('td',{class:'dr-num dr-muted',text:String(pages)}),h('td',{class:'dr-actions'},open));return tr}):[h('tr',{},h('td',{colspan:'3',class:'dr-muted',text:'No documents yet.'}))]))}
 async function ndaStatus(){try{const s=await api('/api/v1/dealroom-sign/nda/'+roomId+'/');if(s.accepted){await load();return}
-  el('start').hidden=s.state!=='not_started';el('enter').hidden=!s.can_enter;
+  el('start').hidden=s.state!=='not_started';el('enter').hidden=!s.can_enter;if(s.state!=='not_started')el('message').hidden=true;
   el('nda-pill').className='fds-pill fds-pill--'+(s.overdue?'warning':s.can_enter?'info':'neutral');el('nda-pill').textContent=s.overdue?'Needs attention':s.can_enter?'Ready to sign':s.state==='not_started'?'Required':'Preparing';
   el('nda-state').textContent=s.state==='not_started'?'':s.can_enter?'Your agreement is ready for your signature.':s.overdue?'Signing needs attention. Contact the room owner to review or reset your NDA.':s.state==='awaiting_seal'?'Signature received. Waiting for the sealed agreement.':'Preparing your agreement — this usually takes a few seconds.'}catch(e){message('Please verify your email to continue.',true)}}
 el('email-form').onsubmit=async e=>{e.preventDefault();try{const r=await api(prefix+'/challenge/','POST',{name:el('name').value,email:el('email').value});challenge=r.challenge_id;el('email-form').hidden=true;el('code-form').hidden=false;el('code-hint').textContent='We sent it to '+el('email').value+'.';el('message').hidden=true;el('code').focus()}catch(e){message('We could not send a code. Please try again in a few minutes.',true)}};
 el('code-form').onsubmit=async e=>{e.preventDefault();try{const r=await api(prefix+'/confirm/','POST',{challenge_id:challenge,code:el('code').value});if(r.status!=='verified'){message(r.message,true);return}who({name:el('name').value,email:el('email').value});el('message').hidden=true;await load()}catch(e){message('That code did not work. Check it and try again.',true)}};
 el('enter').onsubmit=async e=>{e.preventDefault();try{const r=await api('/api/v1/dealroom-sign/nda/'+roomId+'/enter/','POST',{});location.assign(r.signing_url)}catch(e){message('Cannot open signing. Verify your room access again.',true)}};
-el('start').onclick=async()=>{try{await api('/api/v1/dealroom-sign/nda/'+roomId+'/','POST',{});await ndaStatus()}catch(e){message('The NDA could not be prepared. Contact the room owner.',true)}};
+el('start').onclick=async()=>{el('start').disabled=true;try{await api('/api/v1/dealroom-sign/nda/'+roomId+'/','POST',{});await ndaStatus()}catch(e){await ndaStatus();if(el('start').hidden)return;message('The NDA could not be prepared. Contact the room owner.',true)}finally{el('start').disabled=false}};
 (async()=>{const data=await api(prefix+'/challenge/');csrf=data.csrf_token;await load();setInterval(async()=>{if(!el('nda').hidden)await ndaStatus()},3000)})();
 
 // Document view: every page is the server-rendered, per-recipient watermarked image (render-page/N).
