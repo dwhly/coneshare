@@ -10,7 +10,7 @@
 <style>
 /* Glue pages read roles only (tokens.css); check-literals.py reports 0 for this directory. */
 *{box-sizing:border-box}html{background:hsl(var(--canvas))}body{margin:0;min-height:100vh;display:flex;flex-direction:column}
-.fds-header{position:sticky;top:0;z-index:10;gap:var(--space-6);padding:0 max(var(--space-6),calc((100vw - 1120px) / 2))}
+.fds-header{position:sticky;top:0;z-index:10;gap:var(--space-6);padding:0 max(var(--space-6),calc((100vw - 1120px) / 2 + var(--space-6)))}
 main{width:100%;max-width:1120px;margin:var(--space-8) auto 0;padding:0 var(--space-6);flex:1}
 h1{font-size:var(--text-2xl);font-weight:650;letter-spacing:-0.015em;margin:var(--space-1) 0}
 h2{font-size:var(--text-lg);font-weight:600;margin:0 0 var(--space-2)}
@@ -30,7 +30,7 @@ pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:var(--text-sm);b
 .approval{border-bottom:1px solid hsl(var(--border));padding:var(--space-3) 0}.approval .fds-btn{margin-right:var(--space-2)}
 .empty{color:hsl(var(--muted-foreground));margin:0}
 .activity p{margin:0;padding:var(--space-2) 0;border-bottom:1px solid hsl(var(--border))}.activity time{font-family:var(--font-mono);font-size:var(--text-sm);color:hsl(var(--muted-foreground))}
-[hidden]{display:none!important}a{color:hsl(var(--brand-muted-foreground))}
+[hidden]{display:none!important}a{color:hsl(var(--brand-muted-foreground))}a.fds-btn{text-decoration:none;color:hsl(var(--foreground))}
 .site-footer{color:hsl(var(--muted-foreground));font-size:var(--text-xs);text-align:center;padding:var(--space-8) 0}
 .tenant{display:inline-flex;align-items:center;gap:var(--space-2);text-decoration:none;color:hsl(var(--foreground));font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-0.01em}
 .tenant img{width:26px;height:26px}
