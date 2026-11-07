@@ -1,7 +1,7 @@
-name: AmForge
-logo: /brand-mark.svg
-tokens:
-  primary: '221 83% 53%'
-  radius: '0.5rem'
+# Fleet Dealroom (docs/design/dealroom-shell.md §0): Fleet-only brand. No tenant tokens: base Fleet tokens apply.
+# `name` is the product name in email subjects ("Fleet Dealroom: your verification code"); `email_sender`'s display
+# name is "Fleet Dealroom".
+name: Fleet Dealroom
+logo: /fds/marks/fleet.svg
 watermark: 'Issued to {{name}} · {{organisation}} · {{email}} · {{date}} · Copy ID {{copy_id}}'
-email_sender: 'AmForge <send@amforge.test>'
+email_sender: 'Fleet Dealroom <dealroom@amforge.test>'

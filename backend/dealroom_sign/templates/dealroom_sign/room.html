@@ -1,35 +1,82 @@
-{% extends 'dealroom_sign/base.html' %}{% block title %}Private room{% endblock %}{% block title_suffix %}{{ brand.name }}{% endblock %}{% block favicon %}{{ brand.logo }}{% endblock %}{% block header %}{% include 'dealroom_sign/_tenant_header.html' %}{% endblock %}{% block styles %}
-.files{list-style:none;margin:0;padding:0}.files li{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding:var(--row-pad-y) 0;border-bottom:1px solid hsl(var(--border))}
-.files li:last-child{border-bottom:0}.files .name{font-weight:500;color:hsl(var(--foreground))}.files .meta{color:hsl(var(--muted-foreground));font-size:var(--text-sm)}
-.files li{padding-left:var(--space-3);padding-right:var(--space-3);border-radius:var(--radius-control)}
-.files li[aria-current="true"]{background:hsl(var(--selected));color:hsl(var(--selected-foreground))}
-.viewer-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-3)}
-.pages{display:flex;flex-direction:column;gap:var(--space-4);align-items:center;background:hsl(var(--muted));border:1px solid hsl(var(--border));border-radius:var(--radius);padding:var(--space-4);max-height:80vh;overflow:auto}
-.pages img{max-width:100%;height:auto;background:white;box-shadow:0 1px 3px hsl(var(--foreground) / 0.12);border-radius:2px}
-.verify-card{max-width:520px}
-#message{max-width:520px}
+{% extends 'dealroom_sign/base.html' %}{% block title %}Private room{% endblock %}{% block header %}{% include 'dealroom_sign/_visitor_header.html' %}{% endblock %}{% block styles %}
+.dr-visitor-main{padding-top:32px;padding-bottom:48px}
+.dr-narrow{max-width:520px}
+.dr-files tr[aria-current="true"] td{background:hsl(var(--selected));color:hsl(var(--selected-foreground))}
+.pages{display:flex;flex-direction:column;gap:16px;align-items:center;background:hsl(var(--muted));border:1px solid hsl(var(--border));border-radius:var(--radius);padding:16px;max-height:80vh;overflow:auto}
+.pages img{max-width:100%;height:auto;background:hsl(var(--card));box-shadow:0 1px 3px hsl(var(--foreground) / 0.12);border-radius:2px}
 #code{letter-spacing:.3em;font-family:var(--font-mono)}
+.dr-steps{display:flex;gap:8px;align-items:center;margin:0 0 16px}
 {% endblock %}{% block content %}
-<div class="eyebrow">Private room</div><h1 id="title">Welcome to your data room</h1><p class="muted" id="subtitle">Verify your email to continue.</p>
-<div id="message" class="fds-callout fds-callout--info" role="status" hidden></div>
-<section id="verify" class="fds-card verify-card"><h2>Verify your email</h2><form id="email-form"><label for="name">Your name</label><input id="name" required autocomplete="name"><label for="email">Email address</label><input id="email" type="email" required autocomplete="email"><button class="fds-btn fds-btn--primary">Send verification code</button></form><form id="code-form" hidden><label for="code">Six-digit code</label><input id="code" pattern="[0-9]{6}" maxlength="6" inputmode="numeric" autocomplete="one-time-code" class="mono" required><button class="fds-btn fds-btn--primary">Continue</button></form></section>
-<section id="nda" class="fds-card" hidden><span class="fds-pill fds-pill--info">One step before entering</span><h2 style="margin-top:var(--space-4)">Confidentiality agreement</h2><p class="muted">Review and sign the room’s NDA. Your access opens once the signed copy and its certificate are safely filed.</p><button id="start" class="fds-btn fds-btn--primary">Prepare my NDA</button><form id="enter" method="post" action="/api/v1/dealroom-sign/nda/{{ room_id }}/enter/" hidden>{% csrf_token %}<button class="fds-btn fds-btn--primary">Review and sign NDA</button></form><p id="nda-state" class="muted" style="margin:var(--space-3) 0 0;font-size:var(--text-sm)"></p></section>
-<section id="contents" class="fds-card" hidden><h2>Documents</h2><p id="identity" class="muted"></p><ul id="files" class="files"></ul></section>
-<section id="viewer" class="fds-card" hidden aria-live="polite"><div class="viewer-bar"><div><h2 id="viewer-title"></h2><span class="fds-pill fds-pill--neutral">Watermarked copy · issued to you</span></div><button type="button" id="viewer-close" class="fds-btn">Close document</button></div><div id="pages" class="pages"></div></section>
-{% endblock %}{% block scripts %}<script>
+<div class="dr-visitor dr-visitor-main">
+  <header class="dr-pagehead">
+    <div class="dr-pagehead__row"><h1 id="title">Verify your email</h1><div class="dr-pagehead__actions" id="page-actions" hidden><button type="button" id="viewer-close" class="dr-btn">Back to documents</button></div></div>
+    <p class="dr-pagehead__sub" id="subtitle">This room is private. We’ll email you a six-digit code to confirm it’s you.</p>
+  </header>
+  <div id="message" class="fds-callout fds-callout--info dr-notice dr-narrow" role="status" hidden></div>
+
+  <section id="verify" class="dr-card dr-narrow">
+    <form id="email-form">
+      <div class="dr-field"><label for="name">Your name</label><input class="dr-input" id="name" required autocomplete="name"></div>
+      <div class="dr-field"><label for="email">Email address</label><input class="dr-input" id="email" type="email" required autocomplete="email"></div>
+      <button class="dr-btn dr-btn--primary">Send verification code</button>
+    </form>
+    <form id="code-form" hidden>
+      <div class="dr-field"><label for="code">Six-digit code</label><input class="dr-input" id="code" pattern="[0-9]{6}" maxlength="6" inputmode="numeric" autocomplete="one-time-code" required><p class="dr-hint" id="code-hint"></p></div>
+      <button class="dr-btn dr-btn--primary">Continue</button>
+    </form>
+  </section>
+
+  <section id="nda" class="dr-card dr-narrow" hidden>
+    <div class="dr-card__head"><div><h2 class="dr-card__title">Confidentiality agreement</h2><p class="dr-card__sub">Sign the room’s NDA once. Your access opens as soon as the signed copy is filed.</p></div><span class="fds-pill fds-pill--info" id="nda-pill">Required</span></div>
+    <button id="start" class="dr-btn dr-btn--primary">Prepare my NDA</button>
+    <form id="enter" method="post" action="/api/v1/dealroom-sign/nda/{{ room_id }}/enter/" hidden>{% csrf_token %}<button class="dr-btn dr-btn--primary">Review and sign NDA</button></form>
+    <p id="nda-state" class="dr-hint" style="margin-top:12px"></p>
+  </section>
+
+  <section id="contents" hidden>
+    <div class="dr-table-wrap"><table class="dr-table dr-files">
+      <thead><tr><th scope="col">Document</th><th scope="col" class="dr-num">Pages</th><th scope="col" class="dr-actions"><span class="sr-only">View</span></th></tr></thead>
+      <tbody id="files"></tbody>
+    </table></div>
+  </section>
+
+  <section id="viewer" hidden aria-live="polite">
+    <div class="dr-filterbar"><span class="fds-pill fds-pill--neutral">Watermarked copy · issued to you</span></div>
+    <div id="pages" class="pages"></div>
+  </section>
+</div>
+{% endblock %}{% block footer %}Fleet Dealroom · Every copy is watermarked to the person it was issued to{% endblock %}{% block scripts %}<script>
+const {h}=window.drShell;
 const slug='{{ slug|escapejs }}', roomId='{{ room_id|escapejs }}';let csrf='',challenge='';
-const el=id=>document.getElementById(id);function message(text,error=false){el('message').hidden=false;el('message').textContent=text;el('message').className=error?'fds-callout fds-callout--danger':'fds-callout fds-callout--info'}
+const el=id=>document.getElementById(id);
+function message(text,error=false){el('message').hidden=false;el('message').textContent=text;el('message').className='fds-callout dr-notice dr-narrow fds-callout--'+(error?'danger':'info')}
 async function api(path,method='GET',body){const r=await fetch(path,{method,credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRFToken':csrf},body:body?JSON.stringify(body):undefined});const data=await r.json();if(!r.ok)throw {status:r.status,data};return data}
 const prefix='/api/v1/dealroom/recipient/'+slug;
-async function load(){try{const room=await api(prefix+'/room/');el('verify').hidden=true;el('nda').hidden=true;el('contents').hidden=false;el('title').textContent=room.name;el('subtitle').textContent='Your documents are ready.';el('identity').textContent=room.member.name+' · '+room.member.email;el('files').replaceChildren();for(const f of room.files){const li=document.createElement('li'),info=document.createElement('div'),name=document.createElement('div'),meta=document.createElement('div'),open=document.createElement('a');name.className='name';name.textContent=f.name;meta.className='meta';meta.textContent=(f.page_count||1)+((f.page_count||1)===1?' page':' pages');info.append(name,meta);open.className='fds-btn';open.textContent='View';open.href=f.page_url;open.rel='noreferrer';open.onclick=e=>{e.preventDefault();view(f,li)};li.append(info,open);el('files').append(li)}return true}catch(e){if(e.data?.code==='nda_required'||JSON.stringify(e.data).includes('nda_required')){el('verify').hidden=true;el('nda').hidden=false;el('subtitle').textContent='Your email is verified.';await ndaStatus()}return false}}
-async function ndaStatus(){try{const s=await api('/api/v1/dealroom-sign/nda/'+roomId+'/');if(s.accepted){await load();return}el('start').hidden=s.state!=='not_started';el('enter').hidden=!s.can_enter;el('nda-state').textContent=s.state==='not_started'?'':s.can_enter?'Ready for your signature.':s.overdue?'Signing needs attention. Contact the room owner to review or reset your NDA.':s.state==='awaiting_seal'?'Signature received. Waiting for the sealed agreement.':'Preparing your agreement — this usually takes a few seconds.'}catch(e){message('Please verify your email to continue.',true)}}
-el('email-form').onsubmit=async e=>{e.preventDefault();try{const r=await api(prefix+'/challenge/','POST',{name:el('name').value,email:el('email').value});challenge=r.challenge_id;el('email-form').hidden=true;el('code-form').hidden=false;message('Check your inbox for the verification code.')}catch(e){message('Could not send a code. Please try again.',true)}};
-el('code-form').onsubmit=async e=>{e.preventDefault();try{const r=await api(prefix+'/confirm/','POST',{challenge_id:challenge,code:el('code').value});if(r.status!=='verified'){message(r.message,true);return}el('message').hidden=true;await load()}catch(e){message('Verification failed.',true)}};
-el('enter').onsubmit=async e=>{e.preventDefault();try{const r=await api('/api/v1/dealroom-sign/nda/'+roomId+'/enter/','POST',{});location.assign(r.signing_url)}catch(e){message('Cannot enter signing. Verify your room access again.',true)}};
+// Context bar (spec §4): room name (server-rendered) + who this visitor is, once known.
+const KEY='dr-visitor-'+slug;
+function who(person){if(person&&person.email){sessionStorage.setItem(KEY,JSON.stringify({name:person.name||'',email:person.email}));el('context-who').textContent=(person.name?person.name+' · ':'')+person.email}}
+function head(title,subtitle){el('title').textContent=title;el('subtitle').textContent=subtitle;document.title=title+' · Fleet Dealroom'}
+let files=[];
+async function load(){try{const room=await api(prefix+'/room/');el('verify').hidden=true;el('nda').hidden=true;el('message').hidden=true;
+  el('context-room').textContent=room.name;who(room.member);files=room.files;showList();return true}
+  catch(e){if(e.data?.code==='nda_required'||JSON.stringify(e.data).includes('nda_required')){el('verify').hidden=true;el('nda').hidden=false;head('One step before you enter','Your email is verified. The room owner asks everyone to sign an NDA first.');try{who(JSON.parse(sessionStorage.getItem(KEY)))}catch(_){}await ndaStatus()}return false}}
+function showList(){head('Documents',files.length?'Every copy you open is watermarked with your name.':'Nothing has been shared in this room yet.');el('viewer').hidden=true;el('page-actions').hidden=true;el('contents').hidden=false;
+  el('files').replaceChildren(...(files.length?files.map(f=>{const pages=f.page_count||1;const tr=h('tr',{});
+    const open=h('a',{class:'dr-btn dr-btn--sm',href:f.page_url,rel:'noreferrer',text:'View',onclick:e=>{e.preventDefault();view(f)}});
+    tr.append(h('td',{},h('span',{class:'name dr-strong',text:f.name})),h('td',{class:'dr-num dr-muted',text:String(pages)}),h('td',{class:'dr-actions'},open));return tr}):[h('tr',{},h('td',{colspan:'3',class:'dr-muted',text:'No documents yet.'}))]))}
+async function ndaStatus(){try{const s=await api('/api/v1/dealroom-sign/nda/'+roomId+'/');if(s.accepted){await load();return}
+  el('start').hidden=s.state!=='not_started';el('enter').hidden=!s.can_enter;
+  el('nda-pill').className='fds-pill fds-pill--'+(s.overdue?'warning':s.can_enter?'info':'neutral');el('nda-pill').textContent=s.overdue?'Needs attention':s.can_enter?'Ready to sign':s.state==='not_started'?'Required':'Preparing';
+  el('nda-state').textContent=s.state==='not_started'?'':s.can_enter?'Your agreement is ready for your signature.':s.overdue?'Signing needs attention. Contact the room owner to review or reset your NDA.':s.state==='awaiting_seal'?'Signature received. Waiting for the sealed agreement.':'Preparing your agreement — this usually takes a few seconds.'}catch(e){message('Please verify your email to continue.',true)}}
+el('email-form').onsubmit=async e=>{e.preventDefault();try{const r=await api(prefix+'/challenge/','POST',{name:el('name').value,email:el('email').value});challenge=r.challenge_id;el('email-form').hidden=true;el('code-form').hidden=false;el('code-hint').textContent='We sent it to '+el('email').value+'.';el('message').hidden=true;el('code').focus()}catch(e){message('We could not send a code. Please try again in a few minutes.',true)}};
+el('code-form').onsubmit=async e=>{e.preventDefault();try{const r=await api(prefix+'/confirm/','POST',{challenge_id:challenge,code:el('code').value});if(r.status!=='verified'){message(r.message,true);return}who({name:el('name').value,email:el('email').value});el('message').hidden=true;await load()}catch(e){message('That code did not work. Check it and try again.',true)}};
+el('enter').onsubmit=async e=>{e.preventDefault();try{const r=await api('/api/v1/dealroom-sign/nda/'+roomId+'/enter/','POST',{});location.assign(r.signing_url)}catch(e){message('Cannot open signing. Verify your room access again.',true)}};
 el('start').onclick=async()=>{try{await api('/api/v1/dealroom-sign/nda/'+roomId+'/','POST',{});await ndaStatus()}catch(e){message('The NDA could not be prepared. Contact the room owner.',true)}};
 (async()=>{const data=await api(prefix+'/challenge/');csrf=data.csrf_token;await load();setInterval(async()=>{if(!el('nda').hidden)await ndaStatus()},3000)})();
 
-// Inline viewer: every page is the server-rendered, per-recipient watermarked image (render-page/N).
-function view(f,li){for(const x of el('files').children)x.removeAttribute('aria-current');li.setAttribute('aria-current','true');el('viewer-title').textContent=f.name;el('pages').replaceChildren();for(let n=1;n<=(f.page_count||1);n++){const img=document.createElement('img');img.loading=n>2?'lazy':'eager';img.alt=f.name+' · page '+n;img.onerror=()=>{const c=document.createElement('div');c.className='fds-callout fds-callout--info';c.textContent=n===1?'An inline preview is not available for this file.':'Page '+n+' is not available.';img.replaceWith(c)};img.src=f.page_url.replace('/render-page/1/','/render-page/'+n+'/');el('pages').append(img)}el('viewer').hidden=false;el('viewer').scrollIntoView({behavior:'smooth',block:'start'})}
-el('viewer-close').onclick=()=>{el('viewer').hidden=true;for(const x of el('files').children)x.removeAttribute('aria-current')};
+// Document view: every page is the server-rendered, per-recipient watermarked image (render-page/N).
+function view(f){head(f.name,(f.page_count||1)+((f.page_count||1)===1?' page':' pages')+' · watermarked to you');el('contents').hidden=true;el('page-actions').hidden=false;el('pages').replaceChildren();
+  for(let n=1;n<=(f.page_count||1);n++){const img=document.createElement('img');img.loading=n>2?'lazy':'eager';img.alt=f.name+' · page '+n;img.onerror=()=>{img.replaceWith(h('div',{class:'fds-callout fds-callout--info',text:n===1?'An inline preview is not available for this file.':'Page '+n+' is not available.'}))};img.src=f.page_url.replace('/render-page/1/','/render-page/'+n+'/');el('pages').append(img)}
+  el('viewer').hidden=false;window.scrollTo({top:0})}
+el('viewer-close').onclick=showList;
 </script>{% endblock %}

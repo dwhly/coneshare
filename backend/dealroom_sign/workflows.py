@@ -71,6 +71,25 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
     return workflow
 
 
+def return_url(workflow):
+    """Where an NDA signer goes back to: the room page, carrying the room name for Sign's context bar
+    ("Back to <room>"). Sign reads it from the envelope's documentMeta.redirectUrl (`room_name` query)."""
+    if workflow.purpose != 'nda':
+        return ''
+    from urllib.parse import urlencode
+    return f'{settings.SITE_DOMAIN}/signing/nda/{workflow.room_id}?' + urlencode({'room_name': workflow.room.name})
+
+
+def envelope_meta(workflow):
+    """Room context Sign can show (spec: dealroom-shell.md §4) and the Fleet Dealroom email subject.
+    The signer's name is already the recipient name (the verified room member's name for NDAs)."""
+    title = workflow.title[:-4] if workflow.title.lower().endswith('.pdf') else workflow.title
+    meta = {'subject': f'Fleet Dealroom: please sign {title}'[:254]}
+    if return_url(workflow):
+        meta['redirectUrl'] = return_url(workflow)
+    return meta
+
+
 def validate_envelope(workflow, envelope):
     if envelope.get('id') != workflow.envelope_id or envelope.get('externalId') != workflow.external_id:
         raise SignError('envelope_correlation_mismatch')
@@ -116,7 +135,7 @@ def execute(workflow, client):
                 raise SignError('source_hash_changed')
             workflow.state = 'creating'
             workflow.save(update_fields=['state'])
-            envelope_id = client.create(workflow, pdf)
+            envelope_id = client.create(workflow, pdf, meta=envelope_meta(workflow))
             # Persist response before any second remote request; ambiguous create is never replayed.
             workflow.envelope_id = envelope_id
             workflow.save(update_fields=['envelope_id'])
@@ -128,8 +147,7 @@ def execute(workflow, client):
     if workflow.state == 'draft' and envelope['status'] == 'DRAFT':
         workflow.state = 'distributing'
         workflow.save(update_fields=['state'])
-        redirect = f'{settings.SITE_DOMAIN}/signing/nda/{workflow.room_id}' if workflow.purpose == 'nda' else ''
-        client.distribute(workflow.envelope_id, nda=workflow.purpose == 'nda', redirect_url=redirect)
+        client.distribute(workflow.envelope_id, nda=workflow.purpose == 'nda', redirect_url=return_url(workflow))
         envelope = client.get(workflow.envelope_id)
         validate_envelope(workflow, envelope)
     if envelope['status'] == 'DRAFT':

@@ -430,3 +430,40 @@ def test_api_schema_does_not_silently_drop_rich_field_requirements(recipients):
         'idempotency_key': 'key', 'recipients': recipients})
     assert not serializer.is_valid()
     assert 'Unsupported input property' in str(serializer.errors)
+
+
+@override_settings(SITE_DOMAIN='https://send.example.test')
+def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
+    # Sign shows "Back to <room>" + the room name from documentMeta.redirectUrl; the signer name is the recipient name.
+    from urllib.parse import parse_qs, urlparse
+    from dealroom_sign.workflows import envelope_meta, return_url
+    fixture.room.name = 'Project Atlas · Glue review'
+    fixture.room.save()
+    work = Workflow.objects.get(pk=fixture.work.pk)
+    assert return_url(work) == '' and envelope_meta(work) == {'subject': 'Fleet Dealroom: please sign Source'}
+    work.purpose = 'nda'
+    url = urlparse(return_url(work))
+    assert f'{url.scheme}://{url.netloc}{url.path}' == f'https://send.example.test/signing/nda/{fixture.room.pk}'
+    assert parse_qs(url.query) == {'room_name': ['Project Atlas · Glue review']}
+    sent = []
+    def respond(request):
+        sent.append(request)
+        return httpx.Response(200, json={'id': 'envelope_new'})
+    with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
+        assert client.create(work, pdf, meta=envelope_meta(work)) == 'envelope_new'
+    payload = _multipart_payload(sent[0])
+    assert payload['meta'] == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'distributionMethod': 'NONE'}
+    assert payload['recipients'][0]['name'] == 'Member'
+
+
+def _multipart_payload(request):
+    import json, re
+    body = request.read().decode('utf-8', 'replace')
+    return json.loads(re.search(r'name="payload"\r\n\r\n(.*?)\r\n--', body, re.S).group(1))
+
+
+def test_status_lists_title_and_recipient_names_only(fixture):
+    from dealroom_sign.serializers import WorkflowSerializer
+    data = WorkflowSerializer(fixture.work).data
+    assert data['title'] == 'Source.pdf'
+    assert data['recipients'] == [{'name': 'Member', 'email': 'member@example.test'}]

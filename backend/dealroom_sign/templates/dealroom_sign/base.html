@@ -1,44 +1,25 @@
 <!doctype html><html lang="en" data-density="spacious"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
-<title>{% block title %}Signing{% endblock %} · {% block title_suffix %}Fleet Dealroom{% endblock %}</title>
-{# Fleet design system v0.5.0, vendored once in frontend/public/fds (source commit 7855f54); nginx serves it at /fds/. #}
-<script src="/fds/theme-boot.js?v=0.5.0"></script>
-<link rel="icon" type="image/svg+xml" href="{% block favicon %}/fds/marks/fleet.svg{% endblock %}">
-<link rel="stylesheet" href="/fds/fonts.css?v=0.5.0">
-<link rel="stylesheet" href="/fds/tokens.css?v=0.5.0">
-<link rel="stylesheet" href="/fds/brand-amforge.css?v=0.5.0">
-<link rel="stylesheet" href="/fds/components.css?v=0.5.0">
+<title>{% block title %}Signing{% endblock %} · Fleet Dealroom</title>
+{# Fleet design system v0.5.1, vendored once in frontend/public/fds (source commit 61540c6); base Fleet tokens, no brand layer.
+   /dealroom/shell.css + shell.js = the shared Fleet Dealroom shell (docs/design/dealroom-shell.md), same files as the React console. #}
+<script src="/fds/theme-boot.js?v=0.5.1"></script>
+<link rel="icon" type="image/svg+xml" href="/fds/marks/fleet.svg">
+<link rel="stylesheet" href="/fds/fonts.css?v=0.5.1">
+<link rel="stylesheet" href="/fds/tokens.css?v=0.5.1">
+<link rel="stylesheet" href="/fds/components.css?v=0.5.1">
+<link rel="stylesheet" href="/dealroom/shell.css?v=r2">
 <style>
 /* Glue pages read roles only (tokens.css); check-literals.py reports 0 for this directory. */
-*{box-sizing:border-box}html{background:hsl(var(--canvas))}body{margin:0;min-height:100vh;display:flex;flex-direction:column}
-.fds-header{position:sticky;top:0;z-index:10;gap:var(--space-6);padding:0 max(var(--space-6),calc((100vw - 1120px) / 2 + var(--space-6)))}
-main{width:100%;max-width:1120px;margin:var(--space-8) auto 0;padding:0 var(--space-6);flex:1}
-h1{font-size:var(--text-2xl);font-weight:650;letter-spacing:-0.015em;margin:var(--space-1) 0}
-h2{font-size:var(--text-lg);font-weight:600;margin:0 0 var(--space-2)}
-.eyebrow{color:hsl(var(--muted-foreground));font-size:var(--text-sm);font-weight:500}
-.muted{color:hsl(var(--muted-foreground));line-height:1.6;margin:0 0 var(--space-4)}
-section.fds-card{margin:var(--space-6) 0}
-label{display:block;color:hsl(var(--foreground));font-size:var(--text-sm);font-weight:500;margin:var(--space-4) 0 var(--space-1)}
-input,select,textarea{display:block;width:100%;font:inherit;font-size:var(--text-md);color:hsl(var(--foreground));background:hsl(var(--background));border:1px solid hsl(var(--input));border-radius:var(--radius-control);padding:var(--space-2) var(--space-3)}
-input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid hsl(var(--ring));outline-offset:1px}
-.fds-btn{font-size:var(--text-md);padding:var(--space-2) var(--space-4)}
-form .fds-btn--primary,section>.fds-btn{margin-top:var(--space-4)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}.coords{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-3)}
-.fds-callout{margin:var(--space-4) 0}
-table{border-collapse:collapse;width:100%;font-size:var(--text-md)}td,th{text-align:left;padding:var(--row-pad-y) var(--space-3);border-bottom:1px solid hsl(var(--border));vertical-align:top}th{color:hsl(var(--muted-foreground));font-weight:500;font-size:var(--text-sm)}
-td .fds-btn{margin-top:var(--space-2)}
-pre{white-space:pre-wrap;font-family:var(--font-mono);font-size:var(--text-sm);background:hsl(var(--muted));border:1px solid hsl(var(--border));border-radius:var(--radius);padding:var(--space-3);margin:0 0 var(--space-3)}
-.approval{border-bottom:1px solid hsl(var(--border));padding:var(--space-3) 0}.approval .fds-btn{margin-right:var(--space-2)}
-.empty{color:hsl(var(--muted-foreground));margin:0}
-.activity p{margin:0;padding:var(--space-2) 0;border-bottom:1px solid hsl(var(--border))}.activity time{font-family:var(--font-mono);font-size:var(--text-sm);color:hsl(var(--muted-foreground))}
-[hidden]{display:none!important}a{color:hsl(var(--brand-muted-foreground))}a.fds-btn{text-decoration:none;color:hsl(var(--foreground))}
+*{box-sizing:border-box}html{background:hsl(var(--background))}body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:hsl(var(--background))}
+main{flex:1;width:100%}
+[hidden]{display:none!important}
+a{color:hsl(var(--brand-muted-foreground))}
 .site-footer{color:hsl(var(--muted-foreground));font-size:var(--text-xs);text-align:center;padding:var(--space-8) 0}
-.tenant{display:inline-flex;align-items:center;gap:var(--space-2);text-decoration:none;color:hsl(var(--foreground));font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-0.01em}
-.tenant img{width:26px;height:26px}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.coords{grid-template-columns:repeat(3,1fr)}main{margin-top:var(--space-6)}}
 {% block styles %}{% endblock %}
 </style></head><body class="fds-body">
 {% block header %}{% endblock %}
 <main>{% block content %}{% endblock %}</main>
-<footer class="site-footer">{% block footer %}Confidential documents · Secure recipient access{% endblock %}</footer>
-<script src="/fds/theme.js?v=0.5.0" defer></script>
+<footer class="site-footer">{% block footer %}Fleet Dealroom · Confidential documents{% endblock %}</footer>
+<script src="/fds/theme.js?v=0.5.1" defer></script>
+<script src="/dealroom/shell.js?v=r2"></script>
 {% block scripts %}{% endblock %}</body></html>

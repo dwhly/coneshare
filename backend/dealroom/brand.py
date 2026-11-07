@@ -8,7 +8,9 @@ from django.conf import settings
 def load_brand():
     path = Path(settings.DEALROOM_BRAND_FILE)
     brand = yaml.safe_load(path.read_text())
-    for key in ('name', 'logo', 'tokens', 'watermark', 'email_sender'):
+    # tokens are optional: Fleet Dealroom uses the base Fleet tokens (a tenant may still set brand slots).
+    brand['tokens'] = brand.get('tokens') or {}
+    for key in ('name', 'logo', 'watermark', 'email_sender'):
         if not brand.get(key):
             raise ValueError(f'Missing brand field: {key}')
     if not {'name', 'organisation', 'email', 'date', 'copy_id'} <= set(__import__('re').findall(r'\{\{(\w+)\}\}', brand['watermark'])):

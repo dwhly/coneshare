@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import { Toaster } from 'sonner';
 import MainLayout from './components/layout/MainLayout';
 import AuthGuard from './components/auth/AuthGuard';
@@ -22,7 +22,10 @@ const ErrorPage = lazyNamed(() => import('./pages/ErrorPage'), 'ErrorPage');
 const NotFoundPage = lazyNamed(() => import('./pages/NotFoundPage'), 'NotFoundPage');
 
 // Authenticated app routes
-const HomePage = lazy(() => import('./pages/DealroomConsole'));
+const RoomsPage = lazy(() => import('./pages/dealroom/RoomsPage'));
+const RoomDetailPage = lazy(() => import('./pages/dealroom/RoomDetailPage'));
+const ActivityPage = lazy(() => import('./pages/dealroom/ActivityPage'));
+const ApprovalsPage = lazy(() => import('./pages/dealroom/ApprovalsPage'));
 const DealroomRecipient = lazy(() => import('./pages/DealroomRecipient'));
 const DocumentsPage = lazy(() => import('./pages/DocumentsPage'));
 const DocumentPage = lazyNamed(() => import('./pages/DocumentPage'), 'DocumentPage');
@@ -74,15 +77,17 @@ function App() {
                 <Route element={<AuthGuard />}>
                   <Route path="/auth/:providerName/callback" element={<CloudAuthCallbackPage />} />
                   <Route element={<MainLayout />}>
-                    <Route path="/" element={<HomePage />} />
+                    <Route path="/" element={<Navigate to="/datarooms" replace />} />
                     <Route path="/documents" element={<DocumentsPage />} />
                     <Route path="/documents/folders/:folderId" element={<DocumentsPage />} />
                     <Route path="/documents/:documentId" element={<DocumentPage />} />
                     <Route path="/documents/:documentId/versions" element={<DocumentVersionsPage />} />
                     <Route path="/documents/:documentId/links/:linkId" element={<ShareLinkAnalyticsPage />} />
                     <Route path="/trash" element={<TrashPage />} />
-                    <Route path="/datarooms" element={<HomePage />} />
-                    <Route path="/datarooms/:dataroomId" element={<HomePage />} />
+                    <Route path="/datarooms" element={<RoomsPage />} />
+                    <Route path="/datarooms/:dataroomId" element={<RoomDetailPage />} />
+                    <Route path="/activity" element={<ActivityPage />} />
+                    <Route path="/approvals" element={<ApprovalsPage />} />
                     <Route path="/file-requests" element={<FileRequestsPage />} />
                     <Route path="/file-requests/:requestId" element={<FileRequestDetailPage />} />
                     <Route path="/analytics/links" element={<AllLinksPage />} />

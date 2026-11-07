@@ -1,20 +1,21 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header";
-import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import { BreadcrumbProvider } from "./BreadcrumbProvider";
-import { SidebarProvider, useSidebar } from "./SidebarProvider";
-import { cn } from "../../lib/utils";
+import { SidebarProvider } from "./SidebarProvider";
 import { UserProvider } from "../../contexts/UserProvider";
 import { UploadProgressIndicator } from "../documents/UploadProgressIndicator";
 import { useLanguageSync } from "../../hooks/useLanguageSync";
-import { applyLayoutParam, useLayoutMode } from "../../lib/layoutMode";
+import { applyLayoutParam } from "../../lib/layoutMode";
+import { DealroomSubnav, isRoomsSection } from "./FleetChrome";
 import { useBreadcrumb } from "./BreadcrumbProvider";
-import { usePageTitle } from "../../hooks/usePageTitle";
+import { pageTitle } from "../../hooks/usePageTitle";
 
 const SECTION_TITLES = [
   ["/datarooms", "Rooms"],
+  ["/activity", "Activity"],
+  ["/approvals", "Approvals"],
   ["/documents", "Documents"],
   ["/file-requests", "File requests"],
   ["/analytics", "Analytics"],
@@ -28,45 +29,35 @@ const SECTION_TITLES = [
 function useConsoleTitle() {
   const { pathname } = useLocation();
   const { breadcrumbData } = useBreadcrumb();
-  const section = pathname === "/" ? "Dashboard" : (SECTION_TITLES.find(([p]) => pathname.startsWith(p)) || [null, ""])[1];
+  const section = pathname === "/" ? "Rooms" : (SECTION_TITLES.find(([p]) => pathname.startsWith(p)) || [null, ""])[1];
   const room = pathname.startsWith("/datarooms/") && breadcrumbData?.type === "dataroom" ? breadcrumbData.dataroomName : "";
-  usePageTitle(room || section);
+  // Rooms-section pages set their own "<page> · Fleet Dealroom" (parent effects run after children's).
+  useEffect(() => {
+    if (!isRoomsSection(pathname)) document.title = pageTitle(room || section);
+  }, [pathname, room, section]);
 }
 
-function SidebarLayout() {
-  const { isCollapsed } = useSidebar();
-  return (
-    <div
-      className={cn(
-        "grid h-screen w-full transition-all",
-        isCollapsed
-          ? "md:grid-cols-[4rem_1fr]"
-          : "md:grid-cols-[16rem_1fr]"
-      )}
-    >
-      <Sidebar />
-      <div className="grid grid-rows-[auto_1fr] overflow-hidden">
-        <Header />
-        <main className="overflow-auto p-4 md:p-6">
-          <Outlet />
-        </main>
-      </div>
-      <UploadProgressIndicator />
-    </div>
-  );
-}
-
-// Default layout: the fleet app header (always bordered, DESIGN.md §6). <main> stays the scroll container.
+// Fleet Dealroom shell (docs/design/dealroom-shell.md): the 56px app header, then for the Rooms section the
+// sub-nav (Rooms · Activity · Approvals) and pages that bring their own 1200px .dr-container. Other pages (settings,
+// admin, legacy Coneshare views) keep their own container. <main> stays the scroll container.
 function TopBarLayout() {
+  const { pathname } = useLocation();
+  const rooms = isRoomsSection(pathname);
   return (
     <div className="grid h-screen w-full grid-cols-[minmax(0,1fr)] grid-rows-[auto_1fr] overflow-hidden bg-background">
       <TopBar />
       <main className="overflow-auto">
-        {/* Pages bring their own container + p-4/md:p-6, so md:px-2 puts content on Sign's 32px gutter. */}
-        <div className="mx-auto w-full max-w-screen-xl pb-8 pt-2 md:px-2 md:pb-12 md:pt-4">
-          <Header variant="inline" />
-          <Outlet />
-        </div>
+        {rooms ? (
+          <>
+            <DealroomSubnav />
+            <Outlet />
+          </>
+        ) : (
+          <div className="mx-auto w-full max-w-[1200px] pb-8 pt-2 md:pb-12 md:pt-4">
+            <Header variant="inline" />
+            <Outlet />
+          </div>
+        )}
       </main>
       <UploadProgressIndicator />
     </div>
@@ -78,8 +69,8 @@ function Layout() {
   useConsoleTitle();
   const { search } = useLocation();
   useEffect(() => applyLayoutParam(search), [search]);
-  const mode = useLayoutMode();
-  return mode === "topbar" ? <TopBarLayout /> : <SidebarLayout />;
+  // One shell for every staff page (spec §1): the sidebar arrangement is retired; ?layout= is ignored.
+  return <TopBarLayout />;
 }
 
 function MainLayout() {

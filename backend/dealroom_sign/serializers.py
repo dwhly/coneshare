@@ -5,14 +5,19 @@ from .models import NdaPolicy, Workflow
 
 class WorkflowSerializer(serializers.ModelSerializer):
     artifacts = serializers.SerializerMethodField()
+    recipients = serializers.SerializerMethodField()
 
     def get_artifacts(self, obj):
         return list(obj.artifacts.values('kind', 'sha256', 'size', 'version_id'))
 
+    def get_recipients(self, obj):
+        # Who the sender asked to sign (name + email only; field placement and tokens stay private).
+        return [{'name': r.get('name', ''), 'email': r.get('email', '')} for r in (obj.recipients or [])]
+
     class Meta:
         model = Workflow
-        fields = ['id', 'room_id', 'purpose', 'envelope_id', 'state', 'member_email', 'source_status', 'signer_projection',
-                  'created_at', 'reconciled_at', 'completed_at', 'last_error', 'artifacts']
+        fields = ['id', 'room_id', 'purpose', 'title', 'recipients', 'envelope_id', 'state', 'member_email', 'source_status',
+                  'signer_projection', 'created_at', 'reconciled_at', 'completed_at', 'last_error', 'artifacts']
         read_only_fields = fields
 
 

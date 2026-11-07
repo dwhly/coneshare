@@ -67,9 +67,9 @@ class Documenso:
             if page > 100 or time.monotonic() > deadline:
                 raise SignError('discovery_limit_requires_operator')
 
-    def create(self, workflow, pdf):
+    def create(self, workflow, pdf, meta=None):
         payload = {'title': workflow.title, 'type': 'DOCUMENT', 'externalId': workflow.external_id,
-                   'recipients': workflow.recipients, 'meta': {'distributionMethod': 'NONE'}}
+                   'recipients': workflow.recipients, 'meta': {**(meta or {}), 'distributionMethod': 'NONE'}}
         return self.request('POST', 'envelope/create', data={'payload': json.dumps(payload)},
                             files={'files': ('document.pdf', pdf, 'application/pdf')}).json()['id']
 
