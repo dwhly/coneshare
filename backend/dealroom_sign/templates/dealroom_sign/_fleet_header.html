@@ -1,6 +1,6 @@
-{# Fleet Dealroom STAFF header for the glue pages: same spec + geometry as the React console's TopBar and Sign's
+{% comment %} Fleet Dealroom STAFF header for the glue pages: same spec + geometry as the React console's TopBar and Sign's
    chief/fleet-header.tsx (docs/design/dealroom-shell.md §1). Lockup → Rooms | Signatures → account menu → Theme last.
-   Then the Rooms section sub-nav (§2). #}
+   Then the Rooms section sub-nav (§2). {% endcomment %}
 <header class="fds-header dr-header">
   <a class="fds-lockup" href="/datarooms" aria-label="Fleet Dealroom"><svg class="fds-lockup__mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5 16.2 10.4 12 8.6 7.8 10.4Z"/><path d="M6 10.5 10.2 18.4 6 16.6 1.8 18.4Z" opacity=".8"/><path d="M18 10.5 22.2 18.4 18 16.6 13.8 18.4Z" opacity=".8"/></svg><span class="fds-lockup__family">Fleet</span><span class="fds-lockup__rule" aria-hidden="true"></span><span class="fds-lockup__product">Dealroom</span></a>
   <nav class="fds-nav" aria-label="Dealroom apps"><a href="/datarooms" aria-current="page">Rooms</a><a{% if sign_url %} href="{{ sign_url }}/inbox"{% else %} aria-disabled="true"{% endif %}>Signatures</a></nav>

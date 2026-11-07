@@ -1,6 +1,6 @@
-{# Fleet Dealroom VISITOR header (docs/design/dealroom-shell.md §4): the same 56px header, content in the 960px visitor
+{% comment %} Fleet Dealroom VISITOR header (docs/design/dealroom-shell.md §4): the same 56px header, content in the 960px visitor
    container: lockup left, Theme right, nothing else. Identical to Sign's recipient header so the lockup never jumps.
-   Then the context bar: room name + the visitor's name and email (filled in once verified). #}
+   Then the context bar: room name + the visitor's name and email (filled in once verified). {% endcomment %}
 <header class="fds-header dr-header dr-header--visitor">
   <div class="dr-visitor">
     <span class="fds-lockup" aria-label="Fleet Dealroom"><svg class="fds-lockup__mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5 16.2 10.4 12 8.6 7.8 10.4Z"/><path d="M6 10.5 10.2 18.4 6 16.6 1.8 18.4Z" opacity=".8"/><path d="M18 10.5 22.2 18.4 18 16.6 13.8 18.4Z" opacity=".8"/></svg><span class="fds-lockup__family">Fleet</span><span class="fds-lockup__rule" aria-hidden="true"></span><span class="fds-lockup__product">Dealroom</span></span>

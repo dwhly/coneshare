@@ -2,7 +2,6 @@
 {% block styles %}
 .dr-login{max-width:420px}
 .dr-card--flush .dr-filterbar{padding:12px 24px;margin:0;border-bottom:1px solid hsl(var(--border))}
-.dr-envelope td{padding-top:10px;padding-bottom:10px}
 .dr-recovery{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 {% endblock %}
 {% block content %}
@@ -34,7 +33,7 @@
         <button type="button" class="dr-btn dr-filter" data-filter="done" aria-pressed="false">Completed</button>
         <button type="button" class="dr-btn dr-filter" data-filter="attention" aria-pressed="false">Needs attention</button>
       </div>
-      <div class="dr-table-wrap"><table class="dr-table">
+      <div class="dr-table-wrap"><table class="dr-table dr-table--top">
         <thead><tr><th scope="col">Recipient</th><th scope="col">Document</th><th scope="col">Status</th><th scope="col">Signed copy</th><th scope="col" class="dr-num">Sent</th></tr></thead>
         <tbody id="envelopes"><tr><td colspan="5" class="dr-muted">Loading envelopes…</td></tr></tbody>
       </table></div>
@@ -103,7 +102,7 @@ function render(){
     const doc=h('td',{},h('span',{text:env.title||'Document'}),h('span',{class:'dr-sub',text:env.purpose==='nda'?'Room NDA':'Room document'}));
     const status=h('td',{},pill(env.state));
     const evidence=h('td',{});
-    evidence.append(h('span',{class:env.artifacts.length?'':'dr-muted',text:env.artifacts.length?'Filed in Executed/':'Not yet'}));
+    evidence.append(h('span',{class:env.artifacts.length?'':'dr-muted',text:env.artifacts.length?'Filed in the room':'Not yet'}));
     if(env.purpose==='nda'&&STUCK.includes(env.state)){
       // Stuck NDA recovery: say what happened in words, offer the reset (member: env.member_email).
       const box=h('div',{class:'dr-recovery'},h('span',{class:'dr-sub',text:human(env.last_error)}));
@@ -144,7 +143,7 @@ el('cancel-send').onclick=()=>el('send-dialog').close();
 el('send-form').onsubmit=async e=>{e.preventDefault();el('send-error').hidden=true;
   if(!versionSel.value){el('send-error').textContent='Upload a PDF to this room first.';el('send-error').hidden=false;return}
   try{await api('dealroom-sign/envelopes/','POST',{room_id:roomSel.value,version_id:versionSel.value,idempotency_key:Array.from(crypto.getRandomValues(new Uint8Array(16)),v=>v.toString(16).padStart(2,'0')).join(''),recipients:[{email:el('recipient-email').value,name:el('recipient-name').value,fields:[{type:'SIGNATURE',page:+el('page').value,positionX:+el('x').value,positionY:+el('y').value,width:+el('w').value,height:+el('h').value}]}]});
-    el('send-dialog').close();message('Sent for signature. The signed copy will be filed in Executed/.');await refresh()}catch(e){el('send-error').textContent=errorText(e);el('send-error').hidden=false}};
+    el('send-dialog').close();message('Sent for signature. The signed copy will be filed in the room.');await refresh()}catch(e){el('send-error').textContent=errorText(e);el('send-error').hidden=false}};
 if(token)open().catch(()=>{sessionStorage.removeItem('glue-staff-token');token='';el('login').hidden=false});
 setInterval(()=>{if(!el('workspace').hidden&&!el('send-dialog').open)refresh().catch(()=>{})},5000);
 </script>{% endblock %}

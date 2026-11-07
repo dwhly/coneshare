@@ -195,10 +195,10 @@ describe("LoginPage", () => {
     const submitButton = screen.getByRole("button", { name: /Sign In/i });
     fireEvent.click(submitButton);
 
-    // After clicking, button should be disabled and show "Signing In..."
+    // After clicking, button should be disabled and show "Signing in…"
     await waitFor(() => {
       expect(submitButton).toBeDisabled();
-      expect(screen.getByText("Signing In...")).toBeInTheDocument();
+      expect(screen.getByText("Signing in…")).toBeInTheDocument();
     });
 
     // Resolve the promise to finish the login process

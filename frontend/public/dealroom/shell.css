@@ -104,6 +104,11 @@
 .dr-table .dr-num, .dr-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .dr-table .dr-actions { width: 1%; text-align: right; white-space: nowrap; }
 .dr-table .dr-strong { font-weight: 500; }
+/* Inside a flush card the first/last cells line up with the card head's 24px inset. */
+.dr-card--flush .dr-table th:first-child, .dr-card--flush .dr-table td:first-child { padding-left: 24px; }
+.dr-card--flush .dr-table th:last-child, .dr-card--flush .dr-table td:last-child { padding-right: 24px; }
+/* Rows that can expand (Details) keep every cell on the first line. */
+.dr-table--top td { vertical-align: top; padding-top: 14px; padding-bottom: 14px; height: auto; }
 .dr-table .dr-sub { display: block; font-size: 13px; color: hsl(var(--muted-foreground)); }
 .dr-table a.dr-rowlink { color: hsl(var(--foreground)); font-weight: 500; text-decoration: none; }
 .dr-table a.dr-rowlink:hover { text-decoration: underline; text-underline-offset: 2px; }
@@ -151,7 +156,7 @@
 .dr-grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0 12px; }
 
 /* Native <dialog> for the Django glue pages (React uses the Radix dialog with the same geometry). */
-dialog.dr-dialog { box-sizing: border-box; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 64px); padding: 24px; margin: auto;
+dialog.dr-dialog { box-sizing: border-box; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 64px); overflow: visible; padding: 24px; margin: auto;
   border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground));
   box-shadow: 0 16px 48px hsl(var(--foreground) / 0.18); }
 dialog.dr-dialog--wide { width: min(720px, calc(100vw - 32px)); }

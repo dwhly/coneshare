@@ -70,7 +70,7 @@ function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-canvas">
-      <header className="fds-header md:px-8">
+      <header className="fds-header dr-header">
         <FleetLockup href="/login" />
         <div className="fds-header__utils">
           <ThemeToggle />

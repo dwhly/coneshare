@@ -121,7 +121,6 @@ export default function RoomDetailPage() {
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
-                      <th scope="col">Type</th>
                       <th scope="col" className="dr-num">Size</th>
                       <th scope="col" className="dr-num">Views</th>
                       <th scope="col" className="dr-num">Added</th>
@@ -134,7 +133,6 @@ export default function RoomDetailPage() {
                     {data.documents.map((d) => (
                       <tr key={d.id}>
                         <td className="dr-strong">{d.name}</td>
-                        <td>{String(d.document_type || "file").toUpperCase()}</td>
                         <td className="dr-num">{formatBytes(d.file_size)}</td>
                         <td className="dr-num">{d.dataroom_view_count ?? 0}</td>
                         <td className="dr-num">{formatDate(d.created_at)}</td>
@@ -158,12 +156,7 @@ export default function RoomDetailPage() {
           <Card
             flush
             title="People with access"
-            action={
-              <button type="button" className="dr-btn" onClick={() => setGrantOpen(true)}>
-                <UserPlus aria-hidden="true" />
-                Grant access
-              </button>
-            }
+            subtitle="Granted people and organisations. Names appear once a visitor verifies their email."
           >
             {data.grants.length === 0 ? (
               <div className="p-6">
@@ -185,7 +178,7 @@ export default function RoomDetailPage() {
                     <tr>
                       <th scope="col">Person or organisation</th>
                       <th scope="col">Status</th>
-                      <th scope="col" className="dr-num">Verified</th>
+                      <th scope="col" className="dr-num">Verified on</th>
                       <th scope="col" className="dr-actions">
                         <span className="sr-only">Actions</span>
                       </th>

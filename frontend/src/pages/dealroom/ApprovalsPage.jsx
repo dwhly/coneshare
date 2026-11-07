@@ -88,7 +88,7 @@ export default function ApprovalsPage() {
         <EmptyState>{show === "pending" ? "No requests are waiting for you." : "No requests match."}</EmptyState>
       ) : (
         <div className="dr-table-wrap">
-          <table className="dr-table">
+          <table className="dr-table dr-table--top">
             <thead>
               <tr>
                 <th scope="col">Request</th>
@@ -112,13 +112,13 @@ export default function ApprovalsPage() {
                 const sum = summary(a, data.rooms);
                 return (
                   <tr key={a.id}>
-                    <td className="py-3">
+                    <td>
                       <span className="dr-strong">{requestTitle(a)}</span>
                       {sum && <span className="dr-sub">{sum}</span>}
                       <Details>
                         <p className="dr-hint mt-2">Target: {a.method} {a.path}</p>
                         <p className="dr-hint mt-2">Current state</p>
-                        <pre>{JSON.stringify(a.current_state, null, 2)}</pre>
+                        {a.current_state && Object.keys(a.current_state).length ? <pre>{JSON.stringify(a.current_state, null, 2)}</pre> : <p className="dr-hint">Nothing yet — this request creates something new.</p>}
                         <p className="dr-hint mt-2">Proposed changes</p>
                         <pre>{JSON.stringify(a.payload, null, 2)}</pre>
                       </Details>
