@@ -1,12 +1,12 @@
 # Vendored fleet-design-system
 
-Source: `dwhly/fleet-design-system` **v0.8.0** (commit `3673538`), copied with `scripts/vendor.sh` (which never copies the
+Source: `dwhly/fleet-design-system` **v0.8.1** (commit `7ec5225`), copied with `scripts/vendor.sh` (which never copies the
 prototype-only `fds-lab.js`). `fds.lock` pins the version, commit and a sha256 per vendored file; verify with
 `scripts/check-vendored.sh frontend/public/fds` from the package. Do not edit vendored files here: change the system
 upstream, bump its version, re-vendor.
 
 Vendored (listed in `fds.lock`): `tokens.css`, `components.css`, `theme.js`, `fonts.css`, `tailwind.preset.cjs`, `fonts/`,
-`marks/`, `brands/`. No brand layer is linked (Fleet Dealroom uses the base Fleet tokens; `brands/` ships unused).
+`marks/`. Vendored with `--brands none` (recorded in `fds.lock`): Fleet Dealroom loads no brand layer, base Fleet tokens only.
 
 Product-owned (not in `fds.lock`):
 - `README.md` (this file);

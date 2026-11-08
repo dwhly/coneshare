@@ -42,7 +42,7 @@
   font-size: 14px; text-align: left; text-decoration: none; cursor: pointer; }
 .dr-menu__item:hover, .dr-menu__item:focus-visible { background: hsl(var(--accent)); outline: none; }
 
-/* §2 Sub-navigation: a second row in the content container, 44px, bottom hairline. fds v0.8.0 baseline (DESIGN.md §10):
+/* §2 Sub-navigation: a second row in the content container, 44px, bottom hairline. fds v0.8.1 baseline (DESIGN.md §10):
    pill tabs, the same "selected" language as the header tabs (.fds-nav) and the filter controls; the first pill's
    box sits on the content edge. */
 .dr-subnav { box-sizing: border-box; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -102,7 +102,7 @@
 .dr-input::placeholder { color: hsl(var(--muted-foreground)); }
 .dr-input:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 1px; }
 .dr-search .dr-input { padding-left: 34px; }
-/* fds v0.8.0 baseline: toolbar controls (filter toggles, menus) sit tight to their text at 26px, never stretched to
+/* fds v0.8.1 baseline: toolbar controls (filter toggles, menus) sit tight to their text at 26px, never stretched to
    the 36px search input's height; selected = the neutral --selected role (same as the tabs). */
 .dr-filterbar .dr-filter, .dr-filterbar .dr-select__trigger { height: 26px; padding: 0 10px; font-size: 13px; }
 .dr-filter[aria-pressed="true"] { background: hsl(var(--selected)); color: hsl(var(--selected-foreground));
@@ -144,7 +144,7 @@
 .dr-empty p { margin: 0; }
 
 /* Status pill (bordered tint + word) and identity chip (neutral + tag dot): fds components.css .fds-pill/.fds-tag,
-   sized for 14px rows: 22px chips (fds v0.8.0 baseline), small-control radius, never 999px. */
+   sized for 14px rows: 22px chips (fds v0.8.1 baseline), small-control radius, never 999px. */
 .dr-table .fds-pill, .dr-card .fds-pill { box-sizing: border-box; height: 22px; font-size: 12px; }
 .dr-chip { display: inline-flex; align-items: center; gap: 6px; padding: 0 8px; height: 22px; border-radius: calc(var(--radius-control) * 0.75);
   background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); font-size: 12px; font-weight: 500; white-space: nowrap; }

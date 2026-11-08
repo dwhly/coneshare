@@ -204,13 +204,13 @@
 [data-theme="dark"][data-chrome="dark"] .fds-header { --border: 222 18% 26%; }
 
 /* Org title-bar colour (optional, per organisation): set --chrome-base (an HSL triplet) on <html> to use the org's
-   own dark bar colour instead of the neutral navy, e.g. AmForge 222 75% 17% (#0b1f4d). It must stay DARK (the island's
-   light text is checked against it). --chrome-rule (HSL) adds the org's 2px accent rule under the bar (AmForge gold). */
+   own dark bar colour instead of the neutral navy, e.g. a navy 222 75% 17% (#0b1f4d). It must stay DARK (the island's
+   light text is checked against it). --chrome-rule (HSL) adds the org's 2px accent rule under the bar (e.g. gold). */
 [data-chrome="dark"][data-chrome-rule] .fds-header { border-bottom: 2px solid hsl(var(--chrome-rule)); }
 
 /* Brand strength follows the bar (owner 2026-11-08: "adopt all"): an org with a dark title bar uses that bar colour
    for SELECTION (selected filters, segments) and the MAIN BUTTON in light mode, as its own board did; the current tab
-   in the bar is a pill in the bar's accent (gold on AmForge). Dark mode keeps the neutral lifted roles. Orgs with a
+   in the bar is a pill in the bar's accent (e.g. gold). Dark mode keeps the neutral lifted roles. Orgs with a
    light bar are unchanged (neutral selection, ink primary). */
 html[data-chrome="dark"]:not([data-theme="dark"]) {
   --selected: var(--chrome-base, 222 28% 13%); --selected-foreground: 0 0% 100%; --selected-border: var(--chrome-base, 222 28% 13%);
@@ -221,7 +221,7 @@ html[data-chrome="dark"]:not([data-theme="dark"]) {
 }
 
 /* Surface warmth — per organisation (owner 2026-11-08): `warm` = a beige-yellow paper with warm lines and warm greys
-   (the AmForge board's own palette). Default is neutral. Only surfaces, lines and greys change: status, brand,
+   (a paper-and-ink palette). Default is neutral. Only surfaces, lines and greys change: status, brand,
    selection-ink and text roles stay the same. Set <html data-surface="warm"> (tenant setting; lab: ?surface=). */
 [data-surface="warm"] {
   --canvas: 40 47% 94%; --background: 42 70% 97%; --card: 43 100% 99%; --popover: 43 100% 99%;
