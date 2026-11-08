@@ -45,7 +45,8 @@
 /* §2 Sub-navigation: a second row in the content container, 44px, bottom hairline. fds v0.8.1 baseline (DESIGN.md §10):
    pill tabs, the same "selected" language as the header tabs (.fds-nav) and the filter controls; the first pill's
    box sits on the content edge. */
-.dr-subnav { box-sizing: border-box; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+/* width: 100% — the glue pages' body is a flex column, where an auto-margin child shrink-wraps and centres. */
+.dr-subnav { box-sizing: border-box; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 .dr-subnav nav { display: flex; align-items: center; gap: 2px; height: 44px; border-bottom: 1px solid hsl(var(--border)); }
 .dr-subnav a { display: inline-flex; align-items: center; padding: 4px 12px; line-height: 1.4; color: hsl(var(--muted-foreground));
   text-decoration: none; border: 1px solid transparent; border-radius: var(--radius-control); }
