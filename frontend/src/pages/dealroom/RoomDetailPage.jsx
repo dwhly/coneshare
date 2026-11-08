@@ -12,11 +12,13 @@ import {
   PageHead,
   RowMenu,
   StatusPill,
+  TableFooter,
   TimeCell,
   formatBytes,
   formatDate,
   humanEvent,
   errorText,
+  usePaged,
 } from "../../components/dealroom/shell";
 import { AddOrganisationDialog, GrantAccessDialog, UploadDialog } from "./dialogs";
 import { items, loadRoomDetail, useLoader } from "./data";
@@ -38,6 +40,8 @@ export default function RoomDetailPage() {
   const [grantOpen, setGrantOpen] = useState(false);
   const [orgOpen, setOrgOpen] = useState(false);
   const room = data?.room;
+  const docsPaged = usePaged(data?.documents);
+  const grantsPaged = usePaged(data?.grants);
   usePageTitle(room?.name || "Room");
   const entry = room ? `${window.location.origin}${room.entry_url}` : "";
 
@@ -130,7 +134,7 @@ export default function RoomDetailPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.documents.map((d) => (
+                    {docsPaged.shown.map((d) => (
                       <tr key={d.id}>
                         <td className="dr-strong">{d.name}</td>
                         <td className="dr-num">{formatBytes(d.file_size)}</td>
@@ -149,6 +153,7 @@ export default function RoomDetailPage() {
                     ))}
                   </tbody>
                 </table>
+                <TableFooter paged={docsPaged} noun="document" />
               </div>
             )}
           </Card>
@@ -185,7 +190,7 @@ export default function RoomDetailPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.grants.slice(0, 12).map((g) => {
+                    {grantsPaged.shown.map((g) => {
                       const [tone, word] = grantStatus(g);
                       return (
                         <tr key={g.id}>
@@ -213,7 +218,7 @@ export default function RoomDetailPage() {
                     })}
                   </tbody>
                 </table>
-                {data.grants.length > 12 && <div className="dr-more dr-muted text-sm">{data.grants.length - 12} more</div>}
+                <TableFooter paged={grantsPaged} noun="person" plural="people" />
               </div>
             )}
           </Card>

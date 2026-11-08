@@ -104,5 +104,42 @@
     };
   }
 
-  window.drShell = { h, svg, drMenu, drAccount, drSelect, displayName };
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  /** DESIGN.md dates: "Nov 4" this year, "Nov 4, 2025" otherwise (list tables are date-only). */
+  function drDate(value) {
+    if (!value) return "—";
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return "—";
+    return MONTHS[d.getMonth()] + " " + d.getDate() + (d.getFullYear() === new Date().getFullYear() ? "" : ", " + d.getFullYear());
+  }
+
+  /** Table footer (spec §7) for a list table: "1 room" / "Showing 1–10 of 47"; pager only when there is >1 page.
+      drPager(footerEl, { noun, plural, pageSize, onPage }) → { render(total), page, slice(rows) }. */
+  function drPager(footer, { noun, plural, pageSize = 10, onPage } = {}) {
+    let page = 1, total = 0;
+    footer.classList.add("dr-tfoot");
+    const pages = () => Math.max(1, Math.ceil(total / pageSize));
+    const go = (n) => { page = Math.min(Math.max(1, n), pages()); if (onPage) onPage(page); };
+    const btn = (label, d, disabled, to) => h("button", { type: "button", class: "dr-btn", "aria-label": label, disabled, onclick: () => go(to) }, svg([d]));
+    const api = {
+      get page() { return page; },
+      reset() { page = 1; },
+      slice(rows) { total = rows.length; if (page > pages()) page = pages(); return rows.slice((page - 1) * pageSize, page * pageSize); },
+      render(n) {
+        total = n; if (page > pages()) page = pages();
+        const text = total <= pageSize ? total + " " + (total === 1 ? noun : plural || noun + "s")
+          : "Showing " + ((page - 1) * pageSize + 1) + "–" + Math.min(total, page * pageSize) + " of " + total;
+        const kids = [h("span", { text })];
+        if (pages() > 1) kids.push(h("nav", { class: "dr-pager", "aria-label": "Pages" },
+          btn("Previous page", "m15 18-6-6 6-6", page <= 1, page - 1),
+          h("span", { class: "dr-pager__page", text: "Page " + page + " of " + pages() }),
+          btn("Next page", "m9 18 6-6-6-6", page >= pages(), page + 1)));
+        footer.replaceChildren(...kids);
+        footer.hidden = false;
+      },
+    };
+    return api;
+  }
+
+  window.drShell = { h, svg, drMenu, drAccount, drSelect, displayName, drDate, drPager };
 })();

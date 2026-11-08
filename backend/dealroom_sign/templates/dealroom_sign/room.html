@@ -37,7 +37,7 @@
     <div class="dr-table-wrap"><table class="dr-table dr-files">
       <thead><tr><th scope="col">Document</th><th scope="col" class="dr-num">Pages</th><th scope="col" class="dr-actions"><span class="sr-only">View</span></th></tr></thead>
       <tbody id="files"></tbody>
-    </table></div>
+    </table><div id="files-foot" hidden></div></div>
   </section>
 
   <section id="viewer" hidden aria-live="polite">
@@ -45,7 +45,7 @@
   </section>
 </div>
 {% endblock %}{% block footer %}Fleet Dealroom · Every copy is watermarked to the person it was issued to{% endblock %}{% block scripts %}<script>
-const {h}=window.drShell;
+const {h,drPager}=window.drShell;
 const slug='{{ slug|escapejs }}', roomId='{{ room_id|escapejs }}';let csrf='',challenge='';
 const el=id=>document.getElementById(id);
 function message(text,error=false){el('message').hidden=false;el('message').textContent=text;el('message').className='fds-callout dr-notice dr-narrow fds-callout--'+(error?'danger':'info')}
@@ -56,11 +56,13 @@ const KEY='dr-visitor-'+slug;
 function who(person){if(person&&person.email){sessionStorage.setItem(KEY,JSON.stringify({name:person.name||'',email:person.email}));el('context-who').textContent=(person.name?person.name+' · ':'')+person.email}}
 function head(title,subtitle){el('title').textContent=title;el('subtitle').textContent=subtitle;document.title=title+' · Fleet Dealroom'}
 let files=[];
+const pager=drPager(el('files-foot'),{noun:'document',onPage:()=>showList()});
 async function load(){try{const room=await api(prefix+'/room/');el('verify').hidden=true;el('nda').hidden=true;el('message').hidden=true;
   el('context-room').textContent=room.name;who(room.member);files=room.files;showList();return true}
   catch(e){if(e.data?.code==='nda_required'||JSON.stringify(e.data).includes('nda_required')){el('verify').hidden=true;el('nda').hidden=false;head('One step before you enter','Your email is verified. The room owner asks everyone to sign an NDA first.');try{who(JSON.parse(sessionStorage.getItem(KEY)))}catch(_){}await ndaStatus()}return false}}
 function showList(){head('Documents',files.length?'Every copy you open is watermarked with your name.':'Nothing has been shared in this room yet.');el('viewer').hidden=true;el('page-actions').hidden=true;el('contents').hidden=false;
-  el('files').replaceChildren(...(files.length?files.map(f=>{const pages=f.page_count||1;const tr=h('tr',{});
+  pager.render(files.length);
+  el('files').replaceChildren(...(files.length?pager.slice(files).map(f=>{const pages=f.page_count||1;const tr=h('tr',{});
     const open=h('a',{class:'dr-btn dr-btn--sm',href:f.page_url,rel:'noreferrer',text:'View',onclick:e=>{e.preventDefault();view(f)}});
     tr.append(h('td',{},h('span',{class:'name dr-strong',text:f.name})),h('td',{class:'dr-num dr-muted',text:String(pages)}),h('td',{class:'dr-actions'},open));return tr}):[h('tr',{},h('td',{colspan:'3',class:'dr-muted',text:'No documents yet.'}))]))}
 async function ndaStatus(){try{const s=await api('/api/v1/dealroom-sign/nda/'+roomId+'/');if(s.accepted){await load();return}

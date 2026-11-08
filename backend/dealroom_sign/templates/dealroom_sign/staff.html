@@ -36,7 +36,7 @@
       <div class="dr-table-wrap"><table class="dr-table dr-table--top">
         <thead><tr><th scope="col">Recipient</th><th scope="col">Document</th><th scope="col">Status</th><th scope="col">Signed copy</th><th scope="col" class="dr-num">Sent</th></tr></thead>
         <tbody id="envelopes"><tr><td colspan="5" class="dr-muted">Loading envelopes…</td></tr></tbody>
-      </table></div>
+      </table><div id="envelopes-foot" hidden></div></div>
     </section>
   </div>
 </div>
@@ -66,7 +66,7 @@
   </form>
 </dialog>
 {% endblock %}{% block scripts %}<script>
-const {h,drAccount,drSelect}=window.drShell;
+const {h,drAccount,drSelect,drDate,drPager}=window.drShell;
 const el=id=>document.getElementById(id);
 // Reuse the console's session when there is one (same origin); fall back to this page's own sign-in.
 let token=sessionStorage.getItem('glue-staff-token')||localStorage.getItem('access_token')||'';
@@ -83,7 +83,8 @@ const ERRORS={sign_unavailable:'Sign could not be reached.',create_outcome_uncer
 const human=code=>ERRORS[code]||String(code||'Waiting for signing evidence').replace(/^sign_/,'').replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
 async function api(path,method='GET',body){const r=await fetch('/api/v1/'+path,{method,headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:body?JSON.stringify(body):undefined});const data=r.status===204?{}:await r.json().catch(()=>({}));if(!r.ok){data.status=r.status;throw data}return data}
 const rows=r=>r.results||r;
-const fmt=d=>d?new Date(d).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}):'—';
+const fmt=drDate;
+const pager=drPager(el('envelopes-foot'),{noun:'envelope',onPage:()=>render()});
 const roomSel=drSelect(el('room-select'),{label:'Room',onChange:v=>{history.replaceState(null,'','?room='+v);selectRoom()}});
 const versionSel=drSelect(el('version-select'),{label:'Document',placeholder:'No documents in this room'});
 versionSel.trigger.setAttribute('aria-labelledby','version-label');
@@ -95,8 +96,11 @@ function render(){
     if(filter==='done'&&s!=='Completed')return false;
     if(filter==='attention'&&!(env.purpose==='nda'&&STUCK.includes(env.state))&&!['Failed','Needs attention','Rejected'].includes(s))return false;
     return !q||JSON.stringify([env.title,env.recipients,env.member_email]).toLowerCase().includes(q)});
+  pager.render(list.length);
   if(!list.length){el('envelopes').replaceChildren(h('tr',{},h('td',{colspan:'5',class:'dr-muted',text:envelopes.length?'No envelopes match.':'Nothing has been sent for signature from this room yet.'})));return}
-  el('envelopes').replaceChildren(...list.map(env=>{
+  // Keep an open Details disclosure open across the 5s refresh.
+  const open=new Set([...el('envelopes').querySelectorAll('tr.dr-envelope details[open]')].map(d=>d.closest('tr').dataset.id));
+  el('envelopes').replaceChildren(...pager.slice(list).map(env=>{
     const who=(env.recipients&&env.recipients[0])||{};const email=who.email||(env.signer_projection[0]||{}).email||env.member_email||'';
     const recipient=h('td',{},h('span',{class:'dr-strong',text:who.name||email||'Preparing'}),who.name&&email?h('span',{class:'dr-sub',text:email}):null);
     const doc=h('td',{},h('span',{text:env.title||'Document'}),h('span',{class:'dr-sub',text:env.purpose==='nda'?'Room NDA':'Room document'}));
@@ -109,9 +113,10 @@ function render(){
       box.append(h('button',{type:'button',class:'dr-btn dr-btn--sm',text:'Reset NDA',onclick:async()=>{try{await api('dealroom-sign/nda-reset/'+env.room_id+'/'+env.id+'/','POST',{});message('NDA reset. '+(env.member_email||'The member')+' can prepare signing again.');await refresh()}catch(e){message(errorText(e),true)}}}));
       evidence.append(box)}
     const raw=h('details',{class:'dr-details'},h('summary',{text:'Details'}),h('pre',{text:JSON.stringify({envelope:env.envelope_id,state:env.state,sign_status:env.source_status,signers:env.signer_projection,evidence:env.artifacts,last_error:env.last_error||null},null,2)}));
+    if(open.has(String(env.id)))raw.open=true;
     evidence.append(raw);
     const sent=h('td',{class:'dr-num dr-muted',text:fmt(env.created_at)});
-    return h('tr',{class:'dr-envelope'},recipient,doc,status,evidence,sent)}))
+    return h('tr',{class:'dr-envelope','data-id':String(env.id)},recipient,doc,status,evidence,sent)}))
 }
 async function agents(){
   const pending=rows(await api('dealroom/approvals/')).filter(a=>a.status==='pending_approval'&&a.operation_id.startsWith('dealroom_sign_')&&(!a.expires_at||new Date(a.expires_at)>new Date()));
@@ -120,6 +125,7 @@ async function agents(){
 }
 async function refresh(){const room=roomSel.value;if(!room)return;agents().catch(()=>{});envelopes=rows(await api('dealroom-sign/envelopes/?room_id='+room));render()}
 async function selectRoom(){
+  pager.reset();
   const room=rooms.find(r=>r.id===roomSel.value);
   el('crumb-room').textContent=room?room.name:'Room';el('crumb-room').href=room?'/datarooms/'+room.id:'/datarooms';
   document.title='Signing · '+(room?room.name+' · ':'')+'Fleet Dealroom';
@@ -135,8 +141,8 @@ async function open(){
   el('login').hidden=true;el('workspace').hidden=false;el('page-actions').hidden=false;
   drAccount(el('account'),token,signOut).catch(()=>{});
   if(rooms.length)await selectRoom();else el('envelopes').replaceChildren(h('tr',{},h('td',{colspan:'5',class:'dr-muted',text:'Create a room first.'})))}
-for(const b of document.querySelectorAll('[data-filter]'))b.onclick=()=>{filter=b.dataset.filter;for(const o of document.querySelectorAll('[data-filter]'))o.setAttribute('aria-pressed',String(o===b));render()};
-el('search').oninput=render;
+for(const b of document.querySelectorAll('[data-filter]'))b.onclick=()=>{filter=b.dataset.filter;pager.reset();for(const o of document.querySelectorAll('[data-filter]'))o.setAttribute('aria-pressed',String(o===b));render()};
+el('search').oninput=()=>{pager.reset();render()};
 el('login-form').onsubmit=async e=>{e.preventDefault();try{const r=await api('token/','POST',{email:el('email').value,password:el('password').value});token=r.access;sessionStorage.setItem('glue-staff-token',token);el('password').value='';el('message').hidden=true;await open()}catch(e){message('That email and password did not match.',true)}};
 el('open-send').onclick=()=>{el('send-error').hidden=true;el('send-dialog').showModal()};
 el('cancel-send').onclick=()=>el('send-dialog').close();

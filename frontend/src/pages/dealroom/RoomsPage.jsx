@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Building2, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { usePageTitle } from "../../hooks/usePageTitle";
-import { EmptyState, FilterButton, PageHead, RowMenu, SearchInput, formatBytes, formatDate, errorText } from "../../components/dealroom/shell";
+import { EmptyState, FilterButton, PageHead, RowMenu, SearchInput, TableFooter, formatBytes, formatDate, errorText, usePaged } from "../../components/dealroom/shell";
 import { AddOrganisationDialog, CreateRoomDialog } from "./dialogs";
 import { loadRooms, useLoader } from "./data";
 
@@ -26,6 +26,7 @@ export default function RoomsPage() {
     const f = FILTERS.find((x) => x.id === filter) || FILTERS[0];
     return (rooms || []).filter((r) => f.test(r) && r.name.toLowerCase().includes(q.trim().toLowerCase()));
   }, [rooms, q, filter]);
+  const paged = usePaged(shown, undefined, `${q}|${filter}`);
 
   const copyLink = async (r) => {
     try {
@@ -108,7 +109,7 @@ export default function RoomsPage() {
                     </td>
                   </tr>
                 )}
-                {shown.map((r) => (
+                {paged.shown.map((r) => (
                   <tr key={r.id}>
                     <td>
                       <Link className="dr-rowlink" to={`/datarooms/${r.id}`}>
@@ -133,6 +134,7 @@ export default function RoomsPage() {
                 ))}
               </tbody>
             </table>
+            {!loading && <TableFooter paged={paged} noun="room" />}
           </div>
         </>
       )}

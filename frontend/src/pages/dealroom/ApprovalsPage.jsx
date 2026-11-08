@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import api from "../../services/api";
 import { usePageTitle } from "../../hooks/usePageTitle";
-import { Details, EmptyState, FilterButton, PageHead, SearchInput, StatusPill, TimeCell, humanEvent, errorText } from "../../components/dealroom/shell";
+import { Details, EmptyState, FilterButton, PageHead, SearchInput, StatusPill, TableFooter, formatDate, humanEvent, errorText, usePaged } from "../../components/dealroom/shell";
 import { items, useLoader } from "./data";
 
 const VERBS = { create: "Create", partial_update: "Change", update: "Change", destroy: "Remove" };
@@ -56,6 +56,7 @@ export default function ApprovalsPage() {
         (!needle || `${requestTitle(a)} ${JSON.stringify(a.payload)}`.toLowerCase().includes(needle))
     );
   }, [data, q, show]);
+  const paged = usePaged(rows, undefined, `${q}|${show}`);
 
   async function decide(a, action) {
     try {
@@ -107,7 +108,7 @@ export default function ApprovalsPage() {
                   </td>
                 </tr>
               )}
-              {rows.map((a) => {
+              {paged.shown.map((a) => {
                 const [tone, word, open] = approvalState(a);
                 const sum = summary(a, data.rooms);
                 return (
@@ -127,7 +128,7 @@ export default function ApprovalsPage() {
                       <StatusPill tone={tone}>{word}</StatusPill>
                     </td>
                     <td className="dr-num dr-muted">
-                      <TimeCell value={a.created_at} />
+                      <time dateTime={a.created_at}>{formatDate(a.created_at)}</time>
                     </td>
                     <td className="dr-actions">
                       {open && (
@@ -146,6 +147,7 @@ export default function ApprovalsPage() {
               })}
             </tbody>
           </table>
+          {!loading && <TableFooter paged={paged} noun="request" />}
         </div>
       )}
     </div>

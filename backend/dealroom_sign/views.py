@@ -220,6 +220,9 @@ class RecipientNdaEnterView(RecipientNdaView):
         return Response({'signing_url': settings.SIGN_PUBLIC_URL.rstrip('/') + '/sign/' + identifier(work.signing_token)})
 
 
+GENERATED_ARTIFACT_NAME = r'^(sealed_pdf|certificate|audit)[-_]envelope_'
+
+
 class SigningSourceView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -229,8 +232,11 @@ class SigningSourceView(APIView):
     @extend_schema(responses=dict)
     def get(self, request, room_id):
         room = staff_room(request, room_id)
+        # Signed copies, certificates and audit trails are outputs of signing, not sendable documents: hide them
+        # (filed artifacts by their manifest row; older auto-named copies by their generated name).
         versions = DocumentVersion.objects.filter(document__dataroomdocument__dataroom=room,
-            document__deleted_at__isnull=True, content_type='application/pdf').select_related('document')
+            document__deleted_at__isnull=True, content_type='application/pdf', executedartifact__isnull=True,
+        ).exclude(document__name__regex=GENERATED_ARTIFACT_NAME).select_related('document').distinct()
         return Response([{'id': str(v.pk), 'name': v.document.name, 'version_number': v.version_number} for v in versions])
 
 

@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import api from "../../services/api";
 import { usePageTitle } from "../../hooks/usePageTitle";
-import { EmptyState, FilterButton, IdentityChip, PageHead, SearchInput, SelectMenu, TimeCell, humanEvent, errorText } from "../../components/dealroom/shell";
+import { EmptyState, FilterButton, IdentityChip, PageHead, SearchInput, SelectMenu, TableFooter, TimeCell, humanEvent, errorText, usePaged } from "../../components/dealroom/shell";
 import { items, useLoader } from "./data";
 
 const ACTORS = [
@@ -13,6 +13,7 @@ const ACTORS = [
 ];
 const actorGroup = (kind) => (kind === "recipient" || kind === "member" || kind === "viewer" ? "recipient" : kind === "agent" || kind === "api_key" ? "agent" : "human");
 const actorWord = { recipient: "Visitor", human: "Staff", agent: "Agent" };
+const MAX_PAGES = 20;
 
 /** Activity (§3 list page): who did what, when, in which room. */
 export default function ActivityPage() {
@@ -21,30 +22,30 @@ export default function ActivityPage() {
   const room = params.get("room") || "";
   const [q, setQ] = useState("");
   const [actor, setActor] = useState("all");
-  const [extra, setExtra] = useState({ rows: [], next: null, busy: false });
   const { data, error, loading } = useLoader(async () => {
     const [act, rooms] = await Promise.all([api.get("/dealroom/activity/"), api.get("/dealroom/rooms/")]);
-    setExtra({ rows: [], next: act.data?.next || null, busy: false });
-    return { rows: items(act.data), rooms: items(rooms.data) };
+    // The API pages by cursor (50 a page, no count): read up to MAX_PAGES so the footer can say "of N".
+    let rows = items(act.data);
+    let next = act.data?.next || null;
+    for (let i = 1; next && i < MAX_PAGES; i++) {
+      const url = new URL(next, window.location.origin);
+      const r = await api.get(`/dealroom/activity/${url.search}`);
+      rows = rows.concat(items(r.data));
+      next = r.data?.next || null;
+    }
+    return { rows, more: Boolean(next), rooms: items(rooms.data) };
   }, []);
   const roomName = useMemo(() => Object.fromEntries((data?.rooms || []).map((r) => [r.id, r.name])), [data]);
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return [...(data?.rows || []), ...extra.rows].filter(
+    return (data?.rows || []).filter(
       (a) =>
         (!room || a.room_id === room) &&
         (actor === "all" || actorGroup(a.actor_kind) === actor) &&
         (!needle || `${a.event_type} ${a.data?.name || ""} ${a.data?.email || ""}`.toLowerCase().includes(needle))
     );
-  }, [data, extra.rows, q, actor, room]);
-
-  async function more() {
-    if (!extra.next) return;
-    setExtra((s) => ({ ...s, busy: true }));
-    const url = new URL(extra.next, window.location.origin);
-    const r = await api.get(`/dealroom/activity/${url.search}`);
-    setExtra((s) => ({ rows: [...s.rows, ...items(r.data)], next: r.data?.next || null, busy: false }));
-  }
+  }, [data, q, actor, room]);
+  const paged = usePaged(rows, undefined, `${q}|${actor}|${room}`);
 
   const roomOptions = [{ value: "all", label: "All rooms" }, ...(data?.rooms || []).map((r) => ({ value: r.id, label: r.name }))];
 
@@ -94,7 +95,7 @@ export default function ActivityPage() {
                   </td>
                 </tr>
               )}
-              {rows.map((a) => {
+              {paged.shown.map((a) => {
                 const group = actorGroup(a.actor_kind);
                 const who = a.data?.name || a.data?.email;
                 return (
@@ -119,13 +120,7 @@ export default function ActivityPage() {
               })}
             </tbody>
           </table>
-          {extra.next && (
-            <div className="dr-more">
-              <button type="button" className="dr-btn dr-btn--sm" onClick={more} disabled={extra.busy}>
-                {extra.busy ? "Loading…" : "Load more"}
-              </button>
-            </div>
-          )}
+          {!loading && <TableFooter paged={paged} noun="event" more={Boolean(data?.more) && !q && actor === "all" && !room} />}
         </div>
       )}
     </div>

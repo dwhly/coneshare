@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Check, ChevronDown, Copy, MoreHorizontal, Search, Upload } from "lucide-react";
+import { Check, ChevronDown, ChevronLeft, ChevronRight, Copy, MoreHorizontal, Search, Upload } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -228,6 +228,52 @@ export function RowMenu({ label = "Actions", items }) {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+export const PAGE_SIZE = 10;
+
+/** Client-side paging for a list table: resets to page 1 when the rows change shape (filters, search). */
+export function usePaged(rows, pageSize = PAGE_SIZE, resetKey = "") {
+  const [page, setPage] = useState(1);
+  const total = rows ? rows.length : 0;
+  const pages = Math.max(1, Math.ceil(total / pageSize));
+  useEffect(() => {
+    setPage(1);
+  }, [resetKey]);
+  const current = Math.min(page, pages);
+  const shown = useMemo(() => (rows || []).slice((current - 1) * pageSize, current * pageSize), [rows, current, pageSize]);
+  return { shown, page: current, pages, total, pageSize, setPage };
+}
+
+/** "1 room" / "12 rooms" on one page; "Showing 1–10 of 47" + pager when there is more than one page. */
+export function footerText(total, page, pageSize, noun, plural, more = false) {
+  if (total <= pageSize && !more) return `${total} ${total === 1 ? noun : plural || `${noun}s`}`;
+  const from = total ? (page - 1) * pageSize + 1 : 0;
+  const to = Math.min(total, page * pageSize);
+  return `Showing ${from}–${to} of ${total}${more ? "+" : ""}`;
+}
+
+/** Table footer (§7): on every list table, inside the table's border. */
+export function TableFooter({ paged, noun, plural, more = false }) {
+  const { total, page, pages, pageSize, setPage } = paged;
+  return (
+    <div className="dr-tfoot">
+      <span>{footerText(total, page, pageSize, noun, plural, more)}</span>
+      {pages > 1 && (
+        <nav className="dr-pager" aria-label="Pages">
+          <button type="button" className="dr-btn" aria-label="Previous page" disabled={page <= 1} onClick={() => setPage(page - 1)}>
+            <ChevronLeft aria-hidden="true" />
+          </button>
+          <span className="dr-pager__page">
+            Page {page} of {pages}
+          </span>
+          <button type="button" className="dr-btn" aria-label="Next page" disabled={page >= pages} onClick={() => setPage(page + 1)}>
+            <ChevronRight aria-hidden="true" />
+          </button>
+        </nav>
+      )}
+    </div>
   );
 }
 

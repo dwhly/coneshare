@@ -11,11 +11,14 @@
 .dr-header .fds-nav a, .dr-subnav a { font-size: 14px; font-weight: 500; }
 .dr-header .fds-nav a[aria-current="page"], .dr-subnav a[aria-current="page"] { font-weight: 500; }
 .dr-header .fds-header__utils { gap: 8px; }
+/* §7 round 3: the header's two controls (account trigger, Theme) are one quiet 32px, 13px/500 style. */
+.dr-header [data-fds-theme-toggle] { box-sizing: border-box; height: 32px; padding: 0 12px; font-size: 13px; font-weight: 500;
+  line-height: 1; display: inline-flex; align-items: center; }
 
 /* Account menu = the person: 28px neutral initials avatar + display name (14px/500) + chevron. */
-.dr-account { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 8px; margin: 0;
+.dr-account { box-sizing: border-box; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 8px 0 2px; margin: 0;
   border: 0; border-radius: var(--radius-control); background: transparent; color: hsl(var(--foreground));
-  font: inherit; font-size: 14px; font-weight: 500; line-height: 1; cursor: pointer; }
+  font: inherit; font-size: 13px; font-weight: 500; line-height: 1; cursor: pointer; }
 .dr-account:hover, .dr-account[aria-expanded="true"] { background: hsl(var(--accent)); }
 .dr-account:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
 .dr-account__name { max-width: 12rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -26,7 +29,13 @@
 .dr-menu { position: relative; }
 .dr-menu__panel { position: absolute; right: 0; top: calc(100% + 6px); z-index: 50; min-width: 15rem; padding: 4px;
   background: hsl(var(--popover)); color: hsl(var(--popover-foreground)); border: 1px solid hsl(var(--border));
-  border-radius: var(--radius); box-shadow: 0 8px 24px hsl(var(--foreground) / 0.12); }
+  border-radius: var(--radius); box-shadow: var(--dr-popover-shadow); }
+/* Popovers and menus are elevated in both schemes: popover surface + border + shadow. In dark a foreground-tinted
+   shadow glows, so the dark shadow uses the canvas (near-black) role and the border steps up to --input. */
+:root { --dr-popover-shadow: 0 8px 24px hsl(var(--foreground) / 0.12), 0 2px 6px hsl(var(--foreground) / 0.06); }
+[data-theme="dark"] { --dr-popover-shadow: 0 12px 32px hsl(var(--canvas) / 0.75), 0 2px 8px hsl(var(--canvas) / 0.6); }
+.dr-popover { background: hsl(var(--popover)); color: hsl(var(--popover-foreground)); box-shadow: var(--dr-popover-shadow); }
+[data-theme="dark"] .dr-popover, [data-theme="dark"] .dr-menu__panel, [data-theme="dark"] .dr-select__list { border-color: hsl(var(--input)); }
 .dr-menu__label { padding: 8px 10px; font-size: 13px; color: hsl(var(--muted-foreground)); overflow: hidden; text-overflow: ellipsis; }
 .dr-menu__sep { height: 1px; margin: 4px -4px; background: hsl(var(--border)); }
 .dr-menu__item { display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; padding: 8px 10px; border: 0;
@@ -114,6 +123,14 @@
 .dr-table a.dr-rowlink:hover { text-decoration: underline; text-underline-offset: 2px; }
 .dr-muted { color: hsl(var(--muted-foreground)); }
 .dr-more { display: flex; justify-content: center; padding: 12px; border-top: 1px solid hsl(var(--border)); }
+/* §7 table footer on every list table: count ("1 room" / "Showing 1–10 of 47") left, pager right only when >1 page. */
+.dr-tfoot { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 6px 16px;
+  border-top: 1px solid hsl(var(--border)); font-size: 13px; line-height: 20px; color: hsl(var(--muted-foreground));
+  font-variant-numeric: tabular-nums; }
+.dr-card--flush .dr-tfoot { padding-left: 24px; padding-right: 24px; }
+.dr-pager { display: flex; align-items: center; gap: 4px; }
+.dr-pager__page { padding: 0 8px; }
+.dr-pager .dr-btn { width: 32px; height: 32px; padding: 0; }
 
 /* Empty state: dashed-outline card, one line + one primary action. */
 .dr-empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 24px; text-align: center;
@@ -175,7 +192,7 @@ dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
 .dr-select__trigger svg { width: 16px; height: 16px; color: hsl(var(--muted-foreground)); flex: none; }
 .dr-select__list { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 60; max-height: 260px; overflow: auto; margin: 0;
   padding: 4px; list-style: none; background: hsl(var(--popover)); color: hsl(var(--popover-foreground)); border: 1px solid hsl(var(--border));
-  border-radius: var(--radius); box-shadow: 0 8px 24px hsl(var(--foreground) / 0.12); }
+  border-radius: var(--radius); box-shadow: var(--dr-popover-shadow); }
 .dr-select__list [role="option"] { padding: 8px 10px; border-radius: calc(var(--radius-control) * 0.75); font-size: 14px; cursor: pointer; }
 .dr-select__list [role="option"]:hover, .dr-select__list [role="option"].is-active { background: hsl(var(--accent)); }
 .dr-select__list [role="option"][aria-selected="true"] { background: hsl(var(--selected)); color: hsl(var(--selected-foreground)); }
