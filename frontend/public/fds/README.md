@@ -1,9 +1,18 @@
 # Vendored fleet-design-system
 
-Source: `dwhly/fleet-design-system` at commit **61540c6** (v0.5.1: v0.5.0 baseline + lockup mark optically centred). Copied verbatim: `fonts.css`, `fonts/`, `tokens.css`, `components.css`, `theme.js`,
-`marks/fleet.svg`; no brand layer (Fleet Dealroom uses the base Fleet tokens); `../../fds.preset.cjs` = `tailwind.preset.cjs`.
-`theme-boot.js` is the inline boot snippet from the footer of `theme.js`, as a file.
+Source: `dwhly/fleet-design-system` **v0.8.0** (commit `3673538`), copied with `scripts/vendor.sh` (which never copies the
+prototype-only `fds-lab.js`). `fds.lock` pins the version, commit and a sha256 per vendored file; verify with
+`scripts/check-vendored.sh frontend/public/fds` from the package. Do not edit vendored files here: change the system
+upstream, bump its version, re-vendor.
+
+Vendored (listed in `fds.lock`): `tokens.css`, `components.css`, `theme.js`, `fonts.css`, `tailwind.preset.cjs`, `fonts/`,
+`marks/`, `brands/`. No brand layer is linked (Fleet Dealroom uses the base Fleet tokens; `brands/` ships unused).
+
+Product-owned (not in `fds.lock`):
+- `README.md` (this file);
+- `theme-boot.js`: the inline boot snippet from the footer of `theme.js`, as a file (CSP-strict pages load it first in `<head>`);
+- `../../fds.preset.cjs`: a one-line wrapper that re-exports `tailwind.preset.cjs` for `tailwind.config.js`.
 
 One copy serves both surfaces: the React console links these from `index.html`, and the Django glue pages
 (`backend/dealroom_sign/templates`) link the same `/fds/...` URLs (nginx serves `frontend/dist` at `/`).
-Prototype only: the gated build replaces this copy with the package dependency. Do not edit here.
+Both write `<html data-edge="outline" data-density="spacious">` statically (DESIGN.md §10).

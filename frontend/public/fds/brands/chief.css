@@ -1,0 +1,13 @@
+/* Chief brand layer — overrides ONLY brand slots (DESIGN.md §Layers). */
+:root {
+  --brand: 212 85% 45%;
+  --brand-foreground: 0 0% 100%;
+  --brand-subtle: 212 90% 96%;
+  --brand-muted-foreground: 212 80% 36%;
+}
+[data-theme="dark"] {
+  --brand: 214 100% 72%;
+  --brand-foreground: 222 22% 9%;
+  --brand-subtle: 214 45% 16%;
+  --brand-muted-foreground: 214 100% 80%;
+}

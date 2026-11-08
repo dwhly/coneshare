@@ -91,11 +91,21 @@
 .fds-header__utils { margin-left: auto; display: flex; align-items: center; gap: var(--space-2); }
 
 /* Nav tabs: active = foreground text + 2px foreground underline. Never brand, never amber. */
-.fds-nav { display: flex; gap: var(--space-1); align-self: stretch; }
-.fds-nav a { display: inline-flex; align-items: center; padding: 0 var(--space-3); font-size: var(--text-sm); font-weight: 500;
-  color: hsl(var(--muted-foreground)); text-decoration: none; border-bottom: 2px solid transparent; }
-.fds-nav a:hover { color: hsl(var(--foreground)); }
-.fds-nav a[aria-current="page"], .fds-nav a.is-active { color: hsl(var(--foreground)); border-bottom-color: hsl(var(--foreground)); font-weight: 600; }
+/* Tabs = the same "selected" language as segmented controls and filter chips: the current tab is a neutral
+   filled pill (--selected tokens, control radius), not an underline (owner 2026-11-07: an underline next to
+   boxed controls read as two different systems). Lab: ?tabs=underline restores the old indicator. */
+.fds-nav { display: flex; align-items: center; gap: 2px; }
+.fds-nav a { display: inline-flex; align-items: center; padding: 4px var(--space-3); font-size: var(--text-sm); font-weight: 500;
+  line-height: 1.4; color: hsl(var(--muted-foreground)); text-decoration: none; border-radius: var(--radius-control);
+  border: 1px solid transparent; }
+.fds-nav a:hover { color: hsl(var(--foreground)); background: hsl(var(--accent)); }
+.fds-nav a[aria-current="page"], .fds-nav a.is-active { color: hsl(var(--selected-foreground)); background: hsl(var(--selected));
+  border-color: hsl(var(--selected-border)); font-weight: 600; }
+[data-tabs="underline"] .fds-nav { align-self: stretch; gap: var(--space-1); }
+[data-tabs="underline"] .fds-nav a { padding: 0 var(--space-3); border-radius: 0; border: 0; border-bottom: 2px solid transparent; }
+[data-tabs="underline"] .fds-nav a:hover { background: none; }
+[data-tabs="underline"] .fds-nav a[aria-current="page"], [data-tabs="underline"] .fds-nav a.is-active {
+  background: none; color: hsl(var(--foreground)); border-bottom-color: hsl(var(--foreground)); }
 
 /* Segmented control / filter chips: selected = neutral --selected role. */
 .fds-seg { display: inline-flex; border: 1px solid hsl(var(--input)); border-radius: var(--radius-control); overflow: hidden; }
@@ -142,3 +152,6 @@
 .fds-lockup__rule { width: 1px; height: 16px; background: hsl(var(--border)); margin: 0 -1px; }
 [data-theme="dark"] .fds-lockup__rule { background: hsl(var(--input)); }
 .fds-lockup__product { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -0.01em; color: hsl(var(--muted-foreground)); }
+
+/* Emphasis heading surface: inverse, high contrast (program column titles on a board). */
+.fds-emphasis { background: hsl(var(--emphasis)); color: hsl(var(--emphasis-foreground)); border-color: hsl(var(--emphasis)); }

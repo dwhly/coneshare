@@ -45,6 +45,9 @@
   --selected: 220 14% 90%;
   --selected-foreground: 222 22% 11%;
   --selected-border: 222 22% 11%;
+  /* emphasis = an inverse, high-contrast heading surface (e.g. program column titles): dark on a light board */
+  --emphasis: var(--chrome-base, 222 28% 14%);
+  --emphasis-foreground: 0 0% 100%;
 
   /* ---- primary action = ink (brand is NOT the primary button) ---- */
   --primary: 222 22% 11%;
@@ -141,6 +144,8 @@
   --selected: 222 14% 22%;
   --selected-foreground: 220 15% 96%;
   --selected-border: 220 15% 80%;
+  --emphasis: 222 16% 27%;
+  --emphasis-foreground: 220 15% 97%;
   --primary: 220 15% 92%;
   --primary-foreground: 222 22% 9%;
   --brand: 217 91% 66%;
@@ -182,3 +187,51 @@
 [data-radius="8"]    { --radius-control: 8px; }
 [data-radius="10"]   { --radius-control: 10px; }
 [data-radius="pill"] { --radius-control: 999px; }
+
+/* Chrome tone — per organisation (owner 2026-11-07): a DARK title bar over a lighter board. Set
+   <html data-chrome="dark"> (a product/tenant setting; lab: ?chrome=dark|light). The header becomes a
+   dark-palette island: the core roles are re-declared inside it, so its tabs, buttons and text adapt with no
+   per-component rules. Neutral navy, never the brand colour. */
+[data-chrome="dark"] .fds-header {
+  --background: var(--chrome-base, 222 28% 13%); --foreground: 220 15% 95%; --card: 222 24% 16%; --popover: 222 22% 12%;
+  --muted: 222 20% 18%; --muted-foreground: 220 12% 72%; --secondary: 222 20% 19%; --accent: 222 20% 21%;
+  --border: 222 18% 24%; --input: 222 16% 34%; --selected: 222 18% 28%; --selected-foreground: 0 0% 100%;
+  --selected-border: 220 15% 72%; --primary: 220 15% 95%; --primary-foreground: 222 28% 10%;
+  --card-foreground: 220 15% 95%; --popover-foreground: 220 15% 95%; --secondary-foreground: 220 15% 95%;
+  --accent-foreground: 220 15% 95%; color-scheme: dark;
+}
+/* dark mode: the bar keeps the same navy, a step ABOVE the near-black board, so the contrast survives */
+[data-theme="dark"][data-chrome="dark"] .fds-header { --border: 222 18% 26%; }
+
+/* Org title-bar colour (optional, per organisation): set --chrome-base (an HSL triplet) on <html> to use the org's
+   own dark bar colour instead of the neutral navy, e.g. AmForge 222 75% 17% (#0b1f4d). It must stay DARK (the island's
+   light text is checked against it). --chrome-rule (HSL) adds the org's 2px accent rule under the bar (AmForge gold). */
+[data-chrome="dark"][data-chrome-rule] .fds-header { border-bottom: 2px solid hsl(var(--chrome-rule)); }
+
+/* Brand strength follows the bar (owner 2026-11-08: "adopt all"): an org with a dark title bar uses that bar colour
+   for SELECTION (selected filters, segments) and the MAIN BUTTON in light mode, as its own board did; the current tab
+   in the bar is a pill in the bar's accent (gold on AmForge). Dark mode keeps the neutral lifted roles. Orgs with a
+   light bar are unchanged (neutral selection, ink primary). */
+html[data-chrome="dark"]:not([data-theme="dark"]) {
+  --selected: var(--chrome-base, 222 28% 13%); --selected-foreground: 0 0% 100%; --selected-border: var(--chrome-base, 222 28% 13%);
+  --primary: var(--chrome-base, 222 28% 13%); --primary-foreground: 0 0% 100%;
+}
+[data-chrome="dark"][data-chrome-rule] .fds-header {
+  --selected: var(--chrome-rule); --selected-foreground: var(--chrome-base, 222 28% 13%); --selected-border: var(--chrome-rule);
+}
+
+/* Surface warmth — per organisation (owner 2026-11-08): `warm` = a beige-yellow paper with warm lines and warm greys
+   (the AmForge board's own palette). Default is neutral. Only surfaces, lines and greys change: status, brand,
+   selection-ink and text roles stay the same. Set <html data-surface="warm"> (tenant setting; lab: ?surface=). */
+[data-surface="warm"] {
+  --canvas: 40 47% 94%; --background: 42 70% 97%; --card: 43 100% 99%; --popover: 43 100% 99%;
+  --muted: 40 32% 90%; --secondary: 40 32% 90%; --accent: 40 34% 88%;
+  --border: 39 30% 84%; --input: 39 20% 70%; --muted-foreground: 40 11% 32%;
+  --selected: 40 22% 84%; --neutral-subtle: 40 28% 90%;
+}
+[data-theme="dark"][data-surface="warm"] {
+  --canvas: 36 12% 6%; --background: 36 10% 8%; --card: 36 9% 10%; --popover: 36 9% 10%;
+  --muted: 36 8% 14%; --secondary: 36 8% 15%; --accent: 36 8% 17%;
+  --border: 36 8% 20%; --input: 36 7% 30%; --muted-foreground: 38 12% 68%;
+  --selected: 36 8% 24%; --neutral-subtle: 36 8% 14%;
+}

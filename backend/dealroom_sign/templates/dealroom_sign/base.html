@@ -1,13 +1,13 @@
-<!doctype html><html lang="en" data-density="spacious"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
+<!doctype html><html lang="en" data-edge="outline" data-density="spacious"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
 <title>{% block title %}Signing{% endblock %} · Fleet Dealroom</title>
-{% comment %} Fleet design system v0.5.1, vendored once in frontend/public/fds (source commit 61540c6); base Fleet tokens, no brand layer.
+{% comment %} Fleet design system v0.8.0, vendored once in frontend/public/fds (commit 3673538, pinned by fds.lock); base Fleet tokens, no brand layer.
    /dealroom/shell.css + shell.js = the shared Fleet Dealroom shell (docs/design/dealroom-shell.md), same files as the React console. {% endcomment %}
-<script src="/fds/theme-boot.js?v=0.5.1"></script>
+<script src="/fds/theme-boot.js?v=0.8.0"></script>
 <link rel="icon" type="image/svg+xml" href="/fds/marks/fleet.svg">
-<link rel="stylesheet" href="/fds/fonts.css?v=0.5.1">
-<link rel="stylesheet" href="/fds/tokens.css?v=0.5.1">
-<link rel="stylesheet" href="/fds/components.css?v=0.5.1">
-<link rel="stylesheet" href="/dealroom/shell.css?v=r2">
+<link rel="stylesheet" href="/fds/fonts.css?v=0.8.0">
+<link rel="stylesheet" href="/fds/tokens.css?v=0.8.0">
+<link rel="stylesheet" href="/fds/components.css?v=0.8.0">
+<link rel="stylesheet" href="/dealroom/shell.css?v=fds080">
 <style>
 /* Glue pages read roles only (tokens.css); check-literals.py reports 0 for this directory. */
 *{box-sizing:border-box}html{background:hsl(var(--background))}body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:hsl(var(--background))}
@@ -20,6 +20,6 @@ a{color:hsl(var(--brand-muted-foreground))}
 {% block header %}{% endblock %}
 <main>{% block content %}{% endblock %}</main>
 <footer class="site-footer">{% block footer %}Fleet Dealroom · Confidential documents{% endblock %}</footer>
-<script src="/fds/theme.js?v=0.5.1" defer></script>
-<script src="/dealroom/shell.js?v=r2"></script>
+<script src="/fds/theme.js?v=0.8.0" defer></script>
+<script src="/dealroom/shell.js?v=fds080"></script>
 {% block scripts %}{% endblock %}</body></html>

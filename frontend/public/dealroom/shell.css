@@ -7,7 +7,6 @@
 .dr-header.fds-header { box-sizing: border-box; width: 100%; height: 56px; min-height: 56px; padding: 0 24px; gap: 24px;
   position: sticky; top: 0; z-index: 30; flex-wrap: nowrap; }
 .dr-header .fds-lockup { flex: none; }
-.dr-header .fds-nav { gap: 0; }
 .dr-header .fds-nav a, .dr-subnav a { font-size: 14px; font-weight: 500; }
 .dr-header .fds-nav a[aria-current="page"], .dr-subnav a[aria-current="page"] { font-weight: 500; }
 .dr-header .fds-header__utils { gap: 8px; }
@@ -43,13 +42,16 @@
   font-size: 14px; text-align: left; text-decoration: none; cursor: pointer; }
 .dr-menu__item:hover, .dr-menu__item:focus-visible { background: hsl(var(--accent)); outline: none; }
 
-/* §2 Sub-navigation: a second row in the content container, 44px, plain 14px tabs, bottom hairline. */
+/* §2 Sub-navigation: a second row in the content container, 44px, bottom hairline. fds v0.8.0 baseline (DESIGN.md §10):
+   pill tabs, the same "selected" language as the header tabs (.fds-nav) and the filter controls; the first pill's
+   box sits on the content edge. */
 .dr-subnav { box-sizing: border-box; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-.dr-subnav nav { display: flex; align-items: stretch; gap: 24px; height: 44px; border-bottom: 1px solid hsl(var(--border)); }
-.dr-subnav a { display: inline-flex; align-items: center; padding: 0; color: hsl(var(--muted-foreground)); text-decoration: none;
-  border-bottom: 2px solid transparent; margin-bottom: -1px; }
-.dr-subnav a:hover { color: hsl(var(--foreground)); }
-.dr-subnav a[aria-current="page"] { color: hsl(var(--foreground)); border-bottom-color: hsl(var(--foreground)); }
+.dr-subnav nav { display: flex; align-items: center; gap: 2px; height: 44px; border-bottom: 1px solid hsl(var(--border)); }
+.dr-subnav a { display: inline-flex; align-items: center; padding: 4px 12px; line-height: 1.4; color: hsl(var(--muted-foreground));
+  text-decoration: none; border: 1px solid transparent; border-radius: var(--radius-control); }
+.dr-subnav a:hover { color: hsl(var(--foreground)); background: hsl(var(--accent)); }
+.dr-subnav a[aria-current="page"] { color: hsl(var(--selected-foreground)); background: hsl(var(--selected));
+  border-color: hsl(var(--selected-border)); }
 .dr-subnav a:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
 
 /* §3 Page structure: 1200px container, 24px side + top padding. */
@@ -100,7 +102,11 @@
 .dr-input::placeholder { color: hsl(var(--muted-foreground)); }
 .dr-input:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 1px; }
 .dr-search .dr-input { padding-left: 34px; }
-.dr-filter[aria-pressed="true"] { background: hsl(var(--selected)); color: hsl(var(--selected-foreground)); }
+/* fds v0.8.0 baseline: toolbar controls (filter toggles, menus) sit tight to their text at 26px, never stretched to
+   the 36px search input's height; selected = the neutral --selected role (same as the tabs). */
+.dr-filterbar .dr-filter, .dr-filterbar .dr-select__trigger { height: 26px; padding: 0 10px; font-size: 13px; }
+.dr-filter[aria-pressed="true"] { background: hsl(var(--selected)); color: hsl(var(--selected-foreground));
+  border-color: hsl(var(--selected-border)); }
 .dr-table-wrap { border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card)); overflow-x: auto; }
 .dr-card .dr-table-wrap { border: 0; border-radius: 0; }
 .dr-table { width: 100%; border-collapse: collapse; font-size: 14px; color: hsl(var(--foreground)); }
@@ -138,8 +144,8 @@
 .dr-empty p { margin: 0; }
 
 /* Status pill (bordered tint + word) and identity chip (neutral + tag dot): fds components.css .fds-pill/.fds-tag,
-   sized for 14px rows. */
-.dr-table .fds-pill, .dr-card .fds-pill { font-size: 12px; }
+   sized for 14px rows: 22px chips (fds v0.8.0 baseline), small-control radius, never 999px. */
+.dr-table .fds-pill, .dr-card .fds-pill { box-sizing: border-box; height: 22px; font-size: 12px; }
 .dr-chip { display: inline-flex; align-items: center; gap: 6px; padding: 0 8px; height: 22px; border-radius: calc(var(--radius-control) * 0.75);
   background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); font-size: 12px; font-weight: 500; white-space: nowrap; }
 .dr-chip::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: hsl(var(--tag-dot, var(--neutral))); }
