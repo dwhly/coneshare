@@ -7,6 +7,15 @@ import httpx
 from django.conf import settings
 
 
+def pdf_filename(title):
+    """The file name signers see when they download ("<title>.pdf", then "<title>_signed.pdf"), not "document.pdf"."""
+    name = re.sub(r'[\\/:*?"<>|\x00-\x1f]+', ' ', title or '').strip().strip('.')
+    name = re.sub(r'\s+', ' ', name)[:120].strip()
+    if name.lower().endswith('.pdf'):
+        name = name[:-4].rstrip()
+    return (name or 'document') + '.pdf'
+
+
 class SignError(Exception):
     def __init__(self, code, *, uncertain=False):
         self.code = code
@@ -71,7 +80,7 @@ class Documenso:
         payload = {'title': workflow.title, 'type': 'DOCUMENT', 'externalId': workflow.external_id,
                    'recipients': workflow.recipients, 'meta': {**(meta or {}), 'distributionMethod': 'NONE'}}
         return self.request('POST', 'envelope/create', data={'payload': json.dumps(payload)},
-                            files={'files': ('document.pdf', pdf, 'application/pdf')}).json()['id']
+                            files={'files': (pdf_filename(workflow.title), pdf, 'application/pdf')}).json()['id']
 
     def distribute(self, envelope_id, *, nda=False, redirect_url=''):
         meta = {'distributionMethod': 'NONE' if nda else 'EMAIL'}
