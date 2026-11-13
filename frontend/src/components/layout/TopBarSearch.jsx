@@ -59,7 +59,8 @@ export function TopBarSearch({ open, onOpenChange }) {
   const onInputKey = (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); setActive((a) => Math.min(a + 1, results.length - 1)); }
     if (e.key === "ArrowUp") { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)); }
-    if (e.key === "Enter") { e.preventDefault(); go(results[active]); }
+    // IME-safe (DESIGN.md §11): Enter that commits a CJK composition must not open a result.
+    if (e.key === "Enter" && !e.nativeEvent.isComposing && e.keyCode !== 229) { e.preventDefault(); go(results[active]); }
   };
 
   const groups = [

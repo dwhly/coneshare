@@ -21,6 +21,12 @@
      brand          links, focus, selection                  projects) — never status
    ========================================================================== */
 
+/* v0.9: everything here sits in a cascade layer (DESIGN.md §11). Product CSS that is NOT
+   in a layer beats every package rule, whatever its specificity — override freely,
+   never with !important. Order: fds.tokens < fds.brand < fds.components < product. */
+@layer fds.tokens, fds.brand, fds.components;
+@layer fds.tokens {
+
 :root {
   color-scheme: light;
 
@@ -112,6 +118,10 @@
   /* Control roundness: buttons, pills, chips, tabs, inputs. "In between" — not square, not oval.
      Small pills use calc(var(--radius-control) * 0.75) so a 20px pill and a 32px button read as one family. */
   --radius-control: 6px;
+  /* overlays (popover, dialog, menu) — v0.9 */
+  --shadow-overlay: 0 8px 24px -6px hsl(var(--foreground) / 0.16), 0 2px 6px -2px hsl(var(--foreground) / 0.10);
+  --backdrop: var(--foreground);
+  --duration-fast: 140ms;
   --shell-height: 3.5rem;
 
   /* ---- density defaults = comfortable ---- */
@@ -206,7 +216,8 @@
 /* Org title-bar colour (optional, per organisation): set --chrome-base (an HSL triplet) on <html> to use the org's
    own dark bar colour instead of the neutral navy, e.g. a navy 222 75% 17% (#0b1f4d). It must stay DARK (the island's
    light text is checked against it). --chrome-rule (HSL) adds the org's 2px accent rule under the bar (e.g. gold). */
-[data-chrome="dark"][data-chrome-rule] .fds-header { border-bottom: 2px solid hsl(var(--chrome-rule)); }
+/* (the 2px rule itself is drawn in components.css, next to .fds-header: since v0.9 a rule here would lose to
+   .fds-header in the higher components layer whatever its specificity — tokens.css declares tokens only) */
 
 /* Brand strength follows the bar (owner 2026-11-08: "adopt all"): an org with a dark title bar uses that bar colour
    for SELECTION (selected filters, segments) and the MAIN BUTTON in light mode, as its own board did; the current tab
@@ -235,3 +246,5 @@ html[data-chrome="dark"]:not([data-theme="dark"]) {
   --border: 36 8% 20%; --input: 36 7% 30%; --muted-foreground: 38 12% 68%;
   --selected: 36 8% 24%; --neutral-subtle: 36 8% 14%;
 }
+
+} /* end @layer fds.tokens */

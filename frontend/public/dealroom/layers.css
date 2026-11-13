@@ -1,0 +1,6 @@
+/* Fleet Dealroom cascade-layer order (fds v0.9, DESIGN.md §11). Linked FIRST in every shell (React console index.html and
+   the Django glue base.html), before the package's own `@layer fds.tokens, fds.brand, fds.components;` statement, so the
+   product's element resets (Tailwind preflight, the glue pages' html/body/a rules) sit BELOW the package layers, as they
+   did by specificity in the v0.8 cascade. Product component CSS (shell.css, Tailwind utilities) stays unlayered and so
+   still beats the package. */
+@layer dr.reset, fds.tokens, fds.brand, fds.components;

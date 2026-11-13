@@ -5,6 +5,12 @@
    Every value comes from tokens.css; no literals here.
    ========================================================================== */
 
+/* v0.9: everything here sits in a cascade layer (DESIGN.md §11). Product CSS that is NOT
+   in a layer beats every package rule, whatever its specificity — override freely,
+   never with !important. Order: fds.tokens < fds.brand < fds.components < product. */
+@layer fds.tokens, fds.brand, fds.components;
+@layer fds.components {
+
 .fds-body {
   background: hsl(var(--canvas));
   color: hsl(var(--foreground));
@@ -87,6 +93,8 @@
 .fds-header { display: flex; align-items: center; gap: var(--space-4); min-height: var(--shell-height);
   padding: 0 var(--space-4); background: hsl(var(--background)); color: hsl(var(--foreground));
   border-bottom: 1px solid hsl(var(--border)); }
+/* Org accent rule under a dark bar (tokens.css: --chrome-rule). Lives here, not in tokens.css: see DESIGN.md §11 layers. */
+[data-chrome="dark"][data-chrome-rule] .fds-header { border-bottom: 2px solid hsl(var(--chrome-rule)); }
 .fds-header__mark { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); color: hsl(var(--foreground)); text-decoration: none; }
 .fds-header__utils { margin-left: auto; display: flex; align-items: center; gap: var(--space-2); }
 
@@ -155,3 +163,58 @@
 
 /* Emphasis heading surface: inverse, high contrast (program column titles on a board). */
 .fds-emphasis { background: hsl(var(--emphasis)); color: hsl(var(--emphasis-foreground)); border-color: hsl(var(--emphasis)); }
+
+/* ==== Native overlays: popover + dialog (v0.9, DESIGN.md §11) ====
+   Use the platform: <div popover class="fds-popover"> opened by <button popovertarget>, and
+   <dialog class="fds-dialog"> (showModal / command="show-modal"). Light-dismiss, Esc, focus
+   return and top-layer stacking come free. Entry animates everywhere (Baseline 2024);
+   exit animates where overlay/display animation exist and is simply instant elsewhere. */
+.fds-popover, .fds-dialog {
+  margin: 0; padding: var(--space-3) var(--space-4);
+  color: hsl(var(--foreground)); background: hsl(var(--background));
+  border: 1px solid hsl(var(--border)); border-radius: var(--radius);
+  box-shadow: var(--shadow-overlay);
+  opacity: 1; translate: 0 0;
+  transition: opacity var(--duration-fast) ease-out, translate var(--duration-fast) ease-out,
+              overlay var(--duration-fast) allow-discrete, display var(--duration-fast) allow-discrete;
+}
+.fds-dialog { margin: auto; max-width: min(36rem, calc(100vw - 2 * var(--space-4))); padding: var(--space-4) var(--space-5, 1.5rem); }
+.fds-popover:not(:popover-open), .fds-dialog:not([open]) { opacity: 0; translate: 0 4px; }
+@starting-style {
+  .fds-popover:popover-open, .fds-dialog[open] { opacity: 0; translate: 0 4px; }
+}
+.fds-dialog::backdrop {
+  background: hsl(var(--backdrop) / 0.32);
+  transition: background-color var(--duration-fast), overlay var(--duration-fast) allow-discrete, display var(--duration-fast) allow-discrete;
+}
+.fds-dialog:not([open])::backdrop { background: hsl(var(--backdrop) / 0); }
+@starting-style { .fds-dialog[open]::backdrop { background: hsl(var(--backdrop) / 0); } }
+
+/* ==== Platform niceties (v0.9) — zero-specificity, any product overrides them ==== */
+:where(h1, h2, h3, h4, .fds-title) { text-wrap: balance; }
+:where(p, li, dd, blockquote, figcaption) { text-wrap: pretty; }   /* progressive: ignored where unsupported */
+:where(:root) { accent-color: hsl(var(--primary)); }              /* native checkbox/radio/range in our ink; progressive */
+
+/* ==== Platform modes (v0.9, DESIGN.md §11) ====
+   prefers-contrast is deliberately NOT forced here (owner 2026-11-13): products may use it
+   as guidance, the package does not thicken borders or darken text globally. */
+@media (prefers-reduced-motion: reduce) {
+  *:not([data-motion="essential"]), *:not([data-motion="essential"])::before, *:not([data-motion="essential"])::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+@media (forced-colors: active) {
+  /* Selected/current states are drawn with tinted fills, which forced colours erase.
+     Paint them with the system selection colours so "which one is on" survives. */
+  :where([aria-current]:not([aria-current="false"]), [aria-pressed="true"], [aria-selected="true"], .is-selected, .is-active) {
+    forced-color-adjust: none; background: Highlight; color: HighlightText; border-color: Highlight;
+  }
+  :where(:focus-visible) { outline: 2px solid Highlight !important; outline-offset: 2px; }
+  /* Severity markers and tag dots carry meaning in their fill — keep it. */
+  .fds-marker, .fds-tag::before { forced-color-adjust: none; }   /* no :where() — it cannot hold pseudo-elements */
+  :where(.fds-card, .fds-callout, .fds-pill, .fds-chip, .fds-btn, .fds-popover, .fds-dialog) { border-color: CanvasText; }
+}
+
+} /* end @layer fds.components */

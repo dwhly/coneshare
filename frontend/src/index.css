@@ -1,6 +1,12 @@
 /* Fleet design system: fonts.css, tokens.css, the brand layer and components.css are linked from index.html
    (vendored in public/fds/, shared with the Django glue pages). Everything below reads roles only. */
-@tailwind base;
+/* fds v0.9 ships in cascade layers (DESIGN.md §11), and unlayered CSS beats every layer. Tailwind v3 flattens its own
+   @layer blocks, so preflight (button/border/heading resets) would now beat .fds-btn/.fds-callout/.fds-header. It goes
+   into the native `dr.reset` layer, which /dealroom/layers.css orders BELOW the package (= the v0.8 cascade, where
+   these element resets lost to fds classes). Components + utilities stay unlayered, so they still win over fds. */
+@layer dr.reset {
+  @tailwind base;
+}
 @tailwind components;
 @tailwind utilities;
 
