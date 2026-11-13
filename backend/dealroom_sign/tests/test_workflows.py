@@ -467,3 +467,13 @@ def test_status_lists_title_and_recipient_names_only(fixture):
     data = WorkflowSerializer(fixture.work).data
     assert data['title'] == 'Source.pdf'
     assert data['recipients'] == [{'name': 'Member', 'email': 'member@example.test'}]
+
+
+def test_status_lists_each_artifact_with_its_document(fixture):
+    """A front end (the board's Sign tab) fetches the signed copy by document id, so status must carry it."""
+    from dealroom_sign.serializers import WorkflowSerializer
+    ExecutedArtifact.objects.create(workflow=fixture.work, version=fixture.version, item_id='item_test',
+                                    kind='sealed_pdf', sha256='abc', size=3)
+    art = WorkflowSerializer(fixture.work).data['artifacts']
+    assert art == [{'kind': 'sealed_pdf', 'sha256': 'abc', 'size': 3, 'version_id': fixture.version.id,
+                    'document_id': fixture.version.document_id}]

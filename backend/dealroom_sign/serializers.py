@@ -1,3 +1,4 @@
+from django.db.models import F
 from rest_framework import serializers
 
 from .models import NdaPolicy, Workflow
@@ -8,7 +9,8 @@ class WorkflowSerializer(serializers.ModelSerializer):
     recipients = serializers.SerializerMethodField()
 
     def get_artifacts(self, obj):
-        return list(obj.artifacts.values('kind', 'sha256', 'size', 'version_id'))
+        # document_id lets a front end (the board's Sign tab) fetch the signed copy through the documents API.
+        return list(obj.artifacts.values('kind', 'sha256', 'size', 'version_id', document_id=F('version__document_id')))
 
     def get_recipients(self, obj):
         # Who the sender asked to sign (name + email only; field placement and tokens stay private).
