@@ -80,7 +80,9 @@ def existing_artifact(row, kind, snapshot_id=None):
 
 def resolve_artifact(row, kind, snapshot_id=None, *, fresh=False):
     artifact = existing_artifact(row, kind, snapshot_id)
-    if artifact and (not fresh or snapshot_id or kind not in {'partial', 'audit'} or row.workflow.state == 'done'):
+    # Partial pages and downloads share the derivative pinned to observed signer
+    # state; existing_artifact invalidates an unpinned copy when that state changes.
+    if artifact and (not fresh or snapshot_id or kind != 'audit' or row.workflow.state == 'done'):
         content = source_bytes(artifact.version)
         if digest(content) != artifact.sha256:
             raise SignError('artifact_hash_mismatch')
@@ -146,10 +148,11 @@ def download(request, row, data):
         event = record('signature.download_requested', organization=row.workflow.room.organization, actor=actor,
             room_id=row.workflow.room_id, target_id=row.pk, data=evidence,
             actor_kind='staff' if human_staff(request) else 'agent')
-        # Bytes are buffered; this records response handoff, never a claim that a person read them.
+        # A buffered response (including close()) cannot establish transport delivery.
+        # Keep the outcome unknown unless the serving transport supplies that evidence.
         record('signature.download_outcome', organization=row.workflow.room.organization, actor=actor,
             room_id=row.workflow.room_id, target_id=row.pk,
-            data={'audit_id':str(event.pk),'outcome':'served','delivery':'response_handoff'})
+            data={'audit_id':str(event.pk),'outcome':'unknown','delivery':'response_handoff'})
     except (PermissionDenied, NotFound, SnapshotChanged):
         raise
     except Exception:

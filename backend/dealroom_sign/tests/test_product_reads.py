@@ -230,6 +230,8 @@ def test_export_scope_log_and_checksum(base):
         assert event.actor_id == str(base.user.pk)
         assert event.data['sha256'] == response['X-Content-SHA256']
         assert event.data['board_id'] == 'fixture'
+        outcome = Activity.objects.get(event_type='signature.download_outcome', data__audit_id=str(event.pk))
+        assert outcome.data == {'audit_id':str(event.pk), 'outcome':'unknown', 'delivery':'response_handoff'}
         with patch('dealroom_sign.exports.record', side_effect=RuntimeError('fixture audit unavailable')):
             assert post(export_body(req)).status_code == 503
         assert post(export_body(req, extra='unknown')).status_code == 400
@@ -278,15 +280,34 @@ def test_partial_stamped_final_bytes_unchanged(base):
     req, _ = product(base); client = remote(base)
     stamped = stamp_partial(base.pdf, str(req.pk), '2026-11-14T10:00:00Z')
     assert all('NOT FINAL' in page.extract_text() for page in PdfReader(io.BytesIO(stamped)).pages)
-    assert hashlib.sha256(base.pdf).hexdigest() == base.work.source_sha256
     with patch('dealroom_sign.exports.Documenso') as remote_class, patch('dealroom_sign.storage.fileserver_client.upload_file'):
         remote_class.return_value.__enter__.return_value = client
         response = post(export_body(req, 'partial'))
         assert response.status_code == 200
         assert all('NOT FINAL' in page.extract_text() for page in PdfReader(io.BytesIO(response.content)).pages)
         assert models.RequestArtifact.objects.get(kind='partial').sha256 == response['X-Content-SHA256']
+        # A newly observed signature invalidates the unpinned derivative.
+        base.work.signer_projection[0]['signingStatus'] = 'SIGNED'; base.work.save()
         client.get.side_effect = [client.get.return_value, {**client.get.return_value, 'status':'COMPLETED'}]
         assert post(export_body(req, 'partial')).status_code == 409
+    base.work.state = 'done'; base.work.save()
+    writer = PdfWriter()
+    writer.clone_document_from_reader(PdfReader(io.BytesIO(base.pdf)))
+    writer.add_metadata({'/Title':'Executed fixture'})
+    sealed = io.BytesIO(); writer.write(sealed); sealed_bytes = sealed.getvalue()
+    assert sealed_bytes != base.pdf
+    sealed_version = DocumentVersion.objects.create(document=base.version.document, version_number=2,
+        type='pdf', content_type='application/pdf', original_storage_key='sealed-fixture.pdf')
+    artifact = ExecutedArtifact.objects.create(workflow=base.work, item_id='item_fixture',
+        kind='sealed_pdf', version=sealed_version, size=len(sealed_bytes), sha256=hashlib.sha256(sealed_bytes).hexdigest())
+    with patch('dealroom_sign.exports.source_bytes', return_value=sealed_bytes) as read, \
+         patch('dealroom_sign.storage.fileserver_client.upload_file') as upload:
+        final = post(export_body(req, 'final'))
+        assert final.status_code == 200 and final.content == sealed_bytes
+        assert hashlib.sha256(final.content).hexdigest() == artifact.sha256 == final['X-Content-SHA256']
+        assert all('NOT FINAL' not in page.extract_text() for page in PdfReader(io.BytesIO(final.content)).pages)
+        read.assert_called_once_with(sealed_version)
+        upload.assert_not_called()
 
 
 def test_import_is_idempotent_and_never_verifies_legacy_identity(base, tmp_path):
@@ -321,6 +342,12 @@ def test_import_is_idempotent_and_never_verifies_legacy_identity(base, tmp_path)
 def test_product_registry_tool_parity():
     root = Path(__file__).resolve().parents[3]
     tools = {x['operation_id']:x for x in json.loads((root/'mcp-server/coneshare_mcp/dealroom_tools.json').read_text())}
+    source = root/'mcp-server/coneshare_mcp/dealroom.py'
+    register = next(node for node in ast.parse(source.read_text()).body if isinstance(node, ast.FunctionDef) and node.name == 'register')
+    scope = {'json':json, 'Path':Path, '__file__':str(source), 'RegistryTool':lambda **kwargs: SimpleNamespace(**kwargs)}
+    exec(compile(ast.Module(body=[register], type_ignores=[]), str(source), 'exec'), scope)
+    mcp = Mock(); scope['register'](mcp)
+    descriptions = {call.args[0].endpoint['operation_id']:call.args[0].description for call in mcp.add_tool.call_args_list}
     for cls in ['SignatureRequestListView','SignatureOverviewView','SignatureRequestDetailView','SignaturePageListView','SignaturePageView','SignatureExportView']:
         oid = f'dealroom_sign_{cls}_endpoint_' + ('post' if cls == 'SignatureExportView' else 'get')
         assert oid in registry(), f'Missing slice 1 registry operation: {oid}'
@@ -329,6 +356,8 @@ def test_product_registry_tool_parity():
         assert registry()[oid]['widens_access'] is False
         if cls in ['SignaturePageListView','SignaturePageView']:
             assert registry()[oid]['human_only'] is True
+            assert 'verified human board session' in descriptions[oid].lower()
+            assert 'JWT' not in descriptions[oid]
 
 
 def test_snapshot_crop_binds_native_item_recipient_and_page(base):
@@ -399,3 +428,116 @@ def test_new_signature_invalidates_unpinned_partial_snapshot(base):
     req.workflow.signer_projection[0]['signingStatus'] = 'SIGNED'
     assert existing_artifact(req,'partial') is None
     assert existing_artifact(req,'partial',snap.snapshot_id).pk == snap.pk
+
+
+@pytest.mark.parametrize('task', [None, {'id':'card-1','title':'Review agreement'}])
+def test_legacy_board_send_creates_product_request_and_import_is_idempotent(base, tmp_path, task):
+    product(base)
+    client = APIClient()
+    client.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(base.user).access_token))
+    body = {'room_id':str(base.room.pk),'version_id':str(base.version.pk),
+        'recipients':base.work.recipients,'idempotency_key':'board-send',
+        'board_id':'fixture','task_ref':task}
+    with patch('dealroom_sign.workflows.source_bytes', return_value=base.pdf):
+        sent = client.post(PREFIX+'/envelopes/', body, format='json')
+        assert sent.status_code == 201, sent.data
+        row = models.SignatureRequest.objects.get(workflow_id=sent.data['id'])
+        assert row.board_id == 'fixture' and row.task_ref == task
+        assert row.source_context == {'identity':'legacy_reported','creator_login':None}
+        assert client.post(PREFIX+'/envelopes/', body, format='json').data['id'] == sent.data['id']
+        for changes in [{'task_ref':{'id':'different-card'}}, {'board_id':'different-board'},
+                        {'creator_login':'unverified@example.test'}]:
+            assert client.post(PREFIX+'/envelopes/', {**body, **changes}, format='json').status_code == 400
+        assert models.SignatureRequest.objects.filter(workflow_id=sent.data['id']).count() == 1
+    listing = get(PREFIX+'/requests?board=fixture').data['items']
+    assert next(r for r in listing if r['id'] == str(row.pk))['task'] == task
+    detail = get(PREFIX+f'/requests/{row.pk}')
+    assert detail.status_code == 200 and detail.data['source_context']['identity'] == 'legacy_reported'
+    manifest = {'board_id':'fixture','bindings':[{'login':base.user.email,'send_user_id':str(base.user.pk),
+        'signer_email':base.user.email,'role':'manager','enabled':True}],
+        'requests':[{'workflow_id':sent.data['id'],'creator_login':base.user.email,'task_ref':task}]}
+    path = tmp_path/'import.json'; path.write_text(json.dumps(manifest))
+    for _ in range(2):
+        call_command('import_board_sign', manifest=str(path), apply=True)
+    row.refresh_from_db()
+    assert models.SignatureRequest.objects.filter(workflow_id=sent.data['id']).count() == 1
+    assert row.source_context == {'identity':'legacy_reported','creator_login':None}
+    operator = User.objects.create_user(username='operator@example.test', email='operator@example.test',
+        organization=base.org, is_staff=True)
+    manifest['bindings'] = [{'login':operator.email, 'send_user_id':str(operator.pk),
+        'signer_email':operator.email, 'role':'reader', 'enabled':True}]
+    manifest['requests'][0]['creator_login'] = operator.email
+    path.write_text(json.dumps(manifest))
+    call_command('import_board_sign', manifest=str(path), apply=True)
+    row.refresh_from_db()
+    assert row.creator_id == base.user.pk and row.source_context['creator_login'] is None
+
+
+def test_legacy_board_send_request_failure_rolls_back_workflow(base):
+    client = APIClient(); client.force_authenticate(base.user)
+    body = {'room_id':str(base.room.pk),'version_id':str(base.version.pk),
+        'recipients':base.work.recipients,'idempotency_key':'rollback-send',
+        'board_id':'fixture','task_ref':None}
+    with patch('dealroom_sign.workflows.source_bytes', return_value=base.pdf), \
+         patch.object(models.SignatureRequest.objects, 'get_or_create', side_effect=RuntimeError('Fixture row write failed')):
+        with pytest.raises(RuntimeError, match='Fixture row write failed'):
+            client.post(PREFIX+'/envelopes/', body, format='json')
+    assert not Workflow.objects.filter(idempotency_key='rollback-send').exists()
+
+
+@pytest.mark.parametrize('tier', ['read_only','read_write','full_access'])
+def test_api_key_pages_denied_detail_redacted_and_binding_email_used(base, tier):
+    req, binding = product(base)
+    binding.signer_email = 'Signer@Example.test'; binding.save()
+    raw, prefix, hashed = generate_raw_api_key()
+    key = APIKey.objects.create(user=base.user, name='Unscoped fixture', prefix=prefix, hashed_key=hashed, tier=tier)
+    assert not KeyScope.objects.filter(key=key).exists()
+    client = APIClient(); client.credentials(HTTP_AUTHORIZATION='Bearer '+raw)
+    with patch('dealroom_sign.client.Documenso.request') as upstream, \
+         patch('dealroom_sign.exports.source_bytes') as read, \
+         patch('dealroom_sign.storage.page_bytes') as page_read, \
+         patch('dealroom_sign.storage.fileserver_client.upload_file') as upload:
+        for suffix in ['/pages?kind=original','/pages/2?kind=partial&field_id=7']:
+            assert client.get(PREFIX+f'/requests/{req.pk}'+suffix).status_code == 403
+        detail = client.get(PREFIX+f'/requests/{req.pk}')
+        assert detail.status_code == 200 and detail.data['evidence'] == []
+        assert not {'partial','audit'} & {a['kind'] for a in detail.data['artifacts']}
+        assert '/pages/' not in detail.content.decode()
+        upstream.assert_not_called(); read.assert_not_called(); page_read.assert_not_called(); upload.assert_not_called()
+        assert detail.data['needs_you'] is True
+        assert detail.data['people'][0]['side'] == 'ours'
+    binding.enabled = False; binding.save()
+    models.BoardStaffBinding.objects.create(board_id='fixture',login='other@example.test',send_user=base.user,
+        signer_email='other@example.test',role='reader')
+    assert client.get(PREFIX+f'/requests/{req.pk}').data['needs_you'] is False
+
+
+def test_board_needs_you_and_evidence_use_case_insensitive_binding_email(base):
+    req, binding = product(base)
+    binding.signer_email = 'Signer@Example.test'; binding.save()
+    detail = get(PREFIX+f'/requests/{req.pk}').data
+    assert detail['needs_you'] is True and detail['people'][0]['side'] == 'ours'
+    assert detail['evidence'][0]['classification']['value'] == 'board_user'
+    assert get(PREFIX+'/requests?board=fixture&state=needs_you').data['items'][0]['id'] == str(req.pk)
+    binding.signer_email = 'other@example.test'; binding.save()
+    models.BoardStaffBinding.objects.create(board_id='fixture',login='second@example.test',send_user=base.user,
+        signer_email='Signer@Example.test',role='reader')
+    assert get(PREFIX+f'/requests/{req.pk}').data['needs_you'] is False
+
+
+def test_unpinned_partial_export_reuses_page_snapshot(base):
+    req, _ = product(base)
+    stamped = stamp_partial(base.pdf, str(req.pk), '2026-11-14T10:00:00Z')
+    sha = hashlib.sha256(stamped).hexdigest()
+    snap = models.RequestArtifact.objects.create(request=req, kind='partial', snapshot_id=sha,
+        version=base.version, item_id='item_fixture', sha256=sha, size=len(stamped), source_sha256=base.work.source_sha256)
+    snapshot_fields(base.work, sha, 'item_fixture', remote(base).get.return_value)
+    with patch('dealroom_sign.exports.source_bytes', return_value=stamped), \
+         patch('dealroom_sign.exports.Documenso') as upstream, \
+         patch('dealroom_sign.storage.fileserver_client.upload_file') as upload:
+        for _ in range(2):
+            response = post(export_body(req, 'partial'))
+            assert response.status_code == 200 and response.content == stamped
+            assert response['X-Dealroom-Artifact-ID'] == str(snap.pk)
+        upstream.assert_not_called(); upload.assert_not_called()
+    assert models.RequestArtifact.objects.filter(request=req, kind='partial').count() == 1

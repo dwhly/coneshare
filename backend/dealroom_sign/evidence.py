@@ -72,8 +72,8 @@ def location(ip):
 
 def projection(row):
     facts = list(ObservedSignEvent.objects.filter(workflow=row.workflow).order_by('occurred_at', 'source_id'))
-    bound = set(BoardStaffBinding.objects.filter(board_id=row.board_id, enabled=True,
-        send_user__is_active=True).values_list('signer_email', flat=True))
+    bound = {email.lower() for email in BoardStaffBinding.objects.filter(board_id=row.board_id, enabled=True,
+        send_user__is_active=True).values_list('signer_email', flat=True)}
     result = []
     for person in people(row):
         rid = person['recipient_id']
@@ -85,7 +85,7 @@ def projection(row):
         signed = first({'DOCUMENT_RECIPIENT_COMPLETED'}) or instant(person.get('signed_at'))
         addresses = [{'event_id':f.source_id,'at':f.occurred_at,'ip':f.ip_address,'user_agent':f.user_agent} for f in events if f.ip_address or f.user_agent]
         ip = next((f.ip_address for f in reversed(events) if f.ip_address), None)
-        ours = person['email'] in bound
+        ours = person['email'].lower() in bound
         # Slice 1 imports no verified entry. Native completion never upgrades legacy identity.
         classification = {'value': 'board_user' if ours else 'outside', 'reason': 'board_sign_in_not_observed' if ours else 'no_board_binding'}
         observed = 'email_code' if any(f.payload.get('type') in {'ACCESS_AUTH_2FA_VALIDATED', 'DOCUMENT_ACCESS_AUTH_2FA_VALIDATED'} for f in events) else None

@@ -4,11 +4,13 @@ from pathlib import Path
 
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
+from rest_framework.exceptions import ValidationError
 
 from core.models import User
 from dealroom_sign.client import Documenso
 from dealroom_sign.evidence import refresh_audit, snapshot_fields
-from dealroom_sign.models import BoardStaffBinding, SignatureRequest, Workflow
+from dealroom_sign.legacy import legacy_request
+from dealroom_sign.models import BoardStaffBinding, Workflow
 from dealroom_sign.requests import board_config
 from dealroom_sign.workflows import validate_envelope
 
@@ -48,19 +50,10 @@ class Command(BaseCommand):
                 if item['creator_login'] not in bindings or not bindings[item['creator_login']][0]['enabled']:
                     raise ValueError('unmapped creator')
                 work = Workflow.objects.select_related('owner__signcredential','room').get(pk=item['workflow_id'])
-                credential = work.owner.signcredential
                 creator = bindings[item['creator_login']][1]
-                if (str(work.owner_id) not in cfg.get('owner_ids', []) or credential.team_id not in cfg.get('team_ids', [])
-                        or str(work.room_id) not in cfg.get('room_ids', []) or not credential.enabled
-                        or creator.organization_id != work.room.organization_id or work.purpose != 'room_document'):
-                    raise ValueError('owner/team/room mapping')
-                old = SignatureRequest.objects.filter(workflow=work).first()
-                if old and (old.board_id != board or old.creator_id != creator.pk or old.task_ref != item['task_ref']):
-                    raise ValueError('existing request mapping conflict')
-                if item['task_ref'] is not None and (not isinstance(item['task_ref'], dict) or set(item['task_ref']) - {'id','title'} or not item['task_ref'].get('id')):
-                    raise ValueError('task reference')
+                legacy_request(work, board, item['task_ref'], creator=creator, apply=False)
                 requests.append((item, work, creator))
-        except (ValueError, TypeError, KeyError, AttributeError, User.DoesNotExist, Workflow.DoesNotExist) as exc:
+        except (ValueError, TypeError, KeyError, AttributeError, ValidationError, User.DoesNotExist, Workflow.DoesNotExist) as exc:
             raise CommandError('Invalid or unmapped import manifest.') from exc
         if not options['apply']:
             self.stdout.write(f'Dry run: {len(bindings)} bindings, {len(requests)} requests; no changes or network reads.')
@@ -70,9 +63,7 @@ class Command(BaseCommand):
                 BoardStaffBinding.objects.update_or_create(board_id=board, login=login, defaults={
                     'send_user':user,'signer_email':item['signer_email'],'role':item['role'],'enabled':item['enabled']})
             for item, work, creator in requests:
-                row, _ = SignatureRequest.objects.get_or_create(workflow=work, defaults={
-                    'board_id':board,'creator':creator,'title':work.title,'kind':'unknown','task_ref':item['task_ref'],
-                    'room':work.room,'state':work.state,'source_context':{'identity':'legacy_reported'}})
+                row = legacy_request(work, board, item['task_ref'], creator=creator)
                 if options['fetch_audit']:
                     with Documenso(work.owner.signcredential) as client:
                         envelope = client.get(work.envelope_id)

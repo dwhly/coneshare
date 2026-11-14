@@ -62,4 +62,13 @@ class RegistryTool(Tool):
 
 def register(mcp):
     for entry in json.loads(Path(__file__).with_name('dealroom_tools.json').read_text()):
-        mcp.add_tool(RegistryTool(name=entry['name'],description=f"{entry['operation_id']}. " + ('Human staff JWT required.' if entry['human_only'] else 'Uses the central operation policy and approval gate.'),parameters=entry['parameters'],endpoint=entry))
+        if entry['operation_id'] in {
+            'dealroom_sign_SignaturePageListView_endpoint_get', 'dealroom_sign_SignaturePageView_endpoint_get'
+        }:
+            policy = 'Verified human board session required.'
+        elif entry['human_only']:
+            policy = 'Human staff JWT required.'
+        else:
+            policy = 'Uses the central operation policy and approval gate.'
+        mcp.add_tool(RegistryTool(name=entry['name'], description=f"{entry['operation_id']}. {policy}",
+            parameters=entry['parameters'], endpoint=entry))

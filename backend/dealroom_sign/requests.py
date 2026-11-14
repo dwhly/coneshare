@@ -64,15 +64,15 @@ def scoped_request(request, request_id):
 
 def people(row):
     projection = {p.get('email', '').lower(): p for p in row.workflow.signer_projection}
-    bindings = set(BoardStaffBinding.objects.filter(board_id=row.board_id, enabled=True,
-        send_user__is_active=True).values_list('signer_email', flat=True))
+    bindings = {email.lower() for email in BoardStaffBinding.objects.filter(board_id=row.board_id, enabled=True,
+        send_user__is_active=True).values_list('signer_email', flat=True)}
     result = []
     for person in row.workflow.recipients:
         email = person.get('email', '')
         native = projection.get(email.lower(), {})
         role = person.get('role', 'SIGNER')
         result.append({'recipient_id': native.get('id'), 'email': email, 'name': person.get('name'),
-            'role': role, 'side': 'ours' if email in bindings else 'theirs',
+            'role': role, 'side': 'ours' if email.lower() in bindings else 'theirs',
             'status': 'COPIED' if role == 'CC' else native.get('signingStatus', 'NOT_SIGNED'),
             'read_status': native.get('readStatus'), 'signed_at': native.get('signedAt'), 'sent_at':native.get('sentAt')})
     return result
@@ -82,12 +82,16 @@ def list_row(row, request):
     persons = people(row)
     required = [p for p in persons if p['role'] != 'CC']
     work = row.workflow
+    binding = getattr(request, 'board_binding', None)
+    signer_emails = {binding.signer_email.lower()} if binding else {email.lower() for email in
+        BoardStaffBinding.objects.filter(send_user=request.user, enabled=True, board_id=row.board_id)
+        .values_list('signer_email', flat=True)}
     return {'id': str(row.pk), 'workflow_id': str(work.pk), 'title': row.title, 'kind': row.kind,
         'state': work.state, 'signed': sum(p['status'] == 'SIGNED' for p in required), 'required': len(required),
         'task': row.task_ref, 'room': {'id': str(row.room_id), 'name': row.room.name} if row.room_id else None,
         'people': persons, 'creator': row.creator.email, 'created_at': row.created_at,
         'completed_at':work.completed_at, 'last_activity_at': work.reconciled_at or row.created_at,
-        'needs_you': any(p['email'] == request.user.email and p['status'] != 'SIGNED' for p in required)
+        'needs_you': any(p['email'].lower() in signer_emails and p['status'] != 'SIGNED' for p in required)
             and work.state == 'awaiting_signature'}
 
 

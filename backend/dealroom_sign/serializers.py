@@ -59,11 +59,23 @@ class NdaPolicyInputSerializer(serializers.Serializer):
     enabled = serializers.BooleanField(default=True)
 
 
+class TaskReferenceSerializer(StrictInputSerializer):
+    id = serializers.CharField(max_length=500)
+    title = serializers.CharField(max_length=500, required=False, allow_blank=True)
+
+
 class SendInputSerializer(StrictInputSerializer):
     room_id = serializers.CharField(max_length=64)
     version_id = serializers.CharField(max_length=64)
     idempotency_key = serializers.CharField(max_length=200)
     recipients = SignerInputSerializer(many=True)
+    board_id = serializers.CharField(max_length=100, required=False)
+    task_ref = TaskReferenceSerializer(required=False, allow_null=True)
+
+    def validate(self, data):
+        if 'task_ref' in data and not data.get('board_id'):
+            raise serializers.ValidationError('A task reference requires a board ID.')
+        return data
 
 
 class NdaPolicySerializer(serializers.ModelSerializer):
