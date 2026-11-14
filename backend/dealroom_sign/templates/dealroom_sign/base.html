@@ -1,16 +1,16 @@
 <!doctype html><html lang="en" data-edge="outline" data-density="spacious"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
 <title>{% block title %}Signing{% endblock %} · Fleet Dealroom</title>
-{% comment %} Fleet design system v0.9.6, vendored once in frontend/public/fds (commit 9ae2925, pinned by fds.lock); base Fleet tokens, no brand layer.
+{% comment %} Fleet design system v0.9.8, vendored once in frontend/public/fds (commit cf449dc, pinned by fds.lock); base Fleet tokens, no brand layer.
    color-scheme meta BEFORE the theme boot (DESIGN.md §11): theme-boot.js and theme.js keep it in step with the choice.
    /dealroom/shell.css + shell.js = the shared Fleet Dealroom shell (docs/design/dealroom-shell.md), same files as the React console. {% endcomment %}
 <meta name="color-scheme" content="light dark">
-<script src="/fds/theme-boot.js?v=0.9.6"></script>
+<script src="/fds/theme-boot.js?v=0.9.8"></script>
 <link rel="icon" type="image/svg+xml" href="/fds/marks/fleet.svg">
-<link rel="stylesheet" href="/dealroom/layers.css?v=fds096">
-<link rel="stylesheet" href="/fds/fonts.css?v=0.9.6">
-<link rel="stylesheet" href="/fds/tokens.css?v=0.9.6">
-<link rel="stylesheet" href="/fds/components.css?v=0.9.6">
-<link rel="stylesheet" href="/dealroom/shell.css?v=fds096">
+<link rel="stylesheet" href="/dealroom/layers.css?v=fds098">
+<link rel="stylesheet" href="/fds/fonts.css?v=0.9.8">
+<link rel="stylesheet" href="/fds/tokens.css?v=0.9.8">
+<link rel="stylesheet" href="/fds/components.css?v=0.9.8">
+<link rel="stylesheet" href="/dealroom/shell.css?v=fds098">
 <style>
 /* Glue pages read roles only (tokens.css); check-literals.py reports 0 for this directory.
    Element resets sit in the dr.reset layer (ordered below the fds layers by /dealroom/layers.css), so .fds-body,
@@ -27,6 +27,6 @@ a{color:hsl(var(--brand-muted-foreground))}
 {% block header %}{% endblock %}
 <main>{% block content %}{% endblock %}</main>
 <footer class="site-footer">{% block footer %}Fleet Dealroom · Confidential documents{% endblock %}</footer>
-<script src="/fds/theme.js?v=0.9.6" defer></script>
-<script src="/dealroom/shell.js?v=fds096"></script>
+<script src="/fds/theme.js?v=0.9.8" defer></script>
+<script src="/dealroom/shell.js?v=fds098"></script>
 {% block scripts %}{% endblock %}</body></html>

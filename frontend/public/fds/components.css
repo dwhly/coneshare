@@ -220,6 +220,11 @@
     color: inherit !important; background: transparent !important; border-color: currentColor !important;
   }
   :where(:focus-visible) { outline: 2px solid Highlight !important; outline-offset: 2px; }
+  /* A focus ring INSIDE a selection would be Highlight on Highlight (invisible): draw it in HighlightText, inset so it
+     stays on the highlighted area. The selected item's own ring is outside it, on Canvas, so it keeps Highlight. */
+  :is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], [aria-selected="true"], .is-selected, .is-active) :focus-visible {
+    outline-color: HighlightText !important; outline-offset: -2px !important;
+  }
   /* Severity markers and tag dots carry meaning in their fill — keep it. */
   .fds-marker, .fds-tag::before { forced-color-adjust: none; }   /* no :where() — it cannot hold pseudo-elements */
   :where(.fds-card, .fds-callout, .fds-pill, .fds-chip, .fds-btn, .fds-popover, .fds-dialog) { border-color: CanvasText; }

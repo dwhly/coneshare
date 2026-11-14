@@ -209,6 +209,7 @@
   --selected-border: 220 15% 72%; --primary: 220 15% 95%; --primary-foreground: 222 28% 10%;
   --card-foreground: 220 15% 95%; --popover-foreground: 220 15% 95%; --secondary-foreground: 220 15% 95%;
   --accent-foreground: 220 15% 95%; color-scheme: dark;
+  --brand-muted-foreground: 217 91% 76%;   /* links inside the island (menus, account popover): the dark link role */
 }
 /* dark mode: the bar keeps the same navy, a step ABOVE the near-black board, so the contrast survives */
 [data-theme="dark"][data-chrome="dark"] .fds-header { --border: 222 18% 26%; }
