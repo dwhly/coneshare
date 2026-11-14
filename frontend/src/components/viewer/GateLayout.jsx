@@ -25,7 +25,7 @@ export function GateLayout({
       <div className="absolute inset-x-0 top-0 h-96 pointer-events-none gate-dot-pattern [mask-image:radial-gradient(ellipse_60%_70%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       {/* Top Minimal Utility Bar */}
-      <header className="relative z-10 w-full px-6 py-4 flex items-center justify-between border-b border-border/60 bg-white/70 backdrop-blur-md">
+      <header className="relative z-10 w-full px-6 py-4 flex items-center justify-between border-b border-border/60 bg-background/70 backdrop-blur-md">
         <div className="flex items-center gap-2.5">
           {resolvedLogoUrl ? (
             <img

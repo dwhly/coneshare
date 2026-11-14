@@ -37,6 +37,14 @@ describe('ViewerToolbar', () => {
     );
   };
 
+  it('sits on a theme-aware surface, not a literal white one (review r1 [5])', () => {
+    // Dark theme: the zoom text uses --foreground (near-white) and the icons --muted-foreground; on bg-white they vanish.
+    const { container } = renderComponent();
+    const bar = container.querySelector('.backdrop-blur-md');
+    expect(bar.className).toContain('bg-popover/90');
+    expect(bar.className).not.toMatch(/(^|\s)bg-white(\/|\s|$)/);
+  });
+
   it('renders all controls correctly', () => {
     renderComponent();
     

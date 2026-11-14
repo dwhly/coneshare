@@ -152,7 +152,7 @@ export function ViewerToolbar({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="flex items-center gap-2 rounded-xl border border-border/80 bg-white/90 p-1.5 shadow-lg backdrop-blur-md">
+      <div className="flex items-center gap-2 rounded-xl border border-border/80 bg-popover/90 p-1.5 shadow-lg backdrop-blur-md">
         
         {/* Group 1: Page Navigation */}
         {previewMode !== 'spreadsheet' && previewMode !== 'markdown' ? (

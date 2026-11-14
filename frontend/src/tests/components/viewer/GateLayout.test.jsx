@@ -27,6 +27,13 @@ describe('GateLayout', () => {
     expect(screen.getByText('About Dealroom')).toBeInTheDocument();
   });
 
+  it('top bar sits on a theme-aware surface, not a literal white one (review r1 [5])', () => {
+    const { container } = render(<GateLayout publicMeta={{ target_type: 'document', target_name: 'D.pdf' }}><div /></GateLayout>);
+    const bar = container.querySelector('header');
+    expect(bar.className).toContain('bg-background/70');
+    expect(bar.className).not.toMatch(/(^|\s)bg-white(\/|\s|$)/);
+  });
+
   it('renders custom badgeText when explicitly provided', () => {
     render(
       <GateLayout
