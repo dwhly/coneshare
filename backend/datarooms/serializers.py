@@ -588,14 +588,50 @@ class DataroomDetailSerializer(serializers.ModelSerializer):
             for document in documents_list
         ]
 
-        scope_rows = None
-        if not use_full_content:
-            scope_rows = list(
-                DataroomItemOrder.objects.filter(dataroom=obj, parent_folder__isnull=True)
-                .order_by("position", "created_at", "id")
-            )
+        if use_full_content:
+            return self._ordered_full_items(obj, folders_data, documents_data)
 
+        scope_rows = list(
+            DataroomItemOrder.objects.filter(dataroom=obj, parent_folder__isnull=True)
+            .order_by("position", "created_at", "id")
+        )
         return build_ordered_dataroom_items(scope_rows, folders_data, documents_data)
+
+    @staticmethod
+    def _ordered_full_items(obj, folders_data, documents_data):
+        """Every folder and document, depth-first: each folder's items in its saved DataroomItemOrder (unordered
+        items after, folders first, by creation), each folder followed by its contents. `position` is the item's
+        place within its own folder, as in the root-only and folder-detail responses."""
+        def key(value):
+            return str(value) if value else None
+
+        folders_by_parent, documents_by_parent = {}, {}
+        for item in folders_data:
+            folders_by_parent.setdefault(key(item.get('parent')), []).append(item)
+        for item in documents_data:
+            documents_by_parent.setdefault(key(item.get('folder')), []).append(item)
+        rows_by_parent = {}
+        for row in DataroomItemOrder.objects.filter(dataroom=obj).order_by("position", "created_at", "id"):
+            rows_by_parent.setdefault(key(row.parent_folder_id), []).append(row)
+
+        ordered, seen = [], set()
+
+        def walk(parent):
+            if parent in seen:
+                return
+            seen.add(parent)
+            scope = build_ordered_dataroom_items(
+                rows_by_parent.get(parent), folders_by_parent.get(parent, []), documents_by_parent.get(parent, []))
+            for item in scope:
+                ordered.append(item)
+                if item['type'] == 'folder':
+                    walk(key(item['id']))
+
+        walk(None)
+        # Anything whose parent is outside the room's tree (should not happen) is still returned, never dropped.
+        for parent in list(folders_by_parent) + list(documents_by_parent):
+            walk(parent)
+        return ordered
 
 
 class AdminDataroomSerializer(DataroomSerializer):

@@ -200,6 +200,59 @@ class TestDataroomSerializer:
         assert data["items"][1]["id"] == str(folder.id)
         assert data["items"][1]["position"] == 1
 
+    def test_full_content_respects_saved_order_in_every_folder(self, dataroom, organization, user):
+        """content=full (every folder and document at any depth) keeps each folder's saved DataroomItemOrder.
+        Review v0.9 send r2 [8]: creation order A, B with saved order B, A came back as A, B."""
+        from datetime import timedelta
+        from django.utils import timezone
+        from documents.models import Document
+
+        base = timezone.now() - timedelta(hours=1)
+
+        def doc(name, minute, folder=None):
+            d = Document.objects.create(name=name, organization=organization, created_by=user, status='ready')
+            ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=d, name=name, folder=folder)
+            DataroomDocument.objects.filter(pk=ddoc.pk).update(created_at=base + timedelta(minutes=minute))
+            return ddoc
+
+        def order(item, position, parent=None):
+            is_folder = isinstance(item, DataroomFolder)
+            DataroomItemOrder.objects.create(
+                dataroom=dataroom, parent_folder=parent, position=position,
+                item_type=DataroomItemOrder.ITEM_TYPE_FOLDER if is_folder else DataroomItemOrder.ITEM_TYPE_DOCUMENT,
+                folder=item if is_folder else None, dataroom_document=None if is_folder else item,
+            )
+
+        a, b = doc("A.pdf", 1), doc("B.pdf", 2)                      # created A, B
+        folder = DataroomFolder.objects.create(dataroom=dataroom, name="Executed")
+        c, d = doc("C.pdf", 3, folder), doc("D.pdf", 4, folder)       # created C, D inside the folder
+        order(b, 0); order(a, 1); order(folder, 2)                   # saved root order: B, A, Executed
+        order(d, 0, folder); order(c, 1, folder)                     # saved folder order: D, C
+
+        factory = APIRequestFactory()
+
+        def items(params):
+            request = factory.get("/", params)
+            force_authenticate(request, user=user)
+            return DataroomDetailSerializer(instance=dataroom, context={"request": Request(request)}).data["items"]
+
+        full = items({"content": "full"})
+        assert {(i["type"], i["id"]) for i in full} == {
+            ("document", str(x.id)) for x in (a, b, c, d)} | {("folder", str(folder.id))}
+        assert len(full) == 5
+        root_docs = [i["name"] for i in full if i["type"] == "document" and not i["folder"]]
+        folder_docs = [i["name"] for i in full if i["type"] == "document" and i["folder"] == str(folder.id)]
+        assert root_docs == ["B.pdf", "A.pdf"]
+        assert folder_docs == ["D.pdf", "C.pdf"]
+        # Positions are per folder, as in the root-only and folder-detail responses.
+        assert [(i["name"], i["position"]) for i in full if i["type"] == "document"] == [
+            ("B.pdf", 0), ("A.pdf", 1), ("D.pdf", 0), ("C.pdf", 1)]
+
+        # The default (root-only) response is unchanged.
+        root = items({})
+        assert [(i["type"], i["name"], i["position"]) for i in root] == [
+            ("document", "B.pdf", 0), ("document", "A.pdf", 1), ("folder", "Executed", 2)]
+
 
 class TestDataroomFolderSerializer:
     def test_dataroom_folder_serializer(self, dataroom, serializer_context, user2):
