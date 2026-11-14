@@ -9,9 +9,9 @@
 (function () {
   var KEY = "fds-theme";
   var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
-  var mem = null;   // used when storage is denied or full, so the toggle still works for this page
+  var mem = null;   // an UNSAVED choice: set only when the write fails (storage denied or full); it wins over storage
   function norm(v) { return v === "light" || v === "dark" || v === "system" ? v : null; }
-  function choice() { var v = null; try { v = norm(localStorage.getItem(KEY)); } catch (e) {} return v || mem || "system"; }
+  function choice() { if (mem) return mem; var v = null; try { v = norm(localStorage.getItem(KEY)); } catch (e) {} return v || "system"; }
   function resolved(c) { return c === "system" ? (mq && mq.matches ? "dark" : "light") : c; }
   function meta(c) {
     var m = document.querySelector('meta[name="color-scheme"]');
@@ -30,13 +30,13 @@
   }
   function cycle() {
     var next = { system: "light", light: "dark", dark: "system" }[choice()] || "system";
-    mem = next;
-    try { localStorage.setItem(KEY, next); } catch (e) {}
+    try { localStorage.setItem(KEY, next); mem = null; } catch (e) { mem = next; }
     apply();
   }
   window.fdsTheme = { apply: apply, cycle: cycle, choice: choice };
   if (mq && mq.addEventListener) mq.addEventListener("change", apply);
-  window.addEventListener("storage", function (e) { if (e.key === KEY || e.key === null) apply(); });
+  // Another tab changed or cleared the preference: storage is authoritative again, so drop any unsaved choice.
+  window.addEventListener("storage", function (e) { if (e.key === KEY || e.key === null) { mem = null; apply(); } });
   document.addEventListener("click", function (e) {
     var t = e.target && e.target.closest && e.target.closest("[data-fds-theme-toggle]");
     if (t) { e.preventDefault(); cycle(); }
