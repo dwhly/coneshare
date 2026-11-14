@@ -52,7 +52,7 @@ for path, methods in schema['paths'].items():
         if recipient:
             props['recipient_session']={'type':'string','description':'Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.'}
             props['csrf_token']={'type':'string'}
-        tools.append({'name':oid,'operation_id':oid,'method':method.upper(),'path':path,'parameters':{'type':'object','properties':props,'required':required,'additionalProperties':False},'path_params':[p['name'] for p in spec.get('parameters',[]) if p['in']=='path'],'query_params':[p['name'] for p in spec.get('parameters',[]) if p['in']=='query'],'multipart':multipart,'recipient':recipient,'human_only':entry['human_only']})
+        tools.append({'name':oid,'operation_id':oid,'method':method.upper(),'path':path,'parameters':{'type':'object','properties':props,'required':required,'additionalProperties':False},'path_params':[p['name'] for p in spec.get('parameters',[]) if p['in']=='path'],'query_params':[p['name'] for p in spec.get('parameters',[]) if p['in']=='query'],'multipart':multipart,'recipient':recipient,'human_only':entry['human_only'], **({'human_only_kinds':entry['human_only_kinds']} if 'human_only_kinds' in entry else {})})
 # Stable ergonomic compatibility alias requested by phase-one acceptance.
 room = next(t for t in tools if t['operation_id']=='dealroom_RoomViewSet_list_get')
 tools.append({**room, 'name':'list_rooms'})

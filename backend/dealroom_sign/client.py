@@ -94,6 +94,11 @@ class Documenso:
             raise SignError('invalid_evidence_pdf')
         return response.content
 
+    def item_pdf(self, item_id, version):
+        if version not in {'original', 'pending', 'signed'}:
+            raise SignError('invalid_item_version')
+        return self.pdf(f'envelope/item/{identifier(item_id)}/download', params={'version': version})
+
     def signed_item(self, item_id):
         return self.pdf(f'envelope/item/{identifier(item_id)}/download', params={'version': 'signed'})
 

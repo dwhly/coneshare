@@ -14,6 +14,10 @@ class RegistryTool(Tool):
     endpoint: dict
 
     async def run(self, arguments: dict) -> ToolResult:
+        body_arg = arguments.get('body')
+        kind = body_arg.get('kind') if isinstance(body_arg, dict) else None
+        if isinstance(kind, str) and kind in self.endpoint.get('human_only_kinds', []):
+            raise ValueError('403: This export kind requires a verified human board session.')
         jsonschema.validate(arguments, self.parameters)
         endpoint = self.endpoint
         path = endpoint['path']
@@ -47,7 +51,8 @@ class RegistryTool(Tool):
         if 'json' in response.headers.get('content-type',''):
             result=response.json()
         else:
-            result={'content_type':response.headers.get('content-type'),'base64':base64.b64encode(response.content).decode()}
+            result={'content_type':response.headers.get('content-type'),'base64':base64.b64encode(response.content).decode(),
+                    'headers':{k:response.headers[k] for k in ['content-disposition','x-content-sha256','x-dealroom-artifact-id','x-dealroom-audit-id','cache-control','referrer-policy'] if k in response.headers}}
         if endpoint['recipient']:
             cookies=SimpleCookie(); cookies.load(arguments.get('recipient_session',''))
             for key,value in response.cookies.items(): cookies[key]=value

@@ -1,24 +1,48 @@
+import io
 import uuid
+from urllib.parse import urlencode
 
+from PIL import Image
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.exceptions import NotFound, PermissionDenied, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from drf_spectacular.utils import extend_schema
-
+from core.authentication import APIKeyAuthentication
 from core.models import APIKey
 from datarooms.models import Dataroom, DataroomDocument
-from documents.models import DocumentVersion
+from dealroom.activity import record
+from dealroom.hooks import human_staff
+from documents.models import DocumentPage, DocumentVersion
+from documents.tasks import generate_pdf_pages_task
 from sharelinks.models import Viewer
 
-from .models import NdaAcceptance, NdaPolicy, SignCredential, Workflow
-from .serializers import CredentialInputSerializer, NdaPolicyInputSerializer, NdaPolicySerializer, SendInputSerializer, WorkflowSerializer
+from . import storage as product_storage
+from .board_auth import BoardProxyAuthentication
+from .client import SignError
+from .evidence import fields_for_snapshot, projection as evidence_projection
+from .exports import (
+    SnapshotChanged, Unavailable, download, existing_artifact,
+    manifest as artifact_manifest, resolve_artifact,
+)
+from .models import NdaAcceptance, NdaPolicy, SignCredential, SignatureRequest, Workflow
+from .operations import require_export_actor
+from .requests import (
+    activity as request_activity, freshness, integrity, list_row,
+    request_scope, scoped_request,
+)
+from .serializers import (
+    CredentialInputSerializer, NdaPolicyInputSerializer, NdaPolicySerializer,
+    SendInputSerializer, SignatureExportInputSerializer, WorkflowSerializer,
+)
 from .storage import source_bytes
 from .validation import digest, validate_recipients
 from .workflows import command
@@ -275,3 +299,206 @@ class SigningNdaResetView(APIView):
         except SignError as exc:
             raise ValidationError({'code': exc.code}) from None
         return Response(WorkflowSerializer(replacement).data, status=201)
+
+
+# Slice 1 read endpoints. Explicit authentication excludes the shared legacy staff JWT.
+class SignatureProductView(APIView):
+    authentication_classes = [BoardProxyAuthentication, APIKeyAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def handle_exception(self, exc):
+        if isinstance(exc, SignError):
+            exc = Unavailable()
+        response = super().handle_exception(exc)
+        code = {400:'unsupported_kind', 403:'forbidden', 404:'not_found', 409:'snapshot_changed', 503:'send_unavailable'}.get(response.status_code)
+        if code:
+            response.data = {'code':code}
+        return response
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+        response['Cache-Control'] = 'private, no-store'
+        response['Referrer-Policy'] = 'no-referrer'
+        return response
+
+    def key_scope_targets(self, request):
+        if isinstance(self, SignatureExportView):
+            require_export_actor(request, request.data.get('kind') if isinstance(request.data, dict) else None)
+            serializer = SignatureExportInputSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            ids = serializer.validated_data['request_ids']
+            # Resolve before filtering by key room scope, so denied room IDs are 403.
+            rows = SignatureRequest.objects.filter(pk__in=ids, workflow__room__organization=request.user.organization)
+        elif self.kwargs.get('request_id'):
+            rows = SignatureRequest.objects.filter(pk=self.kwargs['request_id'], workflow__room__organization=request.user.organization)
+        else:
+            rows = request_scope(request, request.query_params.get('board'))
+        return set(str(r.workflow.room_id) for r in rows), set()
+
+
+LIST_PARAMETERS = [OpenApiParameter(name, str, required=name == 'board') for name in ['board','state','direction','q','cursor']]
+PAGE_PARAMETERS = [OpenApiParameter('kind', str, enum=['original','partial','final']), OpenApiParameter('snapshot_id', str), OpenApiParameter('field_id', str)]
+
+
+class SignatureRequestListView(SignatureProductView):
+    @extend_schema(parameters=LIST_PARAMETERS, responses={200:OpenApiTypes.OBJECT})
+    def get(self, request):
+        if set(request.query_params) - {'board','state','direction','q','cursor'}:
+            raise ValidationError('Unsupported input property.')
+        rows = request_scope(request, request.query_params.get('board')).order_by('-created_at', '-id')
+        q = request.query_params.get('q', '').strip()[:200]
+        if q:
+            rows = rows.filter(Q(title__icontains=q) | Q(workflow__recipients__icontains=q) | Q(task_ref__icontains=q) | Q(room__name__icontains=q))
+        direction = request.query_params.get('direction')
+        if direction:
+            if direction not in {'in','out','std','unknown'}:
+                raise ValidationError('Invalid direction.')
+            rows = rows.filter(kind=direction)
+        projected = [list_row(r, request) for r in rows]
+        def matches(r, state):
+            return (state == 'needs_you' and r['needs_you'] or
+                    state == 'waiting' and r['state'] == 'awaiting_signature' and r['signed'] < r['required'] or
+                    r['state'] == state)
+        counts = {state:sum(bool(matches(r, state)) for r in projected) for state in ['needs_you','waiting','done','declined']}
+        counts['all'] = len(projected)
+        state = request.query_params.get('state')
+        if state:
+            projected = [r for r in projected if matches(r, state)]
+        cursor = request.query_params.get('cursor')
+        if cursor:
+            ids = [r['id'] for r in projected]
+            if cursor not in ids:
+                raise ValidationError('Invalid cursor.')
+            projected = projected[ids.index(cursor)+1:]
+        items = projected[:50]
+        return Response({'items':items,'counts':counts,'next_cursor':items[-1]['id'] if len(projected)>50 else None,
+            'as_of':timezone.now(),'stale':any(not r.workflow.reconciled_at or (timezone.now()-r.workflow.reconciled_at).total_seconds()>90 for r in rows)})
+
+
+class SignatureOverviewView(SignatureProductView):
+    @extend_schema(parameters=[OpenApiParameter('board', str, required=True)], responses={200:OpenApiTypes.OBJECT})
+    def get(self, request):
+        rows = list(request_scope(request, request.query_params.get('board')).order_by('-created_at')[:200])
+        items = [list_row(r, request) for r in rows]
+        return Response({'needs_you':[r for r in items if r['needs_you']],
+            'waiting':[r for r in items if r['state']=='awaiting_signature' and not r['needs_you']],
+            'likely':[],'recent':items[:10],'source_states':{'predictions':'not_enabled'},
+            'as_of':timezone.now(),'stale':any(freshness(r)['stale'] for r in rows)})
+
+
+class SignatureRequestDetailView(SignatureProductView):
+    @extend_schema(responses={200:OpenApiTypes.OBJECT})
+    def get(self, request, request_id):
+        row = scoped_request(request, request_id)
+        human = human_staff(request)
+        evidence = evidence_projection(row) if human else []
+        artifacts = artifact_manifest(row, human)
+        # Field crops use only persisted native recipient/field geometry from audit events.
+        if human:
+            available = next((a for a in artifacts if a['kind'] == 'final' and a['available']), None)
+            available = available or next((a for a in artifacts if a['kind'] == 'partial' and a['snapshot_id']), None)
+            if available:
+                for item in evidence:
+                    field = signature_field(row, available['snapshot_id'], recipient_id=item['recipient_id'])
+                    if field and item['signed_at']:
+                        query = urlencode({'kind':available['kind'],'snapshot_id':available['snapshot_id'],'field_id':field['id']})
+                        item['signature'] = {'snapshot_id':available['snapshot_id'],'page':field['page'],'field_id':field['id'],
+                            'url':f'/api/v1/dealroom-sign/requests/{row.pk}/pages/{field["page"]}?{query}', 'type':'not_recorded'}
+        return Response({**list_row(row, request),'revision':row.revision,'evidence':evidence,'activity':request_activity(row),
+            'source_context':{'identity':row.source_context.get('identity', 'not_recorded')},
+            'integrity':integrity(row),'settings':{},'completion':[],'artifacts':artifacts,'audit_complete':row.audit_complete,'audit_as_of':row.audit_as_of,
+            'capabilities':{name:{'enabled':False,'reason':'read_only_slice'} for name in ['send','remind','void','revise','settings','evidence_report','history_evidence']},
+            'human':human, **freshness(row)})
+
+
+def signature_field(row, snapshot_id, field_id=None, recipient_id=None):
+    return next((field for field in fields_for_snapshot(row.workflow, snapshot_id)
+        if field['inserted'] and (field_id is None or field['id'] == field_id)
+        and (recipient_id is None or str(field['recipient_id']) == str(recipient_id))), None)
+
+
+def page_artifact(request, row):
+    if set(request.query_params) - {'kind','snapshot_id','field_id'}:
+        raise ValidationError('Unsupported input property.')
+    kind = request.query_params.get('kind', 'original')
+    if kind not in {'original','partial','final'}:
+        raise ValidationError('Invalid page kind.')
+    snapshot = request.query_params.get('snapshot_id')
+    artifact = existing_artifact(row, kind, snapshot)
+    if artifact is None:
+        artifact, _ = resolve_artifact(row, kind, snapshot)
+    version = artifact.version
+    if version.render_status == DocumentVersion.RENDER_FAILED:
+        return artifact, Response({'code':'render_failed'}, status=422)
+    if not version.has_pages:
+        if version.render_status not in {DocumentVersion.RENDER_PROCESSING, DocumentVersion.RENDER_QUEUED}:
+            DocumentVersion.objects.filter(pk=version.pk).update(render_status=DocumentVersion.RENDER_QUEUED)
+            try:
+                generate_pdf_pages_task.delay(version.pk)
+            except Exception:
+                raise Unavailable() from None
+        return artifact, Response({'status':'processing','snapshot_id':artifact.snapshot_id}, status=202)
+    return artifact, None
+
+
+class SignaturePageListView(SignatureProductView):
+    @extend_schema(parameters=PAGE_PARAMETERS, responses={200:OpenApiTypes.OBJECT,202:OpenApiTypes.OBJECT,422:OpenApiTypes.OBJECT})
+    def get(self, request, request_id):
+        row = scoped_request(request, request_id)
+        artifact, pending = page_artifact(request, row)
+        if pending is not None:
+            return pending
+        query = urlencode({'kind':request.query_params.get('kind','original'),'snapshot_id':artifact.snapshot_id})
+        pages = list(artifact.version.pages.order_by('page_number'))
+        signature_pages = sorted({f['page'] for r in row.workflow.recipients for f in r.get('fields', []) if f.get('type') in {'SIGNATURE','FREE_SIGNATURE','INITIALS'}})
+        if request.query_params.get('kind', 'original') != 'original':
+            signature_pages = sorted({f['page'] for f in fields_for_snapshot(row.workflow, artifact.snapshot_id)})
+        signatures = [{'recipient_id':f['recipient_id'],'field_id':f['id'],'page':f['page'],
+            'url':f'/api/v1/dealroom-sign/requests/{row.pk}/pages/{f["page"]}?{query}&field_id={f["id"]}'}
+            for f in fields_for_snapshot(row.workflow, artifact.snapshot_id) if f['inserted']]
+        return Response({'sha256':artifact.sha256, 'signatures':signatures, 'version_id':str(artifact.version.pk),'snapshot_id':artifact.snapshot_id,'status':'ready',
+            'page_count':len(pages),'signature_pages':signature_pages,
+            'pages':[{'page':p.page_number,'url':f'/api/v1/dealroom-sign/requests/{row.pk}/pages/{p.page_number}?{query}'} for p in pages]})
+
+
+class SignaturePageView(SignatureProductView):
+    @extend_schema(parameters=PAGE_PARAMETERS, responses={200:OpenApiTypes.BINARY,202:OpenApiTypes.OBJECT,422:OpenApiTypes.OBJECT})
+    def get(self, request, request_id, page):
+        row = scoped_request(request, request_id)
+        if not request.query_params.get('snapshot_id'):
+            raise SnapshotChanged()
+        artifact, pending = page_artifact(request, row)
+        if pending is not None:
+            return pending
+        rendered = get_object_or_404(DocumentPage, document_version=artifact.version, page_number=page)
+        try:
+            content = product_storage.page_bytes(rendered)
+            field_id = request.query_params.get('field_id')
+            if field_id:
+                field = signature_field(row, artifact.snapshot_id, field_id=field_id)
+                if not field or field['page'] != page or request.query_params.get('kind') == 'original':
+                    raise NotFound('not_found')
+                with Image.open(io.BytesIO(content)) as img:
+                    x, y = img.width*field['positionX']/100, img.height*field['positionY']/100
+                    crop = img.crop((x,y,x+img.width*field['width']/100,y+img.height*field['height']/100))
+                    out = io.BytesIO(); crop.convert('RGB').save(out, format='JPEG'); crop.close(); content = out.getvalue()
+            record('signature.page_viewed', organization=row.workflow.room.organization, actor=request.user,
+                room_id=row.workflow.room_id, target_id=row.pk,
+                data={'snapshot_id':artifact.snapshot_id,'page':page,'field_id':field_id,'sha256':digest(content),'board_id':row.board_id})
+        except NotFound:
+            raise
+        except Exception:
+            raise Unavailable() from None
+        return HttpResponse(content, content_type='image/jpeg')
+
+
+class SignatureExportView(SignatureProductView):
+    @extend_schema(request=SignatureExportInputSerializer, responses={200:OpenApiTypes.BINARY},
+        description='Partial, audit, evidence_report and history_evidence require a verified human board session, even with full-access keys. Original/final/certificate require explicit operation, request and actual filing-room scope. Reports/CSV are reserved and disabled.')
+    def post(self, request):
+        require_export_actor(request, request.data.get('kind') if isinstance(request.data, dict) else None)
+        serializer = SignatureExportInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        row = scoped_request(request, data['request_ids'][0])
+        return download(request, row, data)

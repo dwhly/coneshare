@@ -489,6 +489,80 @@
   },
   {
     "human_only": false,
+    "human_only_kinds": [
+      "partial",
+      "audit",
+      "evidence_report",
+      "history_evidence"
+    ],
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_sign_SignatureExportView_endpoint_post",
+    "operation_id": "dealroom_sign_SignatureExportView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "format": {
+              "description": "* `pdf` - pdf",
+              "enum": [
+                "pdf"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "description": "* `original` - original\n* `partial` - partial\n* `final` - final\n* `certificate` - certificate\n* `audit` - audit",
+              "enum": [
+                "original",
+                "partial",
+                "final",
+                "certificate",
+                "audit"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "default": "Request page download",
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            "request_ids": {
+              "items": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            },
+            "snapshot_id": {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "kind",
+            "request_ids"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "body"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/exports",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
     "method": "GET",
     "multipart": false,
     "name": "dealroom_sign_SigningNdaPolicyView_endpoint_get",
@@ -653,6 +727,191 @@
       "workflow_id"
     ],
     "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SignatureOverviewView_endpoint_get",
+    "operation_id": "dealroom_sign_SignatureOverviewView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "board": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "board"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/overview",
+    "path_params": [],
+    "query_params": [
+      "board"
+    ],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SignatureRequestListView_endpoint_get",
+    "operation_id": "dealroom_sign_SignatureRequestListView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "board": {
+          "type": "string"
+        },
+        "cursor": {
+          "type": "string"
+        },
+        "direction": {
+          "type": "string"
+        },
+        "q": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "board"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/requests",
+    "path_params": [],
+    "query_params": [
+      "board",
+      "cursor",
+      "direction",
+      "q",
+      "state"
+    ],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SignatureRequestDetailView_endpoint_get",
+    "operation_id": "dealroom_sign_SignatureRequestDetailView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "request_id": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/requests/{request_id}",
+    "path_params": [
+      "request_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SignaturePageListView_endpoint_get",
+    "operation_id": "dealroom_sign_SignaturePageListView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "field_id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "final",
+            "original",
+            "partial"
+          ],
+          "type": "string"
+        },
+        "request_id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/pages",
+    "path_params": [
+      "request_id"
+    ],
+    "query_params": [
+      "field_id",
+      "kind",
+      "snapshot_id"
+    ],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_sign_SignaturePageView_endpoint_get",
+    "operation_id": "dealroom_sign_SignaturePageView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "field_id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "final",
+            "original",
+            "partial"
+          ],
+          "type": "string"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "request_id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "request_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/pages/{page}",
+    "path_params": [
+      "page",
+      "request_id"
+    ],
+    "query_params": [
+      "field_id",
+      "kind",
+      "snapshot_id"
+    ],
     "recipient": false
   },
   {

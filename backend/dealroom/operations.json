@@ -1949,6 +1949,72 @@
     "tier": "read_write",
     "widens_access": "evaluate_change"
   },
+  "dealroom_sign_SignatureExportView_endpoint_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "human_only_kinds": [
+      "partial",
+      "audit",
+      "evidence_report",
+      "history_evidence"
+    ],
+    "method": "POST",
+    "operation_id": "dealroom_sign_SignatureExportView_endpoint_post",
+    "path": "/api/v1/dealroom-sign/exports",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_sign_SignatureOverviewView_endpoint_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_sign_SignatureOverviewView_endpoint_get",
+    "path": "/api/v1/dealroom-sign/overview",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_sign_SignaturePageListView_endpoint_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_sign_SignaturePageListView_endpoint_get",
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/pages",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_sign_SignaturePageView_endpoint_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_sign_SignaturePageView_endpoint_get",
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/pages/{page}",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_sign_SignatureRequestDetailView_endpoint_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_sign_SignatureRequestDetailView_endpoint_get",
+    "path": "/api/v1/dealroom-sign/requests/{request_id}",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_sign_SignatureRequestListView_endpoint_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_sign_SignatureRequestListView_endpoint_get",
+    "path": "/api/v1/dealroom-sign/requests",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
   "dealroom_sign_SigningEnvelopeViewSet_create_post": {
     "boundary": "staff",
     "human_only": false,

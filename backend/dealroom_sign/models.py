@@ -89,6 +89,65 @@ class ObservedSignEvent(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     source_id = models.CharField(max_length=200)
     kind = models.CharField(max_length=100)
+    occurred_at = models.DateTimeField(null=True, default=None)
+    actor_email = models.EmailField(null=True, default=None)
+    name = models.CharField(max_length=255, null=True, default=None)
+    recipient_id = models.CharField(max_length=100, null=True, default=None)
+    ip_address = models.GenericIPAddressField(null=True, default=None)
+    user_agent = models.TextField(null=True, default=None)
+    payload = models.JSONField(default=dict)
+    schema_version = models.PositiveIntegerField(default=1)
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['workflow', 'source_id', 'kind'], name='sign_observed_fact')]
+
+
+class BoardStaffBinding(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    board_id = models.CharField(max_length=100)
+    login = models.CharField(max_length=254)
+    send_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    signer_email = models.EmailField()
+    enabled = models.BooleanField(default=True)
+    role = models.CharField(max_length=16, choices=[('reader', 'Reader'), ('writer', 'Writer'), ('manager', 'Manager')])
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['board_id', 'login'], name='sign_board_login')]
+
+
+class SignatureRequest(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    board_id = models.CharField(max_length=100)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    collaborator_ids = models.JSONField(default=list)
+    workflow = models.OneToOneField(Workflow, null=True, on_delete=models.PROTECT, related_name='signature_request')
+    title = models.CharField(max_length=255)
+    kind = models.CharField(max_length=16, default='unknown', choices=[('in', 'Incoming'), ('out', 'Outgoing'), ('std', 'Standard'), ('unknown', 'Unknown')])
+    task_ref = models.JSONField(null=True, default=None)
+    room = models.ForeignKey('datarooms.Dataroom', null=True, on_delete=models.PROTECT)
+    source_context = models.JSONField(default=dict)
+    revision = models.PositiveIntegerField(default=1)
+    state = models.CharField(max_length=24)
+    previous_request = models.ForeignKey('self', null=True, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    audit_complete = models.BooleanField(default=False)
+    audit_as_of = models.DateTimeField(null=True, default=None)
+
+    class Meta:
+        indexes = [models.Index(fields=['board_id', 'state', 'created_at'], name='sign_request_board_state')]
+
+
+class RequestArtifact(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    request = models.ForeignKey(SignatureRequest, on_delete=models.PROTECT, related_name='snapshots')
+    kind = models.CharField(max_length=24)
+    snapshot_id = models.CharField(max_length=64)
+    item_id = models.CharField(max_length=100)
+    version = models.ForeignKey('documents.DocumentVersion', on_delete=models.PROTECT)
+    sha256 = models.CharField(max_length=64)
+    size = models.PositiveBigIntegerField()
+    as_of = models.DateTimeField(default=timezone.now)
+    source_sha256 = models.CharField(max_length=64)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['request', 'kind', 'snapshot_id'], name='sign_request_snapshot')]

@@ -9,7 +9,8 @@ from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
 from .client import Documenso, SignError
-from .models import NdaAcceptance, ObservedSignEvent, SignCredential, Workflow
+from .evidence import ingest, snapshot_fields
+from .models import NdaAcceptance, ObservedSignEvent, SignCredential, SignatureRequest, Workflow
 from .storage import publish, source_bytes, stage, verify_seal
 from .validation import digest, request_digest, validate_recipients
 
@@ -19,6 +20,8 @@ AUDIT_KINDS = {
     'DOCUMENT_VIEWED': 'envelope.viewed', 'DOCUMENT_RECIPIENT_COMPLETED': 'envelope.signed',
     'DOCUMENT_COMPLETED': 'envelope.completed', 'DOCUMENT_REJECTED': 'envelope.declined',
     'DOCUMENT_CANCELLED': 'envelope.cancelled',
+    'DOCUMENT_RECIPIENT_REJECTED': 'envelope.declined',
+    'DOCUMENT_RECIPIENT_EXPIRED': 'envelope.expired',
 }
 
 
@@ -160,7 +163,7 @@ def reconcile(workflow, client, envelope=None):
     envelope = envelope or client.get(workflow.envelope_id)
     validate_envelope(workflow, envelope)
     recipients = envelope['recipients']
-    projection = [{k: r.get(k) for k in ('id', 'email', 'role', 'signingStatus', 'signedAt', 'readStatus')} for r in recipients]
+    projection = [{k: r.get(k) for k in ('id', 'email', 'role', 'signingStatus', 'signedAt', 'readStatus', 'sentAt')} for r in recipients]
     status = envelope['status']
     if workflow.purpose == 'nda':
         if len(recipients) != 1 or recipients[0]['email'].strip().lower() != workflow.member_email:
@@ -200,8 +203,13 @@ def reconcile(workflow, client, envelope=None):
             kind = AUDIT_KINDS.get(fact.get('type', fact.get('event')))
             if kind and fact.get('id'):
                 record_fact(workflow, kind, fact['id'], {'email': fact.get('email', ''), 'name': fact.get('name', ''), 'occurred_at': fact.get('createdAt')})
+        ingest(workflow, audit_rows)
+        SignatureRequest.objects.filter(workflow=workflow).update(audit_complete=True, audit_as_of=timezone.now(), state=workflow.state)
         if staged:
             publish(workflow, staged)
+            for item in staged:
+                if item["kind"] == "sealed_pdf":
+                    snapshot_fields(workflow, item["sha256"], item["item_id"], envelope)
             workflow.completed_at = timezone.now()
             if workflow.purpose == 'nda':
                 NdaAcceptance.objects.get_or_create(room=workflow.room, member_id=workflow.member_id,

@@ -104,6 +104,8 @@ def classify(view, method):
         entry.update(boundary='recipient', reason='Central recipient policy; unsupported legacy actions denied.', widens_access=False)
     elif name in STAFF or (name in UPSTREAM_READ and read):
         entry.update(boundary='staff', reason='Phase-one staff business operation.')
+    if name == 'SignatureExportView':
+        entry.update(widens_access=False, human_only_kinds=['partial', 'audit', 'evidence_report', 'history_evidence'])
     if name == 'LogoutView':
         entry['human_only'] = True
     if name == 'PreferencesView':

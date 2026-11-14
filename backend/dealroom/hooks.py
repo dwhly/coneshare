@@ -13,7 +13,13 @@ RENDER_SEMAPHORE = BoundedSemaphore(1)
 
 
 def human_staff(request):
-    return bool(request.user.is_authenticated and request.user.is_staff and isinstance(request.successful_authenticator, JWTAuthentication) and not isinstance(request.auth, APIKey))
+    from dealroom_sign.board_auth import BoardProxyAuthentication, HUMAN_VIAS
+    if not (request.user.is_authenticated and request.user.is_staff) or isinstance(request.auth, APIKey):
+        return False
+    if isinstance(request.successful_authenticator, BoardProxyAuthentication):
+        binding = getattr(request, 'board_binding', None)
+        return bool(binding and binding.enabled and request.board_context.get('via') in HUMAN_VIAS)
+    return isinstance(request.successful_authenticator, JWTAuthentication)
 
 
 def enforce(view, request):
@@ -30,6 +36,16 @@ def enforce(view, request):
         raise PermissionDenied('Staff access is required.')
     if op['human_only'] and not human_staff(request):
         raise PermissionDenied('This operation requires a human staff JWT, never an API key.')
+    # Product snapshots are intentionally reachable only through signed product
+    # routes. Legacy admin document reads must not reveal their page capabilities.
+    if type(view).__name__ == 'DocumentViewSet' and view.kwargs.get('pk'):
+        from dealroom_sign.models import RequestArtifact, ExecutedArtifact
+        document_id = view.kwargs['pk']
+        protected = RequestArtifact.objects.filter(version__document_id=document_id).exists()
+        protected = protected or ExecutedArtifact.objects.filter(version__document_id=document_id,
+            kind='audit', workflow__signature_request__isnull=False).exists()
+        if protected:
+            raise PermissionDenied('Use the authorized signature product operation.')
     if isinstance(request.auth, APIKey):
         if request.method not in ('GET', 'HEAD', 'OPTIONS') and not (type(view).__name__ == 'RoomViewSet' and getattr(view, 'action', None) == 'upload'):
             if request.content_type.split(';', 1)[0].strip().lower() != 'application/json':

@@ -26,7 +26,7 @@ class WorkflowSerializer(serializers.ModelSerializer):
 class StrictInputSerializer(serializers.Serializer):
     def to_internal_value(self, data):
         if isinstance(data, dict) and set(data) - set(self.fields):
-            raise serializers.ValidationError('Unsupported input property.')
+            raise serializers.ValidationError({'non_field_errors': ['Unsupported input property.']})
         return super().to_internal_value(data)
 
 
@@ -71,3 +71,11 @@ class NdaPolicySerializer(serializers.ModelSerializer):
         model = NdaPolicy
         fields = ['room_id', 'revision', 'source_version_id', 'source_sha256', 'fields', 'enabled']
         read_only_fields = fields
+
+
+class SignatureExportInputSerializer(StrictInputSerializer):
+    request_ids = serializers.ListField(child=serializers.UUIDField(), min_length=1, max_length=1)
+    kind = serializers.ChoiceField(choices=['original', 'partial', 'final', 'certificate', 'audit'])
+    format = serializers.ChoiceField(choices=['pdf'])
+    snapshot_id = serializers.CharField(max_length=64, required=False)
+    reason = serializers.CharField(max_length=500, default='Request page download')

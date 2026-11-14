@@ -114,3 +114,26 @@ def recover_previews(limit=4):
             get_renderer(version).enqueue_render_task(version)
         except Exception:
             logging.getLogger(__name__).warning('Executed PDF preview dispatch failed; retry scheduled')
+
+
+def snapshot_version(request, kind, sha256, content):
+    """Private derivative, outside room document listings; canonical versions are untouched."""
+    work = request.workflow
+    key = f'{work.room.organization_id}/dealroom-sign/{work.pk}/snapshots/{sha256}.pdf'
+    fileserver_client.upload_file(key, content, 'application/pdf', timeout=(10, 10))
+    doc = Document.objects.create(organization=work.room.organization, created_by=None,
+        name=f'{kind}.pdf', type='pdf', content_type='application/pdf', status='ready',
+        original_storage_key=key, storage_key=key, file_size=len(content))
+    return DocumentVersion.objects.create(document=doc, version_number=1, type='pdf',
+        content_type='application/pdf', original_storage_key=key, storage_key=key,
+        file_size=len(content), num_pages=len(PdfReader(io.BytesIO(content)).pages),
+        render_status=DocumentVersion.RENDER_NOT_GENERATED)
+
+
+def page_bytes(page):
+    url = fileserver_client.generate_download_url(page.storage_key)
+    response = httpx.get(url, timeout=10, follow_redirects=False)
+    response.raise_for_status()
+    if len(response.content) > 25 * 1024 * 1024 or not response.content.startswith(b'\xff\xd8'):
+        raise SignError('invalid_page_image')
+    return response.content
