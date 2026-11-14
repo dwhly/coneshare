@@ -1,7 +1,7 @@
 /* Fleet Dealroom shell helpers for the Django glue pages (no build step). Pairs with /dealroom/shell.css.
    - drMenu: account dropdown (button[aria-expanded] + .dr-menu__panel)
    - drAccount: renders "the person" (initials avatar + display name + chevron) from a staff JWT
-   - drSelect: styled select (button + listbox); no native <select> is ever shown */
+   - drSelect: styled select (select-only combobox + listbox, WAI-ARIA APG); no native <select> is ever shown */
 (function () {
   "use strict";
   const h = (tag, attrs, ...kids) => {
@@ -71,35 +71,61 @@
     return user;
   }
 
-  /** Styled select: button trigger + listbox. Returns { get value, set(options, value), onchange }. */
+  /** Styled select: a select-only combobox (WAI-ARIA APG) — button[role=combobox] + listbox. DOM focus stays on the
+      button; while open, aria-activedescendant names the keyboard-active option and aria-selected follows it, so a
+      screen reader announces each option as you move. Enter/Space/Tab commit, Escape cancels. Returns
+      { get value, set(options, value), trigger }. */
   function drSelect(container, { label, placeholder = "Choose…", onChange } = {}) {
     let options = [], value = "", active = -1;
+    const base = container.dataset.id || "sel";
+    const listId = base + "-list";
+    const optId = (i) => base + "-opt-" + i;
     const text = h("span", { class: "dr-muted", text: placeholder });
-    const trigger = h("button", { type: "button", class: "dr-select__trigger", "aria-haspopup": "listbox", "aria-expanded": "false", "aria-label": label, id: container.dataset.id || null }, text, chevron());
-    const list = h("ul", { class: "dr-select__list", role: "listbox", "aria-label": label, tabindex: "-1" });
+    const trigger = h("button", { type: "button", class: "dr-select__trigger", role: "combobox", "aria-haspopup": "listbox", "aria-expanded": "false", "aria-controls": listId, "aria-label": label, id: container.dataset.id || null }, text, chevron());
+    const list = h("ul", { class: "dr-select__list", role: "listbox", id: listId, "aria-label": label, tabindex: "-1",
+      onmousedown: (e) => e.preventDefault() }); // clicks in the list (options, scrollbar) keep focus on the combobox
     list.hidden = true;
     container.classList.add("dr-select");
     container.replaceChildren(trigger, list);
-    const close = () => { list.hidden = true; trigger.setAttribute("aria-expanded", "false"); };
+    const isOpen = () => !list.hidden;
     const render = () => {
       const cur = options.find((o) => o.value === value);
       text.textContent = cur ? cur.label : placeholder; text.className = cur ? "" : "dr-muted";
-      list.replaceChildren(...options.map((o, i) => h("li", { role: "option", id: (container.dataset.id || "sel") + "-opt-" + i, "aria-selected": o.value === value ? "true" : "false", class: i === active ? "is-active" : null, text: o.label, onclick: () => choose(o.value) })));
+      // Open: selection follows the active option (APG select-only combobox). Closed: the committed value.
+      const selected = (o, i) => (isOpen() ? i === active : o.value === value);
+      list.replaceChildren(...options.map((o, i) => h("li", { role: "option", id: optId(i), "aria-selected": selected(o, i) ? "true" : "false", class: i === active && isOpen() ? "is-active" : null, text: o.label, onclick: () => choose(o.value) })));
+      if (isOpen() && options[active]) {
+        trigger.setAttribute("aria-activedescendant", optId(active));
+        const li = list.children[active];
+        if (li && li.scrollIntoView) li.scrollIntoView({ block: "nearest" });
+      } else trigger.removeAttribute("aria-activedescendant");
     };
-    const choose = (v) => { const changed = v !== value; value = v; render(); close(); trigger.focus(); if (changed && onChange) onChange(v); };
-    trigger.addEventListener("click", (e) => { e.stopPropagation(); if (list.hidden) { active = Math.max(0, options.findIndex((o) => o.value === value)); render(); list.hidden = false; trigger.setAttribute("aria-expanded", "true"); } else close(); });
+    const close = () => { list.hidden = true; trigger.setAttribute("aria-expanded", "false"); active = -1; render(); };
+    const open = () => { active = Math.max(0, options.findIndex((o) => o.value === value)); list.hidden = false; trigger.setAttribute("aria-expanded", "true"); render(); };
+    const choose = (v, refocus = true) => { const changed = v !== value; value = v; close(); if (refocus) trigger.focus(); if (changed && onChange) onChange(v); };
+    const move = (i) => { active = Math.min(options.length - 1, Math.max(0, i)); render(); };
+    trigger.addEventListener("click", (e) => { e.stopPropagation(); if (isOpen()) close(); else open(); });
     trigger.addEventListener("keydown", (e) => {
-      if (list.hidden && (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ")) { e.preventDefault(); trigger.click(); return; }
-      if (list.hidden) return;
-      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(options.length - 1, active + 1); render(); }
-      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(0, active - 1); render(); }
-      else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (options[active]) choose(options[active].value); }
-      else if (e.key === "Escape" || e.key === "Tab") close();
+      if (!isOpen()) {
+        if (["ArrowDown", "ArrowUp", "Enter", " ", "Home", "End"].includes(e.key)) {
+          e.preventDefault(); open();
+          if (e.key === "Home") move(0); else if (e.key === "End") move(options.length - 1);
+        }
+        return;
+      }
+      if (e.key === "ArrowDown") { e.preventDefault(); move(active + 1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); move(active - 1); }
+      else if (e.key === "Home" || e.key === "PageUp") { e.preventDefault(); move(0); }
+      else if (e.key === "End" || e.key === "PageDown") { e.preventDefault(); move(options.length - 1); }
+      else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (options[active]) choose(options[active].value); else close(); }
+      else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); }
+      else if (e.key === "Tab") { if (options[active]) choose(options[active].value, false); else close(); }
     });
-    document.addEventListener("click", (e) => { if (!container.contains(e.target)) close(); });
+    trigger.addEventListener("blur", () => { if (isOpen()) close(); });
+    document.addEventListener("click", (e) => { if (!container.contains(e.target) && isOpen()) close(); });
     return {
       get value() { return value; },
-      set(opts, v) { options = opts; value = v !== undefined ? v : (options.find((o) => o.value === value) ? value : (options[0] ? options[0].value : "")); render(); },
+      set(opts, v) { options = opts; value = v !== undefined ? v : (options.find((o) => o.value === value) ? value : (options[0] ? options[0].value : "")); if (isOpen()) active = Math.min(active, options.length - 1); render(); },
       trigger,
     };
   }
