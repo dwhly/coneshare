@@ -106,6 +106,8 @@ def classify(view, method):
         entry.update(boundary='staff', reason='Phase-one staff business operation.')
     if name == 'SignatureExportView':
         entry.update(widens_access=False, human_only_kinds=['partial', 'audit', 'evidence_report', 'history_evidence'])
+    if name == 'SigningEnvelopeViewSet' and action == 'create':
+        entry['reason'] = 'Staff envelope send; API keys cannot supply board_id or task_ref. Board-originated rows require the board transport; API-key sends retain human approval.'
     if name == 'LogoutView':
         entry['human_only'] = True
     if name == 'PreferencesView':

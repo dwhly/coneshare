@@ -21,7 +21,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from core.authentication import generate_raw_api_key
 from core.models import APIKey, Organization, User
 from datarooms.models import Dataroom, DataroomDocument
-from dealroom.models import Activity, KeyScope
+from dealroom.models import AccessApproval, Activity, KeyScope
 from dealroom.registry import registry
 from dealroom_sign import models
 from dealroom_sign.client import Documenso
@@ -483,6 +483,89 @@ def test_legacy_board_send_request_failure_rolls_back_workflow(base):
         with pytest.raises(RuntimeError, match='Fixture row write failed'):
             client.post(PREFIX+'/envelopes/', body, format='json')
     assert not Workflow.objects.filter(idempotency_key='rollback-send').exists()
+
+
+def test_overview_exposes_only_the_requested_boards_configured_rooms(base):
+    product(base)
+    base.settings.BOARD_SIGN_BOARDS['other'] = {'room_ids': ['other-room']}
+    path = PREFIX+'/overview?board=fixture'
+    assert get(path).data['room_ids'] == [str(base.room.pk)]
+    assert get(PREFIX+'/overview?board=other').status_code == 403
+    base.settings.BOARD_SIGN_BOARDS['fixture']['room_ids'] = []
+    assert get(path).data['room_ids'] == []
+
+
+def test_legacy_board_send_unconfigured_room_creates_no_rows(base):
+    base.settings.BOARD_SIGN_BOARDS['fixture']['room_ids'] = []
+    client = APIClient(); client.force_authenticate(base.user)
+    body = {'room_id':str(base.room.pk), 'version_id':str(base.version.pk),
+        'recipients':base.work.recipients, 'idempotency_key':'unconfigured-room',
+        'board_id':'fixture', 'task_ref':None}
+    before = Workflow.objects.count()
+    with patch('dealroom_sign.workflows.source_bytes', return_value=base.pdf):
+        response = client.post(PREFIX+'/envelopes/', body, format='json')
+    assert response.status_code == 400
+    assert 'Invalid owner/team/room mapping' in str(response.data)
+    assert Workflow.objects.count() == before
+    assert not models.SignatureRequest.objects.exists()
+
+
+@pytest.mark.parametrize('metadata', [
+    {'board_id':'fixture'},
+    {'board_id':'fixture', 'task_ref':{'id':'card-1', 'title':'Agreement'}},
+    {'task_ref':{'id':'card-1', 'title':'Agreement'}},
+    {'task_ref':None},
+])
+@pytest.mark.parametrize('approval_enabled', [True, False])
+def test_api_key_cannot_create_board_originated_envelopes(base, metadata, approval_enabled):
+    base.settings.DEALROOM_ENABLED = approval_enabled
+    raw, prefix, hashed = generate_raw_api_key()
+    APIKey.objects.create(user=base.user, name='Fixture writer', tier='full_access',
+        prefix=prefix, hashed_key=hashed)
+    client = APIClient(); client.credentials(HTTP_AUTHORIZATION='Bearer '+raw)
+    body = {'room_id':str(base.room.pk), 'version_id':str(base.version.pk),
+        'recipients':base.work.recipients, 'idempotency_key':'key-board-send'}
+    before = Workflow.objects.count()
+    with patch('dealroom_sign.workflows.source_bytes', return_value=base.pdf):
+        response = client.post(PREFIX+'/envelopes/', {**body, **metadata}, format='json')
+        assert response.status_code in {400, 403}, response.data
+        assert Workflow.objects.count() == before
+        assert not models.SignatureRequest.objects.exists()
+        assert not AccessApproval.objects.exists()
+        # The existing non-board operation remains available to agent keys.
+        assert client.post(PREFIX+'/envelopes/', body, format='json').status_code == (202 if approval_enabled else 201)
+        assert not models.SignatureRequest.objects.exists()
+
+
+def test_envelope_registry_documents_api_key_board_metadata_rejection():
+    note = registry()['dealroom_sign_SigningEnvelopeViewSet_create_post']['reason']
+    assert 'API keys' in note and 'board_id' in note and 'task_ref' in note
+
+
+def test_legacy_replay_preserves_imported_operator_creator(base, tmp_path):
+    client = APIClient(); client.force_authenticate(base.user)
+    task = {'id':'card-1', 'title':'Agreement'}
+    body = {'room_id':str(base.room.pk), 'version_id':str(base.version.pk),
+        'recipients':base.work.recipients, 'idempotency_key':'import-before-replay',
+        'board_id':'fixture', 'task_ref':task}
+    with patch('dealroom_sign.workflows.source_bytes', return_value=base.pdf):
+        sent = client.post(PREFIX+'/envelopes/', body, format='json')
+    assert sent.status_code == 201
+    models.SignatureRequest.objects.get(workflow_id=sent.data['id']).delete()
+    operator = User.objects.create_user(username='operator@example.test', email='operator@example.test',
+        organization=base.org, is_staff=True)
+    manifest = {'board_id':'fixture', 'bindings':[{'login':operator.email,
+        'send_user_id':str(operator.pk), 'signer_email':operator.email, 'role':'reader', 'enabled':True}],
+        'requests':[{'workflow_id':sent.data['id'], 'creator_login':operator.email, 'task_ref':task}]}
+    path = tmp_path/'import.json'; path.write_text(json.dumps(manifest))
+    call_command('import_board_sign', manifest=str(path), apply=True)
+    row = models.SignatureRequest.objects.get(workflow_id=sent.data['id'])
+    response = client.post(PREFIX+'/envelopes/', body, format='json')
+    assert response.status_code == 201, response.data
+    assert response.data['id'] == sent.data['id']
+    row.refresh_from_db()
+    assert row.creator_id == operator.pk
+    assert models.SignatureRequest.objects.count() == 1
 
 
 @pytest.mark.parametrize('tier', ['read_only','read_write','full_access'])

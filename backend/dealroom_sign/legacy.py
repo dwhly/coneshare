@@ -23,11 +23,9 @@ def legacy_request(work, board_id, task_ref, *, creator=None, apply=True):
             or not isinstance(task_ref.get('id'), str) or not task_ref['id']
             or ('title' in task_ref and not isinstance(task_ref['title'], str))):
         raise ValidationError('Invalid task reference.')
-    # A live legacy send retains its shared Send owner even when an import later
-    # names an individual operator. Importing must not relabel that creator.
+    # Imports and live replays retain whichever creator first established the row.
     existing = SignatureRequest.objects.filter(workflow=work).first()
-    if existing and (existing.board_id != board_id or existing.task_ref != task_ref
-            or existing.creator_id not in {creator.pk, work.owner_id}):
+    if existing and (existing.board_id != board_id or existing.task_ref != task_ref):
         raise ValidationError('Existing request mapping conflict.')
     if not apply:
         return existing
@@ -36,7 +34,6 @@ def legacy_request(work, board_id, task_ref, *, creator=None, apply=True):
         'task_ref':task_ref, 'room':work.room, 'state':work.state,
         'source_context':{'identity':'legacy_reported', 'creator_login':None}})
     # Recheck the winner of a concurrent get_or_create before accepting a replay.
-    if (row.board_id != board_id or row.task_ref != task_ref
-            or row.creator_id not in {creator.pk, work.owner_id}):
+    if row.board_id != board_id or row.task_ref != task_ref:
         raise ValidationError('Existing request mapping conflict.')
     return row

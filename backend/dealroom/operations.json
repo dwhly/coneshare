@@ -2021,7 +2021,7 @@
     "method": "POST",
     "operation_id": "dealroom_sign_SigningEnvelopeViewSet_create_post",
     "path": "/api/v1/dealroom-sign/envelopes/",
-    "reason": "Phase-one staff business operation.",
+    "reason": "Staff envelope send; API keys cannot supply board_id or task_ref. Board-originated rows require the board transport; API-key sends retain human approval.",
     "tier": "read_write",
     "widens_access": true
   },

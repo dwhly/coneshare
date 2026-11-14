@@ -36,7 +36,7 @@ from .exports import (
 from .models import NdaAcceptance, NdaPolicy, SignCredential, SignatureRequest, Workflow
 from .operations import require_export_actor
 from .requests import (
-    activity as request_activity, freshness, integrity, list_row,
+    activity as request_activity, board_config, freshness, integrity, list_row,
     request_scope, scoped_request,
 )
 from .serializers import (
@@ -98,8 +98,15 @@ class SigningEnvelopeViewSet(viewsets.ReadOnlyModelViewSet):
     def key_scope_targets(self, request):
         return scoped_room(self, request)
 
+    def validate_approval(self, request):
+        # Reject before an API-key request can create an approval or a workflow.
+        if (isinstance(request.auth, APIKey) and isinstance(request.data, dict)
+                and any(field in request.data for field in ('board_id', 'task_ref'))):
+            raise PermissionDenied('API keys cannot supply board_id or task_ref.')
+
     @extend_schema(request=SendInputSerializer, responses=WorkflowSerializer)
     def create(self, request):
+        self.validate_approval(request)
         serializer = SendInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -381,9 +388,11 @@ class SignatureOverviewView(SignatureProductView):
     def get(self, request):
         rows = list(request_scope(request, request.query_params.get('board')).order_by('-created_at')[:200])
         items = [list_row(r, request) for r in rows]
+        context = getattr(request, 'board_context', None)
+        room_ids = board_config(context['board']).get('room_ids', []) if context else []
         return Response({'needs_you':[r for r in items if r['needs_you']],
             'waiting':[r for r in items if r['state']=='awaiting_signature' and not r['needs_you']],
-            'likely':[],'recent':items[:10],'source_states':{'predictions':'not_enabled'},
+            'likely':[],'recent':items[:10],'source_states':{'predictions':'not_enabled'}, 'room_ids':room_ids,
             'as_of':timezone.now(),'stale':any(freshness(r)['stale'] for r in rows)})
 
 
