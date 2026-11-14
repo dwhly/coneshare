@@ -59,7 +59,8 @@ def test_full_access_api_key_perm_on_datarooms(user):
 
 
 @pytest.mark.django_db
-def test_read_only_api_key_blocked_on_dataroom_full_access_actions(user):
+def test_read_only_api_key_blocked_on_dataroom_full_access_actions(user, fleet_security_mode):
+    # Fleet: dealroom/hooks.py denies disabled legacy writes before API-key tier checks.
     ro_client = _create_client_with_api_key(user, 'read_only')
     root_folder = Folder.objects.get_root_for_org(user.organization)
     dataroom = Dataroom.objects.create(
@@ -90,19 +91,28 @@ def test_read_only_api_key_blocked_on_dataroom_full_access_actions(user):
         format='json',
     )
     assert remove_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_only" in str(remove_resp.data['detail'])
+    if fleet_security_mode:
+        assert remove_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert "read_only" in str(remove_resp.data['detail'])
 
     remove_collab_post_resp = ro_client.post(
         reverse('dataroom-remove-collaborator', args=[dataroom.id, collab_user.id]),
     )
     assert remove_collab_post_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_only" in str(remove_collab_post_resp.data['detail'])
+    if fleet_security_mode:
+        assert remove_collab_post_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert "read_only" in str(remove_collab_post_resp.data['detail'])
 
     remove_collab_del_resp = ro_client.delete(
         reverse('dataroom-remove-collaborator', args=[dataroom.id, collab_user.id]),
     )
     assert remove_collab_del_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_only" in str(remove_collab_del_resp.data['detail'])
+    if fleet_security_mode:
+        assert remove_collab_del_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert "read_only" in str(remove_collab_del_resp.data['detail'])
 
     transfer_resp = ro_client.post(
         reverse('dataroom-transfer-ownership', args=[dataroom.id]),
@@ -110,11 +120,20 @@ def test_read_only_api_key_blocked_on_dataroom_full_access_actions(user):
         format='json',
     )
     assert transfer_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_only" in str(transfer_resp.data['detail'])
+    if fleet_security_mode:
+        assert transfer_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert "read_only" in str(transfer_resp.data['detail'])
+
+    assert DataroomDocument.objects.filter(dataroom=dataroom, document=doc).exists()
+    assert DataroomCollaborator.objects.filter(dataroom=dataroom, user=collab_user).exists()
+    dataroom.refresh_from_db()
+    assert dataroom.created_by == user
 
 
 @pytest.mark.django_db
-def test_read_write_api_key_blocked_on_dataroom_full_access_actions(user):
+def test_read_write_api_key_blocked_on_dataroom_full_access_actions(user, fleet_security_mode):
+    # Fleet: dealroom/hooks.py denies disabled legacy writes before API-key tier checks.
     rw_client = _create_client_with_api_key(user, 'read_write')
     root_folder = Folder.objects.get_root_for_org(user.organization)
     dataroom = Dataroom.objects.create(
@@ -145,20 +164,28 @@ def test_read_write_api_key_blocked_on_dataroom_full_access_actions(user):
     )
     DataroomCollaborator.objects.create(dataroom=dataroom, user=collab_user, invited_by=user)
 
-    # 1. Non-destructive POST action (add-content) -> Allowed (200)
+    # Legacy add-content and upgrade-storage are also disabled in Fleet.
     add_resp = rw_client.post(
         reverse('dataroom-add-content', args=[dataroom.id]),
         {'document_ids': [str(doc2.id)]},
         format='json',
     )
-    assert add_resp.status_code == status.HTTP_200_OK
-    assert DataroomDocument.objects.filter(dataroom=dataroom).count() == 2
+    if fleet_security_mode:
+        assert add_resp.status_code == status.HTTP_403_FORBIDDEN
+        assert add_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert add_resp.status_code == status.HTTP_200_OK
+    assert DataroomDocument.objects.filter(dataroom=dataroom).count() == (1 if fleet_security_mode else 2)
 
-    # 2. upgrade-storage remains allowed for read_write -> (200)
+    # Upstream permits read_write upgrades; Fleet also denies this legacy write.
     upgrade_resp = rw_client.post(reverse('dataroom-upgrade-storage', args=[dataroom.id]))
-    assert upgrade_resp.status_code == status.HTTP_200_OK
+    if fleet_security_mode:
+        assert upgrade_resp.status_code == status.HTTP_403_FORBIDDEN
+        assert upgrade_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert upgrade_resp.status_code == status.HTTP_200_OK
     dataroom.refresh_from_db()
-    assert dataroom.storage_version == 2
+    assert dataroom.storage_version == (1 if fleet_security_mode else 2)
 
     # 3. POST remove-content -> Blocked (403)
     remove_resp = rw_client.post(
@@ -167,8 +194,11 @@ def test_read_write_api_key_blocked_on_dataroom_full_access_actions(user):
         format='json',
     )
     assert remove_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_write" in str(remove_resp.data['detail'])
-    assert "full_access" in str(remove_resp.data['detail'])
+    if fleet_security_mode:
+        assert remove_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert "read_write" in str(remove_resp.data['detail'])
+        assert "full_access" in str(remove_resp.data['detail'])
     assert DataroomDocument.objects.filter(dataroom=dataroom, document=doc).exists()
 
     # 4. POST collaborators/{user_id}/ -> Blocked (403)
@@ -176,8 +206,11 @@ def test_read_write_api_key_blocked_on_dataroom_full_access_actions(user):
         reverse('dataroom-remove-collaborator', args=[dataroom.id, collab_user.id]),
     )
     assert remove_collab_post_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_write" in str(remove_collab_post_resp.data['detail'])
-    assert "full_access" in str(remove_collab_post_resp.data['detail'])
+    if fleet_security_mode:
+        assert remove_collab_post_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert "read_write" in str(remove_collab_post_resp.data['detail'])
+        assert "full_access" in str(remove_collab_post_resp.data['detail'])
     assert DataroomCollaborator.objects.filter(dataroom=dataroom, user=collab_user).exists()
 
     # 5. DELETE collaborators/{user_id}/ -> Blocked (403)
@@ -194,14 +227,18 @@ def test_read_write_api_key_blocked_on_dataroom_full_access_actions(user):
         format='json',
     )
     assert transfer_resp.status_code == status.HTTP_403_FORBIDDEN
-    assert "read_write" in str(transfer_resp.data['detail'])
-    assert "full_access" in str(transfer_resp.data['detail'])
+    if fleet_security_mode:
+        assert transfer_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert "read_write" in str(transfer_resp.data['detail'])
+        assert "full_access" in str(transfer_resp.data['detail'])
     dataroom.refresh_from_db()
     assert dataroom.created_by == user
 
 
 @pytest.mark.django_db
-def test_full_access_api_key_allowed_on_dataroom_full_access_actions(user):
+def test_full_access_api_key_allowed_on_dataroom_full_access_actions(user, fleet_security_mode):
+    # Fleet: dealroom/hooks.py denies disabled legacy writes before API-key tier checks.
     full_client = _create_client_with_api_key(user, 'full_access')
     root_folder = Folder.objects.get_root_for_org(user.organization)
     dataroom = Dataroom.objects.create(
@@ -238,20 +275,34 @@ def test_full_access_api_key_allowed_on_dataroom_full_access_actions(user):
         {'dataroom_document_ids': [str(doc.id)]},
         format='json',
     )
-    assert remove_resp.status_code == status.HTTP_204_NO_CONTENT
-    assert not DataroomDocument.objects.filter(dataroom=dataroom, document=doc).exists()
+    if fleet_security_mode:
+        assert remove_resp.status_code == status.HTTP_403_FORBIDDEN
+        assert remove_resp.data == {'detail': 'Unclassified or disabled operation.'}
+        assert DataroomDocument.objects.filter(dataroom=dataroom, document=doc).exists()
+    else:
+        assert remove_resp.status_code == status.HTTP_204_NO_CONTENT
+        assert not DataroomDocument.objects.filter(dataroom=dataroom, document=doc).exists()
 
     remove_collab_resp = full_client.post(
         reverse('dataroom-remove-collaborator', args=[dataroom.id, collab_user.id]),
     )
-    assert remove_collab_resp.status_code == status.HTTP_200_OK
-    assert not DataroomCollaborator.objects.filter(dataroom=dataroom, user=collab_user).exists()
+    if fleet_security_mode:
+        assert remove_collab_resp.status_code == status.HTTP_403_FORBIDDEN
+        assert remove_collab_resp.data == {'detail': 'Unclassified or disabled operation.'}
+        assert DataroomCollaborator.objects.filter(dataroom=dataroom, user=collab_user).exists()
+    else:
+        assert remove_collab_resp.status_code == status.HTTP_200_OK
+        assert not DataroomCollaborator.objects.filter(dataroom=dataroom, user=collab_user).exists()
 
     transfer_resp = full_client.post(
         reverse('dataroom-transfer-ownership', args=[dataroom.id]),
         {'new_owner_id': str(new_owner.id)},
         format='json',
     )
-    assert transfer_resp.status_code == status.HTTP_200_OK
+    if fleet_security_mode:
+        assert transfer_resp.status_code == status.HTTP_403_FORBIDDEN
+        assert transfer_resp.data == {'detail': 'Unclassified or disabled operation.'}
+    else:
+        assert transfer_resp.status_code == status.HTTP_200_OK
     dataroom.refresh_from_db()
-    assert dataroom.created_by == new_owner
+    assert dataroom.created_by == (user if fleet_security_mode else new_owner)

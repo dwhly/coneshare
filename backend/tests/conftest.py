@@ -1,4 +1,6 @@
 import os
+from unittest.mock import patch
+
 import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.settings import api_settings
@@ -14,6 +16,17 @@ from documents.services import create_document_from_upload
 User = get_user_model()
 
 DEFAULT_TEST_PASSWORD = "StrongPassword123!"
+
+
+@pytest.fixture(params=[True, False], ids=['fleet', 'upstream-handler'])
+def fleet_security_mode(request, settings):
+    """Check Fleet's boundary and the upstream protection behind that boundary."""
+    settings.DEALROOM_ENABLED = request.param
+    with patch(
+        'requests.sessions.Session.request',
+        side_effect=AssertionError('HTTP must be mocked in security tests.'),
+    ):
+        yield request.param
 
 
 @pytest.fixture(autouse=True, scope="session")

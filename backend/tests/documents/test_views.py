@@ -1134,7 +1134,7 @@ class TestDocumentVersionUploadViews:
     @patch('documents.views.fileserver_client.generate_download_url')
     @patch('documents.views.fileserver_client.get_file_info')
     def test_upload_finalize_version_with_different_file_type(
-        self, mock_get_file_info, mock_generate_download_url, api_client, user
+        self, mock_get_file_info, mock_generate_download_url, api_client, user, fleet_security_mode
     ):
         """
         Verify that uploading a video version to an existing PDF document routes
@@ -1167,6 +1167,14 @@ class TestDocumentVersionUploadViews:
             'file_name': 'clip.mp4',
         }, format='json')
 
+        # Fleet: dealroom/hooks.py rejects legacy finalization before filename validation.
+        if fleet_security_mode:
+            assert res.status_code == status.HTTP_403_FORBIDDEN
+            assert res.data == {'detail': 'Unclassified or disabled operation.'}
+            assert doc.versions.count() == 1
+            mock_get_file_info.assert_not_called()
+            return
+
         assert res.status_code == status.HTTP_202_ACCEPTED
         doc.refresh_from_db()
         assert doc.name == "presentation.pdf"
@@ -1185,7 +1193,8 @@ class TestDocumentVersionUploadViews:
             v2.original_storage_key, is_internal=False, filename="clip.mp4"
         )
 
-    def test_finalize_version_rejects_extension_mismatch(self, api_client, user):
+    @patch('documents.views.fileserver_client.get_file_info')
+    def test_finalize_version_rejects_extension_mismatch(self, mock_get_file_info, api_client, user, fleet_security_mode):
         """Test that finalize returns 400 when file_name extension does not match storage_key."""
         api_client.force_authenticate(user=user)
         doc = Document.objects.create(
@@ -1199,10 +1208,21 @@ class TestDocumentVersionUploadViews:
             'file_name': 'sneaky.pdf',
             'content_type': 'application/pdf',
         })
+        # Fleet: dealroom/hooks.py rejects legacy finalization before filename validation.
+        if fleet_security_mode:
+            assert res.status_code == status.HTTP_403_FORBIDDEN
+            assert res.data == {'detail': 'Unclassified or disabled operation.'}
+            assert doc.versions.count() == 1
+            mock_get_file_info.assert_not_called()
+            return
+
+        mock_get_file_info.assert_not_called()
+        assert doc.versions.count() == 1
         assert res.status_code == status.HTTP_400_BAD_REQUEST
         assert 'file_name' in res.json()
 
-    def test_finalize_version_rejects_overlong_file_name(self, api_client, user):
+    @patch('documents.views.fileserver_client.get_file_info')
+    def test_finalize_version_rejects_overlong_file_name(self, mock_get_file_info, api_client, user, fleet_security_mode):
         """Test that finalize returns 400 when file_name exceeds 255 chars."""
         api_client.force_authenticate(user=user)
         doc = Document.objects.create(
@@ -1216,10 +1236,21 @@ class TestDocumentVersionUploadViews:
             'file_name': 'a' * 256 + '.pdf',
             'content_type': 'application/pdf',
         })
+        # Fleet: dealroom/hooks.py rejects legacy finalization before filename validation.
+        if fleet_security_mode:
+            assert res.status_code == status.HTTP_403_FORBIDDEN
+            assert res.data == {'detail': 'Unclassified or disabled operation.'}
+            assert doc.versions.count() == 1
+            mock_get_file_info.assert_not_called()
+            return
+
+        mock_get_file_info.assert_not_called()
+        assert doc.versions.count() == 1
         assert res.status_code == status.HTTP_400_BAD_REQUEST
+        assert 'file_name' in res.json()
 
     @patch('documents.views.fileserver_client.get_file_info', return_value={'exists': True, 'size': 123})
-    def test_finalize_version_sanitizes_traversal_in_file_name(self, mock_get_file_info, api_client, user):
+    def test_finalize_version_sanitizes_traversal_in_file_name(self, mock_get_file_info, api_client, user, fleet_security_mode):
         """Test that directory traversal in file_name is sanitized before storage."""
         api_client.force_authenticate(user=user)
         doc = Document.objects.create(
@@ -1233,6 +1264,14 @@ class TestDocumentVersionUploadViews:
             'file_name': '../../safe_version.pdf',
             'content_type': 'application/pdf',
         })
+        # Fleet: dealroom/hooks.py rejects legacy finalization before filename validation.
+        if fleet_security_mode:
+            assert res.status_code == status.HTTP_403_FORBIDDEN
+            assert res.data == {'detail': 'Unclassified or disabled operation.'}
+            assert doc.versions.count() == 1
+            mock_get_file_info.assert_not_called()
+            return
+
         assert res.status_code == status.HTTP_202_ACCEPTED
         v2 = doc.versions.get(version_number=2)
         assert v2.metadata.get('file_name') == 'safe_version.pdf'
