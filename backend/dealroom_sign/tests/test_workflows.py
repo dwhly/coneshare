@@ -434,8 +434,9 @@ def test_api_schema_does_not_silently_drop_rich_field_requirements(recipients):
 
 @override_settings(SITE_DOMAIN='https://send.example.test')
 def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
-    # Sign shows "Back to <room>" + the room name from documentMeta.redirectUrl; the signer name is the recipient name.
-    from urllib.parse import parse_qs, urlparse
+    # Sign's "Back to room" link is documentMeta.redirectUrl (the room's signing page); the signer name is the
+    # recipient name.
+    from urllib.parse import urlparse
     from dealroom_sign.workflows import envelope_meta, return_url
     fixture.room.name = 'Project Atlas · Glue review'
     fixture.room.save()
@@ -444,7 +445,7 @@ def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
     work.purpose = 'nda'
     url = urlparse(return_url(work))
     assert f'{url.scheme}://{url.netloc}{url.path}' == f'https://send.example.test/signing/nda/{fixture.room.pk}'
-    assert parse_qs(url.query) == {'room_name': ['Project Atlas · Glue review']}
+    assert url.query == '' and url.fragment == ''
     sent = []
     def respond(request):
         sent.append(request)
@@ -454,6 +455,26 @@ def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
     payload = _multipart_payload(sent[0])
     assert payload['meta'] == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'distributionMethod': 'NONE'}
     assert payload['recipients'][0]['name'] == 'Member'
+
+
+@override_settings(SITE_DOMAIN='https://send.example.test')
+def test_nda_return_url_and_envelope_meta_carry_no_room_name(fixture):
+    # Review v0.9 send r2 [9]: the return URL lands in nginx $request logs, browser history and Sign's envelope
+    # metadata, so it names the room by id only. The signing page fetches the name after authorising the visitor.
+    import json
+    from urllib.parse import quote, quote_plus
+    from dealroom_sign.workflows import envelope_meta, return_url
+    secret = 'Project Atlas Confidential'
+    fixture.room.name = secret
+    fixture.room.save()
+    work = Workflow.objects.get(pk=fixture.work.pk)
+    work.purpose = 'nda'
+    url = return_url(work)
+    assert url == f'https://send.example.test/signing/nda/{fixture.room.pk}'
+    meta = json.dumps(envelope_meta(work), ensure_ascii=False)
+    for form in (secret, quote(secret), quote_plus(secret), 'Atlas', 'room_name'):
+        assert form not in url
+        assert form not in meta
 
 
 def _multipart_payload(request):

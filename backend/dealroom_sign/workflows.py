@@ -72,12 +72,13 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
 
 
 def return_url(workflow):
-    """Where an NDA signer goes back to: the room page, carrying the room name for Sign's context bar
-    ("Back to <room>"). Sign reads it from the envelope's documentMeta.redirectUrl (`room_name` query)."""
+    """Where an NDA signer goes back to: the room's signing page, by room id only. The URL reaches nginx $request
+    logs, browser history and Sign's envelope metadata (documentMeta.redirectUrl), so it carries no room name
+    (review v0.9 send r2 [9]); the page fetches the name from the recipient API after authorising the visitor, and
+    Sign's context bar falls back to "Back to room" + the document title."""
     if workflow.purpose != 'nda':
         return ''
-    from urllib.parse import urlencode
-    return f'{settings.SITE_DOMAIN}/signing/nda/{workflow.room_id}?' + urlencode({'room_name': workflow.room.name})
+    return f'{settings.SITE_DOMAIN}/signing/nda/{workflow.room_id}'
 
 
 def envelope_meta(workflow):
