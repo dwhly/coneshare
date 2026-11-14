@@ -39,7 +39,10 @@ class APIKeyTierPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if getattr(settings, 'DEALROOM_ENABLED', False):
-            return True  # dealroom.hooks is the single operation-ID tier boundary.
+            # Deliberately replace upstream tier checks with dealroom/operations.json
+            # tiers enforced by dealroom.hooks. Fleet staff deletes use read_write:
+            # archive/revoke soft deletes only reduce access.
+            return True
         if not isinstance(request.auth, APIKey):
             return True  # Request not authenticated via API Key (e.g. Session/JWT)
 

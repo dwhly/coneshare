@@ -1,6 +1,13 @@
+import hashlib
+from io import BytesIO
+from unittest.mock import patch
+
 import pytest
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import SimpleUploadedFile
+from pypdf import PdfWriter
 
+from dealroom.uploads import upload
 from documents.models import (
     Document,
     DocumentPage,
@@ -40,6 +47,32 @@ def test_document_creation(organization, user):
     assert document.organization == organization
     assert document.created_by == user
     assert document.status == 'processing'
+
+
+@pytest.mark.django_db
+def test_fleet_uploaded_version_full_clean(dataroom, user, settings, django_capture_on_commit_callbacks):
+    settings.DEALROOM_ENABLED = True
+    settings.CACHES = {'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'}}
+    pdf = BytesIO()
+    writer = PdfWriter()
+    writer.add_blank_page(width=72, height=72)
+    writer.write(pdf)
+    content = pdf.getvalue()
+    uploaded_file = SimpleUploadedFile('Fleet.pdf', content, content_type='application/pdf')
+
+    with (
+        patch('requests.sessions.Session.request', side_effect=AssertionError('HTTP must be mocked.')),
+        patch('dealroom.uploads.fileserver_client.upload_file') as store_file,
+        patch('documents.tasks.generate_pdf_pages_task.delay'),
+        django_capture_on_commit_callbacks(execute=True),
+    ):
+        item = upload(dataroom, user, uploaded_file)
+
+    store_file.assert_called_once()
+    version = item.document.versions.get(is_primary=True)
+    assert version.metadata['source_sha256'] == hashlib.sha256(content).hexdigest()
+    assert version.metadata['file_name'] == 'Fleet.pdf'
+    version.full_clean()
 
 
 def test_validate_document_version_metadata():

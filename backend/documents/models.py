@@ -304,7 +304,7 @@ def validate_document_version_metadata(value):
     if not isinstance(value, dict):
         raise ValidationError("metadata must be a dictionary.")
 
-    allowed_keys = {'cloud_import', 'file_name'}
+    allowed_keys = {'cloud_import', 'file_name', 'source_sha256'}
     invalid_keys = set(value.keys()) - allowed_keys
     if invalid_keys:
         raise ValidationError(f"Invalid keys in metadata: {', '.join(invalid_keys)}")
@@ -387,6 +387,7 @@ class DocumentVersion(BaseModel):
     # Expected schema for metadata:
     # {
     #     'file_name': str (optional, max 255 chars, sanitized original version file name),
+    #     'source_sha256': str (optional, source checksum recorded by Fleet uploads),
     #     'cloud_import': {
     #         'provider': str (optional),
     #         'provider_display': str (optional),

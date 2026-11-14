@@ -11,6 +11,7 @@ import requests
 from pdf2image import convert_from_bytes
 from django.conf import settings
 from django.core.cache import cache
+from django.core.exceptions import SuspiciousFileOperation
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.mail import send_mail
 from django.db import transaction
@@ -3069,6 +3070,10 @@ class ShareLinkFileDownloadView(APIView):
                 or request.query_params.get('disposition', '').lower() == 'inline'
             )
             disposition_type = 'inline' if is_inline else 'attachment'
+            try:
+                safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
+            except SuspiciousFileOperation:
+                safe_filename = 'image' if document.type == 'image' else 'document'
             identity = amforge.issue_copy(
                 link, request, document, IssuedCopy.KIND_DOWNLOAD,
                 dataroom_document=dataroom_document_obj, auth_status=auth_status,
@@ -3080,7 +3085,6 @@ class ShareLinkFileDownloadView(APIView):
                     )
                     response = HttpResponse(image_buffer, content_type=content_type)
                     # Ensure filename has .jpg extension since we're creating a JPEG
-                    safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
                     raw_ascii = safe_filename.replace(' ', '_').encode('ascii', 'ignore').decode('ascii').strip('._- ')
                     ascii_name = raw_ascii or "image"
                     utf8_name = quote(f"{safe_filename}.jpg", safe='')
@@ -3096,7 +3100,6 @@ class ShareLinkFileDownloadView(APIView):
                     pdf_buffer = _generate_watermarked_pdf(document, primary_version, effective_watermark_text, request, viewer_email, identity=identity)
                 response = HttpResponse(pdf_buffer, content_type='application/pdf')
                 # Ensure filename has .pdf extension
-                safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
                 raw_ascii = safe_filename.replace(' ', '_').encode('ascii', 'ignore').decode('ascii').strip('._- ')
                 ascii_name = raw_ascii or "document"
                 utf8_name = quote(f"{safe_filename}.pdf", safe='')
