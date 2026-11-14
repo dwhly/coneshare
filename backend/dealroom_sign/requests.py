@@ -2,9 +2,10 @@
 from django.conf import settings
 from django.db.models import Q, F
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from rest_framework.exceptions import NotFound, PermissionDenied
 
-from core.models import APIKey
+from core.models import APIKey, User
 from dealroom.models import Activity, KeyScope
 from .models import BoardStaffBinding, SignatureRequest, ObservedSignEvent
 
@@ -90,21 +91,82 @@ def list_row(row, request):
         'state': work.state, 'signed': sum(p['status'] == 'SIGNED' for p in required), 'required': len(required),
         'task': row.task_ref, 'room': {'id': str(row.room_id), 'name': row.room.name} if row.room_id else None,
         'people': persons, 'creator': row.creator.email, 'created_at': row.created_at,
-        'completed_at':work.completed_at, 'last_activity_at': work.reconciled_at or row.created_at,
+        'completed_at':work.completed_at, 'last_activity_at': last_activity_at(row),
         'needs_you': any(p['email'].lower() in signer_emails and p['status'] != 'SIGNED' for p in required)
             and work.state == 'awaiting_signature'}
 
 
+def event_time(value):
+    try:
+        at = parse_datetime(value) if isinstance(value, str) else value
+        return timezone.make_aware(at) if at and timezone.is_naive(at) else at
+    except (ValueError, TypeError):
+        return None
+
+
+def local_activity(row):
+    return Activity.objects.filter(organization=row.workflow.room.organization).filter(
+        Q(target_id=str(row.pk)) | Q(data__workflow_id=str(row.workflow_id)))
+
+
+def last_activity_at(row):
+    # Reconciliation, import and snapshot timestamps describe our observation, not
+    # an action by a signer. In particular, never substitute fetch time for a gap.
+    times = list(ObservedSignEvent.objects.filter(workflow=row.workflow)
+        .exclude(kind='snapshot.fields').exclude(occurred_at=None).values_list('occurred_at', flat=True))
+    for person in row.workflow.signer_projection:
+        times.extend(event_time(person.get(key)) for key in ('sentAt', 'openedAt', 'readAt', 'signedAt'))
+    for item in local_activity(row):
+        if item.data.get('source') == 'sign' or item.data.get('source_record_id'):
+            times.append(event_time(item.data.get('occurred_at')))
+        elif item.event_type in {'envelope.sent', 'signature.download_requested', 'envelope.cancelled',
+                                'envelope.declined', 'envelope.signed', 'envelope.viewed', 'signature.page_viewed'}:
+            times.append(item.created_at)
+    return max((at for at in times if at), default=row.created_at)
+
+
+def event_pages(data):
+    values = data.get('pages', [data.get('pageNumber', data.get('page'))])
+    if not isinstance(values, list):
+        values = [values]
+    return [int(p) for p in values if isinstance(p, (int, str)) and str(p).isdigit() and int(p) > 0]
+
+
 def activity(row):
-    local = list(Activity.objects.filter(organization=row.workflow.room.organization).filter(
-        Q(target_id=str(row.pk)) | Q(data__workflow_id=str(row.workflow_id))))
-    result = [{'id': str(a.pk), 'kind': a.event_type, 'at': a.created_at,
-               'actor': a.actor_id, 'sha256': a.data.get('sha256'), 'download_kind': a.data.get('kind')}
-              for a in local]
-    seen = {a.data.get('source_record_id') for a in local}
-    for fact in ObservedSignEvent.objects.filter(workflow=row.workflow).exclude(kind='snapshot.fields'):
-        if fact.source_id not in seen:
-            result.append({'id':fact.source_id,'kind':fact.kind,'at':fact.occurred_at,'source':'sign'})
+    local = list(local_activity(row))
+    facts = list(ObservedSignEvent.objects.filter(workflow=row.workflow).exclude(kind='snapshot.fields'))
+    native = {f.source_id: f for f in facts}
+    users = {str(u.pk): u for u in User.objects.filter(organization=row.workflow.room.organization,
+        pk__in=[a.actor_id for a in local if a.actor_kind == 'staff'])}
+
+    def observed(fact):
+        data = fact.payload.get('data', {})
+        return {'kind':fact.kind, 'at':fact.occurred_at, 'source':'sign',
+            'actor_email':fact.actor_email, 'actor_name':fact.name,
+            'recipient_id':fact.recipient_id, 'pages':event_pages(data),
+            'email_type':data.get('emailType'), 'source_kind':fact.payload.get('type'),
+            'source_event_ids':[fact.source_id]}
+
+    result, seen = [], set()
+    for item in local:
+        source_id = item.data.get('source_record_id')
+        fact = native.get(source_id)
+        user = users.get(item.actor_id)
+        native_source = item.data.get('source') == 'sign' or source_id
+        event = {'id':str(item.pk), 'kind':item.event_type, 'recorded_at':item.created_at,
+            'at':event_time(item.data.get('occurred_at')) if native_source else item.created_at,
+            'actor':item.actor_id, 'actor_email':item.data.get('email') or (user.email if user else None),
+            'actor_name':item.data.get('name') or (user.get_full_name() if user else None),
+            'sha256':item.data.get('sha256'), 'download_kind':item.data.get('kind'),
+            'pages':event_pages(item.data), 'recipient_id':item.data.get('recipient_id'),
+            'related_event_id':item.data.get('audit_id'),
+            'source_event_ids':[source_id] if source_id else [str(item.pk)]}
+        if fact:
+            details = observed(fact)
+            event.update({k:v for k,v in details.items() if v is not None})
+            seen.add(source_id)
+        result.append(event)
+    result.extend({'id':f.source_id, **observed(f)} for f in facts if f.source_id not in seen)
     return sorted(result, key=lambda item: (item['at'].isoformat() if item['at'] else '', item['id']))
 
 

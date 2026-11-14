@@ -363,6 +363,9 @@ class SignatureRequestListView(SignatureProductView):
                 raise ValidationError('Invalid direction.')
             rows = rows.filter(kind=direction)
         projected = [list_row(r, request) for r in rows]
+        # Sort the real activity projection before applying the cursor/page limit.
+        # Import/creation order can otherwise hide an active older request on page two.
+        projected.sort(key=lambda r: (-r['last_activity_at'].timestamp(), r['title'].casefold(), r['id']))
         def matches(r, state):
             return (state == 'needs_you' and r['needs_you'] or
                     state == 'waiting' and r['state'] == 'awaiting_signature' and r['signed'] < r['required'] or
