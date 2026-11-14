@@ -26,6 +26,8 @@ from django.contrib.gis.geoip2 import GeoIP2
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from dealroom_sign.config import parse_board_sign_boards
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -595,3 +597,6 @@ SIGN_INTERNAL_URL = os.environ.get("SIGN_INTERNAL_URL", "http://amforge-sign-dev
 SIGN_PUBLIC_URL = os.environ.get("SIGN_PUBLIC_URL", "http://100.110.241.2:8792")
 SIGN_DEPLOYMENT_ID = os.environ.get("SIGN_DEPLOYMENT_ID", "chief-glue-v1")
 SIGN_WEBHOOK_SECRET = os.environ.get("SIGN_WEBHOOK_SECRET", "")
+
+BOARD_SIGN_PROXY_KEY = os.environ.get("BOARD_SIGN_PROXY_KEY", "")
+BOARD_SIGN_BOARDS = parse_board_sign_boards(os.environ.get("BOARD_SIGN_BOARDS", "{}"))
