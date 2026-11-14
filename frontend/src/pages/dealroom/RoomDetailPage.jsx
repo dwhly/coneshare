@@ -136,7 +136,10 @@ export default function RoomDetailPage() {
                   <tbody>
                     {docsPaged.shown.map((d) => (
                       <tr key={d.id}>
-                        <td className="dr-strong">{d.name}</td>
+                        <td>
+                          <span className="dr-strong">{d.name}</span>
+                          {d.folder_path && <span className="dr-sub">{d.folder_path}</span>}
+                        </td>
                         <td className="dr-num">{formatBytes(d.file_size)}</td>
                         <td className="dr-num">{d.dataroom_view_count ?? 0}</td>
                         <td className="dr-num">{formatDate(d.created_at)}</td>

@@ -26,7 +26,9 @@ export async function loadRooms() {
 export async function loadRoomDetail(id) {
   const [room, detail, links, grants, members, orgs] = await Promise.all([
     api.get(`/dealroom/rooms/${id}/`),
-    api.get(`/datarooms/${id}/`).catch(() => ({ data: { items: [] } })),
+    // content=full: every folder and document at any depth (the default returns the root level only, which would hide
+    // everything filed under a folder, e.g. signed copies under Executed/Agreements/...). Review r1 [2].
+    api.get(`/datarooms/${id}/`, { params: { content: "full" } }).catch(() => ({ data: { items: [] } })),
     api.get("/dealroom/share-links/").catch(() => ({ data: [] })),
     api.get("/dealroom/grants/").catch(() => ({ data: [] })),
     api.get("/dealroom/members/").catch(() => ({ data: [] })),
@@ -44,14 +46,27 @@ export async function loadRoomDetail(id) {
       org_name: g.viewer_organisation ? orgName[g.viewer_organisation] || "Organisation" : "",
     }))
     .reverse();
+  const all = detail.data?.items || [];
+  const folders = all.filter((i) => i.type === "folder");
   return {
     room: room.data,
     created_at: detail.data?.created_at,
-    documents: (detail.data?.items || []).filter((i) => i.type === "document"),
-    folders: (detail.data?.items || []).filter((i) => i.type === "folder"),
+    documents: withFolderPaths(all.filter((i) => i.type === "document"), folders),
+    folders,
     grants: grantRows,
     orgs: orgList,
   };
+}
+
+/** Each document gets `folder_path` ("Executed / Agreements", "" at the root); root documents first, then by path. */
+export function withFolderPaths(documents, folders) {
+  const path = Object.fromEntries(
+    folders.map((f) => [String(f.id), [...(f.ancestors || []).map((a) => a.name), f.name].join(" / ")]),
+  );
+  // Array.prototype.sort is stable, so the server's order holds within a folder.
+  return documents
+    .map((d) => ({ ...d, folder_path: d.folder ? path[String(d.folder)] || "" : "" }))
+    .sort((a, b) => a.folder_path.localeCompare(b.folder_path));
 }
 
 export function useLoader(loader, deps) {
