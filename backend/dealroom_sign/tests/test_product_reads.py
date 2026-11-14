@@ -9,10 +9,12 @@ import time
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
+from datetime import timedelta
 
 import httpx
 import pytest
 from django.core.management import call_command
+from django.utils import timezone
 from pypdf import PdfReader, PdfWriter
 from PIL import Image
 from rest_framework.test import APIClient
@@ -125,6 +127,47 @@ def test_board_actor_and_cross_board_denied(base):
     assert get(path).status_code == 403
     jwt = APIClient(); jwt.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(base.user).access_token))
     assert jwt.get(path).status_code == 403
+
+
+def test_last_activity_uses_real_events_not_fetch_or_poll_time(base):
+    req, _ = product(base)
+    sent = timezone.now() - timedelta(days=3)
+    opened = sent + timedelta(hours=2)
+    models.SignatureRequest.objects.filter(pk=req.pk).update(created_at=sent - timedelta(minutes=1))
+    base.work.signer_projection[0]['sentAt'] = sent.isoformat()
+    base.work.reconciled_at = timezone.now()
+    base.work.save()
+    fact = ObservedSignEvent.objects.create(workflow=base.work, source_id='opened-real',
+        kind='envelope.viewed', occurred_at=opened)
+    ObservedSignEvent.objects.create(workflow=base.work, source_id='snapshot-new',
+        kind='snapshot.fields', occurred_at=timezone.now())
+    # Imported/native mirrors are recorded at fetch time but carry the original time.
+    Activity.objects.create(organization=base.org, event_type='envelope.viewed', actor_id='sign:fixture',
+        data={'workflow_id':str(base.work.pk), 'source':'sign', 'source_record_id':fact.source_id,
+              'occurred_at':opened.isoformat()})
+    for _ in range(2):
+        base.work.reconciled_at = timezone.now(); base.work.save()
+        result = get(PREFIX+'/requests?board=fixture').data['items'][0]
+        assert result['last_activity_at'] == opened
+        assert get(PREFIX+f'/requests/{req.pk}').data['last_activity_at'] == opened
+    fact.occurred_at = opened + timedelta(hours=1); fact.kind = 'page_viewed'; fact.save()
+    assert get(PREFIX+'/requests?board=fixture').data['items'][0]['last_activity_at'] == fact.occurred_at
+
+
+def test_activity_preserves_actor_recipient_pages_and_original_source_ids(base):
+    req, _ = product(base)
+    at = timezone.now() - timedelta(days=2)
+    ObservedSignEvent.objects.create(workflow=base.work, source_id='native-page', kind='page_viewed',
+        occurred_at=at, actor_email='signer@example.test', name='Signer', recipient_id='12',
+        payload={'type':'page_viewed','data':{'pageNumber':6}})
+    download = Activity.objects.create(organization=base.org, event_type='signature.download_requested',
+        actor_kind='staff', actor_id=str(base.user.pk), target_id=str(req.pk), data={'kind':'original'})
+    events = get(PREFIX+f'/requests/{req.pk}').data['activity']
+    page = next(e for e in events if e['id'] == 'native-page')
+    assert page['actor_email'] == 'signer@example.test'
+    assert page['recipient_id'] == '12' and page['pages'] == [6]
+    assert page['source_event_ids'] == ['native-page']
+    assert next(e for e in events if e['id'] == str(download.pk))['actor_email'] == base.user.email
 
 
 def test_domain_fallback_viewer_gets_no_requests_evidence_or_exports(base):
