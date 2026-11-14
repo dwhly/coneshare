@@ -9,7 +9,9 @@
 (function () {
   var KEY = "fds-theme";
   var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
-  function choice() { try { return localStorage.getItem(KEY) || "system"; } catch (e) { return "system"; } }
+  var mem = null;   // used when storage is denied or full, so the toggle still works for this page
+  function norm(v) { return v === "light" || v === "dark" || v === "system" ? v : null; }
+  function choice() { var v = null; try { v = norm(localStorage.getItem(KEY)); } catch (e) {} return v || mem || "system"; }
   function resolved(c) { return c === "system" ? (mq && mq.matches ? "dark" : "light") : c; }
   function meta(c) {
     var m = document.querySelector('meta[name="color-scheme"]');
@@ -28,6 +30,7 @@
   }
   function cycle() {
     var next = { system: "light", light: "dark", dark: "system" }[choice()] || "system";
+    mem = next;
     try { localStorage.setItem(KEY, next); } catch (e) {}
     apply();
   }
@@ -38,10 +41,22 @@
     var t = e.target && e.target.closest && e.target.closest("[data-fds-theme-toggle]");
     if (t) { e.preventDefault(); cycle(); }
   });
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply); else apply();
+  // Toggles mounted later (client-side navigation in React/Next apps) get the current label too.
+  var SEL = "[data-fds-theme-toggle]";
+  function watch() {
+    if (!window.MutationObserver || !document.body) return;
+    new MutationObserver(function (ms) {
+      for (var i = 0; i < ms.length; i++) for (var j = 0; j < ms[i].addedNodes.length; j++) {
+        var n = ms[i].addedNodes[j];
+        if (n.nodeType === 1 && (n.matches(SEL) || n.querySelector(SEL))) { apply(); return; }
+      }
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+  function start() { apply(); watch(); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
 })();
 
 /* Inline boot snippet (copy into <head>, before CSS paints):
-<script>(function(){try{var c=localStorage.getItem("fds-theme")||"system";var d=c==="dark"||(c==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.setAttribute("data-theme",d?"dark":"light");var m=document.querySelector('meta[name="color-scheme"]');if(m)m.content=c==="system"?"light dark":c}catch(e){}})()</script>
+<script>(function(){var c="system";try{c=localStorage.getItem("fds-theme")||"system"}catch(e){}if(c!=="light"&&c!=="dark")c="system";try{var d=c==="dark"||(c==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.setAttribute("data-theme",d?"dark":"light");var m=document.querySelector('meta[name="color-scheme"]');if(m)m.content=c==="system"?"light dark":c}catch(e){}})()</script>
 Also put <meta name="color-scheme" content="light dark"> in <head> BEFORE the snippet.
 */

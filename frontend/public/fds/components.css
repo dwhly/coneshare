@@ -170,7 +170,7 @@
    return and top-layer stacking come free. Entry animates everywhere (Baseline 2024);
    exit animates where overlay/display animation exist and is simply instant elsewhere. */
 .fds-popover, .fds-dialog {
-  margin: 0; padding: var(--space-3) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   color: hsl(var(--foreground)); background: hsl(var(--background));
   border: 1px solid hsl(var(--border)); border-radius: var(--radius);
   box-shadow: var(--shadow-overlay);
@@ -208,8 +208,16 @@
 @media (forced-colors: active) {
   /* Selected/current states are drawn with tinted fills, which forced colours erase.
      Paint them with the system selection colours so "which one is on" survives. */
-  :where([aria-current]:not([aria-current="false"]), [aria-pressed="true"], [aria-selected="true"], .is-selected, .is-active) {
-    forced-color-adjust: none; background: Highlight; color: HighlightText; border-color: Highlight;
+  /* !important inside a layer beats every NORMAL declaration, layered or not, whatever its specificity: that is the
+     platform's mechanism for exactly this kind of accessibility override. Without it a product's (or the package's
+     own) more specific selected-state colours won, while forced-color-adjust:none still switched off the browser's
+     own correction. Descendants take the selection text colour so a coloured child never sits on Highlight. */
+  :is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], [aria-selected="true"], .is-selected, .is-active),
+  :is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], [aria-selected="true"], .is-selected, .is-active):is(:hover, :focus-visible) {
+    forced-color-adjust: none !important; background: Highlight !important; color: HighlightText !important; border-color: Highlight !important;
+  }
+  :is([aria-current]:not([aria-current="false"]), [aria-pressed="true"], [aria-selected="true"], .is-selected, .is-active) * {
+    color: inherit !important; background: transparent !important; border-color: currentColor !important;
   }
   :where(:focus-visible) { outline: 2px solid Highlight !important; outline-offset: 2px; }
   /* Severity markers and tag dots carry meaning in their fill — keep it. */
