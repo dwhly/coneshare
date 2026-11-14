@@ -19,10 +19,12 @@ def test_staff_page_is_fleet_only_and_has_no_template_leaks():
     assert 'href="https://sign.example.test/inbox"' in html
 
 
-def test_visitor_page_has_fleet_lockup_and_room_context():
+def test_visitor_page_has_fleet_lockup_and_an_empty_room_context():
+    # The room name is filled in from the authorised recipient API only (review v0.9 r1 [1]); the page renders none.
     html = render_to_string('dealroom_sign/room.html', {'slug': 's', 'room_id': 'r', 'room_name': 'Project Atlas'})
     text = _visible(html)
     assert '{#' not in html and '#}' not in html and 'AmForge' not in html
     assert 'dr-header--visitor' in html and 'fds-lockup' in html
-    assert 'id="context-room">Project Atlas<' in html
+    assert 'id="context-room"></span>' in html and 'Project Atlas' not in html
     assert 'Fleet' in text and 'Dealroom' in text
+

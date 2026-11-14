@@ -51,7 +51,7 @@ const el=id=>document.getElementById(id);
 function message(text,error=false){el('message').hidden=false;el('message').textContent=text;el('message').className='fds-callout dr-notice dr-narrow fds-callout--'+(error?'danger':'info')}
 async function api(path,method='GET',body){const r=await fetch(path,{method,credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRFToken':csrf},body:body?JSON.stringify(body):undefined});const data=await r.json();if(!r.ok)throw {status:r.status,data};return data}
 const prefix='/api/v1/dealroom/recipient/'+slug;
-// Context bar (spec §4): room name (server-rendered) + who this visitor is, once known.
+// Context bar (spec §4): room name + who this visitor is, both from the authorised room API (never server-rendered).
 const KEY='dr-visitor-'+slug;
 function who(person){if(person&&person.email){sessionStorage.setItem(KEY,JSON.stringify({name:person.name||'',email:person.email}));el('context-who').textContent=(person.name?person.name+' · ':'')+person.email}}
 function head(title,subtitle){el('title').textContent=title;el('subtitle').textContent=subtitle;document.title=title+' · Fleet Dealroom'}
