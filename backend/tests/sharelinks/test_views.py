@@ -1,6 +1,6 @@
 import pytest
 import requests
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import patch, mock_open, MagicMock, call
 from datetime import timedelta
 from rest_framework.test import APIClient
 
@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.utils.text import get_valid_filename
 from rest_framework import status
 
-from datarooms.models import Dataroom, DataroomDocument, DataroomFolder, DataroomItemOrder
+from datarooms.models import Dataroom, DataroomCollaborator, DataroomDocument, DataroomFolder, DataroomItemOrder
 from documents.models import (Document, DocumentPage, DocumentVersion)
 from documents.renderers.base import BasePreviewRenderer
 from sharelinks.models import (DataroomVisit, EmailVerificationToken, PageView,
@@ -673,6 +673,51 @@ class TestShareLinkViewDataView:
         # Phase 1: this legacy request is denied before its former handler runs.
         assert response.status_code == 403
         assert response.data == {'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'}
+
+    @override_settings(ENABLE_VIDEO_PREVIEW=False)
+    @patch('sharelinks.views.fileserver_client.generate_download_url')
+    def test_get_share_link_data_uses_version_filename_when_different_from_doc_name(
+        self, mock_fs_download_url, public_client, share_link, fleet_security_mode
+    ):
+        """Test that download_url uses the active version's file name rather than parent document name."""
+        share_link.document.type = 'video'
+        share_link.document.save(update_fields=['type'])
+        primary_version = share_link.document.versions.get(is_primary=True)
+        primary_version.original_storage_key = "path/to/video.mp4"
+        primary_version.type = "video"
+        primary_version.metadata = {"file_name": "clip.mp4"}
+        primary_version.save()
+        mock_fs_download_url.return_value = "http://test.coneshare.com/files/download/video-token"
+
+        response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
+        # Fleet: dealroom/policy.py denies legacy view-data; no download capability is issued.
+        if fleet_security_mode:
+            assert response.status_code == status.HTTP_403_FORBIDDEN
+            assert response.data == {
+                'detail': 'This recipient operation is not enabled in phase 1; use the room entry route.'
+            }
+            mock_fs_download_url.assert_not_called()
+            assert not share_link.issued_copies.exists()
+            return
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data['download_url'] is None
+        mock_fs_download_url.assert_not_called()
+
+        # Fleet: originals require opt-in and use the audited download-file route (sharelinks/views.py).
+        share_link.allow_original_download = True
+        share_link.save(update_fields=['allow_original_download'])
+        response = public_client.get(f'/api/v1/links/{share_link.slug}/view-data/')
+        assert response.status_code == status.HTTP_200_OK
+        download_path = f'/api/v1/links/{share_link.slug}/download-file/'
+        assert response.data['download_url'].endswith(download_path)
+        mock_fs_download_url.assert_not_called()
+        download_response = public_client.get(download_path)
+        assert download_response.status_code == status.HTTP_302_FOUND
+        assert share_link.issued_copies.filter(kind='original').count() == 1
+        assert mock_fs_download_url.call_args == call(
+            "path/to/video.mp4", is_internal=False, filename="clip.mp4"
+        )
 
     @override_settings(SITE_DOMAIN="http://test.coneshare.com")
     @patch('documents.fileserver.fileserver_client.generate_download_url')
@@ -2022,6 +2067,317 @@ class TestShareLinkViewSet:
         # Phase 1: this legacy request is denied before its former handler runs.
         assert response.status_code == 403
         assert response.data == {'detail': 'Unclassified or disabled operation.'}
+
+    def test_patch_dataroom_link_cascades_download_and_watermark_to_existing_settings(
+        self, api_client, public_client, dataroom, user, document_factory, fleet_security_mode
+    ):
+        """
+        Updating allow_download or enable_watermark on a Dataroom ShareLink
+        should propagate to all existing ShareLinkDataroomSetting rows and
+        populate default watermark_text when enabling watermarking with blank text.
+        """
+        doc = document_factory(name="Deck.pdf", type='pdf')
+        ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=doc)
+        folder = DataroomFolder.objects.create(dataroom=dataroom, name="Financials")
+
+        link = ShareLink.objects.create(
+            dataroom=dataroom,
+            created_by=user,
+            name="DR Link",
+            allow_download=False,
+            enable_watermark=False,
+            watermark_text="",
+        )
+        doc_setting = link.dataroom_settings.get(dataroom_document=ddoc)
+        folder_setting = link.dataroom_settings.get(dataroom_folder=folder)
+        folder_setting.is_visible = False
+        folder_setting.save(update_fields=['is_visible'])
+
+        url = f'/api/v1/share-links/{link.id}/'
+
+        # Fleet: dealroom/hooks.py denies legacy link writes before any permission cascade.
+        if fleet_security_mode:
+            before = list(link.dataroom_settings.order_by('pk').values())
+            for payload in (
+                {'allow_download': True},
+                {'enable_watermark': True},
+                {'allow_download': False, 'enable_watermark': False},
+            ):
+                response = api_client.patch(url, payload, format='json')
+                assert response.status_code == status.HTTP_403_FORBIDDEN
+                assert response.data == {'detail': 'Unclassified or disabled operation.'}
+                assert list(link.dataroom_settings.order_by('pk').values()) == before
+                link.refresh_from_db()
+                assert link.allow_download is False
+                assert link.enable_watermark is False
+            return
+
+        # 1. Enable allow_download -> cascades to both doc and folder settings, preserving is_visible
+        resp_dl = api_client.patch(url, {'allow_download': True}, format='json')
+        assert resp_dl.status_code == status.HTTP_200_OK
+
+        doc_setting.refresh_from_db()
+        folder_setting.refresh_from_db()
+        assert doc_setting.allow_download is True
+        assert doc_setting.enable_watermark is False
+        assert folder_setting.allow_download is True
+        assert folder_setting.enable_watermark is False
+        assert folder_setting.is_visible is False
+
+        resp_settings = {s['id']: s for s in resp_dl.data['dataroom_settings']}
+        assert resp_settings[str(doc_setting.id)]['allow_download'] is True
+        assert resp_settings[str(folder_setting.id)]['allow_download'] is True
+
+        # 2. Enable enable_watermark -> cascades and sets default watermark_text
+        resp_wm = api_client.patch(url, {'enable_watermark': True}, format='json')
+        assert resp_wm.status_code == status.HTTP_200_OK
+
+        link.refresh_from_db()
+        doc_setting.refresh_from_db()
+        folder_setting.refresh_from_db()
+        assert link.enable_watermark is True
+        assert link.watermark_text == 'CONFIDENTIAL - {{email}}'
+        assert doc_setting.enable_watermark is True
+        assert doc_setting.allow_download is True
+        assert folder_setting.enable_watermark is True
+        assert folder_setting.allow_download is True
+
+        # 3. Public view-data endpoint reflects the updated permissions
+        view_resp = public_client.get(f'/api/v1/links/{link.slug}/view-data/')
+        assert view_resp.status_code == status.HTTP_200_OK
+        items = view_resp.json()['items']
+        assert len(items) == 1
+        assert items[0]['id'] == str(ddoc.id)
+        assert items[0]['allow_download'] is True
+        assert items[0]['enable_watermark'] is True
+
+        # 4. Disable both -> cascades False to both settings
+        resp_off = api_client.patch(
+            url, {'allow_download': False, 'enable_watermark': False}, format='json'
+        )
+        assert resp_off.status_code == status.HTTP_200_OK
+
+        doc_setting.refresh_from_db()
+        folder_setting.refresh_from_db()
+        assert doc_setting.allow_download is False
+        assert doc_setting.enable_watermark is False
+        assert folder_setting.allow_download is False
+        assert folder_setting.enable_watermark is False
+
+    def test_patch_dataroom_link_preserves_item_overrides_when_permissions_unchanged(
+        self, api_client, dataroom, user, document_factory, fleet_security_mode
+    ):
+        """
+        Editing unrelated fields or submitting unchanged allow_download /
+        enable_watermark values must preserve granular per-item overrides.
+        """
+        doc1 = document_factory(name="Doc1.pdf", type='pdf')
+        doc2 = document_factory(name="Doc2.pdf", type='pdf')
+        ddoc1 = DataroomDocument.objects.create(dataroom=dataroom, document=doc1)
+        ddoc2 = DataroomDocument.objects.create(dataroom=dataroom, document=doc2)
+        folder = DataroomFolder.objects.create(dataroom=dataroom, name="Folder")
+
+        link = ShareLink.objects.create(
+            dataroom=dataroom,
+            created_by=user,
+            name="Original Name",
+            allow_download=True,
+            enable_watermark=False,
+        )
+        s_doc1 = link.dataroom_settings.get(dataroom_document=ddoc1)
+        s_doc2 = link.dataroom_settings.get(dataroom_document=ddoc2)
+        s_folder = link.dataroom_settings.get(dataroom_folder=folder)
+
+        # Fleet: dealroom/hooks.py denies both legacy bulk settings and link writes.
+        if fleet_security_mode:
+            s_doc1.allow_download = False
+            s_doc1.enable_watermark = True
+            s_doc1.save()
+            s_doc2.is_visible = False
+            s_doc2.save()
+            s_folder.allow_download = False
+            s_folder.save()
+            before = list(link.dataroom_settings.order_by('pk').values())
+            for path, payload in (
+                (f'/api/v1/share-links/{link.id}/dataroom-settings/', [
+                    {'id': str(s_doc1.id), 'allow_download': True},
+                ]),
+                (f'/api/v1/share-links/{link.id}/', {'name': 'Renamed Link'}),
+                (f'/api/v1/share-links/{link.id}/', {
+                    'allow_download': True, 'enable_watermark': False,
+                }),
+                (f'/api/v1/share-links/{link.id}/', {'enable_watermark': True}),
+            ):
+                response = api_client.patch(path, payload, format='json')
+                assert response.status_code == status.HTTP_403_FORBIDDEN
+                assert response.data == {'detail': 'Unclassified or disabled operation.'}
+                assert list(link.dataroom_settings.order_by('pk').values()) == before
+                link.refresh_from_db()
+                assert link.name == 'Original Name'
+                assert link.allow_download is True
+                assert link.enable_watermark is False
+            return
+
+        # Configure granular per-item overrides
+        bulk_resp = api_client.patch(
+            f'/api/v1/share-links/{link.id}/dataroom-settings/',
+            [
+                {'id': str(s_doc1.id), 'allow_download': False, 'enable_watermark': True},
+                {'id': str(s_doc2.id), 'is_visible': False},
+                {'id': str(s_folder.id), 'allow_download': False},
+            ],
+            format='json',
+        )
+        assert bulk_resp.status_code == status.HTTP_200_OK
+
+        url = f'/api/v1/share-links/{link.id}/'
+
+        # 1. Partial PATCH on unrelated field only
+        resp_rename = api_client.patch(url, {'name': 'Renamed Link'}, format='json')
+        assert resp_rename.status_code == status.HTTP_200_OK
+
+        s_doc1.refresh_from_db()
+        s_doc2.refresh_from_db()
+        s_folder.refresh_from_db()
+        assert s_doc1.allow_download is False
+        assert s_doc1.enable_watermark is True
+        assert s_doc2.is_visible is False
+        assert s_folder.allow_download is False
+
+        # 2. Full LinkSheet-style payload with unchanged allow_download and enable_watermark
+        resp_full = api_client.patch(
+            url,
+            {
+                'name': 'Renamed Again',
+                'allow_download': True,
+                'enable_watermark': False,
+                'watermark_text': '',
+            },
+            format='json',
+        )
+        assert resp_full.status_code == status.HTTP_200_OK
+
+        s_doc1.refresh_from_db()
+        s_doc2.refresh_from_db()
+        s_folder.refresh_from_db()
+        assert s_doc1.allow_download is False
+        assert s_doc1.enable_watermark is True
+        assert s_doc2.is_visible is False
+        assert s_folder.allow_download is False
+
+        # 3. Change only enable_watermark while allow_download remains unchanged ->
+        #    only enable_watermark cascades, preserving per-item allow_download overrides
+        resp_wm_only = api_client.patch(
+            url,
+            {
+                'name': 'Watermark Enabled',
+                'allow_download': True,
+                'enable_watermark': True,
+                'watermark_text': '',
+            },
+            format='json',
+        )
+        assert resp_wm_only.status_code == status.HTTP_200_OK
+
+        s_doc1.refresh_from_db()
+        s_doc2.refresh_from_db()
+        s_folder.refresh_from_db()
+        assert s_doc1.enable_watermark is True
+        assert s_doc2.enable_watermark is True
+        assert s_folder.enable_watermark is True
+        assert s_doc1.allow_download is False
+        assert s_doc2.allow_download is True
+        assert s_doc2.is_visible is False
+        assert s_folder.allow_download is False
+
+    def test_patch_document_link_updates_link_without_touching_dataroom_settings(
+        self, api_client, dataroom, user, document_factory, fleet_security_mode
+    ):
+        """
+        Updating allow_download or enable_watermark on a non-dataroom (document)
+        ShareLink should succeed without creating or modifying ShareLinkDataroomSetting rows.
+        """
+        doc = document_factory(name="Standalone.pdf", type='pdf')
+        doc_link = ShareLink.objects.create(
+            document=doc,
+            created_by=user,
+            name="Doc Link",
+            allow_download=False,
+            enable_watermark=False,
+        )
+
+        # Separate dataroom link whose settings must remain untouched
+        dr_doc = document_factory(name="RoomDoc.pdf", type='pdf')
+        ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=dr_doc)
+        dr_link = ShareLink.objects.create(
+            dataroom=dataroom,
+            created_by=user,
+            name="DR Link",
+            allow_download=False,
+            enable_watermark=False,
+        )
+        dr_setting = dr_link.dataroom_settings.get(dataroom_document=ddoc)
+
+        url = f'/api/v1/share-links/{doc_link.id}/'
+        response = api_client.patch(
+            url, {'allow_download': True, 'enable_watermark': True}, format='json'
+        )
+        # Fleet: dealroom/hooks.py denies document-link writes as well as room-link writes.
+        if fleet_security_mode:
+            assert response.status_code == status.HTTP_403_FORBIDDEN
+            assert response.data == {'detail': 'Unclassified or disabled operation.'}
+            doc_link.refresh_from_db()
+            dr_setting.refresh_from_db()
+            assert doc_link.allow_download is False
+            assert doc_link.enable_watermark is False
+            assert not doc_link.dataroom_settings.exists()
+            assert dr_setting.allow_download is False
+            assert dr_setting.enable_watermark is False
+            return
+
+        assert response.status_code == status.HTTP_200_OK
+
+        doc_link.refresh_from_db()
+        dr_setting.refresh_from_db()
+        assert doc_link.allow_download is True
+        assert doc_link.enable_watermark is True
+        assert ShareLinkDataroomSetting.objects.filter(share_link=doc_link).count() == 0
+        assert dr_setting.allow_download is False
+        assert dr_setting.enable_watermark is False
+
+    def test_patch_dataroom_link_without_edit_permission_returns_403_and_does_not_cascade(
+        self, api_client, dataroom, user, user2, document_factory
+    ):
+        """
+        A dataroom collaborator without edit permission on another user's link
+        should receive 403 Forbidden with no cascade to ShareLinkDataroomSetting.
+        """
+        doc = document_factory(name="Protected.pdf", type='pdf')
+        ddoc = DataroomDocument.objects.create(dataroom=dataroom, document=doc)
+        link = ShareLink.objects.create(
+            dataroom=dataroom,
+            created_by=user,
+            name="Owner Link",
+            allow_download=False,
+            enable_watermark=False,
+        )
+        setting = link.dataroom_settings.get(dataroom_document=ddoc)
+
+        DataroomCollaborator.objects.create(dataroom=dataroom, user=user2)
+        api_client.force_authenticate(user=user2)
+
+        url = f'/api/v1/share-links/{link.id}/'
+        response = api_client.patch(
+            url, {'allow_download': True, 'enable_watermark': True}, format='json'
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+        link.refresh_from_db()
+        setting.refresh_from_db()
+        assert link.allow_download is False
+        assert link.enable_watermark is False
+        assert setting.allow_download is False
+        assert setting.enable_watermark is False
 
 
 @pytest.mark.django_db

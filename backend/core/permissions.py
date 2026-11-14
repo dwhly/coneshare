@@ -3,6 +3,12 @@ from rest_framework import permissions
 from core.models import APIKey
 
 
+def require_full_access(func):
+    """Mark a ViewSet action as requiring the 'full_access' API key tier for unsafe methods."""
+    setattr(func, 'requires_full_access', True)
+    return func
+
+
 class IsAdmin(permissions.BasePermission):
     """
     Allows access only to organization admin users.
@@ -33,7 +39,10 @@ class APIKeyTierPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if getattr(settings, 'DEALROOM_ENABLED', False):
-            return True  # dealroom.hooks is the single operation-ID tier boundary.
+            # Deliberately replace upstream tier checks with dealroom/operations.json
+            # tiers enforced by dealroom.hooks. Fleet staff deletes use read_write:
+            # archive/revoke soft deletes only reduce access.
+            return True
         if not isinstance(request.auth, APIKey):
             return True  # Request not authenticated via API Key (e.g. Session/JWT)
 
@@ -47,6 +56,20 @@ class APIKeyTierPermission(permissions.BasePermission):
         if tier == 'read_write':
             if method == 'DELETE':
                 self.message = "API key tier 'read_write' does not permit DELETE requests."
+                return False
+
+            # Destructive or privileged ViewSet actions invoked via non-DELETE methods (e.g. POST)
+            action = getattr(view, 'action', None)
+            action_handler = getattr(view, action, None) if action else None
+            if (
+                action_handler
+                and getattr(action_handler, 'requires_full_access', False)
+                and method not in permissions.SAFE_METHODS
+            ):
+                self.message = (
+                    f"API key tier 'read_write' does not permit action '{action}'. "
+                    "'full_access' tier is required."
+                )
                 return False
 
             # API key management requires 'full_access' tier

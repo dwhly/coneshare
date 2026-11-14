@@ -11,6 +11,7 @@ import requests
 from pdf2image import convert_from_bytes
 from django.conf import settings
 from django.core.cache import cache
+from django.core.exceptions import SuspiciousFileOperation
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.mail import send_mail
 from django.db import transaction
@@ -736,7 +737,28 @@ class ShareLinkViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         if not can_user_edit_share_link(self.request.user, instance):
             raise PermissionDenied("You do not have permission to update this share link.")
-        serializer.save()
+
+        with transaction.atomic():
+            locked_instance = ShareLink.objects.select_for_update().get(pk=instance.pk)
+            changed_fields = {}
+            if locked_instance.dataroom_id:
+                vdata = serializer.validated_data
+                for field in ('allow_download', 'enable_watermark'):
+                    if field in vdata and vdata[field] != getattr(locked_instance, field):
+                        changed_fields[field] = vdata[field]
+
+            updated_instance = serializer.save()
+
+            if changed_fields:
+                if (
+                    changed_fields.get('enable_watermark') is True
+                    and not (updated_instance.watermark_text or '').strip()
+                ):
+                    updated_instance.watermark_text = DEFAULT_WATERMARK_TEMPLATE
+                    updated_instance.save(update_fields=['watermark_text'])
+                ShareLinkDataroomSetting.objects.filter(
+                    share_link=updated_instance
+                ).update(**changed_fields, updated_at=timezone.now())
 
     def perform_destroy(self, instance):
         instance = self.get_object()
@@ -1183,7 +1205,7 @@ class ShareLinkViewDataView(APIView):
                 elif primary_version and primary_version.original_storage_key:
                     try:
                         download_url = fileserver_client.generate_download_url(
-                            primary_version.original_storage_key, is_internal=False, filename=document.name
+                            primary_version.original_storage_key, is_internal=False, filename=primary_version.get_filename()
                         )
                     except APIException:
                         # If file server is down, we can't generate a download URL.
@@ -3048,6 +3070,10 @@ class ShareLinkFileDownloadView(APIView):
                 or request.query_params.get('disposition', '').lower() == 'inline'
             )
             disposition_type = 'inline' if is_inline else 'attachment'
+            try:
+                safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
+            except SuspiciousFileOperation:
+                safe_filename = 'image' if document.type == 'image' else 'document'
             identity = amforge.issue_copy(
                 link, request, document, IssuedCopy.KIND_DOWNLOAD,
                 dataroom_document=dataroom_document_obj, auth_status=auth_status,
@@ -3059,8 +3085,10 @@ class ShareLinkFileDownloadView(APIView):
                     )
                     response = HttpResponse(image_buffer, content_type=content_type)
                     # Ensure filename has .jpg extension since we're creating a JPEG
-                    safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
-                    response['Content-Disposition'] = f'{disposition_type}; filename="{safe_filename}.jpg"'
+                    raw_ascii = safe_filename.replace(' ', '_').encode('ascii', 'ignore').decode('ascii').strip('._- ')
+                    ascii_name = raw_ascii or "image"
+                    utf8_name = quote(f"{safe_filename}.jpg", safe='')
+                    response['Content-Disposition'] = f'{disposition_type}; filename="{ascii_name}.jpg"; filename*=UTF-8\'\'{utf8_name}'
                     response['X-AmForge-Copy-ID'] = identity['copy_id']
                     return response
 
@@ -3072,8 +3100,10 @@ class ShareLinkFileDownloadView(APIView):
                     pdf_buffer = _generate_watermarked_pdf(document, primary_version, effective_watermark_text, request, viewer_email, identity=identity)
                 response = HttpResponse(pdf_buffer, content_type='application/pdf')
                 # Ensure filename has .pdf extension
-                safe_filename, _ = os.path.splitext(get_valid_filename(document.name))
-                response['Content-Disposition'] = f'{disposition_type}; filename="{safe_filename}.pdf"'
+                raw_ascii = safe_filename.replace(' ', '_').encode('ascii', 'ignore').decode('ascii').strip('._- ')
+                ascii_name = raw_ascii or "document"
+                utf8_name = quote(f"{safe_filename}.pdf", safe='')
+                response['Content-Disposition'] = f'{disposition_type}; filename="{ascii_name}.pdf"; filename*=UTF-8\'\'{utf8_name}'
                 response['X-AmForge-Copy-ID'] = identity['copy_id']
                 return response
             except WatermarkingDependenciesMissingError as e:
@@ -3098,7 +3128,7 @@ class ShareLinkFileDownloadView(APIView):
 
             try:
                 download_url = fileserver_client.generate_download_url(
-                    primary_version.original_storage_key, is_internal=False, filename=document.name
+                    primary_version.original_storage_key, is_internal=False, filename=primary_version.get_filename()
                 )
                 return HttpResponseRedirect(download_url)
             except APIException as e:
