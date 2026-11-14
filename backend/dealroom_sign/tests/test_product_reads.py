@@ -170,6 +170,33 @@ def test_activity_preserves_actor_recipient_pages_and_original_source_ids(base):
     assert next(e for e in events if e['id'] == str(download.pk))['actor_email'] == base.user.email
 
 
+def test_history_orders_real_activity_before_pagination(base):
+    first, _ = product(base)
+    at = timezone.now() - timedelta(days=1)
+    base.work.signer_projection[0]['sentAt'] = at.isoformat()
+    base.work.save()
+    expected = [str(first.pk)]
+    # Later-created requests have older activity.
+    # The newest actual activity must still appear on page one of a full history.
+    for index in range(1, 52):
+        projection = [{**base.work.signer_projection[0], 'sentAt': (at - timedelta(hours=index)).isoformat()}]
+        work = Workflow.objects.create(owner=base.user, room=base.room, source_version=base.version,
+            source_sha256=base.work.source_sha256, idempotency_key=f'history-{index}',
+            external_id=f'history-{index}', state='awaiting_signature',
+            recipients=base.work.recipients, signer_projection=projection, reconciled_at=timezone.now())
+        row = models.SignatureRequest.objects.create(board_id='fixture', creator=base.user, workflow=work,
+            title=f'Agreement {index}', kind='out', state=work.state)
+        expected.append(str(row.pk))
+    response = get(PREFIX+'/requests?board=fixture')
+    assert response.status_code == 200
+    assert [row['id'] for row in response.data['items']] == expected[:50]
+    assert response.data['next_cursor'] == expected[49]
+    remainder = get(PREFIX+'/requests?board=fixture&cursor='+response.data['next_cursor'])
+    assert [row['id'] for row in remainder.data['items']] == expected[50:]
+    assert remainder.data['items'][-1]['last_activity_at'] == at - timedelta(hours=51)
+    assert remainder.data['next_cursor'] is None
+
+
 def test_domain_fallback_viewer_gets_no_requests_evidence_or_exports(base):
     req, _ = product(base)
     with patch('dealroom_sign.client.Documenso.request') as upstream:
