@@ -97,11 +97,24 @@
       if (isOpen() && options[active]) {
         trigger.setAttribute("aria-activedescendant", optId(active));
         const li = list.children[active];
-        if (li && li.scrollIntoView) li.scrollIntoView({ block: "nearest" });
+        if (li) { // keep the active option visible by scrolling the list only (never the page or the dialog body)
+          if (li.offsetTop < list.scrollTop) list.scrollTop = li.offsetTop;
+          else if (li.offsetTop + li.offsetHeight > list.scrollTop + list.clientHeight) list.scrollTop = li.offsetTop + li.offsetHeight - list.clientHeight;
+        }
       } else trigger.removeAttribute("aria-activedescendant");
     };
+    // Inside a scrolling dialog body the list floats (position: fixed, placed from the trigger, flipped up when there
+    // is no room below) so the body's overflow never clips it; scrolling or resizing closes it (review r1 [4]).
+    const place = () => {
+      if (!container.closest(".dr-dialog__body")) return;
+      const b = trigger.getBoundingClientRect(), below = innerHeight - b.bottom - 12, above = b.top - 12;
+      const up = below < 160 && above > below;
+      Object.assign(list.style, { position: "fixed", left: b.left + "px", right: "auto", width: b.width + "px",
+        top: up ? "auto" : b.bottom + 4 + "px", bottom: up ? innerHeight - b.top + 4 + "px" : "auto",
+        maxHeight: Math.max(120, Math.min(260, up ? above : below)) + "px" });
+    };
     const close = () => { list.hidden = true; trigger.setAttribute("aria-expanded", "false"); active = -1; render(); };
-    const open = () => { active = Math.max(0, options.findIndex((o) => o.value === value)); list.hidden = false; trigger.setAttribute("aria-expanded", "true"); render(); };
+    const open = () => { active = Math.max(0, options.findIndex((o) => o.value === value)); place(); list.hidden = false; trigger.setAttribute("aria-expanded", "true"); render(); };
     const choose = (v, refocus = true) => { const changed = v !== value; value = v; close(); if (refocus) trigger.focus(); if (changed && onChange) onChange(v); };
     const move = (i) => { active = Math.min(options.length - 1, Math.max(0, i)); render(); };
     trigger.addEventListener("click", (e) => { e.stopPropagation(); if (isOpen()) close(); else open(); });
@@ -123,6 +136,8 @@
     });
     trigger.addEventListener("blur", () => { if (isOpen()) close(); });
     document.addEventListener("click", (e) => { if (!container.contains(e.target) && isOpen()) close(); });
+    document.addEventListener("scroll", (e) => { if (isOpen() && list.style.position === "fixed" && e.target !== list) close(); }, true);
+    window.addEventListener("resize", () => { if (isOpen() && list.style.position === "fixed") close(); });
     return {
       get value() { return value; },
       set(opts, v) { options = opts; value = v !== undefined ? v : (options.find((o) => o.value === value) ? value : (options[0] ? options[0].value : "")); if (isOpen()) active = Math.min(active, options.length - 1); render(); },

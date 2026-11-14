@@ -184,6 +184,13 @@ dialog.dr-dialog { box-sizing: border-box; width: min(560px, calc(100vw - 32px))
   border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground));
   box-shadow: 0 16px 48px hsl(var(--foreground) / 0.18); }
 dialog.dr-dialog--wide { width: min(720px, calc(100vw - 32px)); }
+/* Bounded dialog (review r1 [4]): title and actions stay put, the fields between them scroll when the viewport is short.
+   The body's negative margin + padding keeps focus rings unclipped; the select's absolutely placed list extends the
+   body's scroll area, so it is never cut off. Same geometry as before whenever the content fits. */
+dialog.dr-dialog[open] { display: flex; flex-direction: column; }
+dialog.dr-dialog > form { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+.dr-dialog__body { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain;
+  margin: -4px -24px; padding: 4px 24px; }
 dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
 .dr-dialog__title { margin: 0 0 4px; font-size: 18px; font-weight: 600; }
 .dr-dialog__desc { margin: 0 0 20px; font-size: 14px; color: hsl(var(--muted-foreground)); }

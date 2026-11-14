@@ -45,6 +45,7 @@
   <form id="send-form">
     <h2 class="dr-dialog__title" id="send-title">Send for signature</h2>
     <p class="dr-dialog__desc">The recipient gets an email from Fleet Dealroom with a link to sign.</p>
+    <div class="dr-dialog__body">
     <div class="dr-field"><span class="dr-label" id="version-label">Document</span><div id="version-select" data-id="version"></div></div>
     <div class="dr-grid2">
       <div class="dr-field"><label for="recipient-name">Recipient name</label><input class="dr-input" id="recipient-name" autocomplete="off" required></div>
@@ -61,6 +62,7 @@
         <div class="dr-field"><label for="h">Height</label><input class="dr-input" id="h" type="number" min="1" max="100" value="8" required></div>
       </div>
     </fieldset>
+    </div>
     <p id="send-error" class="fds-callout fds-callout--danger" role="alert" hidden></p>
     <div class="dr-dialog__foot"><button type="button" class="dr-btn" id="cancel-send">Cancel</button><button class="dr-btn dr-btn--primary" id="submit-send">Send for signature</button></div>
   </form>
