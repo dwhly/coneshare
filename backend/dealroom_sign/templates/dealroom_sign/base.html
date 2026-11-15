@@ -4,13 +4,14 @@
    color-scheme meta BEFORE the theme boot (DESIGN.md §11): theme-boot.js and theme.js keep it in step with the choice.
    /dealroom/shell.css + shell.js = the shared Fleet Dealroom shell (docs/design/dealroom-shell.md), same files as the React console. {% endcomment %}
 <meta name="color-scheme" content="light dark">
-<script src="/fds/theme-boot.js?v=0.9.8"></script>
-<link rel="icon" type="image/svg+xml" href="/fds/marks/fleet.svg">
-<link rel="stylesheet" href="/dealroom/layers.css?v=fds098">
-<link rel="stylesheet" href="/fds/fonts.css?v=0.9.8">
-<link rel="stylesheet" href="/fds/tokens.css?v=0.9.8">
-<link rel="stylesheet" href="/fds/components.css?v=0.9.8">
-<link rel="stylesheet" href="/dealroom/shell.css?v=fds098">
+{% block assets %}<script src="{{ asset_prefix }}/fds/theme-boot.js?v=0.9.8"></script>
+<link rel="icon" type="image/svg+xml" href="{{ asset_prefix }}/fds/marks/fleet.svg">
+<link rel="stylesheet" href="{{ asset_prefix }}/dealroom/layers.css?v=fds098">
+<link rel="stylesheet" href="{{ asset_prefix }}/fds/fonts.css?v=0.9.8">
+<link rel="stylesheet" href="{{ asset_prefix }}/fds/tokens.css?v=0.9.8">
+<link rel="stylesheet" href="{{ asset_prefix }}/fds/components.css?v=0.9.8">
+<link rel="stylesheet" href="{{ asset_prefix }}/dealroom/shell.css?v=fds098">
+{% endblock %}
 <style>
 /* Glue pages read roles only (tokens.css); check-literals.py reports 0 for this directory.
    Element resets sit in the dr.reset layer (ordered below the fds layers by /dealroom/layers.css), so .fds-body,
@@ -27,6 +28,7 @@ a{color:hsl(var(--brand-muted-foreground))}
 {% block header %}{% endblock %}
 <main>{% block content %}{% endblock %}</main>
 <footer class="site-footer">{% block footer %}Fleet Dealroom · Confidential documents{% endblock %}</footer>
-<script src="/fds/theme.js?v=0.9.8" defer></script>
-<script src="/dealroom/shell.js?v=fds098"></script>
+{% block shell_scripts %}<script src="{{ asset_prefix }}/fds/theme.js?v=0.9.8" defer></script>
+<script src="{{ asset_prefix }}/dealroom/shell.js?v=fds098"></script>
+{% endblock %}
 {% block scripts %}{% endblock %}</body></html>

@@ -9,6 +9,9 @@ class DealroomSignConfig(AppConfig):
         import logging
         logging.getLogger("httpx").setLevel(logging.WARNING)
         logging.getLogger("httpcore").setLevel(logging.WARNING)
+        from .recipient_logging import RecipientLogFilter
+        for name in ('django.request', 'django.security.csrf', 'django.security.DisallowedHost'):
+            logging.getLogger(name).addFilter(RecipientLogFilter())
         from django.apps import apps
         if apps.is_installed("dealroom"):
             from .operations import install

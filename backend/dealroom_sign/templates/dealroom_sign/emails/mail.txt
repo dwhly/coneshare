@@ -1,0 +1,25 @@
+Fleet | Dealroom
+{% if invitation %}{{ sender }} · Estimated {{ estimated_minutes }} minutes · Due {{ access.context.due_at }} ({{ access.context.timezone }}) · {{ access.context.note|truncatechars:80 }}
+
+{% if access.context.incoming %}{{ sender }} (via {{ access.sending_staff.name }}’s Dealroom){% else %}{{ sender }}{% endif %} sent you “{{ title }}” to sign.
+{{ access.sender.company }}
+
+{{ access.context.note }}
+
+{{ title }}
+{{ access.context.pages|default_if_none:'Unknown' }} pages · {{ access.context.signatures }} signatures needed · Estimated {{ estimated_minutes }} minutes
+Due {{ access.context.due_at }} ({{ access.context.timezone }})
+
+Review and sign: {{ url }}
+You don't need an account.
+{% else %}“{{ title }}” is fully signed.
+{{ parties }}
+{% for person in access.workflow.signer_projection %}{{ person.email }}: {{ person.signedAt|default_if_none:'Not recorded' }} (UTC)
+{% endfor %}{% for file in files %}{{ file.name }} ({{ file.size }} bytes)
+{% endfor %}{% if link_only %}The files are above the attachment limit. Download your copies: {{ url }}{% else %}Your signed PDF and signing certificate are attached. Keep these files for your records.
+Your personal link: {{ url }}{% endif %}
+{% endif %}
+Is this legit? This invitation uses {{ origin }}. This is a private preview.
+If the button doesn't work, open {{ origin }}/s/access and enter {{ alternate }}.
+Report a concern: mailto:{{ report }}
+Reply to {{ access.sender.email }} to contact {{ sender }} or arrange a paper copy.

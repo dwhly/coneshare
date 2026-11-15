@@ -9,7 +9,7 @@ from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
 from .client import Documenso, SignError
-from .evidence import ingest, snapshot_fields
+from .evidence import ingest, snapshot_fields, instant
 from .legacy import legacy_request
 from .models import NdaAcceptance, ObservedSignEvent, SignCredential, SignatureRequest, Workflow
 from .storage import publish, source_bytes, stage, verify_seal
@@ -23,12 +23,16 @@ AUDIT_KINDS = {
     'DOCUMENT_CANCELLED': 'envelope.cancelled',
     'DOCUMENT_RECIPIENT_REJECTED': 'envelope.declined',
     'DOCUMENT_RECIPIENT_EXPIRED': 'envelope.expired',
+    'EMAIL_SENT': 'native_email.alert',
 }
 
 
 def record_fact(workflow, kind, source_id, data=None):
     from dealroom.activity import record
-    _, created = ObservedSignEvent.objects.get_or_create(workflow=workflow, source_id=str(source_id), kind=kind)
+    local = kind.startswith(('signer.', 'mail.', 'signing_deadline.', 'native_email.'))
+    defaults = {'occurred_at': instant((data or {}).get('occurred_at')) or timezone.now(),
+        'recipient_id': (data or {}).get('recipient_id'), 'payload': {'data': data or {}}} if local else {}
+    _, created = ObservedSignEvent.objects.get_or_create(workflow=workflow, source_id=str(source_id), kind=kind, defaults=defaults)
     if created:
         recipient_event = kind in {'envelope.viewed', 'envelope.signed', 'nda.signed'}
         actor = (workflow.member_id or 'sign:' + digest(str((data or {}).get('email', '')).encode())[:50]) if recipient_event else workflow.owner
@@ -85,13 +89,8 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
 
 
 def return_url(workflow):
-    """Where an NDA signer goes back to: the room's signing page, by room id only. The URL reaches nginx $request
-    logs, browser history and Sign's envelope metadata (documentMeta.redirectUrl), so it carries no room name
-    (review v0.9 send r2 [9]); the page fetches the name from the recipient API after authorising the visitor, and
-    Sign's context bar falls back to "Back to room" + the document title."""
-    if workflow.purpose != 'nda':
-        return ''
-    return f'{settings.SITE_DOMAIN}/signing/nda/{workflow.room_id}'
+    from .recipient_proxy import origin
+    return origin() + '/s/return/' + str(workflow.pk)
 
 
 def envelope_meta(workflow):
@@ -159,9 +158,11 @@ def execute(workflow, client):
         envelope = adopt(workflow, client, workflow.envelope_id)
     validate_envelope(workflow, envelope)
     if workflow.state == 'draft' and envelope['status'] == 'DRAFT':
+        from .counterparty import sender_snapshot
+        sender_snapshot(workflow)
         workflow.state = 'distributing'
         workflow.save(update_fields=['state'])
-        client.distribute(workflow.envelope_id, nda=workflow.purpose == 'nda', redirect_url=return_url(workflow))
+        client.distribute(workflow.envelope_id, external_id=workflow.external_id, nda=workflow.purpose == 'nda', redirect_url=return_url(workflow))
         envelope = client.get(workflow.envelope_id)
         validate_envelope(workflow, envelope)
     if envelope['status'] == 'DRAFT':
@@ -189,7 +190,7 @@ def reconcile(workflow, client, envelope=None):
             original = client.pdf(f'envelope/item/{item_id}/download', params={'version': 'original'})
             if digest(original) != workflow.source_sha256:
                 raise SignError('source_hash_changed')
-        if not envelope.get('completedAt') or any(r.get('signingStatus') != 'SIGNED' for r in recipients):
+        if not envelope.get('completedAt') or any(r.get('signingStatus') != 'SIGNED' for r in recipients if r.get('role') != 'CC'):
             raise SignError('completion_evidence_incomplete')
         if not completion_id:
             raise SignError('completion_audit_pending')
@@ -202,6 +203,9 @@ def reconcile(workflow, client, envelope=None):
     with transaction.atomic():
         locked = Workflow.objects.select_for_update().get(pk=workflow.pk)
         if locked.state == 'done':
+            for fact in audit_rows:
+                if fact.get('type') == 'EMAIL_SENT' and fact.get('id'):
+                    record_fact(locked, 'native_email.alert', fact['id'])
             return locked
         workflow.source_status = status
         workflow.signer_projection = projection
@@ -231,6 +235,15 @@ def reconcile(workflow, client, envelope=None):
         workflow.last_error = ''
         workflow.next_attempt_at = timezone.now() + timedelta(seconds=15)
         workflow.save()
+        from .counterparty import provision
+        from .counterparty_mail import enqueue
+        from .recipient_proxy import eligible
+        release_time = next((instant(f.get('createdAt')) for f in audit_rows if f.get('type') == 'DOCUMENT_SENT'), None)
+        for access in provision(workflow, envelope, released_at=release_time):
+            if status == 'PENDING' and eligible(access, envelope):
+                enqueue(access, 'invitation', 'release:' + access.revision)
+            elif staged and access.completed_at:
+                enqueue(access, 'fully_signed', completion_id)
     return workflow
 
 
@@ -273,6 +286,8 @@ def sweep(limit=20):
         process(workflow_id)
     from .storage import recover_previews
     recover_previews()
+    from .counterparty_mail import drain
+    drain(limit)
 
 
 def reset_nda(workflow):

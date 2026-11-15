@@ -18,7 +18,7 @@ from dealroom_sign.models import ExecutedArtifact, NdaAcceptance, NdaPolicy, Wor
 from dealroom_sign.storage import publish, verify_seal
 from dealroom_sign.workflows import command, process
 from sharelinks.models import ShareLink, ShareLinkAccessGrant, Viewer
-from .test_workflows import fixture, pdf, recipients, agent_client
+from .test_workflows import fixture, pdf, recipients, agent_client, envelope
 
 pytestmark = pytest.mark.django_db
 ROOT = Path(__file__).resolve().parents[3]
@@ -222,7 +222,8 @@ def test_staff_port_is_tailnet_only():
     assert compose['services']['web']['ports'] == ['100.110.241.2:8797:80']
 
 
-def test_member_start_can_enter_identity_and_revocation(fixture, member_context, pdf):
+def test_member_start_can_enter_identity_and_revocation(fixture, member_context, pdf, settings):
+    settings.SIGN_RECIPIENT_ORIGIN = 'https://recipient.test:9445'
     ctx = member_context
     url = f'/api/v1/dealroom-sign/nda/{fixture.room.pk}/'
     with patch('dealroom_sign.workflows.source_bytes', return_value=pdf):
@@ -232,9 +233,16 @@ def test_member_start_can_enter_identity_and_revocation(fixture, member_context,
     work = Workflow.objects.get(purpose='nda')
     work.state = 'awaiting_signature'; work.signing_token = 'recipient_token'
     work.signer_projection = [{'email': ctx.member.email}]; work.save()
+    from dealroom_sign.counterparty import provision
+    native = envelope(work)
+    native['recipients'][0]['token'] = work.signing_token
+    provision(work, native)
+    ctx.member.verified_at = timezone.now()
+    ctx.member.save()
     assert ctx.client.get(url).data['can_enter'] is True
     response = ctx.client.post(url+'enter/', {}, format='json')
-    assert response.status_code == 200 and response.data['signing_url'].endswith('/sign/recipient_token')
+    assert response.status_code == 200 and response.data['signing_url'].startswith('https://recipient.test:9445/s/nda/')
+    assert 'recipient_token' not in response.data['signing_url']
     assert response['Referrer-Policy'] == 'no-referrer'
     work.signer_projection = [{'email': 'other@example.test'}]; work.save()
     assert ctx.client.get(url).data['can_enter'] is False

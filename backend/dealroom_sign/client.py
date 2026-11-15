@@ -7,6 +7,15 @@ import httpx
 from django.conf import settings
 
 
+NATIVE_EMAIL_OFF = dict.fromkeys((
+    'recipientSigningRequest', 'recipientRemoved', 'recipientSigned', 'documentPending',
+    'documentCompleted', 'documentDeleted', 'ownerDocumentCompleted', 'ownerRecipientExpired',
+    'ownerDocumentCreated',
+), False)
+NATIVE_REMINDERS_OFF = {'sendAfter': {'disabled': True}, 'repeatEvery': {'disabled': True}}
+SIGNING_PERIOD = {'unit': 'day', 'amount': 30}
+
+
 def pdf_filename(title):
     """The file name signers see when they download ("<title>.pdf", then "<title>_signed.pdf"), not "document.pdf"."""
     name = re.sub(r'[\\/:*?"<>|\x00-\x1f]+', ' ', title or '').strip().strip('.')
@@ -78,14 +87,26 @@ class Documenso:
 
     def create(self, workflow, pdf, meta=None):
         payload = {'title': workflow.title, 'type': 'DOCUMENT', 'externalId': workflow.external_id,
-                   'recipients': workflow.recipients, 'meta': {**(meta or {}), 'distributionMethod': 'NONE'}}
+                   'recipients': workflow.recipients, 'meta': {**(meta or {}), 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF}}
         return self.request('POST', 'envelope/create', data={'payload': json.dumps(payload)},
                             files={'files': (pdf_filename(workflow.title), pdf, 'application/pdf')}).json()['id']
 
-    def distribute(self, envelope_id, *, nda=False, redirect_url=''):
-        meta = {'distributionMethod': 'NONE' if nda else 'EMAIL'}
-        if redirect_url:
-            meta['redirectUrl'] = redirect_url
+    def distribute(self, envelope_id, *, external_id, nda=False, redirect_url=''):
+        # EDD §4.3 / r1b: distribute strips reminder/expiry settings; persist and verify first.
+        self.request('POST', 'envelope/update', json={'envelopeId': envelope_id,
+            'data': {'globalAccessAuth': [], 'globalActionAuth': []},
+            'meta': {'reminderSettings': NATIVE_REMINDERS_OFF, 'envelopeExpirationPeriod': SIGNING_PERIOD}})
+        envelope = self.request('POST', settings.SIGN_INTERNAL_URL.rstrip('/') +
+            '/api/deal/envelope/editor/get', json={'envelopeId': identifier(envelope_id)}).json()
+        if (not isinstance(envelope, dict) or envelope.get('id') != envelope_id or
+                envelope.get('teamId') != self.team_id or not external_id or
+                envelope.get('externalId') != external_id):
+            raise SignError('envelope_correlation_mismatch')
+        persisted = envelope.get('documentMeta') or {}
+        if (persisted.get('reminderSettings') != NATIVE_REMINDERS_OFF or
+                persisted.get('envelopeExpirationPeriod') != SIGNING_PERIOD):
+            raise SignError('release_settings_not_persisted')
+        meta = {'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF, 'redirectUrl': redirect_url}
         return self.request('POST', 'envelope/distribute', json={'envelopeId': envelope_id, 'meta': meta}).json()
 
     def pdf(self, path, **kwargs):

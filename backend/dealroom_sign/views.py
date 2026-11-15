@@ -247,9 +247,13 @@ class RecipientNdaEnterView(RecipientNdaView):
             raise PermissionDenied('No signing workflow for this member.')
         if work.state != 'awaiting_signature' or not work.signing_token or not work.signer_projection or work.signer_projection[0].get('email', '').strip().lower() != member.email.strip().lower():
             raise PermissionDenied('Signing is not ready for this verified member.')
-        from .client import identifier
-        # Use only configured origin, never an upstream signingUrl or a caller URL.
-        return Response({'signing_url': settings.SIGN_PUBLIC_URL.rstrip('/') + '/sign/' + identifier(work.signing_token)})
+        from .counterparty import issue_handoff
+        from .recipient_proxy import origin
+        access = work.signer_accesses.filter(revision=work.policy_revision,
+            email=member.email.strip().lower(), native_token__isnull=False).first()
+        if not access or access.native_token != work.signing_token:
+            raise PermissionDenied('Signing is not ready for this verified member.')
+        return Response({'signing_url': origin() + '/s/nda/' + issue_handoff(access, member)})
 
 
 GENERATED_ARTIFACT_NAME = r'^(sealed_pdf|certificate|audit)[-_]envelope_'
@@ -397,6 +401,24 @@ class SignatureOverviewView(SignatureProductView):
             'waiting':[r for r in items if r['state']=='awaiting_signature' and not r['needs_you']],
             'likely':[],'recent':items[:10],'source_states':{'predictions':'not_enabled'}, 'room_ids':room_ids,
             'as_of':timezone.now(),'stale':any(freshness(r)['stale'] for r in rows)})
+
+
+class SignatureSignerRevokeView(SignatureProductView):
+    @extend_schema(request=OpenApiTypes.OBJECT, responses={200: OpenApiTypes.OBJECT})
+    def post(self, request, request_id, signer_id):
+        if not human_staff(request):
+            raise PermissionDenied('forbidden')
+        row = scoped_request(request, request_id)
+        binding = getattr(request, 'board_binding', None)
+        if request.user.pk != row.workflow.owner_id or (binding and binding.role not in {'writer', 'manager'}):
+            raise PermissionDenied('forbidden')
+        reason = request.data.get('reason')
+        if set(request.data) != {'reason'} or not isinstance(reason, str) or not 1 <= len(reason.strip()) <= 500:
+            raise ValidationError('A reason is required.')
+        access = get_object_or_404(row.workflow.signer_accesses, pk=signer_id)
+        from .counterparty import revoke
+        revoke(access, reason.strip())
+        return Response({'revoked': True})
 
 
 class SignatureRequestDetailView(SignatureProductView):

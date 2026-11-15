@@ -1,5 +1,11 @@
 async function sign(p,name,shots){
  await p.waitForLoadState('networkidle');
+ const consent=p.getByRole('checkbox',{name:'I agree to use electronic records and signatures for this document.'});
+ if(await consent.isVisible()){
+  await consent.check();
+  await p.getByRole('button',{name:'Review and sign',exact:true}).click();
+  await p.waitForLoadState('networkidle');
+ }
  await p.getByTestId('signature-pad-dialog-button').waitFor({timeout:30000});
  await p.getByTestId('signature-pad-dialog-button').click();
  await p.getByRole('tab',{name:'Type',exact:true}).click();

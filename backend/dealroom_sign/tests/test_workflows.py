@@ -14,7 +14,7 @@ from rest_framework.exceptions import PermissionDenied, ValidationError
 from core.models import Organization, User
 from datarooms.models import Dataroom, DataroomDocument
 from documents.models import Document, DocumentVersion
-from dealroom_sign.client import Documenso, SignError
+from dealroom_sign.client import Documenso, SignError, NATIVE_EMAIL_OFF, NATIVE_REMINDERS_OFF, SIGNING_PERIOD
 from dealroom_sign.models import ExecutedArtifact, NdaAcceptance, NdaPolicy, SignCredential, Workflow
 from dealroom_sign.policy import artifact_allowed, check_nda
 from dealroom_sign.validation import digest, validate_recipients
@@ -109,11 +109,12 @@ def test_nda_distribution_none(fixture):
     requests = []
     def respond(request):
         requests.append(request)
-        return httpx.Response(200, json={'success': True})
+        return httpx.Response(200, json={'id': 'envelope_test', 'teamId': 3, 'externalId': fixture.work.external_id,
+            'documentMeta': {'reminderSettings': NATIVE_REMINDERS_OFF, 'envelopeExpirationPeriod': SIGNING_PERIOD}})
     with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
-        client.distribute('envelope_test', nda=True)
+        client.distribute('envelope_test', external_id=fixture.work.external_id, nda=True)
     import json
-    assert json.loads(requests[0].content)['meta']['distributionMethod'] == 'NONE'
+    assert json.loads(requests[-1].content)['meta']['distributionMethod'] == 'NONE'
 
 
 def test_remote_errors_do_not_expose_tokens(fixture):
@@ -432,7 +433,7 @@ def test_api_schema_does_not_silently_drop_rich_field_requirements(recipients):
     assert 'Unsupported input property' in str(serializer.errors)
 
 
-@override_settings(SITE_DOMAIN='https://send.example.test')
+@override_settings(SITE_DOMAIN='https://send.example.test', SIGN_RECIPIENT_ORIGIN='https://recipient.example.test:9445')
 def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
     # Sign's "Back to room" link is documentMeta.redirectUrl (the room's signing page); the signer name is the
     # recipient name.
@@ -441,10 +442,11 @@ def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
     fixture.room.name = 'Project Atlas · Glue review'
     fixture.room.save()
     work = Workflow.objects.get(pk=fixture.work.pk)
-    assert return_url(work) == '' and envelope_meta(work) == {'subject': 'Fleet Dealroom: please sign Source'}
+    assert return_url(work) == f'https://recipient.example.test:9445/s/return/{work.pk}'
+    assert envelope_meta(work) == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work)}
     work.purpose = 'nda'
     url = urlparse(return_url(work))
-    assert f'{url.scheme}://{url.netloc}{url.path}' == f'https://send.example.test/signing/nda/{fixture.room.pk}'
+    assert f'{url.scheme}://{url.netloc}{url.path}' == f'https://recipient.example.test:9445/s/return/{work.pk}'
     assert url.query == '' and url.fragment == ''
     sent = []
     def respond(request):
@@ -453,11 +455,11 @@ def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
     with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
         assert client.create(work, pdf, meta=envelope_meta(work)) == 'envelope_new'
     payload = _multipart_payload(sent[0])
-    assert payload['meta'] == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'distributionMethod': 'NONE'}
+    assert payload['meta'] == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF}
     assert payload['recipients'][0]['name'] == 'Member'
 
 
-@override_settings(SITE_DOMAIN='https://send.example.test')
+@override_settings(SITE_DOMAIN='https://send.example.test', SIGN_RECIPIENT_ORIGIN='https://recipient.example.test:9445')
 def test_nda_return_url_and_envelope_meta_carry_no_room_name(fixture):
     # Review v0.9 send r2 [9]: the return URL lands in nginx $request logs, browser history and Sign's envelope
     # metadata, so it names the room by id only. The signing page fetches the name after authorising the visitor.
@@ -470,7 +472,7 @@ def test_nda_return_url_and_envelope_meta_carry_no_room_name(fixture):
     work = Workflow.objects.get(pk=fixture.work.pk)
     work.purpose = 'nda'
     url = return_url(work)
-    assert url == f'https://send.example.test/signing/nda/{fixture.room.pk}'
+    assert url == f'https://recipient.example.test:9445/s/return/{work.pk}'
     meta = json.dumps(envelope_meta(work), ensure_ascii=False)
     for form in (secret, quote(secret), quote_plus(secret), 'Atlas', 'room_name'):
         assert form not in url

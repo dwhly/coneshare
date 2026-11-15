@@ -1,0 +1,164 @@
+{
+  "procedures": [
+    {
+      "name": "envelope.attachment.find",
+      "type": "query",
+      "openapi": {
+        "method": "GET",
+        "path": "/envelope/attachment",
+        "summary": "Find attachments",
+        "description": "Find all attachments for an envelope",
+        "tags": [
+          "Envelope Attachments"
+        ]
+      },
+      "input": 1,
+      "output": true,
+      "classification": "recipient"
+    },
+    {
+      "name": "envelope.item.getManyByToken",
+      "type": "query",
+      "input": 1,
+      "output": true,
+      "classification": "recipient"
+    },
+    {
+      "name": "envelope.recipient.report",
+      "type": "mutation",
+      "input": 1,
+      "output": true,
+      "classification": "recipient",
+      "widensAccess": true,
+      "wideningReason": "Conservative approval for mutation; unknown mutations are widening."
+    },
+    {
+      "name": "envelope.field.sign",
+      "type": "mutation",
+      "input": 1,
+      "output": true,
+      "classification": "recipient",
+      "widensAccess": true,
+      "wideningReason": "Conservative approval for mutation; unknown mutations are widening."
+    },
+    {
+      "name": "envelope.signingStatus",
+      "type": "query",
+      "input": 1,
+      "output": true,
+      "classification": "recipient"
+    },
+    {
+      "name": "document.getDocumentByToken",
+      "type": "query",
+      "input": 1,
+      "output": true,
+      "classification": "recipient"
+    },
+    {
+      "name": "field.signFieldWithToken",
+      "type": "mutation",
+      "input": 1,
+      "output": false,
+      "classification": "recipient",
+      "widensAccess": true,
+      "wideningReason": "Conservative approval for mutation; unknown mutations are widening."
+    },
+    {
+      "name": "field.removeSignedFieldWithToken",
+      "type": "mutation",
+      "input": 1,
+      "output": false,
+      "classification": "recipient",
+      "widensAccess": true,
+      "wideningReason": "Conservative approval for mutation; unknown mutations are widening."
+    },
+    {
+      "name": "recipient.completeDocumentWithToken",
+      "type": "mutation",
+      "input": 1,
+      "output": true,
+      "classification": "recipient",
+      "widensAccess": true,
+      "wideningReason": "Conservative approval for mutation; unknown mutations are widening."
+    },
+    {
+      "name": "recipient.rejectDocumentWithToken",
+      "type": "mutation",
+      "input": 1,
+      "output": false,
+      "classification": "recipient",
+      "widensAccess": true,
+      "wideningReason": "Conservative approval for mutation; unknown mutations are widening."
+    }
+  ],
+  "files": [
+    {
+      "method": "GET",
+      "path": "/api/files/token/:token/envelopeItem/:envelopeItemId",
+      "classification": "recipient"
+    },
+    {
+      "method": "GET",
+      "path": "/api/files/token/:token/envelopeItem/:envelopeItemId",
+      "classification": "recipient"
+    },
+    {
+      "method": "GET",
+      "path": "/api/files/token/:token/envelopeItem/:envelopeItemId/download/:version?",
+      "classification": "recipient"
+    },
+    {
+      "method": "GET",
+      "path": "/api/files/token/:token/envelopeItem/:envelopeItemId/download/:version?",
+      "classification": "recipient"
+    },
+    {
+      "method": "GET",
+      "path": "/api/files/token/:token/envelope/:envelopeId/envelopeItem/:envelopeItemId/dataId/:documentDataId/:version/item.pdf",
+      "classification": "recipient"
+    },
+    {
+      "method": "GET",
+      "path": "/api/files/token/:token/envelope/:envelopeId/envelopeItem/:envelopeItemId/dataId/:documentDataId/:version/item.pdf",
+      "classification": "recipient"
+    }
+  ],
+  "source_sha256": {
+    "apps/remix/server/api/files/files.ts": "2b8dd341af511c8510565738f3eed7b065c3dbc671a80d61c9c8f8e5aa67fb67",
+    "apps/remix/server/api/files/routes/get-envelope-item-pdf-by-token.ts": "2e6575a7ed2c8f4ac633bee9692eadb5be45d53a11a0553ce370f93addb64b8a",
+    "apps/remix/server/router.ts": "bcb79d8ac98d4a8d960b24135eb4592410efd24583feff3ed97e82ed6bfca4ce",
+    "packages/trpc/server/admin-router/router.ts": "f3b2f824e34245fb07181f47facf196fe71ea63bb04ccfc5e3b13e1716f92b8b",
+    "packages/trpc/server/api-token-router/router.ts": "b022d001d2912826971d700fa540e826c2150fdc6e3f055a4ed9cba0d1b56ee5",
+    "packages/trpc/server/auth-router/router.ts": "aa571368f55b4460ff36fa8e206823a31d0fa22ecf63906da0c75ae6410f5eb6",
+    "packages/trpc/server/document-router/router.ts": "d6bc416a83f8224b45dfebaf8ed4c17ebc08c3a16d210b49e8efc66cbcdd51e6",
+    "packages/trpc/server/document-router/schema.ts": "b84e1ca078995f4b8a86f3fa953c0a5d4d3791e9c22dcaf2f457d208727271da",
+    "packages/trpc/server/enterprise-router/router.ts": "0e4a28c8a997905e17a5dda074c23b063603f195e851fe5c5c334dc9d11499fb",
+    "packages/trpc/server/envelope-router/attachment/find-attachments.types.ts": "e83ede034957a09165350cfdc213c5269c9ac89472b3d6aca34fb5efab11ea06",
+    "packages/trpc/server/envelope-router/envelope-recipients/report-recipient.types.ts": "0b41e4cb801c83b7716977a9a871b8ee69fb7a72dcadf3ffb536c33eccd30ec8",
+    "packages/trpc/server/envelope-router/get-envelope-items-by-token.types.ts": "97640a4c0a6e78672762f123a851468249748c751d290cde1d02299160371e0f",
+    "packages/trpc/server/envelope-router/router.ts": "e56336a4c5649894c9ccb1a4abfc985e953090583aadfd16a35186e5aabe1644",
+    "packages/trpc/server/envelope-router/sign-envelope-field.types.ts": "f68ddef661b21d100a020a4e5408792b246bd5c728d9845cd517a758d42e5fca",
+    "packages/trpc/server/envelope-router/signing-status-envelope.types.ts": "ffeaa4712eec936ccaaaadb5c8fac8eab89ca507895ef7dd026c557198ed9e00",
+    "packages/trpc/server/field-router/router.ts": "d24c407cdde2ed557bb03a1b1bb895555b9a111762fa0b099933fe76625bdd6d",
+    "packages/trpc/server/field-router/schema.ts": "be56cbda388f0242364a2e7163b0704ba64adbe1e3b32c773989d420291af8c4",
+    "packages/trpc/server/folder-router/router.ts": "1348239e89d17410d967a4983eb97854b83f3580e05ff6fdeb69c8f6b2b46f36",
+    "packages/trpc/server/organisation-router/router.ts": "fd0346f87d0c2f8d514409105a85956906ee846b4a332815f7dee94b4a2fe804",
+    "packages/trpc/server/profile-router/router.ts": "013e31ded6ba46857a69d0301539dd9e25cede10e087ef87d18f019fdf4df425",
+    "packages/trpc/server/recipient-router/router.ts": "2096e73daf73939ad371e7100c263e044f00f5268610ad93ee612cc31cea1c6d",
+    "packages/trpc/server/recipient-router/schema.ts": "7b407195540a40034dfea041993983e6aca9ee51d830e48d9e6db7cae80583f2",
+    "packages/trpc/server/router.ts": "5f23bdeceeb064c34925b2d7fe193772054d9810ef2f14e2334a2217f045c8d9",
+    "packages/trpc/server/team-router/router.ts": "fb0cbcd301ea62bfb28d86dad1a05199e9aaba2b11e1e5302f8cd3b92f6215f6",
+    "packages/trpc/server/template-router/router.ts": "9d73543242e13656b9a7e492ac613c8d91819a67300e0c717ca46600c2f06a8f",
+    "packages/trpc/server/webhook-router/router.ts": "5d8d5ca43add9d75db0dde0182b07ec6bcae6b6b4c4cfa95bee99b21dc304f80"
+  },
+  "send_denied": [
+    "document.getDocumentByToken",
+    "envelope.recipient.report",
+    "field.signFieldWithToken"
+  ],
+  "attachment_aliases": [
+    "/api/v2/envelope/attachment",
+    "/api/v2-beta/envelope/attachment"
+  ]
+}

@@ -2,12 +2,13 @@
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'/Users/dano/code/amforge-forks/shots/node_modules/playwright');
 const fs=require('fs'),path=require('path');
 const root=path.resolve(__dirname,'../../..');
-const fixture=JSON.parse(fs.readFileSync(root+'/deploy/chief-glue-v1/.local/fixture.json'));
+const fixture=JSON.parse(fs.readFileSync(process.env.SIGN_FIXTURE_FILE||root+'/deploy/chief-glue-v1/.local/fixture.json'));
 const memberEmail=process.env.MEMBER_EMAIL||'member@acme.test', memberName=process.env.MEMBER_NAME||'Jane Acme';
 const base=process.env.GLUE_URL||'http://glue-v1.100-110-241-2.sslip.io';
 const shots=process.env.SHOTS||'/Users/dano/code/chief-dealroom/docs/status/shots';
+const mailpit=process.env.MAILPIT_URL||'http://100.110.241.2:8785';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function mail(to,predicate){for(let n=0;n<40;n++){const list=await fetch('http://100.110.241.2:8785/api/v1/search?query='+encodeURIComponent('to:'+to)).then(r=>r.json());for(const m of (list.messages||[]).slice(0,8)){const full=await fetch('http://100.110.241.2:8785/api/v1/message/'+m.ID).then(r=>r.json());const value=predicate(full);if(value)return value;}await sleep(1000);}throw Error('No matching Mailpit delivery');}
+async function mail(to,predicate){for(let n=0;n<40;n++){const list=await fetch(mailpit+'/api/v1/search?query='+encodeURIComponent('to:'+to)).then(r=>r.json());for(const m of (list.messages||[]).slice(0,8)){const full=await fetch(mailpit+'/api/v1/message/'+m.ID).then(r=>r.json());const value=predicate(full);if(value)return value;}await sleep(1000);}throw Error('No matching Mailpit delivery');}
 const {sign:signNative}=require('./signature.cjs');
 const sign=(p,name)=>signNative(p,name,shots);
 (async()=>{

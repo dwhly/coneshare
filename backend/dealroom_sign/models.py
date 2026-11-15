@@ -151,3 +151,83 @@ class RequestArtifact(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['request', 'kind', 'snapshot_id'], name='sign_request_snapshot')]
+
+
+class SignerAccess(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    workflow = models.ForeignKey(Workflow, on_delete=models.PROTECT, related_name='signer_accesses')
+    request = models.ForeignKey(SignatureRequest, null=True, on_delete=models.PROTECT)
+    revision = models.CharField(max_length=64)
+    native_recipient_id = models.CharField(max_length=100)
+    native_token = encrypt(models.TextField())
+    generation = models.PositiveBigIntegerField(default=1)
+    capability_hash = models.CharField(max_length=64, unique=True)
+    alternate_hash = models.CharField(max_length=64, unique=True)
+    email = models.EmailField()
+    name = models.CharField(max_length=200, blank=True)
+    role = models.CharField(max_length=16, default='SIGNER')
+    sender = models.JSONField(default=dict)
+    sending_staff = models.JSONField(default=dict)
+    context = models.JSONField(default=dict)
+    required_auth = models.CharField(max_length=16, default='link')
+    released_at = models.DateTimeField()
+    signing_expires_at = models.DateTimeField()
+    completed_at = models.DateTimeField(null=True)
+    room_expires_at = models.DateTimeField(null=True)
+    revoked_at = models.DateTimeField(null=True)
+    revocation_reason = models.CharField(max_length=500, blank=True)
+    invite_state = models.CharField(max_length=24, default='pending')
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['workflow', 'revision', 'native_recipient_id'],
+            name='sign_access_recipient_revision')]
+
+
+class SignerSession(models.Model):
+    session_hash = models.CharField(max_length=64, primary_key=True)
+    access = models.ForeignKey(SignerAccess, on_delete=models.CASCADE, related_name='sessions')
+    generation = models.PositiveBigIntegerField()
+    issued_at = models.DateTimeField(default=timezone.now)
+    expires_at = models.DateTimeField()
+    idle_expires_at = models.DateTimeField()
+    code_verified_at = models.DateTimeField(null=True)
+    disclosure_hash = models.CharField(max_length=64, blank=True)
+    consented_at = models.DateTimeField(null=True)
+
+
+class SignerHandoff(models.Model):
+    token_hash = models.CharField(max_length=64, primary_key=True)
+    access = models.ForeignKey(SignerAccess, on_delete=models.CASCADE)
+    generation = models.PositiveBigIntegerField()
+    viewer_id = models.CharField(max_length=64)
+    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
+    revision = models.CharField(max_length=64)
+    native_recipient_id = models.CharField(max_length=100)
+    expires_at = models.DateTimeField()
+    used_at = models.DateTimeField(null=True)
+
+
+class SignerChallenge(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    access = models.ForeignKey(SignerAccess, on_delete=models.CASCADE)
+    session = models.ForeignKey(SignerSession, on_delete=models.CASCADE)
+    code_hash = models.CharField(max_length=64)
+    expires_at = models.DateTimeField()
+    attempts = models.PositiveSmallIntegerField(default=0)
+    used_at = models.DateTimeField(null=True)
+    sent_at = models.DateTimeField(default=timezone.now)
+
+
+class CounterpartyEffect(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    access = models.ForeignKey(SignerAccess, on_delete=models.PROTECT, related_name='effects')
+    kind = models.CharField(max_length=24)
+    source_id = models.CharField(max_length=200)
+    state = models.CharField(max_length=24, default='pending', db_index=True)
+    message_id = models.CharField(max_length=254)
+    payload_hash = models.CharField(max_length=64, blank=True)
+    last_error = models.CharField(max_length=100, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['access', 'kind', 'source_id'], name='sign_counterparty_effect')]

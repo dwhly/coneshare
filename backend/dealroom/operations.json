@@ -2015,6 +2015,16 @@
     "tier": "read_only",
     "widens_access": false
   },
+  "dealroom_sign_SignatureSignerRevokeView_endpoint_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_sign_SignatureSignerRevokeView_endpoint_post",
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/signers/{signer_id}/revoke-room",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
   "dealroom_sign_SigningEnvelopeViewSet_create_post": {
     "boundary": "staff",
     "human_only": false,

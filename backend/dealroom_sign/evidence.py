@@ -13,7 +13,7 @@ EVENTS = {'DOCUMENT_SENT': 'envelope.sent', 'DOCUMENT_OPENED': 'envelope.viewed'
     'DOCUMENT_VIEWED': 'envelope.viewed', 'DOCUMENT_RECIPIENT_COMPLETED': 'envelope.signed',
     'DOCUMENT_COMPLETED': 'envelope.completed', 'DOCUMENT_RECIPIENT_REJECTED': 'envelope.declined',
     'DOCUMENT_REJECTED': 'envelope.declined', 'DOCUMENT_CANCELLED': 'envelope.cancelled',
-    'DOCUMENT_RECIPIENT_EXPIRED': 'envelope.expired'}
+    'DOCUMENT_RECIPIENT_EXPIRED': 'envelope.expired', 'EMAIL_SENT': 'native_email.alert'}
 
 
 def instant(value):

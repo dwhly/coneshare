@@ -1,0 +1,23 @@
+{% extends 'dealroom_sign/base.html' %}
+{% block title %}Fleet | Dealroom{% endblock %}
+
+{% block styles %}
+body{padding:var(--space-6);max-width:680px;margin:auto;color:hsl(var(--foreground))}header{font-weight:700;margin:var(--space-8) 0}button{min-height:44px;padding:var(--space-3) var(--space-6);background:hsl(var(--primary));color:hsl(var(--primary-foreground));border:0;border-radius:var(--radius);font:inherit;cursor:pointer}input{font:inherit;padding:var(--space-3)}label{display:block;margin:var(--space-6) 0}
+{% endblock %}
+{% block header %}<header>Fleet | Dealroom</header>{% endblock %}
+{% block content %}
+{% if state == 'entry' %}<h1>A document is waiting for you</h1><p>Open your personal invitation to review it. You don't need an account.</p><form action="{{ entry_path }}" method="post" data-entry><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}"><button>Continue</button></form>
+{% elif state == 'alternate' %}<h1>Open your invitation</h1><form action="/s/access" method="post"><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}"><label>Access code <input name="code" maxlength="24" required></label><button>Continue</button></form>
+{% elif state == 'welcome' %}<h1>{{ access.context.title }}</h1><p>{{ access.sender.name }}{% if access.sender.company %} · {{ access.sender.company }}{% endif %} sent you this document to sign.</p><p>{{ access.context.note }}</p><p>{{ access.context.pages|default_if_none:'—' }} pages · {{ access.context.signatures }} signature(s). Due {{ access.context.due_at }} ({{ access.context.timezone }}).</p><p><a href="/s/session/original">Read the original PDF</a></p><form action="/s/session/consent" method="post"><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}"><input type="hidden" name="disclosure_hash" value="{{ disclosure_hash }}"><label><input type="checkbox" name="agree" required> I agree to use electronic records and signatures for this document.</label><p><a href="/articles/signature-disclosure">Electronic signature disclosure</a></p><button>Review and sign</button></form>
+{% elif state == 'signed' %}<h1>Signed — your copy will follow</h1><p>Your signature has been recorded. You can close this page.</p>{% if access.workflow.state == 'done' %}<p>Your final copy is ready.</p><form action="/s/session/download" method="post"><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}"><button name="kind" value="final">Download signed PDF</button> <button name="kind" value="certificate">Download certificate</button></form>{% endif %}
+{% elif state == 'checking' %}<h1>Checking your signature</h1><p>Confirmation is pending. Your copy will follow after signing is confirmed.</p><a href="/s/return/{{ access.workflow_id }}">Check again</a>
+{% elif state == 'waiting' %}<h1>Waiting for the earlier signer</h1><p>We will email you when it is your turn.</p>
+{% elif state == 'declined' %}<h1>Signing declined</h1><p>This request has not been completed.</p>
+{% elif state == 'expired' %}<h1>This signing window has closed</h1><p>Reply to your sender to arrange next steps.</p>
+{% elif state == 'withdrawn' %}<h1>This request was withdrawn</h1>
+{% elif state == 'disclosure' %}<h1>Electronic records and signatures</h1><p>By agreeing, you consent to review and sign this document electronically. You can read and save the original PDF before consenting. Keep a copy of the signed PDF and signing certificate sent after completion.</p><p>You need a browser and a PDF reader. To arrange a paper copy or withdraw before signing, reply to the sender of your invitation.</p>
+{% else %}<h1>Open the link in your Fleet Dealroom email</h1><p>Use your personal invitation to continue.</p>{% endif %}
+{% endblock %}
+{% block footer %}Fleet | Dealroom{% endblock %}
+{% block shell_scripts %}{% endblock %}
+{% block scripts %}<script src="/s/assets/entry.js" defer></script>{% endblock %}

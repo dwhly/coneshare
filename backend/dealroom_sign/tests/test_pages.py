@@ -53,3 +53,15 @@ def test_layer_order_statement_is_the_first_stylesheet_on_every_entry_page():
         src = open(path, encoding='utf-8').read()
         if '<html' in src or '/fds/' in src:  # a standalone page must be base.html itself
             assert os.path.basename(path) == 'base.html', path
+
+
+def test_counterparty_pages_and_emails_keep_fleet_brand_and_isolated_assets():
+    from pathlib import Path
+    html = render_to_string('dealroom_sign/recipient.html', {'state': 'help', 'asset_prefix': '/s/assets'})
+    assert _stylesheets(html)[0] == '/s/assets/dealroom/layers.css'
+    assert all(s.startswith('/s/assets/') for s in _stylesheets(html))
+    assert 'Open the link in your Fleet Dealroom email' in _visible(html)
+    root = Path(__file__).resolve().parents[1] / 'templates' / 'dealroom_sign'
+    for path in [root/'recipient.html', *sorted((root/'emails').iterdir())]:
+        text = path.read_text().lower()
+        assert not any(brand in text for brand in ['amforge', 'documenso', 'sslip.io'])

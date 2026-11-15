@@ -600,3 +600,15 @@ SIGN_WEBHOOK_SECRET = os.environ.get("SIGN_WEBHOOK_SECRET", "")
 
 BOARD_SIGN_PROXY_KEY = os.environ.get("BOARD_SIGN_PROXY_KEY", "")
 BOARD_SIGN_BOARDS = parse_board_sign_boards(os.environ.get("BOARD_SIGN_BOARDS", "{}"))
+
+# Dedicated recipient ingress; never inherit the staff origin or transport credential.
+SIGN_RECIPIENT_ORIGIN = os.environ.get('SIGN_RECIPIENT_ORIGIN', '')
+SIGN_RECIPIENT_INTERNAL_URL = os.environ.get('SIGN_RECIPIENT_INTERNAL_URL', 'http://sign:3001')
+FLEET_PROXY_KEY_FILE = os.environ.get('FLEET_PROXY_KEY_FILE', '')
+SIGN_CAPABILITY_KEY = os.environ.get('SIGN_CAPABILITY_KEY', '')
+SIGN_FROM_EMAIL = os.environ.get('SIGN_FROM_EMAIL', 'sign@fleet.test')
+SIGN_REPORT_EMAIL = os.environ.get('SIGN_REPORT_EMAIL', 'support@fleet.test')
+SIGN_MESSAGE_DOMAIN = os.environ.get('SIGN_MESSAGE_DOMAIN', 'fleet.test')
+SIGN_MAIL_MAX_BYTES = int(os.environ.get('SIGN_MAIL_MAX_BYTES', str(14 * 1024 * 1024)))
+SIGN_SMTP_SIZE = int(os.environ.get('SIGN_SMTP_SIZE', '0'))
+MIDDLEWARE = ['dealroom_sign.recipient_proxy.RecipientBoundaryMiddleware', *MIDDLEWARE]

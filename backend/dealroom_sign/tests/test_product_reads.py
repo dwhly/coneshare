@@ -694,3 +694,26 @@ def test_unpinned_partial_export_reuses_page_snapshot(base):
             assert response['X-Dealroom-Artifact-ID'] == str(snap.pk)
         upstream.assert_not_called(); upload.assert_not_called()
     assert models.RequestArtifact.objects.filter(request=req, kind='partial').count() == 1
+
+
+def test_sender_revocation_requires_human_owner_and_invalidates_personal_access(base):
+    from dealroom_sign.counterparty import provision, capability, resolve, new_session, get_session
+    row, binding = product(base)
+    env = remote(base).get.return_value
+    env['recipients'][0]['token'] = 'native-recipient-test'
+    access = provision(base.work, env)[0]
+    bearer = capability(access)
+    _, session = new_session(access)
+    path = PREFIX + f'/requests/{row.pk}/signers/{access.pk}/revoke-room'
+    raw = b'{"reason":"Sender withdrew access"}'
+    client = APIClient()
+    assert client.generic('POST', path, raw, content_type='application/json',
+        **headers('POST', path, raw, via='service')).status_code == 403
+    binding.role = 'reader'; binding.save()
+    assert client.generic('POST', path, raw, content_type='application/json',
+        **headers('POST', path, raw)).status_code == 403
+    binding.role = 'manager'; binding.save()
+    result = client.generic('POST', path, raw, content_type='application/json', **headers('POST', path, raw))
+    assert result.status_code == 200
+    assert resolve(bearer) is None and get_session(session) is None
+    assert ObservedSignEvent.objects.filter(workflow=base.work, kind='signer.revoked').exists()
