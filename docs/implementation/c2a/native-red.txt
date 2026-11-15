@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_native_payload_omits_internal_signer_hints ________________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (0d026f88-37ad-4d61-a080-48ac24816aaf)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_native_payload_omits_internal_signer_hints(fixture):
+        import json
+        from dealroom_sign.client import Documenso
+        work = send(fixture, signers=[{'name': 'Lee Harbor', 'email': LEE[0]['email'], 'company': 'Harbor Light Analytics', 'title': 'COO'}])
+        with Documenso(fixture.credential) as client, patch.object(client, 'request') as request:
+            request.return_value.json.return_value = {'id': 'new-envelope'}
+            client.create(work, (FIXTURES / 'harbor.pdf').read_bytes())
+        recipient = json.loads(request.call_args.kwargs['data']['payload'])['recipients'][0]
+>       assert set(recipient) == {'name', 'email', 'role', 'signingOrder', 'fields'}
+E       AssertionError: assert {'company', '...ngOrder', ...} == {'email', 'fi...signingOrder'}
+E         
+E         Extra items in the left set:
+E         'company'
+E         'title'
+E         Use -v to get more diff
+
+backend/dealroom_sign/tests/test_placement_send.py:137: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FZCNWFD0GJKKH7WEFNNP8R
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_native_payload_omits_internal_signer_hints
+1 failed, 10 deselected in 9.41s

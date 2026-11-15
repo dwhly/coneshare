@@ -47,7 +47,7 @@ from .serializers import (
 )
 from .storage import source_bytes
 from .validation import digest, validate_recipients
-from .workflows import command
+from .workflows import PlacementRequired, command
 
 
 def staff_room(request, room_id):
@@ -116,9 +116,12 @@ class SigningEnvelopeViewSet(viewsets.ReadOnlyModelViewSet):
         version = room_version(room, data['version_id'])
         if not SignCredential.objects.filter(owner=request.user, enabled=True).exists():
             raise ValidationError('Configure your per-staff Sign credential first.')
-        workflow = command(owner=request.user, room=room, version=version, recipients=data['recipients'],
-            idempotency_key=data['idempotency_key'], board_id=data.get('board_id'), task_ref=data.get('task_ref'),
-            requester=data.get('requester'), title=data.get('title'))
+        try:
+            workflow = command(owner=request.user, room=room, version=version, recipients=data['recipients'],
+                idempotency_key=data['idempotency_key'], board_id=data.get('board_id'), task_ref=data.get('task_ref'),
+                requester=data.get('requester'), title=data.get('title'), placement=data.get('placement'))
+        except PlacementRequired as exc:
+            return Response(exc.result, status=409)
         return Response(WorkflowSerializer(workflow).data, status=201)
 
 

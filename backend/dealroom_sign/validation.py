@@ -18,7 +18,7 @@ def request_digest(data):
     return digest(json.dumps(data, sort_keys=True, separators=(',', ':')).encode())
 
 
-def validate_recipients(recipients, pdf, *, page_count=None):
+def validate_recipients(recipients, pdf, *, page_count=None, automatic=False):
     try:
         if page_count is None:
             page_count = len(PdfReader(io.BytesIO(pdf)).pages)
@@ -29,7 +29,7 @@ def validate_recipients(recipients, pdf, *, page_count=None):
     normalized = []
     emails = set()
     for recipient in recipients:
-        if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+        if set(recipient) - {'email', 'name', 'company', 'title', 'role', 'signingOrder', 'fields'}:
             raise ValidationError('Unsupported recipient property.')
         email = str(recipient.get('email', '')).strip().lower()
         try:
@@ -40,7 +40,9 @@ def validate_recipients(recipients, pdf, *, page_count=None):
             raise ValidationError('Each signer must have a unique email and SIGNER role.')
         emails.add(email)
         fields = recipient.get('fields', [])
-        if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+        if automatic and fields:
+            raise ValidationError('Automatic placement cannot include caller-supplied fields.')
+        if not automatic and (not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields)):
             raise ValidationError('Each signer requires a sender-placed signature field.')
         for field in fields:
             if set(field) - {'type', 'page', 'positionX', 'positionY', 'width', 'height', 'identifier', 'fieldMeta'}:
@@ -67,4 +69,8 @@ def validate_recipients(recipients, pdf, *, page_count=None):
                            'signingOrder': order, 'fields': [dict(f, identifier=0) for f in fields]})
         if 'company' in recipient:
             normalized[-1]['company'] = recipient['company'].strip()
+        if 'title' in recipient:
+            if not isinstance(recipient['title'], str) or len(recipient['title']) > 200:
+                raise ValidationError('Title must be text of at most 200 characters.')
+            normalized[-1]['title'] = recipient['title'].strip()
     return normalized

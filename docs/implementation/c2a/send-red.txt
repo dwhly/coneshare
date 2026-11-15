@@ -1,0 +1,382 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+_________________ test_api_default_creates_signature_and_date __________________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (53d95e67-9d6f-4e56-88f8-17654d4b7686)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_api_default_creates_signature_and_date(fixture):
+        response = api_send(fixture, 'harbor')
+>       assert response.status_code == 201, response.data
+E       AssertionError: {'non_field_errors': [ErrorDetail(string='Unsupported input property.', code='invalid')]}
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "text/html; charset=utf-8">.status_code
+
+backend/dealroom_sign/tests/test_placement_send.py:47: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FZAW448R172TGVBCB92PX8
+_____________ test_api_hold_is_typed_and_creates_no_workflow[bare] _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (41fc8e4d-4700-4dab-81fa-52d81c950cc3)>, credential=<SignCredential: SignCredential object (1)>)
+name = 'bare'
+
+    @pytest.mark.parametrize('name', ['bare', 'unusual'])
+    def test_api_hold_is_typed_and_creates_no_workflow(fixture, name):
+        before = Workflow.objects.count()
+        response = api_send(fixture, name)
+>       assert response.status_code == 409, response.data
+E       AssertionError: {'non_field_errors': [ErrorDetail(string='Unsupported input property.', code='invalid')]}
+E       assert 400 == 409
+E        +  where 400 = <Response status_code=400, "text/html; charset=utf-8">.status_code
+
+backend/dealroom_sign/tests/test_placement_send.py:57: AssertionError
+___________ test_api_hold_is_typed_and_creates_no_workflow[unusual] ____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (1fd65920-272f-4b64-bea5-1d4b1b315ff7)>, credential=<SignCredential: SignCredential object (1)>)
+name = 'unusual'
+
+    @pytest.mark.parametrize('name', ['bare', 'unusual'])
+    def test_api_hold_is_typed_and_creates_no_workflow(fixture, name):
+        before = Workflow.objects.count()
+        response = api_send(fixture, name)
+>       assert response.status_code == 409, response.data
+E       AssertionError: {'non_field_errors': [ErrorDetail(string='Unsupported input property.', code='invalid')]}
+E       assert 400 == 409
+E        +  where 400 = <Response status_code=400, "text/html; charset=utf-8">.status_code
+
+backend/dealroom_sign/tests/test_placement_send.py:57: AssertionError
+____________ test_placement_persists_workflow_and_history_evidence _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (38f721c1-3fb2-4906-be3c-b12b3f5e69e8)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x70126b4ec050>
+
+    def test_placement_persists_workflow_and_history_evidence(fixture, settings):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)], 'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+>       work = send(fixture, board_id='board-c2a')
+
+backend/dealroom_sign/tests/test_placement_send.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/tests/test_placement_send.py:30: in send
+    return command(owner=fixture.user, room=fixture.room, version=fixture.version,
+backend/dealroom_sign/workflows.py:75: in command
+    recipients = validate_recipients(recipients, pdf)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor'}]
+pdf = b'%PDF-1.3\n%\x93\x8c\x8b\x9e ReportLab Generated PDF document (opensource)\n1 0 obj\n<<\n/F1 2 0 R /F2 3 0 R\n>>\nend...tLab generated PDF document -- digest (opensource)\n\n/Info 7 0 R\n/Root 6 0 R\n/Size 11\n>>\nstartxref\n2694\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+                raise ValidationError('Unsupported recipient property.')
+            email = str(recipient.get('email', '')).strip().lower()
+            try:
+                validate_email(email)
+            except Exception:
+                raise ValidationError('Invalid signer email.') from None
+            if email in emails or recipient.get('role', 'SIGNER') != 'SIGNER':
+                raise ValidationError('Each signer must have a unique email and SIGNER role.')
+            emails.add(email)
+            fields = recipient.get('fields', [])
+            if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+>               raise ValidationError('Each signer requires a sender-placed signature field.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Each signer requires a sender-placed signature field.', code='invalid')]
+
+backend/dealroom_sign/validation.py:44: ValidationError
+________ test_auto_retry_does_not_recompute_and_changed_hints_rejected _________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (aa5b44c9-57d4-4a08-950b-3ef7b4a6f206)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_auto_retry_does_not_recompute_and_changed_hints_rejected(fixture):
+>       work = send(fixture)
+
+backend/dealroom_sign/tests/test_placement_send.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/tests/test_placement_send.py:30: in send
+    return command(owner=fixture.user, room=fixture.room, version=fixture.version,
+backend/dealroom_sign/workflows.py:75: in command
+    recipients = validate_recipients(recipients, pdf)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor'}]
+pdf = b'%PDF-1.3\n%\x93\x8c\x8b\x9e ReportLab Generated PDF document (opensource)\n1 0 obj\n<<\n/F1 2 0 R /F2 3 0 R\n>>\nend...tLab generated PDF document -- digest (opensource)\n\n/Info 7 0 R\n/Root 6 0 R\n/Size 11\n>>\nstartxref\n2694\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+                raise ValidationError('Unsupported recipient property.')
+            email = str(recipient.get('email', '')).strip().lower()
+            try:
+                validate_email(email)
+            except Exception:
+                raise ValidationError('Invalid signer email.') from None
+            if email in emails or recipient.get('role', 'SIGNER') != 'SIGNER':
+                raise ValidationError('Each signer must have a unique email and SIGNER role.')
+            emails.add(email)
+            fields = recipient.get('fields', [])
+            if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+>               raise ValidationError('Each signer requires a sender-placed signature field.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Each signer requires a sender-placed signature field.', code='invalid')]
+
+backend/dealroom_sign/validation.py:44: ValidationError
+______________ test_native_gets_exact_source_and_evidence_fields _______________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (157cd2d3-1182-44a0-85cf-e30f0e6c1116)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_native_gets_exact_source_and_evidence_fields(fixture):
+>       work = send(fixture)
+
+backend/dealroom_sign/tests/test_placement_send.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/tests/test_placement_send.py:30: in send
+    return command(owner=fixture.user, room=fixture.room, version=fixture.version,
+backend/dealroom_sign/workflows.py:75: in command
+    recipients = validate_recipients(recipients, pdf)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor'}]
+pdf = b'%PDF-1.3\n%\x93\x8c\x8b\x9e ReportLab Generated PDF document (opensource)\n1 0 obj\n<<\n/F1 2 0 R /F2 3 0 R\n>>\nend...tLab generated PDF document -- digest (opensource)\n\n/Info 7 0 R\n/Root 6 0 R\n/Size 11\n>>\nstartxref\n2694\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+                raise ValidationError('Unsupported recipient property.')
+            email = str(recipient.get('email', '')).strip().lower()
+            try:
+                validate_email(email)
+            except Exception:
+                raise ValidationError('Invalid signer email.') from None
+            if email in emails or recipient.get('role', 'SIGNER') != 'SIGNER':
+                raise ValidationError('Each signer must have a unique email and SIGNER role.')
+            emails.add(email)
+            fields = recipient.get('fields', [])
+            if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+>               raise ValidationError('Each signer requires a sender-placed signature field.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Each signer requires a sender-placed signature field.', code='invalid')]
+
+backend/dealroom_sign/validation.py:44: ValidationError
+_______________ test_changed_source_never_creates_or_distributes _______________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (fedda955-1d0b-42bb-a212-932f00d69b4b)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_changed_source_never_creates_or_distributes(fixture):
+>       work = send(fixture)
+
+backend/dealroom_sign/tests/test_placement_send.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/tests/test_placement_send.py:30: in send
+    return command(owner=fixture.user, room=fixture.room, version=fixture.version,
+backend/dealroom_sign/workflows.py:75: in command
+    recipients = validate_recipients(recipients, pdf)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor'}]
+pdf = b'%PDF-1.3\n%\x93\x8c\x8b\x9e ReportLab Generated PDF document (opensource)\n1 0 obj\n<<\n/F1 2 0 R /F2 3 0 R\n>>\nend...tLab generated PDF document -- digest (opensource)\n\n/Info 7 0 R\n/Root 6 0 R\n/Size 11\n>>\nstartxref\n2694\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+                raise ValidationError('Unsupported recipient property.')
+            email = str(recipient.get('email', '')).strip().lower()
+            try:
+                validate_email(email)
+            except Exception:
+                raise ValidationError('Invalid signer email.') from None
+            if email in emails or recipient.get('role', 'SIGNER') != 'SIGNER':
+                raise ValidationError('Each signer must have a unique email and SIGNER role.')
+            emails.add(email)
+            fields = recipient.get('fields', [])
+            if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+>               raise ValidationError('Each signer requires a sender-placed signature field.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Each signer requires a sender-placed signature field.', code='invalid')]
+
+backend/dealroom_sign/validation.py:44: ValidationError
+____ test_worker_checks_persisted_placement_before_any_remote_write[fields] ____
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (07786319-f40d-408b-97b4-d4854dfcc7da)>, credential=<SignCredential: SignCredential object (1)>)
+change = 'fields'
+
+    @pytest.mark.parametrize('change', ['fields', 'status', 'hash'])
+    def test_worker_checks_persisted_placement_before_any_remote_write(fixture, change):
+>       work = send(fixture)
+
+backend/dealroom_sign/tests/test_placement_send.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/tests/test_placement_send.py:30: in send
+    return command(owner=fixture.user, room=fixture.room, version=fixture.version,
+backend/dealroom_sign/workflows.py:75: in command
+    recipients = validate_recipients(recipients, pdf)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor'}]
+pdf = b'%PDF-1.3\n%\x93\x8c\x8b\x9e ReportLab Generated PDF document (opensource)\n1 0 obj\n<<\n/F1 2 0 R /F2 3 0 R\n>>\nend...tLab generated PDF document -- digest (opensource)\n\n/Info 7 0 R\n/Root 6 0 R\n/Size 11\n>>\nstartxref\n2694\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+                raise ValidationError('Unsupported recipient property.')
+            email = str(recipient.get('email', '')).strip().lower()
+            try:
+                validate_email(email)
+            except Exception:
+                raise ValidationError('Invalid signer email.') from None
+            if email in emails or recipient.get('role', 'SIGNER') != 'SIGNER':
+                raise ValidationError('Each signer must have a unique email and SIGNER role.')
+            emails.add(email)
+            fields = recipient.get('fields', [])
+            if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+>               raise ValidationError('Each signer requires a sender-placed signature field.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Each signer requires a sender-placed signature field.', code='invalid')]
+
+backend/dealroom_sign/validation.py:44: ValidationError
+____ test_worker_checks_persisted_placement_before_any_remote_write[status] ____
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (962823e9-1d7d-4064-a289-29a3f3cc64b0)>, credential=<SignCredential: SignCredential object (1)>)
+change = 'status'
+
+    @pytest.mark.parametrize('change', ['fields', 'status', 'hash'])
+    def test_worker_checks_persisted_placement_before_any_remote_write(fixture, change):
+>       work = send(fixture)
+
+backend/dealroom_sign/tests/test_placement_send.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/tests/test_placement_send.py:30: in send
+    return command(owner=fixture.user, room=fixture.room, version=fixture.version,
+backend/dealroom_sign/workflows.py:75: in command
+    recipients = validate_recipients(recipients, pdf)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor'}]
+pdf = b'%PDF-1.3\n%\x93\x8c\x8b\x9e ReportLab Generated PDF document (opensource)\n1 0 obj\n<<\n/F1 2 0 R /F2 3 0 R\n>>\nend...tLab generated PDF document -- digest (opensource)\n\n/Info 7 0 R\n/Root 6 0 R\n/Size 11\n>>\nstartxref\n2694\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+                raise ValidationError('Unsupported recipient property.')
+            email = str(recipient.get('email', '')).strip().lower()
+            try:
+                validate_email(email)
+            except Exception:
+                raise ValidationError('Invalid signer email.') from None
+            if email in emails or recipient.get('role', 'SIGNER') != 'SIGNER':
+                raise ValidationError('Each signer must have a unique email and SIGNER role.')
+            emails.add(email)
+            fields = recipient.get('fields', [])
+            if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+>               raise ValidationError('Each signer requires a sender-placed signature field.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Each signer requires a sender-placed signature field.', code='invalid')]
+
+backend/dealroom_sign/validation.py:44: ValidationError
+_____ test_worker_checks_persisted_placement_before_any_remote_write[hash] _____
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (179d8f4b-49a6-4b67-a833-9279fe5ac44f)>, credential=<SignCredential: SignCredential object (1)>)
+change = 'hash'
+
+    @pytest.mark.parametrize('change', ['fields', 'status', 'hash'])
+    def test_worker_checks_persisted_placement_before_any_remote_write(fixture, change):
+>       work = send(fixture)
+
+backend/dealroom_sign/tests/test_placement_send.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/tests/test_placement_send.py:30: in send
+    return command(owner=fixture.user, room=fixture.room, version=fixture.version,
+backend/dealroom_sign/workflows.py:75: in command
+    recipients = validate_recipients(recipients, pdf)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor'}]
+pdf = b'%PDF-1.3\n%\x93\x8c\x8b\x9e ReportLab Generated PDF document (opensource)\n1 0 obj\n<<\n/F1 2 0 R /F2 3 0 R\n>>\nend...tLab generated PDF document -- digest (opensource)\n\n/Info 7 0 R\n/Root 6 0 R\n/Size 11\n>>\nstartxref\n2694\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
+                raise ValidationError('Unsupported recipient property.')
+            email = str(recipient.get('email', '')).strip().lower()
+            try:
+                validate_email(email)
+            except Exception:
+                raise ValidationError('Invalid signer email.') from None
+            if email in emails or recipient.get('role', 'SIGNER') != 'SIGNER':
+                raise ValidationError('Each signer must have a unique email and SIGNER role.')
+            emails.add(email)
+            fields = recipient.get('fields', [])
+            if not fields or not any(f.get('type') in {'SIGNATURE', 'FREE_SIGNATURE'} for f in fields):
+>               raise ValidationError('Each signer requires a sender-placed signature field.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Each signer requires a sender-placed signature field.', code='invalid')]
+
+backend/dealroom_sign/validation.py:44: ValidationError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_api_default_creates_signature_and_date
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_api_hold_is_typed_and_creates_no_workflow[bare]
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_api_hold_is_typed_and_creates_no_workflow[unusual]
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_placement_persists_workflow_and_history_evidence
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_auto_retry_does_not_recompute_and_changed_hints_rejected
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_native_gets_exact_source_and_evidence_fields
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_changed_source_never_creates_or_distributes
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_worker_checks_persisted_placement_before_any_remote_write[fields]
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_worker_checks_persisted_placement_before_any_remote_write[status]
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_worker_checks_persisted_placement_before_any_remote_write[hash]
+10 failed in 15.08s

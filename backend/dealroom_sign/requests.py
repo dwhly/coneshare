@@ -146,7 +146,8 @@ def activity(row):
             'recipient_id':fact.recipient_id, 'pages':event_pages(data),
             'error':data.get('error'), 'effect_id':data.get('effect_id'), 'attempt':data.get('attempt'),
             'next_attempt_at':data.get('next_attempt_at'), 'email_type':data.get('emailType'), 'source_kind':fact.payload.get('type'),
-            'source_event_ids':[fact.source_id]}
+            'source_event_ids':[fact.source_id], **({'placement':data.get('placement'),
+                'source_sha256':data.get('source_sha256')} if fact.kind == 'placement.resolved' else {})}
 
     result, seen = [], set()
     for item in local:

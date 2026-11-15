@@ -87,7 +87,8 @@ class Documenso:
 
     def create(self, workflow, pdf, meta=None):
         payload = {'title': workflow.title, 'type': 'DOCUMENT', 'externalId': workflow.external_id,
-                   'recipients': workflow.recipients, 'meta': {**(meta or {}), 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF}}
+                   'recipients': [{k: r[k] for k in ('name', 'email', 'role', 'signingOrder', 'fields') if k in r}
+                                  for r in workflow.recipients], 'meta': {**(meta or {}), 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF}}
         return self.request('POST', 'envelope/create', data={'payload': json.dumps(payload)},
                             files={'files': (pdf_filename(workflow.title), pdf, 'application/pdf')}).json()['id']
 

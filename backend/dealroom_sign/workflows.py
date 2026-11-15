@@ -12,6 +12,7 @@ from .client import Documenso, SignError
 from .evidence import ingest, snapshot_fields, instant
 from .legacy import legacy_request
 from .models import NdaAcceptance, ObservedSignEvent, SignCredential, SignatureRequest, Workflow
+from .placement import place, to_native_fields, validate_result
 from .presentation import clean_title, requester_snapshot
 from .storage import publish, source_bytes, stage, verify_seal
 from .validation import digest, request_digest, validate_recipients
@@ -30,7 +31,7 @@ AUDIT_KINDS = {
 
 def record_fact(workflow, kind, source_id, data=None, *, actor=None):
     from dealroom.activity import record
-    local = kind.startswith(('signer.', 'mail.', 'signing_deadline.', 'native_email.', 'release.'))
+    local = kind.startswith(('signer.', 'mail.', 'signing_deadline.', 'native_email.', 'release.', 'placement.'))
     defaults = {'occurred_at': instant((data or {}).get('occurred_at')) or timezone.now(),
         'recipient_id': (data or {}).get('recipient_id'), 'payload': {'data': data or {}}} if local else {}
     _, created = ObservedSignEvent.objects.get_or_create(workflow=workflow, source_id=str(source_id), kind=kind, defaults=defaults)
@@ -43,10 +44,13 @@ def record_fact(workflow, kind, source_id, data=None, *, actor=None):
 
 
 def command(*, owner, room, version, recipients, idempotency_key, purpose='room_document',
-            member=None, policy=None, board_id=None, task_ref=None, requester=None, title=None):
+            member=None, policy=None, board_id=None, task_ref=None, requester=None, title=None, placement=None):
+    automatic = placement == 'auto' or (placement is None and isinstance(recipients, list) and all(not r.get('fields') for r in recipients))
+    if automatic and purpose != 'room_document':
+        raise ValidationError('Automatic placement is limited to document sends.')
     if not idempotency_key or len(idempotency_key) > 200:
         raise ValidationError('An idempotency key of at most 200 characters is required.')
-    metadata = {}
+    metadata = {'placement': 'auto'} if automatic else {}
     if requester is not None or title is not None:
         if not board_id or purpose != 'room_document':
             raise ValidationError('Sender metadata requires a board document request.')
@@ -58,7 +62,7 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             metadata['title'] = title
     existing = Workflow.objects.filter(owner=owner, idempotency_key=idempotency_key).first()
     if existing:
-        normalized = validate_recipients(recipients, None, page_count=500)
+        normalized = validate_recipients(recipients, None, page_count=500, automatic=automatic)
         data = {'room': str(room.pk), 'version': str(version.pk), 'sha256': existing.source_sha256,
                 'recipients': normalized, 'purpose': purpose, 'member': str(member.pk) if member else '',
                 'policy': str(policy.revision) if policy else ''}
@@ -72,7 +76,7 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
                 legacy_request(existing, board_id, task_ref, requester=requester, title=title)
         return existing
     pdf = source_bytes(version)
-    recipients = validate_recipients(recipients, pdf)
+    recipients = validate_recipients(recipients, pdf, automatic=automatic)
     if purpose == 'nda':
         if not member or len(recipients) != 1 or recipients[0]['email'] != member.email.strip().lower():
             raise ValidationError('NDA signer must match the verified member.')
@@ -85,6 +89,13 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
         data.update(board_id=board_id, task_ref=task_ref)
     data.update(metadata)
     fingerprint = request_digest(data)
+    analysis = None
+    if automatic:
+        analysis = place(pdf, recipients)
+        if analysis['status'] != 'placed':
+            raise PlacementRequired(analysis)
+        recipients = [dict(r, fields=to_native_fields(analysis, r['email'])) for r in recipients]
+        recipients = validate_recipients(recipients, pdf)
     command_id = uuid.uuid4()
     with transaction.atomic():
         workflow, created = Workflow.objects.get_or_create(owner=owner, idempotency_key=idempotency_key, defaults={
@@ -98,7 +109,32 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             raise ValidationError('Idempotency key already used with different inputs.')
         if board_id:
             legacy_request(workflow, board_id, task_ref, requester=requester, title=title)
+        if created and analysis:
+            record_fact(workflow, 'placement.resolved', 'placement:' + workflow.source_sha256,
+                        {'source_sha256': workflow.source_sha256, 'recipients_sha256': request_digest(recipients),
+                         'placement': analysis})
     return workflow
+
+
+class PlacementRequired(Exception):
+    def __init__(self, result):
+        self.result = {'status': 'needs_sender', 'reason': result['reason'],
+                       'suggestions': result['fields'], 'placement_status': result['status'],
+                       'model': result['model']}
+        super().__init__(result['reason'])
+
+
+def check_placement(workflow):
+    fact = ObservedSignEvent.objects.filter(workflow=workflow, kind='placement.resolved').first()
+    if fact:
+        data = fact.payload.get('data', {})
+        analysis = data.get('placement', {})
+        if (data.get('source_sha256') != workflow.source_sha256
+                or data.get('recipients_sha256') != request_digest(workflow.recipients)
+                or analysis.get('status') != 'placed'
+                or not validate_result(analysis, workflow.recipients)
+                or any(to_native_fields(analysis, r['email']) != r['fields'] for r in workflow.recipients)):
+            raise SignError('placement_evidence_changed')
 
 
 def return_url(workflow):
@@ -147,6 +183,7 @@ def adopt(workflow, client, envelope_id):
 
 
 def execute(workflow, client):
+    check_placement(workflow)
     if not workflow.envelope_id:
         if workflow.state in {'creating', 'uncertain'}:
             matches = client.find(workflow.external_id)
@@ -309,7 +346,7 @@ def process(workflow_id):
             next_attempt_at=timezone.now()+timedelta(seconds=900 if workflow.state == 'done' else 15))
     except SignError as exc:
         workflow.refresh_from_db()
-        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch', 'release_mail_settings_mismatch'}:
+        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch', 'release_mail_settings_mismatch', 'placement_evidence_changed'}:
             workflow.state = 'quarantined'
         elif not workflow.envelope_id and workflow.state == 'creating':
             workflow.state = 'uncertain' if exc.uncertain else 'failed'

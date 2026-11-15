@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________________ test_c2a_nonplacement_errors_stay_bounded ___________________
+
+    def test_c2a_nonplacement_errors_stay_bounded():
+        import io
+        import urllib.error
+        client = dr.Dealroom('https://send.example.test')
+        error = urllib.error.HTTPError('https://send.example.test', 400, 'Bad Request', {},
+                                       io.BytesIO(json.dumps({'detail': 'x' * 2000}).encode()))
+        with patch.object(client, 'token', return_value='test'), patch('urllib.request.urlopen', side_effect=error):
+            with pytest.raises(dr.DealroomError) as caught:
+                client._call('POST', '/dealroom-sign/envelopes/', {})
+>       assert len(str(caught.value)) < 750
+E       assert 2059 < 750
+E        +  where 2059 = len("Dealroom POST /dealroom-sign/envelopes/: 400 {'detail': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}")
+E        +    where "Dealroom POST /dealroom-sign/envelopes/: 400 {'detail': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}" = str(DealroomError("Dealroom POST /dealroom-sign/envelopes/: 400 {'detail': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}"))
+E        +      where DealroomError("Dealroom POST /dealroom-sign/envelopes/: 400 {'detail': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}") = <ExceptionInfo DealroomError("Dealroom POST /dealroom-sign/envelopes/: 400 {'detail': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}") tblen=2>.value
+
+tests/test_dealroom_sign.py:548: AssertionError
+=============================== warnings summary ===============================
+../../../usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_dealroom_sign.py::test_c2a_nonplacement_errors_stay_bounded
+1 failed, 42 deselected, 1 warning in 0.92s

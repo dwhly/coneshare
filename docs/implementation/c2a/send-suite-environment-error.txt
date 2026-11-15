@@ -1,0 +1,1233 @@
+........................................................................ [ 14%]
+........................................................................ [ 29%]
+........................................................................ [ 44%]
+........................................................................ [ 58%]
+........................................................................ [ 73%]
+........................................................................ [ 88%]
+......FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF               [100%]
+=================================== FAILURES ===================================
+_________ test_board_settings_read_from_env[backend.settings-boards0] __________
+
+settings_module = 'backend.settings'
+boards = {'empty': {'owner_ids': [], 'room_ids': [], 'team_ids': []}, 'fixture': {'owner_ids': ['owner-1'], 'room_ids': ['room-1'], 'team_ids': [3]}}
+
+    @pytest.mark.parametrize('boards', [BOARDS, {}])
+    def test_board_settings_read_from_env(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards), 'test-proxy-key')
+    
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 9, in <module>
+E             django.setup()
+E             ~~~~~~~~~~~~^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/__init__.py", line 19, in setup
+E             configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 81, in __getattr__
+E             self._setup(name)
+E             ~~~~~~~~~~~^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 68, in _setup
+E             self._wrapped = Settings(settings_module)
+E                             ~~~~~~~~^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 166, in __init__
+E             mod = importlib.import_module(self.SETTINGS_MODULE)
+E           File "/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py", line 88, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+E           File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "/root/worktrees/send-c1b/backend/backend/__init__.py", line 3, in <module>
+E             from .celery import app as celery_app
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E         ImportError: cannot import name 'Celery' from partially initialized module 'celery' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').returncode
+
+backend/dealroom_sign/tests/test_settings.py:77: AssertionError
+_________ test_board_settings_read_from_env[backend.settings-boards1] __________
+
+settings_module = 'backend.settings', boards = {}
+
+    @pytest.mark.parametrize('boards', [BOARDS, {}])
+    def test_board_settings_read_from_env(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards), 'test-proxy-key')
+    
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 9, in <module>
+E             django.setup()
+E             ~~~~~~~~~~~~^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/__init__.py", line 19, in setup
+E             configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 81, in __getattr__
+E             self._setup(name)
+E             ~~~~~~~~~~~^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 68, in _setup
+E             self._wrapped = Settings(settings_module)
+E                             ~~~~~~~~^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 166, in __init__
+E             mod = importlib.import_module(self.SETTINGS_MODULE)
+E           File "/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py", line 88, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+E           File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "/root/worktrees/send-c1b/backend/backend/__init__.py", line 3, in <module>
+E             from .celery import app as celery_app
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E         ImportError: cannot import name 'Celery' from partially initialized module 'celery' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').returncode
+
+backend/dealroom_sign/tests/test_settings.py:77: AssertionError
+__ test_board_settings_read_from_env[dealroom_sign.runtime_settings-boards0] ___
+
+settings_module = 'dealroom_sign.runtime_settings'
+boards = {'empty': {'owner_ids': [], 'room_ids': [], 'team_ids': []}, 'fixture': {'owner_ids': ['owner-1'], 'room_ids': ['room-1'], 'team_ids': [3]}}
+
+    @pytest.mark.parametrize('boards', [BOARDS, {}])
+    def test_board_settings_read_from_env(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards), 'test-proxy-key')
+    
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 9, in <module>
+E             django.setup()
+E             ~~~~~~~~~~~~^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/__init__.py", line 19, in setup
+E             configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 81, in __getattr__
+E             self._setup(name)
+E             ~~~~~~~~~~~^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 68, in _setup
+E             self._wrapped = Settings(settings_module)
+E                             ~~~~~~~~^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 166, in __init__
+E             mod = importlib.import_module(self.SETTINGS_MODULE)
+E           File "/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py", line 88, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+E           File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "/root/worktrees/send-c1b/backend/dealroom_sign/runtime_settings.py", line 3, in <module>
+E             from backend.settings import *  # noqa: F401,F403
+E             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/backend/backend/__init__.py", line 3, in <module>
+E             from .celery import app as celery_app
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E         ImportError: cannot import name 'Celery' from partially initialized module 'celery' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').returncode
+
+backend/dealroom_sign/tests/test_settings.py:77: AssertionError
+__ test_board_settings_read_from_env[dealroom_sign.runtime_settings-boards1] ___
+
+settings_module = 'dealroom_sign.runtime_settings', boards = {}
+
+    @pytest.mark.parametrize('boards', [BOARDS, {}])
+    def test_board_settings_read_from_env(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards), 'test-proxy-key')
+    
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 9, in <module>
+E             django.setup()
+E             ~~~~~~~~~~~~^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/__init__.py", line 19, in setup
+E             configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 81, in __getattr__
+E             self._setup(name)
+E             ~~~~~~~~~~~^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 68, in _setup
+E             self._wrapped = Settings(settings_module)
+E                             ~~~~~~~~^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 166, in __init__
+E             mod = importlib.import_module(self.SETTINGS_MODULE)
+E           File "/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py", line 88, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+E           File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "/root/worktrees/send-c1b/backend/dealroom_sign/runtime_settings.py", line 3, in <module>
+E             from backend.settings import *  # noqa: F401,F403
+E             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/backend/backend/__init__.py", line 3, in <module>
+E             from .celery import app as celery_app
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E         ImportError: cannot import name 'Celery' from partially initialized module 'celery' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').returncode
+
+backend/dealroom_sign/tests/test_settings.py:77: AssertionError
+________ test_board_settings_default_when_env_absent[backend.settings] _________
+
+settings_module = 'backend.settings'
+
+    def test_board_settings_default_when_env_absent(settings_module):
+        result = load_settings(settings_module)
+    
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 9, in <module>
+E             django.setup()
+E             ~~~~~~~~~~~~^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/__init__.py", line 19, in setup
+E             configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 81, in __getattr__
+E             self._setup(name)
+E             ~~~~~~~~~~~^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 68, in _setup
+E             self._wrapped = Settings(settings_module)
+E                             ~~~~~~~~^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 166, in __init__
+E             mod = importlib.import_module(self.SETTINGS_MODULE)
+E           File "/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py", line 88, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+E           File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "/root/worktrees/send-c1b/backend/backend/__init__.py", line 3, in <module>
+E             from .celery import app as celery_app
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E         ImportError: cannot import name 'Celery' from partially initialized module 'celery' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').returncode
+
+backend/dealroom_sign/tests/test_settings.py:84: AssertionError
+_ test_board_settings_default_when_env_absent[dealroom_sign.runtime_settings] __
+
+settings_module = 'dealroom_sign.runtime_settings'
+
+    def test_board_settings_default_when_env_absent(settings_module):
+        result = load_settings(settings_module)
+    
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 9, in <module>
+E             django.setup()
+E             ~~~~~~~~~~~~^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/__init__.py", line 19, in setup
+E             configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+E                               ^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 81, in __getattr__
+E             self._setup(name)
+E             ~~~~~~~~~~~^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 68, in _setup
+E             self._wrapped = Settings(settings_module)
+E                             ~~~~~~~~^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/.agent/c2a-venv/lib/python3.13/site-packages/django/conf/__init__.py", line 166, in __init__
+E             mod = importlib.import_module(self.SETTINGS_MODULE)
+E           File "/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py", line 88, in import_module
+E             return _bootstrap._gcd_import(name[level:], package, level)
+E                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "<frozen importlib._bootstrap>", line 1395, in _gcd_import
+E           File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+E           File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+E           File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+E           File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+E           File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+E           File "/root/worktrees/send-c1b/backend/dealroom_sign/runtime_settings.py", line 3, in <module>
+E             from backend.settings import *  # noqa: F401,F403
+E             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/root/worktrees/send-c1b/backend/backend/__init__.py", line 3, in <module>
+E             from .celery import app as celery_app
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E           File "/root/worktrees/send-c1b/backend/backend/celery.py", line 2, in <module>
+E             from celery import Celery
+E         ImportError: cannot import name 'Celery' from partially initialized module 'celery' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').returncode
+
+backend/dealroom_sign/tests/test_settings.py:84: AssertionError
+__ test_malformed_board_json_fails_at_startup[backend.settings-invalid-json] ___
+
+settings_module = 'backend.settings', boards = '{'
+
+    @pytest.mark.parametrize('boards', ['{', '', '  '], ids=['invalid-json', 'empty', 'whitespace'])
+    def test_malformed_board_json_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, boards)
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:93: AssertionError
+______ test_malformed_board_json_fails_at_startup[backend.settings-empty] ______
+
+settings_module = 'backend.settings', boards = ''
+
+    @pytest.mark.parametrize('boards', ['{', '', '  '], ids=['invalid-json', 'empty', 'whitespace'])
+    def test_malformed_board_json_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, boards)
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:93: AssertionError
+___ test_malformed_board_json_fails_at_startup[backend.settings-whitespace] ____
+
+settings_module = 'backend.settings', boards = '  '
+
+    @pytest.mark.parametrize('boards', ['{', '', '  '], ids=['invalid-json', 'empty', 'whitespace'])
+    def test_malformed_board_json_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, boards)
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:93: AssertionError
+_ test_malformed_board_json_fails_at_startup[dealroom_sign.runtime_settings-invalid-json] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = '{'
+
+    @pytest.mark.parametrize('boards', ['{', '', '  '], ids=['invalid-json', 'empty', 'whitespace'])
+    def test_malformed_board_json_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, boards)
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:93: AssertionError
+_ test_malformed_board_json_fails_at_startup[dealroom_sign.runtime_settings-empty] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = ''
+
+    @pytest.mark.parametrize('boards', ['{', '', '  '], ids=['invalid-json', 'empty', 'whitespace'])
+    def test_malformed_board_json_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, boards)
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:93: AssertionError
+_ test_malformed_board_json_fails_at_startup[dealroom_sign.runtime_settings-whitespace] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = '  '
+
+    @pytest.mark.parametrize('boards', ['{', '', '  '], ids=['invalid-json', 'empty', 'whitespace'])
+    def test_malformed_board_json_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, boards)
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:93: AssertionError
+_______ test_invalid_board_shape_fails_at_startup[backend.settings-list] _______
+
+settings_module = 'backend.settings', boards = []
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_______ test_invalid_board_shape_fails_at_startup[backend.settings-null] _______
+
+settings_module = 'backend.settings', boards = None
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_____ test_invalid_board_shape_fails_at_startup[backend.settings-boolean] ______
+
+settings_module = 'backend.settings', boards = True
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+______ test_invalid_board_shape_fails_at_startup[backend.settings-number] ______
+
+settings_module = 'backend.settings', boards = 1
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+______ test_invalid_board_shape_fails_at_startup[backend.settings-string] ______
+
+settings_module = 'backend.settings', boards = 'fixture'
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+____ test_invalid_board_shape_fails_at_startup[backend.settings-board-list] ____
+
+settings_module = 'backend.settings', boards = {'fixture': []}
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+____ test_invalid_board_shape_fails_at_startup[backend.settings-board-null] ____
+
+settings_module = 'backend.settings', boards = {'fixture': None}
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+__ test_invalid_board_shape_fails_at_startup[backend.settings-missing-lists] ___
+
+settings_module = 'backend.settings', boards = {'fixture': {}}
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-list] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = []
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-null] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = None
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-boolean] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = True
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-number] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = 1
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-string] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = 'fixture'
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-board-list] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = {'fixture': []}
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-board-null] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = {'fixture': None}
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_ test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-missing-lists] _
+
+settings_module = 'dealroom_sign.runtime_settings', boards = {'fixture': {}}
+
+    @pytest.mark.parametrize('boards', [
+        [], None, True, 1, 'fixture',
+        {'fixture': []},
+        {'fixture': None},
+        {'fixture': {}},
+    ], ids=['list', 'null', 'boolean', 'number', 'string', 'board-list', 'board-null', 'missing-lists'])
+    def test_invalid_board_shape_fails_at_startup(settings_module, boards):
+        result = load_settings(settings_module, json.dumps(boards))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:106: AssertionError
+_____ test_board_scope_requires_lists[backend.settings-missing-owner_ids] ______
+
+settings_module = 'backend.settings', field = 'owner_ids', invalid = 'missing'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-missing-room_ids] ______
+
+settings_module = 'backend.settings', field = 'room_ids', invalid = 'missing'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-missing-team_ids] ______
+
+settings_module = 'backend.settings', field = 'team_ids', invalid = 'missing'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-string-owner_ids] ______
+
+settings_module = 'backend.settings', field = 'owner_ids', invalid = 'string'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-string-room_ids] _______
+
+settings_module = 'backend.settings', field = 'room_ids', invalid = 'string'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-string-team_ids] _______
+
+settings_module = 'backend.settings', field = 'team_ids', invalid = 'string'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_______ test_board_scope_requires_lists[backend.settings-null-owner_ids] _______
+
+settings_module = 'backend.settings', field = 'owner_ids', invalid = 'null'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_______ test_board_scope_requires_lists[backend.settings-null-room_ids] ________
+
+settings_module = 'backend.settings', field = 'room_ids', invalid = 'null'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_______ test_board_scope_requires_lists[backend.settings-null-team_ids] ________
+
+settings_module = 'backend.settings', field = 'team_ids', invalid = 'null'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-object-owner_ids] ______
+
+settings_module = 'backend.settings', field = 'owner_ids', invalid = 'object'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-object-room_ids] _______
+
+settings_module = 'backend.settings', field = 'room_ids', invalid = 'object'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+______ test_board_scope_requires_lists[backend.settings-object-team_ids] _______
+
+settings_module = 'backend.settings', field = 'team_ids', invalid = 'object'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-missing-owner_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'owner_ids'
+invalid = 'missing'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-missing-room_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'room_ids'
+invalid = 'missing'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-missing-team_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'team_ids'
+invalid = 'missing'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-string-owner_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'owner_ids'
+invalid = 'string'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-string-room_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'room_ids'
+invalid = 'string'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-string-team_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'team_ids'
+invalid = 'string'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-null-owner_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'owner_ids'
+invalid = 'null'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-null-room_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'room_ids'
+invalid = 'null'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-null-team_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'team_ids'
+invalid = 'null'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-object-owner_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'owner_ids'
+invalid = 'object'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-object-room_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'room_ids'
+invalid = 'object'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+_ test_board_scope_requires_lists[dealroom_sign.runtime_settings-object-team_ids] _
+
+settings_module = 'dealroom_sign.runtime_settings', field = 'team_ids'
+invalid = 'object'
+
+    @pytest.mark.parametrize('field', ['owner_ids', 'room_ids', 'team_ids'])
+    @pytest.mark.parametrize('invalid', ['missing', 'string', 'null', 'object'])
+    def test_board_scope_requires_lists(settings_module, field, invalid):
+        board = dict(BOARDS['fixture'])
+        if invalid == 'missing':
+            del board[field]
+        else:
+            board[field] = {'string': 'id-1', 'null': None, 'object': {}}[invalid]
+        result = load_settings(settings_module, json.dumps({'fixture': board}))
+    
+        assert result.returncode != 0
+>       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in result.stderr
+E       assert 'ImproperlyConfigured: BOARD_SIGN_BOARDS' in 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 9, in <module>\n    django.setup()\n    ~~~~~~~~~~~~^^\n ...alized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n' = CompletedProcess(args=['/root/worktrees/send-c1b/.agent/c2a-venv/bin/python', '-c', "\nimport importlib\nimport json\n...lized module \'celery\' (most likely due to a circular import) (/root/worktrees/send-c1b/backend/backend/celery.py)\n').stderr
+
+backend/dealroom_sign/tests/test_settings.py:120: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_settings_read_from_env[backend.settings-boards0]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_settings_read_from_env[backend.settings-boards1]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_settings_read_from_env[dealroom_sign.runtime_settings-boards0]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_settings_read_from_env[dealroom_sign.runtime_settings-boards1]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_settings_default_when_env_absent[backend.settings]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_settings_default_when_env_absent[dealroom_sign.runtime_settings]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_malformed_board_json_fails_at_startup[backend.settings-invalid-json]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_malformed_board_json_fails_at_startup[backend.settings-empty]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_malformed_board_json_fails_at_startup[backend.settings-whitespace]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_malformed_board_json_fails_at_startup[dealroom_sign.runtime_settings-invalid-json]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_malformed_board_json_fails_at_startup[dealroom_sign.runtime_settings-empty]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_malformed_board_json_fails_at_startup[dealroom_sign.runtime_settings-whitespace]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-list]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-null]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-boolean]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-number]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-string]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-board-list]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-board-null]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[backend.settings-missing-lists]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-list]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-null]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-boolean]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-number]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-string]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-board-list]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-board-null]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_invalid_board_shape_fails_at_startup[dealroom_sign.runtime_settings-missing-lists]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-missing-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-missing-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-missing-team_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-string-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-string-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-string-team_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-null-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-null-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-null-team_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-object-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-object-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[backend.settings-object-team_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-missing-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-missing-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-missing-team_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-string-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-string-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-string-team_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-null-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-null-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-null-team_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-object-owner_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-object-room_ids]
+FAILED backend/dealroom_sign/tests/test_settings.py::test_board_scope_requires_lists[dealroom_sign.runtime_settings-object-team_ids]
+52 failed, 438 passed, 43 warnings in 160.82s (0:02:40)

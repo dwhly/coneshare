@@ -1,0 +1,102 @@
+......F....FFFF                                                          [100%]
+=================================== FAILURES ===================================
+______________________ test_runtime_pins_licenses_and_ci _______________________
+
+    def test_runtime_pins_licenses_and_ci():
+        root = Path(__file__).resolve().parents[2]
+        requirements = (root / 'requirements.txt').read_text()
+>       assert 'pdfplumber==0.11.9' in requirements
+E       AssertionError: assert 'pdfplumber==0.11.9' in 'asgiref==3.9.1\nDjango==5.2.17\nsqlparse==0.6.0\ndjangorestframework==3.18.2\ndrf-spectacular==0.28.0\npython-ulid==3...=3.2.13\nopenapi-spec-validator==0.7.1\n\ngunicorn==23.0.0\nsentry-sdk==2.60.0\nopenpyxl==3.1.5\nzipstream-ng==1.8.0\n'
+
+backend/dealroom_sign/tests/test_placement.py:181: AssertionError
+_________________ test_validate_rejects_unusable_fields[page] __________________
+
+change = 'page'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        from dealroom_sign.placement import validate_result
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+        if change == 'page': fields[0]['page'] = 0
+        if change == 'extra_signer': fields.append(dict(fields[0], signer='unrequested@example.test', page=3))
+        if change == 'duplicate': fields.append(dict(fields[0], page=3))
+        if change == 'low': fields[0]['confidence'] = 'low'
+>       assert not validate_result(result, LEE)
+E       AssertionError: assert not True
+E        +  where True = <function validate_result at 0x7f55b7841120>({'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}])
+
+backend/dealroom_sign/tests/test_placement.py:211: AssertionError
+_____________ test_validate_rejects_unusable_fields[extra_signer] ______________
+
+change = 'extra_signer'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        from dealroom_sign.placement import validate_result
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+        if change == 'page': fields[0]['page'] = 0
+        if change == 'extra_signer': fields.append(dict(fields[0], signer='unrequested@example.test', page=3))
+        if change == 'duplicate': fields.append(dict(fields[0], page=3))
+        if change == 'low': fields[0]['confidence'] = 'low'
+>       assert not validate_result(result, LEE)
+E       AssertionError: assert not True
+E        +  where True = <function validate_result at 0x7f55b7841120>({'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}..., COO'}], 'line': [72.0, 367.2, 288.0], 'line_kind': 'drawn'}, 'h': 3.661616, 'page': 3, ...}], 'method': 'rules', ...}, [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}])
+
+backend/dealroom_sign/tests/test_placement.py:211: AssertionError
+_______________ test_validate_rejects_unusable_fields[duplicate] _______________
+
+change = 'duplicate'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        from dealroom_sign.placement import validate_result
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+        if change == 'page': fields[0]['page'] = 0
+        if change == 'extra_signer': fields.append(dict(fields[0], signer='unrequested@example.test', page=3))
+        if change == 'duplicate': fields.append(dict(fields[0], page=3))
+        if change == 'low': fields[0]['confidence'] = 'low'
+>       assert not validate_result(result, LEE)
+E       AssertionError: assert not True
+E        +  where True = <function validate_result at 0x7f55b7841120>({'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}..., COO'}], 'line': [72.0, 367.2, 288.0], 'line_kind': 'drawn'}, 'h': 3.661616, 'page': 3, ...}], 'method': 'rules', ...}, [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}])
+
+backend/dealroom_sign/tests/test_placement.py:211: AssertionError
+__________________ test_validate_rejects_unusable_fields[low] __________________
+
+change = 'low'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        from dealroom_sign.placement import validate_result
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+        if change == 'page': fields[0]['page'] = 0
+        if change == 'extra_signer': fields.append(dict(fields[0], signer='unrequested@example.test', page=3))
+        if change == 'duplicate': fields.append(dict(fields[0], page=3))
+        if change == 'low': fields[0]['confidence'] = 'low'
+>       assert not validate_result(result, LEE)
+E       AssertionError: assert not True
+E        +  where True = <function validate_result at 0x7f55b7841120>({'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}])
+
+backend/dealroom_sign/tests/test_placement.py:211: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement.py::test_runtime_pins_licenses_and_ci
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[page]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[extra_signer]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[duplicate]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[low]
+5 failed, 10 passed, 20 deselected in 0.99s

@@ -1,0 +1,307 @@
+{
+  "tolerance_pt": 2,
+  "coordinate_system": "PDF points, top-left, displayed page (612 x 792)",
+  "fixtures": {
+    "bare": {
+      "status": "bare",
+      "signers": [
+        {
+          "name": "Lee Harbor",
+          "email": "lee@harborlight.fleet.test",
+          "side": "them"
+        },
+        {
+          "name": "Dan Whaley",
+          "email": "dan@fleettest.fleet.test",
+          "company": "Fleet Test Co.",
+          "side": "us"
+        }
+      ],
+      "boxes_by_signer_index": {}
+    },
+    "nda": {
+      "status": "placed",
+      "signers": [
+        {
+          "name": "Lee Harbor",
+          "email": "lee@harborlight.fleet.test",
+          "side": "them"
+        },
+        {
+          "name": "Dan Whaley",
+          "email": "dan@fleettest.fleet.test",
+          "company": "Fleet Test Co.",
+          "side": "us"
+        }
+      ],
+      "boxes_by_signer_index": {
+        "0": [
+          [
+            "SIGNATURE",
+            2,
+            72,
+            337.2,
+            216,
+            29
+          ],
+          [
+            "DATE",
+            2,
+            359.21,
+            364.17,
+            70.06,
+            13
+          ]
+        ],
+        "1": [
+          [
+            "SIGNATURE",
+            2,
+            72,
+            178.8,
+            216,
+            29
+          ],
+          [
+            "DATE",
+            2,
+            359.21,
+            205.77,
+            70.06,
+            13
+          ]
+        ]
+      }
+    },
+    "offer": {
+      "status": "placed",
+      "signers": [
+        {
+          "name": "Jordan Reyes",
+          "email": "jordan.reyes.1987@gmail.com",
+          "side": "them"
+        }
+      ],
+      "boxes_by_signer_index": {
+        "0": [
+          [
+            "SIGNATURE",
+            1,
+            72,
+            469.6,
+            201.6,
+            29
+          ],
+          [
+            "DATE",
+            1,
+            328.98,
+            483.99,
+            82.5,
+            13
+          ]
+        ]
+      }
+    },
+    "roles": {
+      "status": "placed",
+      "signers": [
+        {
+          "name": "Lee Harbor",
+          "email": "lee@harborlight.fleet.test",
+          "side": "them"
+        },
+        {
+          "name": "Dan Whaley",
+          "email": "dan@fleettest.fleet.test",
+          "company": "Fleet Test Co.",
+          "side": "us"
+        }
+      ],
+      "boxes_by_signer_index": {
+        "0": [
+          [
+            "SIGNATURE",
+            3,
+            119.97,
+            151.79,
+            165,
+            29
+          ],
+          [
+            "NAME",
+            3,
+            136.16,
+            189.79,
+            148.5,
+            13
+          ],
+          [
+            "DATE",
+            3,
+            98.58,
+            211.79,
+            104.5,
+            13
+          ]
+        ],
+        "1": [
+          [
+            "SIGNATURE",
+            3,
+            119.97,
+            300.79,
+            165,
+            29
+          ],
+          [
+            "NAME",
+            3,
+            136.16,
+            338.79,
+            148.5,
+            13
+          ],
+          [
+            "DATE",
+            3,
+            98.58,
+            360.79,
+            104.5,
+            13
+          ]
+        ]
+      }
+    },
+    "witness": {
+      "status": "placed",
+      "signers": [
+        {
+          "name": "Lee Harbor",
+          "email": "lee@harborlight.fleet.test",
+          "side": "them"
+        },
+        {
+          "name": "Dan Whaley",
+          "email": "dan@fleettest.fleet.test",
+          "company": "Fleet Test Co.",
+          "side": "us"
+        }
+      ],
+      "boxes_by_signer_index": {
+        "0": [
+          [
+            "SIGNATURE",
+            2,
+            112,
+            246,
+            154.4,
+            29
+          ],
+          [
+            "NAME",
+            2,
+            112,
+            292,
+            154.4,
+            13
+          ],
+          [
+            "DATE",
+            2,
+            112,
+            352,
+            154.4,
+            13
+          ]
+        ],
+        "1": [
+          [
+            "SIGNATURE",
+            2,
+            356.8,
+            246,
+            154.4,
+            29
+          ],
+          [
+            "NAME",
+            2,
+            356.8,
+            292,
+            154.4,
+            13
+          ],
+          [
+            "DATE",
+            2,
+            356.8,
+            352,
+            154.4,
+            13
+          ]
+        ]
+      }
+    },
+    "harbor": {
+      "status": "placed",
+      "signers": [
+        {
+          "name": "Lee Harbor",
+          "email": "lee@harborlight.fleet.test",
+          "side": "them"
+        }
+      ],
+      "boxes_by_signer_index": {
+        "0": [
+          [
+            "SIGNATURE",
+            2,
+            72,
+            337.2,
+            216,
+            29
+          ],
+          [
+            "DATE",
+            2,
+            359.21,
+            364.17,
+            70.06,
+            13
+          ]
+        ]
+      }
+    },
+    "unusual": {
+      "status": "placed",
+      "signers": [
+        {
+          "name": "Lee Harbor",
+          "email": "lee@harborlight.fleet.test",
+          "side": "them"
+        }
+      ],
+      "boxes_by_signer_index": {
+        "0": [
+          [
+            "SIGNATURE",
+            1,
+            245,
+            414,
+            220,
+            29
+          ],
+          [
+            "DATE",
+            1,
+            112,
+            470,
+            153,
+            13
+          ]
+        ]
+      }
+    }
+  }
+}

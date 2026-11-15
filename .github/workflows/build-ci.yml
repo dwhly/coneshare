@@ -74,6 +74,16 @@ jobs:
     - name: Install dependencies
       run: pip install -r backend/requirements.txt
 
+    - name: Placement goldens (offline)
+      working-directory: ./backend
+      run: pytest dealroom_sign/tests/test_placement.py -q
+      env:
+        SECRET_KEY: "placement-ci-test-key"
+        DJANGO_SETTINGS_MODULE: "dealroom_sign.test_settings"
+        INTERNAL_API_TOKEN: "placement-ci-token"
+        OPENROUTER_API_KEY: ""
+        PLACE_MODEL: ""
+
     - name: Compile translation catalogs
       run: python backend/compile_po.py
 

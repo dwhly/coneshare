@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Fields placed by Fleet/. Input:
+
+'Activity recorded (actor not recorded)'
+
+    at /root/worktrees/board-s1/tests/brand_labels_ui_harness.cjs:565:12 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Activity recorded (actor not recorded)',
+  expected: /Fields placed by Fleet/,
+  operator: 'match',
+  diff: 'simple'
+}

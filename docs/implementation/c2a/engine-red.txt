@@ -1,0 +1,500 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFF                                               [100%]
+=================================== FAILURES ===================================
+_______________________________ test_golden[nda] _______________________________
+
+name = 'nda'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'nda', signers = None, kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+______________________________ test_golden[offer] ______________________________
+
+name = 'offer'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'offer', signers = None, kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+______________________________ test_golden[roles] ______________________________
+
+name = 'roles'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'roles', signers = None, kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_____________________________ test_golden[witness] _____________________________
+
+name = 'witness'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'witness', signers = None, kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_____________________________ test_golden[harbor] ______________________________
+
+name = 'harbor'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'harbor', signers = None, kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+____________________ test_bare_always_asks_even_with_model _____________________
+
+    def test_bare_always_asks_even_with_model():
+        model = Mock()
+>       result = run('bare', model_client=model)
+
+backend/dealroom_sign/tests/test_placement.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'bare', signers = None
+kwargs = {'model_client': <Mock id='133009076547136'>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_____________ test_unusual_label_model_golden_and_minimal_payload ______________
+
+    def test_unusual_label_model_golden_and_minimal_payload():
+        model = Mock(side_effect=model_answer)
+>       result = run('unusual', model_client=model)
+
+backend/dealroom_sign/tests/test_placement.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <Mock id='133009076547472'>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+___________________ test_model_unavailable_visible[failure0] ___________________
+
+failure = TimeoutError('secret provider body')
+
+    @pytest.mark.parametrize('failure', [TimeoutError('secret provider body'), ValueError('invalid JSON')])
+    def test_model_unavailable_visible(failure):
+>       result = run('unusual', model_client=Mock(side_effect=failure))
+
+backend/dealroom_sign/tests/test_placement.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <Mock id='133008946552448'>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+___________________ test_model_unavailable_visible[failure1] ___________________
+
+failure = ValueError('invalid JSON')
+
+    @pytest.mark.parametrize('failure', [TimeoutError('secret provider body'), ValueError('invalid JSON')])
+    def test_model_unavailable_visible(failure):
+>       result = run('unusual', model_client=Mock(side_effect=failure))
+
+backend/dealroom_sign/tests/test_placement.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <Mock id='133008946554464'>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+______________________ test_no_key_does_not_call_provider ______________________
+
+    def test_no_key_does_not_call_provider():
+>       result = run('unusual')
+
+backend/dealroom_sign/tests/test_placement.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None, kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_________________ test_invalid_model_assignments_ask[invented] _________________
+
+change = 'invented'
+
+    @pytest.mark.parametrize('change', ['invented', 'low', 'missing', 'extra', 'no_evidence', 'bool_id'])
+    def test_invalid_model_assignments_ask(change):
+        def reply(payload):
+            result = model_answer(payload)
+            row = result['assignments'][0]
+            if change == 'invented': row['block_id'] = 'b999'
+            if change == 'low': row['confidence'] = 'low'
+            if change == 'missing': result['assignments'] = []
+            if change == 'extra': row['rect'] = [1, 2, 3, 4]
+            if change == 'no_evidence': row['evidence'] = 'an invented label'
+            if change == 'bool_id': row['block_id'] = True
+            return result
+>       result = run('unusual', model_client=reply)
+
+backend/dealroom_sign/tests/test_placement.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <function test_invalid_model_assignments_ask.<locals>.reply at 0x78f88eed19e0>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+___________________ test_invalid_model_assignments_ask[low] ____________________
+
+change = 'low'
+
+    @pytest.mark.parametrize('change', ['invented', 'low', 'missing', 'extra', 'no_evidence', 'bool_id'])
+    def test_invalid_model_assignments_ask(change):
+        def reply(payload):
+            result = model_answer(payload)
+            row = result['assignments'][0]
+            if change == 'invented': row['block_id'] = 'b999'
+            if change == 'low': row['confidence'] = 'low'
+            if change == 'missing': result['assignments'] = []
+            if change == 'extra': row['rect'] = [1, 2, 3, 4]
+            if change == 'no_evidence': row['evidence'] = 'an invented label'
+            if change == 'bool_id': row['block_id'] = True
+            return result
+>       result = run('unusual', model_client=reply)
+
+backend/dealroom_sign/tests/test_placement.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <function test_invalid_model_assignments_ask.<locals>.reply at 0x78f88eed1e40>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_________________ test_invalid_model_assignments_ask[missing] __________________
+
+change = 'missing'
+
+    @pytest.mark.parametrize('change', ['invented', 'low', 'missing', 'extra', 'no_evidence', 'bool_id'])
+    def test_invalid_model_assignments_ask(change):
+        def reply(payload):
+            result = model_answer(payload)
+            row = result['assignments'][0]
+            if change == 'invented': row['block_id'] = 'b999'
+            if change == 'low': row['confidence'] = 'low'
+            if change == 'missing': result['assignments'] = []
+            if change == 'extra': row['rect'] = [1, 2, 3, 4]
+            if change == 'no_evidence': row['evidence'] = 'an invented label'
+            if change == 'bool_id': row['block_id'] = True
+            return result
+>       result = run('unusual', model_client=reply)
+
+backend/dealroom_sign/tests/test_placement.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <function test_invalid_model_assignments_ask.<locals>.reply at 0x78f88eed1da0>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+__________________ test_invalid_model_assignments_ask[extra] ___________________
+
+change = 'extra'
+
+    @pytest.mark.parametrize('change', ['invented', 'low', 'missing', 'extra', 'no_evidence', 'bool_id'])
+    def test_invalid_model_assignments_ask(change):
+        def reply(payload):
+            result = model_answer(payload)
+            row = result['assignments'][0]
+            if change == 'invented': row['block_id'] = 'b999'
+            if change == 'low': row['confidence'] = 'low'
+            if change == 'missing': result['assignments'] = []
+            if change == 'extra': row['rect'] = [1, 2, 3, 4]
+            if change == 'no_evidence': row['evidence'] = 'an invented label'
+            if change == 'bool_id': row['block_id'] = True
+            return result
+>       result = run('unusual', model_client=reply)
+
+backend/dealroom_sign/tests/test_placement.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <function test_invalid_model_assignments_ask.<locals>.reply at 0x78f88eed19e0>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_______________ test_invalid_model_assignments_ask[no_evidence] ________________
+
+change = 'no_evidence'
+
+    @pytest.mark.parametrize('change', ['invented', 'low', 'missing', 'extra', 'no_evidence', 'bool_id'])
+    def test_invalid_model_assignments_ask(change):
+        def reply(payload):
+            result = model_answer(payload)
+            row = result['assignments'][0]
+            if change == 'invented': row['block_id'] = 'b999'
+            if change == 'low': row['confidence'] = 'low'
+            if change == 'missing': result['assignments'] = []
+            if change == 'extra': row['rect'] = [1, 2, 3, 4]
+            if change == 'no_evidence': row['evidence'] = 'an invented label'
+            if change == 'bool_id': row['block_id'] = True
+            return result
+>       result = run('unusual', model_client=reply)
+
+backend/dealroom_sign/tests/test_placement.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <function test_invalid_model_assignments_ask.<locals>.reply at 0x78f88eed0cc0>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_________________ test_invalid_model_assignments_ask[bool_id] __________________
+
+change = 'bool_id'
+
+    @pytest.mark.parametrize('change', ['invented', 'low', 'missing', 'extra', 'no_evidence', 'bool_id'])
+    def test_invalid_model_assignments_ask(change):
+        def reply(payload):
+            result = model_answer(payload)
+            row = result['assignments'][0]
+            if change == 'invented': row['block_id'] = 'b999'
+            if change == 'low': row['confidence'] = 'low'
+            if change == 'missing': result['assignments'] = []
+            if change == 'extra': row['rect'] = [1, 2, 3, 4]
+            if change == 'no_evidence': row['evidence'] = 'an invented label'
+            if change == 'bool_id': row['block_id'] = True
+            return result
+>       result = run('unusual', model_client=reply)
+
+backend/dealroom_sign/tests/test_placement.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'unusual', signers = None
+kwargs = {'model_client': <function test_invalid_model_assignments_ask.<locals>.reply at 0x78f88eed22a0>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_____________________ test_rules_success_never_calls_model _____________________
+
+    def test_rules_success_never_calls_model():
+        model = Mock()
+>       assert run('harbor', model_client=model)['status'] == 'placed'
+
+backend/dealroom_sign/tests/test_placement.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'harbor', signers = None
+kwargs = {'model_client': <Mock id='133009076548144'>}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+____________________ test_two_signers_cannot_take_one_line _____________________
+
+    def test_two_signers_cannot_take_one_line():
+        signers = [*LEE, dict(LEE[0], email='another@harborlight.fleet.test')]
+>       assert run('harbor', signers)['status'] == 'needs_sender'
+
+backend/dealroom_sign/tests/test_placement.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}, {'email': 'another@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+_______________________ test_duplicate_signers_rejected ________________________
+
+    def test_duplicate_signers_rejected():
+>       assert run('harbor', LEE * 2)['status'] == 'needs_sender'
+
+backend/dealroom_sign/tests/test_placement.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}, {'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+________ test_unknown_signer_is_not_assigned_from_generic_signature_cue ________
+
+    def test_unknown_signer_is_not_assigned_from_generic_signature_cue():
+>       assert run('offer', [{'name': 'Other Person', 'email': 'other@gmail.com'}])['status'] == 'needs_sender'
+
+backend/dealroom_sign/tests/test_placement.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'offer', signers = [{'email': 'other@gmail.com', 'name': 'Other Person'}]
+kwargs = {}
+
+    def run(name, signers=None, **kwargs):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:38: ModuleNotFoundError
+________________________ test_invalid_pdf_fails_closed _________________________
+
+    def test_invalid_pdf_fails_closed():
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:137: ModuleNotFoundError
+_________________________ test_missing_date_line_asks __________________________
+
+    def test_missing_date_line_asks():
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:142: ModuleNotFoundError
+___________ test_rotated_pages_fail_closed_without_moving_fields[90] ___________
+
+rotation = 90
+
+    @pytest.mark.parametrize('rotation', [90, 180, 270])
+    def test_rotated_pages_fail_closed_without_moving_fields(rotation):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:154: ModuleNotFoundError
+__________ test_rotated_pages_fail_closed_without_moving_fields[180] ___________
+
+rotation = 180
+
+    @pytest.mark.parametrize('rotation', [90, 180, 270])
+    def test_rotated_pages_fail_closed_without_moving_fields(rotation):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:154: ModuleNotFoundError
+__________ test_rotated_pages_fail_closed_without_moving_fields[270] ___________
+
+rotation = 270
+
+    @pytest.mark.parametrize('rotation', [90, 180, 270])
+    def test_rotated_pages_fail_closed_without_moving_fields(rotation):
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:154: ModuleNotFoundError
+_________________________ test_cropbox_requires_review _________________________
+
+    def test_cropbox_requires_review():
+>       from dealroom_sign.placement import place
+E       ModuleNotFoundError: No module named 'dealroom_sign.placement'
+
+backend/dealroom_sign/tests/test_placement.py:168: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[nda] - Modu...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[offer] - Mo...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[roles] - Mo...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[witness] - ...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[harbor] - M...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_bare_always_asks_even_with_model
+FAILED backend/dealroom_sign/tests/test_placement.py::test_unusual_label_model_golden_and_minimal_payload
+FAILED backend/dealroom_sign/tests/test_placement.py::test_model_unavailable_visible[failure0]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_model_unavailable_visible[failure1]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_no_key_does_not_call_provider
+FAILED backend/dealroom_sign/tests/test_placement.py::test_invalid_model_assignments_ask[invented]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_invalid_model_assignments_ask[low]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_invalid_model_assignments_ask[missing]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_invalid_model_assignments_ask[extra]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_invalid_model_assignments_ask[no_evidence]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_invalid_model_assignments_ask[bool_id]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rules_success_never_calls_model
+FAILED backend/dealroom_sign/tests/test_placement.py::test_two_signers_cannot_take_one_line
+FAILED backend/dealroom_sign/tests/test_placement.py::test_duplicate_signers_rejected
+FAILED backend/dealroom_sign/tests/test_placement.py::test_unknown_signer_is_not_assigned_from_generic_signature_cue
+FAILED backend/dealroom_sign/tests/test_placement.py::test_invalid_pdf_fails_closed
+FAILED backend/dealroom_sign/tests/test_placement.py::test_missing_date_line_asks
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rotated_pages_fail_closed_without_moving_fields[90]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rotated_pages_fail_closed_without_moving_fields[180]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rotated_pages_fail_closed_without_moving_fields[270]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_cropbox_requires_review
+26 failed in 0.49s

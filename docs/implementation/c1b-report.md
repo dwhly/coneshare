@@ -411,3 +411,137 @@ All three passed Gate 3 (reviews `counterparty-c1b-gate3-r5.md` and `-r6.md`).
   - a done headline that says "will follow" while the copy is ready;
   - raw byte sizes in mail;
   - the green email button.
+
+## C2a — Automatic field placement in the existing Send path
+
+Starting HEADs: Send `f6f2fbd5` (`agent/c1b-counterparty`), Board `ec46ae9`
+(`agent/sign-s1`). Changes remain unstaged and uncommitted. Sign and the recipient
+proxy are untouched. There are no new public routes or database migrations.
+
+`backend/dealroom_sign/placement.py` ports the prototype's text/line rules to
+`pdfplumber==0.11.9` and `pdfminer.six==20251230`. Their MIT notices are retained in
+`backend/dealroom_sign/licenses/`; PyMuPDF is not a Send dependency. The parser uses
+positioned words, drawn lines, thin rectangle edges and underscore blanks, nearby
+names/company headings, and role definitions. It returns SIGNATURE, DATE and empty
+NAME fields in the same 1-based page/top-left percentage units the native API uses,
+with confidence and the matched label/line geometry. Already printed names are
+identity evidence, not NAME blanks. TITLE fields remain outside C2a.
+
+Assignment is a bounded, one-to-one maximum-weight matching. Confidence uses the
+**actual assigned block**, with score ≥4 and a ≥2 margin against the best feasible
+assignment excluding that pair. Generic email providers supply no company hint.
+Missing dates, ambiguous matches, overlapping/invalid boxes and unreadable PDFs
+hold the send. The supplied `bare.pdf` contains unnamed Signature/Date blanks;
+without attributable cues it returns `bare` and never calls a model. Documents
+with no cues behave the same way.
+
+Only unusual local labels with independently clear signer identity can reach the
+model. OpenRouter receives selected signer hints and extracted local labels with
+coordinates, not opening paragraphs or the PDF. `PLACE_MODEL` must specify the
+operator's cheap-tier model; there is no hard-coded model default. The key is read
+from `OPENROUTER_API_KEY`. Missing configuration, timeout, HTTP errors, oversized or
+invalid responses produce a visible `needs_sender` reason. The client has a
+30-second HTTP timeout, bounded input/output, no redirects or tools, and a strict
+candidate-ID response validator. Invented IDs, duplicate assignments, missing
+signers, low confidence and unsupported evidence cannot become placements. All
+model tests are offline, using injected clients or a fake HTTP client. No real
+provider run or deployed acceptance is claimed.
+
+Board `Dealroom.send` now requests `placement: auto` and supplies no fixed boxes.
+Send also defaults to automatic placement when fields are absent; explicit
+sender fields and NDA policy fields retain their existing path. Placement runs
+before a workflow is queued. `bare` and `needs_sender` return HTTP 409 with
+`status: needs_sender`, a plain reason and suggestions, creating no workflow or
+native distribution. The board preserves that typed result, leaves the form
+open, displays the message beside Send, and records no sent state.
+
+For a placed result, one transaction persists the fields and a
+`placement.resolved` workflow event containing the full analysis, source hash and
+recipient/field digest. History includes the evidence and renders “Fields placed
+by Fleet” with the label and page. Idempotent retries compare the original inputs
+and reuse the stored analysis. The worker validates the saved evidence and fields
+before remote writes. The existing source-byte checks still run before upload,
+on adoption of the native original and before completed-artifact publication.
+Placement uses those same source bytes; no PDF rewriting is introduced. Internal
+company/title hints are removed from the native recipient DTO.
+
+C2a intentionally uses the current C1b send seam. Cropped, rotated or nonzero-origin
+pages require review; silently transforming them would outrun the separately
+approved normalized-prepare work. The future review/Adjust UI is not implemented.
+Only requested signers are placed: the live Lee-only case does not infer or invite
+Dan from another visible block.
+
+### C2a red → green evidence
+
+| Item | Failing evidence | Passing evidence |
+| --- | --- | --- |
+| Rules, five prototype goldens, live Lee placement, unusual-label model and failure controls | [Engine red](c2a/engine-red.txt): **26 failed** before implementation | [Engine green](c2a/engine-green.txt): **40 passed**, including later validation/provider controls |
+| Pinned dependencies, MIT notices, explicit CI golden job; invalid page/extra signer/duplicate/low-confidence fields | [Validation red](c2a/validation-red.txt): **5 failed / 10 passed** | Same engine green; existing bounds/overlap controls remain intact |
+| Default API placement, typed holds, durable History evidence, idempotency and source/evidence checks | [Send red](c2a/send-red.txt): **10 failed** against unchanged production code, after supplying real staff/config test prerequisites | [Final placement run](c2a/placement-green.txt): **51 passed** (40 engine + 11 integration) |
+| Keep placement-only company/title hints out of the native recipient payload | [Native DTO red](c2a/native-red.txt): **1 failed** | Final placement run above |
+| Board removes fixed fields and preserves HTTP 409 without recording a send | [Board red](c2a/board-red.txt): **4 failed** | [Board focused green](c2a/board-green.txt): **93 passed**, including signing and shipped UI controls |
+| Plain typed error, intelligible History evidence, persistent unsent form message | [Error red](c2a/board-ui-red.txt), [History red](c2a/board-history-red.txt), [form red](c2a/board-form-red.txt): each fails its behavioral assertion | [UI green](c2a/board-ui-green.txt); included in the 93-test run |
+| Preserve bounded generic errors while allowing typed placement responses | [Bounded-error red](c2a/board-error-red.txt): **1 failed** | Board focused green above |
+| Unavailable-model message describes the current review hold, without promising an available review UI | [Message red](c2a/model-message-red.txt): **1 failed** | Final placement run above |
+
+No existing test assertion was weakened, skipped or deleted. The early Send full
+run used a relative `PYTHONPATH`; settings subprocesses changed directory and
+imported `backend/backend/celery.py` as `celery`, causing **52 environment failures /
+438 passes**. [That run is retained](c2a/send-suite-environment-error.txt). The
+reproduction script now uses an absolute backend path; this needed no product or
+test change.
+
+Full Send `dealroom_sign/tests`: **495 passed, 0 failed, 0 skipped** ([log](c2a/send-suite.txt)).
+Full Board: **271 passed, 3 unchanged baseline failures, 58 inherited skips**
+([log](c2a/board-suite.txt)). The failures are
+`test_detail_pages_program_and_epic`,
+`test_function_serves_the_same_endpoints_and_shapes`, and
+`test_relay_publishes_the_tailnet_payload`, all in `test_cloud_edition.py`.
+Temporarily substituting unchanged HEAD `app.py`, `dealroom.py` and `static/app.js`
+reproduced **the same 3 failures / 14 passes** ([baseline log](c2a/board-baseline.txt));
+the C2a files were restored in `finally`. No inherited skip condition was changed.
+Both worktrees pass `git diff --check`, and staging is empty.
+
+### C2a fixtures and renderings
+
+The five prototype PDFs and signer files are checked in under
+`backend/dealroom_sign/tests/fixtures/placement/`, with independent expected boxes
+and a **2-point tolerance** in `expected.json`. The sixth PDF was decoded from the
+provided live fictional `send.json`; it is byte-identical to prototype `nda.pdf`,
+but has its own **Lee-only** golden. The seventh, reproducible `unusual.pdf`, uses
+“Hand of the covenanting party:” and a mocked model. Its body-text sentinel is
+asserted absent from provider input.
+
+[All fixtures contact sheet](c2a/contact.png). Individual renders are **1020 × 1320
+pixels**, and the contact sheet is **1680 × 1088**, all below the 2000-pixel limit:
+[bare](c2a/bare-p1.png), [NDA](c2a/nda-p2.png), [offer](c2a/offer-p1.png),
+[roles](c2a/roles-p3.png), [witness](c2a/witness-p2.png),
+[live Harbor NDA](c2a/harbor-p2.png), [unusual label, mocked](c2a/unusual-p1.png).
+The [recorded results](c2a/placements.json) include each field's evidence. Visual
+inspection confirms Lee's signature is directly above “Lee Harbor, COO” on page 2,
+with its adjacent Date blank filled; offer decoy rules receive no fields.
+
+### C2a reproduction and scope limits
+
+From the Send root, install `backend/requirements.txt` into a local environment.
+The evidence run used `.agent/c2a-venv` (Python 3.13.14); the CI golden job uses the
+repository's Python 3.12 job and explicitly runs `test_placement.py` offline. The
+same CI step/environment reproduced locally with **40 passes** ([log](c2a/ci-goldens.txt));
+no hosted GitHub Actions execution is claimed.
+
+```sh
+# Local preview Redis/core dependencies use 127.0.0.1:16379 and :18080.
+docs/implementation/c2a/run_send_tests.sh backend/dealroom_sign/tests
+# Override C2A_PYTHON to use a different installed test environment.
+docs/implementation/c2a/run_send_tests.sh \
+  backend/dealroom_sign/tests/test_placement.py \
+  backend/dealroom_sign/tests/test_placement_send.py
+PYTHONPATH=backend .agent/c2a-venv/bin/python docs/implementation/c2a/render_fixtures.py
+bash /root/work/sign-product/run-board-tests.sh /root/worktrees/board-s1
+```
+
+The OpenRouter request shape follows its [official API reference](https://openrouter.ai/docs/api_reference/overview);
+the parser uses the [documented pdfplumber geometry API](https://github.com/jsvine/pdfplumber).
+No key was retrieved, no real document was sent to a provider, no invitation was
+sent, and no deployment was performed. Model acceptance against a configured live
+provider and the complete native signing/sealing walk remain deployment checks.

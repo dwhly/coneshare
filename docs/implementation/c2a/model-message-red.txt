@@ -1,0 +1,15 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________________ test_no_key_does_not_call_provider ______________________
+
+    def test_no_key_does_not_call_provider():
+        result = run('unusual')
+        assert result['status'] == 'needs_sender'
+        assert result['model']['outcome'] == 'unavailable'
+>       assert 'Placement review comes next; nothing was sent.' in result['reason']
+E       AssertionError: assert 'Placement review comes next; nothing was sent.' in 'Model placement unavailable — please confirm the highlighted fields. Nothing was sent.'
+
+backend/dealroom_sign/tests/test_placement.py:98: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement.py::test_no_key_does_not_call_provider
+1 failed, 39 deselected in 0.36s

@@ -1,0 +1,104 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_c2a_transport_requests_auto_placement_without_fixed_fields ________
+
+    def test_c2a_transport_requests_auto_placement_without_fixed_fields():
+        client = dr.Dealroom('https://send.example.test')
+        signer = {'name': 'Lee Harbor', 'email': 'lee@harborlight.fleet.test', 'company': 'Harbor Light Analytics', 'title': 'COO'}
+        with patch.object(client, '_call', return_value={'id': 'wf'}) as upstream:
+            client.send('room-1', 'ver-1', [signer], 2, 'key')
+        body = upstream.call_args.args[2]
+>       assert body['placement'] == 'auto'
+               ^^^^^^^^^^^^^^^^^
+E       KeyError: 'placement'
+
+tests/test_dealroom_sign.py:496: KeyError
+_________________ test_c2a_http_transport_preserves_typed_hold _________________
+
+    def test_c2a_http_transport_preserves_typed_hold():
+        import io
+        import urllib.error
+        client = dr.Dealroom('https://send.example.test')
+        hold = {'status': 'needs_sender', 'reason': "Couldn't tell where Lee signs. Placement review comes next; nothing was sent.", 'suggestions': []}
+        error = urllib.error.HTTPError('https://send.example.test', 409, 'Conflict', {}, io.BytesIO(json.dumps(hold).encode()))
+        with patch.object(client, 'token', return_value='test'), patch('urllib.request.urlopen', side_effect=error):
+            with pytest.raises(dr.DealroomError) as caught:
+                client._call('POST', '/dealroom-sign/envelopes/', {})
+>       assert caught.value.status == 409
+E       assert 400 == 409
+E        +  where 400 = DealroomError('Dealroom POST /dealroom-sign/envelopes/: 409 {\'status\': \'needs_sender\', \'reason\': "Couldn\'t tell where Lee signs. Placement review comes next; nothing was sent.", \'suggestions\': []}').status
+E        +    where DealroomError('Dealroom POST /dealroom-sign/envelopes/: 409 {\'status\': \'needs_sender\', \'reason\': "Couldn\'t tell where Lee signs. Placement review comes next; nothing was sent.", \'suggestions\': []}') = <ExceptionInfo DealroomError('Dealroom POST /dealroom-sign/envelopes/: 409 {\'status\': \'needs_sender\', \'reason\': "Couldn\'t tell where Lee signs. Placement review comes next; nothing was sent.", \'suggestions\': []}') tblen=2>.value
+
+tests/test_dealroom_sign.py:511: AssertionError
+_____________ test_c2a_hold_is_shown_without_recording_sent[False] _____________
+
+card_route = False
+
+    @pytest.mark.parametrize('card_route', [False, True])
+    def test_c2a_hold_is_shown_without_recording_sent(card_route):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        cid = f"hk.{BOARD}:{mk('Placement review')}"
+        path = f'/api/views/biz/cards/{cid}/signature' if card_route else '/api/views/biz/signatures'
+        hold = {'status': 'needs_sender', 'reason': "Couldn't tell where Lee signs. Placement review comes next; nothing was sent.", 'suggestions': []}
+        error = dr.DealroomError(hold['reason'], 409)
+        error.result = hold
+        with patch.object(FakeDealroom, 'send', side_effect=error):
+            response = client.post(path, json={'filename': 'NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+                                  'signers': [{'name': 'Lee Harbor', 'email': 'lee@harborlight.fleet.test'}]}, headers=H)
+        assert response.status_code == 409
+>       assert response.json() == hold
+E       assert {'detail': "C...ng was sent."} == {'status': 'n...gestions': []}
+E         
+E         Left contains 1 more item:
+E         {'detail': "Couldn't tell where Lee signs. Placement review comes next; "
+E                    'nothing was sent.'}
+E         Right contains 3 more items:
+E         {'reason': "Couldn't tell where Lee signs. Placement review comes next; "
+E                    'nothing was sent.',...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_dealroom_sign.py:529: AssertionError
+_____________ test_c2a_hold_is_shown_without_recording_sent[True] ______________
+
+card_route = True
+
+    @pytest.mark.parametrize('card_route', [False, True])
+    def test_c2a_hold_is_shown_without_recording_sent(card_route):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        cid = f"hk.{BOARD}:{mk('Placement review')}"
+        path = f'/api/views/biz/cards/{cid}/signature' if card_route else '/api/views/biz/signatures'
+        hold = {'status': 'needs_sender', 'reason': "Couldn't tell where Lee signs. Placement review comes next; nothing was sent.", 'suggestions': []}
+        error = dr.DealroomError(hold['reason'], 409)
+        error.result = hold
+        with patch.object(FakeDealroom, 'send', side_effect=error):
+            response = client.post(path, json={'filename': 'NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+                                  'signers': [{'name': 'Lee Harbor', 'email': 'lee@harborlight.fleet.test'}]}, headers=H)
+        assert response.status_code == 409
+>       assert response.json() == hold
+E       assert {'detail': "C...ng was sent."} == {'status': 'n...gestions': []}
+E         
+E         Left contains 1 more item:
+E         {'detail': "Couldn't tell where Lee signs. Placement review comes next; "
+E                    'nothing was sent.'}
+E         Right contains 3 more items:
+E         {'reason': "Couldn't tell where Lee signs. Placement review comes next; "
+E                    'nothing was sent.',...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_dealroom_sign.py:529: AssertionError
+=============================== warnings summary ===============================
+../../../usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_dealroom_sign.py::test_c2a_transport_requests_auto_placement_without_fixed_fields
+FAILED tests/test_dealroom_sign.py::test_c2a_http_transport_preserves_typed_hold
+FAILED tests/test_dealroom_sign.py::test_c2a_hold_is_shown_without_recording_sent[False]
+FAILED tests/test_dealroom_sign.py::test_c2a_hold_is_shown_without_recording_sent[True]
+4 failed, 37 deselected, 1 warning in 1.31s

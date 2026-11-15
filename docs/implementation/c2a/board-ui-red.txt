@@ -1,0 +1,13 @@
+AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+Caught error:
+
+Error: HTTP 409
+    at async /root/worktrees/board-s1/tests/brand_labels_ui_harness.cjs:562:5 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Error],
+  expected: [Function (anonymous)],
+  operator: 'rejects',
+  diff: 'simple'
+}

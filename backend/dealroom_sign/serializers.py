@@ -47,7 +47,9 @@ class SignerInputSerializer(StrictInputSerializer):
     name = serializers.CharField(max_length=200)
     role = serializers.ChoiceField(choices=['SIGNER'], default='SIGNER')
     signingOrder = serializers.IntegerField(min_value=1, max_value=20, default=1)
-    fields = FieldInputSerializer(many=True)
+    fields = FieldInputSerializer(many=True, required=False)
+    company = serializers.CharField(max_length=200, required=False, allow_blank=True)
+    title = serializers.CharField(max_length=200, required=False, allow_blank=True)
 
 
 class CredentialInputSerializer(serializers.Serializer):
@@ -71,6 +73,7 @@ class SendInputSerializer(StrictInputSerializer):
     version_id = serializers.CharField(max_length=64)
     idempotency_key = serializers.CharField(max_length=200)
     recipients = SignerInputSerializer(many=True)
+    placement = serializers.ChoiceField(choices=['auto', 'sender'], required=False)
     board_id = serializers.CharField(max_length=100, required=False)
     task_ref = TaskReferenceSerializer(required=False, allow_null=True)
     requester = serializers.JSONField(required=False)
