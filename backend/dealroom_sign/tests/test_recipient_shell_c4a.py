@@ -66,3 +66,15 @@ def test_visitor_theme_button_stays_on_one_line_like_signs_header():
     import os
     css = open(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'frontend', 'public', 'dealroom', 'shell.css'), encoding='utf-8').read()
     assert '.dr-header--visitor .fds-header__utils .fds-btn { white-space: nowrap; }' in css
+
+
+def _product(html):
+    return re.search(r'<span class="fds-lockup__product">([^<]+)</span>', html)[1]
+
+
+def test_app_is_called_sign_while_signing_and_dealroom_once_signed():
+    for state in ['entry', 'welcome', 'alternate', 'disclosure', 'checking', 'waiting']:
+        assert _product(_render(state)) == 'Sign', state
+        assert 'aria-label="Fleet Sign"' in _render(state), state
+    assert _product(_render('signed')) == 'Dealroom'
+    assert 'aria-label="Fleet Dealroom"' in _render('signed')

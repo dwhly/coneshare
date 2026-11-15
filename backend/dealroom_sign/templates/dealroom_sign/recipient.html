@@ -1,6 +1,6 @@
 {% extends 'dealroom_sign/base.html' %}
 {% block title %}{% if title and state != 'entry' %}{{ title }}{% else %}Your document{% endif %}{% endblock %}
-{% comment %} Counterparty pages (/s/...). The same Fleet visitor shell as Sign's signing page (docs/design/dealroom-shell.md §4):
+{% comment %} Counterparty pages (/s/...). The app is "Sign" while signing and "Dealroom" once signed (the copy page becomes the room). The same Fleet visitor shell as Sign's signing page (docs/design/dealroom-shell.md §4):
    _visitor_header (lockup left, Theme last) + the context bar + the 960px visitor container, with fds buttons.
    The anonymous entry page names nothing (a link scanner sees only it); the title and signer appear after the session starts. {% endcomment %}
 {% block styles %}
@@ -19,7 +19,7 @@
 .dr-recipient-actions .fds-btn{min-height:40px;padding-inline:var(--space-4)}
 @media (max-width:480px){.dr-recipient-actions{flex-direction:column}.dr-recipient-actions .fds-btn{justify-content:center}}
 {% endblock %}
-{% block header %}{% if state == 'entry' or not access %}{% include 'dealroom_sign/_visitor_header.html' with context_label='Invitation' %}{% else %}{% include 'dealroom_sign/_visitor_header.html' with context_label='Document' context_room=title context_who=access.name|add:' · '|add:access.email %}{% endif %}{% endblock %}
+{% block header %}{% if state == 'signed' %}{% firstof 'Dealroom' as product %}{% else %}{% firstof 'Sign' as product %}{% endif %}{% if state == 'entry' or not access %}{% include 'dealroom_sign/_visitor_header.html' with context_label='Invitation' product=product %}{% else %}{% include 'dealroom_sign/_visitor_header.html' with context_label='Document' product=product context_room=title context_who=access.name|add:' · '|add:access.email %}{% endif %}{% endblock %}
 {% block content %}<div class="dr-visitor dr-visitor-main"><div class="dr-recipient">
 {% if state == 'entry' %}<h1>A document is waiting for you</h1><p>Open your personal invitation to review it. You don't need an account.</p><form action="{{ entry_path }}" method="post" data-entry><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}"><div class="dr-recipient-actions"><button class="fds-btn fds-btn--primary">Continue</button></div></form>
 {% elif state == 'alternate' %}<h1>Open your invitation</h1><form action="/s/access" method="post"><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf }}"><label class="dr-recipient-field">Access code <input class="fds-input" name="code" maxlength="24" required autocomplete="one-time-code"></label><div class="dr-recipient-actions"><button class="fds-btn fds-btn--primary">Continue</button></div></form>
