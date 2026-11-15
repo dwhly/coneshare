@@ -10,8 +10,10 @@ from rest_framework.test import APIRequestFactory, force_authenticate
 from dealroom_sign.client import Documenso, SignError
 from dealroom_sign.models import ObservedSignEvent, Workflow
 from dealroom_sign.requests import activity
-from dealroom_sign.views import SigningEnvelopeViewSet
-from dealroom_sign.workflows import command, execute
+from dealroom_sign.views import SigningEnvelopeViewSet, SigningSourceView
+from dealroom_sign.workflows import command, execute, envelope_meta
+from dealroom_sign.placement import place
+from dealroom_sign.tests.test_placement_r2 import nearby_body_pdf, opaque_reply
 from dealroom_sign.tests.test_placement import FIXTURES, LEE
 from dealroom_sign.tests.test_workflows import fixture, pdf, recipients  # noqa: F401
 
@@ -93,7 +95,7 @@ def test_native_gets_exact_source_and_evidence_fields(fixture):
         execute(work, client)
     assert client.create.call_args.args[1] == source
     assert hashlib.sha256(source).hexdigest() == work.source_sha256
-    assert client.create.call_args.args[0].recipients[0]['fields'][0]['positionY'] == pytest.approx(337.2 / 792 * 100)
+    assert client.create.call_args.args[0].recipients[0]['fields'][0]['positionY'] == pytest.approx((367.2 - 18) / 792 * 100)
     client.distribute.assert_not_called()
 
 
@@ -134,3 +136,53 @@ def test_native_payload_omits_internal_signer_hints(fixture):
     recipient = json.loads(request.call_args.kwargs['data']['payload'])['recipients'][0]
     assert set(recipient) == {'name', 'email', 'role', 'signingOrder', 'fields'}
     assert {f['type'] for f in recipient['fields']} == {'SIGNATURE', 'DATE'}
+
+
+def test_r2_missing_auto_fact_stops_before_remote_write(fixture):
+    work = send(fixture)
+    ObservedSignEvent.objects.filter(workflow=work, kind='placement.resolved').delete()
+    client = Mock()
+    with pytest.raises(SignError, match='placement_evidence_missing'):
+        execute(work, client)
+    client.create.assert_not_called()
+    client.distribute.assert_not_called()
+
+
+def test_r2_date_only_envelope_and_native_metadata(fixture):
+    work = send(fixture)
+    assert envelope_meta(work)['dateFormat'] == 'yyyy-MM-dd'
+    sig = next(f for f in work.recipients[0]['fields'] if f['type'] == 'SIGNATURE')
+    date = next(f for f in work.recipients[0]['fields'] if f['type'] == 'DATE')
+    assert sig['fieldMeta'] == {'type':'signature', 'fontSize':18}
+    assert date['fieldMeta'] == {'type':'date', 'fontSize':10}
+
+
+def test_r2_nearby_sentinel_reaches_neither_model_nor_history(fixture, settings):
+    settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)], 'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+    model = Mock(side_effect=opaque_reply)
+    def resolve(pdf, signers):
+        return place(pdf, signers, model_client=model)
+    with patch('dealroom_sign.workflows.source_bytes', return_value=nearby_body_pdf()), patch('dealroom_sign.workflows.place', side_effect=resolve):
+        work = command(owner=fixture.user, room=fixture.room, version=fixture.version,
+                       recipients=[{k:v for k,v in LEE[0].items() if k != 'side'}],
+                       idempotency_key='r2-private', board_id='board-c2a', placement='auto')
+    assert 'PRIVATE NEARBY SENTINEL' not in json.dumps(model.call_args.args[0])
+    assert 'PRIVATE NEARBY SENTINEL' not in json.dumps(activity(work.signature_request), default=str)
+    assert 'PRIVATE NEARBY SENTINEL' not in json.dumps(list(ObservedSignEvent.objects.filter(workflow=work).values('payload')), default=str)
+
+
+def test_r2_selected_source_hash_is_authorized_and_matches_bytes(fixture):
+    fixture.user.is_staff = True
+    fixture.user.save()
+    source = (FIXTURES / 'harbor.pdf').read_bytes()
+    for version_id, expected in [(str(fixture.version.pk), hashlib.sha256(source).hexdigest()), ('absent-version', None)]:
+        request = APIRequestFactory().get('/sources/', {'version_id': version_id})
+        force_authenticate(request, user=fixture.user)
+        with patch('dealroom_sign.views.source_bytes', return_value=source) as read:
+            response = SigningSourceView.as_view()(request, room_id=str(fixture.room.pk))
+        if expected:
+            assert response.data[0]['sha256'] == expected
+            read.assert_called_once_with(fixture.version)
+        else:
+            assert response.data == []
+            read.assert_not_called()

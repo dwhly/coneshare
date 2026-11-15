@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_r2_selected_source_hash_is_authorized_and_matches_bytes _________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (6054ad9b-8a10-4977-923e-1f3c06862333)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_r2_selected_source_hash_is_authorized_and_matches_bytes(fixture):
+        from dealroom_sign.views import SigningSourceView
+        fixture.user.is_staff = True
+        fixture.user.save()
+        source = (FIXTURES / 'harbor.pdf').read_bytes()
+        for version_id, expected in [(str(fixture.version.pk), hashlib.sha256(source).hexdigest()), ('absent-version', None)]:
+            request = APIRequestFactory().get('/sources/', {'version_id': version_id})
+            force_authenticate(request, user=fixture.user)
+            with patch('dealroom_sign.views.source_bytes', return_value=source) as read:
+                response = SigningSourceView.as_view()(request, room_id=str(fixture.room.pk))
+            if expected:
+>               assert response.data[0]['sha256'] == expected
+E               KeyError: 'sha256'
+
+backend/dealroom_sign/tests/test_placement_send.py:186: KeyError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7G0Z50E661W55Y2RY15EKZM
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_r2_selected_source_hash_is_authorized_and_matches_bytes
+1 failed, 14 deselected in 10.36s

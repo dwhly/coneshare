@@ -1,0 +1,77 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________ test_printed_name_variants_veto_company_match[JORDAN LEE] ___________
+
+printed = 'JORDAN LEE'
+
+    @pytest.mark.parametrize('printed', ['JORDAN LEE', 'jordan lee', "Jo O’Neil", 'Lee A. Harbor'])
+    def test_printed_name_variants_veto_company_match(printed):
+        result = placement.place(named_pdf(printed), [{'name':'Pat Smith', 'email':'pat@harborlight.fleet.test'}])
+>       assert result['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:220: AssertionError
+__________ test_printed_name_variants_veto_company_match[jordan lee] ___________
+
+printed = 'jordan lee'
+
+    @pytest.mark.parametrize('printed', ['JORDAN LEE', 'jordan lee', "Jo O’Neil", 'Lee A. Harbor'])
+    def test_printed_name_variants_veto_company_match(printed):
+        result = placement.place(named_pdf(printed), [{'name':'Pat Smith', 'email':'pat@harborlight.fleet.test'}])
+>       assert result['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:220: AssertionError
+________ test_printed_name_variants_veto_company_match[Jo O\u2019Neil] _________
+
+printed = 'Jo O’Neil'
+
+    @pytest.mark.parametrize('printed', ['JORDAN LEE', 'jordan lee', "Jo O’Neil", 'Lee A. Harbor'])
+    def test_printed_name_variants_veto_company_match(printed):
+        result = placement.place(named_pdf(printed), [{'name':'Pat Smith', 'email':'pat@harborlight.fleet.test'}])
+>       assert result['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:220: AssertionError
+_________ test_printed_name_variants_veto_company_match[Lee A. Harbor] _________
+
+printed = 'Lee A. Harbor'
+
+    @pytest.mark.parametrize('printed', ['JORDAN LEE', 'jordan lee', "Jo O’Neil", 'Lee A. Harbor'])
+    def test_printed_name_variants_veto_company_match(printed):
+        result = placement.place(named_pdf(printed), [{'name':'Pat Smith', 'email':'pat@harborlight.fleet.test'}])
+>       assert result['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:220: AssertionError
+______________ test_named_caption_is_not_dropped_when_it_is_long _______________
+
+    def test_named_caption_is_not_dropped_when_it_is_long():
+        name = 'Alexanderthefirst ' * 8 + 'Harbor'
+        result = placement.place(named_pdf(name), [{'name':'Pat Smith', 'email':'pat@harborlight.fleet.test'}])
+>       assert result['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:227: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_printed_name_variants_veto_company_match[JORDAN LEE]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_printed_name_variants_veto_company_match[jordan lee]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_printed_name_variants_veto_company_match[Jo O\u2019Neil]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_printed_name_variants_veto_company_match[Lee A. Harbor]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_named_caption_is_not_dropped_when_it_is_long
+5 failed, 68 deselected in 1.66s

@@ -1,0 +1,13 @@
+.....................................................                    [100%]
+=============================== warnings summary ===============================
+../../work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1507
+../../work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1507
+  /root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1507: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio
+    self._mark_plugins_for_rewrite(hook, disable_autoload)
+
+../../../usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+53 passed, 3 warnings in 5.12s

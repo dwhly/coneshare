@@ -279,7 +279,11 @@ class SigningSourceView(APIView):
         versions = DocumentVersion.objects.filter(document__dataroomdocument__dataroom=room,
             document__deleted_at__isnull=True, content_type='application/pdf', executedartifact__isnull=True,
         ).exclude(document__name__regex=GENERATED_ARTIFACT_NAME).select_related('document').distinct()
-        return Response([{'id': str(v.pk), 'name': v.document.name, 'version_number': v.version_number} for v in versions])
+        selected = request.query_params.get('version_id')
+        if selected:
+            versions = versions.filter(pk=selected)
+        return Response([{'id': str(v.pk), 'name': v.document.name, 'version_number': v.version_number,
+                          **({'sha256': digest(source_bytes(v))} if selected else {})} for v in versions])
 
 
 class SigningWhoViewedView(APIView):

@@ -545,3 +545,135 @@ the parser uses the [documented pdfplumber geometry API](https://github.com/jsvi
 No key was retrieved, no real document was sent to a provider, no invitation was
 sent, and no deployment was performed. Model acceptance against a configured live
 provider and the complete native signing/sealing walk remain deployment checks.
+
+## C2a r2 — Gate 3 fixes and native field rendering
+
+Starting HEADs: Send `8b79285e`, Board `ce62d68`. Sign and the recipient proxy
+remain unchanged. All work is unstaged. The test environment is outside the
+repository at `/tmp/send-c2a-r2-venv`; tracked `.agent/` content is preserved.
+
+Printed full names now veto a different signer before company/domain scoring.
+Names match whole tokens, surname-only matching is removed, and company/domain
+hints require at least four characters. Case, initials, apostrophes, long captions
+and incomplete identities fail closed where a full match cannot be established.
+Role definitions start at their explicit `by`/`between`/`and`/`with` boundary.
+All seven original `expected.json` golden regions and their tolerance are unchanged.
+
+Placement has a configurable 12-second total deadline, including the model.
+Parsing runs in a killable child interpreter with a default three-second budget
+inside that deadline. Raw per-page limits are 5,000 edges, 20,000 characters and
+4,000 words, checked before grouping/de-duplication. Word extraction happens once;
+edge de-duplication uses neighboring spatial buckets. The 100,000-hairline test
+asserts a hold within four seconds. Timeout returns `needs_sender`, empty fields,
+`reason_code: placement_timeout`, and exactly “Placement took too long”.
+
+Only bounded name/company/role patterns and fixed field labels leave extraction.
+The model receives opaque signer IDs and names, with no emails or unnecessary
+company/title hints. A sentence immediately above a signature line is absent from
+both model input and persisted History. Caption ownership cannot cross a previous
+signature block; companion dates require local label adjacency and column ownership.
+User-visible parser reasons come from fixed codes. Model outcomes distinguish
+`not_configured`, `timeout`, `invalid_reply`, and `error`.
+
+Automatic workflows have a durable `auto` marker in their existing correlation ID,
+so deleting the placement fact cannot bypass the worker check. New manual workflows
+have a `manual` marker. Legacy room-document workflows whose placement mode cannot
+be established also hold if evidence is missing; no schema migration is required.
+The worker still checks source and recipient digests before remote writes.
+
+Board treats socket/read timeouts as `outcome_unknown` and keeps this message by
+the form: “We couldn't confirm whether it was sent. Check History before trying
+again.” The submission key hashes room, PDF SHA-256, ordered signers, board and card.
+A SQLite mapping beside Board's state file persists the uploaded version before
+send, so retries and restarts reuse the same source. Existing room files obtain
+their hash through the authorized selected-source query. Replayed successful
+responses do not append duplicate local History records.
+
+The complete pdfplumber runtime dependency closure is pinned: pypdfium2 5.15.2,
+cryptography 50.0.2, charset-normalizer 3.5.2, cffi 2.1.1 and pycparser 3.12,
+with the existing Pillow 13.0.0 pin. Distribution licences, including PDFium's
+third-party notices and Pillow's bundled notices, are retained in
+`backend/dealroom_sign/licenses/`.
+
+### C2a r2 red → green
+
+| Item | Red evidence | Final coverage |
+| --- | --- | --- |
+| H1 reviewer cases, fixture-wide wrong-signer properties; N4 anchored roles | [H1 red](c2a-r2/h1-red.txt): 19 failed, 32 passed | [H1 green](c2a-r2/h1-green.txt): 91 passed; all original goldens intact |
+| H1 uppercase, lowercase, initials, apostrophes and long captions | [Variants red](c2a-r2/identity-variants-red.txt): 5 failed; [unrecognized-caption red](c2a-r2/unrecognized-red.txt): 2 failed | Final placement suite |
+| M1 total deadline; M2 caps and 100,000 hairlines; M3 nearby sentinel and opaque IDs; L1/L2 attribution; L3 dependencies; N1/N2 reasons/outcomes; signature anchoring | [Engine red](c2a-r2/engine-red.txt): 17 failed, 51 passed | Final placement suite |
+| M3 History sentinel; N3 missing fact; date-only envelope and native metadata | [Send red](c2a-r2/send-red.txt): 3 failed | Final placement suite |
+| Authorized selected-source content hash for Board retries | [Source red](c2a-r2/source-red.txt): 1 failed | Final placement suite |
+| M1 Board open/read timeouts, wrapped socket timeout, retry key/source, key inputs and persistent form message | [Board red](c2a-r2/board-red.txt): 8 failed, 43 deselected | [Board focused](c2a-r2/board-focused.txt), including restart/concurrent-retry checks |
+
+No test was skipped, deleted or weakened. Existing model stubs now return the
+opaque ID supplied by the payload; the no-configuration assertion requires its
+specific outcome; the HTTP timeout assertion requires the remaining deadline
+instead of 30 seconds. The native position assertion checks the corrected box;
+the independent golden region assertions remain unchanged.
+
+### C2a r2 overlays and Sign schema evidence
+
+Sign was inspected read-only: `packages/lib/types/field-meta.ts` supports
+`fontSize` for signature/date fields but has no signature alignment option;
+`render-signature-field.ts` centres signature text vertically. Send converts the
+unchanged measured region into an 18 pt native signature box ending on the rule,
+with signature fontSize 18 and DATE fontSize 10. Only these exact internal metadata
+values are accepted; caller-supplied rich metadata remains refused.
+
+Sign's `document-meta.ts` and `constants/date-formats.ts` allow `yyyy-MM-dd` at
+envelope level; `dd MMM yyyy` is absent from the allowlist. The date-only option is
+passed through the existing create payload.
+
+[Seven-fixture contact sheet](c2a-r2/contact.png),
+[recorded placements/native fields](c2a-r2/placements.json),
+[Harbor native boxes](c2a-r2/harbor-overlay.png).
+The [before detail](c2a-r2/harbor-before-detail.png) and
+[after detail](c2a-r2/harbor-after-detail.png) come from Sign's actual
+`insertFieldInPDFV2` export renderer, merged onto Harbor page 2. The
+[measured ink gap](c2a-r2/render-metrics.json) falls from **8.2 pt to 1.7 pt**;
+the native box bottom is on the rule at **367.2 pt**. The date fits on one line.
+[Full after rendering](c2a-r2/harbor-after-rendered.png) and
+[rendered PDF](c2a-r2/harbor-after-rendered.pdf) are retained.
+
+These are native rendering proofs, not a live invitation, deployment or newly
+sealed production PDF. No provider request or real signing transaction was made.
+[Reproduction commands and settings](c2a-r2/README.md) are included.
+
+Board final full suite: **281 passed, 3 unchanged baseline failures, 58 inherited
+skips** ([log](c2a-r2/board-suite.txt)). The failures are
+`test_detail_pages_program_and_epic`, `test_function_serves_the_same_endpoints_and_shapes`,
+and `test_relay_publishes_the_tailnet_payload` in `test_cloud_edition.py`.
+Restoring starting-HEAD production files reproduced **the same 3 failures / 14
+passes** ([baseline](c2a-r2/board-baseline.txt)); r2 files were restored in `finally`.
+The focused signing/timeout/retry/browser suite has **53 passes**.
+The [100,000-hairline timing](c2a-r2/hairline-timing.json) is **3.01 seconds**.
+
+The [first full Send run](c2a-r2/send-first-run.txt) had **571 passes / 1 failure**:
+an exact envelope metadata assertion still expected the previous dictionary without
+`dateFormat`. Its exact expected dictionaries (local metadata and the captured native payload)
+were extended with the required date-only format; no other assertion was relaxed.
+
+A final L1 boundary regression covers a heading above an unlabeled previous rule:
+[red](c2a-r2/heading-red.txt) **1 failed** →
+[green](c2a-r2/heading-green.txt) **18 passed**, including the original goldens and
+caption cases. Both headings and captions now stop at a preceding signature rule.
+The full suite below was rerun after this final change.
+
+The L2 close-column regression also covers an **unlabeled** right-hand signature
+rule. Date ownership checks raw rules as well as recognized blocks, so a narrow
+column gutter cannot let the left signer borrow that column's date:
+[column red](c2a-r2/column-red.txt) **1 failed** →
+[complete engine green](c2a-r2/engine-green.txt) **117 passed**. This is included in the final full run.
+
+**Final Send `dealroom_sign/tests`: 576 passed, 0 failed, 0 skipped**
+([full log](c2a-r2/send-suite.txt), 270.36 s). This run includes all final heading
+and close-column fixes. The complete placement engine has **117 passes**; the
+five reviewer wrong-signer cases and the 42 fixture-wide identity checks pass.
+The seven original expected placements are unchanged.
+
+Both worktrees pass `git diff --check`. Starting HEADs are unchanged and staging
+is empty. [Footprint evidence](c2a-r2/footprint.txt) confirms Sign is clean, the
+recipient proxy and tracked `.agent/memory.md` are unchanged, and `expected.json`
+is byte-identical to the starting version. The only remaining test failures are
+the three reproduced Board cloud-edition baseline failures described above.

@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_heading_cannot_cross_a_previous_unlabelled_rule _____________
+
+    def test_heading_cannot_cross_a_previous_unlabelled_rule():
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 480, 'Lee Harbor')
+        c.line(72, 460, 270, 460)
+        c.drawString(72, 425, 'Signature:')
+        c.line(140, 423, 310, 423)
+        c.drawString(72, 395, 'Date:')
+        c.line(112, 393, 260, 393)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:257: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_heading_cannot_cross_a_previous_unlabelled_rule
+1 failed, 75 deselected in 0.70s

@@ -445,7 +445,7 @@ def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
     fixture.room.save()
     work = Workflow.objects.get(pk=fixture.work.pk)
     assert return_url(work) == f'https://recipient.example.test:9445/s/return/{work.pk}'
-    assert envelope_meta(work) == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work)}
+    assert envelope_meta(work) == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'dateFormat': 'yyyy-MM-dd'}
     work.purpose = 'nda'
     url = urlparse(return_url(work))
     assert f'{url.scheme}://{url.netloc}{url.path}' == f'https://recipient.example.test:9445/s/return/{work.pk}'
@@ -457,7 +457,7 @@ def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
     with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
         assert client.create(work, pdf, meta=envelope_meta(work)) == 'envelope_new'
     payload = _multipart_payload(sent[0])
-    assert payload['meta'] == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF}
+    assert payload['meta'] == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF, 'dateFormat': 'yyyy-MM-dd'}
     assert payload['recipients'][0]['name'] == 'Member'
 
 

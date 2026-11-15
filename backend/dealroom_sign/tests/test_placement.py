@@ -63,7 +63,7 @@ def test_bare_always_asks_even_with_model():
 
 def model_answer(payload):
     candidate = next(c for c in payload['candidates'] if 'Hand of the covenanting party:' in [l['text'] for l in c['labels']])
-    return {'assignments': [{'signer': LEE[0]['email'], 'block_id': candidate['id'], 'confidence': 'high',
+    return {'assignments': [{'signer': payload['signers'][0]['id'], 'block_id': candidate['id'], 'confidence': 'high',
                               'evidence': 'Hand of the covenanting party:'}]}
 
 
@@ -89,7 +89,7 @@ def test_model_unavailable_visible(failure):
 def test_no_key_does_not_call_provider():
     result = run('unusual')
     assert result['status'] == 'needs_sender'
-    assert result['model']['outcome'] == 'unavailable'
+    assert result['model']['outcome'] == 'not_configured'
     assert 'Placement review comes next; nothing was sent.' in result['reason']
 
 
@@ -230,7 +230,9 @@ def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
     if mode == 'missing_model':
         factory.assert_not_called()
     else:
-        factory.assert_called_once_with(timeout=30, follow_redirects=False)
+        factory.assert_called_once()
+        assert 0 < factory.call_args.kwargs['timeout'] <= 12
+        assert factory.call_args.kwargs['follow_redirects'] is False
         assert captured['url'] == 'https://openrouter.ai/api/v1/chat/completions'
         assert captured['json']['model'] == 'fixture/cheap-tier'
         assert captured['json']['max_tokens'] == 2000
