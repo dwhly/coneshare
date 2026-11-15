@@ -60,3 +60,9 @@ def test_context_bar_names_the_document_and_signer_only_after_the_session_starts
     assert 'Harbor Light Mutual NDA' in bar and 'Lee Harbor' in bar and 'lee@harborlight.fleet.test' in bar
     entry = _render('entry')
     assert 'Harbor Light Mutual NDA' not in entry and 'lee@harborlight' not in entry and 'Lee Harbor' not in entry
+
+
+def test_visitor_theme_button_stays_on_one_line_like_signs_header():
+    import os
+    css = open(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'frontend', 'public', 'dealroom', 'shell.css'), encoding='utf-8').read()
+    assert '.dr-header--visitor .fds-header__utils .fds-btn { white-space: nowrap; }' in css

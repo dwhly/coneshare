@@ -219,6 +219,7 @@ dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
 .dr-visitor { box-sizing: border-box; width: 100%; max-width: 960px; margin: 0 auto; padding: 0 24px; }
 .dr-header--visitor .dr-visitor { display: flex; align-items: center; gap: 24px; height: 100%; }
 .dr-header--visitor .fds-header__utils { margin-left: auto; }
+.dr-header--visitor .fds-header__utils .fds-btn { white-space: nowrap; }
 .dr-context { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px;
   font-size: 13px; line-height: 20px; color: hsl(var(--muted-foreground)); border-bottom: 1px solid hsl(var(--border)); }
 .dr-context__room { color: hsl(var(--foreground)); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
