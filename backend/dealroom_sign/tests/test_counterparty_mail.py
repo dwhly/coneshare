@@ -22,7 +22,7 @@ def test_invitation_headers_content_and_brand(access):
     effect = enqueue(access, 'invitation', 'release')
     message = compose(effect)
     mime = message.message()
-    assert parseaddr(message.from_email) == (access.sender['name'] + ' via Fleet Dealroom', 'sign@fleet.test')
+    assert parseaddr(message.from_email) == (access.sender['name'] + ' via Fleet Sign', 'sign@fleet.test')
     assert message.reply_to == [access.sender['email']] and message.to == [access.email] and not message.cc
     assert message.subject == access.sender['name'] + ' sent you “Mutual NDA” to sign'
     assert message.attachments == []
@@ -45,7 +45,7 @@ def test_incoming_staff_invitation_names_requester_and_preserves_staff_identity(
     access.delete()
     incoming = provision(work, envelope(work))[0]
     message = compose(enqueue(incoming, 'invitation', 'release'))
-    assert parseaddr(message.from_email)[0] == 'Harbor Light via Fleet Dealroom'
+    assert parseaddr(message.from_email)[0] == 'Harbor Light via Fleet Sign'
     assert message.reply_to == ['requester@harbor.test']
     assert f'Harbor Light (via {incoming.sending_staff["name"]}’s Dealroom)' in message.body
     assert incoming.sender != incoming.sending_staff
@@ -174,3 +174,12 @@ def test_incoming_requester_must_be_bound_before_native_release(access):
     with pytest.raises(SignError, match='incoming_requester_missing'):
         execute(work, native)
     native.distribute.assert_not_called()
+
+
+def test_sender_name_follows_the_app_sign_for_invitations_dealroom_for_copies(access):
+    # Owner, 15 Nov 2026: the app is "Sign" while signing and "Dealroom" once signed, so the From name matches the
+    # email's own header ("Fleet | Sign" on the invitation, "Fleet | Dealroom" on the fully-signed copy).
+    invitation = compose(enqueue(access, 'invitation', 'release'))
+    assert parseaddr(invitation.from_email) == (access.sender['name'] + ' via Fleet Sign', 'sign@fleet.test')
+    final = compose(completed(access), files=[('signed.pdf', b'%PDF-'), ('certificate.pdf', b'%PDF-')])
+    assert parseaddr(final.from_email)[0].endswith(' via Fleet Dealroom')

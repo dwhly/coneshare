@@ -208,7 +208,7 @@ def test_missing_staff_names_never_render_none(access, first, last, expected):
     access.delete()
     fresh = provision(work, envelope(work))[0]
     message = compose(enqueue(fresh, 'invitation', 'release'))
-    assert parseaddr(message.from_email)[0] == expected + ' via Fleet Dealroom'
+    assert parseaddr(message.from_email)[0] == expected + ' via Fleet Sign'
     assert message.reply_to == [work.owner.email]
     html = page(RequestFactory().get('/'), 'welcome', access=fresh).content.decode()
     for text in [message.subject, message.body, message.alternatives[0][0], html]:
@@ -224,7 +224,7 @@ def test_outgoing_requester_overrides_owner_for_mail_and_context(access):
     fresh = provision(work, envelope(work))[0]
     message = compose(enqueue(fresh, 'invitation', 'release'))
     assert message.reply_to == [requester['email']]
-    assert parseaddr(message.from_email)[0] == 'Drew Whaley via Fleet Dealroom'
+    assert parseaddr(message.from_email)[0] == 'Drew Whaley via Fleet Sign'
     assert fresh.sending_staff['email'] == work.owner.email
     assert 'Drew Whaley' in page(RequestFactory().get('/'), 'welcome', access=fresh).content.decode()
 

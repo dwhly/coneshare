@@ -77,7 +77,8 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
     url = personal_url(access)
     public = urlsplit(url)
     report = address(getattr(settings, 'SIGN_REPORT_EMAIL', 'support@fleet.test'))
-    from_email = formataddr((sender + ' via Fleet Dealroom', address(settings.SIGN_FROM_EMAIL)))
+    # The app is "Sign" while signing and "Dealroom" once signed (owner, 15 Nov 2026): the From name matches the header.
+    from_email = formataddr((sender + (' via Fleet Sign' if invitation else ' via Fleet Dealroom'), address(settings.SIGN_FROM_EMAIL)))
     subject = f'{sender} sent you “{title}” to sign' if invitation else f'“{title}” fully signed'
     projection = {p.get('email', '').lower(): p for p in access.workflow.signer_projection}
     parties = []

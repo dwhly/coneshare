@@ -50,3 +50,4 @@ def test_email_app_name_and_inter_first_with_no_remote_font():
     for html in (inv, final):
         assert "font-family:Inter,-apple-system" in html
         assert '@font-face' not in html and '.woff' not in html  # no remote font: it would act like a tracking pixel
+
