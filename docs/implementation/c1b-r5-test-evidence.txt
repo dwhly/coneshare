@@ -1,0 +1,96 @@
+C1b r5 local red/green evidence — 2026-11-15
+Starting HEADs: Send 999129a7; Sign f0cb8d0f1; Fleet 97b91ab.
+No live deployment/SMTP/browser acceptance is claimed.
+
+Sign initial regression run BEFORE implementation (22 failed, 4 passed)
+not ok 1 - r5 installed SuperJSON matches the reviewed deserialization contract
+not ok 3 - r5 M1 envelope.attachment.find referentialEqualities deny GET single
+not ok 4 - r5 M1 envelope.attachment.find referentialEqualities deny GET 0
+not ok 5 - r5 M1 envelope.attachment.find referentialEqualities deny GET 1
+not ok 6 - r5 M1 envelope.attachment.find referentialEqualities deny GET 2
+not ok 7 - r5 M1 envelope.attachment.find referentialEqualities deny POST single
+not ok 8 - r5 M1 envelope.attachment.find referentialEqualities deny POST 0
+not ok 9 - r5 M1 envelope.attachment.find referentialEqualities deny POST 1
+not ok 10 - r5 M1 envelope.attachment.find referentialEqualities deny POST 2
+not ok 11 - r5 M1 envelope.item.getManyByToken referentialEqualities deny GET single
+not ok 12 - r5 M1 envelope.item.getManyByToken referentialEqualities deny GET 0
+not ok 13 - r5 M1 envelope.item.getManyByToken referentialEqualities deny GET 1
+not ok 14 - r5 M1 envelope.item.getManyByToken referentialEqualities deny GET 2
+not ok 15 - r5 M1 envelope.item.getManyByToken referentialEqualities deny POST single
+not ok 16 - r5 M1 envelope.item.getManyByToken referentialEqualities deny POST 0
+not ok 17 - r5 M1 envelope.item.getManyByToken referentialEqualities deny POST 1
+not ok 18 - r5 M1 envelope.item.getManyByToken referentialEqualities deny POST 2
+not ok 19 - r5 M1 every procedure validates the SuperJSON shape on GET
+not ok 21 - r5 M1 malformed batch and raw recipient authority deny GET
+not ok 22 - r5 M1 every procedure validates the SuperJSON shape on POST
+not ok 24 - r5 M1 malformed batch and raw recipient authority deny POST
+not ok 26 - r5 M1 each independent layer denies the reference payload with its peer removed
+# tests 26
+# pass 4
+# fail 22
+# skipped 0
+# duration_ms 663.250284
+
+Sign focused restored run (before the two additional decoder tests)
+# tests 26
+# pass 26
+# fail 0
+# skipped 0
+# duration_ms 3426.684161
+
+Sign decoder-removal mutation: allowed undefined annotation creates token field
+not ok 1 - r5 M1 undefined annotations cannot create a token field on GET
+  error: |-
+    200 !== 404
+not ok 2 - r5 M1 undefined annotations cannot create a token field on POST
+  error: |-
+    200 !== 404
+# tests 2
+# pass 0
+# fail 2
+# skipped 0
+
+Sign FINAL inventory/listener/schema/drift/harness suite
+# tests 182
+# pass 182
+# fail 0
+# skipped 0
+# duration_ms 4130.966931
+
+Send initial red before cap/report changes (advanced-clock and outage controls already pass)
+E       AssertionError: assert 26 == (20 + 1)
+E       AssertionError: assert 28 == (20 + 3)
+FAILED dealroom_sign/tests/test_gate3_r5.py::test_waiting_rechecks_have_independent_per_pass_cap[1]
+FAILED dealroom_sign/tests/test_gate3_r5.py::test_waiting_rechecks_have_independent_per_pass_cap[3]
+FAILED dealroom_sign/tests/test_gate3_r5.py::test_report_discloses_waiting_outage_retry_exhaustion
+3 failed, 2 passed in 13.06s
+
+Send History-on-recheck mutation: only the post-15-minute assertion fails
+>       assert Activity.objects.count() == before
+E       assert 1 == 0
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_major2_waiting_has_no_history_or_repeated_sweep_cost
+1 failed in 10.26s
+
+Send FINAL targeted suite
+98 passed in 79.51s (0:01:19)
+
+Sign layer-independence test uses temporary first-party module copies and always removes them:
+- shape guard removed alone: both reference payloads remain denied for single/batched GET/POST (8 checks).
+- decoded guard removed alone: both remain denied for single/batched GET/POST (8 checks).
+- both removed: those same 8 requests forward (control).
+Additional decoded-guard removal produces the 2 failures above; production source restored in finally.
+History-on-recheck mutation restores production source in finally.
+
+Strict scoped TypeScript check: exit 0, no diagnostics.
+Fleet preflight: Ran 9 tests, OK (2.192s).
+Fleet topology: Ran 9 tests, OK (0.017s).
+Footprint: zero mechanically counted upstream r5 files/lines; zero untracked non-first-party paths.
+main.js diff against Sign HEAD is empty. Existing first-party exclusions and budgets unchanged.
+All existing test assertions remain active; R4 History test only gains assertions.
+
+Commands:
+SEND_REPO=/root/worktrees/send-c1b CI=true node --import tsx --test --test-reporter=tap chief/inventory/*.test.ts
+/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests/test_gate3_r5.py dealroom_sign/tests/test_gate3_r4.py dealroom_sign/tests/test_gate3.py dealroom_sign/tests/test_counterparty_mail.py dealroom_sign/tests/test_recipient_proxy.py dealroom_sign/tests/test_gate3_r4_report.py
+node node_modules/typescript/bin/tsc --noEmit --strict --skipLibCheck --target ES2022 --module ES2022 --moduleResolution bundler --esModuleInterop --resolveJsonModule --lib DOM,DOM.Iterable,ES2022 --types node apps/remix/server/chief/recipient-listener.ts chief/inventory/gate3-r5.test.ts chief/inventory/counterparty-drift.test.ts
+python3 deploy/do1/test_gate3_preflight.py
+/root/work/sign-product/send-venv/bin/python deploy/do1/test_c1b_topology.py

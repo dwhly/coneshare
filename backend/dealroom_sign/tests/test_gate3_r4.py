@@ -40,6 +40,15 @@ def test_major2_waiting_has_no_history_or_repeated_sweep_cost(access):
     assert native.call_count == 1
     effect.refresh_from_db()
     assert effect.state == 'pending'
+    with patch('dealroom_sign.counterparty_mail.timezone.now', return_value=effect.updated_at + timedelta(minutes=16)), \
+         patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)) as recheck, \
+         patch('dealroom_sign.recipient_proxy.eligible', return_value=False):
+        drain(1)
+    recheck.assert_called_once()
+    assert Activity.objects.count() == before
+    assert not ObservedSignEvent.objects.filter(kind__startswith='mail.').exists()
+    effect.refresh_from_db()
+    assert effect.state == 'pending' and effect.last_error == 'mail_waiting'
 
 
 def test_minor11_waiting_does_not_overwrite_interrupted_worker(access):

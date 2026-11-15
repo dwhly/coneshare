@@ -309,7 +309,7 @@ def send_effect(effect_id):
     return True
 
 
-def drain(limit=20):
+def drain(limit=20, waiting_limit=20):
     from .workflows import record_fact
     stale = CounterpartyEffect.objects.filter(state='running', updated_at__lt=timezone.now()-timedelta(minutes=5))
     for effect in stale:
@@ -317,8 +317,10 @@ def drain(limit=20):
             record_fact(effect.access.workflow, 'mail.delivery_uncertain', uuid.uuid4(),
                 {'effect_id': str(effect.pk), 'kind': effect.kind, 'error': 'worker_interrupted'})
     sent = 0
+    waiting = CounterpartyEffect.objects.filter(state='pending', last_error='mail_waiting',
+        updated_at__lte=timezone.now()-timedelta(minutes=15)).order_by('updated_at', 'pk').values('pk')[:waiting_limit]
     pending = CounterpartyEffect.objects.filter(state='pending').filter(
-        ~Q(last_error='mail_waiting') | Q(updated_at__lte=timezone.now()-timedelta(minutes=15)))
+        ~Q(last_error='mail_waiting') | Q(pk__in=waiting))
     for effect in pending.select_related('access__workflow').order_by('updated_at').iterator():
         if ready_at(effect, attempt_history(effect)) <= timezone.now():
             sent += bool(send_effect(effect.pk))

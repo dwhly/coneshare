@@ -1,6 +1,6 @@
 # C1b Gate 3 implementation report
 
-**Current revision: r4.** The r4 section below records Gate-3 re-review r2. Earlier sections retain the r3 evidence; r4 corrections take precedence.
+**Current revision: r5.** The r5 section below records Gate-3 re-review r3. Earlier sections retain their historical evidence; r5 corrections take precedence.
 
 2026-11-15. Gate 3 r3 changes are **uncommitted** in the three supplied worktrees, whose HEADs match Send `f9fef317`, Sign `d596af665` and Fleet deploy `c0401af`. Actual existing branches are Send `agent/c1b-counterparty`, Sign `agent/c1b-listener` and Fleet deploy `agent/c1b-deploy`; the latter two differ from the brief’s shared branch label. Branches were preserved. This report supersedes the r2 implementation report and applies all 8 major, 14 minor and 7 nit findings, including the manager decisions. No deployed database, private env/key file, production Compose file or project memory was changed. No live acceptance result is claimed.
 
@@ -231,3 +231,45 @@ python3 deploy/do1/test_gate3_preflight.py
 ```
 
 [Local failure/pass summaries](c1b-r4-test-evidence.txt) retain the failing regression names and mutation results. Live E2E/HTTP/SMTP/runtime mutations are still manager-run acceptance, with the limitations explicitly described above; local harness checks do not claim those live results.
+
+## r5 — Gate-3 re-review r3
+
+Starting HEADs: Send `999129a7`, Sign `f0cb8d0f1`, Fleet deploy `97b91ab`. Changes remain uncommitted. This revision addresses the one major, one minor and two nits in `counterparty-c1b-gate3-r3.md`.
+
+### Boundary and compatibility decisions
+
+The staff listener on 3000 validates every supplied JSON tRPC input, including every indexed member of `batch=1`, on GET and POST. Envelope keys are limited to `json` and `meta`; metadata keys are limited to `values` and optional version `v: 1`. Every annotation must be exactly `['undefined']`. Root undefined (the installed client's encoding of a no-argument call), dotted nested undefined paths and array element undefined are supported. Unknown envelope/metadata keys, referential equalities, other annotations and malformed batch membership fail closed. A no-input GET still reaches native staff authentication/schema checks. Input bytes are preserved for the native handler.
+
+The existing token-field/recipient-access/user-mode predicate runs both on raw `json` and on the result of the installed `SuperJSON.deserialize` for both dual-mode procedures. Token-only procedures remain denied. The shape and deserialization layers are independent: temporary source variants remove each guard alone and still deny both reference payloads, with single/batched GET/POST coverage; removing both forwards those same payloads as the mutation control. No runtime switch disables either layer.
+
+**Annotation audit:** inspected tRPC request schemas and staff UI call sites. Analytics requests use calendar strings (`from`/`to`); their Date schemas are response data. Embedding-presign and email-auth expiry Dates are responses. The request Date at `templateUpdatedAt` belongs to direct-template recipient signing (`createDocumentFromDirectTemplate`), not a staff-only flow. Staff editor Maps/Sets are local lookup collections. No non-undefined annotation exception is granted, including for token-capable procedures. Both drift-contract copies now pin installed **superjson 2.2.5**; drift checks compare the actual package resolved from both the native transformer and listener with the contract and lockfile.
+
+**Multipart transport:** existing staff upload callers use the native tRPC FormData handler, which does not call SuperJSON. Preserve only single, unbatched POSTs to the eight inspected authenticated upload procedures: `envelope.create`, `envelope.use`, `envelope.item.createMany`, `envelope.item.replacePdf`, `document.create`, `template.createTemplate`, `team.settings.updateBrandingLogo`, and `organisation.settings.updateBrandingLogo`. This is a transport distinction, not a metadata exception: JSON calls to these same procedures receive both checks. Token-capable routes cannot use this allowance. Tests preserve the uploaded body byte-for-byte through the boundary.
+
+### Waiting and retry decisions
+
+Waiting re-checks have their own `waiting_limit=20` cap per drain, independent of the delivery `limit`. SQL selects only the oldest due waiting effects up to that cap; remaining due effects retain their timestamp for the next pass. Waiting checks that remain ineligible still consume no delivery slot. Tests cover delivery limits 1 and 3, 25 due waiting effects, delivery progress in the same pass and the remaining five re-checks on the next pass.
+
+**Nit 2 — waiting-plus-outage:** retain the existing fail-closed preparation-attempt policy. If a waiting invitation's re-check encounters a Sign outage, that failure counts as `mail.preparation_attempt` even when the signer **never became eligible**. Six failures separated by 45, 90, 180, 360 and 720 minutes exhaust retries **23 hours 15 minutes** after the first preparation failure (plus scheduling/processing delay; the first waiting re-check is due after 15 minutes). The effect becomes `failed`, produces the existing failure History and requires **manual Retry email** by an authorized sender/writer after recovery. It is not automatically awakened by later eligible reconciliation while failed. No delivery is attempted during this outage. The clock-driven regression pins all six transitions, elapsed time and zero SMTP sends; this revision documents the behavior rather than changing its retry budget.
+
+### Per-item red → green evidence
+
+| Review item | Regression evidence | Red → green |
+| --- | --- | --- |
+| Major 1 | `chief/inventory/gate3-r5.test.ts`: both dual-mode procedures, GET/POST, single and each of three batch positions; shape negatives for every inventoried procedure plus an unknown future procedure; malformed batches; ordinary staff/undefined/multipart controls. `counterparty-drift.test.ts` checks the installed version. | Initial **22 failed / 4 passed → 26 passed**: 16 reference-payload failures, 4 shape/batch failures, 1 missing version pin, 1 missing independent-guard test prerequisite. |
+| Major 1, independent layers | Temporary module variants remove the shape guard alone, the decoded guard alone, then both. One remaining guard denies all 8 reference-payload combinations; removing both forwards all 8 controls. Additional tests show permitted undefined annotations can create a `token` field, requiring the decoded check even without referential equalities. | Both-layer control confirms forwarding; each single-layer variant confirms denial. Removing the decoded guard causes **2 additional failures → 2 restored passes**. Final focused set: **28 passed**, included in the 182-test suite below. |
+| Minor 1 | `test_gate3_r5.py::test_waiting_rechecks_have_independent_per_pass_cap`: 25 due waiting effects and delivery limits 1/3. Old code performs 26/28 reconciliations; fixed code performs 21/23, preserves the five deferred rows, makes delivery progress and services the remainder next pass. | **2 failed → 2 passed** |
+| Nit 1 | Existing R4 50-drain assertions remain intact; advance to 16 minutes after the first wait, prove another native reconciliation occurs, then assert zero added Activity/History and zero mail facts. A mutation logs only on that later re-check. | Existing behavior passes; **1 re-check-only mutation failure → 1 restored pass** |
+| Nit 2 | `test_report_discloses_waiting_outage_retry_exhaustion` plus a six-failure clock-driven behavior control with no SMTP send. Document the retained bounded preparation-attempt policy above. | **1 documentation failure → 1 pass**; existing outage behavior control passes |
+
+### r5 final validation and footprint
+
+- Send: **98 targeted tests passed**, including R5, R4, G3, counterparty mail, recipient proxy and executable report checks. No failure or skip. This is a targeted run, not a claim to have rerun the entire Send backend.
+- Sign: **182 inventory/listener/schema/drift/harness tests passed, 0 failed, 0 skipped**, with `SEND_REPO=/root/worktrees/send-c1b`. Strict scoped TypeScript checking of the listener and changed tests passed with no diagnostics.
+- Fleet deploy: **9 preflight + 9 topology tests passed**. No Fleet source change was necessary.
+- Sign r5 footprint against `f0cb8d0f1`: **zero upstream files, +0/−0 lines**, including mechanically counted paths. Every changed/new Sign file is within the existing first-party exclusions; those exclusions and budgets are unchanged. `main.js` is unchanged, retaining the historical C1b +2/−2 integration. The inherited whole-fork budget excess described in r4 remains.
+- No existing assertion was weakened, skipped or deleted. R4's History test only gains assertions. Temporary mutation sources are removed/restored; no mutation remains.
+- All three supplied HEADs are unchanged, all changes remain unstaged/uncommitted, and all three `git diff --check` checks pass. No migration, production configuration, secret or deployed database was changed. Project memory remains unchanged without explicit confirmation.
+- Live browser/HTTP/SMTP/deployment acceptance remains manager-run; these local results do not claim live acceptance.
+
+[r5 failure/pass evidence and exact commands](c1b-r5-test-evidence.txt) record the red runs, mutation outcomes, final suites and footprint check.
