@@ -345,3 +345,69 @@ RECIPIENT_SCREENSHOT=/root/worktrees/send-c1b/docs/implementation/c1b-r6-context
 The extra foundation-suite failure is `test_schema_mcp_static_parity`: its static MCP schema omits the existing `SignatureEmailRetryView` and `SignatureSignerRevokeView` operation IDs. This is unrelated to requester/title input properties or recipient policy. [Unchanged-HEAD reproduction](c1b-r6-send-baseline.txt) records its baseline check; the r6 production files were restored in `finally`. Neither that assertion nor either endpoint was removed or weakened.
 
 Final footprint checks: Send, Board and Sign pass `git diff --check`; all three starting HEADs remain unchanged and staging is empty. Sign remains completely unchanged. Deployment still requires the manager's usual rollout and full native signing/SMTP acceptance; these results do not claim a deployed signature or delivered email.
+
+## Manager live acceptance, preview, 15 Nov 2026
+
+**Deployed (fictional preview `fleet-dealroom-proto`):**
+- Sign `proto-c1b-5b29ff6c9`.
+- Send `proto-c1b-9005dbd6`.
+- Board preview on h-af: `hermes-board-sign-preview`, `app.py` and `dealroom.py` from board `ec46ae9`. The backups are
+  `*.bak-c1b-r6`.
+
+**Before cutover:**
+- The preview database was backed up to `/root/work/sign-product/preview-backup-c1b-20261115T023802Z/`.
+- Migration 0003 is applied.
+- 138 stale native jobs that were PENDING since 4 Nov were set to FAILED, including one unsent native signing email.
+- The preview Send organisation was renamed from "Chief Glue Review" to "Fleet Test Co.".
+
+**Walk:** fictional signer `lee.c1b2@harborlight.fleet.test`, sent through the board preview and signed on an
+emulated iPhone 13 (Chromium). Evidence is at `http://100.122.202.37:8765/dealroom-sign/c1b/`.
+
+| Check | Result |
+|---|---|
+| Invitation comes from Send, "Dan via Fleet Dealroom", with Reply-To the requester | PASS |
+| No native Documenso email | PASS |
+| Personal link → entry → context and consent → signing page → document loads | PASS (after fixes A–C) |
+| Signing completes | PASS |
+| Fully-signed email goes to the signer and separately to the sender | PASS |
+| No party addresses or CCs in the headers or bodies (the only `@` is the Message-ID) | PASS |
+| Attachments are "… — signed.pdf" and "Signing certificate.pdf" | PASS |
+| PDF seal is "Fleet Dealroom Sign (preview)" and valid | PASS |
+| The same link afterwards shows the copy page, and its download is the sealed PDF | PASS |
+| Sign 3001 is not published; 9443–9446 route correctly | PASS |
+
+**Fixes found live:**
+- **A. Sign crashed on boot.** Rollup tree-shook `staffFetch`. Fixed in Sign `5b29ff6c9` with a guard test.
+- **B. Codex r6 fixes:**
+  - browsers sent `Origin: null` under `no-referrer`, so consent got a 403;
+  - asset roots used the wrong image layout;
+  - "None None" sender name;
+  - the requester wasn't passed from the board;
+  - title timestamp, pluralization and the doubled zone.
+
+  These are in Send `85682a54` and board `ec46ae9`.
+- **C. The viewer PDF route allowlisted the wrong versions** (`original|pending|signed` where Sign serves
+  `initial|current`). Fixed in Send `9005dbd6`.
+
+All three passed Gate 3 (reviews `counterparty-c1b-gate3-r5.md` and `-r6.md`).
+
+**Follow-ups (non-blocking):**
+1. Pages send **two** `Referrer-Policy` headers: `same-origin`, then `strict-origin-when-cross-origin` from the
+   image's nginx. Browsers apply the last one. Cross-origin requests get the bare origin only, never the token path,
+   but there should be exactly one `same-origin`.
+2. Requester name fallback: strip "(via …)", and use the email when the name is missing (r5 minor 1).
+3. Run title cleanup only for older stored titles; the `\d{4}` pattern eats years (r5 nit).
+4. "Unknown page" should read "Unknown pages" (r5 nit).
+5. Bundle guard: cover every `./hono/server/**` import and add a check against the built bundle; update the
+   `router.ts` comment (r6 nits).
+6. No Staff Sign UI 404 sweep has been run yet: editor autosave and save, distribute, team and organisation
+   settings (r4 nit).
+
+**Signer UX leftovers, belonging to later slices:**
+- **C2:** signature placement on the signer's line, and the date fields.
+- **C4:**
+  - the theme toggle and doubled "Next field" / "Complete";
+  - Documenso's stock consent wording;
+  - a done headline that says "will follow" while the copy is ready;
+  - raw byte sizes in mail;
+  - the green email button.
