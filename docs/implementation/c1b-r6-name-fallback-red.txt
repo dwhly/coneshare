@@ -1,0 +1,40 @@
+F.......                                                                 [100%]
+=================================== FAILURES ===================================
+_______ test_requester_missing_display_name_has_same_safe_fallback[-in] ________
+
+access = <SignerAccess: SignerAccess object (67625975-592f-4399-87eb-14f5b5c91758)>
+kind = 'in', name = ''
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('name', ['', '   ', 'None', 'None None'])
+    def test_requester_missing_display_name_has_same_safe_fallback(access, kind, name):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room,
+            source_context={'requester': {'name': name, 'email': 'human@example.test'}})
+>       _, _, sender, _ = sender_snapshot(work)
+
+dealroom_sign/tests/test_live_acceptance_r6.py:351: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+workflow = <Workflow: Workflow object (a325de5e-5339-4874-88e1-129ad0347f80)>
+
+    def sender_snapshot(workflow):
+        row = SignatureRequest.objects.filter(workflow=workflow).first()
+        staff = {'name': display_name(workflow.owner.get_full_name()),
+                 'email': workflow.owner.email, 'company': workflow.room.organization.name}
+        sender = staff
+        context = row.source_context if row else {}
+        if row and row.kind == 'in':
+            sender = context.get('requester')
+            if not isinstance(sender, dict) or not sender.get('name') or not sender.get('email'):
+>               raise SignError('incoming_requester_missing')
+E               dealroom_sign.client.SignError: incoming_requester_missing
+
+dealroom_sign/counterparty.py:109: SignError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FX0FJQYSHV241MKMAXB4W9
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_requester_missing_display_name_has_same_safe_fallback[-in]
+1 failed, 7 passed, 82 deselected in 9.95s

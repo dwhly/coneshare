@@ -1,0 +1,1013 @@
+FFFFFFFF.......................FF..FF..FF..FF..FFFF.FF.FFFFFFF.F.FFFFFFF [ 98%]
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_html_header_and_meta_allow_only_same_origin_referrers[/s/access] _____
+
+access = <SignerAccess: SignerAccess object (0ed42891-eb44-4c00-93e0-a26a72c4140b)>
+path = '/s/access'
+
+    @pytest.mark.parametrize('path', ['/s/access', '/articles/signature-disclosure', 'entry', 'context', 'return'])
+    def test_html_header_and_meta_allow_only_same_origin_referrers(access, path):
+        browser = Client(enforce_csrf_checks=True)
+        _, raw = new_session(access)
+        browser.cookies[COOKIE] = raw
+        path = {'entry': '/s/' + capability(access), 'context': '/s/session/context',
+                'return': '/s/return/' + str(access.workflow_id)}.get(path, path)
+        with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
+            response = browser.get(path, **BASE)
+        assert response.status_code == 200
+>       assert response['Referrer-Policy'] == 'same-origin'
+E       AssertionError: assert 'no-referrer' == 'same-origin'
+E         
+E         - same-origin
+E         + no-referrer
+
+dealroom_sign/tests/test_live_acceptance_r6.py:76: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FWHQ83VTHRWSZK0VCXBJ7K
+_ test_html_header_and_meta_allow_only_same_origin_referrers[/articles/signature-disclosure] _
+
+access = <SignerAccess: SignerAccess object (5384afcf-c4c8-4c26-99f9-7c0314b7e967)>
+path = '/articles/signature-disclosure'
+
+    @pytest.mark.parametrize('path', ['/s/access', '/articles/signature-disclosure', 'entry', 'context', 'return'])
+    def test_html_header_and_meta_allow_only_same_origin_referrers(access, path):
+        browser = Client(enforce_csrf_checks=True)
+        _, raw = new_session(access)
+        browser.cookies[COOKIE] = raw
+        path = {'entry': '/s/' + capability(access), 'context': '/s/session/context',
+                'return': '/s/return/' + str(access.workflow_id)}.get(path, path)
+        with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
+            response = browser.get(path, **BASE)
+        assert response.status_code == 200
+>       assert response['Referrer-Policy'] == 'same-origin'
+E       AssertionError: assert 'no-referrer' == 'same-origin'
+E         
+E         - same-origin
+E         + no-referrer
+
+dealroom_sign/tests/test_live_acceptance_r6.py:76: AssertionError
+______ test_html_header_and_meta_allow_only_same_origin_referrers[entry] _______
+
+access = <SignerAccess: SignerAccess object (af5c9e44-ec0f-49b7-b56d-8ce66a7c077c)>
+path = '/s/XwP-8g_XS7R0_NeAdznaiDOXogeramLzxObnBSnjWxY'
+
+    @pytest.mark.parametrize('path', ['/s/access', '/articles/signature-disclosure', 'entry', 'context', 'return'])
+    def test_html_header_and_meta_allow_only_same_origin_referrers(access, path):
+        browser = Client(enforce_csrf_checks=True)
+        _, raw = new_session(access)
+        browser.cookies[COOKIE] = raw
+        path = {'entry': '/s/' + capability(access), 'context': '/s/session/context',
+                'return': '/s/return/' + str(access.workflow_id)}.get(path, path)
+        with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
+            response = browser.get(path, **BASE)
+        assert response.status_code == 200
+>       assert response['Referrer-Policy'] == 'same-origin'
+E       AssertionError: assert 'no-referrer' == 'same-origin'
+E         
+E         - same-origin
+E         + no-referrer
+
+dealroom_sign/tests/test_live_acceptance_r6.py:76: AssertionError
+_____ test_html_header_and_meta_allow_only_same_origin_referrers[context] ______
+
+access = <SignerAccess: SignerAccess object (2da5dc83-dd8a-4efe-901e-5ad613355f6a)>
+path = '/s/session/context'
+
+    @pytest.mark.parametrize('path', ['/s/access', '/articles/signature-disclosure', 'entry', 'context', 'return'])
+    def test_html_header_and_meta_allow_only_same_origin_referrers(access, path):
+        browser = Client(enforce_csrf_checks=True)
+        _, raw = new_session(access)
+        browser.cookies[COOKIE] = raw
+        path = {'entry': '/s/' + capability(access), 'context': '/s/session/context',
+                'return': '/s/return/' + str(access.workflow_id)}.get(path, path)
+        with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
+            response = browser.get(path, **BASE)
+        assert response.status_code == 200
+>       assert response['Referrer-Policy'] == 'same-origin'
+E       AssertionError: assert 'no-referrer' == 'same-origin'
+E         
+E         - same-origin
+E         + no-referrer
+
+dealroom_sign/tests/test_live_acceptance_r6.py:76: AssertionError
+______ test_html_header_and_meta_allow_only_same_origin_referrers[return] ______
+
+access = <SignerAccess: SignerAccess object (1597d658-0fed-4bf0-ad9b-7a77fd93158d)>
+path = '/s/return/70fdc8bb-1db5-4bad-9f1d-72b2bb7fda09'
+
+    @pytest.mark.parametrize('path', ['/s/access', '/articles/signature-disclosure', 'entry', 'context', 'return'])
+    def test_html_header_and_meta_allow_only_same_origin_referrers(access, path):
+        browser = Client(enforce_csrf_checks=True)
+        _, raw = new_session(access)
+        browser.cookies[COOKIE] = raw
+        path = {'entry': '/s/' + capability(access), 'context': '/s/session/context',
+                'return': '/s/return/' + str(access.workflow_id)}.get(path, path)
+        with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
+            response = browser.get(path, **BASE)
+        assert response.status_code == 200
+>       assert response['Referrer-Policy'] == 'same-origin'
+E       AssertionError: assert 'no-referrer' == 'same-origin'
+E         
+E         - same-origin
+E         + no-referrer
+
+dealroom_sign/tests/test_live_acceptance_r6.py:76: AssertionError
+_______ test_browser_policy_drives_real_entry_consent_and_download_forms _______
+
+access = <SignerAccess: SignerAccess object (1b48e8c5-083f-4b28-9476-b2015d112305)>
+pdf = b'%PDF-1.3\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<\n/Producer (pypdf)\n>>\nendobj\n2 0 obj\n<<\n/Type /Pages\n/Count 1\n/Kids ...n0000000113 00000 n \n0000000162 00000 n \ntrailer\n<<\n/Size 5\n/Root 3 0 R\n/Info 1 0 R\n>>\nstartxref\n256\n%%EOF\n'
+
+    def test_browser_policy_drives_real_entry_consent_and_download_forms(access, pdf):
+        cache.clear()
+        browser = Client(enforce_csrf_checks=True)
+        path = '/s/' + capability(access)
+        document = FormPage(browser.get(path, **BASE), path)
+        # Entry's real script uses FormData fetch with the hidden CSRF token.
+        entry = browser.post(path + '/enter', document.forms[path + '/enter'], **document.headers(fetch=True))
+        assert entry.status_code == 200
+        with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
+            context = browser.get(entry.json()['url'], **BASE)
+        document = FormPage(context, entry.json()['url'])
+        consent = document.submit(browser, '/s/session/consent', agree='on')
+>       assert consent.status_code == 303
+E       assert 403 == 303
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:92: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:30,887 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+____________ test_alternate_form_and_code_fetch_use_document_policy ____________
+
+access = <SignerAccess: SignerAccess object (236803f5-40b6-43dd-9323-e1c256b44d33)>
+
+    def test_alternate_form_and_code_fetch_use_document_policy(access):
+        cache.clear()
+        browser = Client(enforce_csrf_checks=True)
+        document = FormPage(browser.get('/s/access', **BASE), '/s/access')
+        result = document.submit(browser, '/s/access', code=alternate_code(access))
+>       assert result.status_code == 303 and result['Location'] == '/s/session/context'
+E       assert (403 == 303)
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:114: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:31,730 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+___________ test_nda_handoff_lands_on_same_origin_consent_and_return ___________
+
+access = <SignerAccess: SignerAccess object (15fe92f8-bb16-492a-8b11-fabcb33b16d2)>
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (154d7b87-e923-4dac-9397-9f0a9c4f7e22)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_nda_handoff_lands_on_same_origin_consent_and_return(access, fixture):
+        from dealroom_sign.counterparty import issue_handoff
+        viewer = nda(access, fixture)
+        browser = Client(enforce_csrf_checks=True)
+        handoff = browser.get('/s/nda/' + issue_handoff(access, viewer), **BASE)
+        assert handoff.status_code == 303
+        with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
+            document = FormPage(browser.get(handoff['Location'], **BASE), handoff['Location'])
+            result = document.submit(browser, '/s/session/consent', agree='on')
+>           assert result.status_code == 303
+E           assert 403 == 303
+E            +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:134: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:32,580 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/tokens.css-image-copy] _
+
+access = <SignerAccess: SignerAccess object (5294cf48-d371-415e-a6ad-eb28644f6d7f)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfa58650>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_2')
+layout = 'image-copy', asset = 'fds/tokens.css'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:52,491 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/tokens.css-configured] _
+
+access = <SignerAccess: SignerAccess object (7de6ef1b-29b5-4edd-927b-be082d4790e6)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfa58770>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_3')
+layout = 'configured', asset = 'fds/tokens.css'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:53,326 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/theme-boot.js-image-copy] _
+
+access = <SignerAccess: SignerAccess object (e07468c5-c56a-4816-b914-ec1d0f3dc910)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfbd8650>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_6')
+layout = 'image-copy', asset = 'fds/theme-boot.js'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:55,799 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/theme-boot.js-configured] _
+
+access = <SignerAccess: SignerAccess object (d6b69a69-3a32-4a62-b672-bdb7baa57f03)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfc75eb0>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_7')
+layout = 'configured', asset = 'fds/theme-boot.js'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:56,969 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/marks/fleet.svg-image-copy] _
+
+access = <SignerAccess: SignerAccess object (b7aaf997-4563-4619-8c49-d1e8be433907)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfb0f260>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_10')
+layout = 'image-copy', asset = 'fds/marks/fleet.svg'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:17:59,535 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/marks/fleet.svg-configured] _
+
+access = <SignerAccess: SignerAccess object (d6efe428-c58e-4241-9147-d9ac8fd20da8)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfb0e870>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_11')
+layout = 'configured', asset = 'fds/marks/fleet.svg'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:18:00,415 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.css-image-copy] _
+
+access = <SignerAccess: SignerAccess object (edbf30cc-c371-4f44-a44d-058b4e513450)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfa1c560>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_14')
+layout = 'image-copy', asset = 'dealroom/shell.css'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:18:02,934 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.css-configured] _
+
+access = <SignerAccess: SignerAccess object (82a49562-73d7-4c62-8258-cacc3a3c4399)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfbd8650>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_15')
+layout = 'configured', asset = 'dealroom/shell.css'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:18:03,824 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.js-image-copy] _
+
+access = <SignerAccess: SignerAccess object (b6940b85-ed0f-4a9b-9033-198f80e30636)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cf696480>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_18')
+layout = 'image-copy', asset = 'dealroom/shell.js'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:18:06,286 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.js-configured] _
+
+access = <SignerAccess: SignerAccess object (f501c7d7-ed6b-4e44-86a3-2b53a76188d6)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cf84fc20>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_assets_in_repository_and_19')
+layout = 'configured', asset = 'dealroom/shell.js'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout == 'image-copy':
+            # Derive both destinations from the deployed image's real COPY chain.
+            backend_copy = (REPO / 'deploy/chief-glue-v1/Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:177: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:18:07,115 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+____ test_asset_roots_fail_closed_for_missing_paths_extensions_and_symlinks ____
+
+access = <SignerAccess: SignerAccess object (84640940-112a-4556-851c-81f5c632d4e6)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7116cfd00230>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-187/test_asset_roots_fail_closed_f0')
+
+    def test_asset_roots_fail_closed_for_missing_paths_extensions_and_symlinks(access, settings, tmp_path):
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = [tmp_path / 'assets']
+        (tmp_path / 'assets/fds').mkdir(parents=True)
+        (tmp_path / 'outside.css').write_text('private')
+        (tmp_path / 'assets/fds/private.css').symlink_to(tmp_path / 'outside.css')
+        for path in ['fds/missing.css', 'fds/private.css', 'fds/private.py', 'fds/../outside.css', '../outside.css']:
+            assert Client().get('/s/assets/' + path, **BASE).status_code == 403
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = []
+>       assert Client().get('/s/assets/fds/tokens.css', **BASE).status_code == 403
+E       assert 200 == 403
+E        +  where 200 = <FileResponse status_code=200, "text/css">.status_code
+E        +    where <FileResponse status_code=200, "text/css"> = <bound method Client.get of <django.test.client.Client object at 0x7116cfd016a0>>('/s/assets/fds/tokens.css', **{'HTTP_HOST': 'recipient.test:9445', 'HTTP_X_FLEET_RECIPIENT_LISTENER': '1', 'HTTP_X_FORWARDED_FOR': '100.64.0.4'})
+E        +      where <bound method Client.get of <django.test.client.Client object at 0x7116cfd016a0>> = <django.test.client.Client object at 0x7116cfd016a0>.get
+E        +        where <django.test.client.Client object at 0x7116cfd016a0> = Client()
+
+dealroom_sign/tests/test_live_acceptance_r6.py:190: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:18:08,025 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+2026-11-15 15:18:08,028 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+2026-11-15 15:18:08,030 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+2026-11-15 15:18:08,032 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+2026-11-15 15:18:08,034 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_______ test_missing_staff_names_never_render_none[None-None-Requester] ________
+
+access = <SignerAccess: SignerAccess object (None)>, first = 'None'
+last = 'None', expected = 'Requester'
+
+    @pytest.mark.parametrize('first,last,expected', [('None', 'None', 'Requester'), (' ', '\t', 'Requester'),
+        ('None', 'Whaley', 'Whaley'), (' Drew ', 'None', 'Drew'), ('', '', 'Requester')])
+    def test_missing_staff_names_never_render_none(access, first, last, expected):
+        work = access.workflow
+        work.owner.first_name, work.owner.last_name = first, last
+        work.owner.save()
+        access.delete()
+        fresh = provision(work, envelope(work))[0]
+        message = compose(enqueue(fresh, 'invitation', 'release'))
+>       assert parseaddr(message.from_email)[0] == expected + ' via Fleet Dealroom'
+E       AssertionError: assert 'None None via Fleet Dealroom' == 'Requester via Fleet Dealroom'
+E         
+E         - Requester via Fleet Dealroom
+E         ? ^ ^^ ----
+E         + None None via Fleet Dealroom
+E         ? ^^^ ^^^^
+
+dealroom_sign/tests/test_live_acceptance_r6.py:202: AssertionError
+________ test_missing_staff_names_never_render_none[None-Whaley-Whaley] ________
+
+access = <SignerAccess: SignerAccess object (None)>, first = 'None'
+last = 'Whaley', expected = 'Whaley'
+
+    @pytest.mark.parametrize('first,last,expected', [('None', 'None', 'Requester'), (' ', '\t', 'Requester'),
+        ('None', 'Whaley', 'Whaley'), (' Drew ', 'None', 'Drew'), ('', '', 'Requester')])
+    def test_missing_staff_names_never_render_none(access, first, last, expected):
+        work = access.workflow
+        work.owner.first_name, work.owner.last_name = first, last
+        work.owner.save()
+        access.delete()
+        fresh = provision(work, envelope(work))[0]
+        message = compose(enqueue(fresh, 'invitation', 'release'))
+>       assert parseaddr(message.from_email)[0] == expected + ' via Fleet Dealroom'
+E       AssertionError: assert 'None Whaley ...leet Dealroom' == 'Whaley via Fleet Dealroom'
+E         
+E         - Whaley via Fleet Dealroom
+E         + None Whaley via Fleet Dealroom
+E         ? +++++
+
+dealroom_sign/tests/test_live_acceptance_r6.py:202: AssertionError
+_________ test_missing_staff_names_never_render_none[ Drew -None-Drew] _________
+
+access = <SignerAccess: SignerAccess object (None)>, first = ' Drew '
+last = 'None', expected = 'Drew'
+
+    @pytest.mark.parametrize('first,last,expected', [('None', 'None', 'Requester'), (' ', '\t', 'Requester'),
+        ('None', 'Whaley', 'Whaley'), (' Drew ', 'None', 'Drew'), ('', '', 'Requester')])
+    def test_missing_staff_names_never_render_none(access, first, last, expected):
+        work = access.workflow
+        work.owner.first_name, work.owner.last_name = first, last
+        work.owner.save()
+        access.delete()
+        fresh = provision(work, envelope(work))[0]
+        message = compose(enqueue(fresh, 'invitation', 'release'))
+>       assert parseaddr(message.from_email)[0] == expected + ' via Fleet Dealroom'
+E       AssertionError: assert 'Drew None via Fleet Dealroom' == 'Drew via Fleet Dealroom'
+E         
+E         - Drew via Fleet Dealroom
+E         + Drew None via Fleet Dealroom
+E         ?      +++++
+
+dealroom_sign/tests/test_live_acceptance_r6.py:202: AssertionError
+_________ test_outgoing_requester_overrides_owner_for_mail_and_context _________
+
+access = <SignerAccess: SignerAccess object (None)>
+
+    def test_outgoing_requester_overrides_owner_for_mail_and_context(access):
+        work = access.workflow
+        requester = {'name': 'Drew Whaley', 'email': 'dwhaley@amforge.com'}
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind='out', state=work.state, room=work.room, source_context={'requester': requester})
+        access.delete()
+        fresh = provision(work, envelope(work))[0]
+        message = compose(enqueue(fresh, 'invitation', 'release'))
+>       assert message.reply_to == [requester['email']]
+E       AssertionError: assert ['owner@example.test'] == ['dwhaley@amforge.com']
+E         
+E         At index 0 diff: 'owner@example.test' != 'dwhaley@amforge.com'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_live_acceptance_r6.py:217: AssertionError
+____ test_incoming_and_outgoing_requesters_share_validation[requester0-in] _____
+
+access = <SignerAccess: SignerAccess object (d3d31bbb-edcf-4511-a322-812361570f21)>
+kind = 'in', requester = {'email': 'bad', 'name': 'Drew'}
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+____ test_incoming_and_outgoing_requesters_share_validation[requester0-out] ____
+
+access = <SignerAccess: SignerAccess object (b2c6c44e-4139-4e2d-806b-6ddb126c0394)>
+kind = 'out', requester = {'email': 'bad', 'name': 'Drew'}
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+____ test_incoming_and_outgoing_requesters_share_validation[requester1-in] _____
+
+access = <SignerAccess: SignerAccess object (08ec3c34-0732-4500-9e1a-70f61cd779b4)>
+kind = 'in'
+requester = {'email': 'drew@example.test', 'name': 'Drew\nBcc: Extra'}
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+____ test_incoming_and_outgoing_requesters_share_validation[requester1-out] ____
+
+access = <SignerAccess: SignerAccess object (765e2a4d-ad75-4503-9e1f-d76f5292cd45)>
+kind = 'out'
+requester = {'email': 'drew@example.test', 'name': 'Drew\nBcc: Extra'}
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+____ test_incoming_and_outgoing_requesters_share_validation[requester2-in] _____
+
+access = <SignerAccess: SignerAccess object (fe29fd93-72d9-4998-90ef-bbc751553c34)>
+kind = 'in'
+requester = {'email': 'drew@example.test\r\nBcc: extra@example.test', 'name': 'Drew'}
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+____ test_incoming_and_outgoing_requesters_share_validation[requester2-out] ____
+
+access = <SignerAccess: SignerAccess object (95369bc8-4447-4df8-9355-6ae74f73c504)>
+kind = 'out'
+requester = {'email': 'drew@example.test\r\nBcc: extra@example.test', 'name': 'Drew'}
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+____ test_incoming_and_outgoing_requesters_share_validation[requester3-out] ____
+
+access = <SignerAccess: SignerAccess object (a99b9d23-20d1-4728-993d-047061cb05b3)>
+kind = 'out', requester = {}
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+_______ test_incoming_and_outgoing_requesters_share_validation[None-out] _______
+
+access = <SignerAccess: SignerAccess object (03e724e4-b0fe-445e-aa41-f705ba29ae2e)>
+kind = 'out', requester = None
+
+    @pytest.mark.parametrize('kind', ['in', 'out'])
+    @pytest.mark.parametrize('requester', [{'name': 'Drew', 'email': 'bad'}, {'name': 'Drew\nBcc: Extra', 'email': 'drew@example.test'},
+        {'name': 'Drew', 'email': 'drew@example.test\r\nBcc: extra@example.test'}, {}, None])
+    def test_incoming_and_outgoing_requesters_share_validation(access, kind, requester):
+        work = access.workflow
+        SignatureRequest.objects.create(workflow=work, board_id='board', creator=work.owner,
+            title=work.title, kind=kind, state=work.state, room=work.room, source_context={'requester': requester})
+>       with pytest.raises(SignError):
+E       Failed: DID NOT RAISE <class 'dealroom_sign.client.SignError'>
+
+dealroom_sign/tests/test_live_acceptance_r6.py:230: Failed
+_ test_board_send_persists_requester_and_clean_display_title_with_replay_binding _
+
+base = namespace(user=<User: staff@example.test>, org=<Organization: Fixture Organisation>, room=<Dataroom: Fixture room>, ve...n/Info 1 0 R\n>>\nstartxref\n356\n%%EOF\n', settings=<pytest_django.fixtures.SettingsWrapper object at 0x7116cf696c30>)
+
+    def test_board_send_persists_requester_and_clean_display_title_with_replay_binding(base):
+        client = APIClient(); client.force_authenticate(base.user)
+        base.version.document.name = 'Harbor Light Mutual NDA (Nov 15 1511).pdf'; base.version.document.save()
+        body = board_body(base)
+        with patch('dealroom_sign.workflows.source_bytes', return_value=base.pdf):
+            response = client.post('/api/v1/dealroom-sign/envelopes/', body, format='json')
+>           assert response.status_code == 201, response.data
+E           AssertionError: {'non_field_errors': [ErrorDetail(string='Unsupported input property.', code='invalid')]}
+E           assert 400 == 201
+E            +  where 400 = <Response status_code=400, "application/json">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:246: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:18:22,030 [WARNING] django.request:253 log_response() - Bad Request: /api/v1/dealroom-sign/envelopes/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Bad Request: /api/v1/dealroom-sign/envelopes/
+_______________ test_invitation_and_context_pluralize_counts[0] ________________
+
+access = <SignerAccess: SignerAccess object (c2bca794-68ac-475f-953c-0081cb7ce05b)>
+count = 0
+
+    @pytest.mark.parametrize('count', [0, 1, 2])
+    def test_invitation_and_context_pluralize_counts(access, count):
+        access.context.update(pages=1, signatures=count)
+        message = compose(enqueue(access, 'invitation', 'release'))
+        suffix = '' if count == 1 else 's'
+        for text in [message.body, message.alternatives[0][0]]:
+            assert f'{count} signature{suffix} needed' in text
+            assert f'Estimated {max(1, count)} minute' + ('' if count <= 1 else 's') in text
+>           assert '1 signatures' not in text and '1 minutes' not in text and '1 pages' not in text
+E           assert ('1 signatures' not in "Fleet | Dea...aper copy.\n"
+E             
+E             '1 signatures' is contained here:
+E             ?           -----
+E               aper copy. and '1 minutes' not in "Fleet | Dea...aper copy.\n"
+E             
+E             '1 minutes' is contained here:
+E               Fleet | Dealroom
+E               None None · Estimated 1 minutes · Due 22 Nov 2026, 3:18 PM UTC (UTC) · 
+E             ?                       +++++++++
+E               
+E               None None sent you “Source” to sign....
+E             
+E             ...Full output truncated (15 lines hidden), use '-vv' to show)
+
+dealroom_sign/tests/test_live_acceptance_r6.py:272: AssertionError
+_______________ test_invitation_and_context_pluralize_counts[1] ________________
+
+access = <SignerAccess: SignerAccess object (4c84e0e1-4b0b-4438-a0f3-f1f59202f52e)>
+count = 1
+
+    @pytest.mark.parametrize('count', [0, 1, 2])
+    def test_invitation_and_context_pluralize_counts(access, count):
+        access.context.update(pages=1, signatures=count)
+        message = compose(enqueue(access, 'invitation', 'release'))
+        suffix = '' if count == 1 else 's'
+        for text in [message.body, message.alternatives[0][0]]:
+>           assert f'{count} signature{suffix} needed' in text
+E           assert '1 signature needed' in "Fleet | Dealroom\nNone None · Estimated 1 minutes · Due 22 Nov 2026, 3:18 PM UTC (UTC) · \n\nNone None sent you “Sour...D4-GI2K-JLCR-R2UG.\nReport a concern: mailto:support@fleet.test\nReply to contact None None or arrange a paper copy.\n"
+
+dealroom_sign/tests/test_live_acceptance_r6.py:270: AssertionError
+_______________ test_invitation_and_context_pluralize_counts[2] ________________
+
+access = <SignerAccess: SignerAccess object (1c658666-60ac-47c8-9ace-f3c334951ae7)>
+count = 2
+
+    @pytest.mark.parametrize('count', [0, 1, 2])
+    def test_invitation_and_context_pluralize_counts(access, count):
+        access.context.update(pages=1, signatures=count)
+        message = compose(enqueue(access, 'invitation', 'release'))
+        suffix = '' if count == 1 else 's'
+        for text in [message.body, message.alternatives[0][0]]:
+            assert f'{count} signature{suffix} needed' in text
+            assert f'Estimated {max(1, count)} minute' + ('' if count <= 1 else 's') in text
+>           assert '1 signatures' not in text and '1 minutes' not in text and '1 pages' not in text
+E           assert ('1 signatures' not in "Fleet | Dea...aper copy.\n"
+E             
+E             '1 signatures' is contained here:
+E             ?           -----
+E               aper copy. and '1 minutes' not in "Fleet | Dea...aper copy.\n"
+E             
+E             '1 minutes' is contained here:
+E               aper copy. and '1 pages' not in "Fleet | Dea...aper copy.\n"
+E             
+E             '1 pages' is contained here:
+E               
+E               
+E               
+E               Source
+E               1 pages · 2 signatures needed · Estimated 2 minutes...
+E             
+E             ...Full output truncated (10 lines hidden), use '-vv' to show)
+
+dealroom_sign/tests/test_live_acceptance_r6.py:272: AssertionError
+__________ test_due_zone_is_shown_once[UTC-22 Nov 2026, 3:11 PM UTC] ___________
+
+access = <SignerAccess: SignerAccess object (9f9e6e6f-aa45-4864-a946-a62c2805ada7)>
+zone = 'UTC', display = '22 Nov 2026, 3:11 PM UTC'
+
+    @pytest.mark.parametrize('zone,display', [('UTC', '22 Nov 2026, 3:11 PM UTC'), ('America/Los_Angeles', '22 Nov 2026, 3:11 PM PST')])
+    def test_due_zone_is_shown_once(access, zone, display):
+        access.context.update(timezone=zone, due_at=display)
+        message = compose(enqueue(access, 'invitation', 'release'))
+        for text in [message.body, message.alternatives[0][0], page(RequestFactory().get('/'), 'welcome', access=access).content.decode()]:
+            assert 'Due ' + display in text
+>           assert '(' + zone + ')' not in text
+E           assert '(UTC)' not in "Fleet | Dea...aper copy.\n"
+E             
+E             '(UTC)' is contained here:
+E               11 PM UTC (UTC) · 
+E             ?           +++++
+E               
+E               None None sent you “Source” to sign.
+E               Test Organization...
+E             
+E             ...Full output truncated (14 lines hidden), use '-vv' to show
+
+dealroom_sign/tests/test_live_acceptance_r6.py:284: AssertionError
+__ test_due_zone_is_shown_once[America/Los_Angeles-22 Nov 2026, 3:11 PM PST] ___
+
+access = <SignerAccess: SignerAccess object (cd1b47c2-80c2-47ff-895e-decdf70cd9eb)>
+zone = 'America/Los_Angeles', display = '22 Nov 2026, 3:11 PM PST'
+
+    @pytest.mark.parametrize('zone,display', [('UTC', '22 Nov 2026, 3:11 PM UTC'), ('America/Los_Angeles', '22 Nov 2026, 3:11 PM PST')])
+    def test_due_zone_is_shown_once(access, zone, display):
+        access.context.update(timezone=zone, due_at=display)
+        message = compose(enqueue(access, 'invitation', 'release'))
+        for text in [message.body, message.alternatives[0][0], page(RequestFactory().get('/'), 'welcome', access=access).content.decode()]:
+            assert 'Due ' + display in text
+>           assert '(' + zone + ')' not in text
+E           assert '(America/Los_Angeles)' not in "Fleet | Dea...aper copy.\n"
+E             
+E             '(America/Los_Angeles)' is contained here:
+E               11 PM PST (America/Los_Angeles) · 
+E               
+E               None None sent you “Source” to sign.
+E               Test Organization
+E               ...
+E             
+E             ...Full output truncated (13 lines hidden), use '-vv' to show
+
+dealroom_sign/tests/test_live_acceptance_r6.py:284: AssertionError
+_______ test_existing_context_cleans_extension_and_board_filename_suffix _______
+
+access = <SignerAccess: SignerAccess object (350d1503-db71-45bd-844e-1e07d1055dc1)>
+
+    def test_existing_context_cleans_extension_and_board_filename_suffix(access):
+        access.context['title'] = 'Harbor Light Mutual NDA (Nov 15 1511).pdf'
+        message = compose(enqueue(access, 'invitation', 'release'))
+        html = page(RequestFactory().get('/'), 'welcome', access=access).content.decode()
+>       assert '<h1>Harbor Light Mutual NDA</h1>' in html
+E       assert '<h1>Harbor Light Mutual NDA</h1>' in '<!doctype html><html lang="en" data-edge="outline" data-density="spacious"><head><meta charset="utf-8"><meta name="vi...oter class="site-footer">Fleet | Dealroom</footer>\n\n<script src="/s/assets/entry.js" defer></script></body></html>\n'
+
+dealroom_sign/tests/test_live_acceptance_r6.py:291: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_html_header_and_meta_allow_only_same_origin_referrers[/s/access]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_html_header_and_meta_allow_only_same_origin_referrers[/articles/signature-disclosure]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_html_header_and_meta_allow_only_same_origin_referrers[entry]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_html_header_and_meta_allow_only_same_origin_referrers[context]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_html_header_and_meta_allow_only_same_origin_referrers[return]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_browser_policy_drives_real_entry_consent_and_download_forms
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_alternate_form_and_code_fetch_use_document_policy
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_nda_handoff_lands_on_same_origin_consent_and_return
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/tokens.css-image-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/tokens.css-configured]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/theme-boot.js-image-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/theme-boot.js-configured]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/marks/fleet.svg-image-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/marks/fleet.svg-configured]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.css-image-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.css-configured]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.js-image-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.js-configured]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_asset_roots_fail_closed_for_missing_paths_extensions_and_symlinks
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_missing_staff_names_never_render_none[None-None-Requester]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_missing_staff_names_never_render_none[None-Whaley-Whaley]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_missing_staff_names_never_render_none[ Drew -None-Drew]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_outgoing_requester_overrides_owner_for_mail_and_context
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[requester0-in]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[requester0-out]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[requester1-in]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[requester1-out]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[requester2-in]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[requester2-out]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[requester3-out]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_incoming_and_outgoing_requesters_share_validation[None-out]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_board_send_persists_requester_and_clean_display_title_with_replay_binding
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_invitation_and_context_pluralize_counts[0]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_invitation_and_context_pluralize_counts[1]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_invitation_and_context_pluralize_counts[2]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_due_zone_is_shown_once[UTC-22 Nov 2026, 3:11 PM UTC]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_due_zone_is_shown_once[America/Los_Angeles-22 Nov 2026, 3:11 PM PST]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_existing_context_cleans_extension_and_board_filename_suffix
+38 failed, 35 passed in 70.94s (0:01:10)

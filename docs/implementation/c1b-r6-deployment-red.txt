@@ -1,0 +1,49 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____ test_deployment_html_does_not_override_referrer_policy[chief-glue-v1] _____
+
+deployment = 'chief-glue-v1'
+
+    @pytest.mark.parametrize('deployment', ['chief-glue-v1', 'chief-send-v1'])
+    def test_deployment_html_does_not_override_referrer_policy(deployment):
+        config = (REPO / 'deploy' / deployment / 'nginx.conf').read_text().replace('"', '')
+>       assert 'add_header Referrer-Policy no-referrer' not in config
+E       AssertionError: assert 'add_header ... no-referrer' not in 'upstream ap...r;\n  }\n}\n'
+E         
+E         'add_header Referrer-Policy no-referrer' is contained here:
+E           d/dist;
+E             add_header Referrer-Policy no-referrer always;
+E             location = / { return 302 /signing/; }
+E             location /signing/ { try_files $uri @app; }
+E             location /view/ { rewrite ^/view/([^/]+)/?$ /signing/room/$1 last; }...
+E         
+E         ...Full output truncated (15 lines hidden), use '-vv' to show
+
+dealroom_sign/tests/test_live_acceptance_r6.py:340: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FWXW1GGQWZBQPRA0WXZ4HH
+____ test_deployment_html_does_not_override_referrer_policy[chief-send-v1] _____
+
+deployment = 'chief-send-v1'
+
+    @pytest.mark.parametrize('deployment', ['chief-glue-v1', 'chief-send-v1'])
+    def test_deployment_html_does_not_override_referrer_policy(deployment):
+        config = (REPO / 'deploy' / deployment / 'nginx.conf').read_text().replace('"', '')
+>       assert 'add_header Referrer-Policy no-referrer' not in config
+E       AssertionError: assert 'add_header ... no-referrer' not in '\n  upstrea...  }\n  }\n\n'
+E         
+E         'add_header Referrer-Policy no-referrer' is contained here:
+E           ys;
+E                 add_header Referrer-Policy no-referrer always;
+E                 try_files $uri /index.html;
+E               }
+E               location / {...
+E         
+E         ...Full output truncated (48 lines hidden), use '-vv' to show
+
+dealroom_sign/tests/test_live_acceptance_r6.py:340: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_deployment_html_does_not_override_referrer_policy[chief-glue-v1]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_deployment_html_does_not_override_referrer_policy[chief-send-v1]
+2 failed, 80 deselected in 10.10s

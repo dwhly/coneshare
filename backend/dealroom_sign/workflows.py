@@ -12,6 +12,7 @@ from .client import Documenso, SignError
 from .evidence import ingest, snapshot_fields, instant
 from .legacy import legacy_request
 from .models import NdaAcceptance, ObservedSignEvent, SignCredential, SignatureRequest, Workflow
+from .presentation import clean_title, requester_snapshot
 from .storage import publish, source_bytes, stage, verify_seal
 from .validation import digest, request_digest, validate_recipients
 
@@ -42,9 +43,19 @@ def record_fact(workflow, kind, source_id, data=None, *, actor=None):
 
 
 def command(*, owner, room, version, recipients, idempotency_key, purpose='room_document',
-            member=None, policy=None, board_id=None, task_ref=None):
+            member=None, policy=None, board_id=None, task_ref=None, requester=None, title=None):
     if not idempotency_key or len(idempotency_key) > 200:
         raise ValidationError('An idempotency key of at most 200 characters is required.')
+    metadata = {}
+    if requester is not None or title is not None:
+        if not board_id or purpose != 'room_document':
+            raise ValidationError('Sender metadata requires a board document request.')
+        if requester is not None:
+            requester = requester_snapshot(requester)
+            metadata['requester'] = requester
+        if title is not None:
+            title = clean_title(title)
+            metadata['title'] = title
     existing = Workflow.objects.filter(owner=owner, idempotency_key=idempotency_key).first()
     if existing:
         normalized = validate_recipients(recipients, None, page_count=500)
@@ -53,11 +64,12 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
                 'policy': str(policy.revision) if policy else ''}
         if board_id:
             data.update(board_id=board_id, task_ref=task_ref)
+        data.update(metadata)
         if request_digest(data) != existing.request_sha256 or (member and existing.member_email != member.email.strip().lower()) or (policy and policy.source_sha256 != existing.source_sha256):
             raise ValidationError('Idempotency key already used with different inputs.')
         if board_id:
             with transaction.atomic():
-                legacy_request(existing, board_id, task_ref)
+                legacy_request(existing, board_id, task_ref, requester=requester, title=title)
         return existing
     pdf = source_bytes(version)
     recipients = validate_recipients(recipients, pdf)
@@ -71,6 +83,7 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             'member': str(member.pk) if member else '', 'policy': str(policy.revision) if policy else ''}
     if board_id:
         data.update(board_id=board_id, task_ref=task_ref)
+    data.update(metadata)
     fingerprint = request_digest(data)
     command_id = uuid.uuid4()
     with transaction.atomic():
@@ -78,13 +91,13 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             'id': command_id, 'room': room, 'request_sha256': fingerprint, 'purpose': purpose,
             'member_id': str(member.pk) if member else '', 'member_email': member.email.strip().lower() if member else '',
             'policy_revision': str(policy.revision) if policy else '', 'source_version': version,
-            'source_sha256': digest(pdf), 'recipients': recipients, 'title': version.document.name,
+            'source_sha256': digest(pdf), 'recipients': recipients, 'title': title or version.document.name,
             'external_id': f'dealroom:{getattr(settings, "SIGN_DEPLOYMENT_ID", "chief")}:{command_id}',
         })
         if workflow.request_sha256 != fingerprint:
             raise ValidationError('Idempotency key already used with different inputs.')
         if board_id:
-            legacy_request(workflow, board_id, task_ref)
+            legacy_request(workflow, board_id, task_ref, requester=requester, title=title)
     return workflow
 
 

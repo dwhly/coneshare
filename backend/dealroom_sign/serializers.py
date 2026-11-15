@@ -1,7 +1,9 @@
 from django.db.models import F
 from rest_framework import serializers
 
+from .client import SignError
 from .models import NdaPolicy, Workflow
+from .presentation import clean_title, requester_snapshot
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
@@ -71,10 +73,23 @@ class SendInputSerializer(StrictInputSerializer):
     recipients = SignerInputSerializer(many=True)
     board_id = serializers.CharField(max_length=100, required=False)
     task_ref = TaskReferenceSerializer(required=False, allow_null=True)
+    requester = serializers.JSONField(required=False)
+    title = serializers.CharField(max_length=500, required=False)
+
+    def validate_requester(self, value):
+        try:
+            return requester_snapshot(value)
+        except SignError:
+            raise serializers.ValidationError('A requester name and valid email are required.') from None
+
+    def validate_title(self, value):
+        return clean_title(value)
 
     def validate(self, data):
         if 'task_ref' in data and not data.get('board_id'):
             raise serializers.ValidationError('A task reference requires a board ID.')
+        if any(field in data for field in ('requester', 'title')) and not data.get('board_id'):
+            raise serializers.ValidationError('Sender metadata requires a board ID.')
         return data
 
 

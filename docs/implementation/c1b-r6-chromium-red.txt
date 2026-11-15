@@ -1,0 +1,92 @@
+Failed to initialize GeoIP2: Path must be a valid database or directory containing databases.
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FX50A4KD4R7X75WV2ASRSK
+2026-11-15 15:28:00,083 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+{
+  "entry": {
+    "path": "/s/[personal-capability]/enter",
+    "method": "POST",
+    "status": 200
+  },
+  "consent": {
+    "path": "/s/session/consent",
+    "method": "POST",
+    "origin": "null",
+    "status": 403
+  }
+}
+
+FDefault organization not found, creating one...
+Default root folder is set, id: 01M7FX53R2CQC4HE2JNMHSBGM7
+
+=================================== FAILURES ===================================
+____________________ test_chromium_iphone_real_consent_form ____________________
+
+access = <SignerAccess: SignerAccess object (2bf67d21-8c36-4fab-9406-8cf997415783)>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-195/test_chromium_iphone_real_cons0')
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7e3ec067e030>
+
+    def test_chromium_iphone_real_consent_form(access, tmp_path, settings):
+        access.context.update(title='Harbor Light Mutual NDA (Nov 15 1511).pdf', pages=1)
+        access.sender = {'name': 'Drew Whaley', 'email': 'dwhaley@amforge.com'}
+        access.save()
+        cert, key = tmp_path/'cert.pem', tmp_path/'key.pem'
+        subprocess.run(['openssl', 'req', '-x509', '-newkey', 'rsa:2048', '-nodes', '-days', '1',
+            '-keyout', str(key), '-out', str(cert), '-subj', '/CN=recipient.test'],
+            check=True, capture_output=True)
+        django_app = WSGIHandler()
+        def listener(environ, start_response):
+            environ.update(HTTP_X_FLEET_RECIPIENT_LISTENER='1', HTTP_X_FORWARDED_FOR='127.0.0.1')
+            environ['wsgi.url_scheme'] = 'https'
+            return django_app(environ, start_response)
+        # A serial server avoids SQLite's parallel session-heartbeat write limitation.
+        server = make_server('127.0.0.1', 0, listener, handler_class=QuietHandler)
+        tls = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        tls.load_cert_chain(cert, key)
+        server.socket = tls.wrap_socket(server.socket, server_side=True)
+        origin = f'https://recipient.test:{server.server_port}'
+        settings.SIGN_RECIPIENT_ORIGIN = origin
+        settings.ALLOWED_HOSTS = [*settings.ALLOWED_HOSTS, 'recipient.test']
+        env = {**os.environ, 'RECIPIENT_ENTRY_URL': origin + '/s/' + capability(access)}
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        with ExitStack() as stack:
+            stack.enter_context(patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)))
+            stack.enter_context(patch('dealroom_sign.recipient_proxy.forward',
+                side_effect=lambda *args: HttpResponse('<h1>Native signing fixture</h1>')))
+            if os.environ.get('R6_TEST_OLD_REFERRER_POLICY'):
+                stack.enter_context(patch('dealroom_sign.recipient_proxy.referrer_policy', return_value='no-referrer'))
+                stack.enter_context(patch('dealroom_sign.recipient_proxy.render_to_string',
+                    side_effect=lambda *args, **kwargs: render_to_string(*args, **kwargs).replace(
+                        'name="referrer" content="same-origin"', 'name="referrer" content="no-referrer"')))
+            thread.start()
+            try:
+                result = subprocess.run(['node', str(Path(__file__).with_name('recipient-form-policy.cjs'))],
+                    env=env, text=True, capture_output=True, timeout=60)
+            finally:
+                server.shutdown()
+                thread.join(timeout=5)
+                server.server_close()
+        print(result.stdout)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+E         
+E         403 !== 303
+E         
+E             at /root/worktrees/send-c1b/backend/dealroom_sign/e2e/recipient-form-policy.cjs:32:12 {
+E           generatedMessage: true,
+E           code: 'ERR_ASSERTION',
+E           actual: 403,
+E           expected: 303,
+E           operator: 'strictEqual',
+E           diff: 'simple'
+E         }
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', '/root/worktrees/send-c1b/backend/dealroom_sign/e2e/recipient-form-policy.cjs'], return... true,\n  code: 'ERR_ASSERTION',\n  actual: 403,\n  expected: 303,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n").returncode
+
+dealroom_sign/e2e/recipient_form_policy.py:74: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+=========================== short test summary info ============================
+FAILED dealroom_sign/e2e/recipient_form_policy.py::test_chromium_iphone_real_consent_form
+1 failed in 12.51s

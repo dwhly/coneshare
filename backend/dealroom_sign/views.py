@@ -36,6 +36,7 @@ from .exports import (
 )
 from .models import CounterpartyEffect, NdaAcceptance, NdaPolicy, SignCredential, SignatureRequest, Workflow
 from .operations import require_export_actor
+from .presentation import referrer_policy
 from .requests import (
     activity as request_activity, board_config, freshness, integrity, list_row,
     request_scope, scoped_request,
@@ -102,7 +103,7 @@ class SigningEnvelopeViewSet(viewsets.ReadOnlyModelViewSet):
     def validate_approval(self, request):
         # Reject before an API-key request can create an approval or a workflow.
         if (isinstance(request.auth, APIKey) and isinstance(request.data, dict)
-                and any(field in request.data for field in ('board_id', 'task_ref'))):
+                and any(field in request.data for field in ('board_id', 'task_ref', 'requester', 'title'))):
             raise PermissionDenied('API keys cannot supply board_id or task_ref.')
 
     @extend_schema(request=SendInputSerializer, responses=WorkflowSerializer)
@@ -116,7 +117,8 @@ class SigningEnvelopeViewSet(viewsets.ReadOnlyModelViewSet):
         if not SignCredential.objects.filter(owner=request.user, enabled=True).exists():
             raise ValidationError('Configure your per-staff Sign credential first.')
         workflow = command(owner=request.user, room=room, version=version, recipients=data['recipients'],
-            idempotency_key=data['idempotency_key'], board_id=data.get('board_id'), task_ref=data.get('task_ref'))
+            idempotency_key=data['idempotency_key'], board_id=data.get('board_id'), task_ref=data.get('task_ref'),
+            requester=data.get('requester'), title=data.get('title'))
         return Response(WorkflowSerializer(workflow).data, status=201)
 
 
@@ -200,7 +202,7 @@ class RecipientNdaView(APIView):
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
-        response['Referrer-Policy'] = 'no-referrer'
+        response['Referrer-Policy'] = referrer_policy(response)
         response['Cache-Control'] = 'private, no-store'
         return response
 
@@ -330,7 +332,7 @@ class SignatureProductView(APIView):
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
         response['Cache-Control'] = 'private, no-store'
-        response['Referrer-Policy'] = 'no-referrer'
+        response['Referrer-Policy'] = referrer_policy(response)
         return response
 
     def key_scope_targets(self, request):

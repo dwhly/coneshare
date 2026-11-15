@@ -25,7 +25,7 @@ def room(request, slug=None, room_id=None):
         link = get_object_or_404(ShareLink, slug=slug, dataroom__isnull=False)
     response = render(request, 'dealroom_sign/room.html', {'slug': link.slug, 'room_id': str(link.dataroom_id)})
     response['Cache-Control'] = 'private, no-store'
-    response['Referrer-Policy'] = 'no-referrer'
+    response['Referrer-Policy'] = 'same-origin'
     return response
 
 

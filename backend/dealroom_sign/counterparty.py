@@ -19,6 +19,7 @@ from .client import SignError
 from .evidence import instant
 from .models import (NdaPolicy, SignatureRequest, SignerAccess, SignerChallenge,
                      SignerHandoff, SignerSession, Workflow)
+from .presentation import clean_title, display_name, requester_snapshot
 
 COOKIE = '__Host-fleet_signer'
 DISCLOSURE = 'Fleet | Dealroom electronic signature consent v1'
@@ -98,14 +99,17 @@ def observe_completion(access, completed):
 
 def sender_snapshot(workflow):
     row = SignatureRequest.objects.filter(workflow=workflow).first()
-    staff = {'name': workflow.owner.get_full_name() or 'Requester',
+    staff = {'name': display_name(workflow.owner.get_full_name()),
              'email': workflow.owner.email, 'company': workflow.room.organization.name}
     sender = staff
     context = row.source_context if row else {}
     if row and row.kind == 'in':
         sender = context.get('requester')
-        if not isinstance(sender, dict) or not sender.get('name') or not sender.get('email'):
+        if not isinstance(sender, dict) or 'name' not in sender or 'email' not in sender:
             raise SignError('incoming_requester_missing')
+        sender = requester_snapshot(sender)
+    elif row and row.kind == 'out' and 'requester' in context:
+        sender = requester_snapshot(context['requester'])
     return row, staff, sender, context
 
 
@@ -135,7 +139,7 @@ def provision(workflow, envelope, *, released_at=None):
                 email=person['email'].lower(), name=person.get('name') or next((p['name'] for p in workflow.recipients
                     if p['email'] == person['email'].lower()), ''), role=person.get('role', 'SIGNER'),
                 sender=sender, sending_staff=staff, released_at=released, signing_expires_at=released+timedelta(days=30),
-                context={'title': workflow.title, 'note': context.get('note', ''),
+                context={'title': clean_title(row.title if row else workflow.title), 'note': context.get('note', ''),
                     'pages': workflow.source_version.num_pages, 'signatures': sum(f['type'] in {'SIGNATURE', 'FREE_SIGNATURE'}
                         for p in workflow.recipients if p['email'] == person['email'].lower() for f in p.get('fields', [])),
                     'due_at': display_time(context.get('due_at') or released+timedelta(days=7), context.get('timezone', 'UTC')),

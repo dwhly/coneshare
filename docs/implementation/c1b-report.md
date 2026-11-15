@@ -1,6 +1,6 @@
 # C1b Gate 3 implementation report
 
-**Current revision: r5.** The r5 section below records Gate-3 re-review r3. Earlier sections retain their historical evidence; r5 corrections take precedence.
+**Current revision: r6.** The r6 section below records the live-acceptance fixes. Earlier sections retain their historical evidence; r6 corrections take precedence.
 
 2026-11-15. Gate 3 r3 changes are **uncommitted** in the three supplied worktrees, whose HEADs match Send `f9fef317`, Sign `d596af665` and Fleet deploy `c0401af`. Actual existing branches are Send `agent/c1b-counterparty`, Sign `agent/c1b-listener` and Fleet deploy `agent/c1b-deploy`; the latter two differ from the brief’s shared branch label. Branches were preserved. This report supersedes the r2 implementation report and applies all 8 major, 14 minor and 7 nit findings, including the manager decisions. No deployed database, private env/key file, production Compose file or project memory was changed. No live acceptance result is claimed.
 
@@ -273,3 +273,75 @@ Waiting re-checks have their own `waiting_limit=20` cap per drain, independent o
 - Live browser/HTTP/SMTP/deployment acceptance remains manager-run; these local results do not claim live acceptance.
 
 [r5 failure/pass evidence and exact commands](c1b-r5-test-evidence.txt) record the red runs, mutation outcomes, final suites and footprint check.
+
+
+## r6 — Live-acceptance fixes
+
+Starting HEADs: Send `99a97ef1`, Sign `5b29ff6c9`, Board `07257f1`. Changes are unstaged and uncommitted. Sign has **zero changed files and +0/−0 upstream lines**. No database schema, migration, production data or project memory was changed.
+
+### Per-item red → green
+
+`R6` below is `backend/dealroom_sign/tests/test_live_acceptance_r6.py`. Initial Send regressions: **38 failed / 35 passed**; the additional room-page regression: **1 failed / 6 controls passed**. nginx policy checks subsequently reproduced **2 failures**. Missing-name consistency reproduced **1 failure / 7 controls passed**. The exact preview Dockerfile follow-up reproduced **5 failures** against the unchanged proxy before restoration. Final R6 set: **95 passed**. All assertions remain active; fixture corrections supplied the configured recipient origin, parsed forms with implicit actions, and used the actual `/signing/room/<slug>` route behind nginx's `/view/` rewrite.
+
+| Item | Change and regression | Red → green |
+| --- | --- | --- |
+| 1. Consent / Origin | HTML headers **and the shared meta tag** use `same-origin`. The proxy keeps exact Origin and CSRF checks; null, absent and foreign Origins still return 403. Room/NDA pages and both Send nginx configs no longer override the page with `no-referrer`. The glue nginx header applies only to its static HTML fallback, preserving Django's PDF/JSON policy. R6 reads actual form controls and the effective document policy to submit entry, consent, alternate access and final/certificate downloads; covers code verification fetch, NDA handoff, return, and 21 noncanonical-Origin negatives. | **11 policy/flow failures → passes**, plus unchanged security controls. Real Chromium evidence is recorded below. |
+| 2. Assets | `SIGN_RECIPIENT_ASSET_ROOTS` is an ordered settings override; `None` searches `frontend/{dist,public}` under `BASE_DIR` and its parent. An explicit empty list disables serving. Root containment, extension allowlist and fail-closed missing-file behavior remain. Tests serve real CSS/JS/SVG bytes from repo public, repo dist, glue image, preview image and custom roots; destinations are parsed from both `deploy/chief-glue-v1/Dockerfile` and `deploy/sign-product-preview/Dockerfile`, plus the frontend COPY in `deploy/chief-send-proto/Dockerfile`. | **11 failed / 10 passed**, then **5 preview-layout failures → 26 passed**. |
+| 3. Missing sender names | Shared display normalization removes blank/whitespace and literal `None` name parts, retaining real parts or falling back to `Requester`. Applied when snapshotting and when rendering already-stored sender names. Incoming/outgoing requester names share the same fallback; requester email is retained. | Staff names: **3 failed / 2 passed → 5 passed**. Requester names: **1 failed / 7 passed → 8 passed**. |
+| 4. Human sender | Board supplies authenticated `user.name` / `user.email`; Send validates and stores `requester` for outgoing requests and uses it for From display name, Reply-To, page sender and requester copies. `workflow.owner` and the creator FK retain the service identity; absent requester retains owner fallback. Incoming/outgoing snapshots share email, shape, length and CR/LF validation. Signer routes cannot write this metadata. | Send outgoing/mail/API plus validation: **10 failed / 2 passed → 12 passed**, with 6 additional input/auth controls. Board: **5 failed / 2 passed → 7 passed**; the complete signing module has **37 passes**. |
+| 5. Display title | Board forwards its clean `stem` separately from the timestamped storage filename. Send binds title and requester into the idempotency digest and persists the clean workflow/request title. Replays changing either fail. Mail and pages also clean older stored board suffixes. | Board/Send metadata tests above fail before the change and pass afterward; shared coverage, not added twice. |
+| 6. Grammar | Text mail, HTML mail/preheader and context pages pluralize pages, signatures and estimated minutes. Covers zero, one and two signatures. | **3 failed → 3 passed**. |
+| 7. Timezone | Keep the zone already formatted by `display_time`; remove the duplicate parenthesized zone. UTC and `America/Los_Angeles` (PST) are covered in both mail formats and pages. | **2 failed → 2 passed**. |
+| 8. Context heading | Shared title normalization removes `.pdf` and the known legacy board timestamp suffix when rendering existing snapshots as well as provisioning new ones. | **1 failed → 1 passed**, shared with item 5's older-snapshot coverage. |
+
+### Exact Board changes
+
+- `hermes_board/app.py::sig_send_impl` constructs `requester = {"name": user.name, "email": user.email}` from the authenticated `User`, then passes `requester` and `title=stem` to `dealroom.send` in both the existing-room and upload/Drive branches. Timestamped `fname` is retained solely for the uploaded file and version lookup.
+- `api_signatures_new` already passes its authenticated `user` into `sig_send_impl`; that call remains intact and receives the new behavior, as does the card-specific route. Both routes are tested with a browser-supplied requester that is ignored in favor of the authenticated identity.
+- `hermes_board/dealroom.py::Dealroom.send` adds optional keyword arguments `requester` and `title` and forwards them in the outgoing Send envelope body. This transport change is required to carry the two fields from `app.py` to Send. It does not assert a verified `creator_login` or change the board's read-authority model.
+- `tests/test_dealroom_sign.py` extends the fake transport's signature and adds upload/existing-room coverage for both routes, disconnected-Drive rejection controls, and a transport payload test. Existing assertions are unchanged.
+
+### Header and data audit
+
+The actual entry script posts `FormData` with the hidden CSRF token. Consent, alternate access and download are native HTML form posts. Code verification is a JSON fetch with the CSRF header. NDA room fetches inherit the room document's `same-origin` policy; JSON response policy does not replace the document's policy. NDA handoff and return GETs preserve session scope and existing publication checks. Proxied native HTML receives the same response policy without rewriting upstream bytes. PDFs/downloads and JSON retain `no-referrer`; DRF's negotiated media type is used before response rendering. No `Origin: null` allowance was added.
+
+New metadata is accepted only through the authenticated board send path and its configured owner/team/room mapping; API keys cannot supply requester/title/board metadata. Missing requester uses the owner; an explicitly invalid requester fails validation. Existing service-account metadata cannot recover a historical human sender: new board sends carry that identity; old snapshots receive display cleanup only.
+
+### Validation and reproduction
+
+**Local results:** the complete signing suite plus `tests/dealroom/test_foundation.py` ran **498 passed / 1 baseline failure / 0 skipped**. The final r6-only run has **95 passes**, including eight additional blank-requester cases and five preview-image cases added after the broader run started. The browser regression has **1 old-policy mutation failure → 1 pass**. The browser harness uses a disposable HTTPS Django server and Chromium iPhone emulation. Native reconciliation and the final native page are fixtures, so this is evidence for entry, assets, consent, session rotation and redirect—not deployed native signing or SMTP acceptance.
+
+```sh
+/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b \
+  dealroom_sign/tests/test_live_acceptance_r6.py
+/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b \
+  dealroom_sign/tests tests/dealroom/test_foundation.py
+bash /root/work/sign-product/run-board-tests.sh /root/worktrees/board-s1 tests/test_dealroom_sign.py
+bash /root/work/sign-product/run-board-tests.sh /root/worktrees/board-s1
+```
+
+The supplied board runner is not executable, so it was invoked with `bash`. Full Board results: **265 passed, 3 failed, 58 inherited skips**. All three failures are unchanged baseline failures in `tests/test_cloud_edition.py`: `test_detail_pages_program_and_epic`, `test_function_serves_the_same_endpoints_and_shapes`, and `test_relay_publishes_the_tailnet_payload`. Replacing only `app.py` and `dealroom.py` temporarily with their unchanged HEAD contents reproduced **the same 3 failures / 14 passes**; the r6 files were restored in `finally`. No test assertions or skip conditions were changed.
+
+Evidence: [Send initial red](c1b-r6-send-red.txt), [additional red](c1b-r6-send-additional-red.txt), [nginx red](c1b-r6-deployment-red.txt), [name fallback red](c1b-r6-name-fallback-red.txt), [preview Dockerfile red](c1b-r6-preview-assets-red.txt), [95 R6 passes](c1b-r6-send-green.txt), [Send suite](c1b-r6-send-suite.txt), [Board red](c1b-r6-board-red.txt), [Board signing green](c1b-r6-board-green.txt), [Board full suite](c1b-r6-board-suite.txt), [Board unchanged-HEAD baseline](c1b-r6-board-baseline.txt).
+
+
+Real Chromium (Playwright **1.65.1**, iPhone 13 emulation) sent `Origin: null` with no Referer under the old-policy test mutation and received **403** on `/s/session/consent`. Restoring the new document policy, without changing the assertions, sent the actual HTTPS origin and `/s/session/context` Referer, received **303**, persisted consent and reached the native-page fixture. **All 16 requested recipient assets returned 200.** The test runs on an ephemeral HTTPS port; its self-signed certificate is trusted only by this test browser. [Browser red](c1b-r6-chromium-red.txt), [browser green](c1b-r6-chromium.txt), [iPhone context screenshot](c1b-r6-context-iphone.png).
+
+Browser reproduction (the temporary dependencies used for this run were removed from the working tree afterward):
+
+```sh
+npm install --prefix .agent/r6-browser --cache .agent/r6-npm-cache \
+  --no-audit --no-fund --ignore-scripts playwright@1.65.1
+PLAYWRIGHT_BROWSERS_PATH=/root/worktrees/send-c1b/.agent/r6-browser/browsers \
+  node .agent/r6-browser/node_modules/playwright/cli.js install chromium
+# Prefix the following with R6_TEST_OLD_REFERRER_POLICY=1 for the expected red run.
+PLAYWRIGHT_MODULE=/root/worktrees/send-c1b/.agent/r6-browser/node_modules/playwright \
+PLAYWRIGHT_BROWSERS_PATH=/root/worktrees/send-c1b/.agent/r6-browser/browsers \
+RECIPIENT_SCREENSHOT=/root/worktrees/send-c1b/docs/implementation/c1b-r6-context-iphone.png \
+  /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b \
+  dealroom_sign/e2e/recipient_form_policy.py -s
+```
+
+The extra foundation-suite failure is `test_schema_mcp_static_parity`: its static MCP schema omits the existing `SignatureEmailRetryView` and `SignatureSignerRevokeView` operation IDs. This is unrelated to requester/title input properties or recipient policy. [Unchanged-HEAD reproduction](c1b-r6-send-baseline.txt) records its baseline check; the r6 production files were restored in `finally`. Neither that assertion nor either endpoint was removed or weakened.
+
+Final footprint checks: Send, Board and Sign pass `git diff --check`; all three starting HEADs remain unchanged and staging is empty. Sign remains completely unchanged. Deployment still requires the manager's usual rollout and full native signing/SMTP acceptance; these results do not claim a deployed signature or delivered email.

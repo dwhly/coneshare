@@ -605,6 +605,9 @@ BOARD_SIGN_BOARDS = parse_board_sign_boards(os.environ.get("BOARD_SIGN_BOARDS", 
 # Dedicated recipient ingress; never inherit the staff origin or transport credential.
 SIGN_RECIPIENT_ORIGIN = os.environ.get('SIGN_RECIPIENT_ORIGIN', '')
 SIGN_RECIPIENT_INTERNAL_URL = os.environ.get('SIGN_RECIPIENT_INTERNAL_URL', 'http://sign:3001')
+# None searches frontend/{dist,public} under BASE_DIR and its parent (image/repo).
+# An explicit empty list disables recipient assets. Overrides are ordered roots.
+SIGN_RECIPIENT_ASSET_ROOTS = None
 FLEET_PROXY_KEY_FILE = os.environ.get('FLEET_PROXY_KEY_FILE', '')
 SIGN_CAPABILITY_KEY = os.environ.get('SIGN_CAPABILITY_KEY', '')
 SIGN_FROM_EMAIL = os.environ.get('SIGN_FROM_EMAIL', 'sign@fleet.test')

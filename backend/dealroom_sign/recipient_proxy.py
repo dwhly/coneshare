@@ -22,6 +22,7 @@ from .counterparty import (COOKIE, access_state, capability, consent, consume_ha
     disclosure_hash, get_session, keyed_hash, new_session, provision, require_auth, resolve,
     verify_code)
 from .models import SignCredential
+from .presentation import clean_title, display_name, referrer_policy
 from .storage import source_bytes
 from .validation import digest
 from .workflows import reconcile, record_fact, validate_envelope
@@ -185,6 +186,8 @@ def page(request, state, *, access=None, status=200):
         'state': state, 'access': access, 'csrf': get_token(request), 'asset_prefix': '/s/assets',
         'disclosure_hash': disclosure_hash(access) if access else '',
         'entry_path': '/s/' + capability(access) + '/enter' if access else '',
+        'title': clean_title(access.context['title']) if access else '',
+        'sender_name': display_name(access.sender.get('name')) if access else '',
     }), status=status)
 
 
@@ -258,8 +261,12 @@ def handle(request):
         return HttpResponse("document.querySelector('[data-entry]')?.addEventListener('submit',async e=>{e.preventDefault();const f=e.target;const r=await fetch(f.action,{method:'POST',body:new FormData(f)});if(r.ok){const d=await r.json();location.assign(d.url)}else{location.reload()}});", content_type='application/javascript')
     if path.startswith(('/s/assets/fds/', '/s/assets/dealroom/')) and request.method == 'GET':
         relative = path.removeprefix('/s/assets/')
-        roots = [Path(settings.BASE_DIR).parent/'frontend'/'public', Path(settings.BASE_DIR).parent/'frontend'/'dist']
+        roots = getattr(settings, 'SIGN_RECIPIENT_ASSET_ROOTS', None)
+        if roots is None:
+            roots = [base/'frontend'/build for base in (Path(settings.BASE_DIR), Path(settings.BASE_DIR).parent)
+                     for build in ('dist', 'public')]
         for root in roots:
+            root = Path(root)
             asset = (root/relative).resolve()
             if asset.is_relative_to(root.resolve()) and asset.suffix in {'.css', '.js', '.woff', '.woff2', '.svg'} and asset.is_file():
                 return FileResponse(asset.open('rb'), content_type=mimetypes.guess_type(str(asset))[0] or 'application/octet-stream')
@@ -466,7 +473,7 @@ class RecipientBoundaryMiddleware:
             response = page(request, 'help', status=403)
         response = csrf.process_response(request, response)
         response['Cache-Control'] = 'private, no-store'
-        response['Referrer-Policy'] = 'no-referrer'
+        response['Referrer-Policy'] = referrer_policy(response)
         response['X-Content-Type-Options'] = 'nosniff'
         response['X-Frame-Options'] = 'DENY'
         # Own pages use external JS; native responses keep their nonce-bearing CSP intact.

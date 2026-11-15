@@ -1,6 +1,5 @@
 """Request-scoped mail, immutable copy bytes and durable SMTP outcomes."""
 import hashlib
-import re
 import smtplib
 import uuid
 from datetime import timedelta
@@ -16,10 +15,11 @@ from django.template import Context
 from django.template.loader import get_template, render_to_string
 from django.utils import timezone
 
-from .client import SignError, pdf_filename
+from .client import SignError
 from .counterparty import (access_state, alternate_code, capability, display_time, observe_completion,
     revision, sender_snapshot, set_lookups)
 from .models import CounterpartyEffect, ObservedSignEvent, SignerAccess
+from .presentation import clean_title, display_name
 from .storage import source_bytes
 
 
@@ -31,12 +31,6 @@ class StableMessage(EmailMultiAlternatives):
             if part.is_multipart():
                 part.set_boundary('fleet-' + seed + '-' + str(index))
         return message
-
-
-def clean_title(title):
-    value = pdf_filename(title)[:-4]
-    value = re.sub(r'(?:[ _-]+\d{10,13}|[ _-]+\d{4}-\d{2}-\d{2}(?:[T _-]\d{2}[:_-]\d{2}(?::\d{2})?)?)$', '', value)
-    return value or 'Document'
 
 
 def header(value):
@@ -75,7 +69,7 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
     access = effect.access
     title = clean_title(access.context['title'])
     invitation = effect.kind == 'invitation'
-    sender = header(access.sender['name'])
+    sender = display_name(header(access.sender['name']))
     if not invitation and '@' in sender:
         sender = 'Requester'
     sender_email = address(access.sender['email'])
@@ -98,7 +92,8 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
             'signed_at': display_time(signed, access.context['timezone']) if signed else 'Not recorded'})
     if not invitation:
         subject += ' — ' + ' and '.join(p['name'] for p in parties)
-    data = {'access': access, 'title': title, 'sender': sender, 'url': url,
+    data = {'access': access, 'title': title, 'sender': sender,
+        'sending_staff': display_name(access.sending_staff.get('name')), 'url': url,
         'origin': public.scheme + '://' + public.netloc, 'report': report,
         'alternate': alternate_code(access), 'invitation': invitation,
         'estimated_minutes': max(1, (access.context.get('pages') or 1) // 3 + access.context.get('signatures', 1)),

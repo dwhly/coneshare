@@ -1,14 +1,14 @@
 Fleet | Dealroom
-{% if invitation %}{{ sender }} · Estimated {{ estimated_minutes }} minutes · Due {{ access.context.due_at }} ({{ access.context.timezone }}) · {{ access.context.note|truncatechars:80 }}
+{% if invitation %}{{ sender }} · Estimated {{ estimated_minutes }} minute{{ estimated_minutes|pluralize }} · Due {{ access.context.due_at }} · {{ access.context.note|truncatechars:80 }}
 
-{% if access.context.incoming %}{{ sender }} (via {{ access.sending_staff.name }}’s Dealroom){% else %}{{ sender }}{% endif %} sent you “{{ title }}” to sign.
+{% if access.context.incoming %}{{ sender }} (via {{ sending_staff }}’s Dealroom){% else %}{{ sender }}{% endif %} sent you “{{ title }}” to sign.
 {{ access.sender.company }}
 
 {{ access.context.note }}
 
 {{ title }}
-{{ access.context.pages|default_if_none:'Unknown' }} pages · {{ access.context.signatures }} signatures needed · Estimated {{ estimated_minutes }} minutes
-Due {{ access.context.due_at }} ({{ access.context.timezone }})
+{{ access.context.pages|default_if_none:'Unknown' }} page{{ access.context.pages|pluralize }} · {{ access.context.signatures }} signature{{ access.context.signatures|pluralize }} needed · Estimated {{ estimated_minutes }} minute{{ estimated_minutes|pluralize }}
+Due {{ access.context.due_at }}
 
 Review and sign: {{ url }}
 You don't need an account.

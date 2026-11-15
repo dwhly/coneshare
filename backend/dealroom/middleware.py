@@ -11,7 +11,8 @@ class PrivateRecipientResponses:
         response = self.get_response(request)
         if request.path.startswith(('/view/', '/api/v1/links/', '/api/v1/dealroom/recipient/', '/api/v1/page-views/', '/api/v1/link-clicks/', '/api/v1/view-sessions/')):
             response['Cache-Control'] = 'private, no-store'
-            response['Referrer-Policy'] = 'no-referrer'
+            response['Referrer-Policy'] = ('same-origin'
+                if response.get('Content-Type', '').split(';')[0] == 'text/html' else 'no-referrer')
             response['Vary'] = 'Cookie, Authorization'
             for key in ('ETag', 'Last-Modified'):
                 if key in response:

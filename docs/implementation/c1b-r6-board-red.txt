@@ -1,0 +1,166 @@
+FFFF..F                                                                  [100%]
+=================================== FAILURES ===================================
+___ test_r6_send_binds_authenticated_requester_and_clean_title[upload-True] ____
+
+card_route = True, source = 'upload'
+
+    @pytest.mark.parametrize('card_route', [True, False])
+    @pytest.mark.parametrize('source', ['upload', 'dealroom', 'drive'])
+    def test_r6_send_binds_authenticated_requester_and_clean_title(card_route, source):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        cid = f"hk.{BOARD}:{mk('Harbor Light Mutual NDA')}"
+        path = f'/api/views/biz/cards/{cid}/signature' if card_route else '/api/views/biz/signatures'
+        body = {'filename': 'Harbor Light Mutual NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+            'signers': [{'name': 'Lee', 'email': 'lee.c1b@harborlight.fleet.test'}],
+            'requester': {'name': 'Browser supplied', 'email': 'browser@example.test'}}
+        if source == 'dealroom':
+            body['filename'] = ''
+            body['doc'] = {'source': 'dealroom', 'room_id': 'room-9', 'version_id': 'ver-9',
+                'name': 'Harbor Light Mutual NDA.pdf', 'pages': 2}
+        if source == 'drive':
+            body['doc'] = {'source': 'drive', 'id': 'drive-document'}
+        with patch.object(FakeDealroom, 'send', return_value={'id': 'wf-r6', 'state': 'queued'}) as send:
+            if source == 'drive':
+                # The existing board fixture has no connected Drive; cover that source
+                # via the transport test below and keep this route fixture explicit.
+                response = client.post(path, json=body, headers=H)
+                assert response.status_code == 400
+                send.assert_not_called()
+                return
+            response = client.post(path, json=body, headers=H)
+        assert response.status_code == 200, response.text
+>       assert send.call_args.kwargs['requester'] == {'name': 'Dan', 'email': 'dan@x.com'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'requester'
+
+tests/test_dealroom_sign.py:472: KeyError
+___ test_r6_send_binds_authenticated_requester_and_clean_title[upload-False] ___
+
+card_route = False, source = 'upload'
+
+    @pytest.mark.parametrize('card_route', [True, False])
+    @pytest.mark.parametrize('source', ['upload', 'dealroom', 'drive'])
+    def test_r6_send_binds_authenticated_requester_and_clean_title(card_route, source):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        cid = f"hk.{BOARD}:{mk('Harbor Light Mutual NDA')}"
+        path = f'/api/views/biz/cards/{cid}/signature' if card_route else '/api/views/biz/signatures'
+        body = {'filename': 'Harbor Light Mutual NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+            'signers': [{'name': 'Lee', 'email': 'lee.c1b@harborlight.fleet.test'}],
+            'requester': {'name': 'Browser supplied', 'email': 'browser@example.test'}}
+        if source == 'dealroom':
+            body['filename'] = ''
+            body['doc'] = {'source': 'dealroom', 'room_id': 'room-9', 'version_id': 'ver-9',
+                'name': 'Harbor Light Mutual NDA.pdf', 'pages': 2}
+        if source == 'drive':
+            body['doc'] = {'source': 'drive', 'id': 'drive-document'}
+        with patch.object(FakeDealroom, 'send', return_value={'id': 'wf-r6', 'state': 'queued'}) as send:
+            if source == 'drive':
+                # The existing board fixture has no connected Drive; cover that source
+                # via the transport test below and keep this route fixture explicit.
+                response = client.post(path, json=body, headers=H)
+                assert response.status_code == 400
+                send.assert_not_called()
+                return
+            response = client.post(path, json=body, headers=H)
+        assert response.status_code == 200, response.text
+>       assert send.call_args.kwargs['requester'] == {'name': 'Dan', 'email': 'dan@x.com'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'requester'
+
+tests/test_dealroom_sign.py:472: KeyError
+__ test_r6_send_binds_authenticated_requester_and_clean_title[dealroom-True] ___
+
+card_route = True, source = 'dealroom'
+
+    @pytest.mark.parametrize('card_route', [True, False])
+    @pytest.mark.parametrize('source', ['upload', 'dealroom', 'drive'])
+    def test_r6_send_binds_authenticated_requester_and_clean_title(card_route, source):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        cid = f"hk.{BOARD}:{mk('Harbor Light Mutual NDA')}"
+        path = f'/api/views/biz/cards/{cid}/signature' if card_route else '/api/views/biz/signatures'
+        body = {'filename': 'Harbor Light Mutual NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+            'signers': [{'name': 'Lee', 'email': 'lee.c1b@harborlight.fleet.test'}],
+            'requester': {'name': 'Browser supplied', 'email': 'browser@example.test'}}
+        if source == 'dealroom':
+            body['filename'] = ''
+            body['doc'] = {'source': 'dealroom', 'room_id': 'room-9', 'version_id': 'ver-9',
+                'name': 'Harbor Light Mutual NDA.pdf', 'pages': 2}
+        if source == 'drive':
+            body['doc'] = {'source': 'drive', 'id': 'drive-document'}
+        with patch.object(FakeDealroom, 'send', return_value={'id': 'wf-r6', 'state': 'queued'}) as send:
+            if source == 'drive':
+                # The existing board fixture has no connected Drive; cover that source
+                # via the transport test below and keep this route fixture explicit.
+                response = client.post(path, json=body, headers=H)
+                assert response.status_code == 400
+                send.assert_not_called()
+                return
+            response = client.post(path, json=body, headers=H)
+        assert response.status_code == 200, response.text
+>       assert send.call_args.kwargs['requester'] == {'name': 'Dan', 'email': 'dan@x.com'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'requester'
+
+tests/test_dealroom_sign.py:472: KeyError
+__ test_r6_send_binds_authenticated_requester_and_clean_title[dealroom-False] __
+
+card_route = False, source = 'dealroom'
+
+    @pytest.mark.parametrize('card_route', [True, False])
+    @pytest.mark.parametrize('source', ['upload', 'dealroom', 'drive'])
+    def test_r6_send_binds_authenticated_requester_and_clean_title(card_route, source):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        cid = f"hk.{BOARD}:{mk('Harbor Light Mutual NDA')}"
+        path = f'/api/views/biz/cards/{cid}/signature' if card_route else '/api/views/biz/signatures'
+        body = {'filename': 'Harbor Light Mutual NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+            'signers': [{'name': 'Lee', 'email': 'lee.c1b@harborlight.fleet.test'}],
+            'requester': {'name': 'Browser supplied', 'email': 'browser@example.test'}}
+        if source == 'dealroom':
+            body['filename'] = ''
+            body['doc'] = {'source': 'dealroom', 'room_id': 'room-9', 'version_id': 'ver-9',
+                'name': 'Harbor Light Mutual NDA.pdf', 'pages': 2}
+        if source == 'drive':
+            body['doc'] = {'source': 'drive', 'id': 'drive-document'}
+        with patch.object(FakeDealroom, 'send', return_value={'id': 'wf-r6', 'state': 'queued'}) as send:
+            if source == 'drive':
+                # The existing board fixture has no connected Drive; cover that source
+                # via the transport test below and keep this route fixture explicit.
+                response = client.post(path, json=body, headers=H)
+                assert response.status_code == 400
+                send.assert_not_called()
+                return
+            response = client.post(path, json=body, headers=H)
+        assert response.status_code == 200, response.text
+>       assert send.call_args.kwargs['requester'] == {'name': 'Dan', 'email': 'dan@x.com'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'requester'
+
+tests/test_dealroom_sign.py:472: KeyError
+_________ test_r6_send_transport_forwards_requester_and_display_title __________
+
+    def test_r6_send_transport_forwards_requester_and_display_title():
+        client = dr.Dealroom('https://send.example.test')
+        requester = {'name': 'Drew Whaley', 'email': 'dwhaley@amforge.com'}
+        with patch.object(client, '_call', return_value={'id': 'wf-r6'}) as upstream:
+>           client.send('room-1', 'version-1', [{'name': 'Lee', 'email': 'lee@example.test'}], 1, 'send-key',
+                board_id='fixture', requester=requester, title='Harbor Light Mutual NDA')
+E           TypeError: Dealroom.send() got an unexpected keyword argument 'requester'
+
+tests/test_dealroom_sign.py:483: TypeError
+=============================== warnings summary ===============================
+../../../usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_dealroom_sign.py::test_r6_send_binds_authenticated_requester_and_clean_title[upload-True]
+FAILED tests/test_dealroom_sign.py::test_r6_send_binds_authenticated_requester_and_clean_title[upload-False]
+FAILED tests/test_dealroom_sign.py::test_r6_send_binds_authenticated_requester_and_clean_title[dealroom-True]
+FAILED tests/test_dealroom_sign.py::test_r6_send_binds_authenticated_requester_and_clean_title[dealroom-False]
+FAILED tests/test_dealroom_sign.py::test_r6_send_transport_forwards_requester_and_display_title
+5 failed, 2 passed, 30 deselected, 1 warning in 2.01s

@@ -1,0 +1,27 @@
+F......                                                                  [100%]
+=================================== FAILURES ===================================
+_________ test_nda_room_page_header_and_meta_match_same_origin_policy __________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (306fcc0e-511c-4a21-9fc8-3402938dadcd)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_nda_room_page_header_and_meta_match_same_origin_policy(fixture):
+        from dealroom.models import RoomPolicy
+        from sharelinks.models import ShareLink
+        link = ShareLink.objects.create(dataroom=fixture.room, created_by=fixture.user)
+        RoomPolicy.objects.create(room=fixture.room, entry_link=link)
+        for path in ['/signing/nda/' + str(fixture.room.pk), '/view/' + link.slug]:
+            response = Client().get(path)
+            assert response.status_code == 200
+>           assert response['Referrer-Policy'] == 'same-origin'
+E           AssertionError: assert 'no-referrer' == 'same-origin'
+E             
+E             - same-origin
+E             + no-referrer
+
+dealroom_sign/tests/test_live_acceptance_r6.py:304: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FWK2CSFQ15RSJ6Y3E4KJ5G
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_nda_room_page_header_and_meta_match_same_origin_policy
+1 failed, 6 passed, 73 deselected in 11.93s

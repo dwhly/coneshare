@@ -5,7 +5,7 @@ from .models import SignatureRequest
 from .requests import board_config
 
 
-def legacy_request(work, board_id, task_ref, *, creator=None, apply=True):
+def legacy_request(work, board_id, task_ref, *, creator=None, apply=True, requester=None, title=None):
     """Validate even on dry runs; callers own the workflow/import transaction.
 
     The creator FK identifies a Send account. A shared legacy JWT does not verify
@@ -29,11 +29,18 @@ def legacy_request(work, board_id, task_ref, *, creator=None, apply=True):
         raise ValidationError('Existing request mapping conflict.')
     if not apply:
         return existing
+    context = {'identity':'legacy_reported', 'creator_login':None}
+    if requester is not None:
+        context['requester'] = requester
     row, _ = SignatureRequest.objects.get_or_create(workflow=work, defaults={
-        'board_id':board_id, 'creator':creator, 'title':work.title, 'kind':'unknown',
+        'board_id':board_id, 'creator':creator, 'title':work.title,
+        'kind':'out' if requester is not None or title is not None else 'unknown',
         'task_ref':task_ref, 'room':work.room, 'state':work.state,
-        'source_context':{'identity':'legacy_reported', 'creator_login':None}})
+        'source_context':context})
     # Recheck the winner of a concurrent get_or_create before accepting a replay.
     if row.board_id != board_id or row.task_ref != task_ref:
         raise ValidationError('Existing request mapping conflict.')
+    if ((requester is not None and row.source_context.get('requester') != requester)
+            or (title is not None and row.title != title)):
+        raise ValidationError('Existing sender metadata conflict.')
     return row

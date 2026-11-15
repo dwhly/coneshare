@@ -1,0 +1,40 @@
+........................................................................ [ 14%]
+........................................................................ [ 28%]
+........................................................................ [ 43%]
+........................................................................ [ 57%]
+.............................................................F.......... [ 72%]
+........................................................................ [ 86%]
+...................................................................      [100%]
+=================================== FAILURES ===================================
+________________________ test_schema_mcp_static_parity _________________________
+
+    @pytest.mark.django_db
+    def test_schema_mcp_static_parity():
+        tools = json.loads((Path(__file__).resolve().parents[3] / 'mcp-server/coneshare_mcp/dealroom_tools.json').read_text())
+        ids = {t['operation_id'] for t in tools}
+        enabled = {oid for oid, entry in registry().items() if entry['boundary'] == 'staff'}
+>       assert enabled <= ids
+E       AssertionError: assert {'core_Organi...ist_get', ...} <= {'core_Organi...ist_get', ...}
+E         
+E         Extra items in the left set:
+E         'dealroom_sign_SignatureEmailRetryView_endpoint_post'
+E         'dealroom_sign_SignatureSignerRevokeView_endpoint_post'
+
+tests/dealroom/test_foundation.py:154: AssertionError
+=============================== warnings summary ===============================
+dealroom_sign/tests/test_product_reads.py: 3 warnings
+dealroom_sign/tests/test_review_r2.py: 19 warnings
+tests/dealroom/test_foundation.py: 41 warnings
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 29 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+dealroom_sign/tests/test_product_reads.py: 2 warnings
+dealroom_sign/tests/test_review_r2.py: 19 warnings
+tests/dealroom/test_foundation.py: 41 warnings
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:370: InsecureKeyLengthWarning: The HMAC key is 29 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_foundation.py::test_schema_mcp_static_parity - Ass...
+1 failed, 498 passed, 125 warnings in 245.07s (0:04:05)

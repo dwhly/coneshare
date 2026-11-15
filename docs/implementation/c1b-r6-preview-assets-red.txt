@@ -1,0 +1,207 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/tokens.css-preview-copy] _
+
+access = <SignerAccess: SignerAccess object (781b9b91-4e36-4688-a230-44fee88c75e8)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7dc47aa5cf80>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-197/test_assets_in_repository_and_0')
+layout = 'preview-copy', asset = 'fds/tokens.css'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'preview-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout in {'image-copy', 'preview-copy'}:
+            # Derive both destinations from the deployed image's real COPY chain.
+            deployment = 'sign-product-preview' if layout == 'preview-copy' else 'chief-glue-v1'
+            backend_copy = (REPO / 'deploy' / deployment / 'Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:186: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FXB76654GN2DQ1X6WCY6FR
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:31:21,078 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/theme-boot.js-preview-copy] _
+
+access = <SignerAccess: SignerAccess object (f31a82db-c65c-4311-b2e6-96c53680952e)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7dc47a535a90>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-197/test_assets_in_repository_and_1')
+layout = 'preview-copy', asset = 'fds/theme-boot.js'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'preview-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout in {'image-copy', 'preview-copy'}:
+            # Derive both destinations from the deployed image's real COPY chain.
+            deployment = 'sign-product-preview' if layout == 'preview-copy' else 'chief-glue-v1'
+            backend_copy = (REPO / 'deploy' / deployment / 'Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:31:21,195 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[fds/marks/fleet.svg-preview-copy] _
+
+access = <SignerAccess: SignerAccess object (65667a18-9590-4654-a6cf-0aad16675b35)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7dc47a6b80b0>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-197/test_assets_in_repository_and_2')
+layout = 'preview-copy', asset = 'fds/marks/fleet.svg'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'preview-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout in {'image-copy', 'preview-copy'}:
+            # Derive both destinations from the deployed image's real COPY chain.
+            deployment = 'sign-product-preview' if layout == 'preview-copy' else 'chief-glue-v1'
+            backend_copy = (REPO / 'deploy' / deployment / 'Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:31:21,228 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.css-preview-copy] _
+
+access = <SignerAccess: SignerAccess object (299929db-0939-4719-b76e-cde5f460efd8)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7dc47a6ba2d0>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-197/test_assets_in_repository_and_3')
+layout = 'preview-copy', asset = 'dealroom/shell.css'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'preview-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout in {'image-copy', 'preview-copy'}:
+            # Derive both destinations from the deployed image's real COPY chain.
+            deployment = 'sign-product-preview' if layout == 'preview-copy' else 'chief-glue-v1'
+            backend_copy = (REPO / 'deploy' / deployment / 'Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:31:21,260 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+_ test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.js-preview-copy] _
+
+access = <SignerAccess: SignerAccess object (d5172a1f-7e9b-4155-84eb-3b23145ff631)>
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7dc47a6bbd10>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-197/test_assets_in_repository_and_4')
+layout = 'preview-copy', asset = 'dealroom/shell.js'
+
+    @pytest.mark.parametrize('layout', ['repo-public', 'repo-dist', 'image-copy', 'preview-copy', 'configured'])
+    @pytest.mark.parametrize('asset', ['fds/tokens.css', 'fds/theme-boot.js', 'fds/marks/fleet.svg', 'dealroom/shell.css', 'dealroom/shell.js'])
+    def test_assets_in_repository_and_actual_docker_copy_layout(access, settings, tmp_path, layout, asset):
+        settings.BASE_DIR = tmp_path / 'backend'
+        settings.SIGN_RECIPIENT_ASSET_ROOTS = None
+        if layout in {'image-copy', 'preview-copy'}:
+            # Derive both destinations from the deployed image's real COPY chain.
+            deployment = 'sign-product-preview' if layout == 'preview-copy' else 'chief-glue-v1'
+            backend_copy = (REPO / 'deploy' / deployment / 'Dockerfile').read_text()
+            frontend_copy = (REPO / 'deploy/chief-send-proto/Dockerfile').read_text()
+            backend_dest = re.search(r'^COPY .*backend/ (\S+)', backend_copy, re.M)[1]
+            frontend_dest = re.search(r'^COPY .* \. (\S+)', frontend_copy, re.M)[1]
+            settings.BASE_DIR = tmp_path / backend_dest.lstrip('/')
+            root = tmp_path / frontend_dest.lstrip('/')
+        elif layout == 'configured':
+            root = tmp_path / 'mounted-assets'
+            settings.SIGN_RECIPIENT_ASSET_ROOTS = [root]
+        else:
+            root = tmp_path / 'frontend' / layout.removeprefix('repo-')
+        target = root / asset
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO / 'frontend/public' / asset).read_bytes())
+        result = Client().get('/s/assets/' + asset, **BASE)
+>       assert result.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = <HttpResponse status_code=403, "text/html; charset=utf-8">.status_code
+
+dealroom_sign/tests/test_live_acceptance_r6.py:186: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-15 15:31:21,295 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/tokens.css-preview-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/theme-boot.js-preview-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[fds/marks/fleet.svg-preview-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.css-preview-copy]
+FAILED dealroom_sign/tests/test_live_acceptance_r6.py::test_assets_in_repository_and_actual_docker_copy_layout[dealroom/shell.js-preview-copy]
+5 failed, 90 deselected in 9.35s

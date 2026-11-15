@@ -1,0 +1,24 @@
+Failed to initialize GeoIP2: Path must be a valid database or directory containing databases.
+Default organization not found, creating one...
+Default root folder is set, id: 01M7FX7BZZJ3KWAE41MSJV5148
+{
+  "entry": {
+    "path": "/s/[personal-capability]/enter",
+    "method": "POST",
+    "referer": "https://recipient.test:33779/s/[personal-capability]",
+    "status": 200
+  },
+  "consent": {
+    "path": "/s/session/consent",
+    "method": "POST",
+    "origin": "https://recipient.test:33779",
+    "referer": "https://recipient.test:33779/s/session/context",
+    "status": 303
+  }
+}
+{"assetRequests":16,"allAssetsOK":true,"nativeFixtureReached":true}
+
+.Default organization not found, creating one...
+Default root folder is set, id: 01M7FX7F3R5D802DHQWK22RVC6
+
+1 passed in 11.92s
