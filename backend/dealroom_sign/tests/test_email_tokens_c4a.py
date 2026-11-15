@@ -51,3 +51,27 @@ def test_email_app_name_and_inter_first_with_no_remote_font():
         assert "font-family:Inter,-apple-system" in html
         assert '@font-face' not in html and '.woff' not in html  # no remote font: it would act like a tracking pixel
 
+
+
+def _txt(invitation, link_only=False):
+    access = SimpleNamespace(sender={'company': ''}, context={'incoming': False, 'note': '', 'pages': 2, 'signatures': 1,
+                                                             'due_at': '22 Nov 2026'})
+    return render_to_string('dealroom_sign/emails/mail.txt', {
+        'invitation': invitation, 'access': access, 'sender': 'Dan', 'sending_staff': 'Dan', 'title': 'Harbor Light Mutual NDA',
+        'estimated_minutes': 1, 'url': 'https://example.test/s/tok', 'origin': 'https://example.test', 'alternate': 'AAAA',
+        'report': 'support@fleet.test', 'link_only': link_only,
+        'parties': [{'name': 'Lee Harbor', 'company': '', 'signed_at': '15 Nov 2026'}],
+        'files': [{'name': 'Harbor Light Mutual NDA — signed.pdf', 'size': 589_232}, {'name': 'Signing certificate.pdf', 'size': 161_012}]})
+
+
+def test_signed_copy_is_the_first_thing_in_the_final_email():
+    # Owner, 15 Nov 2026: the fully-signed email must visibly give them their copy of the NDA.
+    html = _mail(False)
+    card = html.index('Your signed copy')
+    assert card < html.index('Lee Harbor')  # the copy comes before the signing record
+    assert html.index('Harbor Light Mutual NDA — signed.pdf') > card and 'Attached' in html
+    text = _txt(False)
+    assert text.index('Your signed copy') < text.index('Lee Harbor')
+    assert 'Harbor Light Mutual NDA — signed.pdf (575.4\xa0KB, attached)' in text and 'bytes' not in text
+    linked = _txt(False, link_only=True)
+    assert 'Harbor Light Mutual NDA — signed.pdf (575.4\xa0KB)' in linked and 'attached)' not in linked
