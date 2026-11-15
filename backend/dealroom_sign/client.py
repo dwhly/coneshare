@@ -91,7 +91,7 @@ class Documenso:
         return self.request('POST', 'envelope/create', data={'payload': json.dumps(payload)},
                             files={'files': (pdf_filename(workflow.title), pdf, 'application/pdf')}).json()['id']
 
-    def distribute(self, envelope_id, *, external_id, nda=False, redirect_url=''):
+    def distribute(self, envelope_id, *, external_id, redirect_url='', before_distribute=None):
         # EDD §4.3 / r1b: distribute strips reminder/expiry settings; persist and verify first.
         self.request('POST', 'envelope/update', json={'envelopeId': envelope_id,
             'data': {'globalAccessAuth': [], 'globalActionAuth': []},
@@ -103,11 +103,24 @@ class Documenso:
                 envelope.get('externalId') != external_id):
             raise SignError('envelope_correlation_mismatch')
         persisted = envelope.get('documentMeta') or {}
+        auth = envelope.get('authOptions') or {}
         if (persisted.get('reminderSettings') != NATIVE_REMINDERS_OFF or
-                persisted.get('envelopeExpirationPeriod') != SIGNING_PERIOD):
+                persisted.get('envelopeExpirationPeriod') != SIGNING_PERIOD or
+                auth.get('globalAccessAuth') != [] or auth.get('globalActionAuth') != []):
             raise SignError('release_settings_not_persisted')
         meta = {'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF, 'redirectUrl': redirect_url}
-        return self.request('POST', 'envelope/distribute', json={'envelopeId': envelope_id, 'meta': meta}).json()
+        if before_distribute:
+            before_distribute()
+        result = self.request('POST', 'envelope/distribute', json={'envelopeId': envelope_id, 'meta': meta}).json()
+        self.verify_release(self.get(envelope_id))
+        return result
+
+    @staticmethod
+    def verify_release(envelope):
+        meta = envelope.get('documentMeta') or {}
+        if (meta.get('distributionMethod') != 'NONE' or
+                any(meta.get('emailSettings', {}).get(flag) is not False for flag in NATIVE_EMAIL_OFF)):
+            raise SignError('release_mail_settings_mismatch', uncertain=True)
 
     def pdf(self, path, **kwargs):
         response = self.request('GET', path, **kwargs)

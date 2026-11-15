@@ -3,13 +3,14 @@ from rest_framework.routers import DefaultRouter
 
 from .views import SigningNdaResetView, RecipientNdaEnterView, RecipientNdaView, SignCredentialView, SigningWhoViewedView, SigningSourceView, SigningEnvelopeViewSet, SigningNdaPolicyView
 from .webhooks import webhook
-from .views import SignatureSignerRevokeView, SignatureRequestListView, SignatureOverviewView, SignatureRequestDetailView, SignaturePageListView, SignaturePageView, SignatureExportView
+from .views import SignatureEmailRetryView, SignatureSignerRevokeView, SignatureRequestListView, SignatureOverviewView, SignatureRequestDetailView, SignaturePageListView, SignaturePageView, SignatureExportView
 
 router = DefaultRouter()
 router.register('envelopes', SigningEnvelopeViewSet, basename='signing-envelope')
 urlpatterns = [
     path('requests', SignatureRequestListView.as_view()),
     path('requests/<uuid:request_id>/signers/<uuid:signer_id>/revoke-room', SignatureSignerRevokeView.as_view()),
+    path('requests/<uuid:request_id>/emails/<uuid:effect_id>/retry', SignatureEmailRetryView.as_view()),
     path('overview', SignatureOverviewView.as_view()),
     path('requests/<uuid:request_id>', SignatureRequestDetailView.as_view()),
     path('requests/<uuid:request_id>/pages', SignaturePageListView.as_view()),

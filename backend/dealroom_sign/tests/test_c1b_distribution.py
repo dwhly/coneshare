@@ -18,12 +18,12 @@ def test_release_updates_reads_back_then_distributes_without_native_mail(nda):
     calls = []
     def handle(request):
         calls.append((request.method, request.url.path, json.loads(request.content) if request.content else None))
-        return httpx.Response(200, json={'id': 'env_test', 'externalId': 'correlation', 'teamId': 3, 'documentMeta': {
-            'reminderSettings': REMINDERS, 'envelopeExpirationPeriod': EXPIRATION}})
+        return httpx.Response(200, json={'id': 'env_test', 'externalId': 'correlation', 'teamId': 3, 'authOptions': {'globalAccessAuth': [], 'globalActionAuth': []}, 'documentMeta': {
+            'distributionMethod': 'NONE', 'emailSettings': FLAGS, 'reminderSettings': REMINDERS, 'envelopeExpirationPeriod': EXPIRATION}})
     with Documenso(SimpleNamespace(enabled=True, team_id=3, token='test'), httpx.MockTransport(handle)) as client:
-        client.distribute('env_test', external_id='correlation', nda=nda, redirect_url='https://recipient.test/s/return/r')
+        client.distribute('env_test', external_id='correlation', redirect_url='https://recipient.test/s/return/r')
     assert [(m, p.rsplit('/', 1)[-1]) for m, p, _ in calls] == [
-        ('POST', 'update'), ('POST', 'get'), ('POST', 'distribute')]
+        ('POST', 'update'), ('POST', 'get'), ('POST', 'distribute'), ('GET', 'env_test')]
     assert calls[0][2] == {'envelopeId': 'env_test', 'data': {'globalAccessAuth': [], 'globalActionAuth': []},
         'meta': {'reminderSettings': REMINDERS, 'envelopeExpirationPeriod': EXPIRATION}}
     assert calls[2][2] == {'envelopeId': 'env_test', 'meta': {'distributionMethod': 'NONE',

@@ -1949,6 +1949,16 @@
     "tier": "read_write",
     "widens_access": "evaluate_change"
   },
+  "dealroom_sign_SignatureEmailRetryView_endpoint_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_sign_SignatureEmailRetryView_endpoint_post",
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/emails/{effect_id}/retry",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": "evaluate_change"
+  },
   "dealroom_sign_SignatureExportView_endpoint_post": {
     "boundary": "staff",
     "human_only": false,

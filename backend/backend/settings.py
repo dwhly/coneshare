@@ -90,6 +90,7 @@ MALWARE_SCAN_TIMEOUT_MS = int(os.environ.get('MALWARE_SCAN_TIMEOUT_MS', 10000))
 MALWARE_SCAN_FAIL_MODE = os.environ.get('MALWARE_SCAN_FAIL_MODE', 'closed')
 
 # Email Configuration (for sending password resets, etc.)
+EMAIL_TIMEOUT = min(60, max(1, int(os.environ.get('EMAIL_TIMEOUT', '30'))))
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))

@@ -41,12 +41,12 @@ def test_unsessioned_native_url_has_help_without_upstream_or_metadata(access):
 
 
 @pytest.mark.parametrize('headers', [{}, {'HTTP_HOST': 'recipient.test:9445'},
-    {'HTTP_HOST': 'staff.test:9443', 'HTTP_X_FLEET_RECIPIENT_LISTENER': '1'},
+    {'HTTP_HOST': 'staff.test:9443', 'HTTP_X_FLEET_RECIPIENT_LISTENER': '1', 'HTTP_X_FORWARDED_FOR': '100.64.0.4'},
     {'HTTP_HOST': 'recipient.test:9445', 'HTTP_X_FORWARDED_HOST': 'recipient.test:9445'}])
 def test_recipient_host_and_listener_are_both_required(access, headers):
     from dealroom_sign.counterparty import capability
     result = Client().get('/s/'+capability(access), **headers)
-    assert result.status_code in {403, 404}
+    assert result.status_code == 403
     assert access.workflow.title.encode() not in result.content
 
 
@@ -54,7 +54,7 @@ def test_scanner_get_does_not_enter_and_enter_requires_csrf_and_exact_origin(acc
     from dealroom_sign.counterparty import capability, COOKIE
     from dealroom_sign.models import SignerSession
     browser = Client(enforce_csrf_checks=True)
-    base = {'HTTP_HOST': 'recipient.test:9445', 'HTTP_X_FLEET_RECIPIENT_LISTENER': '1'}
+    base = {'HTTP_HOST': 'recipient.test:9445', 'HTTP_X_FLEET_RECIPIENT_LISTENER': '1', 'HTTP_X_FORWARDED_FOR': '100.64.0.4'}
     path = '/s/'+capability(access)
     response = browser.get(path, **base)
     assert response.status_code == 200 and not SignerSession.objects.exists()
@@ -89,7 +89,7 @@ def test_return_does_not_trust_browser_completion_or_other_request(access):
     session, raw = new_session(access)
     browser = Client()
     browser.cookies[COOKIE] = raw
-    base = {'HTTP_HOST': 'recipient.test:9445', 'HTTP_X_FLEET_RECIPIENT_LISTENER': '1'}
+    base = {'HTTP_HOST': 'recipient.test:9445', 'HTTP_X_FLEET_RECIPIENT_LISTENER': '1', 'HTTP_X_FORWARDED_FOR': '100.64.0.4'}
     with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=envelope(access.workflow)):
         response = browser.get('/s/return/'+str(access.workflow_id)+'?signed=true', **base)
         assert b'Checking your signature' in response.content and b'Signed \xe2\x80\x94' not in response.content
@@ -113,7 +113,7 @@ def test_native_completion_uses_pinned_secondary_document_id_and_no_override(acc
             authorize_rpc(req(value), access, env)
 
 
-def test_native_post_requires_origin_json_consent_and_source_hash(access, settings, tmp_path):
+def test_native_post_requires_origin_json_consent_and_source_hash(access, settings, tmp_path, pdf):
     from dealroom_sign.counterparty import new_session, COOKIE, consent, disclosure_hash
     from dealroom_sign.validation import digest
     session, raw = new_session(access)
@@ -125,8 +125,11 @@ def test_native_post_requires_origin_json_consent_and_source_hash(access, settin
     env = envelope(access.workflow)
     env['fields'] = [{'id': 5, 'recipientId': 1, 'envelopeItemId': 'item_test'}]
     path = '/api/trpc/envelope.field.sign?batch=1'
+    key = tmp_path/'key'; key.write_text('fixture-private-key'); settings.FLEET_PROXY_KEY_FILE = str(key)
     with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=env), \
+         patch('dealroom_sign.recipient_proxy.Documenso') as engine, \
          patch('dealroom_sign.recipient_proxy.httpx.Client') as upstream:
+        engine.return_value.__enter__.return_value.item_pdf.return_value = pdf
         assert browser.post(path, data, content_type='application/json', **headers).status_code == 403
         upstream.assert_not_called()
     session, raw = consent(session, raw, disclosure_hash(access), True)
@@ -137,6 +140,24 @@ def test_native_post_requires_origin_json_consent_and_source_hash(access, settin
         engine.return_value.__enter__.return_value.item_pdf.return_value = b'%PDF-changed'
         assert browser.post(path, data, content_type='application/json', **headers).status_code == 403
         upstream.assert_not_called()
+
+    with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=env), \
+         patch('dealroom_sign.recipient_proxy.Documenso') as engine, \
+         patch('dealroom_sign.recipient_proxy.httpx.Client') as upstream:
+        engine.return_value.__enter__.return_value.item_pdf.return_value = pdf
+        assert browser.post(path, data, content_type='application/json', **{**headers, 'HTTP_ORIGIN': 'https://other.test'}).status_code == 403
+        assert browser.post(path, json.dumps(data), content_type='text/plain', **headers).status_code == 403
+        upstream.assert_not_called()
+    transport = httpx.MockTransport(lambda request: httpx.Response(200, headers={'content-type': 'application/json'},
+        stream=httpx.ByteStream(b'{"result":"signed"}')))
+    with patch('dealroom_sign.recipient_proxy.reconcile_native', return_value=env), \
+         patch('dealroom_sign.recipient_proxy.Documenso') as engine, \
+         patch('dealroom_sign.recipient_proxy.httpx.Client', return_value=httpx.Client(transport=transport)):
+        engine.return_value.__enter__.return_value.item_pdf.return_value = pdf
+        result = browser.post(path, data, content_type='application/json', **headers)
+        assert result.status_code == 200
+        assert b''.join(result.streaming_content) == b'{"result":"signed"}'
+        result.close()
 
 
 def test_live_native_read_returns_exact_bytes_strips_cookies_and_rejects_external_redirect(access, settings, tmp_path):
@@ -243,7 +264,7 @@ def test_expired_personal_link_renders_closed_window_without_metadata_or_session
     from dealroom_sign.models import SignerSession
     access.signing_expires_at = timezone.now()-timedelta(seconds=1)
     access.save()
-    base = {'HTTP_HOST':'recipient.test:9445', 'HTTP_X_FLEET_RECIPIENT_LISTENER':'1'}
+    base = {'HTTP_HOST':'recipient.test:9445', 'HTTP_X_FLEET_RECIPIENT_LISTENER':'1', 'HTTP_X_FORWARDED_FOR': '100.64.0.4'}
     with patch('dealroom_sign.recipient_proxy.Documenso') as native:
         response = Client().get('/s/'+capability(access), **base)
     assert response.status_code == 410 and b'This signing window has closed' in response.content

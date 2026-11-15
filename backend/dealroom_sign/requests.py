@@ -144,7 +144,8 @@ def activity(row):
         return {'kind':fact.kind, 'at':fact.occurred_at, 'source':'sign',
             'actor_email':fact.actor_email, 'actor_name':fact.name,
             'recipient_id':fact.recipient_id, 'pages':event_pages(data),
-            'email_type':data.get('emailType'), 'source_kind':fact.payload.get('type'),
+            'error':data.get('error'), 'effect_id':data.get('effect_id'), 'attempt':data.get('attempt'),
+            'next_attempt_at':data.get('next_attempt_at'), 'email_type':data.get('emailType'), 'source_kind':fact.payload.get('type'),
             'source_event_ids':[fact.source_id]}
 
     result, seen = [], set()

@@ -201,7 +201,7 @@ def cookie_response(response, raw):
 
 def limit(request, purpose='entry', maximum=30):
     # Never persist bearer values as cache keys. The listener's trusted hop supplies the IP.
-    ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR', '')
+    ip = client_ip(request)
     key = 'sign-rate:' + keyed_hash('rate', purpose + ':' + ip)
     if cache.add(key, 1, timeout=60):
         return

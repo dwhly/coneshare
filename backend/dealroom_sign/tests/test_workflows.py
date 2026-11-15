@@ -110,11 +110,11 @@ def test_nda_distribution_none(fixture):
     def respond(request):
         requests.append(request)
         return httpx.Response(200, json={'id': 'envelope_test', 'teamId': 3, 'externalId': fixture.work.external_id,
-            'documentMeta': {'reminderSettings': NATIVE_REMINDERS_OFF, 'envelopeExpirationPeriod': SIGNING_PERIOD}})
+            'authOptions': {'globalAccessAuth': [], 'globalActionAuth': []}, 'documentMeta': {'reminderSettings': NATIVE_REMINDERS_OFF, 'envelopeExpirationPeriod': SIGNING_PERIOD, 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF}})
     with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
-        client.distribute('envelope_test', external_id=fixture.work.external_id, nda=True)
+        client.distribute('envelope_test', external_id=fixture.work.external_id)
     import json
-    assert json.loads(requests[-1].content)['meta']['distributionMethod'] == 'NONE'
+    assert json.loads(requests[-2].content)['meta']['distributionMethod'] == 'NONE'
 
 
 def test_remote_errors_do_not_expose_tokens(fixture):

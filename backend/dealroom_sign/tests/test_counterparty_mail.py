@@ -159,7 +159,7 @@ def test_mime_hash_matches_the_message_actually_sent_and_size_rejection_uses_lin
     assert effect.state == 'succeeded' and len(messages) == 2
     assert len(messages[0].attachments) == 2 and messages[1].attachments == []
     assert messages[0].extra_headers['Message-ID'] == messages[1].extra_headers['Message-ID']
-    assert effect.payload_hash == hashlib.sha256(messages[1].message().as_bytes()).hexdigest()
+    assert effect.payload_hash == hashlib.sha256(messages[1].message().as_bytes(linesep='\r\n')).hexdigest()
 
 
 def test_incoming_requester_must_be_bound_before_native_release(access):

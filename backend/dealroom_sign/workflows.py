@@ -1,4 +1,4 @@
-"""Durable workflow execution; remote calls happen outside local transactions."""
+"""Durable leased execution and serialized reconciliation/publication."""
 import uuid
 from datetime import timedelta
 
@@ -27,15 +27,15 @@ AUDIT_KINDS = {
 }
 
 
-def record_fact(workflow, kind, source_id, data=None):
+def record_fact(workflow, kind, source_id, data=None, *, actor=None):
     from dealroom.activity import record
-    local = kind.startswith(('signer.', 'mail.', 'signing_deadline.', 'native_email.'))
+    local = kind.startswith(('signer.', 'mail.', 'signing_deadline.', 'native_email.', 'release.'))
     defaults = {'occurred_at': instant((data or {}).get('occurred_at')) or timezone.now(),
         'recipient_id': (data or {}).get('recipient_id'), 'payload': {'data': data or {}}} if local else {}
     _, created = ObservedSignEvent.objects.get_or_create(workflow=workflow, source_id=str(source_id), kind=kind, defaults=defaults)
     if created:
         recipient_event = kind in {'envelope.viewed', 'envelope.signed', 'nda.signed'}
-        actor = (workflow.member_id or 'sign:' + digest(str((data or {}).get('email', '')).encode())[:50]) if recipient_event else workflow.owner
+        actor = (workflow.member_id or 'sign:' + digest(str((data or {}).get('email', '')).encode())[:50]) if recipient_event else (actor or workflow.owner)
         record(kind, organization=workflow.room.organization, actor=actor, actor_kind='recipient' if recipient_event else 'staff',
                room_id=workflow.room_id, target_id=workflow.envelope_id or str(workflow.pk),
                data={'workflow_id': str(workflow.pk), 'member_id': workflow.member_id, 'source': 'sign', 'source_record_id': str(source_id), **(data or {})})
@@ -160,17 +160,38 @@ def execute(workflow, client):
     if workflow.state == 'draft' and envelope['status'] == 'DRAFT':
         from .counterparty import sender_snapshot
         sender_snapshot(workflow)
-        workflow.state = 'distributing'
-        workflow.save(update_fields=['state'])
-        client.distribute(workflow.envelope_id, external_id=workflow.external_id, nda=workflow.purpose == 'nda', redirect_url=return_url(workflow))
+        def mark_attempted():
+            workflow.state = 'distributing'
+            workflow.save(update_fields=['state'])
+        client.distribute(workflow.envelope_id, external_id=workflow.external_id,
+            redirect_url=return_url(workflow), before_distribute=mark_attempted)
         envelope = client.get(workflow.envelope_id)
         validate_envelope(workflow, envelope)
     if envelope['status'] == 'DRAFT':
         raise SignError('distribution_outcome_uncertain', uncertain=True)
+    if workflow.state == 'distributing':
+        client.verify_release(envelope)
     return reconcile(workflow, client, envelope)
 
 
 def reconcile(workflow, client, envelope=None):
+    with transaction.atomic():
+        locked = Workflow.objects.select_for_update().select_related('owner', 'room__organization', 'source_version').get(pk=workflow.pk)
+        return _reconcile_locked(locked, client, envelope)
+
+
+def observe_native_mail(workflow, rows):
+    for fact in rows:
+        if fact.get('type') == 'EMAIL_SENT' and fact.get('id'):
+            record_fact(workflow, 'native_email.alert', fact['id'])
+
+
+def _reconcile_locked(workflow, client, envelope=None):
+    audit = client.audit(workflow.envelope_id)
+    audit_rows = audit if isinstance(audit, list) else audit.get('data', audit.get('logs', []))
+    if workflow.state == 'done':
+        observe_native_mail(workflow, audit_rows)
+        return workflow
     envelope = envelope or client.get(workflow.envelope_id)
     validate_envelope(workflow, envelope)
     recipients = envelope['recipients']
@@ -180,8 +201,6 @@ def reconcile(workflow, client, envelope=None):
         if len(recipients) != 1 or recipients[0]['email'].strip().lower() != workflow.member_email:
             raise SignError('nda_identity_mismatch')
         workflow.signing_token = recipients[0].get('token', '')
-    audit = client.audit(workflow.envelope_id)
-    audit_rows = audit if isinstance(audit, list) else audit.get('data', audit.get('logs', []))
     completion_id = next((f['id'] for f in audit_rows if f.get('type') == 'DOCUMENT_COMPLETED' and f.get('id')), None)
     staged = []
     seal = None
@@ -232,11 +251,10 @@ def reconcile(workflow, client, envelope=None):
             record_fact(workflow, 'fileback.completed', completion_id, seal)
         elif status == 'PENDING':
             record_fact(workflow, 'nda.sent' if workflow.purpose == 'nda' else 'envelope.sent', f'sent:{workflow.pk}')
-        workflow.last_error = ''
-        workflow.next_attempt_at = timezone.now() + timedelta(seconds=15)
-        workflow.save()
+        workflow.save(update_fields=['source_status', 'signer_projection', 'reconciled_at',
+            'state', 'signing_token', 'completed_at'])
         from .counterparty import provision
-        from .counterparty_mail import enqueue
+        from .counterparty_mail import enqueue, enqueue_requester
         from .recipient_proxy import eligible
         release_time = next((instant(f.get('createdAt')) for f in audit_rows if f.get('type') == 'DOCUMENT_SENT'), None)
         for access in provision(workflow, envelope, released_at=release_time):
@@ -244,13 +262,15 @@ def reconcile(workflow, client, envelope=None):
                 enqueue(access, 'invitation', 'release:' + access.revision)
             elif staged and access.completed_at:
                 enqueue(access, 'fully_signed', completion_id)
+        if staged:
+            enqueue_requester(workflow, completion_id)
     return workflow
 
 
 def process(workflow_id):
     now = timezone.now()
     # Long enough for bounded remote calls; CAS prevents concurrent webhook/poll runners.
-    claimed = Workflow.objects.filter(pk=workflow_id).exclude(state__in=TERMINAL).filter(
+    claimed = Workflow.objects.filter(pk=workflow_id, next_attempt_at__lte=now).exclude(state__in=TERMINAL - {'done'}).filter(
         Q(lease_until__isnull=True) | Q(lease_until__lt=now)).update(lease_until=now + timedelta(minutes=5))
     if not claimed:
         return
@@ -258,13 +278,19 @@ def process(workflow_id):
     try:
         credential = SignCredential.objects.get(owner=workflow.owner, enabled=True)
         with Documenso(credential) as client:
-            execute(workflow, client)
+            if workflow.state == 'done':
+                observe_native_mail(workflow, client.audit(workflow.envelope_id).get('data', []))
+            else:
+                execute(workflow, client)
+        Workflow.objects.filter(pk=workflow.pk).update(last_error='',
+            next_attempt_at=timezone.now()+timedelta(seconds=900 if workflow.state == 'done' else 15))
     except SignError as exc:
         workflow.refresh_from_db()
         if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch'}:
             workflow.state = 'quarantined'
         elif not workflow.envelope_id and workflow.state == 'creating':
             workflow.state = 'uncertain' if exc.uncertain else 'failed'
+        record_fact(workflow, 'release.error', uuid.uuid4(), {'error': exc.code})
         workflow.last_error = exc.code
         workflow.attempts += 1
         workflow.next_attempt_at = timezone.now() + timedelta(seconds=min(300, 15 * 2 ** min(workflow.attempts, 4)))
@@ -272,6 +298,7 @@ def process(workflow_id):
     except Exception as exc:
         # Do not log exceptions containing remote credential or recipient tokens.
         workflow.refresh_from_db()
+        record_fact(workflow, 'release.error', uuid.uuid4(), {'error': 'integration_' + type(exc).__name__[:60]})
         workflow.attempts += 1
         Workflow.objects.filter(pk=workflow.pk).update(attempts=workflow.attempts,
             last_error='integration_' + type(exc).__name__[:60],
@@ -281,7 +308,7 @@ def process(workflow_id):
 
 
 def sweep(limit=20):
-    ids = Workflow.objects.exclude(state__in=TERMINAL).filter(next_attempt_at__lte=timezone.now()).order_by('next_attempt_at').values_list('pk', flat=True)[:limit]
+    ids = Workflow.objects.exclude(state__in=TERMINAL - {'done'}).filter(next_attempt_at__lte=timezone.now()).order_by('next_attempt_at').values_list('pk', flat=True)[:limit]
     for workflow_id in list(ids):
         process(workflow_id)
     from .storage import recover_previews

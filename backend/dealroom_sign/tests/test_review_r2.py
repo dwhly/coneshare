@@ -202,8 +202,9 @@ def test_valid_multisignature_pdf_accepted():
 def test_unexpected_errors_increment_attempts_and_backoff(fixture):
     with patch('dealroom_sign.workflows.Documenso', side_effect=RuntimeError):
         for attempt in [1, 2, 3]:
-            before = timezone.now()
-            process(fixture.work.pk)
+            before = max(timezone.now(), fixture.work.next_attempt_at)
+            with patch('django.utils.timezone.now', return_value=before):
+                process(fixture.work.pk)
             fixture.work.refresh_from_db()
             assert fixture.work.attempts == attempt
             assert (fixture.work.next_attempt_at-before).total_seconds() >= 15*2**attempt

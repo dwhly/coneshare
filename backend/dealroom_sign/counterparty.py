@@ -6,6 +6,7 @@ import hmac
 import secrets
 import re
 from datetime import timedelta
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
@@ -24,7 +25,9 @@ DISCLOSURE = 'Fleet | Dealroom electronic signature consent v1'
 
 
 def keyed_hash(purpose, value):
-    root = getattr(settings, 'SIGN_CAPABILITY_KEY', '') or settings.SECRET_KEY
+    root = getattr(settings, 'SIGN_CAPABILITY_KEY', '')
+    if not isinstance(root, str) or not root.strip():
+        raise SignError('capability_key_unavailable')
     key = hmac.digest(root.encode(), ('fleet-sign/' + purpose).encode(), 'sha256')
     return hmac.new(key, value if isinstance(value, bytes) else value.encode(), hashlib.sha256).hexdigest()
 
@@ -95,7 +98,7 @@ def observe_completion(access, completed):
 
 def sender_snapshot(workflow):
     row = SignatureRequest.objects.filter(workflow=workflow).first()
-    staff = {'name': workflow.owner.get_full_name() or workflow.owner.email,
+    staff = {'name': workflow.owner.get_full_name() or 'Requester',
              'email': workflow.owner.email, 'company': workflow.room.organization.name}
     sender = staff
     context = row.source_context if row else {}
@@ -104,6 +107,17 @@ def sender_snapshot(workflow):
         if not isinstance(sender, dict) or not sender.get('name') or not sender.get('email'):
             raise SignError('incoming_requester_missing')
     return row, staff, sender, context
+
+
+def display_time(value, zone):
+    value = instant(value) if isinstance(value, str) else value
+    if not value:
+        raise SignError('mail_time_unavailable')
+    try:
+        local = value.astimezone(ZoneInfo(zone))
+    except (ZoneInfoNotFoundError, ValueError):
+        raise SignError('sender_timezone_invalid') from None
+    return local.strftime('%d %b %Y, %-I:%M %p %Z')
 
 
 def provision(workflow, envelope, *, released_at=None):
@@ -124,7 +138,7 @@ def provision(workflow, envelope, *, released_at=None):
                 context={'title': workflow.title, 'note': context.get('note', ''),
                     'pages': workflow.source_version.num_pages, 'signatures': sum(f['type'] in {'SIGNATURE', 'FREE_SIGNATURE'}
                         for p in workflow.recipients if p['email'] == person['email'].lower() for f in p.get('fields', [])),
-                    'due_at': context.get('due_at') or (released+timedelta(days=7)).isoformat(),
+                    'due_at': display_time(context.get('due_at') or released+timedelta(days=7), context.get('timezone', 'UTC')),
                     'timezone': context.get('timezone', 'UTC'), 'incoming': bool(row and row.kind == 'in')})
             set_lookups(access)
             access.save()
@@ -140,10 +154,10 @@ def provision(workflow, envelope, *, released_at=None):
         completed = instant(person.get('signedAt'))
         if not completed and envelope['status'] == 'COMPLETED':
             completed = instant(envelope.get('completedAt'))
-        if person.get('signingStatus') == 'SIGNED' and completed:
+        if person.get('role') != 'CC' and person.get('signingStatus') == 'SIGNED' and completed:
             observe_completion(access, completed)
-        if person.get('role') == 'CC' and envelope['status'] == 'COMPLETED':
-            observe_completion(access, instant(envelope.get('completedAt')) or timezone.now())
+        if person.get('role') == 'CC' and workflow.completed_at:
+            observe_completion(access, workflow.completed_at)
         result.append(access)
     return result
 
@@ -156,7 +170,7 @@ def revoke(access, reason):
         access.revoked_at, access.revocation_reason = timezone.now(), reason[:500]
         set_lookups(access)
         access.save()
-        access.sessions.all().delete()
+        access.sessions.all().update(expires_at=timezone.now())
         record_fact(access.workflow, 'signer.revoked', f'{access.pk}:{access.generation}', {'reason': reason[:500]})
 
 
@@ -188,7 +202,7 @@ def new_session(access, *, previous=None, validated=None):
         if validated and (validated.access_id != access.pk or validated.generation != access.generation):
             raise SignError('session_scope_mismatch')
         if previous:
-            SignerSession.objects.filter(session_hash=keyed_hash('session', previous)).delete()
+            SignerSession.objects.filter(session_hash=keyed_hash('session', previous)).update(expires_at=timezone.now())
             SessionStore(session_key=previous).delete()
         now = timezone.now()
         deadline = access.room_expires_at if access.completed_at else access.signing_expires_at

@@ -28,12 +28,13 @@ from sharelinks.models import Viewer
 from . import storage as product_storage
 from .board_auth import BoardProxyAuthentication
 from .client import SignError
+from .counterparty_mail import retry_email
 from .evidence import fields_for_snapshot, projection as evidence_projection
 from .exports import (
     SnapshotChanged, Unavailable, download, existing_artifact,
     manifest as artifact_manifest, resolve_artifact,
 )
-from .models import NdaAcceptance, NdaPolicy, SignCredential, SignatureRequest, Workflow
+from .models import CounterpartyEffect, NdaAcceptance, NdaPolicy, SignCredential, SignatureRequest, Workflow
 from .operations import require_export_actor
 from .requests import (
     activity as request_activity, board_config, freshness, integrity, list_row,
@@ -301,7 +302,6 @@ class SigningNdaResetView(APIView):
     def post(self, request, room_id, workflow_id):
         from dealroom.hooks import human_staff
         from .workflows import reset_nda
-        from .client import SignError
         if not human_staff(request):
             raise PermissionDenied('Only a human staff JWT may reset an NDA.')
         room = staff_room(request, room_id)
@@ -421,6 +421,29 @@ class SignatureSignerRevokeView(SignatureProductView):
         return Response({'revoked': True})
 
 
+def can_retry_email(request, row):
+    if not human_staff(request):
+        return False
+    binding = getattr(request, 'board_binding', None)
+    return (binding.role in {'writer', 'manager'}) if binding else request.user.pk == row.workflow.owner_id
+
+
+class SignatureEmailRetryView(SignatureProductView):
+    @extend_schema(request=OpenApiTypes.OBJECT, responses={200: OpenApiTypes.OBJECT})
+    def post(self, request, request_id, effect_id):
+        row = scoped_request(request, request_id)
+        if not can_retry_email(request, row):
+            raise PermissionDenied('forbidden')
+        if request.data:
+            raise ValidationError('Unsupported input property.')
+        effect = get_object_or_404(CounterpartyEffect, pk=effect_id, access__workflow=row.workflow)
+        try:
+            retry_email(effect, request.user)
+        except SignError as exc:
+            raise ValidationError(exc.code) from None
+        return Response({'state': 'pending'})
+
+
 class SignatureRequestDetailView(SignatureProductView):
     @extend_schema(responses={200:OpenApiTypes.OBJECT})
     def get(self, request, request_id):
@@ -443,7 +466,10 @@ class SignatureRequestDetailView(SignatureProductView):
             'source_context':{'identity':row.source_context.get('identity', 'not_recorded')},
             'integrity':integrity(row),'settings':{},'completion':[],'artifacts':artifacts,'audit_complete':row.audit_complete,'audit_as_of':row.audit_as_of,
             'capabilities':{name:{'enabled':False,'reason':'read_only_slice'} for name in ['send','remind','void','revise','settings','evidence_report','history_evidence']},
-            'human':human, **freshness(row)})
+            'email_effects': [{'id': str(effect.pk), 'kind': effect.kind, 'state': effect.state,
+                'last_error': effect.last_error, 'can_retry': effect.state == 'failed' and can_retry_email(request, row)}
+                for effect in CounterpartyEffect.objects.filter(access__workflow=row.workflow)] if human else [],
+            'last_error': row.workflow.last_error, 'human':human, **freshness(row)})
 
 
 def signature_field(row, snapshot_id, field_id=None, recipient_id=None):
