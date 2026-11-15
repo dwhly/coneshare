@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Case, IntegerField, Q, Value, When
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
@@ -158,7 +158,8 @@ def execute(workflow, client):
         envelope = adopt(workflow, client, workflow.envelope_id)
     validate_envelope(workflow, envelope)
     if workflow.state == 'draft' and envelope['status'] == 'DRAFT':
-        from .counterparty import sender_snapshot
+        from .counterparty import keyed_hash, sender_snapshot
+        keyed_hash('link', b'pre-distribute-check')
         sender_snapshot(workflow)
         def mark_attempted():
             workflow.state = 'distributing'
@@ -267,10 +268,18 @@ def _reconcile_locked(workflow, client, envelope=None):
     return workflow
 
 
+def watchable_workflows(now):
+    # Late native mail is watched for one day; active signing always takes priority.
+    cutoff = now - timedelta(days=1)
+    return Workflow.objects.exclude(state__in=TERMINAL - {'done'}).filter(
+        ~Q(state='done') | Q(completed_at__gte=cutoff) |
+        Q(completed_at__isnull=True, created_at__gte=cutoff))
+
+
 def process(workflow_id):
     now = timezone.now()
     # Long enough for bounded remote calls; CAS prevents concurrent webhook/poll runners.
-    claimed = Workflow.objects.filter(pk=workflow_id, next_attempt_at__lte=now).exclude(state__in=TERMINAL - {'done'}).filter(
+    claimed = watchable_workflows(now).filter(pk=workflow_id, next_attempt_at__lte=now).filter(
         Q(lease_until__isnull=True) | Q(lease_until__lt=now)).update(lease_until=now + timedelta(minutes=5))
     if not claimed:
         return
@@ -282,33 +291,38 @@ def process(workflow_id):
                 observe_native_mail(workflow, client.audit(workflow.envelope_id).get('data', []))
             else:
                 execute(workflow, client)
+        workflow.refresh_from_db()
         Workflow.objects.filter(pk=workflow.pk).update(last_error='',
             next_attempt_at=timezone.now()+timedelta(seconds=900 if workflow.state == 'done' else 15))
     except SignError as exc:
         workflow.refresh_from_db()
-        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch'}:
+        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch', 'release_mail_settings_mismatch'}:
             workflow.state = 'quarantined'
         elif not workflow.envelope_id and workflow.state == 'creating':
             workflow.state = 'uncertain' if exc.uncertain else 'failed'
-        record_fact(workflow, 'release.error', uuid.uuid4(), {'error': exc.code})
+        if workflow.state != 'done':
+            record_fact(workflow, 'release.error', uuid.uuid4(), {'error': exc.code})
         workflow.last_error = exc.code
         workflow.attempts += 1
-        workflow.next_attempt_at = timezone.now() + timedelta(seconds=min(300, 15 * 2 ** min(workflow.attempts, 4)))
+        workflow.next_attempt_at = timezone.now() + timedelta(seconds=900 if workflow.state == 'done' else min(300, 15 * 2 ** min(workflow.attempts, 4)))
         workflow.save(update_fields=['state', 'last_error', 'attempts', 'next_attempt_at'])
     except Exception as exc:
         # Do not log exceptions containing remote credential or recipient tokens.
         workflow.refresh_from_db()
-        record_fact(workflow, 'release.error', uuid.uuid4(), {'error': 'integration_' + type(exc).__name__[:60]})
+        if workflow.state != 'done':
+            record_fact(workflow, 'release.error', uuid.uuid4(), {'error': 'integration_' + type(exc).__name__[:60]})
         workflow.attempts += 1
         Workflow.objects.filter(pk=workflow.pk).update(attempts=workflow.attempts,
             last_error='integration_' + type(exc).__name__[:60],
-            next_attempt_at=timezone.now() + timedelta(seconds=min(300, 15 * 2 ** min(workflow.attempts, 4))))
+            next_attempt_at=timezone.now() + timedelta(seconds=900 if workflow.state == 'done' else min(300, 15 * 2 ** min(workflow.attempts, 4))))
     finally:
         Workflow.objects.filter(pk=workflow.pk).update(lease_until=None)
 
 
 def sweep(limit=20):
-    ids = Workflow.objects.exclude(state__in=TERMINAL - {'done'}).filter(next_attempt_at__lte=timezone.now()).order_by('next_attempt_at').values_list('pk', flat=True)[:limit]
+    ids = watchable_workflows(timezone.now()).filter(next_attempt_at__lte=timezone.now()).annotate(
+        watch_priority=Case(When(state='done', then=Value(1)), default=Value(0), output_field=IntegerField())
+    ).order_by('watch_priority', 'next_attempt_at').values_list('pk', flat=True)[:limit]
     for workflow_id in list(ids):
         process(workflow_id)
     from .storage import recover_previews

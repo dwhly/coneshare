@@ -3,6 +3,7 @@ import io
 import json
 import math
 
+from django.core.validators import validate_email
 from pypdf import PdfReader
 from rest_framework.exceptions import ValidationError
 
@@ -28,9 +29,8 @@ def validate_recipients(recipients, pdf, *, page_count=None):
     normalized = []
     emails = set()
     for recipient in recipients:
-        if set(recipient) - {'email', 'name', 'role', 'signingOrder', 'fields'}:
+        if set(recipient) - {'email', 'name', 'company', 'role', 'signingOrder', 'fields'}:
             raise ValidationError('Unsupported recipient property.')
-        from django.core.validators import validate_email
         email = str(recipient.get('email', '')).strip().lower()
         try:
             validate_email(email)
@@ -61,6 +61,10 @@ def validate_recipients(recipients, pdf, *, page_count=None):
         order = recipient.get('signingOrder', 1)
         if type(order) is not int or not 1 <= order <= 20:
             raise ValidationError('Invalid signing order.')
+        if 'company' in recipient and (not isinstance(recipient['company'], str) or len(recipient['company']) > 200):
+            raise ValidationError('Company must be text of at most 200 characters.')
         normalized.append({'email': email, 'name': str(recipient.get('name', ''))[:200], 'role': 'SIGNER',
                            'signingOrder': order, 'fields': [dict(f, identifier=0) for f in fields]})
+        if 'company' in recipient:
+            normalized[-1]['company'] = recipient['company'].strip()
     return normalized

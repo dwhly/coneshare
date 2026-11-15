@@ -1,5 +1,7 @@
 # C1b Gate 3 implementation report
 
+**Current revision: r4.** The r4 section below records Gate-3 re-review r2. Earlier sections retain the r3 evidence; r4 corrections take precedence.
+
 2026-11-15. Gate 3 r3 changes are **uncommitted** in the three supplied worktrees, whose HEADs match Send `f9fef317`, Sign `d596af665` and Fleet deploy `c0401af`. Actual existing branches are Send `agent/c1b-counterparty`, Sign `agent/c1b-listener` and Fleet deploy `agent/c1b-deploy`; the latter two differ from the brief’s shared branch label. Branches were preserved. This report supersedes the r2 implementation report and applies all 8 major, 14 minor and 7 nit findings, including the manager decisions. No deployed database, private env/key file, production Compose file or project memory was changed. No live acceptance result is claimed.
 
 ## Per-item evidence
@@ -53,9 +55,8 @@ Final local results: No stack deployment, SMTP relay acceptance, real browser si
 Commands:
 
 ```sh
-# Fictional test-only capability key; the runner and webhook baseline remain unchanged.
-SIGN_CAPABILITY_KEY=fictional-local-test-key \
-  /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+# r4 test fixtures provide fictional keys; no capability-key environment variable is needed.
+/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
 cd /root/worktrees/sign-c1b
 SEND_REPO=/root/worktrees/send-c1b CI=true node --import tsx --test chief/inventory/*.test.ts
 cd /root/worktrees/fd-c1b
@@ -98,16 +99,19 @@ The original first-party-directory exclusion file and thresholds are unchanged. 
    umask 077
    python3 - <<'PY'
    import secrets
+   import re
    from pathlib import Path
    env = Path('deploy/do1/proto/send.env')
    proxy = Path('deploy/do1/proto/fleet-proxy-key')
    text = env.read_text()  # manager must create this ignored preview file first
-   if any(line.strip().startswith('SIGN_CAPABILITY_KEY=') for line in text.splitlines()) or proxy.exists():
+   if any(re.match(r'^\s*(?:export\s+)?SIGN_CAPABILITY_KEY\s*=', line) for line in text.splitlines()) or proxy.exists():
        raise SystemExit('Preview keys already exist; preserve them or handle rotation explicitly')
+   with proxy.open('x') as output:
+       proxy.chmod(0o600)
+       output.write(secrets.token_urlsafe(48) + '\n')
+   env.chmod(0o600)
    with env.open('a') as output:
        output.write('\nSIGN_CAPABILITY_KEY=' + secrets.token_urlsafe(48) + '\n')
-   with proxy.open('x') as output:
-       output.write(secrets.token_urlsafe(48) + '\n')
    PY
    ```
 
@@ -133,3 +137,97 @@ The original first-party-directory exclusion file and thresholds are unchanged. 
 ## Remaining acceptance limits
 
 All live checks above, including visuals, relay behavior and real signing, remain manager acceptance work. C3 interim copies/full request room, C4 polished recipient UI, C5 optional-code issuance/UI and reminder scheduling, and C6 questions/paper/decline remain the previously agreed later slices. Public exposure, external SMTP delivery and public seal trust are outside this fictional preview scope.
+
+
+## C1b r4 — Gate-3 re-review r2
+
+The r4 starting HEADs are Send `65153e67`, Sign `2b12cbd04`, Fleet deploy `2daee98`. Changes remain uncommitted. The r3 sections above are historical evidence; the corrections below supersede their party fallback, requester-copy scope, polling, test-key setup and runbook claims.
+
+### Concurrency and mutation limits
+
+Reconciliation holds the workflow row lock through native get/audit pagination and completed-file staging (up to approximately 40 seconds of network work). Consequently parallel tRPC calls and co-signers wait for that same workflow lock, including read-only proxied requests. This preserves the existing atomic publication and no-restaging guarantee; no claim of concurrent read throughput is made. Static requests bypass reconciliation. A later change would need an independently verified observation/publication split before moving network I/O outside this lock.
+
+Live mutant 3 changes the listener's route-rejection **status** from 404 to 200, while still refusing to forward. It does not prove that removing the listener route gate is detected: native middleware repeats that check, and could mask a missing listener check. The keyed HTTP baseline and status mutation remain useful but are not proof of layer independence. Local listener tests directly observe non-forwarding; live layer-removal acceptance remains a separate test.
+
+Retry email deliberately permits scoped human board writers/managers, including a non-owner writer (r3's approved behavior and actor audit). Revoke additionally requires workflow ownership because it invalidates recipient access. The unreachable JWT-owner retry fallback has been removed; no role or ownership assertion was relaxed.
+
+
+### Per-item fixes and red → green evidence
+
+`R4` = `backend/dealroom_sign/tests/test_gate3_r4.py`; `G3` = `test_gate3.py`; `Routes` = `test_gate3_routes.py`; `Report` = `test_gate3_r4_report.py`. Counts are test cases, except explicitly labelled subtests/mutation runs. Coverage-only mutations restore the exact original file in `finally`; no mutation remains. The corrected `Requester` → `Signer 1` assertion is the explicitly requested contract correction. All other existing assertions remain active.
+
+| Review item | Final change and evidence | Red → green |
+| --- | --- | --- |
+| Major 1 | Staff gate decodes once, strips `.data` before all trailing slashes, strips configured base path, rejects ambiguous encodings, doubled slashes and semicolon parameters, and denies the entire `/sign/` namespace. Procedure comparisons are case-insensitive. `gate3-r4.test.ts` covers every (a)–(e) surface, mixed case, suffix/encoding variants and real installed router behavior. | **8 initial failures + 3 suffix follow-up failures → 13 passed** |
+| Major 2 | `mail.attempt` is written only after eligibility passes. Waiting uses a durable `mail_waiting` effect state detail, checks at most every 15 minutes, wakes on eligible reconciliation, creates zero History across 50 sweeps, and consumes no drain delivery slot. Deferred effects are filtered in SQL before attempt-history queries. Preparation errors have separate `mail.preparation_attempt` facts and retain the bounded failure policy. R4 `major2_*`. | **2 failing cases + 1 query-cost follow-up failure → 2 passed** |
+| Major 3 | Party rows use neutral `Signer N`, never requester identity; skip CCs and suppress address-valued names/companies. Final concern reporting uses Reply instead of a body mailto address. Corrected G3 expectation plus multi-signer/header/body and address-valued-label regressions. | **3 failed → 3 passed** |
+| Minor 1 | New autouse fictional capability-key fixture; standalone Django process still fails closed with no key. Documented runner needs no key env var. The two inherited webhook failures also now set their own fictional webhook secret in those tests, without changing any assertion. | **1 capability fixture failure → pass**; **2 inherited webhook failures → pass**; standalone and three existing missing-key negatives pass |
+| Minor 2 | Command validation accepts bounded optional `company` metadata, preserves it for mail and request fingerprints, and leaves absent-company fingerprints unchanged. R4 `company_survives_command_validation`. | **1 failed → 1 passed** |
+| Minor 3 | Case-insensitive requester-address dedup reuses that recipient's existing completion capability/effect when the requester is a signer or CC. R4 `requester_copy_reuses_existing_recipient`. | **2 failed → 2 passed** |
+| Minor 4 | NDA workflows do not enqueue a room-owner/requester copy; the member retains their normal final copy. R4 `nda_has_no_requester_copy`. | **1 failed → 1 passed** |
+| Minor 5 | Validate capability-key availability in draft before native distribute or the attempted-release marker. R4 asserts no distribute call and unchanged draft state. | **1 failed → 1 passed** |
+| Minor 6 | Watch late native mail for 24 hours after completion, poll at 15-minute intervals, prioritize active work, and keep completed-workflow errors out of History. R4 expiry/priority and both SignError/unexpected-error tests. | **3 failed → 3 passed** |
+| Minor 7 | Explicitly document the network-under-row-lock tradeoff, read-only request serialization and publication guarantee above. `Report` disclosure check. | **1 failed → 1 passed** (documentation) |
+| Minor 8 | Resolve bind sources and reject parent-directory mounts exposing the proxy key, including extra directory mounts on legitimate holders. Fictional preflight test checks mailpit, send-web and Sign. | **1 failing test / 3 failing subtests → all pass** |
+| Minor 9 | Add published-3001, writable-mount, renamed-env-value and equal-key negatives. Disable each guard in turn to prove those assertions fail, then restore. | **4 mutation runs fail → 2 restored tests pass** |
+| Minor 10 | Document that live mutant 3 is status-only and does not establish layer independence. Local removal of the listener gate fails the direct non-forwarding test even though downstream middleware could mask this live. | **1 documentation failure + 1 gate-removal mutation failure → restored passes**; live runtime remains manager acceptance |
+| Minor 11 | Waiting-state write reacquires the effect row lock and requires `running`, preserving a stale worker's `delivery_uncertain`. R4 interrupted-worker regression. | **1 failed → 1 passed** |
+| Nit 1 | Wiring test associates each wrapper with its serve call, port variable/default and private-port expression. Swapping the two wrappers fails. | **1 mutation failure → 1 pass** |
+| Nit 2 | Ownership E2E explicitly labels staff blanket denial and keyed recipient ownership, with an own-token control on each listener. All original assertions remain. Harness structure test detects the old incomplete controls. | **1 local harness failure → 1 pass**; actual E2E manager runs live |
+| Nit 3 | Missing-asset live assertion requires exactly 404. Execute the assertion against 301/403/500 and 404 to prove its strength. | **3 failed / 1 passed → 4 passed**; actual HTTP manager runs live |
+| Nit 4 | Reject empty native tokens before comparing tRPC scope, including all three allowed read operations. R4 empty-token cases. | **3 failed → 3 passed** |
+| Nit 5 | Remove unreachable owner fallback from retry permissions; retain board writer/manager authorization and document its intentional difference from revoke. Existing reader/non-owner/actor audit assertions remain. | **1 failed → 1 passed**, existing permission tests pass |
+| Nit 6 | Final-copy alternate-access footer refers to a link; invitations retain their button wording. R4 checks text and HTML. | **1 failed → 1 passed** |
+| Nit 7 | Alternate-access CSRF negative supplies correct Origin, isolating missing CSRF. Removing the CSRF rejection makes this specific assertion fail. | **1 mutation failure → 1 pass** |
+| Nit 8 | Exercise capability, alternate, both lookups, session, OTP verification, handoff issuance/consumption and rate-limit call sites against independently derived HMACs. Changing call-site labels while retaining the hash function fails all eight cases. | **8 mutation failures → 8 passes** |
+| Nit 9 | Proxy-secret leakage check rejects substring values such as `Bearer <key>` under any env name; errors print no values. | **1 failed → 1 passed** |
+| Nit 10 | Topology parser recursively checks nested proxy blocks, rejects unresolved includes at every level and requires a staff server. | **4 failed → 4 passed** |
+| Nit 11 | Execute the actual documented generator against disposable files: proxy creation precedes env append, both modes are 0600, ordinary/export/spaced existing assignments are preserved, failed proxy creation leaves env unchanged. | **4 failed / 1 passed → 5 passed** |
+| Nit 12 | A post-release mail-settings mismatch records one error and quarantines the workflow for operator review. It cannot distribute again or keep adding scheduled History. | **1 failed → 1 passed** |
+
+### Contract corrections and limits
+
+- **Message-ID exception:** under the standing contract-mismatch authority, retain the stable protocol Message-ID (`<opaque-effect-hash@configured-domain>`), which requires `@`. The multi-signer test checks all MIME-part headers, excluding only To/From/Reply-To and this separately validated opaque Message-ID. The multi-signer regression requires no `@` in subject, other headers, text and HTML; no recipient address enters the Message-ID. Removing Message-ID would conflict with the existing stable-identity/uncertain-delivery contract. No existing Message-ID assertion was removed.
+- **NDA scope:** requester completion mail is for room-document requests, not member NDAs. Deduplication never creates a second capability for the same requester address.
+- **Late mail:** the 24-hour automatic watch is bounded. Native mail occurring after that window requires operator audit; active reconciliation still records any native mail it observes. Done-workflow failures retain safe `last_error` and a 15-minute schedule without History spam.
+- **Mismatch recovery:** `release_mail_settings_mismatch` is quarantined after the first failure; an operator must investigate native release settings before recovery. No automatic resend or fallback is introduced.
+- **Router decoding:** installed Node/Hono constructs a WHATWG URL; Hono `getPath` uses `decodeURI`, preserving encoded `/`, and parameter access decodes it. React Router normalizes `.data` and trailing slash, decodes each segment, preserves encoded separators during matching, and matches routes case-insensitively with trailing slashes allowed. Semicolons remain literal parameter text. The staff gate is deliberately stricter: leftover percent encodings, semicolons, backslashes and doubled slashes fail closed. Encoded dots/separators cannot reach recipient loaders.
+- No production key/env, deployed database, schema/migration, project memory, or native upstream Sign implementation was changed. All deployment, real browser, SMTP and live runtime mutation acceptance remains manager work.
+
+### r4 upstream accounting
+
+Existing first-party exclusions and budgets are unchanged. `recipient-artifact-access.spec.ts` is fork-authored (absent upstream), but its path is mechanically counted; its r4 changes are **+8/−3**, all test labels/controls. Native upstream-owned r4 churn is **zero**. `main.js` remains the sole C1b native-owned edit, **+2/−2**, unchanged by r4.
+
+| Comparison against actual r4 working tree | Mechanically counted files | Added / deleted | Churn |
+| --- | ---: | ---: | ---: |
+| r4 vs `2b12cbd04` | 1 fork-authored E2E test | +8 / −3 | 11 |
+| C1b vs `6c4757feb` | 2 | +37 / −10 | 47 |
+| C0 + C1b vs `d3b7f7c6` | 12 | +76 / −492 | 568 |
+| Entire fork vs `v2.21.1` | 98 | +2784 / −1748 | 4532 |
+
+The inherited whole-fork budget excess remains. No exclusion or threshold was added to hide it.
+
+### r4 final validation
+
+- Send signing suite, with **no capability-key environment variable**: **333 passed, 0 failed, 0 skipped**. The inherited webhook tests now pass using explicit fictional test settings. The runner emits 43 inherited JWT test-key length warnings.
+- Final Send follow-up after filtering deferred mail effects before attempt-history queries: **77 passed**. This includes all R4 mail/workflow regressions, G3, counterparty-mail and executable report checks. The standalone missing-key test still fails closed outside pytest's fixture.
+- Sign inventory/listener/schema/drift/harness suite with `SEND_REPO` set: **155 passed, 0 failed, 0 skipped**.
+- Fleet: **9 preflight tests + 9 topology tests passed**. Four guard-removal mutations failed before restoring preflight.
+- HTTP harness JS syntax, artifact E2E TypeScript transpilation, Python mutation-script parsing and all three `git diff --check` runs passed.
+- All supplied HEADs are unchanged; all changes are unstaged/uncommitted. Native upstream-owned Sign runtime diff against r4 HEAD is empty. No migration was created or modified.
+
+Commands used:
+
+```sh
+/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b \
+  dealroom_sign/tests/test_gate3_r4.py dealroom_sign/tests/test_gate3.py \
+  dealroom_sign/tests/test_counterparty_mail.py dealroom_sign/tests/test_gate3_r4_report.py
+cd /root/worktrees/sign-c1b
+SEND_REPO=/root/worktrees/send-c1b CI=true node --import tsx --test chief/inventory/*.test.ts
+cd /root/worktrees/fd-c1b
+python3 deploy/do1/test_gate3_preflight.py
+/root/work/sign-product/send-venv/bin/python deploy/do1/test_c1b_topology.py
+```
+
+[Local failure/pass summaries](c1b-r4-test-evidence.txt) retain the failing regression names and mutation results. Live E2E/HTTP/SMTP/runtime mutations are still manager-run acceptance, with the limitations explicitly described above; local harness checks do not claim those live results.

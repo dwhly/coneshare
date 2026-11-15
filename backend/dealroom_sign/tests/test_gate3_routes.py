@@ -1,3 +1,6 @@
+import base64
+import hashlib
+import hmac
 import json
 from datetime import timedelta
 from unittest.mock import patch
@@ -11,8 +14,8 @@ from django.utils import timezone
 
 from dealroom_sign.client import SignError
 from dealroom_sign.counterparty import (COOKIE, alternate_code, capability, disclosure_hash, get_session,
-    issue_handoff, keyed_hash, new_session, observe_completion)
-from dealroom_sign.models import NdaPolicy, SignerChallenge, SignerSession
+    issue_handoff, keyed_hash, new_session, observe_completion, material, resolve, verify_code, consume_handoff)
+from dealroom_sign.models import NdaPolicy, SignerChallenge, SignerSession, SignerHandoff
 from dealroom_sign.recipient_proxy import forward_headers, limit
 from dealroom_sign.tests.test_counterparty import access
 from dealroom_sign.tests.test_workflows import fixture, pdf, recipients, envelope
@@ -59,7 +62,7 @@ def test_minor13_consent_csrf_origin_rotation_and_planted_cookie(access):
 
 def test_minor13_alternate_access_csrf_origin_and_previous_cookie(access):
     browser, session, raw = browser_session(access)
-    assert browser.post('/s/access', {'code': alternate_code(access)}, **BASE).status_code == 403
+    assert browser.post('/s/access', {'code': alternate_code(access)}, HTTP_ORIGIN=ORIGIN, **BASE).status_code == 403
     assert browser.post('/s/access', {'code': alternate_code(access)}, HTTP_ORIGIN='https://other.test',
         HTTP_X_CSRFTOKEN=browser.cookies['csrftoken'].value, **BASE).status_code == 403
     assert post(browser, '/s/access', {'code': 'INVALID'}).status_code == 403
@@ -181,3 +184,41 @@ def test_minor10_requester_link_downloads_same_copy_but_never_forwards_native_wr
             content_type='application/json', HTTP_ORIGIN=ORIGIN, **BASE)
     assert response.status_code == 200 and b'Signed' in response.content
     native.assert_not_called()
+
+
+@pytest.mark.parametrize('purpose', ['link', 'alternate', 'lookup-link', 'lookup-alternate', 'session', 'otp', 'handoff', 'rate'])
+def test_r4_nit8_hmac_call_sites(access, fixture, settings, purpose):
+    def expected(label, value):
+        key = hmac.digest(settings.SIGN_CAPABILITY_KEY.encode(), ('fleet-sign/'+label).encode(), 'sha256')
+        return hmac.new(key, value if isinstance(value, bytes) else value.encode(), hashlib.sha256).hexdigest()
+    if purpose == 'link':
+        assert capability(access) == base64.urlsafe_b64encode(bytes.fromhex(expected(purpose, material(access)))).decode().rstrip('=')
+    elif purpose == 'alternate':
+        assert alternate_code(access).replace('-', '') == base64.b32encode(bytes.fromhex(expected(purpose, material(access)))[:10]).decode()
+    elif purpose == 'lookup-link':
+        assert access.capability_hash == expected(purpose, capability(access))
+        assert resolve(capability(access)).pk == access.pk
+    elif purpose == 'lookup-alternate':
+        assert access.alternate_hash == expected(purpose, alternate_code(access).replace('-', ''))
+        assert resolve(alternate_code(access), alternate=True).pk == access.pk
+    elif purpose == 'session':
+        session, raw = new_session(access)
+        assert session.session_hash == expected(purpose, raw)
+        assert get_session(raw).pk == session.pk
+    elif purpose == 'otp':
+        session, raw = new_session(access)
+        challenge = SignerChallenge.objects.create(session=session, access=access, code_hash=expected(purpose, '123456'),
+            expires_at=timezone.now()+timedelta(minutes=5))
+        fresh, cookie = verify_code(session, raw, str(challenge.pk), '123456')
+        assert fresh.code_verified_at and get_session(cookie).pk == fresh.pk
+    elif purpose == 'handoff':
+        viewer = nda(access, fixture)
+        raw = issue_handoff(access, viewer)
+        assert SignerHandoff.objects.get(access=access).token_hash == expected(purpose, raw)
+        consumed, session, cookie = consume_handoff(raw)
+        assert consumed.pk == access.pk and get_session(cookie).pk == session.pk
+    else:
+        settings.CACHES = {'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'}}
+        cache.clear()
+        limit(RequestFactory().get('/', **BASE))
+        assert cache.get('sign-rate:'+expected(purpose, 'entry:100.64.0.4')) == 1

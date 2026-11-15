@@ -1,0 +1,214 @@
+C1b r4 local red/green evidence (fictional fixtures only).
+Local regressions and mutations; no live preview acceptance is claimed.
+Final runs: Send suite-green and final-targeted-green; Sign suite-green; Fleet preflight-green and topology-green.
+Earlier intermediate failures are retained to show the correction sequence.
+
+/root/worktrees/send-c1b/.agent/fleet-c1b-r4-include-red.log
+FAIL: test_r4_nit10_top_level_include_fails_closed (__main__.RecipientTopology.test_r4_nit10_top_level_include_fails_closed)
+Ran 9 tests in 0.016s
+FAILED (failures=1)
+
+/root/worktrees/send-c1b/.agent/fleet-c1b-r4-preflight-green.log
+Ran 9 tests in 2.033s
+OK
+
+/root/worktrees/send-c1b/.agent/fleet-c1b-r4-preflight-mutations-red.log
+FAIL: test_r4_minor9_private_port_and_readonly_mount (deploy.do1.test_gate3_preflight.Preflight.test_r4_minor9_private_port_and_readonly_mount)
+FAILED (failures=1)
+FAIL: test_r4_minor9_private_port_and_readonly_mount (deploy.do1.test_gate3_preflight.Preflight.test_r4_minor9_private_port_and_readonly_mount)
+FAILED (failures=1)
+FAIL: test_r4_minor9_value_alias_and_key_independence (deploy.do1.test_gate3_preflight.Preflight.test_r4_minor9_value_alias_and_key_independence)
+FAILED (failures=1)
+FAIL: test_r4_minor9_value_alias_and_key_independence (deploy.do1.test_gate3_preflight.Preflight.test_r4_minor9_value_alias_and_key_independence)
+FAILED (failures=1)
+
+/root/worktrees/send-c1b/.agent/fleet-c1b-r4-preflight-red.log
+FAIL: test_r4_minor8_parent_directory_mounts_are_private (__main__.Preflight.test_r4_minor8_parent_directory_mounts_are_private) (service='mailpit')
+FAIL: test_r4_minor8_parent_directory_mounts_are_private (__main__.Preflight.test_r4_minor8_parent_directory_mounts_are_private) (service='send-web')
+FAIL: test_r4_minor8_parent_directory_mounts_are_private (__main__.Preflight.test_r4_minor8_parent_directory_mounts_are_private) (service='sign')
+FAIL: test_r4_nit9_embedded_key_value_is_private (__main__.Preflight.test_r4_nit9_embedded_key_value_is_private)
+Ran 9 tests in 2.799s
+FAILED (failures=4)
+
+/root/worktrees/send-c1b/.agent/fleet-c1b-r4-topology-green.log
+Ran 9 tests in 0.027s
+OK
+
+/root/worktrees/send-c1b/.agent/fleet-c1b-r4-topology-red.log
+FAIL: test_r4_nit10_missing_staff_server_fails (__main__.RecipientTopology.test_r4_nit10_missing_staff_server_fails)
+FAIL: test_r4_nit10_nested_location_is_checked (__main__.RecipientTopology.test_r4_nit10_nested_location_is_checked)
+FAIL: test_r4_nit10_unresolved_include_fails_closed (__main__.RecipientTopology.test_r4_nit10_unresolved_include_fails_closed)
+Ran 8 tests in 0.017s
+FAILED (failures=3)
+
+/root/worktrees/send-c1b/.agent/c1b-r4-csrf-red.log
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_minor13_alternate_access_csrf_origin_and_previous_cookie
+1 failed, 16 deselected in 10.71s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-drain-red.log
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_major2_waiting_does_not_consume_limit_and_reconcile_wakes_it
+1 failed, 18 deselected in 11.04s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-final-targeted-green.log
+77 passed in 67.67s (0:01:07)
+
+/root/worktrees/send-c1b/.agent/c1b-r4-hmac-red.log
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[link]
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[alternate]
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[lookup-link]
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[lookup-alternate]
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[session]
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[otp]
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[handoff]
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_r4_nit8_hmac_call_sites[rate]
+8 failed, 9 deselected in 17.44s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-hygiene-red.log
+FAILED dealroom_sign/tests/test_workflows.py::test_duplicate_completion_files_once_and_accepts_atomically
+FAILED dealroom_sign/tests/test_workflows.py::test_webhook_hint_auth_and_no_payload_trust[unit-test-secret-202]
+FAILED dealroom_sign/tests/test_workflows.py::test_webhook_enqueue_failure_retryable
+3 failed, 44 passed in 39.84s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-label-red.log
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_major3_address_valued_display_labels_stay_private
+1 failed, 18 deselected in 10.90s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-multi-red.log
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_major3_multiple_signers_have_neutral_rows_and_no_addresses
+1 failed, 16 deselected in 11.19s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-party-red.log
+FAILED dealroom_sign/tests/test_gate3.py::test_m3_private_final_mail_and_nit5_distinct_copy
+1 failed, 38 deselected in 12.87s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-permission-red.log
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_nit5_retry_requires_explicit_board_binding
+1 failed, 17 deselected in 11.10s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-report-green.log
+8 passed in 1.69s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-report-red.log
+FAILED dealroom_sign/tests/test_gate3_r4_report.py::test_nit11_generator_sets_private_modes
+FAILED dealroom_sign/tests/test_gate3_r4_report.py::test_nit11_generator_preserves_existing_keys[export SIGN_CAPABILITY_KEY=fixture]
+FAILED dealroom_sign/tests/test_gate3_r4_report.py::test_nit11_generator_preserves_existing_keys[SIGN_CAPABILITY_KEY = fixture]
+FAILED dealroom_sign/tests/test_gate3_r4_report.py::test_nit11_proxy_creation_failure_does_not_append_env
+FAILED dealroom_sign/tests/test_gate3_r4_report.py::test_minor7_report_discloses_network_lock_tradeoff
+FAILED dealroom_sign/tests/test_gate3_r4_report.py::test_minor10_report_limits_mutation_claim
+6 failed, 1 passed in 0.36s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-send-green.log
+FAILED dealroom_sign/tests/test_workflows.py::test_webhook_hint_auth_and_no_payload_trust[unit-test-secret-202]
+FAILED dealroom_sign/tests/test_workflows.py::test_webhook_enqueue_failure_retryable
+FAILED dealroom_sign/tests/test_gate3.py::test_m3_private_final_mail_and_nit5_distinct_copy
+FAILED dealroom_sign/tests/test_gate3.py::test_minor3_plain_text_is_not_html_escaped
+4 failed, 108 passed in 88.40s (0:01:28)
+
+/root/worktrees/send-c1b/.agent/c1b-r4-send-red.log
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_major2_waiting_has_no_history_or_repeated_sweep_cost
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor11_waiting_does_not_overwrite_interrupted_worker
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor2_company_survives_command_validation
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor3_requester_copy_reuses_existing_recipient[SIGNER]
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor3_requester_copy_reuses_existing_recipient[CC]
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor4_nda_has_no_requester_copy
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor5_missing_key_stops_before_distribute
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor6_done_watch_expires_and_active_work_has_priority
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor6_done_outage_adds_no_history[failure0]
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_minor6_done_outage_adds_no_history[failure1]
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_nit4_empty_native_token_denied[envelope.signingStatus-value0]
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_nit4_empty_native_token_denied[envelope.attachment.find-value1]
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_nit4_empty_native_token_denied[envelope.item.getManyByToken-value2]
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_nit6_final_footer_refers_to_link
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_nit12_release_mismatch_is_held_once
+15 failed in 25.22s
+
+/root/worktrees/send-c1b/.agent/c1b-r4-suite-green.log
+333 passed, 43 warnings in 215.21s (0:03:35)
+
+/root/worktrees/send-c1b/.agent/c1b-r4-targeted-green.log
+93 passed in 80.91s (0:01:20)
+
+/root/worktrees/send-c1b/.agent/c1b-r4-wait-query-red.log
+FAILED dealroom_sign/tests/test_gate3_r4.py::test_major2_waiting_has_no_history_or_repeated_sweep_cost
+1 failed, 18 deselected in 10.31s
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-data-slash-red.tap.log
+not ok 6 - r4 M1 all token surfaces deny /.data/
+not ok 7 - r4 M1 all token surfaces deny /.data//
+not ok 8 - r4 M1 all token surfaces deny /.DATA/
+# tests 13
+# pass 10
+# fail 3
+# skipped 0
+# duration_ms 586.905517
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-harness-green.tap.log
+# tests 5
+# pass 5
+# fail 0
+# skipped 0
+# duration_ms 235.649663
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-harness-red.tap.log
+not ok 1 - r4 nit3 live missing-asset assertion rejects 301
+not ok 2 - r4 nit3 live missing-asset assertion rejects 403
+not ok 3 - r4 nit3 live missing-asset assertion rejects 500
+not ok 5 - r4 nit2 ownership harness labels staff denial separately and checks own token on each listener
+# tests 5
+# pass 1
+# fail 4
+# skipped 0
+# duration_ms 385.133211
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-listener-gate-red.tap.log
+not ok 5 - fds r2: recipient listener answers the session poll as signed out, never with a staff session
+# tests 5
+# pass 4
+# fail 1
+# skipped 0
+# duration_ms 379.211193
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-listener-green.tap.log
+# tests 10
+# pass 10
+# fail 0
+# skipped 0
+# duration_ms 749.165691
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-listener-red.tap.log
+not ok 1 - r4 M1 all token surfaces deny /
+not ok 2 - r4 M1 all token surfaces deny //
+not ok 3 - r4 M1 all token surfaces deny /.data
+not ok 5 - r4 M1 all token surfaces deny /.DATA
+not ok 6 - r4 M1 all token surfaces deny /%2Edata
+not ok 7 - r4 M1 all token surfaces deny %2F.data
+not ok 8 - r4 M1 all token surfaces deny ;v=1/.data
+not ok 9 - r4 M1 encoded separators, repeated encodings and parameters fail closed
+# tests 10
+# pass 2
+# fail 8
+# skipped 0
+# duration_ms 836.152533
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-suite-green.tap.log
+# tests 155
+# pass 155
+# fail 0
+# skipped 0
+# duration_ms 2374.080388
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-wiring-green.tap.log
+# tests 3
+# pass 3
+# fail 0
+# skipped 0
+# duration_ms 309.409411
+
+/root/worktrees/send-c1b/.agent/sign-c1b-r4-wiring-red.tap.log
+not ok 1 - minor14 main wires staffFetch only to 3000 and recipientFetch to 3001
+# tests 1
+# pass 0
+# fail 1
+# skipped 0
+# duration_ms 470.274516
+

@@ -11,6 +11,7 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.validators import validate_email
 from django.db import transaction
+from django.db.models import Q
 from django.template import Context
 from django.template.loader import get_template, render_to_string
 from django.utils import timezone
@@ -73,14 +74,16 @@ def final_files(access):
 def compose(effect, *, files=None, force_link=False, smtp_size=0):
     access = effect.access
     title = clean_title(access.context['title'])
+    invitation = effect.kind == 'invitation'
     sender = header(access.sender['name'])
+    if not invitation and '@' in sender:
+        sender = 'Requester'
     sender_email = address(access.sender['email'])
     to = address(access.email)
     url = personal_url(access)
     public = urlsplit(url)
     report = address(getattr(settings, 'SIGN_REPORT_EMAIL', 'support@fleet.test'))
     from_email = formataddr((sender + ' via Fleet Dealroom', address(settings.SIGN_FROM_EMAIL)))
-    invitation = effect.kind == 'invitation'
     subject = f'{sender} sent you “{title}” to sign' if invitation else f'“{title}” fully signed'
     projection = {p.get('email', '').lower(): p for p in access.workflow.signer_projection}
     parties = []
@@ -88,7 +91,10 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
         if person.get('role') == 'CC':
             continue
         signed = projection.get(person['email'].lower(), {}).get('signedAt')
-        parties.append({'name': person.get('name') or sender, 'company': person.get('company', ''),
+        name = person.get('name') or ''
+        company = person.get('company') or ''
+        parties.append({'name': name if name.strip() and '@' not in name else f'Signer {len(parties) + 1}',
+            'company': company if '@' not in company else '',
             'signed_at': display_time(signed, access.context['timezone']) if signed else 'Not recorded'})
     if not invitation:
         subject += ' — ' + ' and '.join(p['name'] for p in parties)
@@ -130,13 +136,26 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
 def enqueue(access, kind, source_id):
     source_id = str(source_id)
     key = hashlib.sha256(f'{access.pk}:{kind}:{source_id}'.encode()).hexdigest()
-    return CounterpartyEffect.objects.get_or_create(access=access, kind=kind, source_id=source_id,
-        defaults={'message_id': f'<{key}@{settings.SIGN_MESSAGE_DOMAIN}>'})[0]
+    effect, _ = CounterpartyEffect.objects.get_or_create(access=access, kind=kind, source_id=source_id,
+        defaults={'message_id': f'<{key}@{settings.SIGN_MESSAGE_DOMAIN}>'})
+    # Reconciliation calls enqueue only after eligibility; wake a waiting invitation now.
+    if kind == 'invitation':
+        if CounterpartyEffect.objects.filter(pk=effect.pk, state='pending', last_error='mail_waiting').update(
+                last_error='', updated_at=timezone.now()):
+            effect.refresh_from_db()
+    return effect
 
 
 def enqueue_requester(workflow, source_id):
     """A separate copy capability has no native token or signing authority."""
+    if workflow.purpose == 'nda':
+        return None
     row, staff, sender, _ = sender_snapshot(workflow)
+    existing = workflow.signer_accesses.filter(revision=revision(workflow), email__iexact=sender['email']).exclude(
+        native_recipient_id='requester').first()
+    if existing:
+        observe_completion(existing, workflow.completed_at)
+        return enqueue(existing, 'fully_signed', source_id)
     template = workflow.signer_accesses.exclude(native_recipient_id='requester').first()
     if not template or not workflow.completed_at:
         raise SignError('copy_not_ready')
@@ -158,13 +177,15 @@ def attempt_history(effect):
     events = ObservedSignEvent.objects.filter(workflow=effect.access.workflow,
         payload__data__effect_id=str(effect.pk))
     reset = events.filter(kind='mail.retry').order_by('-occurred_at').first()
-    attempts = events.filter(kind='mail.attempt')
+    attempts = events.filter(kind__in=['mail.attempt', 'mail.preparation_attempt'])
     if reset:
         attempts = attempts.filter(pk__gt=reset.pk)
     return attempts.count()
 
 
 def ready_at(effect, attempts):
+    if effect.last_error == 'mail_waiting':
+        return effect.updated_at + timedelta(minutes=15)
     return effect.updated_at + timedelta(minutes=45 * 2 ** (min(attempts, 6)-1)) if attempts else effect.updated_at
 
 
@@ -192,22 +213,35 @@ def send_effect(effect_id):
         attempts = attempt_history(effect)
         if effect.state != 'pending' or ready_at(effect, attempts) > timezone.now():
             return
-        attempt_id = uuid.uuid4()
-        attempts += 1
-        record_fact(effect.access.workflow, 'mail.attempt', attempt_id,
-            {'effect_id': str(effect.pk), 'attempt': attempts, 'kind': effect.kind})
         effect.state = 'running'
         effect.save(update_fields=['state', 'updated_at'])
     connection = None
+    counted = False
+    def record_attempt(kind):
+        nonlocal attempts, counted
+        with transaction.atomic():
+            current = CounterpartyEffect.objects.select_for_update().get(pk=effect.pk)
+            if current.state != 'running':
+                return False
+            attempts += 1
+            record_fact(effect.access.workflow, kind, uuid.uuid4(),
+                {'effect_id': str(effect.pk), 'attempt': attempts, 'kind': effect.kind})
+            counted = True
+            return True
     try:
         access = effect.access
         envelope = reconcile_native(access)
         if effect.kind == 'invitation' and not eligible(access, envelope):
-            effect.state = 'pending' if access_state(access) == 'welcome' else 'cancelled'
-            # Waiting for a preceding signer is not a delivery attempt.
-            ObservedSignEvent.objects.filter(workflow=access.workflow, source_id=str(attempt_id), kind='mail.attempt').update(kind='mail.waiting')
-            effect.save(update_fields=['state', 'updated_at'])
-            return
+            with transaction.atomic():
+                current = CounterpartyEffect.objects.select_for_update().get(pk=effect.pk)
+                if current.state != 'running':
+                    return False
+                effect.state = 'pending' if access_state(access) == 'welcome' else 'cancelled'
+                effect.last_error = 'mail_waiting' if effect.state == 'pending' else ''
+                effect.save(update_fields=['state', 'last_error', 'updated_at'])
+            return False
+        if not record_attempt('mail.attempt'):
+            return False
         connection = get_connection(fail_silently=False)
         connection.open()
         smtp = getattr(connection, 'connection', None)
@@ -223,6 +257,8 @@ def send_effect(effect_id):
         if access_state(access) not in {'welcome', 'signed'}:
             raise SignError('recipient_unavailable')
     except Exception as exc:
+        if not counted and not record_attempt('mail.preparation_attempt'):
+            return False
         effect.state = 'pending' if attempts < 6 else 'failed'
         effect.last_error = exc.code if isinstance(exc, SignError) else 'mail_preparation_' + type(exc).__name__[:60]
     else:
@@ -270,6 +306,8 @@ def send_effect(effect_id):
              'attempt': attempts, 'error': effect.last_error,
              'next_attempt_at': ready_at(effect, attempts).isoformat() if effect.state == 'pending' else None})
 
+    return True
+
 
 def drain(limit=20):
     from .workflows import record_fact
@@ -279,9 +317,10 @@ def drain(limit=20):
             record_fact(effect.access.workflow, 'mail.delivery_uncertain', uuid.uuid4(),
                 {'effect_id': str(effect.pk), 'kind': effect.kind, 'error': 'worker_interrupted'})
     sent = 0
-    for effect in CounterpartyEffect.objects.filter(state='pending').select_related('access__workflow').order_by('updated_at').iterator():
+    pending = CounterpartyEffect.objects.filter(state='pending').filter(
+        ~Q(last_error='mail_waiting') | Q(updated_at__lte=timezone.now()-timedelta(minutes=15)))
+    for effect in pending.select_related('access__workflow').order_by('updated_at').iterator():
         if ready_at(effect, attempt_history(effect)) <= timezone.now():
-            send_effect(effect.pk)
-            sent += 1
+            sent += bool(send_effect(effect.pk))
             if sent >= limit:
                 break

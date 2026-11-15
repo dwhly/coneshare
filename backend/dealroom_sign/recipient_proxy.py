@@ -130,7 +130,7 @@ def authorize_rpc(request, access, envelope):
             if not isinstance(mode, dict) or set(mode) != {'type', 'token'} or mode['type'] != 'recipient':
                 raise SignError('recipient_scope_mismatch')
             token = mode['token']
-        if token != access.native_token:
+        if not access.native_token or not token or token != access.native_token:
             raise SignError('recipient_scope_mismatch')
         if 'envelopeId' in RPC[name][1] and value.get('envelopeId') != access.workflow.envelope_id:
             raise SignError('recipient_scope_mismatch')

@@ -191,7 +191,8 @@ def test_m3_private_final_mail_and_nit5_distinct_copy(access):
     message = compose(effect, files=[('signed.pdf', b'%PDF-a'), ('certificate.pdf', b'%PDF-b')])
     for text in [message.subject, message.body, message.alternatives[0][0]]:
         assert access.email not in text and 'copy@example.test' not in text and 'CC Person' not in text
-        assert 'Requester' in text
+        assert 'Signer 1' in text
+        assert 'Requester:' not in text
     for text in [message.body, message.alternatives[0][0]]:
         assert 'Harbor' in text and '14 Nov 2026, 3:42 PM PST' in text
         assert 'This invitation uses' not in text and 'Estimated' not in text

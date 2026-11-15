@@ -243,7 +243,8 @@ def test_lease_blocks_concurrent_workers(fixture):
 
 
 @pytest.mark.parametrize('secret,code', [('', 403), ('wrong', 403), ('unit-test-secret', 202)])
-def test_webhook_hint_auth_and_no_payload_trust(secret, code):
+def test_webhook_hint_auth_and_no_payload_trust(secret, code, settings):
+    settings.SIGN_WEBHOOK_SECRET = 'unit-test-secret'
     req = RequestFactory().post('/hook', {'payload': {'envelopeId': 'envelope_test', 'status': 'COMPLETED'}}, content_type='application/json', HTTP_X_DOCUMENSO_SECRET=secret)
     with patch('dealroom_sign.webhooks.reconcile_envelope.delay') as enqueue:
         result = webhook(req)
@@ -253,7 +254,8 @@ def test_webhook_hint_auth_and_no_payload_trust(secret, code):
     assert not NdaAcceptance.objects.exists()
 
 
-def test_webhook_enqueue_failure_retryable():
+def test_webhook_enqueue_failure_retryable(settings):
+    settings.SIGN_WEBHOOK_SECRET = 'unit-test-secret'
     req = RequestFactory().post('/hook', {'payload': {'envelopeId': 'envelope_test'}}, content_type='application/json', HTTP_X_DOCUMENSO_SECRET='unit-test-secret')
     with patch('dealroom_sign.webhooks.reconcile_envelope.delay', side_effect=RuntimeError):
         assert webhook(req).status_code == 503

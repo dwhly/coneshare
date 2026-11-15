@@ -425,7 +425,9 @@ def can_retry_email(request, row):
     if not human_staff(request):
         return False
     binding = getattr(request, 'board_binding', None)
-    return (binding.role in {'writer', 'manager'}) if binding else request.user.pk == row.workflow.owner_id
+    # Board writers may retry known failed mail; revoke separately requires ownership.
+    # Request scope requires a board binding for human access.
+    return bool(binding and binding.role in {'writer', 'manager'})
 
 
 class SignatureEmailRetryView(SignatureProductView):

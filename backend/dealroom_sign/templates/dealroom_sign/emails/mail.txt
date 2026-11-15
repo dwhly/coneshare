@@ -19,6 +19,6 @@ You don't need an account.
 Your personal link: {{ url }}{% endif %}
 {% endif %}
 Is this legit? {% if invitation %}This invitation uses{% else %}Your completed documents are available at{% endif %} {{ origin }}. This is a private preview.
-If the button doesn't work, open {{ origin }}/s/access and enter {{ alternate }}.
-Report a concern: mailto:{{ report }}
+If the {% if invitation %}button{% else %}link{% endif %} doesn't work, open {{ origin }}/s/access and enter {{ alternate }}.
+{% if invitation %}Report a concern: mailto:{{ report }}{% else %}Reply to report a concern.{% endif %}
 Reply to contact {{ sender }} or arrange a paper copy.
