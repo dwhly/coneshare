@@ -397,13 +397,14 @@ def forward(request, session):
                     raise SignError('source_hash_changed')
         elif path.startswith('/api/files/token/'):
             match = re.fullmatch(r'/api/files/token/([^/]+)/envelopeItem/([^/]+)(?:/download/(original|pending|signed))?', path)
-            long = re.fullmatch(r'/api/files/token/([^/]+)/envelope/([^/]+)/envelopeItem/([^/]+)/dataId/([^/]+)/(original|pending|signed)/item.pdf', path)
+            # Sign's in-page viewer route accepts only initial|current (get-envelope-item-pdf-by-token.ts).
+            long = re.fullmatch(r'/api/files/token/([^/]+)/envelope/([^/]+)/envelopeItem/([^/]+)/dataId/([^/]+)/(initial|current)/item\.pdf', path)
             if request.method != 'GET':
                 raise SignError('recipient_scope_mismatch')
             if long:
                 item = next((i for i in envelope['envelopeItems'] if i['id'] == long[3]), {})
                 valid = (long[1] == access.native_token and long[2] == access.workflow.envelope_id and
-                    long[3] in access.workflow.item_ids and long[4] == item.get('documentDataId') and long[5] == 'original')
+                    long[3] in access.workflow.item_ids and long[4] == item.get('documentDataId'))
             else:
                 valid = match and match[1] == access.native_token and match[2] in access.workflow.item_ids and match[3] in {None, 'original'}
             if not valid:
