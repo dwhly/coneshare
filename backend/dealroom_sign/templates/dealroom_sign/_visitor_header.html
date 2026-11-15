@@ -8,4 +8,4 @@
     <div class="fds-header__utils"><button type="button" class="fds-btn" data-fds-theme-toggle>Theme</button></div>
   </div>
 </header>
-<div class="dr-visitor"><div class="dr-context" aria-label="Room"><span class="dr-context__room" id="context-room"></span><span class="dr-context__who" id="context-who"></span></div></div>
+<div class="dr-visitor"><div class="dr-context" aria-label="{{ context_label|default:'Room' }}"><span class="dr-context__room" id="context-room">{{ context_room }}</span><span class="dr-context__who" id="context-who">{{ context_who }}</span></div></div>
