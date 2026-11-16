@@ -228,6 +228,7 @@ dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
 
 @media (max-width: 720px) {
   .dr-header.fds-header { padding: 0 16px; gap: 12px; }
+  .dr-header--visitor.fds-header { padding: 0; } /* the visitor container carries the side padding, like Sign's */
   .dr-header .dr-account__name { display: none; }
   .dr-grid2, .dr-grid5 { grid-template-columns: 1fr; }
   .dr-search { width: 100%; }
@@ -241,7 +242,9 @@ dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
   font-size: 0; width: 32px; height: 32px; min-width: 32px; padding: 0;
   border-color: transparent; background: transparent; color: inherit;
 }
-.fds-header [data-fds-theme-toggle]:hover { background: hsl(var(--accent)); }
+@media (hover: hover) {
+  .fds-header [data-fds-theme-toggle]:hover { background: hsl(var(--accent)); }
+}
 .fds-header [data-fds-theme-toggle]::before {
   content: ""; width: 18px; height: 18px; background: currentColor;
   -webkit-mask: var(--fds-theme-icon, url("icons/sun-moon.svg")) center / 18px no-repeat;

@@ -97,3 +97,18 @@ def test_theme_control_is_a_small_sun_or_moon_icon():
         assert f'[data-theme-choice="{choice}"] .fds-header [data-fds-theme-toggle]' in css and f'icons/{icon}.svg' in css
         svg = (public / 'icons' / f'{icon}.svg').read_text()
         assert svg.startswith('<svg') and 'currentColor' not in svg  # used as a mask: shape only
+
+
+def test_visitor_header_lines_up_with_signs_on_phones_and_auto_icon_is_lucides_sun_moon():
+    # Measured 15 Nov 2026: on a 390px phone Send's lockup sat at 40px (header 16 + container 24) vs Sign's 24px, because
+    # the phone rule `.dr-header.fds-header { padding: 0 16px }` came after the visitor reset. Auto read as a plain sun.
+    import re
+    from pathlib import Path
+    public = Path(__file__).resolve().parents[3] / 'frontend' / 'public' / 'dealroom'
+    css = (public / 'shell.css').read_text()
+    phone = css[css.index('@media (max-width: 720px) {'):]
+    phone = phone[:phone.index('\n}')]
+    assert phone.index('.dr-header--visitor.fds-header { padding: 0; }') > phone.index('.dr-header.fds-header {')
+    assert 'M14.837 16.385a6 6 0 1 1-7.223-7.222' in (public / 'icons' / 'sun-moon.svg').read_text()
+    assert re.search(r'@media \(hover: hover\) \{\s*\.fds-header \[data-fds-theme-toggle\]:hover', css)
+    assert not re.search(r'^\.fds-header \[data-fds-theme-toggle\]:hover', css, re.M)  # no sticky chip after a tap
