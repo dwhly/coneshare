@@ -27,6 +27,7 @@ from .tenant_brand import get_tenant_brand
 
 
 class StableMessage(EmailMultiAlternatives):
+    # Django 5.2 private API: re-check the MIME structure test before upgrading to Django 6.
     inline_logo = None
 
     def _create_alternatives(self, message):
@@ -39,7 +40,7 @@ class StableMessage(EmailMultiAlternatives):
                     related.attach(part)
                     image = MIMEImage(brand.logo_bytes, _subtype=brand.logo_mime.split('/')[1])
                     image.add_header('Content-ID', '<' + brand.logo_hash + '@fleet>')
-                    image.add_header('Content-Disposition', 'inline', filename='tenant-logo.' + ('png' if brand.logo_mime == 'image/png' else 'svg'))
+                    image.add_header('Content-Disposition', 'inline')
                     related.attach(image)
                     message.get_payload()[index] = related
         return message

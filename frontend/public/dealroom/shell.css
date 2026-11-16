@@ -264,3 +264,7 @@ dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
   .fleet-tenant-logo { --tenant-logo-height: 17px; }
   .fds-lockup:has(.fleet-tenant-logo) { gap: 8px; }
 }
+
+@media (forced-colors: active) {
+  .fds-header [data-fds-theme-toggle]::before { forced-color-adjust: none; background: ButtonText; }
+}

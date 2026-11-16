@@ -182,5 +182,31 @@
     return api;
   }
 
+  // fds owns the cycle; mirror its label for hover and reliable screen-reader announcements.
+  const themeStatus = h("span", { "aria-live": "polite", "aria-atomic": "true" });
+  themeStatus.style.cssText = "position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0";
+  document.body.appendChild(themeStatus);
+  function syncThemeControls() {
+    document.querySelectorAll("[data-fds-theme-toggle]").forEach(function (button) {
+      const label = (button.getAttribute("aria-label") || "").replace(/ \(click to change\)$/, "");
+      if (!label) return;
+      button.setAttribute("title", label);
+      if (themeStatus.textContent !== label) themeStatus.textContent = label;
+    });
+  }
+  new MutationObserver(syncThemeControls).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["aria-label"] });
+  syncThemeControls();
+
+  function logoFallback(image) {
+    if (!image.matches("img.fleet-tenant-logo")) return;
+    image.replaceWith(h("span", { class: "fds-lockup__family", text: image.alt }));
+  }
+  document.addEventListener("error", function (event) {
+    if (event.target instanceof HTMLImageElement) logoFallback(event.target);
+  }, true);
+  document.querySelectorAll("img.fleet-tenant-logo").forEach(function (image) {
+    if (image.complete && !image.naturalWidth) logoFallback(image);
+  });
+
   window.drShell = { h, svg, drMenu, drAccount, drSelect, displayName, drDate, drPager };
 })();

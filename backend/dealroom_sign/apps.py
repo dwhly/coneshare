@@ -1,11 +1,14 @@
 from django.apps import AppConfig
 
+from .tenant_brand import get_tenant_brand
+
 
 class DealroomSignConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'dealroom_sign'
 
     def ready(self):
+        get_tenant_brand()
         import logging
         logging.getLogger("httpx").setLevel(logging.WARNING)
         logging.getLogger("httpcore").setLevel(logging.WARNING)

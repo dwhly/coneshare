@@ -30,6 +30,7 @@ from core.views import (CustomTokenObtainPairView, LanguagesView, LogoutView, Pu
 
 urlpatterns = [
     path('chief/tenant-logo', tenant_logo),
+    path('signing/tenant-logo', tenant_logo),
     path("api/v1/dealroom-sign/", include("dealroom_sign.urls")),
     path("signing/", include("dealroom_sign.page_urls")),
     path('api/v1/dealroom/', include('dealroom.urls')),

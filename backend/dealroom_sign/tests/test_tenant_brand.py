@@ -9,6 +9,7 @@ from django.test import RequestFactory
 
 from dealroom_sign import tenant_brand
 from dealroom_sign.counterparty_mail import compose, enqueue
+from dealroom_sign.tests.tenant_scan import scan
 from dealroom_sign.tests.test_counterparty import access
 from dealroom_sign.tests.test_counterparty_mail import completed
 from dealroom_sign.tests.test_recipient_shell_c4a import _render
@@ -36,15 +37,15 @@ def test_defaults_and_env_configuration(logo, monkeypatch):
     brand = parse_tenant_brand({})
     assert (brand.name, brand.logo_url, brand.logo_baseline, brand.chrome, brand.chrome_rule, brand.surface, brand.powered_by) == ('Fleet', '', .8, '', '', '', False)
     monkeypatch.setenv('FLEET_TENANT_NAME', 'Acme Test Co')
+    monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
     monkeypatch.setenv('FLEET_TENANT_LOGO', str(logo))
     monkeypatch.setenv('FLEET_TENANT_LOGO_BASELINE', '0.75')
-    monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
     monkeypatch.setenv('FLEET_TENANT_CHROME_RULE', '#abc')
     monkeypatch.setenv('FLEET_TENANT_SURFACE', 'warm')
     monkeypatch.setenv('FLEET_TENANT_POWERED_BY', '1')
     brand = get_tenant_brand()
     assert brand.name == 'Acme Test Co' and brand.logo_baseline == .75
-    assert brand.logo_url.startswith('/chief/tenant-logo?v=') and str(logo) not in brand.logo_url
+    assert brand.logo_url.startswith('/signing/tenant-logo?v=') and str(logo) not in brand.logo_url
     assert brand.chrome_hsl == '210 65.3846% 20.3922%'
     assert brand.chrome_rule == '#abc' and brand.surface == 'warm' and brand.powered_by
 
@@ -87,6 +88,7 @@ def test_invalid_logo_warns_once_and_falls_back_to_tenant_name(tmp_path, filenam
     tenant_brand._warned.clear()
     tenant_brand.get_tenant_brand.cache_clear()
     monkeypatch.setenv('FLEET_TENANT_NAME', 'Acme Test Co')
+    monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
     monkeypatch.setenv('FLEET_TENANT_LOGO', str(path))
     for _ in range(3):
         brand = tenant_brand.parse_tenant_brand(os.environ)
@@ -123,6 +125,7 @@ def test_header_defaults_name_logo_and_product_rule(logo, monkeypatch):
 
 def test_fixed_logo_route_hash_and_cache(logo, monkeypatch):
     from dealroom_sign.tenant_brand import get_tenant_brand, tenant_logo
+    monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
     monkeypatch.setenv('FLEET_TENANT_LOGO', str(logo))
     brand = get_tenant_brand()
     response = tenant_logo(RequestFactory().get(brand.logo_url))
@@ -139,8 +142,8 @@ def test_email_cid_band_and_plain_text(access, logo, monkeypatch):
     effect = enqueue(access, 'invitation', 'tenant')
     original = compose(effect).body
     monkeypatch.setenv('FLEET_TENANT_NAME', 'Acme Test Co')
-    monkeypatch.setenv('FLEET_TENANT_LOGO', str(logo))
     monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
+    monkeypatch.setenv('FLEET_TENANT_LOGO', str(logo))
     monkeypatch.setenv('FLEET_TENANT_CHROME_RULE', '#abcdef')
     monkeypatch.setenv('FLEET_TENANT_POWERED_BY', '1')
     message = compose(effect)
@@ -163,17 +166,7 @@ def test_email_cid_band_and_plain_text(access, logo, monkeypatch):
 
 
 def test_no_tenant_names_in_product_tree():
-    names = ['Acme Test Co', *filter(None, os.environ.get('FLEET_TEST_TENANT_NAMES', '').split(','))]
-    root = Path(__file__).resolve().parents[1]
-    hits = []
-    for path in root.rglob('*'):
-        if not path.is_file() or any(p in {'tests', 'e2e', '__pycache__', 'management'} for p in path.relative_to(root).parts):
-            continue
-        if path.suffix in {'.py', '.html', '.txt', '.js', '.css'}:
-            for name in names:
-                if name.casefold() in path.read_text().casefold():
-                    hits.append(str(path.relative_to(root)))
-    assert not hits
+    assert not scan(Path(__file__).resolve().parents[3])
 
 
 @pytest.mark.parametrize('filename,content', [
@@ -185,7 +178,7 @@ def test_malformed_image_is_rejected(tmp_path, filename, content):
     from dealroom_sign.tenant_brand import parse_tenant_brand
     path = tmp_path / filename
     path.write_bytes(content)
-    assert not parse_tenant_brand({'FLEET_TENANT_LOGO': str(path)}).logo_url
+    assert not parse_tenant_brand({'FLEET_TENANT_LOGO': str(path), 'FLEET_TENANT_CHROME': '#123456'}).logo_url
 
 
 @pytest.mark.django_db
@@ -193,6 +186,7 @@ def test_logo_is_available_on_visitor_origin_without_a_signer_session(client, lo
     from dealroom_sign.tenant_brand import get_tenant_brand
     from urllib.parse import urlsplit
     settings.SIGN_RECIPIENT_ORIGIN = 'https://recipient.test:9445'
+    monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
     monkeypatch.setenv('FLEET_TENANT_LOGO', str(logo))
     response = client.get(get_tenant_brand().logo_url, HTTP_HOST=urlsplit(settings.SIGN_RECIPIENT_ORIGIN).netloc,
         HTTP_X_FLEET_RECIPIENT_LISTENER='1')
