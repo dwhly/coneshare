@@ -1,4 +1,4 @@
-Fleet | Dealroom
+{{ tenant.name|default:"Fleet" }} | Dealroom
 {% if invitation %}{{ sender }} · Estimated {{ estimated_minutes }} minute{{ estimated_minutes|pluralize }} · Due {{ access.context.due_at }} · {{ access.context.note|truncatechars:80 }}
 
 {% if access.context.incoming %}{{ sender }} (via {{ sending_staff }}’s Dealroom){% else %}{{ sender }}{% endif %} sent you “{{ title }}” to sign.

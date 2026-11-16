@@ -31,4 +31,4 @@ def room(request, slug=None, room_id=None):
 
 @require_GET
 def staff(request):
-    return render(request, 'dealroom_sign/staff.html', {'sign_url': _sign_url()})
+    return render(request, 'dealroom_sign/staff.html', {'sign_url': _sign_url(), 'staff_shell': True})

@@ -24,6 +24,7 @@ from .counterparty import (COOKIE, access_state, capability, consent, consume_ha
 from .models import SignCredential
 from .presentation import clean_title, display_name, referrer_policy
 from .storage import source_bytes
+from .tenant_brand import tenant_logo
 from .validation import digest
 from .workflows import reconcile, record_fact, validate_envelope
 
@@ -255,6 +256,8 @@ def handle(request):
         # Native tRPC uses exact-Origin plus non-simple JSON, as Sign's own CSRF contract does.
         elif request.content_type != 'application/json':
             raise SignError('csrf_required')
+    if path == '/chief/tenant-logo' and request.method == 'GET':
+        return tenant_logo(request)
     raw = request.COOKIES.get(COOKIE)
     session = get_session(raw)
     if path == '/s/assets/entry.js' and request.method == 'GET':
@@ -473,7 +476,8 @@ class RecipientBoundaryMiddleware:
         except (SignError, httpx.HTTPError, SignCredential.DoesNotExist, ValueError, TypeError):
             response = page(request, 'help', status=403)
         response = csrf.process_response(request, response)
-        response['Cache-Control'] = 'private, no-store'
+        if request.path != '/chief/tenant-logo' or response.status_code != 200:
+            response['Cache-Control'] = 'private, no-store'
         response['Referrer-Policy'] = referrer_policy(response)
         response['X-Content-Type-Options'] = 'nosniff'
         response['X-Frame-Options'] = 'DENY'

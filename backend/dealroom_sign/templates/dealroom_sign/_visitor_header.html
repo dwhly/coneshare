@@ -2,9 +2,10 @@
    container: lockup left, Theme right, nothing else. Identical to Sign's recipient header so the lockup never jumps.
    Then the context bar: room name + the visitor's name and email, both filled in by room.html from the authorised
    recipient API only. The server never renders room metadata into this anonymous page. {% endcomment %}
+{% load tenant_brand %}{% tenant_brand as tenant %}
 <header class="fds-header dr-header dr-header--visitor">
   <div class="dr-visitor">
-    <span class="fds-lockup" aria-label="Fleet {{ product|default:'Dealroom' }}"><svg class="fds-lockup__mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5 16.2 10.4 12 8.6 7.8 10.4Z"/><path d="M6 10.5 10.2 18.4 6 16.6 1.8 18.4Z" opacity=".8"/><path d="M18 10.5 22.2 18.4 18 16.6 13.8 18.4Z" opacity=".8"/></svg><span class="fds-lockup__family">Fleet</span><span class="fds-lockup__rule" aria-hidden="true"></span><span class="fds-lockup__product">{{ product|default:'Dealroom' }}</span></span>
+    <span class="fds-lockup" aria-label="{{ tenant.name }} {{ product|default:'Dealroom' }}">{% if tenant.logo_url %}<img class="fleet-tenant-logo" src="{{ tenant.logo_url }}" alt="{{ tenant.name }}" style="--tenant-logo-baseline:{{ tenant.logo_baseline }}">{% else %}<svg class="fds-lockup__mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5 16.2 10.4 12 8.6 7.8 10.4Z"/><path d="M6 10.5 10.2 18.4 6 16.6 1.8 18.4Z" opacity=".8"/><path d="M18 10.5 22.2 18.4 18 16.6 13.8 18.4Z" opacity=".8"/></svg><span class="fds-lockup__family">{{ tenant.name }}</span>{% endif %}<span class="fds-lockup__rule" aria-hidden="true"></span><span class="fds-lockup__product">{{ product|default:'Dealroom' }}</span></span>
     <div class="fds-header__utils"><button type="button" class="fds-btn" data-fds-theme-toggle>Theme</button></div>
   </div>
 </header>

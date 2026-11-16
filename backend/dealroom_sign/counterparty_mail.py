@@ -3,11 +3,13 @@ import hashlib
 import smtplib
 import uuid
 from datetime import timedelta
+from email.mime.image import MIMEImage
 from email.utils import formataddr, format_datetime
 from urllib.parse import urlsplit
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
+from django.core.mail.message import SafeMIMEMultipart
 from django.core.validators import validate_email
 from django.db import transaction
 from django.db.models import Q
@@ -21,9 +23,27 @@ from .counterparty import (access_state, alternate_code, capability, display_tim
 from .models import CounterpartyEffect, ObservedSignEvent, SignerAccess
 from .presentation import clean_title, display_name
 from .storage import source_bytes
+from .tenant_brand import get_tenant_brand
 
 
 class StableMessage(EmailMultiAlternatives):
+    inline_logo = None
+
+    def _create_alternatives(self, message):
+        message = super()._create_alternatives(message)
+        if self.inline_logo:
+            brand = self.inline_logo
+            for index, part in enumerate(message.get_payload()):
+                if part.get_content_type() == 'text/html':
+                    related = SafeMIMEMultipart(_subtype='related', type='text/html')
+                    related.attach(part)
+                    image = MIMEImage(brand.logo_bytes, _subtype=brand.logo_mime.split('/')[1])
+                    image.add_header('Content-ID', '<' + brand.logo_hash + '@fleet>')
+                    image.add_header('Content-Disposition', 'inline', filename='tenant-logo.' + ('png' if brand.logo_mime == 'image/png' else 'svg'))
+                    related.attach(image)
+                    message.get_payload()[index] = related
+        return message
+
     def message(self):
         message = super().message()
         seed = hashlib.sha256(self.extra_headers['Message-ID'].encode()).hexdigest()
@@ -78,7 +98,8 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
     public = urlsplit(url)
     report = address(getattr(settings, 'SIGN_REPORT_EMAIL', 'support@fleet.test'))
     # The app is "Sign" while signing and "Dealroom" once signed (owner, 15 Nov 2026): the From name matches the header.
-    from_email = formataddr((sender + (' via Fleet Sign' if invitation else ' via Fleet Dealroom'), address(settings.SIGN_FROM_EMAIL)))
+    tenant = get_tenant_brand()
+    from_email = formataddr((sender + ' via ' + tenant.name + (' Sign' if invitation else ' Dealroom'), address(settings.SIGN_FROM_EMAIL)))
     subject = f'{sender} sent you “{title}” to sign' if invitation else f'“{title}” fully signed'
     projection = {p.get('email', '').lower(): p for p in access.workflow.signer_projection}
     parties = []
@@ -93,7 +114,7 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
             'signed_at': display_time(signed, access.context['timezone']) if signed else 'Not recorded'})
     if not invitation:
         subject += ' — ' + ' and '.join(p['name'] for p in parties)
-    data = {'access': access, 'title': title, 'sender': sender,
+    data = {'tenant': tenant, 'access': access, 'title': title, 'sender': sender,
         'sending_staff': display_name(access.sending_staff.get('name')), 'url': url,
         'origin': public.scheme + '://' + public.netloc, 'report': report,
         'alternate': alternate_code(access), 'invitation': invitation,
@@ -112,6 +133,7 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
             raise SignError('mail_html_too_large')
         message = StableMessage(header(subject), text, from_email, [to], reply_to=[sender_email],
             headers={'Message-ID': effect.message_id, 'Date': format_datetime(access.released_at if invitation else (access.workflow.completed_at or access.completed_at))})
+        message.inline_logo = tenant if tenant.logo_bytes else None
         message.attach_alternative(html, 'text/html')
         if attach:
             for name, content in files:

@@ -21,12 +21,15 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from dealroom_sign.tenant_brand import tenant_logo
+
 from core.views import (CustomTokenObtainPairView, LanguagesView, LogoutView, PublicSettingsView,
                         SetPasswordView, SignupRequestView,
                         SignupVerifyView)
 
 
 urlpatterns = [
+    path('chief/tenant-logo', tenant_logo),
     path("api/v1/dealroom-sign/", include("dealroom_sign.urls")),
     path("signing/", include("dealroom_sign.page_urls")),
     path('api/v1/dealroom/', include('dealroom.urls')),

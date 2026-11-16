@@ -44,7 +44,7 @@
     <div id="pages" class="pages"></div>
   </section>
 </div>
-{% endblock %}{% block footer %}Fleet Dealroom · Every copy is watermarked to the person it was issued to{% endblock %}{% block scripts %}<script>
+{% endblock %}{% block footer %}{{ tenant.name }} Dealroom · Every copy is watermarked to the person it was issued to{% endblock %}{% block scripts %}<script>
 const {h,drPager}=window.drShell;
 const slug='{{ slug|escapejs }}', roomId='{{ room_id|escapejs }}';let csrf='',challenge='';
 const el=id=>document.getElementById(id);
@@ -54,7 +54,7 @@ const prefix='/api/v1/dealroom/recipient/'+slug;
 // Context bar (spec §4): room name + who this visitor is, both from the authorised room API (never server-rendered).
 const KEY='dr-visitor-'+slug;
 function who(person){if(person&&person.email){sessionStorage.setItem(KEY,JSON.stringify({name:person.name||'',email:person.email}));el('context-who').textContent=(person.name?person.name+' · ':'')+person.email}}
-function head(title,subtitle){el('title').textContent=title;el('subtitle').textContent=subtitle;document.title=title+' · Fleet Dealroom'}
+function head(title,subtitle){el('title').textContent=title;el('subtitle').textContent=subtitle;document.title=title+' · {{ tenant.name|escapejs }} Dealroom'}
 let files=[];
 const pager=drPager(el('files-foot'),{noun:'document',onPage:()=>showList()});
 async function load(){try{const room=await api(prefix+'/room/');el('verify').hidden=true;el('nda').hidden=true;el('message').hidden=true;

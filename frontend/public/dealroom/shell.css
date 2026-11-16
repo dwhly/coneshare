@@ -254,3 +254,13 @@ dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
 [data-theme-choice="light"] .fds-header [data-fds-theme-toggle] { --fds-theme-icon: url("icons/sun.svg"); }
 [data-theme-choice="dark"] .fds-header [data-fds-theme-toggle] { --fds-theme-icon: url("icons/moon.svg"); }
 [data-theme-choice="system"] .fds-header [data-fds-theme-toggle] { --fds-theme-icon: url("icons/sun-moon.svg"); }
+
+/* The inline image's bottom is its baseline; shift it by the configured letter descender. */
+.fds-lockup:has(.fleet-tenant-logo) { align-items: baseline; }
+.fleet-tenant-logo { --tenant-logo-height: 20px; height: var(--tenant-logo-height); width: auto; max-width: none; flex: none; align-self: baseline; transform: translateY(calc(var(--tenant-logo-height) * (1 - var(--tenant-logo-baseline, .8)))); }
+.fds-lockup:has(.fleet-tenant-logo) .fds-lockup__rule { align-self: center; }
+[data-chrome="dark"] .fds-header .fds-lockup__rule { background: hsl(var(--muted-foreground) / .55); }
+@media (max-width: 420px) {
+  .fleet-tenant-logo { --tenant-logo-height: 17px; }
+  .fds-lockup:has(.fleet-tenant-logo) { gap: 8px; }
+}
