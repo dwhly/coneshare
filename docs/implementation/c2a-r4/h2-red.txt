@@ -1,0 +1,55 @@
+FFF...                                                                   [100%]
+=================================== FAILURES ===================================
+___ test_stacked_individual_blocks_place_without_neighbour_veto[80-headings] ___
+
+layout = 'headings', gap = 80
+
+    @pytest.mark.parametrize('layout', ['headings', 'captions'])
+    @pytest.mark.parametrize('gap', [80, 110])
+    def test_stacked_individual_blocks_place_without_neighbour_veto(layout, gap):
+        result = placement.place(stacked_pdf(layout, gap), TWO)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:151: AssertionError
+___ test_stacked_individual_blocks_place_without_neighbour_veto[80-captions] ___
+
+layout = 'captions', gap = 80
+
+    @pytest.mark.parametrize('layout', ['headings', 'captions'])
+    @pytest.mark.parametrize('gap', [80, 110])
+    def test_stacked_individual_blocks_place_without_neighbour_veto(layout, gap):
+        result = placement.place(stacked_pdf(layout, gap), TWO)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:151: AssertionError
+__ test_stacked_individual_blocks_place_without_neighbour_veto[110-headings] ___
+
+layout = 'headings', gap = 110
+
+    @pytest.mark.parametrize('layout', ['headings', 'captions'])
+    @pytest.mark.parametrize('gap', [80, 110])
+    def test_stacked_individual_blocks_place_without_neighbour_veto(layout, gap):
+        result = placement.place(stacked_pdf(layout, gap), TWO)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:151: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r4.py::test_stacked_individual_blocks_place_without_neighbour_veto[80-headings]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_stacked_individual_blocks_place_without_neighbour_veto[80-captions]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_stacked_individual_blocks_place_without_neighbour_veto[110-headings]
+3 failed, 3 passed, 58 deselected in 1.80s

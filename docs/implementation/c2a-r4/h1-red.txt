@@ -1,0 +1,662 @@
+FF..F....F.F....FFFFFF..F.....FFFFFFFFFF.FF.FFFF.                        [100%]
+=================================== FAILURES ===================================
+______ test_golden_harbor_role_suffix_keeps_exact_boxes[General Counsel] _______
+
+title = 'General Counsel'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_____ test_golden_harbor_role_suffix_keeps_exact_boxes[Managing Director] ______
+
+title = 'Managing Director'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+______ test_golden_harbor_role_suffix_keeps_exact_boxes[Managing Member] _______
+
+title = 'Managing Member'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_______ test_golden_harbor_role_suffix_keeps_exact_boxes[Founder & CEO] ________
+
+title = 'Founder & CEO'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_ test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales] _
+
+title = 'Senior Vice President of Sales'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___ test_golden_harbor_block_wording_keeps_exact_boxes[Authorized Signatory] ___
+
+wording = 'Authorized Signatory'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___ test_golden_harbor_block_wording_keeps_exact_boxes[Authorised Signatory] ___
+
+wording = 'Authorised Signatory'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+____ test_golden_harbor_block_wording_keeps_exact_boxes[DISCLOSING PARTY:] _____
+
+wording = 'DISCLOSING PARTY:'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_____ test_golden_harbor_block_wording_keeps_exact_boxes[RECEIVING PARTY:] _____
+
+wording = 'RECEIVING PARTY:'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___ test_golden_harbor_block_wording_keeps_exact_boxes[AGREED AND ACCEPTED:] ___
+
+wording = 'AGREED AND ACCEPTED:'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___ test_golden_harbor_block_wording_keeps_exact_boxes[IN WITNESS WHEREOF:] ____
+
+wording = 'IN WITNESS WHEREOF:'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_ test_golden_harbor_block_wording_keeps_exact_boxes[Date: November 16, 2026] __
+
+wording = 'Date: November 16, 2026'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+__ test_golden_harbor_block_wording_keeps_exact_boxes[Title: General Counsel] __
+
+wording = 'Title: General Counsel'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Managing Director] _
+
+wording = 'Title: Managing Director'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_ test_golden_harbor_block_wording_keeps_exact_boxes[Title: President and CEO] _
+
+wording = 'Title: President and CEO'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+__ test_golden_harbor_block_wording_keeps_exact_boxes[Title: CEO and Founder] __
+
+wording = 'Title: CEO and Founder'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+__ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Managing Member] __
+
+wording = 'Title: Managing Member'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+______ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Founder] ______
+
+wording = 'Title: Founder'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_____ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Secretary] _____
+
+wording = 'Title: Secretary'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_______ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Owner] _______
+
+wording = 'Title: Owner'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Vice President, Sales] _
+
+wording = 'Title: Vice President, Sales'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Founder & CEO] ___
+
+wording = 'Title: Founder & CEO'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_ test_golden_harbor_block_wording_keeps_exact_boxes[Title: Senior Vice President of Sales] _
+
+wording = 'Title: Senior Vice President of Sales'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___ test_golden_harbor_block_wording_keeps_exact_boxes[Its: Managing Member] ___
+
+wording = 'Its: Managing Member'
+
+    @pytest.mark.parametrize('wording', WORDING + ['Title: ' + t for t in TITLES] + ['Its: Managing Member'])
+    def test_golden_harbor_block_wording_keeps_exact_boxes(wording):
+>       assert_golden(placement.place(harbor_variant(wording=wording), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___________ test_ascii_hyphen_role_preserves_printed_identity[True] ____________
+
+own_name = True
+
+    @pytest.mark.parametrize('own_name', [False, True])
+    def test_ascii_hyphen_role_preserves_printed_identity(own_name):
+        result = placement.place(extent_pdf('format:Lee Harbor - COO'), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:111: AssertionError
+____ test_unnamed_company_block_accounts_for_roles[Title: General Counsel] _____
+
+wording = 'Title: General Counsel'
+
+    @pytest.mark.parametrize('wording', ['Title: General Counsel', 'Its: Managing Member', 'Duly authorized'])
+    def test_unnamed_company_block_accounts_for_roles(wording):
+>       assert placement.place(extent_pdf('format:' + wording), PAT)['status'] == 'placed'
+E       AssertionError: assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:118: AssertionError
+_____ test_unnamed_company_block_accounts_for_roles[Its: Managing Member] ______
+
+wording = 'Its: Managing Member'
+
+    @pytest.mark.parametrize('wording', ['Title: General Counsel', 'Its: Managing Member', 'Duly authorized'])
+    def test_unnamed_company_block_accounts_for_roles(wording):
+>       assert placement.place(extent_pdf('format:' + wording), PAT)['status'] == 'placed'
+E       AssertionError: assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:118: AssertionError
+________ test_unnamed_company_block_accounts_for_roles[Duly authorized] ________
+
+wording = 'Duly authorized'
+
+    @pytest.mark.parametrize('wording', ['Title: General Counsel', 'Its: Managing Member', 'Duly authorized'])
+    def test_unnamed_company_block_accounts_for_roles(wording):
+>       assert placement.place(extent_pdf('format:' + wording), PAT)['status'] == 'placed'
+E       AssertionError: assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:118: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[General Counsel]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[Managing Director]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[Managing Member]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[Founder & CEO]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Authorized Signatory]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Authorised Signatory]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[DISCLOSING PARTY:]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[RECEIVING PARTY:]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[AGREED AND ACCEPTED:]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[IN WITNESS WHEREOF:]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Date: November 16, 2026]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: General Counsel]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Managing Director]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: President and CEO]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: CEO and Founder]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Managing Member]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Founder]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Secretary]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Owner]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Vice President, Sales]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Founder & CEO]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Title: Senior Vice President of Sales]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_block_wording_keeps_exact_boxes[Its: Managing Member]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_ascii_hyphen_role_preserves_printed_identity[True]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_unnamed_company_block_accounts_for_roles[Title: General Counsel]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_unnamed_company_block_accounts_for_roles[Its: Managing Member]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_unnamed_company_block_accounts_for_roles[Duly authorized]
+28 failed, 21 passed, 9 deselected in 15.71s

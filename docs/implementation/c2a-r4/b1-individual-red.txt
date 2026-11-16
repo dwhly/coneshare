@@ -1,0 +1,76 @@
+....FFFF........                                                         [100%]
+=================================== FAILURES ===================================
+____________ test_rule_row_name_controls_identity[False-True-right] ____________
+
+layout = 'right', own_name = True, company = False
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    @pytest.mark.parametrize('company', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name, company):
+        result = placement.place(row_name_pdf(layout, company=company), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'placed'
+E         
+E         - placed
+E         + bare
+
+dealroom_sign/tests/test_placement_r4.py:51: AssertionError
+____________ test_rule_row_name_controls_identity[False-True-grid] _____________
+
+layout = 'grid', own_name = True, company = False
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    @pytest.mark.parametrize('company', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name, company):
+        result = placement.place(row_name_pdf(layout, company=company), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'placed'
+E         
+E         - placed
+E         + bare
+
+dealroom_sign/tests/test_placement_r4.py:51: AssertionError
+____________ test_rule_row_name_controls_identity[False-True-left] _____________
+
+layout = 'left', own_name = True, company = False
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    @pytest.mark.parametrize('company', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name, company):
+        result = placement.place(row_name_pdf(layout, company=company), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'placed'
+E         
+E         - placed
+E         + bare
+
+dealroom_sign/tests/test_placement_r4.py:51: AssertionError
+__________ test_rule_row_name_controls_identity[False-True-baseline] ___________
+
+layout = 'baseline', own_name = True, company = False
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    @pytest.mark.parametrize('company', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name, company):
+        result = placement.place(row_name_pdf(layout, company=company), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'placed'
+E         
+E         - placed
+E         + bare
+
+dealroom_sign/tests/test_placement_r4.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[False-True-right]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[False-True-grid]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[False-True-left]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[False-True-baseline]
+4 failed, 12 passed, 65 deselected in 4.20s

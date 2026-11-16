@@ -66,11 +66,13 @@ def test_inserted_raw_person_vetoes_across_fixtures(fixture):
                  and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]
         below = [n for n in range(24, 85) if not any(w['x0'] < x + 75 and w['x1'] > x
                  and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]
-        for offset in (rng.choice(above), rng.choice(below)):
+        for name_x, offset in ((x, rng.choice(above)), (x, rng.choice(below)),
+                               (x + 110, -8)):
             stream = io.BytesIO()
             c = canvas.Canvas(stream, pagesize=(612, 792))
             c.setFont('Helvetica', 8)
-            c.drawString(x, 792 - y - offset - 8, 'Name: Lee Harbor')
+            # x + 110 is line.x1 + 30: a caption beside the rule's own row.
+            c.drawString(name_x, 792 - y - offset - 8, 'Name: Lee Harbor')
             c.save()
             reader = PdfReader(io.BytesIO(original))
             reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])

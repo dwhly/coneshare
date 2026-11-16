@@ -1,0 +1,73 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+FFF...F..                                                                [100%]
+=================================== FAILURES ===================================
+______________ test_rule_row_name_controls_identity[False-right] _______________
+
+layout = 'right', own_name = False
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name):
+        result = placement.place(row_name_pdf(layout), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 394.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r4.py:44: AssertionError
+_______________ test_rule_row_name_controls_identity[False-grid] _______________
+
+layout = 'grid', own_name = False
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name):
+        result = placement.place(row_name_pdf(layout), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 368.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r4.py:44: AssertionError
+_______________ test_rule_row_name_controls_identity[False-left] _______________
+
+layout = 'left', own_name = False
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name):
+        result = placement.place(row_name_pdf(layout), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'needs_sender'
+E         
+E         - needs_sender
+E         + bare
+
+dealroom_sign/tests/test_placement_r4.py:44: AssertionError
+_______________ test_rule_row_name_controls_identity[True-left] ________________
+
+layout = 'left', own_name = True
+
+    @pytest.mark.parametrize('layout', ['right', 'grid', 'left', 'baseline'])
+    @pytest.mark.parametrize('own_name', [False, True])
+    def test_rule_row_name_controls_identity(layout, own_name):
+        result = placement.place(row_name_pdf(layout), LEE if own_name else PAT)
+>       assert result['status'] == ('placed' if own_name else 'needs_sender'), result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'placed'
+E         
+E         - placed
+E         + bare
+
+dealroom_sign/tests/test_placement_r4.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[False-right]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[False-grid]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[False-left]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_rule_row_name_controls_identity[True-left]
+4 failed, 5 passed in 2.31s

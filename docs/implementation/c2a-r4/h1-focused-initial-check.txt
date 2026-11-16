@@ -1,0 +1,30 @@
+....................F................................................... [ 73%]
+..........................                                               [100%]
+=================================== FAILURES ===================================
+_ test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales] _
+
+title = 'Senior Vice President of Sales'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales]
+1 failed, 97 passed, 4 deselected in 28.03s

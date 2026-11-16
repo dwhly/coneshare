@@ -1,0 +1,32 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_company_word_body_is_absent_from_history _________________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (afb99c26-5102-4aef-b914-1a937e51c23e)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7809e87e4110>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x7809e8e29d60>
+
+    def test_company_word_body_is_absent_from_history(fixture, settings, caplog):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)], 'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        text = 'Project Falcon Acquisition Of Acme Corp.'
+        model = Mock(side_effect=opaque_reply)
+        with patch('dealroom_sign.workflows.source_bytes', return_value=title_body_pdf(text, extra_block=True)), \
+             patch('dealroom_sign.workflows.place', side_effect=lambda pdf, signers: place(pdf, signers, model_client=model)):
+            work = command(owner=fixture.user, room=fixture.room, version=fixture.version,
+                           recipients=[{k: v for k, v in LEE[0].items() if k != 'side'}],
+                           idempotency_key='r4-private', board_id='board-c2a', placement='auto')
+>       assert text not in json.dumps(model.call_args.args[0])
+E       assert 'Project Fal...f Acme Corp.' not in '{"signers":...999999]}]}]}'
+E         
+E         'Project Falcon Acquisition Of Acme Corp.' is contained here:
+E         ?           ^^^^^^^^^^
+E           {"text": "Project Falcon Acquisition Of Acme Corp.", "rect": [72.0, 460.484, 292.74000000000007, 472.484]}, {"text": "Hand of the covenanting party:", "rect": [72.0, 482.484, 235.42800000000003, 494.484]}, {"text": "Date:", "rect": [72.0, 522.4839999999999, 100.67999999999999, 534.4839999999999]}]}]}
+E         ?           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+dealroom_sign/tests/test_send_r4.py:28: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7K27C5SE5XWX2DZBYGBWXWD
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_send_r4.py::test_company_word_body_is_absent_from_history
+1 failed in 10.30s

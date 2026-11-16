@@ -15,6 +15,7 @@ import sys
 import threading
 import time
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 
 import httpx
@@ -24,7 +25,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.3'
+VERSION = 'c2a.4'
 MAX_EDGES = 5000
 MAX_CHARS = 20000
 MAX_WORDS = 4000
@@ -75,22 +76,33 @@ def similarity(a, b):
     if len(norm(a)) < 4 or not right or not left or all(t in generic for t in left):
         return 0
     return float(left == right or ''.join(left) == ''.join(right)
+                 or (len(left) == 1 and left[0] == right[0] and all(t in generic for t in right[1:]))
                  or any(''.join(left) == ''.join(right[i:j])
                         for i in range(len(right)) for j in range(i + 2, len(right) + 1)))
 
 
 PERSON = re.compile(r"[^\W\d_][^\W\d_'.’\-]*(?:['’.-][^\W\d_]+)?\.?(?: [^\W\d_][^\W\d_'.’\-]*(?:['’.-][^\W\d_]+)?\.?){1,4}")
 NAME_CAPTION = re.compile(r'^(?:name(?:\s*/\s*title)?|printed name|print name|sincerely)[,:\s]+', re.I)
-ROLE = re.compile(r'^(?:CEO|COO|CFO|CTO|President|Vice President|Director|Manager|Counsel|Partner|Witness|Chief (?:Executive|Operating|Financial|Technology) Officer)$', re.I)
+ROLE_HEAD = r'(?:Officer|Director|Counsel|Manager|President|Partner|Member|Secretary|Treasurer|Founder|Owner|Principal|Trustee|Signatory|Head|Lead|Witness|[SE]?VP|C[A-Z]?O)'
+ROLE_WORD = (ROLE_HEAD + r'|Chief|Senior|Executive|General|Managing|Vice|Deputy|Assistant|Authorized|Authorised'
+             r'|Operating|Financial|Technology|Technical|Sales|Marketing|Finance|Legal|Operations'
+             r'|Engineering|Product|Human|Resources|Business|Development|Compliance|Board|Directors|and|of|the')
+ROLE = re.compile(r'^(?=.*\b' + ROLE_HEAD + r'\b)(?:' + ROLE_WORD + r')(?:[\s,&/]+(?:' + ROLE_WORD + r'))*$', re.I)
+BLOCK_WORDING = re.compile(r'^(?:accepted(?: and agreed)?|agreed(?: and accepted| by the parties)?'
+                           r'|(?:disclosing|receiving) party|in witness whereof|duly authori[sz]ed'
+                           r'|limited liability company|limited liability partnership|limited|inc\.?|llc|ltd\.?)\s*:?$', re.I)
 COMPANY = re.compile(r'\b(?:inc|llc|ltd|co|corp|corporation|company|gmbh|plc|analytics)\b', re.I)
+IDENTITY_SPLIT = re.compile(r',|\s+[–—/\-]\s+|\s+\(')
 
 
 def person_text(text):
-    prefix = re.match(r'^(?:signature|signed(?:\s+by)?|sign here|by|title|its)\b[:\s]*', text, re.I)
+    if re.match(r'^(?:title|its|date)\b', text, re.I) or BLOCK_WORDING.fullmatch(text):
+        return ''
+    prefix = re.match(r'^(?:signature|signed(?:\s+by)?|sign here|by)\b[:\s]*', text, re.I)
     text = text[prefix.end():] if prefix else text
     caption = NAME_CAPTION.match(text)
     stripped = NAME_CAPTION.sub('', text).strip()
-    name = re.split(r',|\s+[–—/]\s+|\s+\(', stripped)[0].strip()
+    name = IDENTITY_SPLIT.split(stripped)[0].strip()
     if COMPANY.search(name) or ROLE.fullmatch(name) or name.lower() in {'accepted and agreed', 'compensation summary', 'base salary'}:
         return ''
     # Explicit Name captions are authoritative even with lower case or initials.
@@ -102,7 +114,9 @@ def person_text(text):
 def identity_parts(text):
     # A suffix may carry a second person as well as a role or company. Keep all
     # parts for the veto; output redaction must never erase identity evidence.
-    return [text] + [part.strip('() ') for part in re.split(r',|\s+[–—/]\s+|\s+\(', text)[1:]]
+    if ROLE.fullmatch(text) or re.match(r'^(?:title|its|date)\b', text, re.I):
+        return [text]
+    return [text] + [part.strip('() ') for part in IDENTITY_SPLIT.split(NAME_CAPTION.sub('', text))[1:]]
 
 
 def printed_names(block):
@@ -118,11 +132,11 @@ def company_text(text):
 def identity_label(text, roles):
     if len(text) > 120:
         return False
-    return bool(text.lower() in roles or text.lower() in {'accepted and agreed:', 'accepted:', 'agreed:', 'agreed by the parties:'}
+    return bool(text.rstrip(': ').lower() in roles or BLOCK_WORDING.fullmatch(text) or ROLE.fullmatch(text)
                 or company_text(text) or person_text(text) or LABEL.fullmatch(text))
 
 
-def safe_label(label, roles, signers=()):
+def safe_label(label, roles, signers=(), *, companies=None):
     text = label['text']
     name = person_text(text)
     if name:
@@ -133,9 +147,11 @@ def safe_label(label, roles, signers=()):
         # A person's caption can include only a recognized company or role.
         for suffix in text.split(',')[1:]:
             suffix = suffix.strip()
-            if ROLE.fullmatch(suffix) or company_text(suffix):
+            if ROLE.fullmatch(suffix) or (company_text(suffix) and (companies is None or suffix in companies)):
                 safe += ', ' + suffix
         return dict(label, text=safe[:120])
+    if company_text(text) and companies is not None and text not in companies:
+        return dict(label, text='[company]')
     if accounted_label(text, roles) or text == 'Hand of the covenanting party:':
         return dict(label, text=text[:120])
     return dict(label, text='[redacted]')
@@ -163,6 +179,53 @@ def text_rows(words):
                 result.append({'text': text, 'rect': [group[0]['x0'], min(w['top'] for w in group),
                                group[-1]['x1'], max(w['bottom'] for w in group)]})
     return result
+
+
+def partition_stacked_blocks(hosts, texts, roles):
+    """Separate stacked hosts at their companion/caption and next label group.
+
+    Without a separator, keep the shared evidence and the existing ambiguity
+    guard. A nearby caption cannot become the next rule's heading by proximity.
+    """
+    for previous in hosts:
+        sig = previous.line
+        column = sig.label.get('rect', [sig.x0])[0]
+        following = [b for b in hosts if b.line.y > sig.y + 5
+                     and b.line.x1 > column
+                     and b.line.label.get('rect', [b.line.x0])[0] < sig.x1]
+        if not following:
+            continue
+        next_block = min(following, key=lambda b: b.line.y)
+        next_sig = next_block.line
+        captions = [t for t in previous.raw_labels if 0 <= t['rect'][1] - sig.y < 22
+                    and abs(t['rect'][0] - column) < 35 and person_text(t['text'])]
+        separators = [t['rect'][3] for t in captions]
+        separators += [max(e.y, e.label['rect'][3]) for e in previous.extras.values()
+                       if sig.y + 5 < e.y < next_sig.y]
+        if not separators:
+            continue
+        end = max(separators)
+        next_column = next_sig.label.get('rect', [next_sig.x0])[0]
+        above = [t for t in texts if max(end, next_sig.y - 90) < t['rect'][1]
+                 and t['rect'][3] < next_sig.y - 2
+                 and t['rect'][0] < next_sig.x1 and t['rect'][2] > next_column - 5
+                 and not LABEL.match(t['text']) and identity_label(t['text'], roles)]
+        start = min([t['rect'][1] for t in above]
+                    + [next_sig.label.get('rect', [0, next_sig.y])[1]])
+        if any(abs((t['rect'][1] + t['rect'][3]) / 2 - (sig.y + next_sig.y) / 2) < 3
+               for t in above):
+            # A boundary identity is evidence for both, never discarded.
+            previous.uncertain_identity = next_block.uncertain_identity = True
+            continue
+        previous.raw_labels = [t for t in previous.raw_labels if t['rect'][1] < start]
+        next_block.raw_labels = [t for t in next_block.raw_labels if t['rect'][1] > end]
+        attributed = [t for t in above if company_text(t['text']) or person_text(t['text'])
+                      or t['text'].rstrip(': ').lower() in roles]
+        heading = max(attributed or above, key=lambda t: t['rect'][3], default=None)
+        next_block.heading = heading['text'] if heading else ''
+        next_block.uncertain_identity = False
+    for block in hosts:
+        block.labels = block.raw_labels
 
 
 def extract(pdf, *, deadline=None):
@@ -244,7 +307,9 @@ def extract(pdf, *, deadline=None):
                     and prev.label.get('rect', [prev.x0])[0] < t['rect'][2] and prev.x1 > t['rect'][0]
                     and (t['rect'][3] < prev.y or 0 < t['rect'][1] - prev.y < 90)
                     for prev in unique)]
-                heading = max(above, key=lambda t: t['rect'][3], default=None)
+                attributed = [t for t in above if company_text(t['text']) or person_text(t['text'])
+                              or t['text'].rstrip(': ').lower() in roles]
+                heading = max(attributed or above, key=lambda t: t['rect'][3], default=None)
                 if not heading and candidates:
                     # Preserve ambiguity without attributing the previous caption.
                     heading = dict(candidates[-1], text='[ambiguous attribution]')
@@ -294,13 +359,23 @@ def extract(pdf, *, deadline=None):
                              and r.semantic not in {'NAME', 'DATE', 'TITLE'}
                              and r.x1 > column and r.label.get('rect', [r.x0])[0] < sig.x1]
                 bottom = min([bottom] + following)
+                # Include the whole row band, including text beside or directly
+                # under the rule. Neighbouring columns stop the band; text in
+                # the gap between two rules belongs to both until disambiguated.
+                neighbours = [r for r in unique if r is not sig
+                              and r.semantic not in {'NAME', 'DATE', 'TITLE'}
+                              and abs(r.y - sig.y) < 30]
+                left = max([0] + [r.x1 for r in neighbours if r.x1 < column])
+                right = min([page.width] + [r.label.get('rect', [r.x0])[0]
+                            for r in neighbours if r.label.get('rect', [r.x0])[0] > sig.x1])
                 block.raw_labels = [t for t in texts if top <= t['rect'][1] <= bottom
-                                    and t['rect'][0] < sig.x1 and t['rect'][2] > column - 5]
+                                    and t['rect'][0] < right and t['rect'][2] > left]
                 # Preserve the previous-block caption guard from r2.
                 block.uncertain_identity = (block.heading == '[ambiguous attribution]'
                                             and not any(t['rect'][1] >= sig.y and person_text(t['text'])
                                                         for t in block.raw_labels))
                 block.labels = block.raw_labels
+            partition_stacked_blocks(hosts, texts, roles)
             blocks.extend(hosts)
             page.close()
     if len(blocks) > 40:
@@ -314,6 +389,14 @@ def accounted_label(text, roles):
     if identity_label(text, roles) or ROLE.fullmatch(text):
         return True
     match = LABEL.match(text)
+    if match and match.group(1).lower() == 'date':
+        value = text[match.end():].strip()
+        for fmt in ('%B %d, %Y', '%b %d, %Y', '%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y'):
+            try:
+                datetime.strptime(value, fmt)
+                return True
+            except ValueError:
+                pass
     return bool(match and (not text[match.end():].strip()
                           or (match.group(1).lower() in {'title', 'its'}
                               and ROLE.fullmatch(text[match.end():].strip()))))
@@ -335,13 +418,22 @@ def prepare_blocks(blocks, roles, signers):
         block.scores = [score(s, block, roles) for s in signers]
         if not printed_names(block) and sum(v >= 4 for v in block.scores) != 1:
             block.scores = [0] * len(signers)
-        block.labels = [safe_label(t, roles, signers) for t in block.labels]
-        block.heading = safe_label({'text': block.heading}, roles, signers)['text'] if block.heading else ''
+        # A company word in arbitrary prose is not permission to emit that prose.
+        # Only a mapped role company or a heading contributing to an accepted
+        # local identity score may survive as a company label.
+        companies = set(roles.values())
+        for signer, value in zip(signers, block.scores):
+            domain = signer['email'].split('@')[-1].split('.')[0].lower()
+            company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
+            if value >= 4 and similarity(company, block.heading):
+                companies.add(block.heading)
+        block.labels = [safe_label(t, roles, signers, companies=companies) for t in block.labels]
+        block.heading = safe_label({'text': block.heading}, roles, signers, companies=companies)['text'] if block.heading else ''
         block.identity = ' | '.join(t['text'] for t in block.labels)
         if block.line.label:
-            block.line.label = safe_label(block.line.label, roles, signers)
+            block.line.label = safe_label(block.line.label, roles, signers, companies=companies)
         for extra in block.extras.values():
-            extra.label = safe_label(extra.label, roles, signers)
+            extra.label = safe_label(extra.label, roles, signers, companies=companies)
         block.raw_labels = []
 
 
@@ -361,7 +453,7 @@ def score(signer, block, roles):
         return 0
     domain = signer['email'].split('@')[-1].split('.')[0].lower()
     company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
-    heading = roles.get(block.heading.lower(), block.heading)
+    heading = roles.get(block.heading.rstrip(': ').lower(), block.heading)
     if similarity(company, heading):
         value += 4
     return value
@@ -416,6 +508,9 @@ def openrouter(payload, *, timeout=12):
               '"evidence":"exact unusual label text"}]}. No invented fields or coordinates.')
     deadline = time.monotonic() + timeout
     with httpx.Client(timeout=timeout, follow_redirects=False) as client:
+        # Closing a socket from a second thread need not interrupt Linux recv.
+        # Bound each blocked read as well as the overall request deadline.
+        client.timeout = httpx.Timeout(timeout, read=min(2, timeout), pool=min(1, timeout))
         watchdog = threading.Timer(timeout, client.close)
         watchdog.daemon = True
         watchdog.start()
@@ -617,7 +712,7 @@ def place(pdf, signers, *, model_client=None):
                             'ambiguous companion field': 'ambiguous_companion'}.get(code, code),
                     PARSE_REASONS.get(code, 'PDF could not be read. Placement review is required.'))
     # A generic label and an unnamed blank supply no signer identity evidence.
-    if not blocks or all(not b.heading and not b.uncertain_identity and all(LABEL.match(t['text']) for t in b.labels) for b in blocks):
+    if not blocks or all(not b.heading and not b.uncertain_identity and all(LABEL.fullmatch(t['text']) for t in b.labels) for b in blocks):
         result.update(status='bare', reason_code='no_identity', reason='No attributable signature cues. Placement review comes next; nothing was sent.')
         return result
     scores = [[b.scores[i] for b in blocks] for i in range(len(signers))]

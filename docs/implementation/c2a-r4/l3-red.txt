@@ -1,0 +1,59 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_distinct_submissions_upload_concurrently _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-282/test_distinct_submissions_uplo0')
+
+    def test_distinct_submissions_upload_concurrently(tmp_path):
+        path = tmp_path / 'sources.sqlite3'
+        entered, release = threading.Event(), threading.Event()
+    
+        def slow_upload():
+            entered.set()
+            assert release.wait(5)
+            return 'version-slow'
+    
+        with ThreadPoolExecutor(2) as pool:
+            slow = pool.submit(dr.SubmissionSources(path).resolve, 'slow-key', slow_upload)
+            assert entered.wait(2)
+            try:
+                other = pool.submit(dr.SubmissionSources(path).resolve, 'other-key', lambda: 'version-other')
+>               assert other.result(timeout=2) == 'version-other'
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dealroom_c2a_r4.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <hermes_board.dealroom.SubmissionSources object at 0x7140b22eedd0>
+key = 'other-key'
+upload = <function test_distinct_submissions_upload_concurrently.<locals>.<lambda> at 0x7140b217c900>
+
+    def resolve(self, key, upload):
+        try:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            with sqlite3.connect(self.path, timeout=1) as db:
+                db.execute('CREATE TABLE IF NOT EXISTS sources (submission_key TEXT PRIMARY KEY, version TEXT NOT NULL)')
+                db.execute('BEGIN IMMEDIATE')
+                found = db.execute('SELECT version FROM sources WHERE submission_key = ?', (key,)).fetchone()
+                if found:
+                    return found[0]
+                version = str(upload())
+                db.execute('INSERT INTO sources VALUES (?, ?)', (key, version))
+                return version
+        except sqlite3.OperationalError:
+>           raise DealroomError('Signing is busy. Please try again.', 503) from None
+E           hermes_board.dealroom.DealroomError: Signing is busy. Please try again.
+
+hermes_board/dealroom.py:56: DealroomError
+=========================== short test summary info ============================
+FAILED tests/test_dealroom_c2a_r4.py::test_distinct_submissions_upload_concurrently
+1 failed, 2 passed in 2.12s
