@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_b2_unproven_empty_widget_holds[missing_reference] ____________
+
+state = 'missing_reference'
+
+    @pytest.mark.parametrize('state', ['absent_value', 'missing_reference', 'parent_cycle', 'parent_appearance', 'appearance_states'])
+    def test_b2_unproven_empty_widget_holds(state):
+        writer = PdfWriter(clone_from=io.BytesIO(annotation_pdf(value='')))
+        annotation = writer.pages[0]['/Annots'][0].get_object()
+        if state == 'absent_value':
+            del annotation['/V']
+        elif state == 'missing_reference':
+            annotation[NameObject('/V')] = IndirectObject(999999, 0, writer)
+        elif state == 'parent_cycle':
+            annotation[NameObject('/Parent')] = writer.pages[0]['/Annots'][0]
+        elif state == 'parent_appearance':
+            stream = DecodedStreamObject()
+            stream.set_data(b'BT (Lee Harbor) Tj ET')
+            annotation[NameObject('/Parent')] = writer._add_object(DictionaryObject({
+                NameObject('/V'): TextStringObject(''),
+                NameObject('/AP'): DictionaryObject({NameObject('/N'): writer._add_object(stream)})}))
+        else:
+            annotation[NameObject('/AP')] = DictionaryObject({NameObject('/N'): DictionaryObject()})
+        out = io.BytesIO()
+        writer.write(out)
+        result = placement.place(out.getvalue(), PAT)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:379: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_unproven_empty_widget_holds[missing_reference]
+1 failed, 128 deselected in 0.59s

@@ -1140,3 +1140,176 @@ These invoke the requested `/root/work/sign-product/run-send-local.sh
 The scripts under `/root/work/sign-product` were not edited. No work was done in
 `send-style` or `sign-style`. No Git staging or commits were performed. The
 completion marker is written beside `counterparty-c2a-r4.md` after verification.
+
+## C2a r5
+
+This round implements Gate 3 r4 against Send `079e2957` and Board `104a2b2`.
+The complete review, including its ruling on the finite-window limit and the
+cases that already held, was read. No existing test was edited, weakened,
+skipped or deleted. Production changes are confined to Send's placement parser
+(`analysis_version = c2a.5`); Board's reservation behavior is unchanged.
+
+### Changes in review order
+
+- **B-1:** unnamed blocks now have a company-only veto walk above and below
+  their local extent, within the existing column band. A rule or prose stops
+  the walk; an unobstructed page edge continues into the adjacent page,
+  including a row starting exactly at its edge. Person-like or unresolved rows
+  set `company_only_blocked`, which can only remove confidence. Distant names
+  never become labels, headings, positive identity, fields or model evidence.
+  Locally named blocks retain their behavior. Tests cover names 100/150/200 pt
+  above, 150/200 pt below, prose/rule stops, both page-break directions,
+  matching distant names supplying no positive evidence, column isolation,
+  named-block controls and exact comparison of all seven goldens.
+- **B-2:** annotations are inspected inside the bounded parser. Non-links
+  hold the whole document as `form_fields`; normal appearances on links hold
+  too. The reason is “Form fields or annotations require placement review.
+  Nothing was sent.” Empty widgets pass only with an explicitly empty `/V`
+  in an acyclic, bounded field/parent chain, no nonempty value anywhere in that
+  chain, and proven text-free appearances. The proof accepts simple
+  rectangle/border operators only. Missing values, text operators, XObjects,
+  images, appearance-state dictionaries, cycles and unsupported content hold.
+  An unresolved `/V` reference uses a distinct sentinel: pdfminer's default
+  `None` cannot be mistaken for proof of an empty field.
+  ReportLab's empty text widget and ordinary links retain placement. Tests
+  include own/inherited values, parent appearances, FreeText/Stamp/Ink/Text,
+  a link with an appearance, and an annotation on another page. Existing
+  page-size/resource checks retain precedence over annotation checks.
+- **H-1:** a matching printed name allows unrecognized `Title:`/`Its:`
+  remainders unless they meet the review's person-like predicate. Company-only
+  scoring remains strict. Roles accept hyphens and `Co-`; the table's ordinary
+  titles are recognized. Execution clauses using “for and on behalf of” supply
+  accounted company evidence and heading candidates, with the optional person
+  extracted and checked locally. Sentence-final lines are neither people nor
+  unresolved people and remain unaccounted prose for company-only scoring.
+  Tests compare title, wording and wrapped-witness variants against Harbor's
+  exact signature/date geometry; another person's execution clause still holds.
+- **M-1:** compound name captions use the proposed caption expression. The
+  unreadable-identity guard applies only to a nonempty, non-label remainder
+  that is not a person. Filled mismatched captions still hold.
+- **M-2:** a previous block with its own person/company heading and no close
+  caption can separate stacked blocks at its rule-row bottom. Side-date
+  headings place on their own rules at both 80 and 110 pt spacing; Pat holds.
+  Previous-caption ambiguity and shared boundary evidence are preserved.
+- **L-1:** empty Email/Address/Phone/Company/Witness captions are accounted;
+  filled values remain unaccounted. **L-2:** an underscore run ends its text
+  group, so a typed Signature/Date row yields two correctly labeled rules.
+  L-2 is implemented now, not deferred.
+- **N-1:** role acronyms use the proposed case-sensitive scoped patterns,
+  including `C[A-Z]{1,2}O`; mixed-case two-word names are no longer roles.
+  **N-2:** partitioning clears uncertainty only when it came from the
+  ambiguous-heading guard. Independent boundary flags survive later pairs.
+
+### Interpretations and small deviations
+
+No finding was skipped. H-1's sentence-final rule was pulled forward while
+closing B-1 because the new walk otherwise misread the existing `witness`
+golden's witness sentence as a person. This preserves the required golden and
+does not narrow the veto. The table's role words were added to the vocabulary:
+without `Proprietor`, for example, the written remainder predicate itself
+classifies “Sole Proprietor” as a person; suffix-form “Account Executive” also
+needs recognition to meet the requested `harbor_variant(title=...)` test.
+
+The typed `Name: ________ Title: ________` Harbor variant adds a real blank name
+rule. It retains the existing NAME-companion behavior rather than suppressing
+a legitimate field solely to make the variant's field count equal the original.
+Its original signature/date fields remain exact, and the test separately
+requires the added NAME field. The seven original PDFs remain byte-for-byte
+unchanged, with exact original field counts and native geometry.
+
+The empty-widget exception is deliberately conservative: even an appearance
+with text operators that might render nothing holds. The supported empty
+ReportLab appearance has only border/background/clip operations. This keeps
+the exception provable without flattening or interpreting annotation text.
+
+### Privacy and retained safeguards
+
+The new walk stores only a boolean outside its local raw evidence; annotation
+values never become placement labels. New workflow checks verify that distant
+identity and annotation holds create no workflow or History event and expose no
+other person's name in the result, exception response, model call or logs.
+Existing same-row, gap-between-columns, second-person, caption-boundary,
+company-only uniqueness, raw-prose redaction, resource, deadline, transport,
+hash-verification, retry and Board reservation tests remain unchanged.
+
+The EDD's r4 limit-acceptance paragraph has been replaced with the r5 confidence
+rule. The [runbook](c2a-runbook.md#identity-extent) describes the veto, annotation
+hold and empty-widget proof. Existing orphan-upload and per-process capacity
+dispositions remain documented. No schema, dependency, migration, deployment
+or external model change was made. No work was done in `send-style`,
+`sign-style` or another host; no Git staging or commits were performed.
+
+### Verification evidence
+
+The supplied Send and Board runners are invoked unchanged through the local
+wrappers, which only redirect their read-only scratch-directory creation to
+`/tmp`, as in r4:
+
+```bash
+bash docs/implementation/c2a-r5/run-send-tests.sh dealroom_sign/tests
+bash docs/implementation/c2a-r5/run-board-tests.sh
+/root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r5/check_goldens.py
+```
+
+They execute `/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b
+dealroom_sign/tests` and `bash /root/work/sign-product/run-board-tests.sh
+/root/worktrees/board-s1`. The runners themselves were not edited.
+
+The final new tests were replayed against the reviewed production file from
+`079e2957`, restored in `finally` by
+[replay_baseline.py](c2a-r5/replay_baseline.py): **85 failed, 47 passed**, 49.48 s.
+Passing baseline cases are controls, not claimed regressions. Initial per-group
+red/green logs are retained; the final baseline replay and final full suite are
+the authoritative results. The first full verification attempt was interrupted
+after the exact-page-edge regression was discovered, then restarted after its
+fix; the interrupted log is not counted as verification.
+The subsequent 856-test run passed before the missing-value-reference check
+was added. Its log is retained as intermediate evidence; final verification
+below includes that correction and its additional test.
+
+| Finding | Failures on `079e2957` | Final behavior checked |
+| --- | ---: | --- |
+| B-1 | 13 | Distant/cross-page person evidence vetoes company-only; rule/prose stops, column bands, named controls and all seven exact goldens hold |
+| B-2 | 15 | Filled, inherited, visible or unproven annotation evidence holds; proven empty widgets/plain links preserve placement |
+| H-1 | 33 | Review titles, execution clauses, title-remainder predicate and wrapped sentence preserve exact boxes; mismatches still hold |
+| M-1 | 8 | Compound captions parse; filled mismatches hold; typed Name/Title retains its legitimate NAME companion |
+| M-2 | 2 | Both stacked heading/side-date spacings place each person on their own rule |
+| L-1 | 5 | Empty contact/company/witness labels are accounted; filled values hold |
+| L-2 | 1 | One typed Signature/Date row yields both fields |
+| N-1 | 4 | Mixed-case person names are not roles; uppercase CHRO is recognized |
+| N-2 | 1 | Independent uncertainty survives partitioning |
+| History | 3 | These new holds create no workflow/event and disclose no other person's name |
+
+[Baseline log](c2a-r5/baseline-send-red.txt),
+[machine-readable counts](c2a-r5/baseline-summary.json),
+[exact-page-edge red](c2a-r5/page-edge-red.txt) and
+[green](c2a-r5/page-edge-green.txt) record the regressions.
+[Missing-value red](c2a-r5/missing-value-red.txt) and the
+[18 annotation cases green](c2a-r5/missing-value-green.txt) verify the strict
+empty-widget exception, including an unresolved value reference.
+[Golden comparison](c2a-r5/golden-comparison.json) and
+[placements](c2a-r5/placements.json) record exact equality with r4 for every
+field and native field dictionary: `bare` holds with zero fields; `nda`, `offer`,
+`roles`, `witness`, `harbor` and the stubbed-model `unusual` place unchanged.
+
+### Final verification
+
+- **Send:** **857 passed, 0 failed, 0 skipped**, 361.41 s
+  ([full log](c2a-r5/send-signing-suite.txt)): all 725 existing tests and all
+  132 new r5 cases (129 placement cases and three workflow/History cases).
+- **Board:** **295 passed, 3 failed, 58 skipped**, 33.06 s
+  ([full log](c2a-r5/board-suite.txt)). The failures are exactly the supplied
+  `test_cloud_edition` baseline cases: `test_detail_pages_program_and_epic`,
+  `test_function_serves_the_same_endpoints_and_shapes`, and
+  `test_relay_publishes_the_tailnet_payload`. Board code and tests are unchanged.
+- **Goldens:** all seven r4 outcomes, field counts, coordinates, confidence
+  and native field dictionaries remain exact. Six place; `bare` holds.
+- **Failing first:** final baseline replay is **85 failed, 47 passed** on
+  `079e2957`; every new case passes in the final full Send suite.
+- `git diff --check` passes for Send, Board and the edited EDD document.
+  [Footprint](c2a-r5/footprint.json) records the verified source/test hashes,
+  unchanged HEADs, empty Git indexes, clean Board worktree, and unchanged
+  existing tests, fixture PDFs and project memory.
+
+All changes remain unstaged and uncommitted. The completion marker is
+`/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-r5.done`.

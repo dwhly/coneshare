@@ -1,4 +1,4 @@
-# Automatic signature placement operations (C2a r4)
+# Automatic signature placement operations (C2a r5)
 
 Placement holds are fail closed: no fields are sent. A bare document remains a
 hold. Rules resolve clearly attributed blocks; unusual labels may use one
@@ -13,10 +13,30 @@ blocks can shorten that window. The horizontal band includes text beside the
 rule, stopping at neighbouring rule columns. Text in a gap shared by two columns
 participates in both. Stacked blocks are separated using the previous block's
 companion fields/close caption and the next block's first attributable label.
-Ambiguous boundaries hold. This is bounded local evidence, not page-wide person
-recognition: a name starting 100 points above a rule is outside this identity
-window, even if only ordinary labels intervene. Do not infer an all-page identity
-guarantee from a `high` local score.
+Ambiguous boundaries hold. A previous block with its own heading and no close
+caption also separates stacked blocks at its rule-row bottom, including side
+dates. An independent boundary uncertainty flag cannot be cleared by another
+pair's successful partition.
+
+**Company-only confidence has an additional veto walk.** From each local extent
+edge, walk upward/downward through overlapping rows in the same column band,
+stopping at a rule or prose. At a page edge, continue from the adjacent page's
+edge through its block-like rows. Any person-like or unresolved identity row
+blocks company-only placement. A distant name can only remove confidence; it
+cannot identify the signer or add a field. Named blocks retain their local
+identity behavior. Fully accounted local evidence and a unique matching signer
+are still required. The r4 acceptance of a name just outside the local window
+is superseded by this rule.
+
+**Annotations hold the entire document** with `form_fields`: “Form fields or
+annotations require placement review. Nothing was sent.” Plain `/Link`
+annotations remain allowed; a normal appearance stream makes a link hold too.
+An empty widget is allowed only with an explicitly empty `/V` somewhere in its
+field/parent chain, no nonempty values anywhere in that chain, and appearances
+proven text-free. The proof accepts simple rectangle/border appearances only;
+text operators, XObjects, images, appearance-state dictionaries, missing values,
+cycles, malformed objects and unknown operators hold. No annotation text is
+flattened, attributed or emitted. This preserves blank ReportLab text fields.
 
 Raw rows are scored only inside the parser child. Other people's names and body
 prose are redacted before model input, result fields or History. A company word

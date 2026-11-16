@@ -1,0 +1,230 @@
+FFFFF..FFFFFF.F.......                                                   [100%]
+=================================== FAILURES ===================================
+_________________ test_b1_far_heading_vetoes_company_only[100] _________________
+
+distance = 100
+
+    @pytest.mark.parametrize('distance', [100, 150, 200])
+    def test_b1_far_heading_vetoes_company_only(distance):
+>       assert_held(placement.place(distant_identity_pdf(distance), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+_________________ test_b1_far_heading_vetoes_company_only[150] _________________
+
+distance = 150
+
+    @pytest.mark.parametrize('distance', [100, 150, 200])
+    def test_b1_far_heading_vetoes_company_only(distance):
+>       assert_held(placement.place(distant_identity_pdf(distance), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+_________________ test_b1_far_heading_vetoes_company_only[200] _________________
+
+distance = 200
+
+    @pytest.mark.parametrize('distance', [100, 150, 200])
+    def test_b1_far_heading_vetoes_company_only(distance):
+>       assert_held(placement.place(distant_identity_pdf(distance), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+_________________ test_b1_far_caption_vetoes_company_only[150] _________________
+
+distance = 150
+
+    @pytest.mark.parametrize('distance', [150, 200])
+    def test_b1_far_caption_vetoes_company_only(distance):
+>       assert_held(placement.place(distant_identity_pdf(distance, below=True), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+_________________ test_b1_far_caption_vetoes_company_only[200] _________________
+
+distance = 200
+
+    @pytest.mark.parametrize('distance', [150, 200])
+    def test_b1_far_caption_vetoes_company_only(distance):
+>       assert_held(placement.place(distant_identity_pdf(distance, below=True), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 400.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+____________________ test_b1_walk_crosses_page_edge[above] _____________________
+
+split = 'above'
+
+    @pytest.mark.parametrize('split', ['above', 'below'])
+    def test_b1_walk_crosses_page_edge(split):
+>       assert_held(placement.place(distant_identity_pdf(split=split), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.4', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'needs_sender'
+E         
+E         - needs_sender
+E         + bare
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+____________________ test_b1_walk_crosses_page_edge[below] _____________________
+
+split = 'below'
+
+    @pytest.mark.parametrize('split', ['above', 'below'])
+    def test_b1_walk_crosses_page_edge(split):
+>       assert_held(placement.place(distant_identity_pdf(split=split), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 700.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.4', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 700.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+_____________ test_b1_distant_name_never_adds_confidence[kwargs0] ______________
+
+kwargs = {'distance': 100}
+
+    @pytest.mark.parametrize('kwargs', [{'distance': 100}, {'distance': 150}, {'distance': 200},
+                                        {'below': True}, {'split': 'above'}, {'split': 'below'}])
+    def test_b1_distant_name_never_adds_confidence(kwargs):
+        result = placement.place(distant_identity_pdf(**kwargs), LEE)
+>       assert result['status'] != 'placed'
+E       AssertionError: assert 'placed' != 'placed'
+
+dealroom_sign/tests/test_placement_r5.py:85: AssertionError
+_____________ test_b1_distant_name_never_adds_confidence[kwargs1] ______________
+
+kwargs = {'distance': 150}
+
+    @pytest.mark.parametrize('kwargs', [{'distance': 100}, {'distance': 150}, {'distance': 200},
+                                        {'below': True}, {'split': 'above'}, {'split': 'below'}])
+    def test_b1_distant_name_never_adds_confidence(kwargs):
+        result = placement.place(distant_identity_pdf(**kwargs), LEE)
+>       assert result['status'] != 'placed'
+E       AssertionError: assert 'placed' != 'placed'
+
+dealroom_sign/tests/test_placement_r5.py:85: AssertionError
+_____________ test_b1_distant_name_never_adds_confidence[kwargs2] ______________
+
+kwargs = {'distance': 200}
+
+    @pytest.mark.parametrize('kwargs', [{'distance': 100}, {'distance': 150}, {'distance': 200},
+                                        {'below': True}, {'split': 'above'}, {'split': 'below'}])
+    def test_b1_distant_name_never_adds_confidence(kwargs):
+        result = placement.place(distant_identity_pdf(**kwargs), LEE)
+>       assert result['status'] != 'placed'
+E       AssertionError: assert 'placed' != 'placed'
+
+dealroom_sign/tests/test_placement_r5.py:85: AssertionError
+_____________ test_b1_distant_name_never_adds_confidence[kwargs3] ______________
+
+kwargs = {'below': True}
+
+    @pytest.mark.parametrize('kwargs', [{'distance': 100}, {'distance': 150}, {'distance': 200},
+                                        {'below': True}, {'split': 'above'}, {'split': 'below'}])
+    def test_b1_distant_name_never_adds_confidence(kwargs):
+        result = placement.place(distant_identity_pdf(**kwargs), LEE)
+>       assert result['status'] != 'placed'
+E       AssertionError: assert 'placed' != 'placed'
+
+dealroom_sign/tests/test_placement_r5.py:85: AssertionError
+_____________ test_b1_distant_name_never_adds_confidence[kwargs5] ______________
+
+kwargs = {'split': 'below'}
+
+    @pytest.mark.parametrize('kwargs', [{'distance': 100}, {'distance': 150}, {'distance': 200},
+                                        {'below': True}, {'split': 'above'}, {'split': 'below'}])
+    def test_b1_distant_name_never_adds_confidence(kwargs):
+        result = placement.place(distant_identity_pdf(**kwargs), LEE)
+>       assert result['status'] != 'placed'
+E       AssertionError: assert 'placed' != 'placed'
+
+dealroom_sign/tests/test_placement_r5.py:85: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_far_heading_vetoes_company_only[100]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_far_heading_vetoes_company_only[150]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_far_heading_vetoes_company_only[200]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_far_caption_vetoes_company_only[150]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_far_caption_vetoes_company_only[200]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_walk_crosses_page_edge[above]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_walk_crosses_page_edge[below]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_distant_name_never_adds_confidence[kwargs0]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_distant_name_never_adds_confidence[kwargs1]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_distant_name_never_adds_confidence[kwargs2]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_distant_name_never_adds_confidence[kwargs3]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_distant_name_never_adds_confidence[kwargs5]
+12 failed, 10 passed in 6.03s

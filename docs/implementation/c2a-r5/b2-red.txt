@@ -1,0 +1,334 @@
+FFFFFFFFFF...                                                            [100%]
+=================================== FAILURES ===================================
+______________ test_b2_annotations_hold_entire_document[kwargs0] _______________
+
+kwargs = {}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x730157442030>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs1] _______________
+
+kwargs = {'other_page': True}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x730157443950>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs2] _______________
+
+kwargs = {'parent': 'Lee Harbor', 'value': ''}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x730157466c00>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs3] _______________
+
+kwargs = {'appearance': b'BT (Lee Harbor) Tj ET', 'value': ''}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x730157464470>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs4] _______________
+
+kwargs = {'appearance': b'/X1 Do', 'value': ''}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x730157486c60>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs5] _______________
+
+kwargs = {'kind': 'FreeText'}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x7301574879e0>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs6] _______________
+
+kwargs = {'kind': 'Stamp'}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x73015748a960>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs7] _______________
+
+kwargs = {'kind': 'Ink'}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x73015748a300>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs8] _______________
+
+kwargs = {'appearance': b'BT (Lee Harbor) Tj ET', 'kind': 'Text'}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x730157489040>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+______________ test_b2_annotations_hold_entire_document[kwargs9] _______________
+
+kwargs = {'appearance': b'BT (Lee Harbor) Tj ET', 'kind': 'Link'}
+caplog = <_pytest.logging.LogCaptureFixture object at 0x7301574878f0>
+
+    @pytest.mark.parametrize('kwargs', [
+        {}, {'other_page': True}, {'value': '', 'parent': 'Lee Harbor'},
+        {'value': '', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'value': '', 'appearance': b'/X1 Do'},
+        {'kind': 'FreeText'}, {'kind': 'Stamp'}, {'kind': 'Ink'},
+        {'kind': 'Text', 'appearance': b'BT (Lee Harbor) Tj ET'},
+        {'kind': 'Link', 'appearance': b'BT (Lee Harbor) Tj ET'},
+    ])
+    def test_b2_annotations_hold_entire_document(kwargs, caplog):
+        model = Mock()
+        result = placement.place(annotation_pdf(**kwargs), PAT, model_client=model)
+>       assert_held(result)
+
+dealroom_sign/tests/test_placement_r5.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [110.0, 404.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:54: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs0]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs1]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs2]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs3]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs4]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs5]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs6]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs7]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs8]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b2_annotations_hold_entire_document[kwargs9]
+10 failed, 3 passed, 22 deselected in 3.50s

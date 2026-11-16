@@ -20,12 +20,15 @@ from pathlib import Path
 
 import httpx
 import pdfplumber
+from pdfminer.pdfinterp import PDFContentParser
+from pdfminer.pdftypes import PDFStream, resolve1
+from pdfminer.psparser import PSEOF, PSKeyword, literal_name
 
 LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|name|title|date|its)\b[:\s]*', re.I)
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.4'
+VERSION = 'c2a.5'
 MAX_EDGES = 5000
 MAX_CHARS = 20000
 MAX_WORDS = 4000
@@ -58,6 +61,8 @@ class Block:
     uncertain_identity: bool = False
     raw_labels: list = field(default_factory=list, repr=False)
     scores: list = field(default_factory=list)
+    company_only_blocked: bool = False
+    ambiguous_heading: bool = False
 
 
 def norm(value):
@@ -82,12 +87,12 @@ def similarity(a, b):
 
 
 PERSON = re.compile(r"[^\W\d_][^\W\d_'.’\-]*(?:['’.-][^\W\d_]+)?\.?(?: [^\W\d_][^\W\d_'.’\-]*(?:['’.-][^\W\d_]+)?\.?){1,4}")
-NAME_CAPTION = re.compile(r'^(?:name(?:\s*/\s*title)?|printed name|print name|sincerely)[,:\s]+', re.I)
-ROLE_HEAD = r'(?:Officer|Director|Counsel|Manager|President|Partner|Member|Secretary|Treasurer|Founder|Owner|Principal|Trustee|Signatory|Head|Lead|Witness|[SE]?VP|C[A-Z]?O)'
+NAME_CAPTION = re.compile(r'^(?:name(?:\s*(?:/|and|&)\s*title|\s*\((?:print|printed)\)|\s+of\s+signatory)?|printed name|print name|sincerely)[,:\s]+', re.I)
+ROLE_HEAD = r'(?:Officer|Director|Counsel|Manager|President|Partner|Member|Secretary|Treasurer|Founder|Owner|Principal|Trustee|Signatory|Head|Lead|Witness|Chairman|Chair|Attorney|Consultant|Staff|Executive|Proprietor|(?-i:[SE]?VP)|(?-i:C[A-Z]{1,2}O))'
 ROLE_WORD = (ROLE_HEAD + r'|Chief|Senior|Executive|General|Managing|Vice|Deputy|Assistant|Authorized|Authorised'
              r'|Operating|Financial|Technology|Technical|Sales|Marketing|Finance|Legal|Operations'
-             r'|Engineering|Product|Human|Resources|Business|Development|Compliance|Board|Directors|and|of|the')
-ROLE = re.compile(r'^(?=.*\b' + ROLE_HEAD + r'\b)(?:' + ROLE_WORD + r')(?:[\s,&/]+(?:' + ROLE_WORD + r'))*$', re.I)
+             r'|Engineering|Product|Human|Resources|Business|Development|Compliance|Board|Directors|Account|Sole|and|of|the')
+ROLE = re.compile(r'^(?=.*\b' + ROLE_HEAD + r'\b)(?:Co-)?(?:' + ROLE_WORD + r')(?:[\s,&/\-]+(?:Co-)?(?:' + ROLE_WORD + r'))*$', re.I)
 BLOCK_WORDING = re.compile(r'^(?:accepted(?: and agreed)?|agreed(?: and accepted| by the parties)?'
                            r'|(?:disclosing|receiving) party|in witness whereof|duly authori[sz]ed'
                            r'|limited liability company|limited liability partnership|limited|inc\.?|llc|ltd\.?)\s*:?$', re.I)
@@ -95,8 +100,23 @@ COMPANY = re.compile(r'\b(?:inc|llc|ltd|co|corp|corporation|company|gmbh|plc|ana
 IDENTITY_SPLIT = re.compile(r',|\s+[–—/\-]\s+|\s+\(')
 
 
+def sentence_text(text):
+    last = re.search(r'\b([^\W\d_]{3,})\.$', text.strip())
+    return bool(last and last.group(1).lower() not in {'jr', 'sr', 'esq'})
+
+
+def behalf_parts(text):
+    match = re.fullmatch(r'(?:signed\s+)?(?:by\s+(.+?)\s+)?for and on behalf of\s+(.+)', text, re.I)
+    if match and company_text(match[2]) and (not match[1] or PERSON.fullmatch(match[1])):
+        return match[1] or '', match[2]
+    return None
+
+
 def person_text(text):
-    if re.match(r'^(?:title|its|date)\b', text, re.I) or BLOCK_WORDING.fullmatch(text):
+    behalf = behalf_parts(text)
+    if behalf:
+        return behalf[0]
+    if sentence_text(text) or re.match(r'^(?:title|its|date)\b', text, re.I) or BLOCK_WORDING.fullmatch(text):
         return ''
     prefix = re.match(r'^(?:signature|signed(?:\s+by)?|sign here|by)\b[:\s]*', text, re.I)
     text = text[prefix.end():] if prefix else text
@@ -114,7 +134,7 @@ def person_text(text):
 def identity_parts(text):
     # A suffix may carry a second person as well as a role or company. Keep all
     # parts for the veto; output redaction must never erase identity evidence.
-    if ROLE.fullmatch(text) or re.match(r'^(?:title|its|date)\b', text, re.I):
+    if behalf_parts(text) or sentence_text(text) or ROLE.fullmatch(text) or re.match(r'^(?:title|its|date)\b', text, re.I):
         return [text]
     return [text] + [part.strip('() ') for part in IDENTITY_SPLIT.split(NAME_CAPTION.sub('', text))[1:]]
 
@@ -133,7 +153,7 @@ def identity_label(text, roles):
     if len(text) > 120:
         return False
     return bool(text.rstrip(': ').lower() in roles or BLOCK_WORDING.fullmatch(text) or ROLE.fullmatch(text)
-                or company_text(text) or person_text(text) or LABEL.fullmatch(text))
+                or behalf_parts(text) or company_text(text) or person_text(text) or LABEL.fullmatch(text))
 
 
 def safe_label(label, roles, signers=(), *, companies=None):
@@ -150,6 +170,9 @@ def safe_label(label, roles, signers=(), *, companies=None):
             if ROLE.fullmatch(suffix) or (company_text(suffix) and (companies is None or suffix in companies)):
                 safe += ', ' + suffix
         return dict(label, text=safe[:120])
+    behalf = behalf_parts(text)
+    if behalf:
+        return dict(label, text=behalf[1] if companies is None or behalf[1] in companies else '[company]')
     if company_text(text) and companies is not None and text not in companies:
         return dict(label, text='[company]')
     if accounted_label(text, roles) or text == 'Hand of the covenanting party:':
@@ -169,7 +192,8 @@ def text_rows(words):
     for row in rows:
         groups = [[]]
         for word in sorted(row, key=lambda w: w['x0']):
-            if groups[-1] and word['x0'] - groups[-1][-1]['x1'] > 24:
+            if groups[-1] and (word['x0'] - groups[-1][-1]['x1'] > 24
+                               or re.search(r'_{3,}', groups[-1][-1]['text'])):
                 groups.append([])
             groups[-1].append(word)
         for group in groups:
@@ -202,6 +226,9 @@ def partition_stacked_blocks(hosts, texts, roles):
         separators = [t['rect'][3] for t in captions]
         separators += [max(e.y, e.label['rect'][3]) for e in previous.extras.values()
                        if sig.y + 5 < e.y < next_sig.y]
+        if not captions and (company_text(previous.heading) or person_text(previous.heading)):
+            if any(t['text'] == previous.heading and t['rect'][3] < sig.y for t in previous.raw_labels):
+                separators.append(max(sig.y, sig.label.get('rect', [0, 0, 0, sig.y])[3]))
         if not separators:
             continue
         end = max(separators)
@@ -209,27 +236,127 @@ def partition_stacked_blocks(hosts, texts, roles):
         above = [t for t in texts if max(end, next_sig.y - 90) < t['rect'][1]
                  and t['rect'][3] < next_sig.y - 2
                  and t['rect'][0] < next_sig.x1 and t['rect'][2] > next_column - 5
-                 and not LABEL.match(t['text']) and identity_label(t['text'], roles)]
+                 and (not LABEL.match(t['text']) or behalf_parts(t['text'])) and identity_label(t['text'], roles)]
         start = min([t['rect'][1] for t in above]
                     + [next_sig.label.get('rect', [0, next_sig.y])[1]])
         if any(abs((t['rect'][1] + t['rect'][3]) / 2 - (sig.y + next_sig.y) / 2) < 3
                for t in above):
             # A boundary identity is evidence for both, never discarded.
             previous.uncertain_identity = next_block.uncertain_identity = True
+            previous.ambiguous_heading = next_block.ambiguous_heading = False
             continue
         previous.raw_labels = [t for t in previous.raw_labels if t['rect'][1] < start]
         next_block.raw_labels = [t for t in next_block.raw_labels if t['rect'][1] > end]
-        attributed = [t for t in above if company_text(t['text']) or person_text(t['text'])
+        attributed = [t for t in above if company_text(t['text']) or behalf_parts(t['text']) or person_text(t['text'])
                       or t['text'].rstrip(': ').lower() in roles]
         heading = max(attributed or above, key=lambda t: t['rect'][3], default=None)
         next_block.heading = heading['text'] if heading else ''
-        next_block.uncertain_identity = False
+        if next_block.ambiguous_heading:
+            next_block.uncertain_identity = False
+            next_block.ambiguous_heading = False
     for block in hosts:
         block.labels = block.raw_labels
 
 
+def company_only_veto(block, extent, pages, roles):
+    """Walk only to remove company confidence; distant rows never become labels."""
+    top, bottom, left, right = extent
+    for direction, boundary in ((-1, top), (1, bottom)):
+        pno = block.line.page
+        while pno in pages:
+            texts, rules, _ = pages[pno]
+            events = [(t['rect'][1], t) for t in texts
+                      if t['rect'][0] < right and t['rect'][2] > left
+                      and direction * (t['rect'][1] - boundary) > 0]
+            events += [(r.y, None) for r in rules if r is not block.line
+                       and r.x1 > left and r.label.get('rect', [r.x0])[0] < right
+                       and direction * (r.y - boundary) >= 0]
+            stopped = False
+            for _, row in sorted(events, key=lambda item: direction * item[0]):
+                if row is None:
+                    stopped = True
+                    break
+                text = row['text']
+                if person_text(text) or unresolved_person(text, roles):
+                    return True
+                if not (identity_label(text, roles) or accounted_label(text, roles)):
+                    stopped = True
+                    break
+            if stopped:
+                break
+            pno += direction
+            # Include rows exactly at the adjacent page's edge too. The local
+            # extent boundary is exclusive because its row was already scored.
+            boundary = math.inf if direction < 0 else -math.inf
+    return False
+
+
+def empty_widget(annotation):
+    """Prove empty values through the parent chain and text-free appearances.
+
+    Only simple rectangle/border appearances are accepted. Text, XObjects,
+    images, appearance states, malformed objects and unknown operators hold.
+    """
+    seen, value_seen = set(), False
+    current = annotation
+    for _ in range(32):
+        current = resolve1(current)
+        if not isinstance(current, dict) or id(current) in seen:
+            return False
+        seen.add(id(current))
+        if 'V' in current:
+            value_seen = True
+            # pdfminer otherwise maps a missing indirect object to None, which
+            # cannot prove that the field value is empty.
+            if resolve1(current['V'], default=object()) not in (b'', '', None):
+                return False
+        appearances = resolve1(current.get('AP', {}))
+        if not isinstance(appearances, dict):
+            return False
+        for value in appearances.values():
+            stream = resolve1(value)
+            if not isinstance(stream, PDFStream) or len(stream.get_data()) > MAX_CHARS:
+                return False
+            parser = PDFContentParser([stream])
+            try:
+                for _ in range(MAX_WORDS):
+                    _, obj = parser.nextobject()
+                    if isinstance(obj, PSKeyword) and obj.name not in {
+                        b'q', b'Q', b're', b'W', b'W*', b'n', b'f', b'F', b'f*', b'S', b's',
+                        b'B', b'B*', b'b', b'b*', b'w', b'J', b'j', b'M', b'd',
+                        b'g', b'G', b'rg', b'RG', b'k', b'K', b'BMC', b'EMC',
+                    }:
+                        return False
+                return False
+            except PSEOF:
+                pass
+        if 'Parent' not in current:
+            return value_seen
+        current = current['Parent']
+    return False
+
+
+def check_annotations(page):
+    try:
+        annotations = resolve1(page.page_obj.annots or [])
+        if not isinstance(annotations, (list, tuple)):
+            raise ValueError
+        for ref in annotations:
+            annotation = resolve1(ref)
+            subtype = literal_name(annotation.get('Subtype'))
+            if subtype == 'Link' and not resolve1(annotation.get('AP', {})).get('N'):
+                continue
+            if subtype == 'Widget' and empty_widget(annotation):
+                continue
+            raise ValueError
+    except Exception:
+        # No annotation value or parser detail crosses the worker boundary.
+        raise ValueError('form_fields') from None
+
+
 def extract(pdf, *, deadline=None):
     blocks, sizes, roles = [], {}, {}
+    pages, extents = {}, []
     with pdfplumber.open(io.BytesIO(pdf)) as doc:
         if not 1 <= len(doc.pages) <= 500:
             raise ValueError('page_limit')
@@ -251,10 +378,13 @@ def extract(pdf, *, deadline=None):
             words = page.extract_words()
             if len(words) > MAX_WORDS:
                 raise ValueError('parse_limit')
+            check_annotations(page)
             texts = text_rows(words)
             for text in texts:
-                if NAME_CAPTION.match(text['text']) and not LABEL.fullmatch(text['text']):
-                    if len(text['text']) > 120 or not person_text(text['text']):
+                caption = NAME_CAPTION.match(text['text'])
+                if caption:
+                    remainder = text['text'][caption.end():].strip()
+                    if remainder and not LABEL.fullmatch(remainder) and (len(text['text']) > 120 or not person_text(text['text'])):
                         raise ValueError('identity_unreadable')
             if pno <= 2:
                 opening = ' '.join(w['text'] for w in words)
@@ -300,14 +430,14 @@ def extract(pdf, *, deadline=None):
                 column = line.label.get('rect', [line.x0])[0]
                 candidates = [t for t in texts if 2 <= line.y - t['rect'][3] < 90
                          and t['rect'][0] < line.x1 and t['rect'][2] > column - 5
-                         and not LABEL.match(t['text']) and len(t['text']) < 85
+                         and (not LABEL.match(t['text']) or behalf_parts(t['text'])) and len(t['text']) < 85
                          and t != line.label and identity_label(t['text'], roles)]
                 above = [t for t in candidates if not any(
                     prev.y < line.y and prev.semantic not in {'DATE', 'NAME', 'TITLE'}
                     and prev.label.get('rect', [prev.x0])[0] < t['rect'][2] and prev.x1 > t['rect'][0]
                     and (t['rect'][3] < prev.y or 0 < t['rect'][1] - prev.y < 90)
                     for prev in unique)]
-                attributed = [t for t in above if company_text(t['text']) or person_text(t['text'])
+                attributed = [t for t in above if company_text(t['text']) or behalf_parts(t['text']) or person_text(t['text'])
                               or t['text'].rstrip(': ').lower() in roles]
                 heading = max(attributed or above, key=lambda t: t['rect'][3], default=None)
                 if not heading and candidates:
@@ -374,19 +504,30 @@ def extract(pdf, *, deadline=None):
                 block.uncertain_identity = (block.heading == '[ambiguous attribution]'
                                             and not any(t['rect'][1] >= sig.y and person_text(t['text'])
                                                         for t in block.raw_labels))
+                block.ambiguous_heading = block.uncertain_identity
                 block.labels = block.raw_labels
+                extents.append((block, (top, bottom, left, right)))
             partition_stacked_blocks(hosts, texts, roles)
             blocks.extend(hosts)
+            pages[pno] = (texts, unique, page.height)
             page.close()
     if len(blocks) > 40:
         raise ValueError('candidate_limit')
     for i, block in enumerate(blocks):
         block.id = f'b{i}'
+    for block, extent in extents:
+        if not printed_names(block):
+            block.company_only_blocked = company_only_veto(block, extent, pages, roles)
     return blocks, sizes, roles
 
 
 def accounted_label(text, roles):
     if identity_label(text, roles) or ROLE.fullmatch(text):
+        return True
+    if re.fullmatch(r'(?:email|address|phone|company|witness)\s*:\s*', text, re.I):
+        return True
+    caption = NAME_CAPTION.match(text)
+    if caption and (not text[caption.end():].strip() or LABEL.fullmatch(text[caption.end():].strip())):
         return True
     match = LABEL.match(text)
     if match and match.group(1).lower() == 'date':
@@ -403,7 +544,7 @@ def accounted_label(text, roles):
 
 
 def unresolved_person(text, roles):
-    if person_text(text) or accounted_label(text, roles):
+    if sentence_text(text) or person_text(text) or accounted_label(text, roles):
         return False
     prefix = LABEL.match(text)
     if prefix and prefix.group(1).lower() != 'date' and text[prefix.end():].strip():
@@ -425,8 +566,9 @@ def prepare_blocks(blocks, roles, signers):
         for signer, value in zip(signers, block.scores):
             domain = signer['email'].split('@')[-1].split('.')[0].lower()
             company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
-            if value >= 4 and similarity(company, block.heading):
-                companies.add(block.heading)
+            heading = (behalf_parts(block.heading) or ('', block.heading))[1]
+            if value >= 4 and similarity(company, heading):
+                companies.add(heading)
         block.labels = [safe_label(t, roles, signers, companies=companies) for t in block.labels]
         block.heading = safe_label({'text': block.heading}, roles, signers, companies=companies)['text'] if block.heading else ''
         block.identity = ' | '.join(t['text'] for t in block.labels)
@@ -438,15 +580,26 @@ def prepare_blocks(blocks, roles, signers):
 
 
 def score(signer, block, roles):
-    if block.uncertain_identity or any(unresolved_person(part, roles) for t in block.raw_labels
-                                       for part in identity_parts(t['text'])):
+    if block.uncertain_identity:
         return 0
     name = tokens(signer.get('name', ''))
     printed = printed_names(block)
+    if not printed and block.company_only_blocked:
+        return 0
     # A printed full name is authoritative, including when company/domain agree.
     if printed and any(name != person for person in printed):
         return 0
     value = 6 if printed and name in printed else 0
+    for label in block.raw_labels:
+        for part in identity_parts(label['text']):
+            if value and (title := re.match(r'^(?:title|its)\b[:\s]*(.*)', part, re.I)):
+                remainder = title[1].strip()
+                if not (PERSON.fullmatch(remainder) and len(remainder.split()) >= 2
+                        and all(w[0].isupper() for w in remainder.split())
+                        and not re.search(r'\b(?:' + ROLE_WORD + r')\b', remainder, re.I)):
+                    continue
+            if unresolved_person(part, roles):
+                return 0
     # Unknown prose cannot create company-only confidence. A matched full name
     # can coexist with non-person text, which is redacted before leaving the worker.
     if not value and any(not accounted_label(t['text'], roles) for t in block.raw_labels):
@@ -454,6 +607,7 @@ def score(signer, block, roles):
     domain = signer['email'].split('@')[-1].split('.')[0].lower()
     company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
     heading = roles.get(block.heading.rstrip(': ').lower(), block.heading)
+    heading = (behalf_parts(heading) or ('', heading))[1]
     if similarity(company, heading):
         value += 4
     return value
@@ -670,6 +824,7 @@ def bounded_model(client, payload, deadline):
 
 
 PARSE_REASONS = {
+    'form_fields': 'Form fields or annotations require placement review. Nothing was sent.',
     'placement_busy': 'Placement is busy. Please try again.',
     'placement_unavailable': 'Placement is unavailable. Please try again.',
     'identity_unreadable': 'Printed identity requires placement review.',
@@ -712,7 +867,8 @@ def place(pdf, signers, *, model_client=None):
                             'ambiguous companion field': 'ambiguous_companion'}.get(code, code),
                     PARSE_REASONS.get(code, 'PDF could not be read. Placement review is required.'))
     # A generic label and an unnamed blank supply no signer identity evidence.
-    if not blocks or all(not b.heading and not b.uncertain_identity and all(LABEL.fullmatch(t['text']) for t in b.labels) for b in blocks):
+    if not blocks or all(not b.heading and not b.uncertain_identity and not b.company_only_blocked
+                         and all(LABEL.fullmatch(t['text']) for t in b.labels) for b in blocks):
         result.update(status='bare', reason_code='no_identity', reason='No attributable signature cues. Placement review comes next; nothing was sent.')
         return result
     scores = [[b.scores[i] for b in blocks] for i in range(len(signers))]
