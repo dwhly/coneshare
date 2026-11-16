@@ -1,0 +1,627 @@
+FFFFFFFFFFFF..FFF....F.FFFFFFFFFFFFF.                                    [100%]
+=================================== FAILURES ===================================
+__________ test_other_person_in_whole_raw_extent_never_gets_high[by] ___________
+
+layout = 'by'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+________ test_other_person_in_whole_raw_extent_never_gets_high[signed] _________
+
+layout = 'signed'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+________ test_other_person_in_whole_raw_extent_never_gets_high[heading] ________
+
+layout = 'heading'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor \u2013 COO] _
+
+layout = 'format:Lee Harbor – COO'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor (COO)] _
+
+layout = 'format:Lee Harbor (COO)'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor / COO] _
+
+layout = 'format:Lee Harbor / COO'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:LEE HARBOR / COO] _
+
+layout = 'format:LEE HARBOR / COO'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:22:text] _____
+
+layout = 'below:22:text'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:26:text] _____
+
+layout = 'below:26:text'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:45:text] _____
+
+layout = 'below:45:text'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:26:rule] _____
+
+layout = 'below:26:rule'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:65:rule] _____
+
+layout = 'below:65:rule'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+____________ test_inserted_raw_person_vetoes_across_fixtures[offer] ____________
+
+fixture = 'offer'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    def test_inserted_raw_person_vetoes_across_fixtures(fixture):
+        original = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        blocks, _, _ = placement.extract(original)
+        # Use independently measured boxes when a fixture has no detected hosts (bare).
+        targets = [(b.line.page, b.line.label.get('rect', [b.line.x0])[0], b.line.y) for b in blocks]
+        if not targets:
+            targets = [(1, 72, 450)]
+        rng = random.Random(613)
+        for page, x, y in targets:
+            for offset in (rng.uniform(-65, -30), rng.uniform(24, 45)):
+                stream = io.BytesIO()
+                c = canvas.Canvas(stream, pagesize=(612, 792))
+                c.setFont('Helvetica', 8)
+                c.drawString(x, 792 - y - offset - 8, 'Name: Lee Harbor')
+                c.save()
+                reader = PdfReader(io.BytesIO(original))
+                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])
+                writer = PdfWriter()
+                writer.append_pages_from_reader(reader)
+                output = io.BytesIO()
+                writer.write(output)
+                pdf = output.getvalue()
+                with pdfplumber.open(io.BytesIO(pdf)) as doc:
+>                   assert 'Lee Harbor' in doc.pages[page - 1].extract_text()
+E                   AssertionError: assert 'Lee Harbor' in 'Fleet Test Co.\nDear Jordan Reyes,\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in...$150,000\nEquity 10,000 options\nSincerely, Dan Whaley, CEO\nAccepted and agreed:\nDate: _______________\nJordan Reyes'
+E                    +  where 'Fleet Test Co.\nDear Jordan Reyes,\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in...$150,000\nEquity 10,000 options\nSincerely, Dan Whaley, CEO\nAccepted and agreed:\nDate: _______________\nJordan Reyes' = <bound method Page.extract_text of <Page:1>>()
+E                    +    where <bound method Page.extract_text of <Page:1>> = <Page:1>.extract_text
+
+backend/dealroom_sign/tests/test_placement_r3.py:76: AssertionError
+____________ test_inserted_raw_person_vetoes_across_fixtures[roles] ____________
+
+fixture = 'roles'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    def test_inserted_raw_person_vetoes_across_fixtures(fixture):
+        original = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        blocks, _, _ = placement.extract(original)
+        # Use independently measured boxes when a fixture has no detected hosts (bare).
+        targets = [(b.line.page, b.line.label.get('rect', [b.line.x0])[0], b.line.y) for b in blocks]
+        if not targets:
+            targets = [(1, 72, 450)]
+        rng = random.Random(613)
+        for page, x, y in targets:
+            for offset in (rng.uniform(-65, -30), rng.uniform(24, 45)):
+                stream = io.BytesIO()
+                c = canvas.Canvas(stream, pagesize=(612, 792))
+                c.setFont('Helvetica', 8)
+                c.drawString(x, 792 - y - offset - 8, 'Name: Lee Harbor')
+                c.save()
+                reader = PdfReader(io.BytesIO(original))
+                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])
+                writer = PdfWriter()
+                writer.append_pages_from_reader(reader)
+                output = io.BytesIO()
+                writer.write(output)
+                pdf = output.getvalue()
+                with pdfplumber.open(io.BytesIO(pdf)) as doc:
+>                   assert 'Lee Harbor' in doc.pages[page - 1].extract_text()
+E                   AssertionError: assert 'Lee Harbor' in 'Agreed by the Parties:\nRNaEmCe:I LPeIeE HNarTbor\nSignature: ______________________________\nPrinted name: _________...LOSER\nSignature: ______________________________\nPrinted name: ___________________________\nDate: ___________________'
+E                    +  where 'Agreed by the Parties:\nRNaEmCe:I LPeIeE HNarTbor\nSignature: ______________________________\nPrinted name: _________...LOSER\nSignature: ______________________________\nPrinted name: ___________________________\nDate: ___________________' = <bound method Page.extract_text of <Page:3>>()
+E                    +    where <bound method Page.extract_text of <Page:3>> = <Page:3>.extract_text
+
+backend/dealroom_sign/tests/test_placement_r3.py:76: AssertionError
+___________ test_inserted_raw_person_vetoes_across_fixtures[witness] ___________
+
+fixture = 'witness'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    def test_inserted_raw_person_vetoes_across_fixtures(fixture):
+        original = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        blocks, _, _ = placement.extract(original)
+        # Use independently measured boxes when a fixture has no detected hosts (bare).
+        targets = [(b.line.page, b.line.label.get('rect', [b.line.x0])[0], b.line.y) for b in blocks]
+        if not targets:
+            targets = [(1, 72, 450)]
+        rng = random.Random(613)
+        for page, x, y in targets:
+            for offset in (rng.uniform(-65, -30), rng.uniform(24, 45)):
+                stream = io.BytesIO()
+                c = canvas.Canvas(stream, pagesize=(612, 792))
+                c.setFont('Helvetica', 8)
+                c.drawString(x, 792 - y - offset - 8, 'Name: Lee Harbor')
+                c.save()
+                reader = PdfReader(io.BytesIO(original))
+                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])
+                writer = PdfWriter()
+                writer.append_pages_from_reader(reader)
+                output = io.BytesIO()
+                writer.write(output)
+                pdf = output.getvalue()
+                with pdfplumber.open(io.BytesIO(pdf)) as doc:
+                    assert 'Lee Harbor' in doc.pages[page - 1].extract_text()
+                result = placement.place(pdf, PAT)
+                for f in result['fields']:
+>                   assert not (f['type'] == 'SIGNATURE' and f['page'] == page
+                                and abs(f['evidence']['line'][1] - y) < 3
+                                and f['confidence'] == 'high'), result
+E                   AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [112.0, 366.0, 266.4], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E                   assert not ('SIGNATURE' == 'SIGNATURE'
+E                     
+E                       SIGNATURE and 2 == 2 and 0.0 < 3 and 'high' == 'high'
+E                    +  where 0.0 = abs((276.0 - 276.0))
+E                     
+E                       high)
+
+backend/dealroom_sign/tests/test_placement_r3.py:79: AssertionError
+_ test_company_only_requires_every_raw_line_accounted_for[unaccounted private words] _
+
+text = 'unaccounted private words'
+
+    @pytest.mark.parametrize('text', ['Pat Smith', 'Alex Rowan Vale', 'unaccounted private words'])
+    def test_company_only_requires_every_raw_line_accounted_for(text):
+>       assert placement.place(extent_pdf('format:' + text), LEE)['fields'] == []
+E       AssertionError: assert [{'confidence...age': 1, ...}] == []
+E         
+E         Left contains 2 more items, first extra item: {'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS, INC. | Signature:', 'labels': [{'rect': [72...ignature:'}], 'line': [120.36000000000001, 342.07, 264.92], 'line_kind': 'underscores'}, 'h': 3.661616, 'page': 1, ...}
+E         Use -v to get more diff
+
+backend/dealroom_sign/tests/test_placement_r3.py:86: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[False-Project Falcon Acquisition Terms] _
+
+text = 'Project Falcon Acquisition Terms', extra_block = False
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+            assert result['status'] == 'placed', result
+            assert model.call_count == 1
+        else:
+>           assert result['fields'] == []
+E           AssertionError: assert [{'confidence...age': 1, ...}] == []
+E             
+E             Left contains 2 more items, first extra item: {'confidence': 'model-high', 'evidence': {'label_text': 'Harbor Light Analytics, Inc. | Hand of the covenanting party:...Hand of the covenanting party:'}], 'line': [245.0, 244.0, 465.0], 'line_kind': 'drawn'}, 'h': 3.661616, 'page': 1, ...}
+E             Use -v to get more diff
+
+backend/dealroom_sign/tests/test_placement_r3.py:122: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[False-Strictly Private And Confidential] _
+
+text = 'Strictly Private And Confidential', extra_block = False
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+            assert result['status'] == 'placed', result
+            assert model.call_count == 1
+        else:
+>           assert result['fields'] == []
+E           AssertionError: assert [{'confidence...age': 1, ...}] == []
+E             
+E             Left contains 2 more items, first extra item: {'confidence': 'model-high', 'evidence': {'label_text': 'Harbor Light Analytics, Inc. | Hand of the covenanting party:...Hand of the covenanting party:'}], 'line': [245.0, 244.0, 465.0], 'line_kind': 'drawn'}, 'h': 3.661616, 'page': 1, ...}
+E             Use -v to get more diff
+
+backend/dealroom_sign/tests/test_placement_r3.py:122: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[False-Purchase Price Remains Confidential] _
+
+text = 'Purchase Price Remains Confidential', extra_block = False
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+            assert result['status'] == 'placed', result
+            assert model.call_count == 1
+        else:
+>           assert result['fields'] == []
+E           AssertionError: assert [{'confidence...age': 1, ...}] == []
+E             
+E             Left contains 2 more items, first extra item: {'confidence': 'model-high', 'evidence': {'label_text': 'Harbor Light Analytics, Inc. | Hand of the covenanting party:...Hand of the covenanting party:'}], 'line': [245.0, 244.0, 465.0], 'line_kind': 'drawn'}, 'h': 3.661616, 'page': 1, ...}
+E             Use -v to get more diff
+
+backend/dealroom_sign/tests/test_placement_r3.py:122: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[True-Project Falcon Acquisition Terms] _
+
+text = 'Project Falcon Acquisition Terms', extra_block = True
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+>           assert result['status'] == 'placed', result
+E           AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E           assert 'needs_sender' == 'placed'
+E             
+E             - placed
+E             + needs_sender
+
+backend/dealroom_sign/tests/test_placement_r3.py:119: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[True-Strictly Private And Confidential] _
+
+text = 'Strictly Private And Confidential', extra_block = True
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+>           assert result['status'] == 'placed', result
+E           AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E           assert 'needs_sender' == 'placed'
+E             
+E             - placed
+E             + needs_sender
+
+backend/dealroom_sign/tests/test_placement_r3.py:119: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[True-Purchase Price Remains Confidential] _
+
+text = 'Purchase Price Remains Confidential', extra_block = True
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+>           assert result['status'] == 'placed', result
+E           AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E           assert 'needs_sender' == 'placed'
+E             
+E             - placed
+E             + needs_sender
+
+backend/dealroom_sign/tests/test_placement_r3.py:119: AssertionError
+_ test_single_company_word_is_not_domain_identity[light-Harbor Light Analytics] _
+
+domain = 'light', company = 'Harbor Light Analytics'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x7319676f7560>('light', 'Harbor Light Analytics')
+E        +    where <function similarity at 0x7319676f7560> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+_ test_single_company_word_is_not_domain_identity[ventures-Acme Ventures LLC] __
+
+domain = 'ventures', company = 'Acme Ventures LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x7319676f7560>('ventures', 'Acme Ventures LLC')
+E        +    where <function similarity at 0x7319676f7560> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+__ test_single_company_word_is_not_domain_identity[capital-Acme Capital LLC] ___
+
+domain = 'capital', company = 'Acme Capital LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x7319676f7560>('capital', 'Acme Capital LLC')
+E        +    where <function similarity at 0x7319676f7560> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+_ test_single_company_word_is_not_domain_identity[partners-Acme Partners LLC] __
+
+domain = 'partners', company = 'Acme Partners LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x7319676f7560>('partners', 'Acme Partners LLC')
+E        +    where <function similarity at 0x7319676f7560> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+____ test_single_company_word_is_not_domain_identity[group-Acme Group LLC] _____
+
+domain = 'group', company = 'Acme Group LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x7319676f7560>('group', 'Acme Group LLC')
+E        +    where <function similarity at 0x7319676f7560> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+_ test_single_company_word_is_not_domain_identity[holdings-Acme Holdings LLC] __
+
+domain = 'holdings', company = 'Acme Holdings LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x7319676f7560>('holdings', 'Acme Holdings LLC')
+E        +    where <function similarity at 0x7319676f7560> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+___ test_single_company_word_is_not_domain_identity[global-Acme Global LLC] ____
+
+domain = 'global', company = 'Acme Global LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x7319676f7560>('global', 'Acme Global LLC')
+E        +    where <function similarity at 0x7319676f7560> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[by]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[signed]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[heading]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor \u2013 COO]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor (COO)]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor / COO]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:LEE HARBOR / COO]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:22:text]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:26:text]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:45:text]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:26:rule]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:65:rule]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[offer]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[roles]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_company_only_requires_every_raw_line_accounted_for[unaccounted private words]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[False-Project Falcon Acquisition Terms]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[False-Strictly Private And Confidential]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[False-Purchase Price Remains Confidential]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[True-Project Falcon Acquisition Terms]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[True-Strictly Private And Confidential]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[True-Purchase Price Remains Confidential]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[light-Harbor Light Analytics]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[ventures-Acme Ventures LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[capital-Acme Capital LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[partners-Acme Partners LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[group-Acme Group LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[holdings-Acme Holdings LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[global-Acme Global LLC]
+29 failed, 8 passed, 17 warnings in 11.71s

@@ -1,0 +1,80 @@
+FFFFF..                                                                  [100%]
+=================================== FAILURES ===================================
+____ test_second_person_in_same_raw_line_also_vetoes[Lee Harbor, Pat Smith] ____
+
+line = 'Lee Harbor, Pat Smith'
+
+    @pytest.mark.parametrize('line', ['Lee Harbor, Pat Smith', 'Lee Harbor / Pat Smith', 'Lee Harbor (Pat Smith)'])
+    def test_second_person_in_same_raw_line_also_vetoes(line):
+        result = placement.place(extent_pdf('format:' + line), LEE)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:171: AssertionError
+___ test_second_person_in_same_raw_line_also_vetoes[Lee Harbor / Pat Smith] ____
+
+line = 'Lee Harbor / Pat Smith'
+
+    @pytest.mark.parametrize('line', ['Lee Harbor, Pat Smith', 'Lee Harbor / Pat Smith', 'Lee Harbor (Pat Smith)'])
+    def test_second_person_in_same_raw_line_also_vetoes(line):
+        result = placement.place(extent_pdf('format:' + line), LEE)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:171: AssertionError
+___ test_second_person_in_same_raw_line_also_vetoes[Lee Harbor (Pat Smith)] ____
+
+line = 'Lee Harbor (Pat Smith)'
+
+    @pytest.mark.parametrize('line', ['Lee Harbor, Pat Smith', 'Lee Harbor / Pat Smith', 'Lee Harbor (Pat Smith)'])
+    def test_second_person_in_same_raw_line_also_vetoes(line):
+        result = placement.place(extent_pdf('format:' + line), LEE)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:171: AssertionError
+________ test_fixed_role_company_and_field_labels_remain_available[COO] ________
+
+label = 'COO'
+
+    @pytest.mark.parametrize('label', ['COO', 'Title: COO', 'Harbor Light Analytics, Inc.', 'Signature:'])
+    def test_fixed_role_company_and_field_labels_remain_available(label):
+>       assert placement.safe_label({'text': label}, {})['text'] == label
+E       AssertionError: assert '[redacted]' == 'COO'
+E         
+E         - COO
+E         + [redacted]
+
+backend/dealroom_sign/tests/test_placement_r3.py:177: AssertionError
+____ test_fixed_role_company_and_field_labels_remain_available[Title: COO] _____
+
+label = 'Title: COO'
+
+    @pytest.mark.parametrize('label', ['COO', 'Title: COO', 'Harbor Light Analytics, Inc.', 'Signature:'])
+    def test_fixed_role_company_and_field_labels_remain_available(label):
+>       assert placement.safe_label({'text': label}, {})['text'] == label
+E       AssertionError: assert '[redacted]' == 'Title: COO'
+E         
+E         - Title: COO
+E         + [redacted]
+
+backend/dealroom_sign/tests/test_placement_r3.py:177: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_second_person_in_same_raw_line_also_vetoes[Lee Harbor, Pat Smith]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_second_person_in_same_raw_line_also_vetoes[Lee Harbor / Pat Smith]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_second_person_in_same_raw_line_also_vetoes[Lee Harbor (Pat Smith)]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_fixed_role_company_and_field_labels_remain_available[COO]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_fixed_role_company_and_field_labels_remain_available[Title: COO]
+5 failed, 2 passed, 41 deselected in 1.17s

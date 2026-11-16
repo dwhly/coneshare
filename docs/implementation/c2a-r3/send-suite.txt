@@ -1,0 +1,30 @@
+........................................................................ [  9%]
+........................................................................ [ 19%]
+........................................................................ [ 29%]
+........................................................................ [ 38%]
+........................................................................ [ 48%]
+.................................F...................................... [ 58%]
+........................................................................ [ 67%]
+........................................................................ [ 77%]
+........................................................................ [ 87%]
+........................................................................ [ 96%]
+........................                                                 [100%]
+=================================== FAILURES ===================================
+________________________ test_schema_mcp_static_parity _________________________
+
+    @pytest.mark.django_db
+    def test_schema_mcp_static_parity():
+        tools = json.loads((Path(__file__).resolve().parents[3] / 'mcp-server/coneshare_mcp/dealroom_tools.json').read_text())
+        ids = {t['operation_id'] for t in tools}
+        enabled = {oid for oid, entry in registry().items() if entry['boundary'] == 'staff'}
+>       assert enabled <= ids
+E       AssertionError: assert {'core_Organi...ist_get', ...} <= {'core_Organi...ist_get', ...}
+E         
+E         Extra items in the left set:
+E         'dealroom_sign_SignatureEmailRetryView_endpoint_post'
+E         'dealroom_sign_SignatureSignerRevokeView_endpoint_post'
+
+backend/tests/dealroom/test_foundation.py:154: AssertionError
+=========================== short test summary info ============================
+FAILED backend/tests/dealroom/test_foundation.py::test_schema_mcp_static_parity
+1 failed, 743 passed, 205 warnings in 358.46s (0:05:58)

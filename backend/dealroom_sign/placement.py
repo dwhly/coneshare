@@ -15,6 +15,7 @@ import sys
 import threading
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import httpx
 import pdfplumber
@@ -23,11 +24,14 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.2'
+VERSION = 'c2a.3'
 MAX_EDGES = 5000
 MAX_CHARS = 20000
 MAX_WORDS = 4000
 MODEL_SLOTS = threading.BoundedSemaphore(4)
+PARSE_SLOTS = threading.BoundedSemaphore(2)
+WORKER_CWD = Path(__file__).resolve().parents[1]
+WORKER_ENV = {'LANG': 'C.UTF-8', 'LC_ALL': 'C.UTF-8'}
 
 
 @dataclass
@@ -51,6 +55,8 @@ class Block:
     unusual: bool
     extras: dict = field(default_factory=dict)
     uncertain_identity: bool = False
+    raw_labels: list = field(default_factory=list, repr=False)
+    scores: list = field(default_factory=list)
 
 
 def norm(value):
@@ -65,11 +71,12 @@ def similarity(a, b):
     # Company/domain hints may join whole words (harborlight / Harbor Light),
     # but may never match a fragment inside a word, or a short token.
     left, right = [t for t in tokens(a) if t not in STOP], [t for t in tokens(b) if t not in STOP]
-    if len(norm(a)) < 4 or not right:
+    generic = {'capital', 'partners', 'ventures', 'group', 'holdings', 'global', 'international', 'services'}
+    if len(norm(a)) < 4 or not right or not left or all(t in generic for t in left):
         return 0
     return float(left == right or ''.join(left) == ''.join(right)
                  or any(''.join(left) == ''.join(right[i:j])
-                        for i in range(len(right)) for j in range(i + 1, len(right) + 1)))
+                        for i in range(len(right)) for j in range(i + 2, len(right) + 1)))
 
 
 PERSON = re.compile(r"[^\W\d_][^\W\d_'.’\-]*(?:['’.-][^\W\d_]+)?\.?(?: [^\W\d_][^\W\d_'.’\-]*(?:['’.-][^\W\d_]+)?\.?){1,4}")
@@ -79,19 +86,28 @@ COMPANY = re.compile(r'\b(?:inc|llc|ltd|co|corp|corporation|company|gmbh|plc|ana
 
 
 def person_text(text):
+    prefix = re.match(r'^(?:signature|signed(?:\s+by)?|sign here|by|title|its)\b[:\s]*', text, re.I)
+    text = text[prefix.end():] if prefix else text
     caption = NAME_CAPTION.match(text)
     stripped = NAME_CAPTION.sub('', text).strip()
-    name = stripped.split(',')[0].strip()
-    if COMPANY.search(name) or name.lower() in {'accepted and agreed', 'compensation summary', 'base salary'}:
+    name = re.split(r',|\s+[–—/]\s+|\s+\(', stripped)[0].strip()
+    if COMPANY.search(name) or ROLE.fullmatch(name) or name.lower() in {'accepted and agreed', 'compensation summary', 'base salary'}:
         return ''
     # Explicit Name captions are authoritative even with lower case or initials.
-    if PERSON.fullmatch(name) and (caption or all(word[0].isupper() for word in name.split())):
+    if PERSON.fullmatch(name) and (caption or prefix or all(word[0].isupper() for word in name.split())):
         return name
     return ''
 
 
+def identity_parts(text):
+    # A suffix may carry a second person as well as a role or company. Keep all
+    # parts for the veto; output redaction must never erase identity evidence.
+    return [text] + [part.strip('() ') for part in re.split(r',|\s+[–—/]\s+|\s+\(', text)[1:]]
+
+
 def printed_names(block):
-    return [tokens(name) for label in block.labels if (name := person_text(label['text']))]
+    return [tokens(name) for label in (block.raw_labels or block.labels)
+            for part in identity_parts(label['text']) if (name := person_text(part))]
 
 
 def company_text(text):
@@ -102,14 +118,16 @@ def company_text(text):
 def identity_label(text, roles):
     if len(text) > 120:
         return False
-    return bool(text.lower() in roles or text.lower() in {'accepted and agreed:', 'accepted:', 'agreed:'}
+    return bool(text.lower() in roles or text.lower() in {'accepted and agreed:', 'accepted:', 'agreed:', 'agreed by the parties:'}
                 or company_text(text) or person_text(text) or LABEL.fullmatch(text))
 
 
-def safe_label(label, roles):
+def safe_label(label, roles, signers=()):
     text = label['text']
     name = person_text(text)
     if name:
+        if not any(tokens(name) == tokens(s['name']) for s in signers):
+            return dict(label, text='[printed name]')
         prefix = NAME_CAPTION.match(text)
         safe = (prefix.group() if prefix else '') + name
         # A person's caption can include only a recognized company or role.
@@ -118,7 +136,7 @@ def safe_label(label, roles):
             if ROLE.fullmatch(suffix) or company_text(suffix):
                 safe += ', ' + suffix
         return dict(label, text=safe[:120])
-    if identity_label(text, roles) or text == 'Hand of the covenanting party:':
+    if accounted_label(text, roles) or text == 'Hand of the covenanting party:':
         return dict(label, text=text[:120])
     return dict(label, text='[redacted]')
 
@@ -227,15 +245,13 @@ def extract(pdf, *, deadline=None):
                     and (t['rect'][3] < prev.y or 0 < t['rect'][1] - prev.y < 90)
                     for prev in unique)]
                 heading = max(above, key=lambda t: t['rect'][3], default=None)
-                if heading:
-                    heading = safe_label(heading, roles)
-                elif candidates:
+                if not heading and candidates:
                     # Preserve ambiguity without attributing the previous caption.
                     heading = dict(candidates[-1], text='[ambiguous attribution]')
                 captions = [t for t in texts if 0 <= t['rect'][1] - line.y < 22
                             and abs(t['rect'][0] - column) < 35 and not t['text'].lower().startswith('date')]
                 below = [t for t in captions if identity_label(t['text'], roles)]
-                labels = ([heading] if heading else []) + ([safe_label(line.label, roles)] if line.label else []) + [safe_label(t, roles) for t in below]
+                labels = ([heading] if heading else []) + ([line.label] if line.label else []) + below
                 identity = ' | '.join(t['text'] for t in labels)
                 known = line.semantic == 'SIGNATURE' or bool(below) or bool(re.search(r'accepted|agreed|executed', heading['text'] if heading else '', re.I))
                 unusual = bool(line.label and not line.semantic and heading)
@@ -266,8 +282,25 @@ def extract(pdf, *, deadline=None):
                     host = eligible[0][1]
                     if extra.semantic in host.extras:
                         raise ValueError('ambiguous companion field')
-                    extra.label = safe_label(extra.label, roles)
                     host.extras[extra.semantic] = extra
+            for block in hosts:
+                sig = block.line
+                column = sig.label.get('rect', [sig.x0])[0]
+                previous = [r.y for r in unique if r.y < sig.y - 5
+                            and r.x1 > column and r.label.get('rect', [r.x0])[0] < sig.x1]
+                top = max([sig.y - 90] + previous)
+                bottom = sig.y + 125
+                following = [r.y for r in unique if r.y > sig.y + 5
+                             and r.semantic not in {'NAME', 'DATE', 'TITLE'}
+                             and r.x1 > column and r.label.get('rect', [r.x0])[0] < sig.x1]
+                bottom = min([bottom] + following)
+                block.raw_labels = [t for t in texts if top <= t['rect'][1] <= bottom
+                                    and t['rect'][0] < sig.x1 and t['rect'][2] > column - 5]
+                # Preserve the previous-block caption guard from r2.
+                block.uncertain_identity = (block.heading == '[ambiguous attribution]'
+                                            and not any(t['rect'][1] >= sig.y and person_text(t['text'])
+                                                        for t in block.raw_labels))
+                block.labels = block.raw_labels
             blocks.extend(hosts)
             page.close()
     if len(blocks) > 40:
@@ -277,8 +310,44 @@ def extract(pdf, *, deadline=None):
     return blocks, sizes, roles
 
 
+def accounted_label(text, roles):
+    if identity_label(text, roles) or ROLE.fullmatch(text):
+        return True
+    match = LABEL.match(text)
+    return bool(match and (not text[match.end():].strip()
+                          or (match.group(1).lower() in {'title', 'its'}
+                              and ROLE.fullmatch(text[match.end():].strip()))))
+
+
+def unresolved_person(text, roles):
+    if person_text(text) or accounted_label(text, roles):
+        return False
+    prefix = LABEL.match(text)
+    if prefix and prefix.group(1).lower() != 'date' and text[prefix.end():].strip():
+        return True
+    words = re.findall(r"[^\W\d_]+", text)
+    return 2 <= len(words) <= 3 and all(w[0].isupper() for w in words)
+
+
+def prepare_blocks(blocks, roles, signers):
+    """Score raw evidence locally, then discard it before worker output."""
+    for block in blocks:
+        block.scores = [score(s, block, roles) for s in signers]
+        if not printed_names(block) and sum(v >= 4 for v in block.scores) != 1:
+            block.scores = [0] * len(signers)
+        block.labels = [safe_label(t, roles, signers) for t in block.labels]
+        block.heading = safe_label({'text': block.heading}, roles, signers)['text'] if block.heading else ''
+        block.identity = ' | '.join(t['text'] for t in block.labels)
+        if block.line.label:
+            block.line.label = safe_label(block.line.label, roles, signers)
+        for extra in block.extras.values():
+            extra.label = safe_label(extra.label, roles, signers)
+        block.raw_labels = []
+
+
 def score(signer, block, roles):
-    if block.uncertain_identity:
+    if block.uncertain_identity or any(unresolved_person(part, roles) for t in block.raw_labels
+                                       for part in identity_parts(t['text'])):
         return 0
     name = tokens(signer.get('name', ''))
     printed = printed_names(block)
@@ -286,6 +355,10 @@ def score(signer, block, roles):
     if printed and any(name != person for person in printed):
         return 0
     value = 6 if printed and name in printed else 0
+    # Unknown prose cannot create company-only confidence. A matched full name
+    # can coexist with non-person text, which is redacted before leaving the worker.
+    if not value and any(not accounted_label(t['text'], roles) for t in block.raw_labels):
+        return 0
     domain = signer['email'].split('@')[-1].split('.')[0].lower()
     company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
     heading = roles.get(block.heading.lower(), block.heading)
@@ -341,18 +414,28 @@ def openrouter(payload, *, timeout=12):
               'Assign every listed signer to a distinct candidate ID only when its identity evidence is clear. '
               'Return only {"assignments":[{"signer":"opaque signer ID","block_id":"b0","confidence":"high",'
               '"evidence":"exact unusual label text"}]}. No invented fields or coordinates.')
+    deadline = time.monotonic() + timeout
     with httpx.Client(timeout=timeout, follow_redirects=False) as client:
-        with client.stream('POST', 'https://openrouter.ai/api/v1/chat/completions',
-                           headers={'Authorization': 'Bearer ' + key},
-                           json={'model': model, 'messages': [{'role': 'system', 'content': prompt},
-                                 {'role': 'user', 'content': json.dumps(payload)}],
-                                 'temperature': 0, 'max_tokens': 2000, 'response_format': {'type': 'json_object'}}) as response:
-            response.raise_for_status()
-            raw = b''
-            for chunk in response.iter_bytes():
-                raw += chunk
-                if len(raw) > 32000:
-                    raise ValueError('model response too large')
+        watchdog = threading.Timer(timeout, client.close)
+        watchdog.daemon = True
+        watchdog.start()
+        try:
+            with client.stream('POST', 'https://openrouter.ai/api/v1/chat/completions',
+                               headers={'Authorization': 'Bearer ' + key},
+                               json={'model': model, 'messages': [{'role': 'system', 'content': prompt},
+                                     {'role': 'user', 'content': json.dumps(payload)}],
+                                     'temperature': 0, 'max_tokens': 2000, 'response_format': {'type': 'json_object'}}) as response:
+                response.raise_for_status()
+                raw = b''
+                for chunk in response.iter_bytes():
+                    # HTTP read timeouts reset on each chunk; this budget does not.
+                    if time.monotonic() >= deadline:
+                        raise TimeoutError
+                    raw += chunk
+                    if len(raw) > 32000:
+                        raise ValueError('model response too large')
+        finally:
+            watchdog.cancel()
     return json.loads(json.loads(raw)['choices'][0]['message']['content'])
 
 
@@ -424,25 +507,42 @@ def seconds(name, default, maximum):
         return default
 
 
-def bounded_extract(pdf, deadline):
+def bounded_extract(pdf, deadline, signers=()):
     budget = min(seconds('PLACEMENT_PARSE_SECONDS', 3, 8), deadline - time.monotonic())
     if budget <= 0:
         raise TimeoutError
-    # A fresh interpreter isolates pdfminer CPU/memory and can be killed, even
-    # when an upstream parser never yields. No Django connections are inherited.
-    with subprocess.Popen([sys.executable, '-m', 'dealroom_sign.placement_worker', str(budget)],
-                          stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as worker:
+    if not PARSE_SLOTS.acquire(blocking=False):
+        raise ValueError('placement_busy')
+    try:
+        # Only the worker sees raw PDF evidence. It has a fixed resource ceiling,
+        # no credentials, and an explicit import location independent of gunicorn.
+        with subprocess.Popen([sys.executable, '-m', 'dealroom_sign.placement_worker', str(budget)],
+                              cwd=WORKER_CWD, env=WORKER_ENV, stdin=subprocess.PIPE,
+                              stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as worker:
+            try:
+                raw, _ = worker.communicate(json.dumps(signers).encode() + b'\n' + pdf, timeout=budget)
+            except subprocess.TimeoutExpired:
+                worker.kill()
+                worker.communicate()
+                raise TimeoutError from None
+        if worker.returncode or not raw:
+            raise ValueError('placement_unavailable')
         try:
-            raw, _ = worker.communicate(pdf, timeout=budget)
-        except subprocess.TimeoutExpired:
-            worker.kill()
-            worker.communicate()
-            raise TimeoutError from None
-    answer = json.loads(raw)
-    if 'error' in answer:
-        if answer['error'] == 'placement_timeout':
-            raise TimeoutError
-        raise ValueError(answer['error'])
+            answer = json.loads(raw)
+            if not isinstance(answer, dict) or not ('error' in answer or {'blocks', 'sizes', 'roles'} <= answer.keys()):
+                raise ValueError
+        except (ValueError, TypeError):
+            raise ValueError('placement_unavailable') from None
+        if 'error' in answer:
+            if answer['error'] == 'placement_timeout':
+                raise TimeoutError
+            raise ValueError(answer['error'])
+    except TimeoutError:
+        raise
+    except OSError:
+        raise ValueError('placement_unavailable') from None
+    finally:
+        PARSE_SLOTS.release()
     blocks = []
     for row in answer['blocks']:
         row['line'] = Line(**row['line'])
@@ -475,6 +575,8 @@ def bounded_model(client, payload, deadline):
 
 
 PARSE_REASONS = {
+    'placement_busy': 'Placement is busy. Please try again.',
+    'placement_unavailable': 'Placement is unavailable. Please try again.',
     'identity_unreadable': 'Printed identity requires placement review.',
     'parse_limit': 'PDF exceeds placement limits.',
     'page_limit': 'PDF exceeds placement limits.',
@@ -503,7 +605,7 @@ def place(pdf, signers, *, model_client=None):
     if not isinstance(pdf, bytes) or len(pdf) > 50 * 1024 * 1024:
         return hold(result, 'parse_limit', 'PDF exceeds placement limits.')
     try:
-        blocks, sizes, roles = bounded_extract(pdf, deadline)
+        blocks, sizes, roles = bounded_extract(pdf, deadline, signers)
     except TimeoutError:
         return hold(result, 'placement_timeout', 'Placement took too long')
     except Exception as exc:
@@ -518,7 +620,7 @@ def place(pdf, signers, *, model_client=None):
     if not blocks or all(not b.heading and not b.uncertain_identity and all(LABEL.match(t['text']) for t in b.labels) for b in blocks):
         result.update(status='bare', reason_code='no_identity', reason='No attributable signature cues. Placement review comes next; nothing was sent.')
         return result
-    scores = [[score(s, b, roles) for b in blocks] for s in signers]
+    scores = [[b.scores[i] for b in blocks] for i in range(len(signers))]
     pairs, total = assignment(scores)
     accepted, uncertain = {}, []
     for i, signer in enumerate(signers):
@@ -587,4 +689,6 @@ def place(pdf, signers, *, model_client=None):
         result['reason'] = "Couldn't tell where " + ', '.join(missing or [s['name'] for s in signers]) + ' signs and dates. Placement review comes next; nothing was sent.'
     if time.monotonic() >= deadline:
         return hold(result, 'placement_timeout', 'Placement took too long')
+    if result['status'] != 'placed':
+        result['fields'] = []
     return result

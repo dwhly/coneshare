@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_model_total_budget_closes_transport_even_without_decoded_chunks _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70d01cf02e40>
+
+    def test_model_total_budget_closes_transport_even_without_decoded_chunks(monkeypatch):
+        slots = threading.BoundedSemaphore(1)
+        monkeypatch.setattr(placement, 'MODEL_SLOTS', slots)
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        monkeypatch.setenv('PLACE_MODEL', 'fixture/model')
+        closed, exited = threading.Event(), threading.Event()
+        class Stream:
+            def __enter__(self): return self
+            def __exit__(self, *args): exited.set()
+            def raise_for_status(self): pass
+            def iter_bytes(self):
+                closed.wait(2)
+                raise TimeoutError
+                yield b''
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        client.close.side_effect = closed.set
+        client.stream.return_value = Stream()
+        monkeypatch.setattr(placement.httpx, 'Client', Mock(return_value=client))
+        with pytest.raises(TimeoutError):
+            placement.bounded_model(None, {}, time.monotonic() + .1)
+>       assert closed.wait(.3), 'total deadline did not close the HTTP transport'
+E       AssertionError: total deadline did not close the HTTP transport
+E       assert False
+E        +  where False = <bound method Event.wait of <threading.Event at 0x70d01cf02ea0: unset>>(0.3)
+E        +    where <bound method Event.wait of <threading.Event at 0x70d01cf02ea0: unset>> = <threading.Event at 0x70d01cf02ea0: unset>.wait
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:189: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_model_total_budget_closes_transport_even_without_decoded_chunks
+1 failed, 10 deselected in 0.69s

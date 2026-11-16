@@ -87,7 +87,8 @@ class RoomViewSet(StaffViewSet):
         if 'file' not in request.FILES:
             raise ValidationError('file required')
         item = upload(self.get_object(), request.auth if isinstance(request.auth, APIKey) else request.user, request.FILES['file'], request.data.get('folder_id'))
-        return Response({'id': str(item.pk), 'document_id': str(item.document_id), 'status': 'processing'}, status=201)
+        return Response({'id': str(item.pk), 'document_id': str(item.document_id),
+                         'version_id': item.upload_version_id, 'sha256': item.upload_sha256, 'status': 'processing'}, status=201)
     @extend_schema(request=dict, responses=dict)
     @action(detail=True, methods=['post'])
     def folders(self, request, pk=None):

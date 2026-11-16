@@ -56,4 +56,6 @@ def upload(room, actor, file, folder_id=None):
         from documents.tasks import generate_pdf_pages_task
         transaction.on_commit(lambda: generate_pdf_pages_task.delay(str(version.pk)))
     record('document.uploaded', organization=room.organization, actor=actor, room_id=room.pk, target_id=document.pk, data={'source_sha256': source_hash.hexdigest(), 'version_id': str(version.pk)})
+    item.upload_version_id = str(version.pk)
+    item.upload_sha256 = source_hash.hexdigest()
     return item

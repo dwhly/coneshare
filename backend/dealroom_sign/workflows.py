@@ -348,7 +348,7 @@ def process(workflow_id):
             next_attempt_at=timezone.now()+timedelta(seconds=900 if workflow.state == 'done' else 15))
     except SignError as exc:
         workflow.refresh_from_db()
-        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch', 'release_mail_settings_mismatch', 'placement_evidence_changed'}:
+        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch', 'release_mail_settings_mismatch', 'placement_evidence_changed', 'placement_evidence_missing'}:
             workflow.state = 'quarantined'
         elif not workflow.envelope_id and workflow.state == 'creating':
             workflow.state = 'uncertain' if exc.uncertain else 'failed'

@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_parse_timeout_kills_reaps_and_releases_slot _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71ec0e70a5a0>
+
+    def test_parse_timeout_kills_reaps_and_releases_slot(monkeypatch):
+        slots = threading.BoundedSemaphore(1)
+        monkeypatch.setattr(placement, 'PARSE_SLOTS', slots)
+        child = Mock(returncode=-9)
+        child.__enter__ = Mock(return_value=child)
+        child.__exit__ = Mock(return_value=False)
+        child.communicate.side_effect = [subprocess.TimeoutExpired('parser', 3), (b'', b'')]
+        monkeypatch.setattr(placement.subprocess, 'Popen', Mock(return_value=child))
+        result = placement.place(b'%PDF', LEE)
+>       assert result['reason_code'] == 'placement_timeout'
+E       AssertionError: assert 'placement_unavailable' == 'placement_timeout'
+E         
+E         - placement_timeout
+E         + placement_unavailable
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:160: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_parse_timeout_kills_reaps_and_releases_slot
+1 failed, 9 deselected in 0.27s
