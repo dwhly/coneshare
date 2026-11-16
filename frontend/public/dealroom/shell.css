@@ -232,3 +232,22 @@ dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
   .dr-grid2, .dr-grid5 { grid-template-columns: 1fr; }
   .dr-search { width: 100%; }
 }
+
+/* C4a (owner, 15 Nov 2026): the Theme control is a small icon, a sun / moon / sun-moon for light / dark / auto.
+   fds theme.js still cycles and keeps the full label as the accessible name; <html data-theme-choice> picks the icon.
+   Icons are same-origin SVG masks (Lucide, ISC) because the CSP blocks data: images. Proposed upstream as fds §6. */
+.fds-header [data-fds-theme-toggle] {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0; width: 32px; height: 32px; min-width: 32px; padding: 0;
+  border-color: transparent; background: transparent; color: inherit;
+}
+.fds-header [data-fds-theme-toggle]:hover { background: hsl(var(--accent)); }
+.fds-header [data-fds-theme-toggle]::before {
+  content: ""; width: 18px; height: 18px; background: currentColor;
+  -webkit-mask: var(--fds-theme-icon, url("icons/sun-moon.svg")) center / 18px no-repeat;
+  mask: var(--fds-theme-icon, url("icons/sun-moon.svg")) center / 18px no-repeat;
+}
+.fds-header [data-fds-theme-toggle]::after { content: ""; position: absolute; inset: -6px; }
+[data-theme-choice="light"] .fds-header [data-fds-theme-toggle] { --fds-theme-icon: url("icons/sun.svg"); }
+[data-theme-choice="dark"] .fds-header [data-fds-theme-toggle] { --fds-theme-icon: url("icons/moon.svg"); }
+[data-theme-choice="system"] .fds-header [data-fds-theme-toggle] { --fds-theme-icon: url("icons/sun-moon.svg"); }

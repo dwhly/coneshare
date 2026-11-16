@@ -78,3 +78,22 @@ def test_app_is_called_sign_while_signing_and_dealroom_once_signed():
         assert 'aria-label="Fleet Sign"' in _render(state), state
     assert _product(_render('signed')) == 'Dealroom'
     assert 'aria-label="Fleet Dealroom"' in _render('signed')
+
+
+def test_theme_control_is_a_small_sun_or_moon_icon():
+    # Owner, 15 Nov 2026: "really just an icon like a moon or a sun". theme.js still cycles auto -> light -> dark and
+    # keeps the full label as the accessible name; the icon follows <html data-theme-choice>. Icons are same-origin
+    # files because Send's CSP (default-src 'self') blocks data: images.
+    import re
+    from pathlib import Path
+    public = Path(__file__).resolve().parents[3] / 'frontend' / 'public' / 'dealroom'
+    css = (public / 'shell.css').read_text()
+    rule = re.search(r'\.fds-header \[data-fds-theme-toggle\] \{([^}]*)\}', css)
+    assert rule, 'icon-button rule for the theme toggle'
+    for prop in ('font-size: 0', 'width: 32px', 'height: 32px', 'padding: 0', 'border-color: transparent'):
+        assert prop in rule.group(1), prop
+    assert re.search(r'\.fds-header \[data-fds-theme-toggle\]::after \{[^}]*inset: -6px', css), '44px tap area'
+    for choice, icon in (('light', 'sun'), ('dark', 'moon'), ('system', 'sun-moon')):
+        assert f'[data-theme-choice="{choice}"] .fds-header [data-fds-theme-toggle]' in css and f'icons/{icon}.svg' in css
+        svg = (public / 'icons' / f'{icon}.svg').read_text()
+        assert svg.startswith('<svg') and 'currentColor' not in svg  # used as a mask: shape only
