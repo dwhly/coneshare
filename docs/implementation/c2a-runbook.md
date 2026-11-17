@@ -1,4 +1,4 @@
-# Automatic signature placement operations (C2a r5)
+# Automatic signature placement operations (C2a r6)
 
 Placement holds are fail closed: no fields are sent. A bare document remains a
 hold. Rules resolve clearly attributed blocks; unusual labels may use one
@@ -20,13 +20,25 @@ pair's successful partition.
 
 **Company-only confidence has an additional veto walk.** From each local extent
 edge, walk upward/downward through overlapping rows in the same column band,
-stopping at a rule or prose. At a page edge, continue from the adjacent page's
+stopping at a non-companion rule or prose. The upward walk also stops at a row
+whose top belongs to another host's `(rule.y, rule.y + 125]` extent in that band.
+`Email`, `E-mail`, `Address`, `Phone`, `Tel` and `Company` rules are `OTHER`
+companions: like `NAME`/`DATE`/`TITLE`, they cannot create hosts, shorten the
+following extent, bound neighbouring columns or stop the walk. At a page edge, continue from the adjacent page's
 edge through its block-like rows. Any person-like or unresolved identity row
 blocks company-only placement. A distant name can only remove confidence; it
 cannot identify the signer or add a field. Named blocks retain their local
 identity behavior. Fully accounted local evidence and a unique matching signer
 are still required. The r4 acceptance of a name just outside the local window
 is superseded by this rule.
+
+Page-number rows and digit-normalised text repeated at the same y ±2 points on
+at least two distinct pages are neutral in this walk. They neither stop it nor
+veto company-only confidence. This does not discard any local identity evidence.
+Execution clauses recognise the additional company suffixes listed in the EDD
+and distinguish roles from capitalised person names. Comma witness clauses stay
+prose; title remainders before a comma and bare person names ending in a period
+retain their veto. The known `Effective Date.` clause ending remains prose.
 
 **Annotations hold the entire document** with `form_fields`: “Form fields or
 annotations require placement review. Nothing was sent.” Plain `/Link`
@@ -37,6 +49,8 @@ proven text-free. The proof accepts simple rectangle/border appearances only;
 text operators, XObjects, images, appearance-state dictionaries, missing values,
 cycles, malformed objects and unknown operators hold. No annotation text is
 flattened, attributed or emitted. This preserves blank ReportLab text fields.
+The broader absent-`/V` empty-widget exception and `/Sig` placement hints remain
+deferred to C2b, as accepted in Gate 3 r5's L-1 finding.
 
 Raw rows are scored only inside the parser child. Other people's names and body
 prose are redacted before model input, result fields or History. A company word

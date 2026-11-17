@@ -1,0 +1,1436 @@
+Baseline: 1efaca25; final r6 tests; only placement.py temporarily restored.
+FFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFF..FFFFFFFFFFFFFFFFFFFFFF              [100%]
+=================================== FAILURES ===================================
+____________ test_r6_holds_keep_other_names_out_of_history[contact] ____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (68a2ec9d-2f9a-484a-9293-3f177ae0c376)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x79f887a2db80>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x79f886e1a2a0>
+source_kind = 'contact'
+
+    @pytest.mark.parametrize('source_kind', ['contact', 'footer', 'title', 'period'])
+    def test_r6_holds_keep_other_names_out_of_history(fixture, settings, caplog, source_kind):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)],
+            'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        if source_kind == 'contact':
+            source = contact_rule_pdf('Email', 'Lee Harbor')
+        elif source_kind == 'footer':
+            source = running_text_pdf(footer='Page 1 of 2')
+        else:
+            source = harbor_variant(wording='Title: Dan Whaley, CEO' if source_kind == 'title' else 'DAN WHALEY.')
+        signers = PAT if source_kind in {'contact', 'footer'} else LEE
+        other_name = 'lee harbor' if signers is PAT else 'dan whaley'
+        model, analyzed = Mock(), []
+        counts = (Workflow.objects.count(), ObservedSignEvent.objects.count())
+    
+        def analyze(pdf, signers):
+            result = place(pdf, signers, model_client=model)
+            analyzed.append(result)
+            return result
+    
+>       with patch('dealroom_sign.workflows.source_bytes', return_value=source), \
+             patch('dealroom_sign.workflows.place', side_effect=analyze), \
+             pytest.raises(PlacementRequired) as caught:
+E            Failed: DID NOT RAISE <class 'dealroom_sign.workflows.PlacementRequired'>
+
+dealroom_sign/tests/test_send_r6.py:39: Failed
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7K76S41J8DC89T3CSEB9A56
+____________ test_r6_holds_keep_other_names_out_of_history[footer] _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (3ae8f8b2-5495-4636-9438-f99bbd723205)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x79f887051550>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x79f887731700>
+source_kind = 'footer'
+
+    @pytest.mark.parametrize('source_kind', ['contact', 'footer', 'title', 'period'])
+    def test_r6_holds_keep_other_names_out_of_history(fixture, settings, caplog, source_kind):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)],
+            'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        if source_kind == 'contact':
+            source = contact_rule_pdf('Email', 'Lee Harbor')
+        elif source_kind == 'footer':
+            source = running_text_pdf(footer='Page 1 of 2')
+        else:
+            source = harbor_variant(wording='Title: Dan Whaley, CEO' if source_kind == 'title' else 'DAN WHALEY.')
+        signers = PAT if source_kind in {'contact', 'footer'} else LEE
+        other_name = 'lee harbor' if signers is PAT else 'dan whaley'
+        model, analyzed = Mock(), []
+        counts = (Workflow.objects.count(), ObservedSignEvent.objects.count())
+    
+        def analyze(pdf, signers):
+            result = place(pdf, signers, model_client=model)
+            analyzed.append(result)
+            return result
+    
+>       with patch('dealroom_sign.workflows.source_bytes', return_value=source), \
+             patch('dealroom_sign.workflows.place', side_effect=analyze), \
+             pytest.raises(PlacementRequired) as caught:
+E            Failed: DID NOT RAISE <class 'dealroom_sign.workflows.PlacementRequired'>
+
+dealroom_sign/tests/test_send_r6.py:39: Failed
+_____________ test_r6_holds_keep_other_names_out_of_history[title] _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (56c53bd5-97c3-4a8f-acc8-c365006eaaa7)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x79f887052cf0>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x79f887673fe0>
+source_kind = 'title'
+
+    @pytest.mark.parametrize('source_kind', ['contact', 'footer', 'title', 'period'])
+    def test_r6_holds_keep_other_names_out_of_history(fixture, settings, caplog, source_kind):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)],
+            'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        if source_kind == 'contact':
+            source = contact_rule_pdf('Email', 'Lee Harbor')
+        elif source_kind == 'footer':
+            source = running_text_pdf(footer='Page 1 of 2')
+        else:
+            source = harbor_variant(wording='Title: Dan Whaley, CEO' if source_kind == 'title' else 'DAN WHALEY.')
+        signers = PAT if source_kind in {'contact', 'footer'} else LEE
+        other_name = 'lee harbor' if signers is PAT else 'dan whaley'
+        model, analyzed = Mock(), []
+        counts = (Workflow.objects.count(), ObservedSignEvent.objects.count())
+    
+        def analyze(pdf, signers):
+            result = place(pdf, signers, model_client=model)
+            analyzed.append(result)
+            return result
+    
+        with patch('dealroom_sign.workflows.source_bytes', return_value=source), \
+             patch('dealroom_sign.workflows.place', side_effect=analyze), \
+             pytest.raises(PlacementRequired) as caught:
+>           command(owner=fixture.user, room=fixture.room, version=fixture.version,
+                    recipients=signers, idempotency_key='r6-private', board_id='board-c2a', placement='auto')
+
+dealroom_sign/tests/test_send_r6.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom_sign/workflows.py:79: in command
+    recipients = validate_recipients(recipients, pdf, automatic=automatic)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+pdf = b'%PDF-1.3\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<\n/PageMode /UseNone\n/Pages 2 0 R\n/Type /Catalog\n>>\nendobj\n2 0 obj\n<<\...fo 10 0 R\n/ID [ <a5c5af2557224b080e92f8f56ddec47a> <a5c5af2557224b080e92f8f56ddec47a> ]\n>>\nstartxref\n2917\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None, automatic=False, trusted_placement=False):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'title', 'role', 'signingOrder', 'fields'}:
+>               raise ValidationError('Unsupported recipient property.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Unsupported recipient property.', code='invalid')]
+
+dealroom_sign/validation.py:33: ValidationError
+____________ test_r6_holds_keep_other_names_out_of_history[period] _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (42950c37-606a-4307-a1ff-72f89753426f)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x79f8876dd1f0>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x79f886e529c0>
+source_kind = 'period'
+
+    @pytest.mark.parametrize('source_kind', ['contact', 'footer', 'title', 'period'])
+    def test_r6_holds_keep_other_names_out_of_history(fixture, settings, caplog, source_kind):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)],
+            'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        if source_kind == 'contact':
+            source = contact_rule_pdf('Email', 'Lee Harbor')
+        elif source_kind == 'footer':
+            source = running_text_pdf(footer='Page 1 of 2')
+        else:
+            source = harbor_variant(wording='Title: Dan Whaley, CEO' if source_kind == 'title' else 'DAN WHALEY.')
+        signers = PAT if source_kind in {'contact', 'footer'} else LEE
+        other_name = 'lee harbor' if signers is PAT else 'dan whaley'
+        model, analyzed = Mock(), []
+        counts = (Workflow.objects.count(), ObservedSignEvent.objects.count())
+    
+        def analyze(pdf, signers):
+            result = place(pdf, signers, model_client=model)
+            analyzed.append(result)
+            return result
+    
+        with patch('dealroom_sign.workflows.source_bytes', return_value=source), \
+             patch('dealroom_sign.workflows.place', side_effect=analyze), \
+             pytest.raises(PlacementRequired) as caught:
+>           command(owner=fixture.user, room=fixture.room, version=fixture.version,
+                    recipients=signers, idempotency_key='r6-private', board_id='board-c2a', placement='auto')
+
+dealroom_sign/tests/test_send_r6.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom_sign/workflows.py:79: in command
+    recipients = validate_recipients(recipients, pdf, automatic=automatic)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+pdf = b'%PDF-1.3\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<\n/PageMode /UseNone\n/Pages 2 0 R\n/Type /Catalog\n>>\nendobj\n2 0 obj\n<<\...fo 10 0 R\n/ID [ <a5c5af2557224b080e92f8f56ddec47a> <a5c5af2557224b080e92f8f56ddec47a> ]\n>>\nstartxref\n2906\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None, automatic=False, trusted_placement=False):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'title', 'role', 'signingOrder', 'fields'}:
+>               raise ValidationError('Unsupported recipient property.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Unsupported recipient property.', code='invalid')]
+
+dealroom_sign/validation.py:33: ValidationError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Email] _
+
+label = 'Email', name = 'Lee Harbor'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = False
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+>           assert_held(result)
+
+dealroom_sign/tests/test_placement_r6.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-E-mail] _
+
+label = 'E-mail', name = 'Lee Harbor'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = False
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+>           assert_held(result)
+
+dealroom_sign/tests/test_placement_r6.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Address] _
+
+label = 'Address', name = 'Lee Harbor'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = False
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+>           assert_held(result)
+
+dealroom_sign/tests/test_placement_r6.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Phone] _
+
+label = 'Phone', name = 'Lee Harbor'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = False
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+>           assert_held(result)
+
+dealroom_sign/tests/test_placement_r6.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Tel] _
+
+label = 'Tel', name = 'Lee Harbor'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = False
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+>           assert_held(result)
+
+dealroom_sign/tests/test_placement_r6.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Company] _
+
+label = 'Company', name = 'Lee Harbor'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = False
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+>           assert_held(result)
+
+dealroom_sign/tests/test_placement_r6.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [105.9, 430.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Email] _
+
+label = 'Email', name = 'Lee Harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-E-mail] _
+
+label = 'E-mail', name = 'Lee Harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Address] _
+
+label = 'Address', name = 'Lee Harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Phone] _
+
+label = 'Phone', name = 'Lee Harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Tel] __
+
+label = 'Tel', name = 'Lee Harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Company] _
+
+label = 'Company', name = 'Lee Harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Email] _
+
+label = 'Email', name = 'Pat Smith'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-E-mail] _
+
+label = 'E-mail', name = 'Pat Smith'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Address] _
+
+label = 'Address', name = 'Pat Smith'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Phone] _
+
+label = 'Phone', name = 'Pat Smith'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+__ test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Tel] __
+
+label = 'Tel', name = 'Pat Smith'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+_ test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Company] _
+
+label = 'Company', name = 'Pat Smith'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Email', 'E-mail', 'Address', 'Phone', 'Tel', 'Company'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h2_contact_rule_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 2, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:39: AssertionError
+___________ test_h1_previous_caption_stays_with_its_host[False-110] ____________
+
+gap = 110, other_name = False
+
+    @pytest.mark.parametrize('gap', [110, 140])
+    @pytest.mark.parametrize('other_name', [False, True])
+    def test_h1_previous_caption_stays_with_its_host(gap, other_name):
+        result = placement.place(stacked_caption_pdf(gap, other_name=other_name), [TWO[1], PAT[0]])
+        if other_name:
+            assert result['status'] == 'needs_sender', result
+            assert result['fields'] == []
+            assert result['assignments'][1]['confidence'] == 'low'
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:74: AssertionError
+___________ test_h1_previous_caption_stays_with_its_host[False-140] ____________
+
+gap = 140, other_name = False
+
+    @pytest.mark.parametrize('gap', [110, 140])
+    @pytest.mark.parametrize('other_name', [False, True])
+    def test_h1_previous_caption_stays_with_its_host(gap, other_name):
+        result = placement.place(stacked_caption_pdf(gap, other_name=other_name), [TWO[1], PAT[0]])
+        if other_name:
+            assert result['status'] == 'needs_sender', result
+            assert result['fields'] == []
+            assert result['assignments'][1]['confidence'] == 'low'
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:74: AssertionError
+_ test_m1_repeated_running_header_is_neutral[0-Mutual Non-Disclosure Agreement] _
+
+header = 'Mutual Non-Disclosure Agreement', drift = 0
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+____ test_m1_repeated_running_header_is_neutral[0-Execution Version {page}] ____
+
+header = 'Execution Version {page}', drift = 0
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+_ test_m1_repeated_running_header_is_neutral[0-Mutual NDA \u2013 Signature Page] _
+
+header = 'Mutual NDA – Signature Page', drift = 0
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+_ test_m1_repeated_running_header_is_neutral[2-Mutual Non-Disclosure Agreement] _
+
+header = 'Mutual Non-Disclosure Agreement', drift = 2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+____ test_m1_repeated_running_header_is_neutral[2-Execution Version {page}] ____
+
+header = 'Execution Version {page}', drift = 2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+_ test_m1_repeated_running_header_is_neutral[2-Mutual NDA \u2013 Signature Page] _
+
+header = 'Mutual NDA – Signature Page', drift = 2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+_ test_m1_repeated_running_header_is_neutral[-2-Mutual Non-Disclosure Agreement] _
+
+header = 'Mutual Non-Disclosure Agreement', drift = -2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+___ test_m1_repeated_running_header_is_neutral[-2-Execution Version {page}] ____
+
+header = 'Execution Version {page}', drift = -2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+_ test_m1_repeated_running_header_is_neutral[-2-Mutual NDA \u2013 Signature Page] _
+
+header = 'Mutual NDA – Signature Page', drift = -2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:112: AssertionError
+________ test_m1_page_number_does_not_hide_next_page_name[Page 1 of 2] _________
+
+footer = 'Page 1 of 2'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_____________ test_m1_page_number_does_not_hide_next_page_name[1] ______________
+
+footer = '1'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+___________ test_m1_page_number_does_not_hide_next_page_name[- 1 -] ____________
+
+footer = '- 1 -'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+___________ test_m1_page_number_does_not_hide_next_page_name[1 / 2] ____________
+
+footer = '1 / 2'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+__________ test_m2_behalf_company_suffix_keeps_exact_golden[LIMITED] ___________
+
+suffix = 'LIMITED'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+____________ test_m2_behalf_company_suffix_keeps_exact_golden[LLP] _____________
+
+suffix = 'LLP'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+_____________ test_m2_behalf_company_suffix_keeps_exact_golden[LP] _____________
+
+suffix = 'LP'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+________ test_m2_behalf_company_suffix_keeps_exact_golden[INCORPORATED] ________
+
+suffix = 'INCORPORATED'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+____________ test_m2_behalf_company_suffix_keeps_exact_golden[PTY] _____________
+
+suffix = 'PTY'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+_____________ test_m2_behalf_company_suffix_keeps_exact_golden[AG] _____________
+
+suffix = 'AG'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+_____________ test_m2_behalf_company_suffix_keeps_exact_golden[SA] _____________
+
+suffix = 'SA'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+_____________ test_m2_behalf_company_suffix_keeps_exact_golden[BV] _____________
+
+suffix = 'BV'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+_____________ test_m2_behalf_company_suffix_keeps_exact_golden[NV] _____________
+
+suffix = 'NV'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+____________ test_m2_behalf_company_suffix_keeps_exact_golden[PBC] _____________
+
+suffix = 'PBC'
+
+    @pytest.mark.parametrize('suffix', ['LIMITED', 'LLP', 'LP', 'INCORPORATED', 'PTY', 'AG', 'SA', 'BV', 'NV', 'PBC'])
+    def test_m2_behalf_company_suffix_keeps_exact_golden(suffix):
+        wording = 'Signed for and on behalf of ACME WIDGETS ' + suffix
+>       exact_harbor(placement.place(harbor_variant(wording=wording), [dict(LEE[0], company='Acme Widgets')]))
+
+dealroom_sign/tests/test_placement_r6.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+______________ test_m2_behalf_role_is_not_a_person[the Director] _______________
+
+person = 'the Director'
+
+    @pytest.mark.parametrize('person', ['the Director', 'The Director', 'Managing Director'])
+    def test_m2_behalf_role_is_not_a_person(person):
+        wording = 'Signed by ' + person + ' for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+>       exact_harbor(placement.place(harbor_variant(wording=wording), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+______________ test_m2_behalf_role_is_not_a_person[The Director] _______________
+
+person = 'The Director'
+
+    @pytest.mark.parametrize('person', ['the Director', 'The Director', 'Managing Director'])
+    def test_m2_behalf_role_is_not_a_person(person):
+        wording = 'Signed by ' + person + ' for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+>       exact_harbor(placement.place(harbor_variant(wording=wording), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+____________ test_m2_behalf_role_is_not_a_person[Managing Director] ____________
+
+person = 'Managing Director'
+
+    @pytest.mark.parametrize('person', ['the Director', 'The Director', 'Managing Director'])
+    def test_m2_behalf_role_is_not_a_person(person):
+        wording = 'Signed by ' + person + ' for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+>       exact_harbor(placement.place(harbor_variant(wording=wording), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+______________ test_m3_comma_witness_paragraph_keeps_exact_golden ______________
+
+    def test_m3_comma_witness_paragraph_keeps_exact_golden():
+        writer = PdfWriter(clone_from=FIXTURES / 'harbor.pdf')
+        blocks, _, _ = placement.extract((FIXTURES / 'harbor.pdf').read_bytes())
+        sig = max((b.line for b in blocks if b.line.page == 2), key=lambda line: line.y)
+        stream = DecodedStreamObject()
+        stream.set_data(writer.pages[1].get_contents().get_data().replace(b'(Harbor Light Analytics, Inc.)', b'()'))
+        writer.pages[1].replace_contents(stream)
+        overlay = io.BytesIO()
+        c = canvas.Canvas(overlay, pagesize=(612, 792))
+        c.setFont('Helvetica', 10)
+        c.drawString(72, 792 - sig.y + 82, 'IN WITNESS WHEREOF, the parties hereto have executed this Agreement as of the')
+        c.drawString(72, 792 - sig.y + 52, 'Effective Date.')
+        c.save()
+        writer.pages[1].merge_page(PdfReader(overlay).pages[0])
+        out = io.BytesIO()
+        writer.write(out)
+>       exact_harbor(placement.place(out.getvalue(), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:176: AssertionError
+____________ test_n1_title_person_before_comma_still_vetoes[Title] _____________
+
+caption = 'Title'
+
+    @pytest.mark.parametrize('caption', ['Title', 'Its'])
+    def test_n1_title_person_before_comma_still_vetoes(caption):
+>       assert_held(placement.place(harbor_variant(wording=caption + ': Dan Whaley, CEO'), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_____________ test_n1_title_person_before_comma_still_vetoes[Its] ______________
+
+caption = 'Its'
+
+    @pytest.mark.parametrize('caption', ['Title', 'Its'])
+    def test_n1_title_person_before_comma_still_vetoes(caption):
+>       assert_held(placement.place(harbor_variant(wording=caption + ': Dan Whaley, CEO'), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+__________ test_n2_period_name_still_vetoes_named_block[DAN WHALEY.] ___________
+
+name = 'DAN WHALEY.'
+
+    @pytest.mark.parametrize('name', ['DAN WHALEY.', 'Dan Whaley.'])
+    def test_n2_period_name_still_vetoes_named_block(name):
+>       assert_held(placement.place(harbor_variant(wording=name), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:165: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+__________ test_n2_period_name_still_vetoes_named_block[Dan Whaley.] ___________
+
+name = 'Dan Whaley.'
+
+    @pytest.mark.parametrize('name', ['DAN WHALEY.', 'Dan Whaley.'])
+    def test_n2_period_name_still_vetoes_named_block(name):
+>       assert_held(placement.place(harbor_variant(wording=name), LEE))
+
+dealroom_sign/tests/test_placement_r6.py:165: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_send_r6.py::test_r6_holds_keep_other_names_out_of_history[contact]
+FAILED dealroom_sign/tests/test_send_r6.py::test_r6_holds_keep_other_names_out_of_history[footer]
+FAILED dealroom_sign/tests/test_send_r6.py::test_r6_holds_keep_other_names_out_of_history[title]
+FAILED dealroom_sign/tests/test_send_r6.py::test_r6_holds_keep_other_names_out_of_history[period]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Email]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-E-mail]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Address]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Phone]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Tel]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers0-False-Company]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Email]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-E-mail]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Address]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Phone]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Tel]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Lee Harbor-signers1-True-Company]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Email]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-E-mail]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Address]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Phone]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Tel]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h2_contact_rule_preserves_typed_identity[Pat Smith-signers2-True-Company]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h1_previous_caption_stays_with_its_host[False-110]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h1_previous_caption_stays_with_its_host[False-140]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[0-Mutual Non-Disclosure Agreement]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[0-Execution Version {page}]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[0-Mutual NDA \u2013 Signature Page]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[2-Mutual Non-Disclosure Agreement]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[2-Execution Version {page}]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[2-Mutual NDA \u2013 Signature Page]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[-2-Mutual Non-Disclosure Agreement]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[-2-Execution Version {page}]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[-2-Mutual NDA \u2013 Signature Page]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[Page 1 of 2]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[1]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[- 1 -]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[1 / 2]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[LIMITED]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[LLP]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[LP]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[INCORPORATED]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[PTY]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[AG]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[SA]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[BV]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[NV]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_company_suffix_keeps_exact_golden[PBC]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_role_is_not_a_person[the Director]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_role_is_not_a_person[The Director]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m2_behalf_role_is_not_a_person[Managing Director]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m3_comma_witness_paragraph_keeps_exact_golden
+FAILED dealroom_sign/tests/test_placement_r6.py::test_n1_title_person_before_comma_still_vetoes[Title]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_n1_title_person_before_comma_still_vetoes[Its]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_n2_period_name_still_vetoes_named_block[DAN WHALEY.]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_n2_period_name_still_vetoes_named_block[Dan Whaley.]
+55 failed, 4 passed in 28.45s

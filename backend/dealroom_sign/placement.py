@@ -14,6 +14,7 @@ import subprocess
 import sys
 import threading
 import time
+from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -28,7 +29,10 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.5'
+VERSION = 'c2a.6'
+OTHER_LABEL = re.compile(r'^(?:email|e-mail|address|phone|tel|company)\b', re.I)
+COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
 MAX_EDGES = 5000
 MAX_CHARS = 20000
 MAX_WORDS = 4000
@@ -96,19 +100,33 @@ ROLE = re.compile(r'^(?=.*\b' + ROLE_HEAD + r'\b)(?:Co-)?(?:' + ROLE_WORD + r')(
 BLOCK_WORDING = re.compile(r'^(?:accepted(?: and agreed)?|agreed(?: and accepted| by the parties)?'
                            r'|(?:disclosing|receiving) party|in witness whereof|duly authori[sz]ed'
                            r'|limited liability company|limited liability partnership|limited|inc\.?|llc|ltd\.?)\s*:?$', re.I)
-COMPANY = re.compile(r'\b(?:inc|llc|ltd|co|corp|corporation|company|gmbh|plc|analytics)\b', re.I)
+COMPANY = re.compile(r'\b(?:inc|llc|ltd|co|corp|corporation|company|gmbh|plc|analytics'
+                     r'|limited|llp|lp|incorporated|pty|ag|sa|bv|nv|pbc)\b', re.I)
 IDENTITY_SPLIT = re.compile(r',|\s+[–—/\-]\s+|\s+\(')
 
 
 def sentence_text(text):
+    text = text.strip()
+    # Preserve the known wrapped witness-clause ending as prose. Other short,
+    # capitalised person rows must retain their identity even with a final dot.
+    name = text[:-1] if text.endswith('.') else ''
+    if (text.casefold() != 'effective date.' and PERSON.fullmatch(name)
+            and all(w[0].isupper() for w in name.split())
+            and not ROLE.fullmatch(name) and not COMPANY.search(name)
+            and not BLOCK_WORDING.fullmatch(name)):
+        return False
     last = re.search(r'\b([^\W\d_]{3,})\.$', text.strip())
     return bool(last and last.group(1).lower() not in {'jr', 'sr', 'esq'})
 
 
 def behalf_parts(text):
     match = re.fullmatch(r'(?:signed\s+)?(?:by\s+(.+?)\s+)?for and on behalf of\s+(.+)', text, re.I)
-    if match and company_text(match[2]) and (not match[1] or PERSON.fullmatch(match[1])):
-        return match[1] or '', match[2]
+    if match and company_text(match[2]):
+        name = match[1] or ''
+        if not name or ROLE.fullmatch(name):
+            return '', match[2]
+        if PERSON.fullmatch(name) and all(w[0].isupper() for w in name.split()):
+            return name, match[2]
     return None
 
 
@@ -123,7 +141,8 @@ def person_text(text):
     caption = NAME_CAPTION.match(text)
     stripped = NAME_CAPTION.sub('', text).strip()
     name = IDENTITY_SPLIT.split(stripped)[0].strip()
-    if COMPANY.search(name) or ROLE.fullmatch(name) or name.lower() in {'accepted and agreed', 'compensation summary', 'base salary'}:
+    if (COMPANY.search(name) or ROLE.fullmatch(name) or BLOCK_WORDING.fullmatch(name)
+            or name.lower() in {'accepted and agreed', 'compensation summary', 'base salary'}):
         return ''
     # Explicit Name captions are authoritative even with lower case or initials.
     if PERSON.fullmatch(name) and (caption or prefix or all(word[0].isupper() for word in name.split())):
@@ -258,22 +277,58 @@ def partition_stacked_blocks(hosts, texts, roles):
         block.labels = block.raw_labels
 
 
-def company_only_veto(block, extent, pages, roles):
+def running_rows(pages):
+    """Identify neutral walk rows locally; keep their text out of worker output."""
+    grouped, neutral = {}, set()
+    for pno, (texts, _, _) in pages.items():
+        for row in texts:
+            if PAGE_NUMBER.fullmatch(row['text']):
+                neutral.add(id(row))
+            key = re.sub(r'\d+', '#', row['text'])
+            grouped.setdefault(key, []).append((row['rect'][1], pno, id(row)))
+    for rows in grouped.values():
+        rows.sort()
+        lower = upper = 0
+        counts = Counter()
+        for top, _, row_id in rows:
+            while upper < len(rows) and rows[upper][0] <= top + 2:
+                counts[rows[upper][1]] += 1
+                upper += 1
+            while rows[lower][0] < top - 2:
+                pno = rows[lower][1]
+                counts[pno] -= 1
+                if not counts[pno]:
+                    del counts[pno]
+                lower += 1
+            if len(counts) >= 2:
+                neutral.add(row_id)
+    return neutral
+
+
+def company_only_veto(block, extent, pages, roles, hosts, neutral):
     """Walk only to remove company confidence; distant rows never become labels."""
     top, bottom, left, right = extent
     for direction, boundary in ((-1, top), (1, bottom)):
         pno = block.line.page
         while pno in pages:
             texts, rules, _ = pages[pno]
+            other_hosts = [b.line for b in hosts if b is not block and b.line.page == pno
+                           and b.line.x1 > left and b.line.label.get('rect', [b.line.x0])[0] < right]
             events = [(t['rect'][1], t) for t in texts
                       if t['rect'][0] < right and t['rect'][2] > left
                       and direction * (t['rect'][1] - boundary) > 0]
             events += [(r.y, None) for r in rules if r is not block.line
+                       and r.semantic not in COMPANION_SEMANTICS
                        and r.x1 > left and r.label.get('rect', [r.x0])[0] < right
                        and direction * (r.y - boundary) >= 0]
             stopped = False
             for _, row in sorted(events, key=lambda item: direction * item[0]):
                 if row is None:
+                    stopped = True
+                    break
+                if id(row) in neutral:
+                    continue
+                if direction < 0 and any(r.y < row['rect'][1] <= r.y + 125 for r in other_hosts):
                     stopped = True
                     break
                 text = row['text']
@@ -423,9 +478,11 @@ def extract(pdf, *, deadline=None):
                     if match:
                         lab = match.group(1).lower()
                         line.semantic = 'SIGNATURE' if lab in {'signature', 'signed', 'sign here', 'by'} else 'NAME' if 'name' in lab else 'DATE' if lab == 'date' else 'TITLE'
+                    elif OTHER_LABEL.match(line.label['text']):
+                        line.semantic = 'OTHER'
             hosts = []
             for line in unique:
-                if line.semantic in {'NAME', 'DATE', 'TITLE'} or line.y < 110:
+                if line.semantic in COMPANION_SEMANTICS or line.y < 110:
                     continue
                 column = line.label.get('rect', [line.x0])[0]
                 candidates = [t for t in texts if 2 <= line.y - t['rect'][3] < 90
@@ -433,7 +490,7 @@ def extract(pdf, *, deadline=None):
                          and (not LABEL.match(t['text']) or behalf_parts(t['text'])) and len(t['text']) < 85
                          and t != line.label and identity_label(t['text'], roles)]
                 above = [t for t in candidates if not any(
-                    prev.y < line.y and prev.semantic not in {'DATE', 'NAME', 'TITLE'}
+                    prev.y < line.y and prev.semantic not in COMPANION_SEMANTICS
                     and prev.label.get('rect', [prev.x0])[0] < t['rect'][2] and prev.x1 > t['rect'][0]
                     and (t['rect'][3] < prev.y or 0 < t['rect'][1] - prev.y < 90)
                     for prev in unique)]
@@ -467,7 +524,7 @@ def extract(pdf, *, deadline=None):
                              and extra.x0 >= sig.x1 and 0 <= ecol - sig.x1 <= 45
                              and not any(other is not block and other.line.x0 <= extra.x0 <= other.line.x1
                                          and abs(other.line.y - sig.y) < 125 for other in hosts)
-                             and not any(other is not sig and other.semantic not in {'DATE', 'NAME', 'TITLE'}
+                             and not any(other is not sig and other.semantic not in COMPANION_SEMANTICS
                                          and other.x0 >= sig.x1 and other.x0 <= extra.x0 <= other.x1
                                          and abs(other.y - sig.y) < 125 for other in unique))
                     if vertical or right:
@@ -486,14 +543,14 @@ def extract(pdf, *, deadline=None):
                 top = max([sig.y - 90] + previous)
                 bottom = sig.y + 125
                 following = [r.y for r in unique if r.y > sig.y + 5
-                             and r.semantic not in {'NAME', 'DATE', 'TITLE'}
+                             and r.semantic not in COMPANION_SEMANTICS
                              and r.x1 > column and r.label.get('rect', [r.x0])[0] < sig.x1]
                 bottom = min([bottom] + following)
                 # Include the whole row band, including text beside or directly
                 # under the rule. Neighbouring columns stop the band; text in
                 # the gap between two rules belongs to both until disambiguated.
                 neighbours = [r for r in unique if r is not sig
-                              and r.semantic not in {'NAME', 'DATE', 'TITLE'}
+                              and r.semantic not in COMPANION_SEMANTICS
                               and abs(r.y - sig.y) < 30]
                 left = max([0] + [r.x1 for r in neighbours if r.x1 < column])
                 right = min([page.width] + [r.label.get('rect', [r.x0])[0]
@@ -515,16 +572,17 @@ def extract(pdf, *, deadline=None):
         raise ValueError('candidate_limit')
     for i, block in enumerate(blocks):
         block.id = f'b{i}'
+    neutral = running_rows(pages)
     for block, extent in extents:
         if not printed_names(block):
-            block.company_only_blocked = company_only_veto(block, extent, pages, roles)
+            block.company_only_blocked = company_only_veto(block, extent, pages, roles, blocks, neutral)
     return blocks, sizes, roles
 
 
 def accounted_label(text, roles):
     if identity_label(text, roles) or ROLE.fullmatch(text):
         return True
-    if re.fullmatch(r'(?:email|address|phone|company|witness)\s*:\s*', text, re.I):
+    if re.fullmatch(r'(?:email|e-mail|address|phone|tel|company|witness)\s*:\s*', text, re.I):
         return True
     caption = NAME_CAPTION.match(text)
     if caption and (not text[caption.end():].strip() or LABEL.fullmatch(text[caption.end():].strip())):
@@ -593,7 +651,7 @@ def score(signer, block, roles):
     for label in block.raw_labels:
         for part in identity_parts(label['text']):
             if value and (title := re.match(r'^(?:title|its)\b[:\s]*(.*)', part, re.I)):
-                remainder = title[1].strip()
+                remainder = IDENTITY_SPLIT.split(title[1])[0].strip()
                 if not (PERSON.fullmatch(remainder) and len(remainder.split()) >= 2
                         and all(w[0].isupper() for w in remainder.split())
                         and not re.search(r'\b(?:' + ROLE_WORD + r')\b', remainder, re.I)):

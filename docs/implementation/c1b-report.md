@@ -1313,3 +1313,101 @@ field and native field dictionary: `bare` holds with zero fields; `nda`, `offer`
 
 All changes remain unstaged and uncommitted. The completion marker is
 `/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-r5.done`.
+
+## C2a r6
+
+Implemented the [Gate 3 r5 follow-ups](../../../dealroom-sign-edd/docs/edd/reviews/counterparty-c2a-gate3-r5.md)
+from Send base `1efaca25`, in the requested order: H-2, H-1, then the medium
+findings and nits. `analysis_version` is now **`c2a.6`**. Changes are confined to
+Send placement, new tests/evidence, this report/runbook, and the explicitly
+requested EDD rule paragraph. Board, `send-style`, `sign-style`, other hosts,
+existing tests, fixture PDFs, dependencies, migrations and project memory were
+not changed. Nothing was staged or committed.
+
+### Fixes and failing-first evidence
+
+| Finding | Failures on `1efaca25` | Implemented behavior |
+| --- | ---: | --- |
+| H-2 | 18 | `Email`, `E-mail`, `Address`, `Phone`, `Tel`, `Company` rules have `OTHER` semantics. All companion kinds are excluded from hosts, heading boundary candidates, following/neighbor boundaries, side-date blockers and walk rule stops. Each of the review's three identity outcomes is exercised for all six labels; a matched signer uses the original By rule. Empty E-mail/Tel captions are accounted like the other empty contact captions. |
+| H-1 | 2 | An upward walk stops at rows whose top falls in another host's `(rule.y, rule.y + 125]` extent in the same band. Stacked named-sender/company-only-counterparty blocks place at both 110 and 140 pt spacings; a different name inside the counterparty block still holds (two passing baseline controls). |
+| M-1 | 13 | Page-number rows and digit-normalised rows repeated at y ±2 pt on at least two distinct pages are neutral in the walk. Repeated headers place, including ±2 pt offsets and changing digits. Footer patterns do not hide the next page's name. Nonrepeated headers and a 3 pt shift retain the veto (two passing baseline controls). Local evidence is unchanged. |
+| M-2 | 13 | Added every proposed company suffix. Execution-clause names use the capitalised PERSON predicate and exclude roles; `the Director`, `The Director` and `Managing Director` become role wording. All cases retain the exact Harbor boxes. |
+| M-3 | 1 | Apply `BLOCK_WORDING.fullmatch` after splitting the name head; the comma witness paragraph keeps the exact Harbor boxes. |
+| N-1 | 2 | Apply the title-remainder predicate to the head before a comma; both Title/Its with a different person's name hold. |
+| N-2 | 2 | Bare capitalised person rows ending in a period retain the second-person veto, in uppercase and title case. |
+| History/privacy | 4 | Contact-rule, cross-page-footer, title-remainder and period-name holds create no workflow or History event, return no fields, call no model and expose no other person's name in results, exceptions or logs. |
+
+Each production fix followed a failing test. Initial red/green group logs are
+under [c2a-r6](c2a-r6/). The final tests were also replayed against the **exact
+review base** by [replay_baseline.py](c2a-r6/replay_baseline.py), restoring the
+working production file in `finally`: **55 failed, 4 passed**, 28.84 s.
+The four passing cases are preservation controls, not claimed regressions.
+[Full baseline log](c2a-r6/baseline-send-red.txt) and
+[machine-readable counts](c2a-r6/baseline-summary.json) record every case.
+
+### Accepted deferral and narrow deviation
+
+- **L-1:** retained the conservative annotation hold accepted by the reviewer
+  for v1. Absent-`/V` empty-widget relaxation and `/Sig` placement hints are
+  deferred to C2b exactly as suggested. Changing this now would contradict the
+  existing explicit absent-value hold test and the review's annotation-chain
+  preservation requirement. Existing annotation tests remain unchanged.
+- **N-2:** preserved the exact known prose fragment `Effective Date.`. A literal
+  PERSON-plus-period exclusion would classify that wrapped witness-clause
+  ending as a person, violating existing tests. Other bare capitalised person
+  rows retain their veto; no existing test was weakened or changed.
+
+No other finding was skipped. The EDD §4.4 and
+[runbook](c2a-runbook.md#identity-extent) document these rules. No new raw PDF text
+crosses the parser boundary: running-text detection remains local, and only the
+existing boolean veto affects company-only scores.
+
+### Verification
+
+The requested runner is invoked unchanged via
+[run-send-tests.sh](c2a-r6/run-send-tests.sh), which redirects only its read-only
+scratch-directory creation to `/tmp` (the same workaround used in r5):
+
+```bash
+bash docs/implementation/c2a-r6/run-send-tests.sh dealroom_sign/tests
+# Executes /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+/root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r6/check_goldens.py
+```
+
+The 184-case r5+r6 targeted placement run passed. The independent
+[golden comparison](c2a-r6/golden-comparison.json) records all seven exact r5
+outcomes, coordinates, confidence and native field dictionaries; six place and
+`bare` holds. [Placements](c2a-r6/placements.json) include the new analysis version.
+The unusual-label fixture uses the existing model stub; no live model was called.
+The unchanged r5 checks cover rule/prose stops, inclusive adjacent-page edges,
+neighbour column bands, named blocks ignoring distant evidence, distant names
+never adding confidence, bare-document holds, annotation privacy and parent
+chains, and preservation of independent partition uncertainty. The final suite
+also retains all earlier resource, transport, assignment and workflow checks.
+
+The initial full run recorded **914 passed, 2 failed**: both failures were in
+new workflow fixtures passing the golden-only `side` property to an API that
+rejects it before placement. The corrected fixtures now use accepted API fields;
+the final baseline replay above confirms both cases fail on the intended missing
+placement hold. The [initial full log](c2a-r6/send-signing-suite-initial.txt) is
+retained as diagnostic evidence, not final verification. Existing tests were
+unchanged. Running rows are skipped before the previous-host row stop so they
+remain neutral even where their geometry overlaps another host's extent.
+
+### Final result
+
+- **Send: 916 passed, 0 failed, 0 skipped**, 384.30 s; all **857 existing**
+  tests and **59 new** cases (55 placement, four workflow/History).
+  [Full log](c2a-r6/send-signing-suite.txt) records the result and 82 warnings.
+- **Failing first:** the final r6 tests on `1efaca25` produce **55 failures and
+  four passing preservation controls**; every case passes on `c2a.6`.
+- **Seven goldens:** exact outcomes, field geometry/confidence and native fields
+  against r5, which already matched r4. Six place; `bare` holds with no fields.
+- **Scope/checks:** Send and the edited EDD pass `git diff --check`.
+  [Footprint](c2a-r6/footprint.json) records the final code/test/doc hashes,
+  unchanged HEAD, empty Git index and unchanged existing tests/fixtures.
+  Board and other hosts were not accessed or modified for this patch.
+- **Completion marker:**
+  `/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-r6.done`.
+
+All changes remain unstaged and uncommitted.
