@@ -1,0 +1,249 @@
+[
+  {
+    "outcome": {
+      "status": "needs_sender",
+      "reason_code": "ambiguous_identity",
+      "analysis_version": "c2a.11",
+      "fields": [],
+      "model_calls": 0
+    },
+    "cases": [
+      "B-1/C12/baseline_13_plain",
+      "B-1/C13/baseline_13_plain",
+      "B-1/C12/baseline_13_name",
+      "B-1/C13/baseline_13_name",
+      "B-1/C12/baseline_14_plain",
+      "B-1/C13/baseline_14_plain",
+      "B-1/C12/baseline_14_name",
+      "B-1/C13/baseline_14_name",
+      "B-1/C12/baseline_16_plain",
+      "B-1/C13/baseline_16_plain",
+      "B-1/C12/baseline_16_name",
+      "B-1/C13/baseline_16_name",
+      "B-1/C12/baseline_18_plain",
+      "B-1/C13/baseline_18_plain",
+      "B-1/C12/baseline_18_name",
+      "B-1/C13/baseline_18_name",
+      "B-1/C12/raised_13",
+      "B-1/C13/raised_13",
+      "B-1/C12/raised_16",
+      "B-1/C13/raised_16",
+      "B-1/C12/raised_19",
+      "B-1/C13/raised_19",
+      "B-1/C12/raised_22",
+      "B-1/C13/raised_22",
+      "B-1/C12/raised_25",
+      "B-1/C13/raised_25",
+      "B-1/C12/raised_28",
+      "B-1/C13/raised_28",
+      "B-1/C12/indented_12",
+      "B-1/C13/indented_12",
+      "B-1/C12/indented_24",
+      "B-1/C13/indented_24",
+      "B-1/C12/margin",
+      "B-1/C13/margin"
+    ]
+  },
+  {
+    "outcome": {
+      "status": "placed",
+      "reason_code": "placed",
+      "analysis_version": "c2a.11",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 15.759804,
+          "y": 21.464646,
+          "w": 31.625817,
+          "h": 3.661616,
+          "confidence": "high",
+          "line": [
+            96.45,
+            200.0,
+            290.0
+          ]
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 31.060606,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "high",
+          "line": [
+            105.9,
+            260.0,
+            290.0
+          ]
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 15.759804,
+          "y": 42.929293,
+          "w": 31.625817,
+          "h": 3.661616,
+          "confidence": "high",
+          "line": [
+            96.45,
+            370.0,
+            290.0
+          ]
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 50.0,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "high",
+          "line": [
+            105.9,
+            410.0,
+            290.0
+          ]
+        }
+      ],
+      "model_calls": 0
+    },
+    "cases": [
+      "M-1/stacked_both/Initials:",
+      "M-1/stacked_both/Fax:",
+      "M-1/stacked_both/Authorised signatory:",
+      "M-1/stacked_both/Firma:"
+    ]
+  },
+  {
+    "outcome": {
+      "status": "placed",
+      "reason_code": "placed",
+      "analysis_version": "c2a.11",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 15.759804,
+          "y": 42.929293,
+          "w": 31.625817,
+          "h": 3.661616,
+          "confidence": "high",
+          "line": [
+            96.45,
+            370.0,
+            290.0
+          ]
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 50.0,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "high",
+          "line": [
+            105.9,
+            410.0,
+            290.0
+          ]
+        }
+      ],
+      "model_calls": 0
+    },
+    "cases": [
+      "M-1/stacked_pat/Initials:",
+      "M-1/stacked_pat/Fax:",
+      "M-1/stacked_pat/Authorised signatory:",
+      "M-1/stacked_pat/Firma:"
+    ]
+  },
+  {
+    "outcome": {
+      "status": "placed",
+      "reason_code": "placed",
+      "analysis_version": "c2a.11",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 15.759804,
+          "y": 21.464646,
+          "w": 31.625817,
+          "h": 3.661616,
+          "confidence": "high",
+          "line": [
+            96.45,
+            200.0,
+            290.0
+          ]
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 31.060606,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "high",
+          "line": [
+            105.9,
+            260.0,
+            290.0
+          ]
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 57.916667,
+          "y": 21.464646,
+          "w": 31.625817,
+          "h": 3.661616,
+          "confidence": "high",
+          "line": [
+            354.45,
+            200.0,
+            548.0
+          ]
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 59.460784,
+          "y": 31.060606,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "high",
+          "line": [
+            363.9,
+            260.0,
+            548.0
+          ]
+        }
+      ],
+      "model_calls": 0
+    },
+    "cases": [
+      "M-1/side_below/Initials:",
+      "M-1/side_below/Fax:",
+      "M-1/side_below/Authorised signatory:",
+      "M-1/side_below/Firma:",
+      "M-1/side_above/Initials:",
+      "M-1/side_above/Fax:",
+      "M-1/side_above/Authorised signatory:",
+      "M-1/side_above/Firma:"
+    ]
+  }
+]

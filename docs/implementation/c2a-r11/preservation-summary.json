@@ -1,0 +1,24 @@
+{
+  "base": "945ad159",
+  "only_existing_test_changed": "backend/dealroom_sign/tests/test_placement_r9.py::test_caption_identity_slot_edges",
+  "all_other_existing_tests_unchanged": true,
+  "r10_H-1_cases_passed_unchanged": 40,
+  "r9_H-1_cases_passed_unchanged": 40,
+  "overlapping_host_veto_preserved": true,
+  "r8_boolean_wrapper_and_forced_classification_preserved": true,
+  "golden_fixtures_and_baselines_unchanged": true,
+  "failing_first_production_matches_base": true,
+  "failing_first_and_final_test_hashes_match": true,
+  "report_append_only": true,
+  "memory_unchanged": true,
+  "index_empty": true,
+  "HEAD_unchanged": true,
+  "diff_check_passed": true,
+  "raw_logs_and_temporary_xml_absent": true,
+  "changed_tracked_files": [
+    "backend/dealroom_sign/placement.py",
+    "backend/dealroom_sign/tests/test_placement_r9.py",
+    "docs/implementation/c1b-report.md",
+    "docs/implementation/c2a-runbook.md"
+  ]
+}

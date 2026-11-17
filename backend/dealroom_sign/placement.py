@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.10'
+VERSION = 'c2a.11'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -411,8 +411,8 @@ def check_annotations(page):
         raise ValueError('form_fields') from None
 
 
-def subordinate_caption(line, rules, texts, roles):
-    """An unknown caption is a companion only within a recognised host's block."""
+def subordinating_host(line, rules, texts, roles):
+    """Return the recognised host whose block contains an unknown caption."""
     column = line.label['rect'][0]
     for host in rules:
         witness = host.label.get('text', '').rstrip(': ').casefold() == 'witness'
@@ -430,8 +430,13 @@ def subordinate_caption(line, rules, texts, roles):
                # an empty caption. A later unknown line remains a candidate.
                or (witness and NAME_CAPTION.match(t['text'])) for t in between):
             continue
-        return True
-    return False
+        return host
+    return None
+
+
+def subordinate_caption(line, rules, texts, roles):
+    """An unknown caption is a companion only within a recognised host's block."""
+    return subordinating_host(line, rules, texts, roles) is not None
 
 
 def conflicting_company_headings(block, extent, texts, rules, roles):
@@ -548,15 +553,15 @@ def extract(pdf, *, deadline=None):
                 if (not line.semantic and SHORT_CAPTION.fullmatch(line.label.get('text', ''))
                         and line.label['text'].rstrip(': ').casefold() != 'witness'
                         and subordinate_caption(line, unique, texts, roles)):
+                    host = subordinating_host(line, unique, texts, roles)
                     line.semantic = 'OTHER'
                     # Only structural subordination can hide a signature's
                     # typed identity. The six unconditional contact captions
                     # above deliberately do not participate in this veto.
-                    column = line.label['rect'][0]
-                    absorbed_names[pno].extend(t for t in texts
-                                              if t['rect'][1] - line.y >= -12
-                                              and t['rect'][2] > column - 5
-                                              and person_text(t['text']))
+                    if host is not None:
+                        absorbed_names[pno].extend((host, t) for t in texts
+                                                  if t['rect'][1] > host.y
+                                                  and person_text(t['text']))
             hosts = []
             for line in unique:
                 if line.semantic in COMPANION_SEMANTICS or line.y < 110:
@@ -652,6 +657,20 @@ def extract(pdf, *, deadline=None):
     for i, block in enumerate(blocks):
         block.id = f'b{i}'
     neutral = running_rows(pages)
+    host_extents = {id(block.line): extent for block, extent in extents}
+    for pno, names in absorbed_names.items():
+        retained = []
+        for host, text in names:
+            extent = host_extents.get(id(host))
+            if extent is not None:
+                top, bottom, left, right = extent
+                if not (top <= text['rect'][1] <= bottom
+                        and text['rect'][0] < right and text['rect'][2] > left):
+                    continue
+            # A name must belong to its own absorbing host. If that rule
+            # formed no block, keep the name so the veto fails closed.
+            retained.append(text)
+        absorbed_names[pno] = retained
     for block, extent in extents:
         texts, rules, _ = pages[block.line.page]
         top, bottom, left, right = extent

@@ -1,0 +1,57 @@
+{
+  "command": "SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests/test_placement_r11.py dealroom_sign/tests/test_placement_r9.py::test_caption_identity_slot_edges",
+  "reporting_arguments": [
+    "--tb=short",
+    "--junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r11/failing-first-summary.xml"
+  ],
+  "base": "945ad159",
+  "exit_code": 1,
+  "tests": 1255,
+  "failures": 1133,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 316.626,
+  "groups": {
+    "test_b1_identity_inside_subordinating_host_holds": {
+      "failure": 1020
+    },
+    "test_m1_other_host_keeps_its_own_identity": {
+      "failure": 12,
+      "passed": 4
+    },
+    "test_signature_host_extent_controls_unchanged": {
+      "failure": 96,
+      "passed": 108
+    },
+    "test_caption_identity_slot_edges": {
+      "failure": 5,
+      "passed": 10
+    }
+  },
+  "raw_suite_logs_retained": false,
+  "source_sha256": {
+    "backend/dealroom_sign/placement.py": "b6a484d22a88bd0b1b4ae324c9133d028feef0dcb49b67431a56d5d9ac554792",
+    "backend/dealroom_sign/tests/test_placement_r11.py": "ef6f40b519548716b4d002c6987806c7268dd3236dc8a1d94758e2211e6e91da",
+    "backend/dealroom_sign/tests/test_placement_r10.py": "a4196297a2a4dd14d7157711bf0844e2d7daa5eced2e1dbf5e2668fb492782b3",
+    "backend/dealroom_sign/tests/test_placement_r9.py": "7fddf9313139aab2bc94f9e13601b2fb4390f382869118a1f520ad0bd617fc14"
+  },
+  "passed": 122,
+  "failure_inventory": {
+    "test_b1_identity_inside_subordinating_host_holds": {
+      "example_test": "dealroom_sign.tests.test_placement_r11.test_b1_identity_inside_subordinating_host_holds[baseline_13_plain-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation-Authorised signatory:]",
+      "message": "AssertionError: {'analysis_version': 'c2a.10', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 420.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}\nassert 'placed' == 'needs_sender'\n  \n  - needs_sender\n  + placed"
+    },
+    "test_m1_other_host_keeps_its_own_identity": {
+      "example_test": "dealroom_sign.tests.test_placement_r11.test_m1_other_host_keeps_its_own_identity[stacked_both-Initials:]",
+      "message": "AssertionError: {'analysis_version': 'c2a.10', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}\nassert 'needs_sender' == 'placed'\n  \n  - placed\n  + needs_sender"
+    },
+    "test_signature_host_extent_controls_unchanged": {
+      "example_test": "dealroom_sign.tests.test_placement_r11.test_signature_host_extent_controls_unchanged[baseline_13_plain-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]",
+      "message": "AssertionError: {'analysis_version': 'c2a.10', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 6, ...}], 'fields': [], 'method': 'rules', ...}\nassert 'needs_sender' == 'placed'\n  \n  - placed\n  + needs_sender"
+    },
+    "test_caption_identity_slot_edges": {
+      "example_test": "dealroom_sign.tests.test_placement_r9.test_caption_identity_slot_edges[-12.1-328-True]",
+      "message": "AssertionError: assert False is True\n +  where False = Block(id='b0', line=Line(page=1, x0=96.45, x1=290.0, y=290.0, kind='drawn', label={'text': 'By:', 'rect': [72.0, 280.0... 395.07]}, semantic='DATE')}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False).uncertain_identity"
+    }
+  }
+}

@@ -31,12 +31,14 @@ closes its identity group. Otherwise the caption retains the r6 unusual-host
 semantics. The six captions Email, E-mail, Address, Phone, Tel and Company
 remain unconditional `OTHER`. Witness remains a signature host. No
 fixture-specific caption exception is used to classify hosts.
-When structural subordination makes a rule `OTHER`, a typed name at or below a
-subordinated rule, within the absorbing host's extent, sets `uncertain_identity`
-on every containing host after partitioning. This includes names following a
-Title row, after a tab, indented, or on the caption row to the rule's right.
+When structural subordination makes a rule `OTHER`, the absorbing host is the
+SIGNATURE/Witness rule that subordinated the caption; a name in its extent,
+below its rule, vetoes every host containing that name. This sets
+`uncertain_identity` after partitioning. If the absorbing rule formed no block,
+keep its collected names (fail closed). This includes names following a Title
+row, after a tab, indented, raised to the rule's right, or in the left margin.
 Placement holds with no fields; the six unconditional contact captions are
-exempt from this veto (Gate 3 r9 B-1/M-1, manager-approved safe direction).
+exempt from this veto (Gate 3 r10 B-1/M-1, manager-approved safe direction).
 `OTHER` rules cannot create hosts, shorten either
 extent edge, bound neighbouring columns or stop the walk. Their attached empty
 captions carry no identity; surrounding typed rows retain their veto. At a page edge, continue from the adjacent page's

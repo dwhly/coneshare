@@ -1765,3 +1765,88 @@ HEAD remains `4db63354`; no staging or commits were performed.
 
 Implementation, full-suite verification and executed evidence are complete.
 [Completion marker](c2a-r10/counterparty-c2a-r10.done).
+
+
+## C2a r11
+
+Applied Gate 3 r10 B-1/M-1/N-1 on `agent/c1b-counterparty` at `945ad159`;
+`analysis_version` is **`c2a.11`**. The absorbed-identity veto now records the
+SIGNATURE/Witness rule that subordinated each caption, collects person rows
+strictly below that rule, and retains only names within that rule's own host
+extent. A rule without a block retains its collected names (fail closed).
+Every host containing a retained name is vetoed after partitioning. The
+caption dy/column filters are removed; the six unconditional contact captions
+remain exempt. [Implementation note](c2a-r11/edd-note.md).
+
+The Boolean `subordinate_caption()` wrapper and its classification gate are
+preserved, so all existing r8 tests keep their forcing hook. Host collection
+uses the new `subordinating_host()` helper. No scoring, extent geometry,
+worker payload, or ordinary signature classification changes are included.
+The [runbook](c2a-runbook.md#identity-extent) names the absorbing host explicitly.
+
+### Failing first
+
+Finalized tests on byte-for-byte `945ad159` production: **1,017 failed,
+239 passed, 0 errors/skips, 318.318 seconds**. There are 1,000 B-1 placements
+instead of holds, 12 M-1 holds instead of placements, and five failing
+boundary assertions. Twenty B-1 layouts already hold because extraction
+merges the name into a long heading. All 204 measured Signature controls,
+four side-above controls, and the Witness-without-block control pass.
+[Executed summary](c2a-r11/failing-first-summary.json).
+
+New-test draft corrections and the interrupted initial verification attempt
+are documented in the [EDD note](c2a-r11/edd-note.md). Only the new r11 B-1
+assertion was adjusted to require the specified observable hold without an
+unnecessary internal flag assertion. No existing test outside the approved
+r9 function was changed. The unchanged r11 implementation was restored
+before the complete final suite.
+
+The new file adds 1,241 cases. B-1 spans 17 forms × C12/C13 × six headings ×
+five captions: plain/prefixed caption-baseline names at 13/14/16/18 pt,
+raised names from dy −13 to −28, an indented caption, and a left-margin name.
+M-1 covers four captions with two signer configurations in stacked layouts,
+plus both side-by-side name positions. All holds require no fields and zero
+model calls; placements require the correct signer, lines, and confidence.
+
+The only existing-test change is the approved
+`test_caption_identity_slot_edges`, retaining its structure and all eight
+original cases, flipping the three specified expectations, and adding seven
+host-boundary probes. All r8/r10 tests and golden fixtures remain untouched.
+
+**Baseline discrepancy:** the new C12 Signature forms do not all place on
+r10. Across the 204 new controls, unchanged r10 produces 198 holds and six
+placements; C12 places only the six margin cases. The new tests preserve
+these measured outcomes, while the existing r10 Signature controls still
+require C12 placement on 360/420 and C13 holds. The initial draft failures and
+compact executed baseline are retained in the [EDD note](c2a-r11/edd-note.md).
+
+### Verification
+
+**Full signing suite: 2,910 passed, 0 failed, 0 errors, 0 skipped,
+82 warnings, 879.909 seconds** (1,662 existing + 1,241 new + seven additional
+boundary parameters in the approved r9 function).
+[Full-suite summary](c2a-r11/full-suite-summary.json). Final test hashes match
+the failing-first run, and the production hash matches the executed evidence.
+
+All 1,020 B-1 cases hold with no fields and zero model calls. All 16 M-1
+cross-host probes place correctly. Both 40-case H-1 matrices, every r8/r10
+test, and the overlapping-host veto pass unchanged. All seven goldens match
+the complete r10 results exactly except `analysis_version`; geometry,
+confidence, and native fields also match r4/r5 exactly.
+[Golden comparison](c2a-r11/golden-comparison.json).
+
+[Compact placement evidence](c2a-r11/placement-summary.json) includes 34 B-1
+representatives, all 16 cross-host cases, all 204 new Signature controls,
+and seven goldens. External model calls are forbidden; only the unusual
+golden uses one local confirming stub. Raw logs and temporary XML are absent.
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+```
+
+The [preservation audit](c2a-r11/preservation-summary.json) confirms the sole
+permitted existing-test edit, unchanged r8/r10 tests and golden baselines,
+append-only report, unchanged project memory, empty index, and unchanged
+HEAD `945ad159`. `git diff --check` passes. No staging or commits were performed.
+Implementation, executed evidence, and verification are complete.
+[Completion marker](c2a-r11/counterparty-c2a-r11.done).

@@ -1,0 +1,8 @@
+C2a r11 complete — analysis_version c2a.11
+Base/HEAD: 945ad159; branch agent/c1b-counterparty; no commit.
+Final failing-first run on exact r10 bytes: 1,017 failed, 239 passed.
+Full signing suite: 2,910 passed; 0 failures/errors/skips; 82 warnings.
+Seven goldens exact against r10 except analysis_version, and exact r4/r5 geometry/confidence/native fields.
+Only the approved r9 boundary test changed among existing tests; all r10 tests and 40 H-1 cases remain intact.
+New Signature controls preserve observed r10 outcomes; the review's C12 baseline discrepancy is documented in edd-note.md.
+Evidence: full-suite-summary.json, failing-first-summary.json, placement-summary.json, golden-comparison.json, preservation-summary.json.
