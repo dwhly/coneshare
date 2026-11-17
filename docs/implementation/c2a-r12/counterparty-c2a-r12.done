@@ -1,0 +1,6 @@
+coder rc=0 head=0c190e9b45db25ee5c1b8d71cdc2b040cd956fab
+failing-first: 256 failed, 135 passed on unchanged r11; all 391 new cases now pass.
+full-suite: 3301 passed, 0 failures/errors/skips, 82 warnings; fix A only, c2a.12.
+goldens: all seven full results exact to r4/r5 except analysis_version.
+existing-test changes: none; all 50 existing test/fixture files unchanged; no commit.
+surprising: review lists eight forms for a nine-form total; baseline_10 added; fix B fails same-y right-host case.

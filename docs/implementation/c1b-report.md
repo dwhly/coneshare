@@ -1850,3 +1850,74 @@ append-only report, unchanged project memory, empty index, and unchanged
 HEAD `945ad159`. `git diff --check` passes. No staging or commits were performed.
 Implementation, executed evidence, and verification are complete.
 [Completion marker](c2a-r11/counterparty-c2a-r11.done).
+
+
+## C2a r12
+
+Applied Gate 3 r11 B-1 **fix A only**, with `analysis_version = c2a.12`, on
+HEAD `0c190e9b`. Absorbed names now retain their caption label alongside the
+actual subordinating host. A name survives the filter when its own host extent
+contains it, **or any block extent on that page contains both the absorbed
+caption label and the name**. A rule without a block still retains its names
+(fail closed). This replaces the host-only retention description in r11.
+The veto still runs after partitioning and cannot add identity confidence.
+Host iteration order is unchanged; fix B is not included.
+[EDD note](c2a-r12/edd-note.md).
+
+Failing first on unchanged `0c190e9b`: **256 failed, 135 passed, 0 errors/skips**
+among 391 new real-worker tests. The failures are all 120 Matrix 1 cases, all
+135 PAT-only Matrix 2 cases, and the same-band right-host regression. All
+135 Dan+Pat cases already held. Every new case requires
+`needs_sender/ambiguous_identity`, no fields, and zero model calls.
+[Summary](c2a-r12/failing-first-summary.json) ·
+[Per-case results](c2a-r12/failing-first-summary-cases.json).
+
+The review names eight Matrix 2 forms but its 270 total requires nine. The
+additional form here is a 10 pt caption-baseline name; the EDD note and test
+generator document that assumption. The reproduced counts match the review.
+The right-host probe deliberately uses two rules at the same y: r11 and a
+nearest-first fix B still place, while fix A holds. This pins containment
+independently of host iteration order.
+
+The **1,750-case executed evidence** reproduces the review table: Matrix 1
+changes 120 placements to holds; Matrix 2 changes 135 placements to holds;
+all 1,020 r11 B-1 holds, 204 Signature controls, 16 M-1 placements, 72 r9 heading
+cases, 40 r9 H-1 holds, and seven goldens preserve their full results except
+the version. Dan+Pat Matrix 2 holds also lower Pat's assignment score to zero.
+All seven complete real-worker golden results equal **r4/r5 exactly except
+`analysis_version`**, including evidence and model metadata; native fields
+also match. Only the unusual golden calls its local stub once; external model
+calls are zero. [Counterfactual summary](c2a-r12/counterfactual-summary.json) ·
+[Per-case full results](c2a-r12/counterfactual-cases.json) ·
+[Golden comparison](c2a-r12/golden-comparison.json).
+
+**Review L-1:** The corrected control baseline is preserved: **198 holds and
+six correct C12 margin placements on 360/420**, with no model calls and zero
+full-result differences from r11. No test expectation was changed for it.
+
+**Review N-1:** The duplicate host search remains intentional: existing r8
+tests force the `subordinate_caption()` Boolean hook. The subsequent
+`subordinating_host()` lookup supplies the actual tuple host and still uses
+the same helper. Fix A changes the later retention filter, preserving that
+hook and all existing test targets without adding a second lookup policy.
+
+**Full signing suite: 3,301 passed, 0 failures/errors/skips, 82 warnings,
+961.055 seconds**: all 2,910 existing cases plus 391 new cases.
+[Summary](c2a-r12/full-suite-summary.json) ·
+[Every test result](c2a-r12/full-suite-summary-cases.json).
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+```
+
+The summary runner adds `--maxfail=1` and reporting arguments. No existing
+test failed. The [preservation audit](c2a-r12/preservation-summary.json) confirms
+all 50 existing test/fixture files are byte-for-byte unchanged, only `extract`
+changed among product functions, and execution hashes match the delivered
+source. The report is append-only, project memory and index are unchanged,
+and HEAD remains `0c190e9b`. No staging or commit was performed.
+[Completion marker](c2a-r12/counterparty-c2a-r12.done).
+
+The local marker is written. Copying it to the requested `dealroom-sign-edd`
+brief path failed with **Read-only file system**; the external marker remains
+undelivered. Code, tests, evidence, and the local payload are complete.

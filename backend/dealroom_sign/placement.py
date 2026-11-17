@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.11'
+VERSION = 'c2a.12'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -559,7 +559,7 @@ def extract(pdf, *, deadline=None):
                     # typed identity. The six unconditional contact captions
                     # above deliberately do not participate in this veto.
                     if host is not None:
-                        absorbed_names[pno].extend((host, t) for t in texts
+                        absorbed_names[pno].extend((host, line.label, t) for t in texts
                                                   if t['rect'][1] > host.y
                                                   and person_text(t['text']))
             hosts = []
@@ -657,18 +657,25 @@ def extract(pdf, *, deadline=None):
     for i, block in enumerate(blocks):
         block.id = f'b{i}'
     neutral = running_rows(pages)
+
+    def inside_extent(text, extent):
+        top, bottom, left, right = extent
+        return (top <= text['rect'][1] <= bottom
+                and text['rect'][0] < right and text['rect'][2] > left)
+
     host_extents = {id(block.line): extent for block, extent in extents}
     for pno, names in absorbed_names.items():
         retained = []
-        for host, text in names:
+        for host, caption, text in names:
             extent = host_extents.get(id(host))
-            if extent is not None:
-                top, bottom, left, right = extent
-                if not (top <= text['rect'][1] <= bottom
-                        and text['rect'][0] < right and text['rect'][2] > left):
-                    continue
-            # A name must belong to its own absorbing host. If that rule
-            # formed no block, keep the name so the veto fails closed.
+            if extent is not None and not (
+                    inside_extent(text, extent)
+                    or any(block.line.page == pno and inside_extent(caption, other)
+                           and inside_extent(text, other) for block, other in extents)):
+                continue
+            # An intervening host can own both the absorbed caption and its
+            # name, regardless of which rule subordinated it first. If that
+            # rule formed no block, keep the name so the veto fails closed.
             retained.append(text)
         absorbed_names[pno] = retained
     for block, extent in extents:

@@ -1,0 +1,112 @@
+{
+  "base": "0c190e9b45db25ee5c1b8d71cdc2b040cd956fab",
+  "analysis_version": "c2a.12",
+  "baseline_sha256": "d725166c26cc38654ae3763dc93c00357520f440d655430551ee60bbe47733d7",
+  "production_sha256": "6ba039d815d04aec8116b675572fd6473994bfb90f6e55602a1aab5ebf032de5",
+  "method": "place via in-process extract + prepare_blocks; goldens also via real worker",
+  "fix_B_in_product": false,
+  "external_model_calls": 0,
+  "matrix2_extra_form": "baseline_10 (eight forms explicit in review; nine required by total)",
+  "cases": 1750,
+  "groups": {
+    "Matrix 1": {
+      "cases": 120,
+      "r11_placed": 120,
+      "r11_bare": 0,
+      "fix_A_placed": 0,
+      "fix_A_bare": 0,
+      "fix_B_placed": 0,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 120,
+      "fix_B_diffs": 120
+    },
+    "Matrix 2": {
+      "cases": 270,
+      "r11_placed": 135,
+      "r11_bare": 0,
+      "fix_A_placed": 0,
+      "fix_A_bare": 0,
+      "fix_B_placed": 0,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 270,
+      "fix_B_diffs": 270
+    },
+    "r11 B-1": {
+      "cases": 1020,
+      "r11_placed": 0,
+      "r11_bare": 0,
+      "fix_A_placed": 0,
+      "fix_A_bare": 0,
+      "fix_B_placed": 0,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 0,
+      "fix_B_diffs": 0
+    },
+    "Signature controls": {
+      "cases": 204,
+      "r11_placed": 6,
+      "r11_bare": 0,
+      "fix_A_placed": 6,
+      "fix_A_bare": 0,
+      "fix_B_placed": 6,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 0,
+      "fix_B_diffs": 0
+    },
+    "M-1": {
+      "cases": 16,
+      "r11_placed": 16,
+      "r11_bare": 0,
+      "fix_A_placed": 16,
+      "fix_A_bare": 0,
+      "fix_B_placed": 16,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 0,
+      "fix_B_diffs": 0
+    },
+    "r9 heading matrix": {
+      "cases": 72,
+      "r11_placed": 6,
+      "r11_bare": 0,
+      "fix_A_placed": 6,
+      "fix_A_bare": 0,
+      "fix_B_placed": 6,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 0,
+      "fix_B_diffs": 0
+    },
+    "r9 H-1": {
+      "cases": 40,
+      "r11_placed": 0,
+      "r11_bare": 0,
+      "fix_A_placed": 0,
+      "fix_A_bare": 0,
+      "fix_B_placed": 0,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 0,
+      "fix_B_diffs": 0
+    },
+    "Seven goldens": {
+      "cases": 7,
+      "r11_placed": 6,
+      "r11_bare": 1,
+      "fix_A_placed": 6,
+      "fix_A_bare": 1,
+      "fix_B_placed": 6,
+      "fix_B_bare": 1,
+      "fix_A_diffs": 0,
+      "fix_B_diffs": 0
+    },
+    "Same-band right host": {
+      "cases": 1,
+      "r11_placed": 1,
+      "r11_bare": 0,
+      "fix_A_placed": 0,
+      "fix_A_bare": 0,
+      "fix_B_placed": 1,
+      "fix_B_bare": 0,
+      "fix_A_diffs": 1,
+      "fix_B_diffs": 0
+    }
+  }
+}
