@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="14" time="0.320" timestamp="2026-11-17T20:02:02.039035" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[-roles0-0]" time="0.005"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x774d005aec00&gt; = placement.score">heading = '', roles = {}, expected = 0
+
+    @pytest.mark.parametrize('heading,roles,expected', [
+        ('', {}, 0), ('RECIPIENT:', {}, 0), ('COMPANY:', {}, 0),
+        ('For and on behalf of COMPANY', {}, 0),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of COMPANY'}, 0),
+        ('RECIPIENT:', {'recipient': 'NORTHWIND TRADERS LLC'}, 4),
+        ('NORTHWIND TRADERS LLC', {}, 4),
+        ('Chris Jones', {}, 4),
+    ])
+    def test_heading_is_normalized_before_identifying_other_party(heading, roles, expected):
+        target = block(40, 450, 'HARBOR LIGHT GROUP, INC.')
+        other = block(40, 290, heading)
+        fleet = block(280, 290, 'FLEET TEST CO.')
+&gt;       assert placement.score(PAT[0], target, roles, [target, other, fleet]) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x774d005aec00&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r20_boundaries.py:30: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[RECIPIENT:-roles1-0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x774d005aec00&gt; = placement.score">heading = 'RECIPIENT:', roles = {}, expected = 0
+
+    @pytest.mark.parametrize('heading,roles,expected', [
+        ('', {}, 0), ('RECIPIENT:', {}, 0), ('COMPANY:', {}, 0),
+        ('For and on behalf of COMPANY', {}, 0),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of COMPANY'}, 0),
+        ('RECIPIENT:', {'recipient': 'NORTHWIND TRADERS LLC'}, 4),
+        ('NORTHWIND TRADERS LLC', {}, 4),
+        ('Chris Jones', {}, 4),
+    ])
+    def test_heading_is_normalized_before_identifying_other_party(heading, roles, expected):
+        target = block(40, 450, 'HARBOR LIGHT GROUP, INC.')
+        other = block(40, 290, heading)
+        fleet = block(280, 290, 'FLEET TEST CO.')
+&gt;       assert placement.score(PAT[0], target, roles, [target, other, fleet]) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x774d005aec00&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r20_boundaries.py:30: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[COMPANY:-roles2-0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x774d005aec00&gt; = placement.score">heading = 'COMPANY:', roles = {}, expected = 0
+
+    @pytest.mark.parametrize('heading,roles,expected', [
+        ('', {}, 0), ('RECIPIENT:', {}, 0), ('COMPANY:', {}, 0),
+        ('For and on behalf of COMPANY', {}, 0),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of COMPANY'}, 0),
+        ('RECIPIENT:', {'recipient': 'NORTHWIND TRADERS LLC'}, 4),
+        ('NORTHWIND TRADERS LLC', {}, 4),
+        ('Chris Jones', {}, 4),
+    ])
+    def test_heading_is_normalized_before_identifying_other_party(heading, roles, expected):
+        target = block(40, 450, 'HARBOR LIGHT GROUP, INC.')
+        other = block(40, 290, heading)
+        fleet = block(280, 290, 'FLEET TEST CO.')
+&gt;       assert placement.score(PAT[0], target, roles, [target, other, fleet]) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x774d005aec00&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r20_boundaries.py:30: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[For and on behalf of COMPANY-roles3-0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x774d005aec00&gt; = placement.score">heading = 'For and on behalf of COMPANY', roles = {}, expected = 0
+
+    @pytest.mark.parametrize('heading,roles,expected', [
+        ('', {}, 0), ('RECIPIENT:', {}, 0), ('COMPANY:', {}, 0),
+        ('For and on behalf of COMPANY', {}, 0),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of COMPANY'}, 0),
+        ('RECIPIENT:', {'recipient': 'NORTHWIND TRADERS LLC'}, 4),
+        ('NORTHWIND TRADERS LLC', {}, 4),
+        ('Chris Jones', {}, 4),
+    ])
+    def test_heading_is_normalized_before_identifying_other_party(heading, roles, expected):
+        target = block(40, 450, 'HARBOR LIGHT GROUP, INC.')
+        other = block(40, 290, heading)
+        fleet = block(280, 290, 'FLEET TEST CO.')
+&gt;       assert placement.score(PAT[0], target, roles, [target, other, fleet]) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x774d005aec00&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r20_boundaries.py:30: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[RECIPIENT:-roles4-0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of COMPANY'}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x774d005aec00&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'For and on behalf of COMPANY'}
+expected = 0
+
+    @pytest.mark.parametrize('heading,roles,expected', [
+        ('', {}, 0), ('RECIPIENT:', {}, 0), ('COMPANY:', {}, 0),
+        ('For and on behalf of COMPANY', {}, 0),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of COMPANY'}, 0),
+        ('RECIPIENT:', {'recipient': 'NORTHWIND TRADERS LLC'}, 4),
+        ('NORTHWIND TRADERS LLC', {}, 4),
+        ('Chris Jones', {}, 4),
+    ])
+    def test_heading_is_normalized_before_identifying_other_party(heading, roles, expected):
+        target = block(40, 450, 'HARBOR LIGHT GROUP, INC.')
+        other = block(40, 290, heading)
+        fleet = block(280, 290, 'FLEET TEST CO.')
+&gt;       assert placement.score(PAT[0], target, roles, [target, other, fleet]) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x774d005aec00&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of COMPANY'}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x774d005aec00&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r20_boundaries.py:30: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[RECIPIENT:-roles5-4]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[NORTHWIND TRADERS LLC-roles6-4]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_heading_is_normalized_before_identifying_other_party[Chris Jones-roles7-4]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_independent_evidence_and_party_count_controls[two_parties]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_independent_evidence_and_party_count_controls[different_page]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_independent_evidence_and_party_count_controls[witness]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_independent_evidence_and_party_count_controls[printed_other]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_independent_evidence_and_party_count_controls[explicit_company]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r20_boundaries" name="test_independent_evidence_and_party_count_controls[printed_signer]" time="0.002" /></testsuite></testsuites>

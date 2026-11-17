@@ -1,0 +1,9 @@
+coder rc=0 head=ddfcc595041f5db88e59024670ac37aa0b9349a6
+failing-first: 185 failed, 359 passed (competition 144; realistic 34; worker 2; boundaries 5 failures).
+shipped: B-1 exact fix2; VERSION = c2a.20.
+measured only: ROLE_DEF, L-1, M-1; per-family costs in results-r20.md and hold-costs.json.
+full suite: 18376 passed, 0 failed, 0 errors, 0 skipped; no -x.
+tests: 544 added across two new test modules; new copied reviewer support; all 17832 prior IDs retained.
+replay: 29924 required cases plus 40 worker/Q4 checks; 0 blocking wrong; 0 B-1 correct-to-hold; seven goldens exact except analysis_version.
+preservation: 1846 starting files hash-verified; only placement.py changed; prior tests/fixtures/evidence/done markers unchanged; no commit or index change.
+blockers: none; exact q1real.py baseline is 34 wrong, versus review prose 38; all 48 cases now hold.

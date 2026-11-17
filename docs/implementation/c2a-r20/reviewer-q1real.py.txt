@@ -1,0 +1,44 @@
+"""Q1 realism: ordinary NDA recitals whose role definition the ROLE_DEF regex does or does not capture."""
+import sys
+sys.path.insert(0, '/tmp/rev19')
+from gens import *
+from dealroom_sign.tests.test_placement_r3 import PAT
+
+RECITALS = {
+    'parsed': 'This Agreement is entered into between FLEET TEST CO. ("Discloser") and HARBOR LIGHT ANALYTICS, INC. ("Recipient").',
+    'address': ('This Agreement is entered into between Fleet Test Co. ("Discloser") and Harbor Light Analytics, Inc., '
+                'a Delaware corporation with offices at 100 Harbor Way, Boston MA ("Recipient").'),
+    'hereinafter': 'This Agreement is entered into between Fleet Test Co. ("Discloser") and Harbor Light Analytics, Inc. (hereinafter "Recipient").',
+    'none': None,
+}
+SECOND = {'guarantor': 'HARBOR LIGHT GROUP, INC.', 'ventures': 'HARBOR LIGHT VENTURES LLC'}
+with ExitStack() as st:
+    M = modules(st, ('r19', 'fix'))
+    for (rk, recital), head, (ak, aff), both in product(RECITALS.items(), ['RECIPIENT:', 'COMPANY:', None],
+                                                        SECOND.items(), [False, True]):
+        rows = []
+        if recital:
+            # wrap at ~95 chars so each row stays on the page
+            words, line, y = recital.split(), '', 80
+            for w in words:
+                if len(line) + len(w) > 95:
+                    rows.append((y, line.strip(), False, 40)); line, y = '', y + 14
+                line += ' ' + w
+            rows.append((y, line.strip(), False, 40))
+        rows += [(250, 'DISCLOSER:', False, 40), (262, 'FLEET TEST CO.', False, 40),
+                 (300, 'By:', True, 40, 220), (360, 'Date:', True, 40, 220)]
+        if head:
+            rows.append((250, head, False, 300))
+        rows += [(300, 'By:', True, 300, 480), (360, 'Date:', True, 300, 480)]
+        rows += [(450, aff, False, 40), (490, 'By:', True, 40, 220), (550, 'Date:', True, 40, 220)]
+        allowed = {PAT[0]['email']: (300, 300, 480), new18.TWO[1]['email']: (40, 300, 220)}
+        res = run_rows(M, rows, both, allowed)
+        r = res['r19'][0]
+        print(rk.ljust(11), repr(head).ljust(13), ak.ljust(9), 'DAN+PAT' if both else 'PAT    ',
+              'r19:', 'WRONG' if res['r19'][1] else r['status'], pat_fields(r),
+              '| fix:', 'WRONG' if res['fix'][1] else res['fix'][0]['status'], '| calls', res['r19'][2] + res['fix'][2])
+    # real worker for one ordinary case
+    rows_w = rows
+    wk = run_rows({'r19': M['r19']}, rows_w, both, allowed, worker=True)['r19']
+    print('worker (last case):', wk[0]['status'], pat_fields(wk[0]), 'equals in-process', wk[0] == res['r19'][0])
+print('http', forbidden.call_count)

@@ -1,0 +1,20 @@
+import sys
+sys.path.insert(0, '/tmp/rev19')
+import h2
+from h import *
+SRC['fix2'] = h2.SRC['fix2']
+from dealroom_sign.tests.test_placement_r3 import PAT
+ROWS = [(80, 'This Agreement is entered into between Fleet Test Co. ("Discloser") and Harbor Light Analytics, Inc.,', False, 40),
+        (94, 'a Delaware corporation with offices at 100 Harbor Way, Boston MA ("Recipient").', False, 40),
+        (250, 'DISCLOSER:', False, 40), (262, 'FLEET TEST CO.', False, 40), (300, 'By:', True, 40, 220), (360, 'Date:', True, 40, 220),
+        (250, 'RECIPIENT:', False, 300), (300, 'By:', True, 300, 480), (360, 'Date:', True, 300, 480),
+        (450, 'HARBOR LIGHT GROUP, INC.', False, 40), (490, 'By:', True, 40, 220), (550, 'Date:', True, 40, 220)]
+with ExitStack() as st:
+    M = modules(st, ('r19', 'fix2'))
+    for s in (PAT, [new18.TWO[1], *PAT]):
+        for n, m in M.items():
+            mo = Mock()
+            r = m.place(new18.rows_pdf(ROWS), s, model_client=mo)
+            print(n, 'signers', len(s), r['status'], r.get('analysis_version'),
+                  [(f['signer'][:3], f['type'], f['evidence']['line'], f['confidence']) for f in r['fields']], 'model calls', mo.call_count)
+print('http', forbidden.call_count)

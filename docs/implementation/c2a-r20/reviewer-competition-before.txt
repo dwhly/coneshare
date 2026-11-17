@@ -1,0 +1,7 @@
+R19 WRONG Competition ('RECIPIENT:', None, 'HARBOR LIGHT GROUP, INC.', 0, False, False) [('pat', 'SIGNATURE', [64.45, 450.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 510.0, 220.0], 'high')] fix: needs_sender
+R19 WRONG Competition ('RECIPIENT:', None, 'HARBOR LIGHT GROUP, INC.', 0, False, True) [('pat', 'SIGNATURE', [64.45, 450.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 510.0, 220.0], 'high')] fix: needs_sender
+R19 WRONG Competition ('RECIPIENT:', None, 'HARBOR LIGHT GROUP, INC.', 0, True, False) [('pat', 'SIGNATURE', [64.45, 450.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 510.0, 220.0], 'high')] fix: needs_sender
+R19 WRONG Competition ('RECIPIENT:', None, 'HARBOR LIGHT GROUP, INC.', 0, True, True) [('pat', 'SIGNATURE', [64.45, 450.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 510.0, 220.0], 'high')] fix: needs_sender
+elapsed 15 http 0
+Competition 480 r18 348/348/132/0 calls 0 r19 240/240/240/0 calls 0 fix 96/96/384/0 calls 0
+    {'r19>fix n>n': 240, 'r19>fix W>n': 144, 'r19>fix W>W': 96}

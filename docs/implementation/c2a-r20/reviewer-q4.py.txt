@@ -1,0 +1,82 @@
+"""Q4 attacks on same-page uniqueness, Q2 worker reproduction, F-fine hold-cost breakdown."""
+import sys
+sys.path.insert(0, '/tmp/rev19')
+import h2
+from gens import *
+SRC['fix2'] = h2.SRC['fix2']
+from dealroom_sign.tests.test_placement_r3 import PAT
+PE, DE = PAT[0]['email'], new18.TWO[1]['email']
+ALLOW = {PE: (40, 290, 220), DE: (280, 290, 460)}
+
+
+def page(pat_head, extra_rows=(), pat_extra=None, aff=None, fleet=FLEET):
+    rows = []
+    if pat_head:
+        rows.append((250, pat_head, False, 40))
+    rows += [(290, 'By:', True, 40, 220)]
+    if pat_extra:
+        rows.append((302, pat_extra, False, 40))
+    rows += [(350, 'Date:', True, 40, 220)]
+    if fleet:
+        rows.append((250, fleet, False, 280))
+    rows += [(290, 'By:', True, 280, 460), (350, 'Date:', True, 280, 460)]
+    if aff:
+        rows += [(410, aff, False, 40), (450, 'By:', True, 40, 220), (510, 'Date:', True, 40, 220)]
+    return rows + list(extra_rows)
+
+
+ATTACKS = {
+    # (a) dodge similarity on the real block, affiliate still matches the domain
+    'dodge hyphen real + GROUP aff': page('HARBOR-LIGHT ANALYTICS, INC.', aff='HARBOR LIGHT GROUP, INC.'),
+    'dodge HLA real + GROUP aff': page('HLA ANALYTICS, INC.', aff='HARBOR LIGHT GROUP, INC.'),
+    'dodge British real + GROUP aff': page('HARBOUR LIGHT ANALYTICS, INC.', aff='HARBOR LIGHT GROUP, INC.'),
+    'dodge real matches, aff spelt HARBOUR': page(HARBOR, pat_extra='Notary Public', aff='HARBOUR LIGHT GROUP, INC.'),
+    'dodge real vetoed, aff HARBORLIGHT one word': page(HARBOR, pat_extra='Notary Public', aff='HARBORLIGHT GROUP, INC.'),
+    'dodge real vetoed, aff "HL GROUP, INC."': page(HARBOR, pat_extra='Notary Public', aff='HL GROUP, INC.'),
+    # (b) parent only in a recital
+    'parent in recital, ordinary page': page(HARBOR, extra_rows=[(80, 'Harbor Light Analytics, Inc. is a subsidiary of Harbor Light Group, Inc.', False, 40)]),
+    'parent in recital, real vetoed': page(HARBOR, pat_extra='Notary Public', extra_rows=[(80, 'Harbor Light Analytics, Inc. is a subsidiary of Harbor Light Group, Inc.', False, 40)]),
+    'parent defined as role in recital': page('RECIPIENT:', extra_rows=[(80, 'between Fleet Test Co. ("Discloser") and Harbor Light Group, Inc. ("Recipient")', False, 40)]),
+    # (c) company in header / footer
+    'header HARBOR GROUP, ordinary page': page(HARBOR, extra_rows=[(30, 'HARBOR LIGHT GROUP, INC.', False, 40)]),
+    'footer HARBOR GROUP, ordinary page': page(HARBOR, extra_rows=[(760, 'HARBOR LIGHT GROUP, INC.', False, 40)]),
+    'header GROUP, real vetoed': page(HARBOR, pat_extra='Notary Public', extra_rows=[(30, 'HARBOR LIGHT GROUP, INC.', False, 40)]),
+    'header GROUP, real unnamed': page('RECIPIENT:', extra_rows=[(30, 'HARBOR LIGHT GROUP, INC.', False, 40)]),
+    'header Analytics, real unnamed': page('RECIPIENT:', extra_rows=[(30, HARBOR, False, 40)]),
+    # (d) ordinary pages that repeat the counterparty's name
+    'ordinary two-party': page(HARBOR),
+    'notice block below (no rule)': page(HARBOR, extra_rows=[(420, 'Notices to Recipient:', False, 40), (432, HARBOR, False, 40),
+                                                             (444, '100 Harbor Way, Boston MA', False, 40)]),
+    'second Harbor block (acknowledgment)': page(HARBOR, aff=HARBOR),
+    'stacked co-signer under one heading': [(250, HARBOR, False, 40), (290, 'By:', True, 40, 220), (330, 'By:', True, 40, 220),
+                                            (370, 'Date:', True, 40, 220), (250, FLEET, False, 280), (290, 'By:', True, 280, 460),
+                                            (370, 'Date:', True, 280, 460)],
+    'heading repeated in caption "For HARBOR..."': page(HARBOR, pat_extra=None, extra_rows=[(270, 'For ' + HARBOR, False, 40)]),
+}
+with ExitStack() as st:
+    M = modules(st, ('r18', 'r19', 'fix2'))
+    for k, rows in ATTACKS.items():
+        for both in (False, True):
+            res = run_rows(M, rows, both, ALLOW)
+            print(k.ljust(44), 'DAN+PAT' if both else 'PAT    ',
+                  *['%s:%s' % (n, 'WRONG' if res[n][1] else res[n][0]['status']) for n in M],
+                  pat_fields(res['r19'][0]), 'calls', sum(v[2] for v in res.values()))
+    # Q2: my r18 B-1 reproduction on the real worker
+    rows = [(250, HARBOR, False, 40), (290, 'By:', True, 40, 220), (302, 'Name: Patricia Smith', False, 40),
+            (350, 'Date:', True, 40, 220), (250, FLEET, False, 280), (290, 'By:', True, 280, 460), (350, 'Date:', True, 280, 460),
+            (410, 'HARBOR LIGHT GROUP, INC.', False, 40), (450, 'By:', True, 40, 220), (510, 'Date:', True, 40, 220)]
+    for s in (PAT, [new18.TWO[1], *PAT]):
+        mo = Mock()
+        r = M['r19'].place(new18.rows_pdf(rows), s, model_client=mo)
+        print('r18 B-1 repro, real worker r19:', len(s), r['status'], r['fields'], 'model calls', mo.call_count)
+    # F fine: r18 -> r19 correct->hold, by gap
+    gaps = Counter()
+    MM = {'r18': M['r18'], 'r19': M['r19']}
+    for g, c, rows, both, allowed in f_fine():
+        if g != 'F fine':
+            continue
+        res = run_rows(MM, rows, both, allowed)
+        if res['r18'][0]['status'] == 'placed' and not res['r18'][1] and res['r19'][0]['status'] != 'placed':
+            gaps[eval(c)[1]] += 1
+    print('F fine correct->hold by gap', sorted(gaps.items()), sum(gaps.values()))
+print('http', forbidden.call_count)

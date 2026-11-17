@@ -1,0 +1,31 @@
+"""Usage: run.py <family> [modules...]  — wrong/placed/holds/bare per module, r19->fix transitions."""
+import sys, time
+sys.path.insert(0, '/tmp/rev19')
+from gens import *
+
+fam = sys.argv[1]
+names = tuple(sys.argv[2:]) or ('r18', 'r19', 'fix')
+GEN = {'veto': veto_matrix, 'aff': ev.affiliate_cases, 'comp': competition, 'l1': l1_cases,
+       'f': f_fine, 'added': added}
+G, shown = {}, Counter()
+t = time.time()
+with ExitStack() as st:
+    M = modules(st, names)
+    for g, c, rows, both, allowed in GEN[fam]():
+        C = G.setdefault(g, Counter())
+        C['cases'] += 1
+        res = run_rows(M, rows, both, allowed)
+        for n, (r, w, calls) in res.items():
+            C[n + '_wrong'] += w
+            C[n + '_' + STATUS[r['status']]] += 1
+            C[n + '_calls'] += calls
+        if 'r19' in res and 'fix' in res:
+            k = lambda n: 'W' if res[n][1] else res[n][0]['status'][0]
+            C['r19>fix ' + k('r19') + '>' + k('fix')] += 1
+        if 'r19' in res and res['r19'][1] and shown[g] < int(os.environ.get('SHOW', '4')):
+            shown[g] += 1
+            print('R19 WRONG', g, c, pat_fields(res['r19'][0]), 'fix:', res.get('fix', [{'status': '-'}])[0]['status'])
+print('elapsed', round(time.time() - t), 'http', forbidden.call_count)
+for g, C in G.items():
+    print(g, C['cases'], *['%s %d/%d/%d/%d calls %d' % (n, C[n + '_wrong'], C[n + '_placed'], C[n + '_holds'], C[n + '_bare'], C[n + '_calls']) for n in M])
+    print('   ', {k: v for k, v in C.items() if k.startswith('r19>fix')})

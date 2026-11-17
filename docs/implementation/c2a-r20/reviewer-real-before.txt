@@ -1,0 +1,50 @@
+parsed      'RECIPIENT:'  guarantor PAT     r19: needs_sender [] | fix: needs_sender | calls 0
+parsed      'RECIPIENT:'  guarantor DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+parsed      'RECIPIENT:'  ventures  PAT     r19: needs_sender [] | fix: needs_sender | calls 0
+parsed      'RECIPIENT:'  ventures  DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+parsed      'COMPANY:'    guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+parsed      'COMPANY:'    guarantor DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+parsed      'COMPANY:'    ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+parsed      'COMPANY:'    ventures  DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+parsed      None          guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+parsed      None          guarantor DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+parsed      None          ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+parsed      None          ventures  DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+address     'RECIPIENT:'  guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     'RECIPIENT:'  guarantor DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     'RECIPIENT:'  ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     'RECIPIENT:'  ventures  DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     'COMPANY:'    guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     'COMPANY:'    guarantor DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     'COMPANY:'    ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     'COMPANY:'    ventures  DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     None          guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     None          guarantor DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     None          ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+address     None          ventures  DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'RECIPIENT:'  guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'RECIPIENT:'  guarantor DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'RECIPIENT:'  ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'RECIPIENT:'  ventures  DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'COMPANY:'    guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'COMPANY:'    guarantor DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'COMPANY:'    ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter 'COMPANY:'    ventures  DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter None          guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter None          guarantor DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter None          ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+hereinafter None          ventures  DAN+PAT r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+none        'RECIPIENT:'  guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+none        'RECIPIENT:'  guarantor DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+none        'RECIPIENT:'  ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+none        'RECIPIENT:'  ventures  DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+none        'COMPANY:'    guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+none        'COMPANY:'    guarantor DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+none        'COMPANY:'    ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+none        'COMPANY:'    ventures  DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+none        None          guarantor PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+none        None          guarantor DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+none        None          ventures  PAT     r19: WRONG [('pat', 'SIGNATURE', [64.45, 490.0, 220.0], 'high'), ('pat', 'DATE', [73.9, 550.0, 220.0], 'high')] | fix: needs_sender | calls 0
+none        None          ventures  DAN+PAT r19: needs_sender [] | fix: needs_sender | calls 0
+worker (last case): needs_sender [] equals in-process True
+http 0

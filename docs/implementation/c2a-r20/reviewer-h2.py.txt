@@ -1,0 +1,8 @@
+"""Adds 'fix2': the Q1 hold applies only on pages with three or more non-witness party blocks."""
+from h import *
+_a = "                    if not named:\n                        return value\n"
+assert SRC['fix'].count(_a) == 1
+SRC['fix2'] = SRC['fix'].replace(_a, """                    if not named and sum(b.line.page == block.line.page and not witness_block(b)
+                                         for b in blocks) >= 3:
+                        return value
+""")

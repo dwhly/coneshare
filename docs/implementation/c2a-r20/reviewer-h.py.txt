@@ -1,0 +1,87 @@
+"""Gate 3 r19 reviewer harness (scratch, outside the repos)."""
+import sys, os, json, copy, subprocess, importlib.util, tempfile, shutil, atexit
+sys.dont_write_bytecode = True
+from pathlib import Path
+from collections import Counter
+from contextlib import ExitStack
+from types import ModuleType
+from unittest.mock import Mock, patch
+
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']:
+    os.environ.pop(k, None)
+ROOT = Path('/root/worktrees/send-c1b')
+D = ROOT / 'docs/implementation'
+sys.path.insert(0, str(ROOT / 'backend'))
+sys.path.insert(0, str(D / 'c2a-r17'))
+spec = importlib.util.spec_from_file_location('r18ev', D / 'c2a-r18/check_evidence.py')
+ev = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(ev)
+old, prior, new18 = ev.old, ev.prior, ev.new
+new17 = prior.new
+TMP = Path(tempfile.mkdtemp(prefix='rev19-'))
+atexit.register(shutil.rmtree, TMP, True)
+from dealroom_sign import placement as _p
+
+
+def make_module(name, source, stack=None):
+    module = ModuleType('rev19_' + name)
+    module.__file__ = _p.__file__
+    sys.modules[module.__name__] = module
+    exec(compile(source, module.__name__, 'exec'), module.__dict__)
+    worker_root = Path(tempfile.mkdtemp(prefix='worker-' + name + '-', dir=TMP))
+    package = worker_root / 'dealroom_sign'
+    package.mkdir()
+    (package / '__init__.py').write_text('')
+    (package / 'placement.py').write_text(source)
+    (package / 'placement_worker.py').write_bytes((ROOT / 'backend/dealroom_sign/placement_worker.py').read_bytes())
+    module.WORKER_CWD = worker_root
+    return module
+
+
+def show(commit):
+    return subprocess.check_output(['git', 'show', commit + ':' + old.PRODUCT], cwd=ROOT).decode()
+
+
+SRC = {'r18': show('9ebf85a0'), 'r19': show('ddfcc595')}
+assert SRC['r19'] == (ROOT / old.PRODUCT).read_text()
+assert SRC['r19'] == (D / 'c2a-r19/release-placement.py.txt').read_text()
+
+# Q1 candidate: domain-only company inference holds when another party block on the page is unidentified.
+_anchor = "                if similarity(company, other_heading):\n                    return value\n"
+assert SRC['r19'].count(_anchor) == 1
+FIX = _anchor + """            if not signer.get('company'):
+                for other in blocks:
+                    if (other is block or other.line.page != block.line.page or witness_block(other)
+                            or printed_names(other, blocks)):
+                        continue
+                    other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
+                    other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
+                    named = (company_text(other_heading) and any(t not in STOP for t in tokens(other_heading))
+                             or person_text(other_heading))
+                    if not named:
+                        return value
+"""
+SRC['fix'] = SRC['r19'].replace(_anchor, FIX)
+STATUS = {'needs_sender': 'holds', 'placed': 'placed', 'bare': 'bare'}
+forbidden = Mock(side_effect=AssertionError('HTTP forbidden'))
+
+
+def modules(stack, names=('r18', 'r19')):
+    out = {n: make_module(n, SRC[n]) for n in names}
+    stack.enter_context(patch('httpx.Client.send', forbidden))
+    return out
+
+
+def run_rows(M, rows, both, allowed, worker=False, signers=None):
+    pdf = new18.rows_pdf(rows)
+    res = {}
+    for n, m in M.items():
+        mo = Mock()
+        s = signers if signers is not None else new18.signers(both)
+        r = (m.place(pdf, s, model_client=mo) if worker else old.r14.in_process(m, pdf, s, mo))
+        res[n] = (r, bool(new17.wrong_fields(r, allowed)), mo.call_count)
+    return res
+
+
+def pat_fields(r):
+    return [(f['signer'][:3], f['type'], f['evidence']['line'], f['confidence']) for f in r['fields'] if f['signer'].startswith('pat')]

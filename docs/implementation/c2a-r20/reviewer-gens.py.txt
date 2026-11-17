@@ -1,0 +1,25 @@
+"""Generators: my r18 families (verbatim from /tmp/rev18/q3.py) plus the r19 veto matrix."""
+from h import *
+from itertools import product, permutations
+_src = open('/tmp/rev18/q3.py').read().split("GEN = {")[0].split('from h import *')[1]
+_src = _src.replace("which = sys.argv[1]\n", "")
+exec(_src)
+from dealroom_sign.tests import test_placement_r19 as t19
+
+
+def veto_matrix():
+    for extra, aff, ax, both in t19.VETO_MATRIX:
+        rows, allowed = t19.veto_rows(extra, aff, ax)
+        yield 'Veto matrix', repr((extra, aff, ax, both)), rows, both, allowed
+
+
+def all_review():
+    yield from veto_matrix()
+    yield from ev.affiliate_cases()
+    yield from competition()
+    yield from l1_cases()
+    yield from f_fine()
+
+
+def added():
+    yield from prior.added_cases()

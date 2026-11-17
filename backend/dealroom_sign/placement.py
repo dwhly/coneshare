@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.19'
+VERSION = 'c2a.20'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -918,6 +918,20 @@ def score(signer, block, roles, blocks=()):
                 other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
                 if similarity(company, other_heading):
                     return value
+            # A domain cannot resolve a third party's unnamed signing block.
+            # Explicit company and printed-name evidence keep their own paths.
+            if not signer.get('company'):
+                for other in blocks:
+                    if (other is block or other.line.page != block.line.page or witness_block(other)
+                            or printed_names(other, blocks)):
+                        continue
+                    other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
+                    other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
+                    named = (company_text(other_heading) and any(t not in STOP for t in tokens(other_heading))
+                             or person_text(other_heading))
+                    if not named and sum(b.line.page == block.line.page and not witness_block(b)
+                                         for b in blocks) >= 3:
+                        return value
         value += 4
     return value
 
