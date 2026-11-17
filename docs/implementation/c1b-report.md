@@ -1921,3 +1921,78 @@ and HEAD remains `0c190e9b`. No staging or commit was performed.
 The local marker is written. Copying it to the requested `dealroom-sign-edd`
 brief path failed with **Read-only file system**; the external marker remains
 undelivered. Code, tests, evidence, and the local payload are complete.
+
+
+## C2a r13
+
+Applied Gate 3 r12 B-1 **fix A′ exactly** on `4ad9f7e2`, with
+`analysis_version = c2a.13`. At absorbed-name collection the caption rectangle
+now spans its label and rule:
+`[min(label.x0, line.x0), label.y0, max(label.x1, line.x1), line.y]`.
+Fix A's existing same-page containment clause uses this union. Host selection,
+scoring, extents, exemptions, partitioning, and worker payload are unchanged.
+[EDD note](c2a-r13/edd-note.md).
+
+Failing first on unchanged r12: **573 failed, 376 passed, 0 errors/skips** in
+234.430 seconds. Failures were the exact review reproduction (1), the
+seven-caption × x150/200/260 × dy0/20 grid (32 of 42), and the short-caption
+sweep (540 of 864). The new file contains **949 real-worker tests**, including
+42 Low controls. Every B-1 case requires `needs_sender/ambiguous_identity`,
+zero fields, and zero model calls. No existing test was changed or skipped.
+[Summary](c2a-r13/failing-first-summary.json) ·
+[Per-case outcomes](c2a-r13/failing-first-summary-cases.json).
+
+The **2,699-case counterfactual execution** reproduces the reviewer table:
+all 864 sweep cases now hold, with exactly 540 full-result changes from r12;
+the reproduction and 32 same-band cases also change from placements to holds.
+There are **zero other full-result differences from r12**, comparing all keys
+except `analysis_version`. Matrix 1, Matrix 2, all 1,020 r11 B-1 cases, 204
+Signature controls, 16 M-1 cases, 72 r9 heading cases, 40 r9 H-1 cases, the
+original same-band probe, all Low controls, and the seven goldens preserve
+r12 results. The original table totals 1,750 cases, despite the review's
+1,751 prose count. [Executed table](c2a-r13/counterfactual-summary.json) ·
+[Full per-case results](c2a-r13/counterfactual-cases.json).
+
+All **seven complete real-worker goldens equal r4/r5/r11/r12 exactly except
+`analysis_version`**, including native fields. Six place; bare stays bare.
+Only unusual uses one local confirming stub; external model calls are zero.
+[Golden comparison](c2a-r13/golden-comparison.json).
+
+**Review L-1:** Two controls pin the existing printed-name policy when both
+label and rule end before the right block's extent. Pat still places at
+signature y290/date y400 with high confidence and no model call. This is the
+review's nonblocking residual, outside B-1; scoring policy remains unchanged.
+The tests do not claim to reproduce the unspecified 36-case Low grid.
+
+**Review L-2:** Forty controls add Pat's separate HARBOR line at y560 to
+Matrix 1: 20 PAT-only placements on that line (score 4, margin 4), and 20
+Dan+Pat holds. All match r12 in full and make zero model calls.
+
+**Review N-1:** The r12 EDD note's `HEAD remains 0c190e9b` and its
+`HEAD_unchanged` audit refer to the coder's pre-commit execution. The manager
+subsequently committed r12 as `4ad9f7e2`, which is the base for this r13 run.
+Historical evidence is preserved; those older statements do not describe the
+current HEAD. No staging or commit is performed for r13.
+
+**Full signing suite: 4,250 passed, 0 failures/errors/skips, 82 warnings,
+1,178.745 seconds** (3,301 existing + 949 new).
+[Summary](c2a-r13/full-suite-summary.json) ·
+[Every test outcome](c2a-r13/full-suite-summary-cases.json).
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+```
+
+Only reporting arguments were added. The
+[preservation audit](c2a-r13/preservation-summary.json) confirms 51 existing
+test/fixture files unchanged, the exact requested product edit, matching
+execution hashes, append-only report, unchanged memory, empty index, and
+unchanged HEAD `4ad9f7e2`. `git diff --check` passes. No staging or commit was
+performed. [Completion marker](c2a-r13/counterparty-c2a-r13.done).
+
+The local r13 marker is written. The subsequent copy to the requested external
+`dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-r13.done` failed with
+**Read-only file system**; that destination is outside this session's writable
+roots and approval escalation is unavailable. The ready local payload records
+this blocker. Implementation, verification, and evidence are complete; external
+marker delivery is the only unfinished action.

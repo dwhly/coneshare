@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.12'
+VERSION = 'c2a.13'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -559,7 +559,10 @@ def extract(pdf, *, deadline=None):
                     # typed identity. The six unconditional contact captions
                     # above deliberately do not participate in this veto.
                     if host is not None:
-                        absorbed_names[pno].extend((host, line.label, t) for t in texts
+                        caption = dict(rect=[min(line.label['rect'][0], line.x0),
+                                             line.label['rect'][1],
+                                             max(line.label['rect'][2], line.x1), line.y])
+                        absorbed_names[pno].extend((host, caption, t) for t in texts
                                                   if t['rect'][1] > host.y
                                                   and person_text(t['text']))
             hosts = []

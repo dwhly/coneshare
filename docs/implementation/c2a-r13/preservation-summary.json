@@ -1,0 +1,22 @@
+{
+  "base": "4ad9f7e20822ca15e8c5a5196f8b61c8cb59a312",
+  "branch": "agent/c1b-counterparty",
+  "HEAD_unchanged": true,
+  "index_empty": true,
+  "existing_test_files_and_fixtures_unchanged": 51,
+  "existing_test_changes": [],
+  "new_test_cases": 949,
+  "only_changed_product_function": "extract",
+  "product_exactly_requested_union_and_version": true,
+  "host_lookup_and_boolean_hook_unchanged": true,
+  "failing_first_production_exact_to_base": true,
+  "failing_first_and_final_tests_identical": true,
+  "final_suite_and_evidence_production_identical": true,
+  "report_append_only": true,
+  "memory_unchanged": true,
+  "diff_check_passed": true,
+  "changed_tracked_files": [
+    "backend/dealroom_sign/placement.py",
+    "docs/implementation/c1b-report.md"
+  ]
+}

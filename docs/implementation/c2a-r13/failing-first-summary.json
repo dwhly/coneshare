@@ -1,0 +1,57 @@
+{
+  "command": "SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests/test_placement_r13.py",
+  "reporting_arguments": [
+    "--tb=short",
+    "--junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r13/failing-first-summary.xml"
+  ],
+  "base": "4ad9f7e20822ca15e8c5a5196f8b61c8cb59a312",
+  "exit_code": 1,
+  "tests": 949,
+  "failures": 573,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 234.43,
+  "groups": {
+    "test_b1_review_reproduction_holds": {
+      "failure": 1
+    },
+    "test_same_band_caption_label_and_rule_hold": {
+      "failure": 32,
+      "passed": 10
+    },
+    "test_b1_short_caption_sweep_holds": {
+      "failure": 540,
+      "passed": 324
+    },
+    "test_l1_name_outside_absorbed_rule_preserves_printed_name_policy": {
+      "passed": 2
+    },
+    "test_l2_separate_own_company_line_preserves_scoring": {
+      "passed": 40
+    }
+  },
+  "raw_suite_logs_retained": false,
+  "source_sha256": {
+    "backend/dealroom_sign/placement.py": "6ba039d815d04aec8116b675572fd6473994bfb90f6e55602a1aab5ebf032de5",
+    "backend/dealroom_sign/tests/test_placement_r13.py": "8494f384a6c997fd54f02c623f41a3dea5d996ca1f7e13bb45f8d70afbc6462f",
+    "backend/dealroom_sign/tests/test_placement_r12.py": "1d870b29519bbc563a84a7e6b0509678e72f8f57cb73354d5ca7888ca90f7ce5",
+    "backend/dealroom_sign/tests/test_placement_r11.py": "900bf22f9cd2c33756396bcd7274c830bac0f8c97dfc53a3e7a7c72a7b0d11c6",
+    "backend/dealroom_sign/tests/test_placement_r10.py": "a4196297a2a4dd14d7157711bf0844e2d7daa5eced2e1dbf5e2668fb492782b3",
+    "backend/dealroom_sign/tests/test_placement_r9.py": "7fddf9313139aab2bc94f9e13601b2fb4390f382869118a1f520ad0bd617fc14"
+  },
+  "passed": 376,
+  "failure_inventory": {
+    "test_b1_review_reproduction_holds": {
+      "example_test": "dealroom_sign.tests.test_placement_r13.test_b1_review_reproduction_holds",
+      "message": "AssertionError: {'analysis_version': 'c2a.12', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [363.9, 400.0, 548.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}\nassert 'placed' == 'needs_sender'\n  \n  - needs_sender\n  + placed"
+    },
+    "test_same_band_caption_label_and_rule_hold": {
+      "example_test": "dealroom_sign.tests.test_placement_r13.test_same_band_caption_label_and_rule_hold[0-150-Authorised signatory:]",
+      "message": "AssertionError: {'analysis_version': 'c2a.12', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [363.9, 400.0, 548.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}\nassert 'placed' == 'needs_sender'\n  \n  - needs_sender\n  + placed"
+    },
+    "test_b1_short_caption_sweep_holds": {
+      "example_test": "dealroom_sign.tests.test_placement_r13.test_b1_short_caption_sweep_holds[Pat Smith-left_only-0-300-200-Firma:]",
+      "message": "AssertionError: {'analysis_version': 'c2a.12', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [333.9, 400.0, 518.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}\nassert 'placed' == 'needs_sender'\n  \n  - needs_sender\n  + placed"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+coder rc=0 head=4ad9f7e20822ca15e8c5a5196f8b61c8cb59a312
+failing-first: 573 failed, 376 passed, 0 errors/skips on unchanged r12; counts recorded before fix.
+full-suite: 4250 passed, 0 failures/errors/skips, 82 warnings, 1178.745 seconds.
+goldens: all 7 full results exact except analysis_version; unusual has 1 local stub call, no external calls.
+existing-test changes: none; 51 existing test/fixture files unchanged; no staging or commit.
+surprising: 0 unexpected result differences; review table totals 1750; external brief marker write blocked by read-only filesystem (local payload ready).

@@ -1,0 +1,170 @@
+{
+  "base": "4ad9f7e20822ca15e8c5a5196f8b61c8cb59a312",
+  "r11_base": "0c190e9b45db25ee5c1b8d71cdc2b040cd956fab",
+  "analysis_version": "c2a.13",
+  "baseline_sha256": {
+    "r11": "d725166c26cc38654ae3763dc93c00357520f440d655430551ee60bbe47733d7",
+    "r12": "6ba039d815d04aec8116b675572fd6473994bfb90f6e55602a1aab5ebf032de5"
+  },
+  "production_sha256": "5ddd31578a194db7113c9074d849e56591bfd47860a95d603d1b42f461d26936",
+  "method": "place via in-process extract + prepare_blocks; goldens also via real worker",
+  "external_model_calls": 0,
+  "cases": 2699,
+  "groups": {
+    "Matrix 1": {
+      "cases": 120,
+      "r11_placed": 120,
+      "r11_bare": 0,
+      "r12_placed": 0,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 120,
+      "r13_vs_r12_diffs": 0
+    },
+    "Matrix 2": {
+      "cases": 270,
+      "r11_placed": 135,
+      "r11_bare": 0,
+      "r12_placed": 0,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 270,
+      "r13_vs_r12_diffs": 0
+    },
+    "r11 B-1": {
+      "cases": 1020,
+      "r11_placed": 0,
+      "r11_bare": 0,
+      "r12_placed": 0,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 0
+    },
+    "Signature controls": {
+      "cases": 204,
+      "r11_placed": 6,
+      "r11_bare": 0,
+      "r12_placed": 6,
+      "r12_bare": 0,
+      "r13_placed": 6,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 0
+    },
+    "M-1": {
+      "cases": 16,
+      "r11_placed": 16,
+      "r11_bare": 0,
+      "r12_placed": 16,
+      "r12_bare": 0,
+      "r13_placed": 16,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 0
+    },
+    "r9 heading matrix": {
+      "cases": 72,
+      "r11_placed": 6,
+      "r11_bare": 0,
+      "r12_placed": 6,
+      "r12_bare": 0,
+      "r13_placed": 6,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 0
+    },
+    "r9 H-1": {
+      "cases": 40,
+      "r11_placed": 0,
+      "r11_bare": 0,
+      "r12_placed": 0,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 0
+    },
+    "Seven goldens": {
+      "cases": 7,
+      "r11_placed": 6,
+      "r11_bare": 1,
+      "r12_placed": 6,
+      "r12_bare": 1,
+      "r13_placed": 6,
+      "r13_bare": 1,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 0
+    },
+    "Same-band right host": {
+      "cases": 1,
+      "r11_placed": 1,
+      "r11_bare": 0,
+      "r12_placed": 0,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 1,
+      "r13_vs_r12_diffs": 0
+    },
+    "r12 B-1 reproduction": {
+      "cases": 1,
+      "r11_placed": 1,
+      "r11_bare": 0,
+      "r12_placed": 1,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 1
+    },
+    "r13 same-band grid": {
+      "cases": 42,
+      "r11_placed": 42,
+      "r11_bare": 0,
+      "r12_placed": 32,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 10,
+      "r13_vs_r12_diffs": 32
+    },
+    "r12 B-1 sweep": {
+      "cases": 864,
+      "r11_placed": 864,
+      "r11_bare": 0,
+      "r12_placed": 540,
+      "r12_bare": 0,
+      "r13_placed": 0,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 324,
+      "r13_vs_r12_diffs": 540
+    },
+    "L-1 short-rule controls": {
+      "cases": 2,
+      "r11_placed": 2,
+      "r11_bare": 0,
+      "r12_placed": 2,
+      "r12_bare": 0,
+      "r13_placed": 2,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 0,
+      "r13_vs_r12_diffs": 0
+    },
+    "L-2 own-company controls": {
+      "cases": 40,
+      "r11_placed": 20,
+      "r11_bare": 0,
+      "r12_placed": 20,
+      "r12_bare": 0,
+      "r13_placed": 20,
+      "r13_bare": 0,
+      "r12_vs_r11_diffs": 40,
+      "r13_vs_r12_diffs": 0
+    }
+  },
+  "unexpected_differences": []
+}
