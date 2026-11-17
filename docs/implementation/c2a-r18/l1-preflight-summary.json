@@ -1,0 +1,110 @@
+{
+  "base": "1084b075",
+  "source_sha256": {
+    "r17": "fa950fbb7dc342de2d1dcaba1f0056cb8ed9a2870af06f97acb461ce7ea1b9d9",
+    "b1": "6c55fec65930717c8ed2d9f6cdd1d2ec58a26d77b2f50f405f5b2c5e349bf58e",
+    "l1": "81ce4f08e69a9b9fb0754c9fa2bd52b18ffc1251251e8f7c2c3301f7c9cdcab8"
+  },
+  "cases": 1152,
+  "groups": {
+    "F three-party permutations": {
+      "cases": 288,
+      "r17_wrong": 0,
+      "r17_placed": 130,
+      "r17_holds": 158,
+      "r17_bare": 0,
+      "r17_model_calls": 0,
+      "b1_wrong": 0,
+      "b1_placed": 130,
+      "b1_holds": 158,
+      "b1_bare": 0,
+      "b1_model_calls": 0,
+      "l1_wrong": 0,
+      "l1_placed": 130,
+      "l1_holds": 158,
+      "l1_bare": 0,
+      "l1_model_calls": 0,
+      "b1_full_diffs": 0,
+      "l1_full_diffs": 0
+    },
+    "F heading gaps long": {
+      "cases": 432,
+      "r17_wrong": 0,
+      "r17_placed": 210,
+      "r17_holds": 222,
+      "r17_bare": 0,
+      "r17_model_calls": 0,
+      "b1_wrong": 0,
+      "b1_placed": 210,
+      "b1_holds": 222,
+      "b1_bare": 0,
+      "b1_model_calls": 0,
+      "l1_wrong": 0,
+      "l1_placed": 210,
+      "l1_holds": 222,
+      "l1_bare": 0,
+      "l1_model_calls": 0,
+      "b1_full_diffs": 0,
+      "l1_full_diffs": 0
+    },
+    "F heading gaps short": {
+      "cases": 432,
+      "r17_wrong": 0,
+      "r17_placed": 216,
+      "r17_holds": 216,
+      "r17_bare": 0,
+      "r17_model_calls": 0,
+      "b1_wrong": 0,
+      "b1_placed": 216,
+      "b1_holds": 216,
+      "b1_bare": 0,
+      "b1_model_calls": 0,
+      "l1_wrong": 0,
+      "l1_placed": 216,
+      "l1_holds": 216,
+      "l1_bare": 0,
+      "l1_model_calls": 0,
+      "b1_full_diffs": 0,
+      "l1_full_diffs": 0
+    }
+  },
+  "bars": {
+    "b1_zero_wrong_every_family": true,
+    "l1_zero_wrong_every_family": true,
+    "r17_replay_exact": true
+  },
+  "external_http_calls": 0,
+  "transitions": {
+    "F three-party permutations": {
+      "b1": {
+        "placed -> placed": 130,
+        "needs_sender -> needs_sender": 158
+      },
+      "l1": {
+        "placed -> placed": 130,
+        "needs_sender -> needs_sender": 158
+      }
+    },
+    "F heading gaps long": {
+      "b1": {
+        "placed -> placed": 210,
+        "needs_sender -> needs_sender": 222
+      },
+      "l1": {
+        "placed -> placed": 210,
+        "needs_sender -> needs_sender": 222
+      }
+    },
+    "F heading gaps short": {
+      "b1": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      },
+      "l1": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      }
+    }
+  },
+  "worker_evaluations": 0
+}

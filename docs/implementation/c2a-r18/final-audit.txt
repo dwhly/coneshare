@@ -1,0 +1,30 @@
+{
+  "suite": {
+    "passed": 17144,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "preservation": {
+    "tracked_files_hash_checked": 1698,
+    "changed_tracked_files": [
+      "backend/dealroom_sign/placement.py",
+      "backend/dealroom_sign/tests/test_placement_r17.py"
+    ],
+    "only_permitted_docstring_changed": true,
+    "all_other_existing_tests_fixtures_evidence_hash_exact": true,
+    "memory_unchanged": true,
+    "head": "465e5afa408a219caa4288b762f0c71ce54f16bf",
+    "head_unchanged": true,
+    "index_unchanged": true,
+    "whitespace_check_rc": 0,
+    "selected_candidate": "l1",
+    "source_matches_comparison": true
+  },
+  "inventory": {
+    "previous_cases": 15498,
+    "current_cases": 17144,
+    "missing_existing_test_cases": [],
+    "new_cases": 1646
+  }
+}

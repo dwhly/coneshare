@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.17'
+VERSION = 'c2a.18'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -213,7 +213,7 @@ def printed_names(block, blocks=()):
 
 
 def heading_crosses_gutter(block, blocks):
-    """A shared heading row cannot supply either column's company identity."""
+    """A shared heading row cannot grant either column company credit."""
     left = min(block.line.x0, block.line.label.get('rect', [block.line.x0])[0])
     for other in blocks:
         if other.line.page != block.line.page or abs(other.line.y - block.line.y) >= 30:
@@ -222,8 +222,8 @@ def heading_crosses_gutter(block, blocks):
         for row in (block.raw_labels or block.labels):
             if row['text'] != block.heading:
                 continue
-            if (block.line.x1 < other_left and row['rect'][0] < other_left and row['rect'][2] > block.line.x1
-                    or other.line.x1 < left and row['rect'][0] < left and row['rect'][2] > other.line.x1):
+            if (block.line.x1 < other_left and row['rect'][0] < other_left and row['rect'][2] > other_left
+                    or other.line.x1 < left and row['rect'][0] < other.line.x1 and row['rect'][2] > other.line.x1):
                 return True
     return False
 
@@ -867,6 +867,16 @@ def score(signer, block, roles, blocks=()):
     heading = roles.get(block.heading.rstrip(': ').lower(), block.heading)
     heading = (behalf_parts(heading) or ('', heading))[1]
     if similarity(company, heading) and not heading_crosses_gutter(block, blocks):
+        # Crossing headings still compete for this company. Removing their
+        # credit must not let an affiliate win on company evidence alone.
+        if not value:
+            for other in blocks:
+                if other is block or not heading_crosses_gutter(other, blocks):
+                    continue
+                other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
+                other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
+                if similarity(company, other_heading):
+                    return value
         value += 4
     return value
 

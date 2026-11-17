@@ -1,0 +1,529 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+..................................................FFFF....FFFF....FFFF.. [ 81%]
+........FFFFFFFF                                                         [100%]
+=================================== FAILURES ===================================
+_________ test_l1_heading_reaches_neighbour_column[True--29-30-False] __________
+
+reverse = False, overhang = 30, dy = -29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True--29-30-True] __________
+
+reverse = True, overhang = 30, dy = -29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+_________ test_l1_heading_reaches_neighbour_column[True--29-60-False] __________
+
+reverse = False, overhang = 60, dy = -29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True--29-60-True] __________
+
+reverse = True, overhang = 60, dy = -29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True-0-30-False] ___________
+
+reverse = False, overhang = 30, dy = 0, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+___________ test_l1_heading_reaches_neighbour_column[True-0-30-True] ___________
+
+reverse = True, overhang = 30, dy = 0, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True-0-60-False] ___________
+
+reverse = False, overhang = 60, dy = 0, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+___________ test_l1_heading_reaches_neighbour_column[True-0-60-True] ___________
+
+reverse = True, overhang = 60, dy = 0, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True-29-30-False] __________
+
+reverse = False, overhang = 30, dy = 29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True-29-30-True] ___________
+
+reverse = True, overhang = 30, dy = 29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True-29-60-False] __________
+
+reverse = False, overhang = 60, dy = 29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+__________ test_l1_heading_reaches_neighbour_column[True-29-60-True] ___________
+
+reverse = True, overhang = 60, dy = 29, same_page = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('overhang', [0, 30, 60, 62])
+    @pytest.mark.parametrize('dy', [-30, -29, 0, 29, 30])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_l1_heading_reaches_neighbour_column(reverse, overhang, dy, same_page):
+        def block(x, y, page, labels):
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, labels, HARBOR, '', False, raw_labels=labels)
+    
+        x, other_x = (280, 40) if reverse else (40, 280)
+        rect = [280 - overhang, 250, 460, 260] if reverse else [40, 250, 220 + overhang, 260]
+        heading = block(x, 290, 1, [{'text': HARBOR, 'rect': rect}])
+        neighbour = block(other_x, 290 + dy, 1 if same_page else 2, [])
+        # Touching the neighbour's boundary is not crossing into its column.
+        expected = same_page and abs(dy) < 30 and overhang > 60
+>       assert placement.heading_crosses_gutter(heading, [heading, neighbour]) == expected
+E       AssertionError: assert True == False
+E        +  where True = <function heading_crosses_gutter at 0x798665bae0c0>(Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where <function heading_crosses_gutter at 0x798665bae0c0> = placement.heading_crosses_gutter
+
+dealroom_sign/tests/test_placement_r18.py:117: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS, INC.-150] _
+
+heading = 'HARBOR LIGHT ANALYTICS, INC.', width = 150, worker = False
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-180] _
+
+heading = 'HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.', width = 180
+worker = False
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-200] _
+
+heading = 'HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.', width = 200
+worker = False
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-218] _
+
+heading = 'HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.', width = 218
+worker = False
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS, INC.-150] _
+
+heading = 'HARBOR LIGHT ANALYTICS, INC.', width = 150, worker = True
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-180] _
+
+heading = 'HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.', width = 180
+worker = True
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-200] _
+
+heading = 'HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.', width = 200
+worker = True
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+_ test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-218] _
+
+heading = 'HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.', width = 218
+worker = True
+
+    @pytest.mark.parametrize('heading,width', [(HARBOR, 150), (LONG_HARBOR, 180),
+                                               (LONG_HARBOR, 200), (LONG_HARBOR, 218)])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_l1_overhang_short_of_neighbour_keeps_company_placement(heading, width, worker):
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 40 + width),
+                (350, 'Date:', True, 40, 40 + width), (250, FLEET, False, 318),
+                (290, 'By:', True, 318, 318 + width), (350, 'Date:', True, 318, 318 + width)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, PAT, model_client=model) if worker
+                  else in_process(placement, pdf, PAT, model))
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r18.py:131: AssertionError
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r18/failing-first-l1.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True--29-30-False]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True--29-30-True]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True--29-60-False]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True--29-60-True]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-0-30-False]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-0-30-True]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-0-60-False]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-0-60-True]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-29-30-False]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-29-30-True]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-29-60-False]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_heading_reaches_neighbour_column[True-29-60-True]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS, INC.-150]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-180]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-200]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[False-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-218]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS, INC.-150]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-180]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-200]
+FAILED dealroom_sign/tests/test_placement_r18.py::test_l1_overhang_short_of_neighbour_keeps_company_placement[True-HARBOR LIGHT ANALYTICS INTERNATIONAL, INC.-218]
+20 failed, 68 passed, 1558 deselected in 1.81s

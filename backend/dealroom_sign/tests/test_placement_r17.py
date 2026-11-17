@@ -1,4 +1,4 @@
-"""Gate 3 r16: witness columns and merged three-party company headings."""
+"""Gate 3 r16 findings: witness columns and merged three-party company headings."""
 from itertools import permutations, product
 from unittest.mock import Mock
 

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="20" time="0.610" timestamp="2026-11-17T17:34:12.387053" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-False-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.008"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'HARBOR LIGHT ANALYTICS, INC.', roles = {}, reverse = False
+printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-False-RECIPIENT:-roles1]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}
+reverse = False, printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-False-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.', roles = {}
+reverse = False, printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-False-RECIPIENT:-roles3]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'RECIPIENT:'
+roles = {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}
+reverse = False, printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-False-FLEET TEST CO.-roles4]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-True-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'HARBOR LIGHT ANALYTICS, INC.', roles = {}, reverse = True
+printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-True-RECIPIENT:-roles1]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}
+reverse = True, printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-True-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.', roles = {}
+reverse = True, printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-True-RECIPIENT:-roles3]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score">heading = 'RECIPIENT:'
+roles = {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}
+reverse = True, printed_name = False
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+        (FLEET, {}),
+    ])
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('printed_name', [False, True])
+    def test_crossing_competitor_normalizes_identity_and_respects_printed_name(
+            heading, roles, reverse, printed_name):
+        def block(x, y, text, rect):
+            row = {'text': text, 'rect': rect}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(1, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        crossing_x, neighbour_x = (280, 40) if reverse else (40, 280)
+        rect = [200, 250, 460, 260] if reverse else [40, 250, 282, 260]
+        crossing = block(crossing_x, 290, heading, rect)
+        neighbour = block(neighbour_x, 290, FLEET, [neighbour_x, 250, neighbour_x + 80, 260])
+        affiliate = block(40, 450, AFFILIATES[0], [40, 410, 200, 420])
+        if printed_name:
+            affiliate.raw_labels.append({'text': 'Name: Pat Smith', 'rect': [40, 462, 130, 472]})
+        blocks = [crossing, neighbour, affiliate]
+        assert placement.heading_crosses_gutter(crossing, blocks)
+        # A matching printed name is independent evidence; a different company's
+        # crossing heading is not a competitor for Pat's company.
+        expected = 10 if printed_name else (4 if heading == FLEET else 0)
+&gt;       assert placement.score(PAT[0], affiliate, roles, blocks) == expected
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x7468bcfaab60&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(280, 290)', line=Line(page=1, x0=310, x1=460, y=290, kind='drawn', label={'text': 'By:', 'rect': [280, 280...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x7468bcfaab60&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r18.py:98: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[False-True-FLEET TEST CO.-roles4]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-False-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-False-RECIPIENT:-roles1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-False-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-False-RECIPIENT:-roles3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-False-FLEET TEST CO.-roles4]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-True-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-True-RECIPIENT:-roles1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-True-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-True-RECIPIENT:-roles3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r18" name="test_crossing_competitor_normalizes_identity_and_respects_printed_name[True-True-FLEET TEST CO.-roles4]" time="0.002" /></testsuite></testsuites>

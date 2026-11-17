@@ -1,0 +1,2502 @@
+[
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 130, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 130, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 160, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 160, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 200, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 200, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 240, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT HOLDINGS, LLC', 150, 240, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 130, 40, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 130, 40, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 130, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 130, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 160, 40, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 160, 40, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 160, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 160, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 200, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 200, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 240, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, False)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  },
+  {
+    "case": "('HARBOR LIGHT, LLC', 150, 240, 280, 'HARBOR LIGHT ANALYTICS, INC.', False, True)",
+    "before": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.17",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "after": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 10.531046,
+          "y": 32.828283,
+          "w": 20.514706,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  198.92000000000002,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  280.07,
+                  54.45,
+                  290.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              290.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 12.075163,
+          "y": 42.424242,
+          "w": 18.970588,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  340.07,
+                  63.900000000000006,
+                  350.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              350.0,
+              190.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.18",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "model_calls": 0
+  }
+]
