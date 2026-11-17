@@ -38,8 +38,9 @@ def firm_key(email):
         return email
 
 
-def personal_url(room, grant):
-    token = signing.dumps({'room': str(room.pk), 'grant': str(grant.pk), 'email': grant.email}, salt='room-personal')
+def personal_url(room, grant, sender=None):
+    token = signing.dumps({'room': str(room.pk), 'grant': str(grant.pk), 'email': grant.email,
+                          'sender_name': getattr(sender or grant.created_by, 'name', '')}, salt='room-personal')
     return f'/view/{room.roompolicy.entry_link.slug}#personal={token}'
 
 
@@ -97,8 +98,17 @@ class RoomOnrampMixin:
                 'version_id': str(version.pk) if version else '', 'page_count': version.num_pages if version else 0,
                 'source': version.metadata.get('drive_source') if version else None})
         invites = Activity.objects.filter(room_id=str(room.pk), organization=room.organization, event_type='room.invited')
+        pending = pending_requests(room)
+        checked = Activity.objects.filter(room_id=str(room.pk), organization=room.organization,
+                                          event_type='room.drive_checked').first()
+        present_ids = {doc['id'] for doc in documents}
+        state['slots'] = {slot: id for slot, id in state['slots'].items() if id in present_ids}
+        missing = [slot for slot in SLOTS.values() if slot['id'] not in state['slots']
+                   and slot['id'] not in state['not_needed']]
         return Response({**state, 'groups': SERIES_A, 'slot_definitions': SLOTS, 'documents': documents,
-            'needs_you': pending_requests(room), 'invitations': [e.data for e in invites],
+            'missing_slots': missing if state['template'] else [],
+            'needs_you': pending, 'needs_you_count': len(pending), 'invitations': [e.data for e in invites],
+            'drive_checked_at': checked.created_at.isoformat() if checked else None,
             'nda_configured': NdaPolicy.objects.filter(room=room, enabled=True).exists(),
             'policy': {'status': room.roompolicy.status, 'expires_at': room.roompolicy.expires_at},
             'drive_enabled': bool(settings.DEALROOM_DRIVE_SNAPSHOT_DIR)})
@@ -107,7 +117,10 @@ class RoomOnrampMixin:
     @action(detail=True, methods=['post'], url_path='drive-review')
     def drive_review(self, request, pk=None):
         room = self.get_object()
-        result = provider_error(lambda: review(request.data.get('links'), request.data.get('template', '')))
+        existing_ids = {version.metadata.get('drive_source', {}).get('id')
+                        for item in room.documents.select_related('document')
+                        for version in item.document.versions.filter(is_primary=True)}
+        result = provider_error(lambda: review(request.data.get('links'), request.data.get('template', ''), existing_ids))
         # Bind this review to the tenant room; the signed tree cannot be edited by the browser.
         result['ticket'] = signing.dumps({'room': str(room.pk), 'review': result['ticket']}, salt='room-drive', compress=True)
         return Response(result)
@@ -125,7 +138,9 @@ class RoomOnrampMixin:
             raise ValidationError('Review expired. Read the folders again.') from exc
         def run():
             providers = {r['id']: DriveSnapshotProvider(r['id']) for r in data['roots']}
-            return import_tree(room, request.user, providers, data['nodes'], data['template'], request.data.get('choices', {}))
+            return import_tree(room, request.user, providers, data['nodes'], data['template'],
+                               request.data.get('choices', {}), request.data.get('excluded', []),
+                               request.data.get('destinations', {}))
         return Response({'imported': provider_error(run)}, status=201)
 
     @extend_schema(request=dict, responses=dict)
@@ -141,7 +156,8 @@ class RoomOnrampMixin:
                     raise ValidationError('Update changed or already published. Check Drive again.')
                 new = publish_update(room, request.user, providers[selected['root_id']], selected)
                 return {'version_id': str(new.pk)}
-            return {'updates': updates}
+            checked = record('room.drive_checked', organization=room.organization, actor=request.user, room_id=room.pk)
+            return {'updates': updates, 'checked_at': checked.created_at.isoformat()}
         return Response(provider_error(run))
 
     @extend_schema(request=dict, responses=dict)
@@ -165,7 +181,7 @@ class RoomOnrampMixin:
             if not grant:
                 grant = ShareLinkAccessGrant.objects.create(share_link=room.roompolicy.entry_link, email=email,
                     created_by=request.user, download_ceiling='none')
-            url = personal_url(room, grant)
+            url = personal_url(room, grant, request.user)
             record('room.invited', organization=room.organization, actor=request.user, room_id=room.pk,
                    target_id=grant.pk, data={'email': email, 'firm': firm_key(email), 'note': note})
             brand = load_brand()

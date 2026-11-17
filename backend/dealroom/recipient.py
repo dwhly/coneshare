@@ -74,7 +74,24 @@ class RecipientChallengeView(APIView):
     @extend_schema(responses=dict)
     def get(self, request, slug):
         # A scanner may GET this or the SPA with a token; neither consumes a challenge.
-        return Response({'csrf_token': get_token(request), 'brand': load_brand()})
+        link = get_link(slug)
+        active = link.is_active and (not link.expires_at or link.expires_at > timezone.now())
+        sender = link.dataroom.created_by if active else None
+        sender_name = sender.name if sender else ''
+        # A signed invitation may identify a different inviter. Previewing it never verifies a visitor.
+        token = request.headers.get('X-Room-Invitation')
+        if token:
+            sender_name = ''
+            try:
+                payload = signing.loads(token, salt='room-personal', max_age=30 * 86400)
+                if payload['room'] == str(link.dataroom_id):
+                    _, grant, _ = select_grant(link, payload['email'])
+                    if str(grant.pk) == payload['grant'] and grant.email == payload['email']:
+                        sender_name = payload.get('sender_name') or getattr(grant.created_by, 'name', '')
+            except (signing.BadSignature, KeyError, TypeError, PermissionDenied):
+                pass
+        return Response({'csrf_token': get_token(request), 'brand': load_brand(),
+                         'sender_name': sender_name})
 
     @extend_schema(request=ChallengeInput, responses=dict)
     def post(self, request, slug):

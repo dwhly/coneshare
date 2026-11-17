@@ -129,12 +129,12 @@ export function CopyField({ value, label = "Visitor link" }) {
  * Styled select (Radix dropdown radio group; the app has no Radix Select dependency). Looks like a field,
  * opens a listbox-style menu, keyboard accessible. options: [{ value, label }].
  */
-export function SelectMenu({ value, onChange, options, placeholder = "Choose…", label, id }) {
+export function SelectMenu({ value, onChange, options, placeholder = "Choose…", label, id, disabled = false }) {
   const current = options.find((o) => o.value === value);
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <button type="button" id={id} className="dr-select__trigger" aria-label={label}>
+        <button type="button" id={id} className="dr-select__trigger" aria-label={label} disabled={disabled}>
           <span className={current ? "" : "dr-muted"}>{current ? current.label : placeholder}</span>
           <ChevronDown aria-hidden="true" />
         </button>
@@ -220,6 +220,7 @@ export function RowMenu({ label = "Actions", items }) {
         {items.map((item) => (
           <DropdownMenuItem
             key={item.label}
+            disabled={item.disabled}
             className={item.danger ? "text-danger focus:text-danger" : ""}
             onSelect={() => (item.href ? window.open(item.href, item.newTab ? "_blank" : "_self", "noopener") : item.onSelect?.())}
           >

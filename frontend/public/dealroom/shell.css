@@ -7,8 +7,8 @@
 .dr-header.fds-header { box-sizing: border-box; width: 100%; height: 56px; min-height: 56px; padding: 0 24px; gap: 24px;
   position: sticky; top: 0; z-index: 30; flex-wrap: nowrap; }
 .dr-header .fds-lockup { flex: none; }
-.dr-header .fds-nav a, .dr-subnav a { font-size: 14px; font-weight: 500; }
-.dr-header .fds-nav a[aria-current="page"], .dr-subnav a[aria-current="page"] { font-weight: 500; }
+.dr-header .fds-nav a, .dr-subnav a, .dr-subnav button { font-size: 14px; font-weight: 500; }
+.dr-header .fds-nav a[aria-current="page"], .dr-subnav a[aria-current="page"], .dr-subnav button[aria-current="page"] { font-weight: 500; }
 .dr-header .fds-header__utils { gap: 8px; }
 /* §7 round 3: the header's two controls (account trigger, Theme) are one quiet 32px, 13px/500 style. */
 .dr-header [data-fds-theme-toggle] { box-sizing: border-box; height: 32px; padding: 0 12px; font-size: 13px; font-weight: 500;
@@ -48,12 +48,14 @@
 /* width: 100% — the glue pages' body is a flex column, where an auto-margin child shrink-wraps and centres. */
 .dr-subnav { box-sizing: border-box; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 .dr-subnav nav { display: flex; align-items: center; gap: 2px; height: 44px; border-bottom: 1px solid hsl(var(--border)); }
-.dr-subnav a { display: inline-flex; align-items: center; padding: 4px 12px; line-height: 1.4; color: hsl(var(--muted-foreground));
+.dr-subnav a, .dr-subnav button { display: inline-flex; align-items: center; padding: 4px 12px; line-height: 1.4; color: hsl(var(--muted-foreground));
   text-decoration: none; border: 1px solid transparent; border-radius: var(--radius-control); }
-.dr-subnav a:hover { color: hsl(var(--foreground)); background: hsl(var(--accent)); }
-.dr-subnav a[aria-current="page"] { color: hsl(var(--selected-foreground)); background: hsl(var(--selected));
+.dr-subnav button { background: transparent; font-family: inherit; cursor: pointer; gap: 6px; white-space: nowrap; }
+.dr-subnav button:disabled { opacity: .5; cursor: default; }
+.dr-subnav a:hover, .dr-subnav button:hover { color: hsl(var(--foreground)); background: hsl(var(--accent)); }
+.dr-subnav a[aria-current="page"], .dr-subnav button[aria-current="page"] { color: hsl(var(--selected-foreground)); background: hsl(var(--selected));
   border-color: hsl(var(--selected-border)); }
-.dr-subnav a:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
+.dr-subnav a:focus-visible, .dr-subnav button:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
 
 /* §3 Page structure: 1200px container, 24px side + top padding. */
 .dr-container { box-sizing: border-box; width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 24px 48px; }

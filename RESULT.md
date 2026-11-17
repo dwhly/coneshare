@@ -93,3 +93,36 @@ Run that block in Bash. Frontend tests used `npx vitest run --cache=false` with 
 ## STOP / external dependencies
 
 No implementation or test blocker remains. Live Google OAuth is intentionally out of scope. A live visitor demonstration still needs the manager’s mounted snapshot (or the supplied fixture), working core/preview workers, and the owner’s existing Sign credentials. Live signing, email delivery and the external host snapshot were not exercised. Nothing has been deployed.
+
+## Round 2 — 17 November 2026
+
+Polish against deployed HEAD `bd78b9d6` on `agent/room-proto`. Changes remain uncommitted. Existing cards, subnavigation, pills, dropdowns, buttons and file icons are reused; no new visual system, migrations, Sign changes or Vite/Vitest configuration changes.
+
+| Item | Result |
+| --- | --- |
+| 1. Visitor entry | Tenant logo/name now come from the existing challenge/brand response on both the invitation and NDA gate. A known inviter reads “Dan Whaley invited you”; signed invitation metadata supports a different inviter from the owner. The action is **Review the NDA**, with plain next-step copy. **Kept the explicit invitation step** because it confirms which personal identity to use without silently replacing an existing visitor session or redeeming scanner GETs. The pre-verification response contains no room name or documents; the NDA/privacy checks remain authoritative. |
+| 2. Missing slots | The sender summary names every missing document. Each empty outline slot is named and offers **Add file**, with a specific accessible label. The API explicitly returns missing slots and ignores assignments to removed documents. Visitors receive neither checklist slots nor empty folders. |
+| 3. Needs you | Uses the existing count pill, shown only while unanswered questions/copy requests exist. The API exposes the pending count; answering removes an item from it. |
+| 4. Selected tabs | Reuses the existing neutral selected subnavigation treatment. **Documents stays selected throughout Drive import**, and each other room section has the same treatment. |
+| 5. Invite priority | Invite investors is secondary for empty rooms and throughout import setup/review. It becomes primary when files exist and no import is pending. Navigation and placement controls are disabled during the import request. |
+| 6. Drive updates | The Documents sidebar starts with **Check Drive for updates** and a persisted **Last checked** timestamp (or “Not checked yet”). Checking records its successful completion without publishing versions. |
+| 7. Pins | Pin/unpin controls use the existing Lucide pin icon to match the wording. Start-here rows have up/down arrows, boundary disabling and labeled removal. Every icon-only control added/changed here has an accessible name and native tooltip. |
+| 8. Review edits | Every file can be excluded, restored, or moved to another reviewed folder or checklist slot. The confirm count follows the included files; zero-file imports are disabled. The backend checks file/folder IDs against the signed review, omits excluded downloads and creates destination folders before moving files into later sibling folders. |
+| 9. Confirmation | A sticky bottom confirmation bar stays visible in the review’s scroll container, including before scrolling. |
+| 10. Folder tree | The default review nests each folder’s files and subfolders beneath it, with recursive included-file counts. Moving or excluding a file updates the tree/counts. |
+| 11. File wording | Review metadata describes the actual export: “Google Doc, saved as a PDF copy”, Sheets → Excel, Slides → PowerPoint, or “PDF, added as is”. Converted files show their final filename/extension. |
+| 12. Skipped items | A separate list names shortcuts, Forms, other unsupported types, oversize files, unavailable exports and files already in the room, with a reason for each. Snapshot listing now reports actual export size instead of always reporting zero. |
+| 13. PDF icons | Passes the final file type to the existing FileTypeIcon, so ordinary and exported PDFs use its PDF icon. |
+| 14. Checklist switch | The default review visibly offers **Match to a Series A checklist instead**. This obtains another signed review and exposes Matched, Unsure and Missing. Exclusions and explicit folder moves survive the switch. A reverse switch keeps Drive folders. |
+
+No requested item was deferred. Existing prototype limits remain: snapshot-based Drive access, synchronous bounded imports, and the existing Sign integration. Live Google OAuth, live signing and real email delivery were not exercised. Changing the snapshot during import can still require a fresh review; full content validation remains on the upload path.
+
+### Round 2 verification
+
+- Backend: **164 passed** (106.20 seconds; 186 existing test-secret warnings), recorded in `docs/room-proto/round2-verification.txt`. Coverage includes all existing `dealroom/tests`, `tests/dealroom` (including the unchanged `test_review_v09_send.py`) and `tests/cloudfiles/test_tasks.py`. New tests cover named missing slots, answered/unanswered counts, exclusions, moves, signed-tree boundaries, all three export descriptions, skipped reasons, repeat imports, persisted checking time, inviter preview without redemption and visitor filtering.
+- Frontend: **23 passed across 6 files**: RoomPolish, RoomOnramp, DealroomRecipient, DealroomRoomDetail, DealroomPages and GlueShellSelect. Existing tests remain intact except the personal-link test’s required button-label expectation, changed from “Continue to room” to “Review the NDA”; its identity and explicit-action assertions are unchanged.
+- Production: **`npx vite build` passed in the scratch frontend copy**, using unchanged configs and copied dependencies. The worktree also built with `npx vite build --configLoader native`. The ordinary loader in the worktree cannot write `.vite-temp` through the required read-only dependency symlink. No npm install was run in the worktree and neither protected config was edited. Existing bundle-size/Browserslist warnings remain.
+- Chromium: built app at **1440×1000** and **390×844**, with intercepted fictional APIs. Verified selected tabs, named missing slots, sticky confirmation, exclusion counts, folder moves, checklist switch/groups, import payload, branded invitation/NDA and room-name privacy. No page errors or horizontal phone overflow. Browser smoke source: [`round2-smoke.py`](docs/room-proto/round2-smoke.py); it expects Vite preview on port 4175 and Python Playwright with Chromium.
+- Screenshots: [Documents](docs/room-proto/round2-screenshots/sender-outline.png), [missing slots](docs/room-proto/round2-screenshots/sender-missing-slots.png), [Drive review](docs/room-proto/round2-screenshots/drive-review.png), [checklist groups](docs/room-proto/round2-screenshots/checklist-review.png), [phone invitation](docs/room-proto/round2-screenshots/visitor-invitation-phone.png), [phone NDA](docs/room-proto/round2-screenshots/visitor-nda-phone.png).
+
+Backend uses the supplied runner and the same Bash `mktemp` redirection documented above. Frontend tests/build use a disposable `.testtmp/frontend` copy, with no config changes. Scratch files and `frontend/node_modules` are removed at completion. No deployment, staging, commit or project-memory update was made.

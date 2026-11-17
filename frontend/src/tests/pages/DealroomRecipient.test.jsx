@@ -30,10 +30,25 @@ test('verification refusal does not render the room or filenames',async()=>{
 test('a personal invitation cannot silently reuse another visitor identity', async () => {
   window.history.replaceState({}, '', '/view/atlas#personal=personal-token');
   mount();
-  const button = await screen.findByRole('button', { name: 'Continue to room' });
+  const button = await screen.findByRole('button', { name: 'Review the NDA' });
   await waitFor(() => expect(button).not.toBeDisabled());
   expect(fetch.mock.calls.some(([url]) => url.endsWith('/room/'))).toBe(false);
   expect(fetch.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
   fireEvent.click(button);
   await waitFor(() => expect(fetch.mock.calls.some(([url, options]) => url.endsWith('/personal/') && JSON.parse(options.body).token === 'personal-token')).toBe(true));
+});
+
+
+test('personal invitation shows tenant identity and sender before the NDA without room details', async () => {
+  window.history.replaceState({}, '', '/view/atlas#personal=personal-token');
+  fetch.mockImplementation(url => url.endsWith('/challenge/') ? response({ csrf_token: 'csrf', brand: { name: 'AmForge', logo: '/amforge.svg' }, sender_name: 'Dan Whaley' }) : url.endsWith('/personal/') ? response({ status: 'verified' }) : response({ code: 'nda_required', room_id: 'r' }, false));
+  mount();
+  expect(await screen.findByText('Dan Whaley invited you')).toBeInTheDocument();
+  expect(screen.getByText('AmForge')).toBeInTheDocument();
+  expect(document.querySelector('img')).toHaveAttribute('src', '/amforge.svg');
+  expect(screen.queryByText('Project Atlas')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Review the NDA' }));
+  expect(await screen.findByText('Before you enter')).toBeInTheDocument();
+  expect(screen.getByText('AmForge')).toBeInTheDocument();
+  expect(screen.queryByText('Project Atlas')).not.toBeInTheDocument();
 });

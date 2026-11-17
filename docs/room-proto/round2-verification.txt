@@ -1,0 +1,36 @@
+Round 2 verification — 2026-11-17
+Base: agent/room-proto @ bd78b9d6. No commits or deployment.
+
+Backend: 164 passed, 186 warnings, 106.20 seconds.
+Command (Bash, at repository root):
+  mkdir -p .testtmp
+  function mktemp() { command mktemp -d /root/worktrees/room-proto/.testtmp/sendlocal.XXXX; }
+  export -f mktemp
+  /root/work/sign-product/run-send-local.sh /root/worktrees/room-proto dealroom/tests tests/dealroom tests/cloudfiles/test_tasks.py
+The runner's unwritable scratch path is redirected; runner code is unchanged.
+Includes all original privacy tests plus 15 new backend regression cases.
+Warnings are the existing CI-secret JWT key-length warnings.
+
+Frontend: 23 passed in 6 files, 7.95 seconds.
+Ran in a disposable .testtmp/frontend copy with unchanged source/configs and copied dependencies:
+  npx vitest run --cache=false src/tests/pages/RoomPolish.test.jsx src/tests/pages/RoomOnramp.test.jsx src/tests/pages/DealroomRecipient.test.jsx src/tests/pages/DealroomRoomDetail.test.jsx src/tests/pages/DealroomPages.test.jsx src/tests/components/dealroom/GlueShellSelect.test.js
+Only existing assertion changed: the required personal-entry CTA label. Its identity-confirmation behavior assertions remain.
+
+Build: npx vite build passed in the scratch frontend copy, 16.02 seconds.
+The worktree also built with npx vite build --configLoader native.
+Ordinary worktree build loader hits EROFS writing node_modules/.vite-temp; native loader / scratch copy avoid that without changing config.
+Existing bundle-size and browser-dataset warnings remain.
+No npm install ran in the worktree. Temporary Python Playwright/browser tools were isolated in .testtmp and removed.
+
+Browser: Chromium, production bundle, 1440x1000 desktop and 390x844 phone.
+All API responses are intercepted fictional fixtures; no live invitation, Sign operation, or external write occurred.
+Checked: missing slot names/Add file, Needs you badge, Documents selected during import, secondary invite action,
+Drive update control, sticky confirmation visible before scrolling, exclusion/count, move to another folder,
+matched/unsure/missing reached from default review, submitted move/exclusion data,
+tenant logo/name/inviter on invitation and NDA screens, no pre-verification room name, no phone horizontal overflow.
+No browser page errors.
+Script: docs/room-proto/round2-smoke.py (Python Playwright; Vite preview port 4175).
+Screenshots: docs/room-proto/round2-screenshots/.
+
+Protected paths: frontend/vite.config.js, frontend/vitest.whitelist.config.js, backend/dealroom_sign/ and .agent/memory.md unchanged.
+Git diff --check passed. Dependency symlink and scratch directory removed before completion.

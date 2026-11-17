@@ -14,6 +14,7 @@ from rest_framework.exceptions import ValidationError
 
 from cloudfiles.providers.base import CloudProviderError
 from cloudfiles.providers.drive_snapshot import DriveSnapshotProvider, folder_id
+from cloudfiles.providers.google_drive import GOOGLE_EXPORTS
 from datarooms.models import Dataroom, DataroomFolder
 from documents.fileserver import fileserver_client
 from documents.services import create_new_document_version, generate_storage_key
@@ -87,10 +88,46 @@ def match_template(nodes):
     return {'matched': matched, 'unsure': unsure, 'missing': [s for k, s in SLOTS.items() if k not in occupied]}
 
 
-def review(links, template=''):
+def import_details(node):
+    """Describe the actual export and flag files the room upload path cannot accept."""
+    mime = node.get('mimeType', '')
+    _, extension = GOOGLE_EXPORTS.get(mime, (mime, ''))
+    name = node['name']
+    if extension and not name.lower().endswith(extension):
+        name += extension
+    extension = Path(name).suffix.lower()
+    labels = {'.pdf': 'PDF', '.docx': 'Word document', '.xlsx': 'Excel file', '.pptx': 'PowerPoint file'}
+    workspace = {'application/vnd.google-apps.document': 'Google Doc',
+                 'application/vnd.google-apps.spreadsheet': 'Google Sheet',
+                 'application/vnd.google-apps.presentation': 'Google Slides'}
+    label = labels.get(extension, extension.lstrip('.').upper() or 'File')
+    reason = ''
+    if mime == 'application/vnd.google-apps.shortcut':
+        reason = 'Drive shortcuts cannot be imported. Add the original file instead.'
+    elif mime == 'application/vnd.google-apps.form':
+        reason = 'Google Forms cannot be imported.'
+    elif mime.startswith('application/vnd.google-apps.') and mime not in GOOGLE_EXPORTS:
+        reason = 'This Google file type cannot be imported.'
+    elif extension not in ALLOWED:
+        reason = 'Supported files are PDF, Word (.docx), Excel (.xlsx) and PowerPoint (.pptx).'
+    elif int(node.get('size') or 0) > 50 * 1024 * 1024:
+        reason = 'This file exceeds the 50 MiB limit.'
+    elif node.get('unavailable_reason'):
+        reason = node['unavailable_reason']
+    if mime in workspace:
+        article = 'an' if extension == '.xlsx' else 'a'
+        description = f'{workspace[mime]}, saved as {article} {label} copy'
+    else:
+        description = f'{label}, added as is'
+    return {**node, 'final_name': name, 'final_type': extension.lstrip('.'),
+            'import_description': description, 'skip_reason': reason}
+
+
+def review(links, template='', existing_ids=None):
     if not isinstance(links, list) or not 1 <= len(links) <= 10 or any(not isinstance(link, str) for link in links) or template not in ('', 'series_a'):
         raise ValidationError('Provide 1–10 folder links and an optional Series A template.')
-    roots, nodes, seen = [], [], set()
+    roots, nodes, skipped, seen = [], [], [], set()
+    existing_ids = set(existing_ids or ())
     for link in links:
         root = folder_id(link)
         if root in {r['id'] for r in roots}:
@@ -100,8 +137,11 @@ def review(links, template=''):
         for node in walk_tree(provider, root):
             if node['id'] not in seen:
                 seen.add(node['id'])
-                nodes.append(node)
-    payload = {'roots': roots, 'nodes': nodes, 'template': template}
+                node = import_details(node) if node['type'] == 'file' else node
+                if node['type'] == 'file' and node['id'] in existing_ids:
+                    node['skip_reason'] = 'Already in this room. Use Check Drive for updates to publish a new version.'
+                (skipped if node.get('skip_reason') else nodes).append(node)
+    payload = {'roots': roots, 'nodes': nodes, 'template': template, 'skipped': skipped}
     # The client may choose slots, but cannot rewrite source IDs, paths, or timestamps.
     return {**payload, **(match_template(nodes) if template else {'matched': [], 'unsure': [], 'missing': []}),
             'ticket': signing.dumps(payload, salt='drive-review', compress=True)}
@@ -129,15 +169,24 @@ def ensure_template(room, actor, state):
 
 
 @transaction.atomic
-def import_tree(room, actor, providers, nodes, template='', choices=None):
+def import_tree(room, actor, providers, nodes, template='', choices=None, excluded=None, destinations=None):
     Dataroom.objects.select_for_update().get(pk=room.pk)
     state = room_state(room)
-    choices = choices or {}
+    choices = {} if choices is None else choices
+    excluded = [] if excluded is None else excluded
+    destinations = {} if destinations is None else destinations
+    file_ids = {n['id'] for n in nodes if n['type'] == 'file'}
+    folder_ids = {n['id'] for n in nodes if n['type'] == 'folder'} | set(providers)
+    if not isinstance(excluded, list) or any(not isinstance(id, str) or id not in file_ids for id in excluded):
+        raise ValidationError('Exclude only files from this review.')
+    if not isinstance(destinations, dict) or any(id not in file_ids or not isinstance(folder, str) or folder not in folder_ids
+                                               for id, folder in destinations.items()):
+        raise ValidationError('Move only reviewed files to reviewed folders.')
     if not isinstance(choices, dict):
         raise ValidationError('File placements must be an object keyed by file ID.')
-    if set(choices) - {n['id'] for n in nodes if n['type'] == 'file'} or any(v and v not in SLOTS for v in choices.values()):
+    if set(choices) - file_ids or any(not isinstance(v, str) or (v and v not in SLOTS) for v in choices.values()):
         raise ValidationError('Choose valid file IDs and template slots.')
-    assigned = [v for v in choices.values() if v]
+    assigned = [v for id, v in choices.items() if v and id not in excluded]
     if len(assigned) != len(set(assigned)):
         raise ValidationError('Each template slot holds one file. Resolve duplicate choices.')
     folders = ensure_template(room, actor, state) if template else {}
@@ -158,8 +207,11 @@ def import_tree(room, actor, providers, nodes, template='', choices=None):
             if node['id'] not in drive_folders:
                 folder = DataroomFolder.objects.create(dataroom=room, name=node['name'], parent=drive_folders.get(node['parent_id']), created_by=actor)
                 drive_folders[node['id']], folder_ids[node['id']] = folder, str(folder.pk)
+    # All destination folders must exist before importing a moved file, including later siblings.
+    for node in nodes:
+        if node['type'] == 'folder' or node['id'] in excluded or node['id'] in existing:
             continue
-        if node['id'] in existing:
+        if import_details(node)['skip_reason']:
             continue
         slot = choices.get(node['id'], '') if template else ''
         if slot and slot in state['slots']:
@@ -170,7 +222,7 @@ def import_tree(room, actor, providers, nodes, template='', choices=None):
             if data.get('modifiedTime') != node['modifiedTime']:
                 raise ValidationError('Drive changed after review. Check the folder again.')
             file = UploadedFile(data['content'], name=data['name'], size=data['size'], content_type=data.get('content_type'))
-            folder = folders[SLOTS[slot]['folder']] if slot else drive_folders.get(node['parent_id'])
+            folder = folders[SLOTS[slot]['folder']] if slot else drive_folders.get(destinations.get(node['id'], node['parent_id']))
             item = upload(room, actor, file, str(folder.pk) if folder else None)
             version = item.document.versions.get(is_primary=True)
             version.metadata = {**version.metadata, 'drive_source': source_metadata(provider, node)}

@@ -64,9 +64,20 @@ class DriveSnapshotProvider(BaseCloudProvider):
 
     def list_files(self, path='/'):
         parent = self.root_id if path == '/' else path
-        return [dict(node, type='folder' if node['mimeType'] == FOLDER_MIME else 'file',
-                     path=node['id'], size=0) for node in self.nodes.values()
-                if parent in node.get('parents', []) and node['id'] != parent]
+        files = []
+        for node in self.nodes.values():
+            if parent not in node.get('parents', []) or node['id'] == parent:
+                continue
+            item = dict(node, type='folder' if node['mimeType'] == FOLDER_MIME else 'file',
+                        path=node['id'], size=int(node.get('size') or 0))
+            if item['type'] == 'file':
+                exported = (self.directory / (node.get('path') or '')).resolve()
+                if exported.is_relative_to(self.directory) and exported.is_file():
+                    item['size'] = max(item['size'], exported.stat().st_size)
+                else:
+                    item['unavailable_reason'] = 'The exported copy is unavailable in this snapshot.'
+            files.append(item)
+        return files
 
     def download_file(self, file_id):
         node = self.nodes.get(file_id)
