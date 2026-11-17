@@ -1,0 +1,310 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+FFFFFFFF..FF..FFFF                                                       [100%]
+=================================== FAILURES ===================================
+__________ test_witness_column_never_owns_party_name[False-Witness:] ___________
+
+role = 'Witness:', reverse = False
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+___________ test_witness_column_never_owns_party_name[False-Attest:] ___________
+
+role = 'Attest:', reverse = False
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+________ test_witness_column_never_owns_party_name[False-Attestation:] _________
+
+role = 'Attestation:', reverse = False
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+___________ test_witness_column_never_owns_party_name[True-Witness:] ___________
+
+role = 'Witness:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+___________ test_witness_column_never_owns_party_name[True-Attest:] ____________
+
+role = 'Attest:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+_________ test_witness_column_never_owns_party_name[True-Attestation:] _________
+
+role = 'Attestation:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+________ test_gutter_scores_only_when_columns_are_staggered[False-0-0] _________
+
+dy = 0, expected = 0, reverse = False
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError
+________ test_gutter_scores_only_when_columns_are_staggered[False-29-0] ________
+
+dy = 29, expected = 0, reverse = False
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError
+_________ test_gutter_scores_only_when_columns_are_staggered[True-0-0] _________
+
+dy = 0, expected = 0, reverse = True
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError
+________ test_gutter_scores_only_when_columns_are_staggered[True-29-0] _________
+
+dy = 29, expected = 0, reverse = True
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError
+___________ test_tied_name_cannot_fall_back_to_company_score[edges0] ___________
+
+edges = (304, 314)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError
+___________ test_tied_name_cannot_fall_back_to_company_score[edges1] ___________
+
+edges = (305, 315)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError
+___________ test_tied_name_cannot_fall_back_to_company_score[edges2] ___________
+
+edges = (306, 316)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError
+___________ test_tied_name_cannot_fall_back_to_company_score[edges3] ___________
+
+edges = (280, 340)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r16/failing-first-new.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[False-Witness:]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[False-Attest:]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[False-Attestation:]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[True-Witness:]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[True-Attest:]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[True-Attestation:]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_gutter_scores_only_when_columns_are_staggered[False-0-0]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_gutter_scores_only_when_columns_are_staggered[False-29-0]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_gutter_scores_only_when_columns_are_staggered[True-0-0]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_gutter_scores_only_when_columns_are_staggered[True-29-0]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_tied_name_cannot_fall_back_to_company_score[edges0]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_tied_name_cannot_fall_back_to_company_score[edges1]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_tied_name_cannot_fall_back_to_company_score[edges2]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_tied_name_cannot_fall_back_to_company_score[edges3]
+14 failed, 4 passed in 0.49s

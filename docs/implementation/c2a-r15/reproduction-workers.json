@@ -1,0 +1,100 @@
+{
+  "M1/PAT": {
+    "status": "needs_sender",
+    "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+    "reason_code": "ambiguous_identity",
+    "fields": [],
+    "assignments": [
+      {
+        "signer": "pat@harborlight.fleet.test",
+        "block_id": "b0",
+        "score": 0,
+        "margin": 0,
+        "confidence": "low"
+      }
+    ],
+    "analysis_version": "c2a.15",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "M1/DAN+PAT": {
+    "status": "needs_sender",
+    "reason": "Couldn't tell where Dan Whaley, Pat Smith sign and date. Placement review comes next; nothing was sent.",
+    "reason_code": "ambiguous_identity",
+    "fields": [],
+    "assignments": [
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "block_id": "b0",
+        "score": 0,
+        "margin": 0,
+        "confidence": "low"
+      },
+      {
+        "signer": "pat@harborlight.fleet.test",
+        "block_id": "b1",
+        "score": 0,
+        "margin": 0,
+        "confidence": "low"
+      }
+    ],
+    "analysis_version": "c2a.15",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "M2/PAT": {
+    "status": "needs_sender",
+    "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+    "reason_code": "ambiguous_identity",
+    "fields": [],
+    "assignments": [
+      {
+        "signer": "pat@harborlight.fleet.test",
+        "block_id": "b0",
+        "score": 0,
+        "margin": 0,
+        "confidence": "low"
+      }
+    ],
+    "analysis_version": "c2a.15",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "M2/DAN+PAT": {
+    "status": "needs_sender",
+    "reason": "Couldn't tell where Dan Whaley, Pat Smith sign and date. Placement review comes next; nothing was sent.",
+    "reason_code": "ambiguous_identity",
+    "fields": [],
+    "assignments": [
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "block_id": "b0",
+        "score": 0,
+        "margin": 0,
+        "confidence": "low"
+      },
+      {
+        "signer": "pat@harborlight.fleet.test",
+        "block_id": "b1",
+        "score": 0,
+        "margin": 0,
+        "confidence": "low"
+      }
+    ],
+    "analysis_version": "c2a.15",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  }
+}

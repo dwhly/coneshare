@@ -1,0 +1,153 @@
+{
+  "counts": {
+    "passed": 11362,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 11362,
+  "groups": {
+    "dealroom_sign.tests.test_counterparty": {
+      "passed": 11
+    },
+    "dealroom_sign.tests.test_counterparty_mail": {
+      "passed": 11
+    },
+    "dealroom_sign.tests.test_gate3": {
+      "passed": 39
+    },
+    "dealroom_sign.tests.test_gate3_r4": {
+      "passed": 19
+    },
+    "dealroom_sign.tests.test_gate3_r5": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_gate3_routes": {
+      "passed": 17
+    },
+    "dealroom_sign.tests.test_live_acceptance_r6": {
+      "passed": 95
+    },
+    "dealroom_sign.tests.test_live_acceptance_r7": {
+      "passed": 12
+    },
+    "dealroom_sign.tests.test_placement_send": {
+      "passed": 15
+    },
+    "dealroom_sign.tests.test_product_reads": {
+      "passed": 50
+    },
+    "dealroom_sign.tests.test_recipient_proxy": {
+      "passed": 17
+    },
+    "dealroom_sign.tests.test_review_r2": {
+      "passed": 44
+    },
+    "dealroom_sign.tests.test_send_r3": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_send_r4": {
+      "passed": 2
+    },
+    "dealroom_sign.tests.test_send_r5": {
+      "passed": 3
+    },
+    "dealroom_sign.tests.test_send_r6": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_send_r7": {
+      "passed": 6
+    },
+    "dealroom_sign.tests.test_workflows": {
+      "passed": 47
+    },
+    "dealroom_sign.tests.test_c1b_distribution": {
+      "passed": 12
+    },
+    "dealroom_sign.tests.test_filename": {
+      "passed": 2
+    },
+    "dealroom_sign.tests.test_gate3_r4_report": {
+      "passed": 8
+    },
+    "dealroom_sign.tests.test_pages": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_placement": {
+      "passed": 40
+    },
+    "dealroom_sign.tests.test_placement_r10": {
+      "passed": 499
+    },
+    "dealroom_sign.tests.test_placement_r11": {
+      "passed": 1241
+    },
+    "dealroom_sign.tests.test_placement_r12": {
+      "passed": 391
+    },
+    "dealroom_sign.tests.test_placement_r13": {
+      "passed": 949
+    },
+    "dealroom_sign.tests.test_placement_r14": {
+      "passed": 3823
+    },
+    "dealroom_sign.tests.test_placement_r15": {
+      "passed": 3236
+    },
+    "dealroom_sign.tests.test_placement_r15b": {
+      "passed": 27
+    },
+    "dealroom_sign.tests.test_placement_r15b_columns": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_placement_r16": {
+      "passed": 22
+    },
+    "dealroom_sign.tests.test_placement_r2": {
+      "passed": 77
+    },
+    "dealroom_sign.tests.test_placement_r3": {
+      "passed": 48
+    },
+    "dealroom_sign.tests.test_placement_r4": {
+      "passed": 83
+    },
+    "dealroom_sign.tests.test_placement_r5": {
+      "passed": 129
+    },
+    "dealroom_sign.tests.test_placement_r6": {
+      "passed": 55
+    },
+    "dealroom_sign.tests.test_placement_r7": {
+      "passed": 45
+    },
+    "dealroom_sign.tests.test_placement_r8": {
+      "passed": 70
+    },
+    "dealroom_sign.tests.test_placement_r9": {
+      "passed": 133
+    },
+    "dealroom_sign.tests.test_placement_resources_r3": {
+      "passed": 11
+    },
+    "dealroom_sign.tests.test_placement_transport_r4": {
+      "passed": 1
+    },
+    "dealroom_sign.tests.test_settings": {
+      "passed": 52
+    }
+  },
+  "failures": [],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "11362",
+      "time": "1276.410",
+      "timestamp": "2026-11-17T15:26:32.881757",
+      "hostname": "h-do1"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "counts": {
+    "passed": 0,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 2,
+  "groups": {
+    "dealroom_sign.tests.test_placement_r3": {
+      "failed": 1
+    },
+    "dealroom_sign.tests.test_placement_r4": {
+      "failed": 1
+    }
+  },
+  "failures": [
+    {
+      "classname": "dealroom_sign.tests.test_placement_r3",
+      "case": "test_inserted_raw_person_vetoes_across_fixtures[witness]",
+      "status": "failed",
+      "details": "fixture = 'witness'\n\n    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))\n    def test_inserted_raw_person_vetoes_across_fixtures(fixture):\n        original = (FIXTURES / (fixture + '.pdf')).read_bytes()\n        blocks, _, _ = placement.extract(original)\n        # Use independently measured boxes when a fixture has no detected hosts (bare).\n        targets = [(b.line.page, b.line.x1 - 80, b.line.y, b.line.x0) for b in blocks]\n        if not targets:\n            targets = [(1, 72, 450, 72)]\n        rng = random.Random(613)\n        for page, x, y, rule_x in targets:\n            with pdfplumber.open(io.BytesIO(original)) as doc:\n                words = doc.pages[page - 1].extract_words()\n            # Randomize within open space so the injected PDF text remains legible.\n            above = [n for n in range(-65, -15) if not any(w['x0'] < x + 75 and w['x1'] > x\n                     and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]\n            below = [n for n in range(24, 85) if not any(w['x0'] < x + 75 and w['x1'] > x\n                     and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]\n            for name_x, offset in ((x, rng.choice(above)), (x, rng.choice(below)),\n                                   (x + 110, -8)):\n                stream = io.BytesIO()\n                c = canvas.Canvas(stream, pagesize=(612, 792))\n                c.setFont('Helvetica', 8)\n                # x + 110 is line.x1 + 30: a caption beside the rule's own row.\n                c.drawString(name_x, 792 - y - offset - 8, 'Name: Lee Harbor')\n                c.save()\n                reader = PdfReader(io.BytesIO(original))\n                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])\n                writer = PdfWriter()\n                writer.append_pages_from_reader(reader)\n                output = io.BytesIO()\n                writer.write(output)\n                pdf = output.getvalue()\n                with pdfplumber.open(io.BytesIO(pdf)) as doc:\n                    assert 'Lee Harbor' in doc.pages[page - 1].extract_text()\n                result = placement.place(pdf, PAT)\n                for f in result['fields']:\n>                   assert not (f['type'] == 'SIGNATURE' and f['page'] == page\n                                and abs(f['evidence']['line'][0] - rule_x) < 3\n                                and abs(f['evidence']['line'][1] - y) < 3\n                                and f['confidence'] == 'high'), result\nE                   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [112.0, 366.0, 266.4], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}\nE                   assert not ('SIGNATURE' == 'SIGNATURE'\nE                     \nE                       SIGNATURE and 2 == 2 and 0.0 < 3 and 0.0 < 3 and 'high' == 'high'\nE                    +  where 0.0 = abs((112.0 - 112.0))\nE                    +  and   0.0 = abs((276.0 - 276.0))\nE                     \nE                       high)\n\ndealroom_sign/tests/test_placement_r3.py:88: AssertionError"
+    },
+    {
+      "classname": "dealroom_sign.tests.test_placement_r4",
+      "case": "test_name_in_gap_between_party_columns_makes_both_uncertain",
+      "status": "failed",
+      "details": "def test_name_in_gap_between_party_columns_makes_both_uncertain():\n        out = io.BytesIO()\n        c = canvas.Canvas(out, pagesize=(612, 792))\n        c.setFont('Helvetica', 9)\n        for x, name, company in [(40, 'Lee Harbor', 'Harbor Light Analytics, Inc.'),\n                                  (380, 'Dan Whaley', 'Fleet Test Co.')]:\n            c.drawString(x, 490, company)\n            c.drawString(x, 450, 'Signature:')\n            c.line(x + 50, 448, x + 200, 448)\n            c.drawString(x, 430, 'Name: ' + name)\n            c.drawString(x, 400, 'Date:')\n            c.line(x + 30, 398, x + 200, 398)\n        c.drawString(270, 450, 'Name: Pat Smith')\n        c.save()\n        result = placement.place(out.getvalue(), TWO)\n        assert result['status'] == 'needs_sender'\n        assert result['fields'] == []\n>       assert all(a['confidence'] != 'high' for a in result['assignments'])\nE       assert False\nE        +  where False = all(<generator object test_name_in_gap_between_party_columns_makes_both_uncertain.<locals>.<genexpr> at 0x73c6a4d05e50>)\n\ndealroom_sign/tests/test_placement_r4.py:231: AssertionError"
+    }
+  ],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "2",
+      "skipped": "0",
+      "tests": "2",
+      "time": "1.909",
+      "timestamp": "2026-11-17T15:20:52.017266",
+      "hostname": "h-do1"
+    }
+  ]
+}

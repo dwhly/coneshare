@@ -1,0 +1,86 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____ test_name_crossing_gutter_cannot_identify_either_party[False-edges0] _____
+
+edges = (300, 350), reverse = False
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[0], [6]] == [[0], [0]]
+E         
+E         At index 1 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError
+_____ test_name_crossing_gutter_cannot_identify_either_party[False-edges1] _____
+
+edges = (270, 320), reverse = False
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[6], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError
+_____ test_name_crossing_gutter_cannot_identify_either_party[True-edges0] ______
+
+edges = (300, 350), reverse = True
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[6], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError
+_____ test_name_crossing_gutter_cannot_identify_either_party[True-edges1] ______
+
+edges = (270, 320), reverse = True
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[0], [6]] == [[0], [0]]
+E         
+E         At index 1 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r16/failing-first-crossing.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r16.py::test_name_crossing_gutter_cannot_identify_either_party[False-edges0]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_name_crossing_gutter_cannot_identify_either_party[False-edges1]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_name_crossing_gutter_cannot_identify_either_party[True-edges0]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_name_crossing_gutter_cannot_identify_either_party[True-edges1]
+4 failed in 0.44s

@@ -1,0 +1,97 @@
+{
+  "totals": {
+    "passed": 802,
+    "failure": 1
+  },
+  "groups": {
+    "dealroom_sign.tests.test_counterparty": {
+      "passed": 11
+    },
+    "dealroom_sign.tests.test_counterparty_mail": {
+      "passed": 11
+    },
+    "dealroom_sign.tests.test_gate3": {
+      "passed": 39
+    },
+    "dealroom_sign.tests.test_gate3_r4": {
+      "passed": 19
+    },
+    "dealroom_sign.tests.test_gate3_r5": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_gate3_routes": {
+      "passed": 17
+    },
+    "dealroom_sign.tests.test_live_acceptance_r6": {
+      "passed": 95
+    },
+    "dealroom_sign.tests.test_live_acceptance_r7": {
+      "passed": 12
+    },
+    "dealroom_sign.tests.test_placement_send": {
+      "passed": 15
+    },
+    "dealroom_sign.tests.test_product_reads": {
+      "passed": 50
+    },
+    "dealroom_sign.tests.test_recipient_proxy": {
+      "passed": 17
+    },
+    "dealroom_sign.tests.test_review_r2": {
+      "passed": 44
+    },
+    "dealroom_sign.tests.test_send_r3": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_send_r4": {
+      "passed": 2
+    },
+    "dealroom_sign.tests.test_send_r5": {
+      "passed": 3
+    },
+    "dealroom_sign.tests.test_send_r6": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_send_r7": {
+      "passed": 6
+    },
+    "dealroom_sign.tests.test_workflows": {
+      "passed": 47
+    },
+    "dealroom_sign.tests.test_c1b_distribution": {
+      "passed": 12
+    },
+    "dealroom_sign.tests.test_filename": {
+      "passed": 2
+    },
+    "dealroom_sign.tests.test_gate3_r4_report": {
+      "passed": 8
+    },
+    "dealroom_sign.tests.test_pages": {
+      "passed": 4
+    },
+    "dealroom_sign.tests.test_placement": {
+      "passed": 40
+    },
+    "dealroom_sign.tests.test_placement_r10": {
+      "passed": 336,
+      "failure": 1
+    }
+  },
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "1",
+      "skipped": "0",
+      "tests": "803",
+      "time": "329.273",
+      "timestamp": "2026-11-17T14:13:22.553127",
+      "hostname": "h-do1"
+    }
+  ],
+  "command": "PYTHONDONTWRITEBYTECODE=1 SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests -x --junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r15/full-suite.xml",
+  "launcher_scratch_warning": true,
+  "complete_and_green": false,
+  "stopped_on_existing_test_failure": true
+}

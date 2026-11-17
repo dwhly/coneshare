@@ -1,0 +1,217 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+FFFF........FFFFFFFFFFFFFF.....................................FFFFFF... [ 96%]
+...                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_nearest_column_and_two_point_ties[row_edges0-expected0-False] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges0-expected0-True] _______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges1-expected1-False] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges1-expected1-True] _______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges6-expected6-False] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges6-expected6-True] _______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges7-expected7-False] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges7-expected7-True] _______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges8-expected8-False] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges8-expected8-True] _______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges9-expected9-False] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff
+______ test_nearest_column_and_two_point_ties[row_edges9-expected9-True] _______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff
+_____ test_nearest_column_and_two_point_ties[row_edges10-expected10-False] _____
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [6, 0]
+E     
+E     At index 1 diff: 6 != 0
+E     Use -v to get more diff
+_____ test_nearest_column_and_two_point_ties[row_edges10-expected10-True] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 6]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff
+_____ test_nearest_column_and_two_point_ties[row_edges11-expected11-False] _____
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff
+_____ test_nearest_column_and_two_point_ties[row_edges11-expected11-True] ______
+dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff
+_______ test_same_column_stacked_blocks_and_other_page_do_not_tie[False] _______
+dealroom_sign/tests/test_placement_r15b.py:50: in test_same_column_stacked_blocks_and_other_page_do_not_tie
+    assert [b.scores for b in blocks] == [[6], [6], [6]]
+E   assert [[0], [0], [6]] == [[6], [6], [6]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff
+_______ test_same_column_stacked_blocks_and_other_page_do_not_tie[True] ________
+dealroom_sign/tests/test_placement_r15b.py:50: in test_same_column_stacked_blocks_and_other_page_do_not_tie
+    assert [b.scores for b in blocks] == [[6], [6], [6]]
+E   assert [[0], [0], [6]] == [[6], [6], [6]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff
+_ test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation] _
+dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC. (the "Recipient")] _
+dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT] _
+dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT:] _
+dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-For and on behalf of the Recipient] _
+dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-harbor light analytics, inc.] _
+dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r15/failing-first-r15b.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges0-expected0-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges0-expected0-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges1-expected1-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges1-expected1-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges6-expected6-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges6-expected6-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges7-expected7-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges7-expected7-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges8-expected8-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges8-expected8-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges9-expected9-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges9-expected9-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges10-expected10-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges10-expected10-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges11-expected11-False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_nearest_column_and_two_point_ties[row_edges11-expected11-True]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_same_column_stacked_blocks_and_other_page_do_not_tie[False]
+FAILED dealroom_sign/tests/test_placement_r15b.py::test_same_column_stacked_blocks_and_other_page_do_not_tie[True]
+FAILED dealroom_sign/tests/test_placement_r10.py::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]
+FAILED dealroom_sign/tests/test_placement_r10.py::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC. (the "Recipient")]
+FAILED dealroom_sign/tests/test_placement_r10.py::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT]
+FAILED dealroom_sign/tests/test_placement_r10.py::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT:]
+FAILED dealroom_sign/tests/test_placement_r10.py::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-For and on behalf of the Recipient]
+FAILED dealroom_sign/tests/test_placement_r10.py::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-harbor light analytics, inc.]
+24 failed, 51 passed, 451 deselected in 12.39s

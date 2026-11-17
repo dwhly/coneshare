@@ -1,0 +1,23 @@
+--- a/backend/dealroom_sign/placement.py
++++ b/backend/dealroom_sign/placement.py
+@@ -29,7 +29,7 @@
+ ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
+ GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
+-VERSION = 'c2a.14'
++VERSION = 'c2a.15'
+ SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+ COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+ PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
+@@ -159,7 +159,11 @@
+ 
+ 
+ def printed_names(block):
++    # A name may identify only a horizontally overlapping label/rule
++    # column. Allow 10 pt at either edge for slightly outdented names.
++    left = min(block.line.x0, block.line.label.get('rect', [block.line.x0])[0])
+     return [tokens(name) for label in (block.raw_labels or block.labels)
++            if label['rect'][0] < block.line.x1 + 10 and label['rect'][2] > left - 10
+             for part in identity_parts(label['text']) if (name := person_text(part))]
+ 
+ 

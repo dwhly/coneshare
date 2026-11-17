@@ -1,0 +1,25 @@
+{
+  "counts": {
+    "failure": 4
+  },
+  "failures": [
+    "dealroom_sign.tests.test_placement_r15b_columns::test_aligned_rule_lengths_share_column[False-False]",
+    "dealroom_sign.tests.test_placement_r15b_columns::test_aligned_rule_lengths_share_column[False-True]",
+    "dealroom_sign.tests.test_placement_r15b_columns::test_aligned_rule_lengths_share_column[True-False]",
+    "dealroom_sign.tests.test_placement_r15b_columns::test_aligned_rule_lengths_share_column[True-True]"
+  ],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "4",
+      "skipped": "0",
+      "tests": "4",
+      "time": "0.435",
+      "timestamp": "2026-11-17T14:27:56.218936",
+      "hostname": "h-do1"
+    }
+  ],
+  "product_sha256": "b8440d9615359ecc0c85ef99eab78ed653ade66b79c90b5f372231bb4dcf48fd",
+  "test_sha256": "a2dab847e50f49b4ad162e718aebe2b3a220b7f44423320f47db6fc743b273f1"
+}

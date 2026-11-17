@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="51" time="1.996" timestamp="2026-11-17T15:22:38.258662" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[False-Witness:]" time="0.005" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[False-Attest:]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[False-Attestation:]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[True-Witness:]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[True-Attest:]" time="0.002"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Attest:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[True-Attestation:]" time="0.002"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Attestation:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-0-0]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-29-0]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-30-6]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-100-6]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-0-0]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-29-0]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-30-6]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-100-6]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges0]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r3" name="test_inserted_raw_person_vetoes_across_fixtures[witness]" time="1.161"><failure message="AssertionError: {'analysis_version': 'c2a.16', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [112.0, 366.0, 266.4], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert not ('SIGNATURE' == 'SIGNATURE'&#10;  &#10;    SIGNATURE and 2 == 2 and 0.0 &lt; 3 and 0.0 &lt; 3 and 'high' == 'high'&#10; +  where 0.0 = abs((112.0 - 112.0))&#10; +  and   0.0 = abs((276.0 - 276.0))&#10;  &#10;    high)">fixture = 'witness'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    def test_inserted_raw_person_vetoes_across_fixtures(fixture):
+        original = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        blocks, _, _ = placement.extract(original)
+        # Use independently measured boxes when a fixture has no detected hosts (bare).
+        targets = [(b.line.page, b.line.x1 - 80, b.line.y, b.line.x0) for b in blocks]
+        if not targets:
+            targets = [(1, 72, 450, 72)]
+        rng = random.Random(613)
+        for page, x, y, rule_x in targets:
+            with pdfplumber.open(io.BytesIO(original)) as doc:
+                words = doc.pages[page - 1].extract_words()
+            # Randomize within open space so the injected PDF text remains legible.
+            above = [n for n in range(-65, -15) if not any(w['x0'] &lt; x + 75 and w['x1'] &gt; x
+                     and w['top'] &lt; y + n + 12 and w['bottom'] &gt; y + n - 3 for w in words)]
+            below = [n for n in range(24, 85) if not any(w['x0'] &lt; x + 75 and w['x1'] &gt; x
+                     and w['top'] &lt; y + n + 12 and w['bottom'] &gt; y + n - 3 for w in words)]
+            for name_x, offset in ((x, rng.choice(above)), (x, rng.choice(below)),
+                                   (x + 110, -8)):
+                stream = io.BytesIO()
+                c = canvas.Canvas(stream, pagesize=(612, 792))
+                c.setFont('Helvetica', 8)
+                # x + 110 is line.x1 + 30: a caption beside the rule's own row.
+                c.drawString(name_x, 792 - y - offset - 8, 'Name: Lee Harbor')
+                c.save()
+                reader = PdfReader(io.BytesIO(original))
+                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])
+                writer = PdfWriter()
+                writer.append_pages_from_reader(reader)
+                output = io.BytesIO()
+                writer.write(output)
+                pdf = output.getvalue()
+                with pdfplumber.open(io.BytesIO(pdf)) as doc:
+                    assert 'Lee Harbor' in doc.pages[page - 1].extract_text()
+                result = placement.place(pdf, PAT)
+                for f in result['fields']:
+&gt;                   assert not (f['type'] == 'SIGNATURE' and f['page'] == page
+                                and abs(f['evidence']['line'][0] - rule_x) &lt; 3
+                                and abs(f['evidence']['line'][1] - y) &lt; 3
+                                and f['confidence'] == 'high'), result
+E                   AssertionError: {'analysis_version': 'c2a.16', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [112.0, 366.0, 266.4], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E                   assert not ('SIGNATURE' == 'SIGNATURE'
+E                     
+E                       SIGNATURE and 2 == 2 and 0.0 &lt; 3 and 0.0 &lt; 3 and 'high' == 'high'
+E                    +  where 0.0 = abs((112.0 - 112.0))
+E                    +  and   0.0 = abs((276.0 - 276.0))
+E                     
+E                       high)
+
+dealroom_sign/tests/test_placement_r3.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r4" name="test_name_in_gap_between_party_columns_makes_both_uncertain" time="0.229" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges0-expected0-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges0-expected0-True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges1-expected1-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges1-expected1-True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges2-expected2-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges2-expected2-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges3-expected3-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges3-expected3-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges4-expected4-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges4-expected4-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges5-expected5-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges5-expected5-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges6-expected6-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges6-expected6-True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges7-expected7-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges7-expected7-True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges8-expected8-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges8-expected8-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges9-expected9-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges9-expected9-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges10-expected10-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges10-expected10-True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges11-expected11-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges11-expected11-True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_same_column_stacked_blocks_and_other_page_do_not_tie[False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_same_column_stacked_blocks_and_other_page_do_not_tie[True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_label_is_part_of_the_column_even_before_rule_start" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[False-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[False-True]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[True-False]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[True-True]" time="0.002" /></testsuite></testsuites>

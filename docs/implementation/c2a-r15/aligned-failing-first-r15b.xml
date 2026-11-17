@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="0.435" timestamp="2026-11-17T14:27:56.218936" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[False-False]" time="0.005"><failure message="assert [[0], [6], [0]] == [[6], [6], [0]]&#10;  &#10;  At index 0 diff: [0] != [6]&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[6], [6], [0]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[False-True]" time="0.002"><failure message="assert [[0], [6], [0]] == [[0], [6], [6]]&#10;  &#10;  At index 2 diff: [0] != [6]&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[0], [6], [6]]
+E     
+E     At index 2 diff: [0] != [6]
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[True-False]" time="0.002"><failure message="assert [[0], [6], [0]] == [[6], [6], [0]]&#10;  &#10;  At index 0 diff: [0] != [6]&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[6], [6], [0]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b_columns" name="test_aligned_rule_lengths_share_column[True-True]" time="0.002"><failure message="assert [[0], [6], [0]] == [[0], [6], [6]]&#10;  &#10;  At index 2 diff: [0] != [6]&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[0], [6], [6]]
+E     
+E     At index 2 diff: [0] != [6]
+E     Use -v to get more diff</failure></testcase></testsuite></testsuites>

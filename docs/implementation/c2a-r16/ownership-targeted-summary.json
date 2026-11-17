@@ -1,0 +1,33 @@
+{
+  "counts": {
+    "passed": 49,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 49,
+  "groups": {
+    "dealroom_sign.tests.test_placement_r16": {
+      "passed": 18
+    },
+    "dealroom_sign.tests.test_placement_r15b": {
+      "passed": 27
+    },
+    "dealroom_sign.tests.test_placement_r15b_columns": {
+      "passed": 4
+    }
+  },
+  "failures": [],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "49",
+      "time": "0.464",
+      "timestamp": "2026-11-17T15:23:23.099081",
+      "hostname": "h-do1"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+....FF............F................................                      [100%]
+=================================== FAILURES ===================================
+___________ test_witness_column_never_owns_party_name[True-Attest:] ____________
+
+role = 'Attest:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+_________ test_witness_column_never_owns_party_name[True-Attestation:] _________
+
+role = 'Attestation:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError
+___________ test_inserted_raw_person_vetoes_across_fixtures[witness] ___________
+
+fixture = 'witness'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    def test_inserted_raw_person_vetoes_across_fixtures(fixture):
+        original = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        blocks, _, _ = placement.extract(original)
+        # Use independently measured boxes when a fixture has no detected hosts (bare).
+        targets = [(b.line.page, b.line.x1 - 80, b.line.y, b.line.x0) for b in blocks]
+        if not targets:
+            targets = [(1, 72, 450, 72)]
+        rng = random.Random(613)
+        for page, x, y, rule_x in targets:
+            with pdfplumber.open(io.BytesIO(original)) as doc:
+                words = doc.pages[page - 1].extract_words()
+            # Randomize within open space so the injected PDF text remains legible.
+            above = [n for n in range(-65, -15) if not any(w['x0'] < x + 75 and w['x1'] > x
+                     and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]
+            below = [n for n in range(24, 85) if not any(w['x0'] < x + 75 and w['x1'] > x
+                     and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]
+            for name_x, offset in ((x, rng.choice(above)), (x, rng.choice(below)),
+                                   (x + 110, -8)):
+                stream = io.BytesIO()
+                c = canvas.Canvas(stream, pagesize=(612, 792))
+                c.setFont('Helvetica', 8)
+                # x + 110 is line.x1 + 30: a caption beside the rule's own row.
+                c.drawString(name_x, 792 - y - offset - 8, 'Name: Lee Harbor')
+                c.save()
+                reader = PdfReader(io.BytesIO(original))
+                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])
+                writer = PdfWriter()
+                writer.append_pages_from_reader(reader)
+                output = io.BytesIO()
+                writer.write(output)
+                pdf = output.getvalue()
+                with pdfplumber.open(io.BytesIO(pdf)) as doc:
+                    assert 'Lee Harbor' in doc.pages[page - 1].extract_text()
+                result = placement.place(pdf, PAT)
+                for f in result['fields']:
+>                   assert not (f['type'] == 'SIGNATURE' and f['page'] == page
+                                and abs(f['evidence']['line'][0] - rule_x) < 3
+                                and abs(f['evidence']['line'][1] - y) < 3
+                                and f['confidence'] == 'high'), result
+E                   AssertionError: {'analysis_version': 'c2a.16', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [112.0, 366.0, 266.4], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E                   assert not ('SIGNATURE' == 'SIGNATURE'
+E                     
+E                       SIGNATURE and 2 == 2 and 0.0 < 3 and 0.0 < 3 and 'high' == 'high'
+E                    +  where 0.0 = abs((112.0 - 112.0))
+E                    +  and   0.0 = abs((276.0 - 276.0))
+E                     
+E                       high)
+
+dealroom_sign/tests/test_placement_r3.py:88: AssertionError
+=============================== warnings summary ===============================
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/pypdf/_page.py:1368: DeprecationWarning: Calling `PageObject.replace_contents()` for pages not assigned to a writer is deprecated and will be removed in pypdf 7.0.0. Attach the page to the writer first or use `PdfWriter(clone_from=...)` directly. The existing approach has proved being unreliable.
+    self.replace_contents(ContentStream(new_content_array, self.pdf))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r16/variant-one.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[True-Attest:]
+FAILED dealroom_sign/tests/test_placement_r16.py::test_witness_column_never_owns_party_name[True-Attestation:]
+FAILED dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+3 failed, 48 passed, 3 warnings in 1.99s

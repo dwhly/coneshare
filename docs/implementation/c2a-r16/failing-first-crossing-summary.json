@@ -1,0 +1,52 @@
+{
+  "counts": {
+    "passed": 0,
+    "failed": 4,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 4,
+  "groups": {
+    "dealroom_sign.tests.test_placement_r16": {
+      "failed": 4
+    }
+  },
+  "failures": [
+    {
+      "classname": "dealroom_sign.tests.test_placement_r16",
+      "case": "test_name_crossing_gutter_cannot_identify_either_party[False-edges0]",
+      "status": "failed",
+      "details": "edges = (300, 350), reverse = False\n\n    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])\n    @pytest.mark.parametrize('reverse', [False, True])\n    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):\n        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}\n        blocks = [block((72, 290), row), block((330, 548), row)]\n        if reverse:\n            blocks.reverse()\n        placement.prepare_blocks(blocks, {}, PAT)\n>       assert [b.scores for b in blocks] == [[0], [0]]\nE       assert [[0], [6]] == [[0], [0]]\nE         \nE         At index 1 diff: [6] != [0]\nE         Use -v to get more diff\n\ndealroom_sign/tests/test_placement_r16.py:57: AssertionError"
+    },
+    {
+      "classname": "dealroom_sign.tests.test_placement_r16",
+      "case": "test_name_crossing_gutter_cannot_identify_either_party[False-edges1]",
+      "status": "failed",
+      "details": "edges = (270, 320), reverse = False\n\n    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])\n    @pytest.mark.parametrize('reverse', [False, True])\n    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):\n        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}\n        blocks = [block((72, 290), row), block((330, 548), row)]\n        if reverse:\n            blocks.reverse()\n        placement.prepare_blocks(blocks, {}, PAT)\n>       assert [b.scores for b in blocks] == [[0], [0]]\nE       assert [[6], [0]] == [[0], [0]]\nE         \nE         At index 0 diff: [6] != [0]\nE         Use -v to get more diff\n\ndealroom_sign/tests/test_placement_r16.py:57: AssertionError"
+    },
+    {
+      "classname": "dealroom_sign.tests.test_placement_r16",
+      "case": "test_name_crossing_gutter_cannot_identify_either_party[True-edges0]",
+      "status": "failed",
+      "details": "edges = (300, 350), reverse = True\n\n    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])\n    @pytest.mark.parametrize('reverse', [False, True])\n    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):\n        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}\n        blocks = [block((72, 290), row), block((330, 548), row)]\n        if reverse:\n            blocks.reverse()\n        placement.prepare_blocks(blocks, {}, PAT)\n>       assert [b.scores for b in blocks] == [[0], [0]]\nE       assert [[6], [0]] == [[0], [0]]\nE         \nE         At index 0 diff: [6] != [0]\nE         Use -v to get more diff\n\ndealroom_sign/tests/test_placement_r16.py:57: AssertionError"
+    },
+    {
+      "classname": "dealroom_sign.tests.test_placement_r16",
+      "case": "test_name_crossing_gutter_cannot_identify_either_party[True-edges1]",
+      "status": "failed",
+      "details": "edges = (270, 320), reverse = True\n\n    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])\n    @pytest.mark.parametrize('reverse', [False, True])\n    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):\n        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}\n        blocks = [block((72, 290), row), block((330, 548), row)]\n        if reverse:\n            blocks.reverse()\n        placement.prepare_blocks(blocks, {}, PAT)\n>       assert [b.scores for b in blocks] == [[0], [0]]\nE       assert [[0], [6]] == [[0], [0]]\nE         \nE         At index 1 diff: [6] != [0]\nE         Use -v to get more diff\n\ndealroom_sign/tests/test_placement_r16.py:57: AssertionError"
+    }
+  ],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "4",
+      "skipped": "0",
+      "tests": "4",
+      "time": "0.446",
+      "timestamp": "2026-11-17T15:24:49.592657",
+      "hostname": "h-do1"
+    }
+  ]
+}

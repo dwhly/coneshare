@@ -1,0 +1,38 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________ test_aligned_rule_lengths_share_column[False-False] ______________
+dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[6], [6], [0]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff
+______________ test_aligned_rule_lengths_share_column[False-True] ______________
+dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[0], [6], [6]]
+E     
+E     At index 2 diff: [0] != [6]
+E     Use -v to get more diff
+______________ test_aligned_rule_lengths_share_column[True-False] ______________
+dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[6], [6], [0]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff
+______________ test_aligned_rule_lengths_share_column[True-True] _______________
+dealroom_sign/tests/test_placement_r15b_columns.py:20: in test_aligned_rule_lengths_share_column
+    assert [b.scores for b in blocks] == ([[0], [6], [6]] if reverse else [[6], [6], [0]])
+E   assert [[0], [6], [0]] == [[0], [6], [6]]
+E     
+E     At index 2 diff: [0] != [6]
+E     Use -v to get more diff
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r15/aligned-failing-first-r15b.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r15b_columns.py::test_aligned_rule_lengths_share_column[False-False]
+FAILED dealroom_sign/tests/test_placement_r15b_columns.py::test_aligned_rule_lengths_share_column[False-True]
+FAILED dealroom_sign/tests/test_placement_r15b_columns.py::test_aligned_rule_lengths_share_column[True-False]
+FAILED dealroom_sign/tests/test_placement_r15b_columns.py::test_aligned_rule_lengths_share_column[True-True]
+4 failed in 0.43s

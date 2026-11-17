@@ -1,0 +1,74 @@
+diff --git a/backend/dealroom_sign/placement.py b/backend/dealroom_sign/placement.py
+index 729bfd34..d1e8a73c 100644
+--- a/backend/dealroom_sign/placement.py
++++ b/backend/dealroom_sign/placement.py
+@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
+ ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
+ GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
+-VERSION = 'c2a.14'
++VERSION = 'c2a.15'
+ SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+ COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+ PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
+@@ -158,8 +158,25 @@ def identity_parts(text):
+     return [text] + [part.strip('() ') for part in IDENTITY_SPLIT.split(NAME_CAPTION.sub('', text))[1:]]
+ 
+ 
+-def printed_names(block):
++def printed_names(block, blocks=()):
++    def column(other):
++        return (min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0]),
++                other.line.x1)
++
++    own = column(block)
++    # Stacked blocks can share a column; only distinct columns compete.
++    others = {column(other) for other in blocks if other.line.page == block.line.page} - {own}
++
++    def owns(row):
++        def distance(bounds):
++            return max(bounds[0] - row['rect'][2], row['rect'][0] - bounds[1], 0)
++
++        # Edge distance admits outdented names, but a tie within 2 pt
++        # supplies identity to neither column. Vertical attribution is unchanged.
++        return all(distance(other) > distance(own) + 2 for other in others)
++
+     return [tokens(name) for label in (block.raw_labels or block.labels)
++            if owns(label)
+             for part in identity_parts(label['text']) if (name := person_text(part))]
+ 
+ 
+@@ -694,7 +711,7 @@ def extract(pdf, *, deadline=None):
+             mixed_heading_names.setdefault(block.line.page, []).extend(
+                 t for t in block.raw_labels
+                 if any(person_text(part) for part in identity_parts(t['text'])))
+-        if not printed_names(block):
++        if not printed_names(block, blocks):
+             block.company_only_blocked = company_only_veto(block, extent, pages, roles, blocks, neutral)
+     # A mixed-company block cannot lend its printed name to another block.
+     # Propagate by the same physical row on the same page, after collecting
+@@ -741,8 +758,8 @@ def unresolved_person(text, roles):
+ def prepare_blocks(blocks, roles, signers):
+     """Score raw evidence locally, then discard it before worker output."""
+     for block in blocks:
+-        block.scores = [score(s, block, roles) for s in signers]
+-        if not printed_names(block) and sum(v >= 4 for v in block.scores) != 1:
++        block.scores = [score(s, block, roles, blocks) for s in signers]
++        if not printed_names(block, blocks) and sum(v >= 4 for v in block.scores) != 1:
+             block.scores = [0] * len(signers)
+         # A company word in arbitrary prose is not permission to emit that prose.
+         # Only a mapped role company or a heading contributing to an accepted
+@@ -764,11 +781,11 @@ def prepare_blocks(blocks, roles, signers):
+         block.raw_labels = []
+ 
+ 
+-def score(signer, block, roles):
++def score(signer, block, roles, blocks=()):
+     if block.uncertain_identity:
+         return 0
+     name = tokens(signer.get('name', ''))
+-    printed = printed_names(block)
++    printed = printed_names(block, blocks)
+     if not printed and block.company_only_blocked:
+         return 0
+     # A printed full name is authoritative, including when company/domain agree.

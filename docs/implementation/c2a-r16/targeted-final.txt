@@ -1,0 +1,15 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+.......................................................                  [100%]
+=============================== warnings summary ===============================
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[witness]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/pypdf/_page.py:1368: DeprecationWarning: Calling `PageObject.replace_contents()` for pages not assigned to a writer is deprecated and will be removed in pypdf 7.0.0. Attach the page to the writer first or use `PdfWriter(clone_from=...)` directly. The existing approach has proved being unreliable.
+    self.replace_contents(ContentStream(new_content_array, self.pdf))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r16/targeted-final.xml -
+55 passed, 6 warnings in 3.14s

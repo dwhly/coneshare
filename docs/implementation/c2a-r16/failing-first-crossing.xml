@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="0.446" timestamp="2026-11-17T15:24:49.592657" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_name_crossing_gutter_cannot_identify_either_party[False-edges0]" time="0.005"><failure message="assert [[0], [6]] == [[0], [0]]&#10;  &#10;  At index 1 diff: [6] != [0]&#10;  Use -v to get more diff">edges = (300, 350), reverse = False
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[0], [6]] == [[0], [0]]
+E         
+E         At index 1 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_name_crossing_gutter_cannot_identify_either_party[False-edges1]" time="0.002"><failure message="assert [[6], [0]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [6] != [0]&#10;  Use -v to get more diff">edges = (270, 320), reverse = False
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[6], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_name_crossing_gutter_cannot_identify_either_party[True-edges0]" time="0.002"><failure message="assert [[6], [0]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [6] != [0]&#10;  Use -v to get more diff">edges = (300, 350), reverse = True
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[6], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_name_crossing_gutter_cannot_identify_either_party[True-edges1]" time="0.002"><failure message="assert [[0], [6]] == [[0], [0]]&#10;  &#10;  At index 1 diff: [6] != [0]&#10;  Use -v to get more diff">edges = (270, 320), reverse = True
+
+    @pytest.mark.parametrize('edges', [(300, 350), (270, 320)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_name_crossing_gutter_cannot_identify_either_party(edges, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row)]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[0], [6]] == [[0], [0]]
+E         
+E         At index 1 diff: [6] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:57: AssertionError</failure></testcase></testsuite></testsuites>

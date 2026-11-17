@@ -1,0 +1,61 @@
+--- a/backend/dealroom_sign/placement.py
++++ b/backend/dealroom_sign/placement.py
+@@ -29,7 +29,7 @@
+ ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
+ GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
+-VERSION = 'c2a.14'
++VERSION = 'c2a.15'
+ SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+ COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+ PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
+@@ -681,7 +681,6 @@
+             # rule formed no block, keep the name so the veto fails closed.
+             retained.append(text)
+         absorbed_names[pno] = retained
+-    mixed_heading_names = {}
+     for block, extent in extents:
+         texts, rules, _ = pages[block.line.page]
+         top, bottom, left, right = extent
+@@ -691,18 +690,17 @@
+             block.uncertain_identity = True
+         if conflicting_company_headings(block, extent, texts, rules, roles):
+             block.uncertain_identity = True
+-            mixed_heading_names.setdefault(block.line.page, []).extend(
+-                t for t in block.raw_labels
+-                if any(person_text(part) for part in identity_parts(t['text'])))
+         if not printed_names(block):
+             block.company_only_blocked = company_only_veto(block, extent, pages, roles, blocks, neutral)
+-    # A mixed-company block cannot lend its printed name to another block.
+-    # Propagate by the same physical row on the same page, after collecting
+-    # every conflict, so traversal order cannot clear or miss a veto.
++    # Keep physical-row peers only until local scoring; never serialize
++    # these references in the worker's dataclass output.
+     for block, extent in extents:
+-        if any(inside_extent(text, extent)
+-               for text in mixed_heading_names.get(block.line.page, [])):
+-            block.uncertain_identity = True
++        names = [t for t in block.raw_labels
++                 if any(person_text(part) for part in identity_parts(t['text']))]
++        block._identity_peers = [other for other, other_extent in extents
++                                 if other is not block and other.line.page == block.line.page
++                                 and any(inside_extent(t, extent) and inside_extent(t, other_extent)
++                                         for t in names)]
+     return blocks, sizes, roles
+ 
+ 
+@@ -740,8 +738,13 @@
+ 
+ def prepare_blocks(blocks, roles, signers):
+     """Score raw evidence locally, then discard it before worker output."""
++    initial = {id(block): [score(s, block, roles) for s in signers] for block in blocks}
+     for block in blocks:
+-        block.scores = [score(s, block, roles) for s in signers]
++        block.scores = [value if not any(initial[id(peer)][i] == 0
++                                         for peer in getattr(block, '_identity_peers', [])) else 0
++                        for i, value in enumerate(initial[id(block)])]
++        if hasattr(block, '_identity_peers'):
++            del block._identity_peers
+         if not printed_names(block) and sum(v >= 4 for v in block.scores) != 1:
+             block.scores = [0] * len(signers)
+         # A company word in arbitrary prose is not permission to emit that prose.

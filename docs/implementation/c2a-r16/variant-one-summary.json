@@ -1,0 +1,59 @@
+{
+  "counts": {
+    "passed": 48,
+    "failed": 3,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 51,
+  "groups": {
+    "dealroom_sign.tests.test_placement_r16": {
+      "passed": 16,
+      "failed": 2
+    },
+    "dealroom_sign.tests.test_placement_r3": {
+      "failed": 1
+    },
+    "dealroom_sign.tests.test_placement_r4": {
+      "passed": 1
+    },
+    "dealroom_sign.tests.test_placement_r15b": {
+      "passed": 27
+    },
+    "dealroom_sign.tests.test_placement_r15b_columns": {
+      "passed": 4
+    }
+  },
+  "failures": [
+    {
+      "classname": "dealroom_sign.tests.test_placement_r16",
+      "case": "test_witness_column_never_owns_party_name[True-Attest:]",
+      "status": "failed",
+      "details": "role = 'Attest:', reverse = True\n\n    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])\n    @pytest.mark.parametrize('reverse', [False, True])\n    def test_witness_column_never_owns_party_name(role, reverse):\n        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}\n        party = block((72, 290), row)\n        witness = block((330, 548), row)\n        witness.line.label['text'] = role\n        witness.line.semantic = ''\n        blocks = [party, witness]\n        if reverse:\n            blocks.reverse()\n        placement.prepare_blocks(blocks, {}, PAT)\n>       assert party.scores == [6]\nE       assert [0] == [6]\nE         \nE         At index 0 diff: 0 != 6\nE         Use -v to get more diff\n\ndealroom_sign/tests/test_placement_r16.py:22: AssertionError"
+    },
+    {
+      "classname": "dealroom_sign.tests.test_placement_r16",
+      "case": "test_witness_column_never_owns_party_name[True-Attestation:]",
+      "status": "failed",
+      "details": "role = 'Attestation:', reverse = True\n\n    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])\n    @pytest.mark.parametrize('reverse', [False, True])\n    def test_witness_column_never_owns_party_name(role, reverse):\n        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}\n        party = block((72, 290), row)\n        witness = block((330, 548), row)\n        witness.line.label['text'] = role\n        witness.line.semantic = ''\n        blocks = [party, witness]\n        if reverse:\n            blocks.reverse()\n        placement.prepare_blocks(blocks, {}, PAT)\n>       assert party.scores == [6]\nE       assert [0] == [6]\nE         \nE         At index 0 diff: 0 != 6\nE         Use -v to get more diff\n\ndealroom_sign/tests/test_placement_r16.py:22: AssertionError"
+    },
+    {
+      "classname": "dealroom_sign.tests.test_placement_r3",
+      "case": "test_inserted_raw_person_vetoes_across_fixtures[witness]",
+      "status": "failed",
+      "details": "fixture = 'witness'\n\n    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))\n    def test_inserted_raw_person_vetoes_across_fixtures(fixture):\n        original = (FIXTURES / (fixture + '.pdf')).read_bytes()\n        blocks, _, _ = placement.extract(original)\n        # Use independently measured boxes when a fixture has no detected hosts (bare).\n        targets = [(b.line.page, b.line.x1 - 80, b.line.y, b.line.x0) for b in blocks]\n        if not targets:\n            targets = [(1, 72, 450, 72)]\n        rng = random.Random(613)\n        for page, x, y, rule_x in targets:\n            with pdfplumber.open(io.BytesIO(original)) as doc:\n                words = doc.pages[page - 1].extract_words()\n            # Randomize within open space so the injected PDF text remains legible.\n            above = [n for n in range(-65, -15) if not any(w['x0'] < x + 75 and w['x1'] > x\n                     and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]\n            below = [n for n in range(24, 85) if not any(w['x0'] < x + 75 and w['x1'] > x\n                     and w['top'] < y + n + 12 and w['bottom'] > y + n - 3 for w in words)]\n            for name_x, offset in ((x, rng.choice(above)), (x, rng.choice(below)),\n                                   (x + 110, -8)):\n                stream = io.BytesIO()\n                c = canvas.Canvas(stream, pagesize=(612, 792))\n                c.setFont('Helvetica', 8)\n                # x + 110 is line.x1 + 30: a caption beside the rule's own row.\n                c.drawString(name_x, 792 - y - offset - 8, 'Name: Lee Harbor')\n                c.save()\n                reader = PdfReader(io.BytesIO(original))\n                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])\n                writer = PdfWriter()\n                writer.append_pages_from_reader(reader)\n                output = io.BytesIO()\n                writer.write(output)\n                pdf = output.getvalue()\n                with pdfplumber.open(io.BytesIO(pdf)) as doc:\n                    assert 'Lee Harbor' in doc.pages[page - 1].extract_text()\n                result = placement.place(pdf, PAT)\n                for f in result['fields']:\n>                   assert not (f['type'] == 'SIGNATURE' and f['page'] == page\n                                and abs(f['evidence']['line'][0] - rule_x) < 3\n                                and abs(f['evidence']['line'][1] - y) < 3\n                                and f['confidence'] == 'high'), result\nE                   AssertionError: {'analysis_version': 'c2a.16', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [112.0, 366.0, 266.4], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}\nE                   assert not ('SIGNATURE' == 'SIGNATURE'\nE                     \nE                       SIGNATURE and 2 == 2 and 0.0 < 3 and 0.0 < 3 and 'high' == 'high'\nE                    +  where 0.0 = abs((112.0 - 112.0))\nE                    +  and   0.0 = abs((276.0 - 276.0))\nE                     \nE                       high)\n\ndealroom_sign/tests/test_placement_r3.py:88: AssertionError"
+    }
+  ],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "3",
+      "skipped": "0",
+      "tests": "51",
+      "time": "1.996",
+      "timestamp": "2026-11-17T15:22:38.258662",
+      "hostname": "h-do1"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "counts": {
+    "failure": 24,
+    "passed": 51
+  },
+  "failures": [
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges0-expected0-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges0-expected0-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges1-expected1-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges1-expected1-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges6-expected6-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges6-expected6-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges7-expected7-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges7-expected7-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges8-expected8-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges8-expected8-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges9-expected9-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges9-expected9-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges10-expected10-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges10-expected10-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges11-expected11-False]",
+    "dealroom_sign.tests.test_placement_r15b::test_nearest_column_and_two_point_ties[row_edges11-expected11-True]",
+    "dealroom_sign.tests.test_placement_r15b::test_same_column_stacked_blocks_and_other_page_do_not_tie[False]",
+    "dealroom_sign.tests.test_placement_r15b::test_same_column_stacked_blocks_and_other_page_do_not_tie[True]",
+    "dealroom_sign.tests.test_placement_r10::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]",
+    "dealroom_sign.tests.test_placement_r10::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC. (the \"Recipient\")]",
+    "dealroom_sign.tests.test_placement_r10::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT]",
+    "dealroom_sign.tests.test_placement_r10::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT:]",
+    "dealroom_sign.tests.test_placement_r10::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-For and on behalf of the Recipient]",
+    "dealroom_sign.tests.test_placement_r10::test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-harbor light analytics, inc.]"
+  ],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "24",
+      "skipped": "0",
+      "tests": "75",
+      "time": "12.395",
+      "timestamp": "2026-11-17T14:23:27.459174",
+      "hostname": "h-do1"
+    }
+  ]
+}

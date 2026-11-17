@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="14" skipped="0" tests="18" time="0.491" timestamp="2026-11-17T15:22:15.061682" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[False-Witness:]" time="0.005"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Witness:', reverse = False
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[False-Attest:]" time="0.002"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Attest:', reverse = False
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[False-Attestation:]" time="0.002"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Attestation:', reverse = False
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[True-Witness:]" time="0.002"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Witness:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[True-Attest:]" time="0.002"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Attest:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_witness_column_never_owns_party_name[True-Attestation:]" time="0.002"><failure message="assert [0] == [6]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">role = 'Attestation:', reverse = True
+
+    @pytest.mark.parametrize('role', ['Witness:', 'Attest:', 'Attestation:'])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_witness_column_never_owns_party_name(role, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [350, 312, 400, 322]}
+        party = block((72, 290), row)
+        witness = block((330, 548), row)
+        witness.line.label['text'] = role
+        witness.line.semantic = ''
+        blocks = [party, witness]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert party.scores == [6]
+E       assert [0] == [6]
+E         
+E         At index 0 diff: 0 != 6
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:22: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-0-0]" time="0.002"><failure message="assert [6] == [0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dy = 0, expected = 0, reverse = False
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-29-0]" time="0.002"><failure message="assert [6] == [0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dy = 29, expected = 0, reverse = False
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-30-6]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[False-100-6]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-0-0]" time="0.002"><failure message="assert [6] == [0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dy = 0, expected = 0, reverse = True
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-29-0]" time="0.002"><failure message="assert [6] == [0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dy = 29, expected = 0, reverse = True
+
+    @pytest.mark.parametrize('dy,expected', [(0, 0), (29, 0), (30, 6), (100, 6)])
+    @pytest.mark.parametrize('reverse', [False, True])
+    def test_gutter_scores_only_when_columns_are_staggered(dy, expected, reverse):
+        row = {'text': 'Name: Pat Smith', 'rect': [300, 312, 310, 322]}
+        left = block((72, 290), row)
+        right = block((330, 548), row, y=300 + dy)
+        blocks = [left, right]
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert left.scores == [expected]
+E       assert [6] == [0]
+E         
+E         At index 0 diff: 6 != 0
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:36: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-30-6]" time="0.002" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_gutter_scores_only_when_columns_are_staggered[True-100-6]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges0]" time="0.002"><failure message="assert [[4], [0]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">edges = (304, 314)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges1]" time="0.002"><failure message="assert [[4], [0]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">edges = (305, 315)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges2]" time="0.002"><failure message="assert [[4], [0]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">edges = (306, 316)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r16" name="test_tied_name_cannot_fall_back_to_company_score[edges3]" time="0.002"><failure message="assert [[4], [0]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">edges = (280, 340)
+
+    @pytest.mark.parametrize('edges', [(304, 314), (305, 315), (306, 316), (280, 340)])
+    def test_tied_name_cannot_fall_back_to_company_score(edges):
+        row = {'text': 'Name: Pat Smith', 'rect': [edges[0], 312, edges[1], 322]}
+        blocks = [block((72, 290), row), block((330, 548), row, y=400)]
+        blocks[0].heading = 'Harbor Light Analytics, Inc.'
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [b.scores for b in blocks] == [[0], [0]]
+E       assert [[4], [0]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r16.py:46: AssertionError</failure></testcase></testsuite></testsuites>

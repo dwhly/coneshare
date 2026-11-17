@@ -2078,3 +2078,33 @@ first. The subsequent external r14 briefs-marker write failed with
 **Read-only file system**. The local marker records this blocker.
 Implementation, verification, and evidence are complete; external-marker
 delivery is blocked by the read-only destination.
+
+## C2a r15 — stopped on existing-test failure
+
+The new M1/M2 regressions failed first on `d88bfb88`: **534 failed / 2,702
+passed**. The complete 9,754-case comparison found zero wrong placements
+and exact goldens for (c), (b′), and their combination. Selected (c), a
+10 pt horizontal-overlap requirement for printed-name scoring, with
+`VERSION = c2a.15`; it loses no correct placements within that table.
+
+The required full suite then stopped at **802 passed / 1 failed**: the
+existing r10 `caption_row_right-C12` signature control expects placement
+for a name exactly 10 pt beyond the rule, but the strict overlap boundary
+holds it. Per the stop rule, no test was changed and no further fix was
+attempted. Candidate (c) remains uncommitted for inspection; this is **not
+a successful r15 delivery**. [Failure and disposition](c2a-r15/STOP.md) ·
+[Complete candidate results](c2a-r15/results.md).
+
+## C2a r15b — best candidate, bar unmet
+
+Nearest-column ownership replaces the fixed tolerance, with ties within 2 pt
+held closed and aligned stacked rules treated as one column. The expanded
+**10,698-case / 113-family** table adds 944 existing control cases. Nearest-only
+has one wrong witness placement; the chosen **nearest + (b′)** combination has
+zero wrong placements and seven exact goldens except `analysis_version`.
+
+The full suite completed without `-x`: **11,327 passed, 13 failed, zero errors
+or skips**. Six r10 caption-row-right, two r14 and five r4/r5 stacked controls
+become holds. Overall, 37 correct r14 placements become holds. No existing
+test changed. The best candidate remains uncommitted at `VERSION = c2a.15`;
+the completion marker reports `rc=1`. [Every family and failure](c2a-r15/results-r15b.md).

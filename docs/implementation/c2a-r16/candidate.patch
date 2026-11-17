@@ -1,0 +1,112 @@
+--- a/backend/dealroom_sign/placement.py
++++ b/backend/dealroom_sign/placement.py
+@@ -29,7 +29,7 @@
+ ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
+ GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
+-VERSION = 'c2a.14'
++VERSION = 'c2a.16'
+ SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+ COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+ PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
+@@ -158,9 +158,58 @@
+     return [text] + [part.strip('() ') for part in IDENTITY_SPLIT.split(NAME_CAPTION.sub('', text))[1:]]
+ 
+ 
+-def printed_names(block):
+-    return [tokens(name) for label in (block.raw_labels or block.labels)
+-            for part in identity_parts(label['text']) if (name := person_text(part))]
++def witness_block(block):
++    return bool(re.fullmatch(r'(?:witness|attest|attestation)\s*:?\s*',
++                             block.line.label.get('text', ''), re.I))
++
++
++def printed_name_evidence(block, blocks=()):
++    if witness_block(block):
++        return [], True
++
++    def column(other):
++        return (min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0]),
++                other.line.x1)
++
++    # A witness signs next to a party, but is never that party.
++    parties = [other for other in [block, *blocks]
++               if other.line.page == block.line.page and not witness_block(other)]
++    # Aligned rules are one column even when their lengths differ.
++    columns = {}
++    for other in parties:
++        left, right = column(other)
++        columns[left] = max(columns.get(left, right), right)
++    left = column(block)[0]
++    own = (left, columns[left])
++    others = [(x, right) for x, right in columns.items() if x != left]
++    neighbours = {(column(other)[0], columns[column(other)[0]]) for other in parties
++                  if abs(other.line.y - block.line.y) < 30 and column(other)[0] != left}
++
++    names, ambiguous = [], False
++    for row in (block.raw_labels or block.labels):
++        printed = [tokens(name) for part in identity_parts(row['text'])
++                   if (name := person_text(part))]
++        if not printed:
++            continue
++
++        def distance(bounds):
++            return max(bounds[0] - row['rect'][2], row['rect'][0] - bounds[1], 0)
++
++        distances = sorted(distance(bounds) for bounds in [own, *others])
++        tied = len(distances) > 1 and distances[1] <= distances[0] + 2
++        # Use the existing same-band boundary: staggered outdented captions
++        # still belong to their nearest column, but a shared gutter is uncertain.
++        gutter = any(own[1] < other[0] and row['rect'][0] < other[0] and row['rect'][2] > own[1]
++                     or other[1] < own[0] and row['rect'][0] < own[0] and row['rect'][2] > other[1]
++                     for other in neighbours)
++        ambiguous |= tied or gutter
++        if not tied and not gutter and all(distance(other) > distance(own) + 2 for other in others):
++            names.extend(printed)
++    return names, ambiguous
++
++
++def printed_names(block, blocks=()):
++    return printed_name_evidence(block, blocks)[0]
+ 
+ 
+ def company_text(text):
+@@ -694,7 +743,7 @@
+             mixed_heading_names.setdefault(block.line.page, []).extend(
+                 t for t in block.raw_labels
+                 if any(person_text(part) for part in identity_parts(t['text'])))
+-        if not printed_names(block):
++        if not printed_names(block, blocks):
+             block.company_only_blocked = company_only_veto(block, extent, pages, roles, blocks, neutral)
+     # A mixed-company block cannot lend its printed name to another block.
+     # Propagate by the same physical row on the same page, after collecting
+@@ -741,9 +790,11 @@
+ def prepare_blocks(blocks, roles, signers):
+     """Score raw evidence locally, then discard it before worker output."""
+     for block in blocks:
+-        block.scores = [score(s, block, roles) for s in signers]
+-        if not printed_names(block) and sum(v >= 4 for v in block.scores) != 1:
++        block.scores = [score(s, block, roles, blocks) for s in signers]
++        if not printed_names(block, blocks) and sum(v >= 4 for v in block.scores) != 1:
+             block.scores = [0] * len(signers)
++    # Every score needs the original role labels, before output redaction.
++    for block in blocks:
+         # A company word in arbitrary prose is not permission to emit that prose.
+         # Only a mapped role company or a heading contributing to an accepted
+         # local identity score may survive as a company label.
+@@ -764,11 +815,13 @@
+         block.raw_labels = []
+ 
+ 
+-def score(signer, block, roles):
++def score(signer, block, roles, blocks=()):
+     if block.uncertain_identity:
+         return 0
+     name = tokens(signer.get('name', ''))
+-    printed = printed_names(block)
++    printed, ambiguous = printed_name_evidence(block, blocks)
++    if ambiguous:
++        return 0
+     if not printed and block.company_only_blocked:
+         return 0
+     # A printed full name is authoritative, including when company/domain agree.

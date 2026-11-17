@@ -1,0 +1,1364 @@
+[
+  {
+    "group": "r3 inserted_raw_person_vetoes_across_fixtures",
+    "case": "{\"fixture\": \"witness\"} / call 3",
+    "nearest": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 18.300654,
+          "y": 31.060606,
+          "w": 25.228758,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | [printed name] | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  72.0,
+                  225.38699999999994,
+                  255.04000000000002,
+                  236.38699999999994
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  72.0,
+                  265.38699999999994,
+                  87.89500000000001,
+                  276.38699999999994
+                ]
+              },
+              {
+                "text": "[printed name]",
+                "rect": [
+                  296.4,
+                  269.65599999999995,
+                  362.2,
+                  277.65599999999995
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  295.387,
+                  101.32600000000001,
+                  306.387
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  72.0,
+                  325.387,
+                  95.837,
+                  336.387
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  355.387,
+                  95.82600000000001,
+                  366.387
+                ]
+              }
+            ],
+            "line": [
+              112.0,
+              276.0,
+              266.4
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "NAME",
+          "page": 2,
+          "x": 18.300654,
+          "y": 36.868687,
+          "w": 25.228758,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Name:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  295.387,
+                  101.32600000000001,
+                  306.387
+                ]
+              }
+            ],
+            "line": [
+              112.0,
+              306.0,
+              266.4
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 18.300654,
+          "y": 44.444444,
+          "w": 25.228758,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  355.387,
+                  95.82600000000001,
+                  366.387
+                ]
+              }
+            ],
+            "line": [
+              112.0,
+              366.0,
+              266.4
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.15",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "chosen": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.16",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    }
+  },
+  {
+    "group": "r4 name_in_gap_between_party_columns_makes_both_uncertain",
+    "case": "{} / call 1",
+    "nearest": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Lee Harbor signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "lee@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 10,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.15",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "chosen": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Lee Harbor, Dan Whaley sign and date. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "lee@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.16",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    }
+  },
+  {
+    "group": "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness",
+    "case": "{\"caption\": \"Authorised signatory:\"} / call 1",
+    "nearest": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 28.746732,
+          "y": 46.717172,
+          "w": 18.638889,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  165.93,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              175.93,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 2,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.15",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    },
+    "chosen": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 28.746732,
+          "y": 46.717172,
+          "w": 18.638889,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  165.93,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              175.93,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 6,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.16",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    }
+  },
+  {
+    "group": "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness",
+    "case": "{\"caption\": \"Signatory:\"} / call 1",
+    "nearest": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 20.754902,
+          "y": 46.717172,
+          "w": 26.630719,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  117.02000000000001,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              127.02,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 2,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.15",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    },
+    "chosen": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 20.754902,
+          "y": 46.717172,
+          "w": 26.630719,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  117.02000000000001,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              127.02,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 6,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.16",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    }
+  },
+  {
+    "group": "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness",
+    "case": "{\"caption\": \"Executed by:\"} / call 1",
+    "nearest": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 22.844771,
+          "y": 46.717172,
+          "w": 24.54085,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  129.81,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              139.81,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 2,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.15",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    },
+    "chosen": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 22.844771,
+          "y": 46.717172,
+          "w": 24.54085,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  129.81,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              139.81,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 6,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.16",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    }
+  },
+  {
+    "group": "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness",
+    "case": "{\"caption\": \"Firma:\"} / call 1",
+    "nearest": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 18.027778,
+          "y": 46.717172,
+          "w": 29.357843,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  100.33000000000001,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              110.33,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 2,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.15",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    },
+    "chosen": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 18.027778,
+          "y": 46.717172,
+          "w": 29.357843,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  100.33000000000001,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              110.33,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 6,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.16",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    }
+  },
+  {
+    "group": "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness",
+    "case": "{\"caption\": \"Unterschrift:\"} / call 1",
+    "nearest": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 22.205882,
+          "y": 46.717172,
+          "w": 25.179739,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  125.9,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              135.9,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 2,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.15",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    },
+    "chosen": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 1,
+          "x": 22.205882,
+          "y": 46.717172,
+          "w": 25.179739,
+          "h": 3.661616,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Name: | [redacted] | Name: Dan Whaley | Date:",
+            "labels": [
+              {
+                "text": "Name:",
+                "rect": [
+                  72.0,
+                  352.07,
+                  101.45,
+                  362.07
+                ]
+              },
+              {
+                "text": "[redacted]",
+                "rect": [
+                  72.0,
+                  390.07,
+                  125.9,
+                  400.07
+                ]
+              },
+              {
+                "text": "Name: Dan Whaley",
+                "rect": [
+                  72.0,
+                  412.07,
+                  158.69,
+                  422.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              135.9,
+              400.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 1,
+          "x": 17.303922,
+          "y": 52.525253,
+          "w": 30.081699,
+          "h": 1.641414,
+          "confidence": "model-high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  72.0,
+                  420.07,
+                  95.9,
+                  430.07
+                ]
+              }
+            ],
+            "line": [
+              105.9,
+              430.0,
+              290.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b1",
+          "score": 6,
+          "margin": 6,
+          "confidence": "model-high"
+        }
+      ],
+      "analysis_version": "c2a.16",
+      "method": "rules+model",
+      "model": {
+        "attempted": true,
+        "outcome": "resolved",
+        "model_id": ""
+      }
+    }
+  }
+]

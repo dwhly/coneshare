@@ -1,0 +1,68 @@
+{
+  "nearest": {
+    "existing_assertions_pass": false,
+    "results": [
+      {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Lee Harbor signs and dates. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "lee@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          },
+          {
+            "signer": "dan@fleettest.fleet.test",
+            "block_id": "b1",
+            "score": 10,
+            "margin": 10,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.15",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    ]
+  },
+  "combined": {
+    "existing_assertions_pass": true,
+    "results": [
+      {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Lee Harbor, Dan Whaley sign and date. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "lee@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          },
+          {
+            "signer": "dan@fleettest.fleet.test",
+            "block_id": "b1",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          }
+        ],
+        "analysis_version": "c2a.15",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    ]
+  }
+}

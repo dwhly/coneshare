@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="24" skipped="0" tests="75" time="12.395" timestamp="2026-11-17T14:23:27.459174" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges0-expected0-False]" time="0.005"><failure message="assert [0, 0] == [6, 0]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges0-expected0-True]" time="0.002"><failure message="assert [0, 0] == [0, 6]&#10;  &#10;  At index 1 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges1-expected1-False]" time="0.002"><failure message="assert [0, 0] == [6, 0]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges1-expected1-True]" time="0.002"><failure message="assert [0, 0] == [0, 6]&#10;  &#10;  At index 1 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges2-expected2-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges2-expected2-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges3-expected3-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges3-expected3-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges4-expected4-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges4-expected4-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges5-expected5-False]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges5-expected5-True]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges6-expected6-False]" time="0.002"><failure message="assert [0, 0] == [0, 6]&#10;  &#10;  At index 1 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges6-expected6-True]" time="0.002"><failure message="assert [0, 0] == [6, 0]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges7-expected7-False]" time="0.002"><failure message="assert [0, 0] == [0, 6]&#10;  &#10;  At index 1 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges7-expected7-True]" time="0.002"><failure message="assert [0, 0] == [6, 0]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges8-expected8-False]" time="0.002"><failure message="assert [6, 6] == [0, 0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges8-expected8-True]" time="0.002"><failure message="assert [6, 6] == [0, 0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges9-expected9-False]" time="0.002"><failure message="assert [6, 6] == [0, 0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges9-expected9-True]" time="0.002"><failure message="assert [6, 6] == [0, 0]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 0]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges10-expected10-False]" time="0.002"><failure message="assert [6, 6] == [6, 0]&#10;  &#10;  At index 1 diff: 6 != 0&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [6, 0]
+E     
+E     At index 1 diff: 6 != 0
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges10-expected10-True]" time="0.002"><failure message="assert [6, 6] == [0, 6]&#10;  &#10;  At index 0 diff: 6 != 0&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [6, 6] == [0, 6]
+E     
+E     At index 0 diff: 6 != 0
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges11-expected11-False]" time="0.002"><failure message="assert [0, 0] == [6, 0]&#10;  &#10;  At index 0 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [6, 0]
+E     
+E     At index 0 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_nearest_column_and_two_point_ties[row_edges11-expected11-True]" time="0.002"><failure message="assert [0, 0] == [0, 6]&#10;  &#10;  At index 1 diff: 0 != 6&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:40: in test_nearest_column_and_two_point_ties
+    assert [b.scores[0] for b in blocks] == expected
+E   assert [0, 0] == [0, 6]
+E     
+E     At index 1 diff: 0 != 6
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_same_column_stacked_blocks_and_other_page_do_not_tie[False]" time="0.002"><failure message="assert [[0], [0], [6]] == [[6], [6], [6]]&#10;  &#10;  At index 0 diff: [0] != [6]&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:50: in test_same_column_stacked_blocks_and_other_page_do_not_tie
+    assert [b.scores for b in blocks] == [[6], [6], [6]]
+E   assert [[0], [0], [6]] == [[6], [6], [6]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_same_column_stacked_blocks_and_other_page_do_not_tie[True]" time="0.002"><failure message="assert [[0], [0], [6]] == [[6], [6], [6]]&#10;  &#10;  At index 0 diff: [0] != [6]&#10;  Use -v to get more diff">dealroom_sign/tests/test_placement_r15b.py:50: in test_same_column_stacked_blocks_and_other_page_do_not_tie
+    assert [b.scores for b in blocks] == [[6], [6], [6]]
+E   assert [[0], [0], [6]] == [[6], [6], [6]]
+E     
+E     At index 0 diff: [0] != [6]
+E     Use -v to get more diff</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r15b" name="test_label_is_part_of_the_column_even_before_rule_start" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.280" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C12-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.245" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C12-RECIPIENT]" time="0.263" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C12-RECIPIENT:]" time="0.241" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C12-For and on behalf of the Recipient]" time="0.233" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C12-harbor light analytics, inc.]" time="0.236" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C13-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.261" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C13-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.255" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C13-RECIPIENT]" time="0.251" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C13-RECIPIENT:]" time="0.271" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C13-For and on behalf of the Recipient]" time="0.235" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[title_then_name-C13-harbor light analytics, inc.]" time="0.239" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.234" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C12-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.237" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C12-RECIPIENT]" time="0.253" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C12-RECIPIENT:]" time="0.281" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C12-For and on behalf of the Recipient]" time="0.230" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C12-harbor light analytics, inc.]" time="0.255" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C13-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.253" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C13-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.236" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C13-RECIPIENT]" time="0.255" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C13-RECIPIENT:]" time="0.237" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C13-For and on behalf of the Recipient]" time="0.235" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[tab_gap-C13-harbor light analytics, inc.]" time="0.242" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.229" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C12-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.240" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C12-RECIPIENT]" time="0.245" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C12-RECIPIENT:]" time="0.244" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C12-For and on behalf of the Recipient]" time="0.268" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C12-harbor light analytics, inc.]" time="0.230" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C13-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.231" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C13-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.232" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C13-RECIPIENT]" time="0.226" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C13-RECIPIENT:]" time="0.231" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C13-For and on behalf of the Recipient]" time="0.229" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[indented-C13-harbor light analytics, inc.]" time="0.246" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.244"><failure message="AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.236"><failure message="AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT]" time="0.244"><failure message="AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-RECIPIENT:]" time="0.242"><failure message="AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-For and on behalf of the Recipient]" time="0.232"><failure message="AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C12-harbor light analytics, inc.]" time="0.238"><failure message="AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r10.py:107: in test_signature_out_of_slot_controls_unchanged
+    assert_signature_control(out_of_slot_pdf(layout, heading, 'Signature:', variant), layout)
+dealroom_sign/tests/test_placement_r10.py:66: in assert_signature_control
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.15', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C13-HARBOR LIGHT ANALYTICS, INC., a Delaware corporation]" time="0.248" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C13-HARBOR LIGHT ANALYTICS, INC. (the &quot;Recipient&quot;)]" time="0.251" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C13-RECIPIENT]" time="0.237" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C13-RECIPIENT:]" time="0.241" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C13-For and on behalf of the Recipient]" time="0.236" /><testcase classname="dealroom_sign.tests.test_placement_r10" name="test_signature_out_of_slot_controls_unchanged[caption_row_right-C13-harbor light analytics, inc.]" time="0.232" /></testsuite></testsuites>
