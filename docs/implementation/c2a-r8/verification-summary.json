@@ -1,0 +1,79 @@
+{
+  "analysis_version": "c2a.8",
+  "base": "b651e646",
+  "branch": "agent/c1b-counterparty",
+  "command": "SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests",
+  "reporting_option": "--junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r8/full-suite.xml (converted to this summary and removed)",
+  "full_suite": {
+    "tests": 1037,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 426.685,
+    "passed": 1037,
+    "warnings": 82
+  },
+  "failing_first": {
+    "base": "b651e646",
+    "tests": 52,
+    "failures": 47,
+    "errors": 0,
+    "seconds": 9.681,
+    "groups": {
+      "test_b1_unusual_host_never_places_on_neighbour": {
+        "passed": 0,
+        "failed": 25
+      },
+      "test_b1_signature_controls_keep_previous_outcome": {
+        "passed": 5,
+        "failed": 0
+      },
+      "test_second_company_holds_without_subordinate_rule": {
+        "passed": 0,
+        "failed": 15
+      },
+      "test_m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+        "passed": 0,
+        "failed": 5
+      },
+      "test_l1_only_authorised_signatory_uses_model_on_its_own_line": {
+        "passed": 0,
+        "failed": 1
+      },
+      "test_n1_no_fixture_caption_constant": {
+        "passed": 0,
+        "failed": 1
+      }
+    }
+  },
+  "final_targeted": {
+    "tests": 101,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 21.358,
+    "passed": 101
+  },
+  "goldens": {
+    "count": 7,
+    "baselines": [
+      "c2a-r4",
+      "c2a-r5"
+    ],
+    "exact_geometry_confidence_and_native": true
+  },
+  "review_outcomes": {
+    "B-1_holds": 25,
+    "defence_alone_holds": 15,
+    "M-1_correct_model_placements": 5,
+    "L-1_correct_model_placements": 1,
+    "unchanged_signature_controls": 5
+  },
+  "existing_tests_edited": false,
+  "raw_suite_logs_retained": false,
+  "staged_or_committed": false,
+  "final_code_sha256": {
+    "backend/dealroom_sign/placement.py": "89920fde026b050e6902c0f3ebf453a6c0a536d96affeb4f77c2a9178ffaaae1",
+    "backend/dealroom_sign/tests/test_placement_r8.py": "280296b6cfd607d777106b0298a83d6b325bcf9510a928c5c0a03c3c7c68b142"
+  }
+}

@@ -23,10 +23,15 @@ edge, walk upward/downward through overlapping rows in the same column band,
 stopping at a non-companion rule or prose. The upward walk also stops at a row
 whose top belongs to another host's `(rule.y, rule.y + 125]` extent in that band.
 Rules whose own label matches `^[A-Za-z][\w .'/&-]{0,30}:\s*$`, without
-matching a known signature/name/title/date label, are `OTHER` companions.
-Witness remains a signature host. The existing model-reviewed caption
-`Hand of the covenanting party:` also retains its host/model path to preserve
-the unusual-label golden. `OTHER` rules cannot create hosts, shorten either
+matching a known signature/name/title/date label, become `OTHER` only when
+subordinate to a SIGNATURE or Witness rule above in the same column band,
+`5 < caption.y - host.y <= 125`. No company, behalf, person or role-map heading
+may intervene. A Witness's intervening name caption, even when blank, also
+closes its identity group. Otherwise the caption retains the r6 unusual-host
+semantics. The six captions Email, E-mail, Address, Phone, Tel and Company
+remain unconditional `OTHER`. Witness remains a signature host. No
+fixture-specific caption exception is used to classify hosts.
+`OTHER` rules cannot create hosts, shorten either
 extent edge, bound neighbouring columns or stop the walk. Their attached empty
 captions carry no identity; surrounding typed rows retain their veto. At a page edge, continue from the adjacent page's
 edge through its block-like rows. Any person-like or unresolved identity row
@@ -35,6 +40,17 @@ cannot identify the signer or add a field. Named blocks retain their local
 identity behavior. Fully accounted local evidence and a unique matching signer
 are still required. The r4 acceptance of a name just outside the local window
 is superseded by this rule.
+
+**Mixed company headings independently veto identity confidence.** After
+stacked-block partitioning, two different standalone company-heading rows in a
+host's retained extent set `uncertain_identity`. If typed names precede its
+first company heading, an ownership-only lookback follows up to 90 points of
+contiguous block rows to the previous company heading. It stops at a real host
+or unaccounted prose and ignores attached `OTHER` captions. A different company
+there also sets uncertainty (C8). This check never adds labels or scores and
+cannot be cleared by later partitioning. Behalf wording retains its existing
+interpretation; it is not a second standalone company-heading row. Existing
+neutral legal-form wording such as `LLC` also names no second company.
 
 Page-number rows are neutral anywhere in this walk. Digit-normalised text
 repeated at the same y ±2 points on at least two distinct pages is neutral only

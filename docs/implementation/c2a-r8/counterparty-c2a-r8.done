@@ -1,0 +1,20 @@
+Implementation and verification complete.
+
+Worktree: /root/worktrees/send-c1b
+Branch: agent/c1b-counterparty
+Base / unchanged HEAD: b651e646
+analysis_version: c2a.8
+No staging or commits. Project memory unchanged.
+
+B-1, independent company defence, M-1, L-1 and N-1 implemented.
+Failing first on r7: 47 failed, 5 unchanged Signature controls passed.
+70 new tests; final targeted check: 101 passed.
+Full signing suite: 1037 passed, 0 failed, 0 skipped (426.69 s).
+Seven goldens exact against r4/r5, including native fields.
+Existing tests and fixture PDFs unchanged.
+
+Brief: counterparty-c2a-r8.md
+Report: ../c1b-report.md#c2a-r8
+EDD note: edd-note.md (local; no external-worktree writes)
+Evidence: verification-summary.json, placements.json, regression-placements.json
+No raw suite logs retained.

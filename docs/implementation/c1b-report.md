@@ -1511,3 +1511,92 @@ SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /ro
   outstanding full-suite environment limitation.
 
 All changes remain unstaged and uncommitted.
+
+## C2a r8
+
+Implemented Gate 3 r7 B-1, mandatory company-identity defence, M-1, L-1 and
+N-1 from `b651e646` on `agent/c1b-counterparty`. `analysis_version` is
+**`c2a.8`**. All writes are inside `/root/worktrees/send-c1b`; nothing is staged
+or committed.
+
+### Fixes and failing-first evidence
+
+The 52 initial regression/control cases ran against unchanged r7 production
+code before edits: **47 failed, 5 passed**, with no collection errors. The five
+passing cases are the `Signature:` preservation controls. Text rows in these
+fixtures use top-down row coordinates; signature/date coordinates identify
+their actual PDF rules. The final file adds 18 boundary/preservation cases,
+for **70 new tests**, without editing any existing test.
+
+| Item | Initial failures | Final behaviour |
+| --- | ---: | --- |
+| B-1 | 25 | All five requested captions in C4, C8, C10, C12 and C13 preserve the unusual host and return `needs_sender / model_not_configured`, with no fields. Unknown short captions become `OTHER` only when subordinate to a recognised signature/Witness in the same band at `5 < gap <= 125`, without an intervening identity heading. The six contact captions remain unconditional `OTHER`. |
+| Independent defence | 15 | With the subordinate rule forced back to r7 behaviour, C8, C12 and C13 each retain only the neighbouring host, mark it `uncertain_identity`, score it zero and hold without a model call. |
+| M-1 | 5 | C7 retains both 340 and 400 in the confirming stub's candidate payload. Dan places `model-high` on 400, with Date 430; never on Witness 340. |
+| L-1 | 1 | The sole `Authorised signatory:` host places `model-high` on 400 with Date 430. |
+| N-1 | 1 | `MODEL_SIGNATURE_CAPTION` is removed. The unusual golden remains exact through the ordinary host path; the pre-existing `safe_label` allowlist entry retains its meaning. |
+
+[Failing-first counts](c2a-r8/failing-first-summary.json) and
+[51 review-layout outcomes](c2a-r8/regression-placements.json) contain compact
+evidence. No raw suite logs are retained.
+
+Two details are necessary to meet the requested C7/C8 outcomes. In C7, the
+three stated conditions alone would still classify 400 as subordinate to
+Witness 340 because blank `Name:` 352 is not a person heading. A Witness's
+intervening name caption, including a blank one, also closes that identity
+group. In C8, the earlier company heading lies outside the neighbour's local
+90-point window. The independent defence follows leading typed names back
+through up to 90 points of contiguous block rows to that heading, stopping at a
+real host or unaccounted prose. This check only removes confidence and emits no
+additional text. It runs after partitioning, so the resulting uncertainty
+cannot be cleared by a later partition. It counts standalone company-heading
+rows, preserving the existing interpretation of behalf wording and neutral
+legal-form wording such as `LLC`.
+
+### Preservation and verification
+
+- **Targeted r6/r7 plus initial r8 cases:** 152 passed in 36.02 s.
+- **Final r8 file:** 70 passed in 11.23 s, including strict distance edges,
+  column separation, all four identity-heading types, and the six contact
+  captions without a preceding host.
+- **Final production-code targeted check:** 101 passed in 21.36 s: all 70 r8
+  cases plus the 31 unchanged r4 Harbor block-wording controls.
+- **Seven goldens:** exact against both r4 and r5 on status, signer, type, page,
+  x/y/w/h, confidence and native field dictionaries. Existing golden
+  assertions remain unchanged; the unusual fixture uses the existing stub.
+- **Signature controls:** C12 places `high` on 360/395. C4, C8, C10 and C13 hold,
+  matching r7. Existing r6/r7 typed-contact identity tests are unchanged.
+- **Scope:** existing tests, fixture PDFs, r4/r5 placement baselines and project
+  memory are unchanged. `git diff --check` passes and the index is empty.
+
+Evidence: [targeted summary](c2a-r8/targeted-summary.json),
+[r8 summary](c2a-r8/r8-summary.json),
+[final targeted summary](c2a-r8/final-targeted-summary.json),
+[golden comparison](c2a-r8/golden-comparison.json),
+[golden placements](c2a-r8/placements.json),
+[preservation checks](c2a-r8/preservation-summary.json), and
+[reproducible evidence checker](c2a-r8/check_evidence.py).
+The [runbook](c2a-runbook.md#identity-extent) and
+[local EDD note](c2a-r8/edd-note.md) record the final semantics.
+
+The first complete run found four existing neutral legal-form controls that
+the new check treated as different company names: **1,033 passed, 4 failed**.
+The guard now excludes existing `BLOCK_WORDING` before comparing company
+headings. Those tests remain unchanged. The
+[initial full-suite summary](c2a-r8/initial-full-suite-summary.json) records
+the complete failure inventory.
+
+**Final full signing suite: 1,037 passed, 0 failed, 0 skipped, 82 warnings,
+426.69 s.** This is the original 967 tests plus all 70 r8 cases, using the
+supplied runner and URL:
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+```
+
+The invocation additionally used `--junitxml` only to collect counts; the
+temporary XML was converted to the
+[verification summary](c2a-r8/verification-summary.json) and removed.
+The [completion marker](c2a-r8/counterparty-c2a-r8.done) is beside the
+[local brief](c2a-r8/counterparty-c2a-r8.md). Implementation and verification
+are complete. HEAD remains `b651e646`; no staging or commits were performed.

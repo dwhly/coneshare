@@ -1,0 +1,15 @@
+{
+  "tests": 1037,
+  "failures": 4,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 419.625,
+  "passed": 1033,
+  "failed_cases": [
+    "dealroom_sign.tests.test_placement_r4::test_golden_harbor_block_wording_keeps_exact_boxes[Limited Liability Company]",
+    "dealroom_sign.tests.test_placement_r4::test_golden_harbor_block_wording_keeps_exact_boxes[Inc.]",
+    "dealroom_sign.tests.test_placement_r4::test_golden_harbor_block_wording_keeps_exact_boxes[LLC]",
+    "dealroom_sign.tests.test_placement_r4::test_golden_harbor_block_wording_keeps_exact_boxes[Ltd.]"
+  ],
+  "cause": "The new company-heading guard treated four existing neutral corporate suffix/block-wording controls as different companies."
+}

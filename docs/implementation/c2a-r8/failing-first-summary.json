@@ -1,0 +1,33 @@
+{
+  "base": "b651e646",
+  "tests": 52,
+  "failures": 47,
+  "errors": 0,
+  "seconds": 9.681,
+  "groups": {
+    "test_b1_unusual_host_never_places_on_neighbour": {
+      "passed": 0,
+      "failed": 25
+    },
+    "test_b1_signature_controls_keep_previous_outcome": {
+      "passed": 5,
+      "failed": 0
+    },
+    "test_second_company_holds_without_subordinate_rule": {
+      "passed": 0,
+      "failed": 15
+    },
+    "test_m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+      "passed": 0,
+      "failed": 5
+    },
+    "test_l1_only_authorised_signatory_uses_model_on_its_own_line": {
+      "passed": 0,
+      "failed": 1
+    },
+    "test_n1_no_fixture_caption_constant": {
+      "passed": 0,
+      "failed": 1
+    }
+  }
+}
