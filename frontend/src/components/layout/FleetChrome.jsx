@@ -14,7 +14,7 @@ import {
 /**
  * Fleet design system chrome shared by every staff surface (DESIGN.md §6, §8):
  *  - FleetLockup: "Fleet | Dealroom" (.fds-lockup from components.css; same geometry in every fleet product)
- *  - ThemeToggle: the labelled Theme button, always LAST at the far right of the header (theme.js wires it)
+ *  - ThemeToggle: the Theme icon button (fds v0.10), always LAST at the far right of the header (theme.js draws it)
  *  - AccountMenu / DealroomSubnav: the shared shell (fleet-dealroom docs/design/dealroom-shell.md §1-§2); geometry in
  *    /dealroom/shell.css, which the Django glue pages link too.
  */
@@ -40,14 +40,20 @@ export function FleetLockup({ as: Comp = "a", product = "Dealroom", className = 
 }
 
 export function ThemeToggle({ className = "" }) {
-  // theme.js rewrites the label ("Theme: auto|light|dark") on load and on every click.
+  // fds v0.10 theme.js draws the sun / moon / sun-moon icon into this empty button and sets title + aria-label
+  // ("Theme: auto (light)") on load and on every click. React renders no children, so it never fights theme.js.
   useEffect(() => {
     window.fdsTheme?.apply();
   }, []);
   return (
-    <button type="button" className={`fds-btn ${className}`} data-fds-theme-toggle suppressHydrationWarning>
-      Theme
-    </button>
+    <button
+      type="button"
+      className={`fds-btn ${className}`}
+      data-fds-theme-toggle
+      aria-label="Theme"
+      title="Theme"
+      suppressHydrationWarning
+    />
   );
 }
 

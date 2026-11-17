@@ -10,9 +10,8 @@
 .dr-header .fds-nav a, .dr-subnav a { font-size: 14px; font-weight: 500; }
 .dr-header .fds-nav a[aria-current="page"], .dr-subnav a[aria-current="page"] { font-weight: 500; }
 .dr-header .fds-header__utils { gap: 8px; }
-/* §7 round 3: the header's two controls (account trigger, Theme) are one quiet 32px, 13px/500 style. */
-.dr-header [data-fds-theme-toggle] { box-sizing: border-box; height: 32px; padding: 0 12px; font-size: 13px; font-weight: 500;
-  line-height: 1; display: inline-flex; align-items: center; }
+/* Theme is the package's 32px icon button (fds v0.10 components.css + theme.js); no product toggle rules here, or the
+   old labelled box and its hover come back. */
 
 /* Account menu = the person: 28px neutral initials avatar + display name (14px/500) + chevron. */
 .dr-account { box-sizing: border-box; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 8px 0 2px; margin: 0;

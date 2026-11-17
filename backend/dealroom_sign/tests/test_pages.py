@@ -53,3 +53,20 @@ def test_layer_order_statement_is_the_first_stylesheet_on_every_entry_page():
         src = open(path, encoding='utf-8').read()
         if '<html' in src or '/fds/' in src:  # a standalone page must be base.html itself
             assert os.path.basename(path) == 'base.html', path
+
+
+def test_theme_control_is_the_package_icon_button_with_no_product_box():
+    # fds v0.10 (owner decision 2026-11-15): theme.js draws sun / moon / sun-moon into an EMPTY [data-fds-theme-toggle]
+    # and sets title + aria-label. A word inside the button or a product toggle rule in shell.css brings back the old
+    # labelled box (DESIGN.md §6 migration notes).
+    import os
+    for name, ctx in (('dealroom_sign/staff.html', {'sign_url': ''}), ('dealroom_sign/room.html', {'slug': 's', 'room_id': 'r'})):
+        html = render_to_string(name, ctx)
+        buttons = re.findall(r'<button[^>]*data-fds-theme-toggle[^>]*>(.*?)</button>', html, flags=re.S)
+        assert buttons == [''], (name, buttons)
+        assert '/fds/theme.js?v=0.10.0' in html, name
+    here = os.path.dirname(os.path.abspath(__file__))
+    shell = os.path.join(here, '..', '..', '..', 'frontend', 'public', 'dealroom', 'shell.css')
+    if os.path.exists(shell):
+        css = re.sub(r'/\*.*?\*/', '', open(shell, encoding='utf-8').read(), flags=re.S)
+        assert 'data-fds-theme-toggle' not in css
