@@ -1,0 +1,44 @@
+[
+  {
+    "group": "r14 reproduction",
+    "before": "placed",
+    "after": "needs_sender",
+    "wrong_to_hold": true,
+    "count": 1
+  },
+  {
+    "group": "r14 grid",
+    "before": "placed",
+    "after": "needs_sender",
+    "wrong_to_hold": true,
+    "count": 84
+  },
+  {
+    "group": "r14 grid",
+    "before": "needs_sender",
+    "after": "needs_sender",
+    "wrong_to_hold": false,
+    "count": 180
+  },
+  {
+    "group": "r14 grid",
+    "before": "placed",
+    "after": "needs_sender",
+    "wrong_to_hold": false,
+    "count": 72
+  },
+  {
+    "group": "r14 fixed sweep",
+    "before": "placed",
+    "after": "needs_sender",
+    "wrong_to_hold": true,
+    "count": 20
+  },
+  {
+    "group": "r14 fixed sweep",
+    "before": "needs_sender",
+    "after": "needs_sender",
+    "wrong_to_hold": false,
+    "count": 20
+  }
+]

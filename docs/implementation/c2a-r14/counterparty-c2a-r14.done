@@ -1,0 +1,6 @@
+coder rc=0 head=2ff90be102b4a4a3f65cee15a3f8258fcb445685
+failing-first: 105 failed, 3718 passed on r13; reproduction 1, grid 84/3456, fixed sweep 20/360.
+full-suite: 8073 passed; 0 failures, errors, skips; 82 warnings; 1339.898 seconds.
+goldens: 7/7 full results exact except analysis_version; all 2699 earlier table results exact.
+existing-test changes: none; 52 existing test/fixture files byte-for-byte unchanged; no commit.
+fix: (b) shared-name veto; (a) fails required reproduction hold; grid 0 wrong/2256 holds, including 72 extra correct-to-hold cases. External marker BLOCKED: Read-only file system.

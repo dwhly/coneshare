@@ -1996,3 +1996,85 @@ The local r13 marker is written. The subsequent copy to the requested external
 roots and approval escalation is unavailable. The ready local payload records
 this blocker. Implementation, verification, and evidence are complete; external
 marker delivery is the only unfinished action.
+
+
+## C2a r14 — mixed-heading blocks cannot lend a printed name
+
+Review: `counterparty-c2a-gate3-r13.md` (B-1, L-1, N-1), on committed r13
+`2ff90be102b4a4a3f65cee15a3f8258fcb445685`. Production version: `c2a.14`.
+
+Both requested candidates were executed before editing production:
+**6,518 cases per candidate/baseline**, with 30 additional real-worker
+checks across the reproduction, correct controls, and goldens.
+[Both counterfactual tables and choice](c2a-r14/edd-note.md) ·
+[Summary](c2a-r14/counterfactual-summary.json) ·
+[All full results](c2a-r14/counterfactual-cases.json).
+
+**Chosen: (b), shared-name veto.** When mixed company headings veto a block,
+its physical printed-name rows also veto any other extent containing those
+rows on that page. The second pass makes this independent of traversal order.
+A separately printed occurrence of the same name remains eligible. Only
+`extract` and `VERSION` change in the product; scoring and worker output
+schemas stay unchanged.
+
+Candidate (a), the column-gutter bound, has zero wrong placements and preserves
+all earlier results/goldens, but fails the explicitly required reproduction
+hold: it places Pat correctly on the counterparty rule. Candidate (b) also
+passes the required hold, so it is the eligible choice. No third candidate
+was introduced. [Candidate a](c2a-r14/candidate-a.patch) ·
+[Candidate b](c2a-r14/candidate-b.patch).
+
+**Failing first:** the final new 3,823-test file, run on unchanged r13, had
+**105 failures, 3,718 passes, zero errors/skips**: reproduction 1, grid 84,
+and dense fixed sweep 20. [Summary](c2a-r14/failing-first-summary.json) ·
+[Every outcome](c2a-r14/failing-first-summary-cases.json).
+
+The selected candidate holds the real-worker reproduction with zero fields
+and model calls. The **3,456-case grid has zero wrong placements and 2,256
+holds** (1,200 placed). Its r13 baseline has the review's 84 wrong placements.
+The **360-case fixed sweep has zero wrong placements and 232 holds**.
+Unambiguous staggered controls remain placed. The grid is explicitly defined
+in the new tests; the note documents the review's omitted generator details.
+
+Every full result in the **2,699-case r13 table remains exact except
+`analysis_version`**, including the original 1,750 preserved cases and all 864
+r12 sweep cases. No wrong-to-hold preservation exceptions are needed. All
+seven counterfactual real-worker goldens remain exact except version.
+Only the unusual golden invokes a local stub once; external calls are zero.
+
+The new grid's conservative cost is 72 previously correct mixed-heading
+placements becoming holds, alongside the 84 wrong placements becoming holds.
+Another 180 grid holds change assignments. The fixed sweep adds 20
+wrong-to-hold and 20 hold-to-hold changes; the reproduction adds one.
+There are **no new placements** under (b) in the executed families.
+[Every difference](c2a-r14/counterfactual-differences.json).
+
+**L-1:** the existing authoritative printed-name policy remains pinned by two
+new real-worker controls and the unchanged original tests. **N-1:** this run
+uses r14 completion-marker names and leaves prior markers intact. The two
+additional separate-name tests cover same-page and cross-page locality.
+
+No existing test is changed, skipped, or weakened. No staging or commit is
+performed; HEAD remains `2ff90be102b4a4a3f65cee15a3f8258fcb445685`.
+
+**Full signing suite: 8,073 passed, 0 failures/errors/skips, 82 warnings,
+1,339.898 seconds** (4,250 existing + 3,823 new).
+[Summary](c2a-r14/full-suite-summary.json) ·
+[Every outcome](c2a-r14/full-suite-summary-cases.json).
+
+The final production worker's **seven goldens exactly match r13 except
+`analysis_version`**, including native fields.
+[Placements](c2a-r14/placements.json) ·
+[Comparison](c2a-r14/golden-comparison.json).
+
+The [final preservation audit](c2a-r14/preservation-summary.json) confirms
+**52 existing test/fixture files unchanged**, exact failing-first/final test
+hashes, exact candidate/final product hashes, only `extract` changed as a
+product function, append-only report, unchanged memory and HEAD, empty index,
+and a clean whitespace check. Implementation and evidence are uncommitted.
+
+The [local completion marker](c2a-r14/counterparty-c2a-r14.done) was written
+first. The subsequent external r14 briefs-marker write failed with
+**Read-only file system**. The local marker records this blocker.
+Implementation, verification, and evidence are complete; external-marker
+delivery is blocked by the read-only destination.

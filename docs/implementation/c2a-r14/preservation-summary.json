@@ -1,0 +1,24 @@
+{
+  "base": "2ff90be102b4a4a3f65cee15a3f8258fcb445685",
+  "chosen": "b",
+  "HEAD_unchanged": true,
+  "index_empty": true,
+  "existing_test_files_and_fixtures_unchanged": 52,
+  "existing_test_changes": [],
+  "new_test_cases": 3823,
+  "failing_first_production_exact_to_base": true,
+  "failing_first_and_final_tests_identical": true,
+  "counterfactual_and_final_production_identical": true,
+  "changed_product_functions": [
+    "extract"
+  ],
+  "goldens_exact_except_analysis_version": 7,
+  "external_http_calls": 0,
+  "report_append_only": true,
+  "memory_unchanged": true,
+  "diff_check_passed": true,
+  "changed_tracked_files": [
+    "backend/dealroom_sign/placement.py",
+    "docs/implementation/c1b-report.md"
+  ]
+}

@@ -1,0 +1,27 @@
+--- a/backend/dealroom_sign/placement.py
++++ b/backend/dealroom_sign/placement.py
+@@ -29,7 +29,7 @@
+ ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
+ GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
+-VERSION = 'c2a.13'
++VERSION = 'c2a.14'
+ SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+ COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+ PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
+@@ -632,12 +632,10 @@
+                              and r.semantic not in COMPANION_SEMANTICS
+                              and r.x1 > column and r.label.get('rect', [r.x0])[0] < sig.x1]
+                 bottom = min([bottom] + following)
+-                # Include the whole row band, including text beside or directly
+-                # under the rule. Neighbouring columns stop the band; text in
+-                # the gap between two rules belongs to both until disambiguated.
++                # Column gutters bound evidence even when rules are staggered.
++                # Keep the gap shared until its identity is disambiguated.
+                 neighbours = [r for r in unique if r is not sig
+-                              and r.semantic not in COMPANION_SEMANTICS
+-                              and abs(r.y - sig.y) < 30]
++                              and r.semantic not in COMPANION_SEMANTICS]
+                 left = max([0] + [r.x1 for r in neighbours if r.x1 < column])
+                 right = min([page.width] + [r.label.get('rect', [r.x0])[0]
+                             for r in neighbours if r.label.get('rect', [r.x0])[0] > sig.x1])

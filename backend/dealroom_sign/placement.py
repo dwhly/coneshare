@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.13'
+VERSION = 'c2a.14'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -681,6 +681,7 @@ def extract(pdf, *, deadline=None):
             # rule formed no block, keep the name so the veto fails closed.
             retained.append(text)
         absorbed_names[pno] = retained
+    mixed_heading_names = {}
     for block, extent in extents:
         texts, rules, _ = pages[block.line.page]
         top, bottom, left, right = extent
@@ -690,8 +691,18 @@ def extract(pdf, *, deadline=None):
             block.uncertain_identity = True
         if conflicting_company_headings(block, extent, texts, rules, roles):
             block.uncertain_identity = True
+            mixed_heading_names.setdefault(block.line.page, []).extend(
+                t for t in block.raw_labels
+                if any(person_text(part) for part in identity_parts(t['text'])))
         if not printed_names(block):
             block.company_only_blocked = company_only_veto(block, extent, pages, roles, blocks, neutral)
+    # A mixed-company block cannot lend its printed name to another block.
+    # Propagate by the same physical row on the same page, after collecting
+    # every conflict, so traversal order cannot clear or miss a veto.
+    for block, extent in extents:
+        if any(inside_extent(text, extent)
+               for text in mixed_heading_names.get(block.line.page, [])):
+            block.uncertain_identity = True
     return blocks, sizes, roles
 
 
