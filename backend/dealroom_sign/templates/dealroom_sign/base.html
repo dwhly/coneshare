@@ -1,4 +1,4 @@
-{% load tenant_brand %}{% tenant_brand as tenant %}{% tenant_product as product %}<!doctype html><html lang="en" data-edge="outline" data-density="spacious"{% if tenant.chrome %} data-chrome="dark"{% endif %}{% if tenant.chrome_rule %} data-chrome-rule{% endif %}{% if tenant.surface %} data-surface="{{ tenant.surface }}"{% endif %}{% if tenant.chrome or tenant.chrome_rule %} style="{% if tenant.chrome %}--chrome-base:{{ tenant.chrome_hsl }};{% endif %}{% if tenant.chrome_rule %}--chrome-rule:{{ tenant.chrome_rule_hsl }};{% endif %}"{% endif %}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="same-origin">
+{% load fleet_attribution %}{% load tenant_brand %}{% tenant_brand as tenant %}{% tenant_product as product %}<!doctype html><html lang="en" data-edge="outline" data-density="spacious"{% if tenant.chrome %} data-chrome="dark"{% endif %}{% if tenant.chrome_rule %} data-chrome-rule{% endif %}{% if tenant.surface %} data-surface="{{ tenant.surface }}"{% endif %}{% if tenant.chrome or tenant.chrome_rule %} style="{% if tenant.chrome %}--chrome-base:{{ tenant.chrome_hsl }};{% endif %}{% if tenant.chrome_rule %}--chrome-rule:{{ tenant.chrome_rule_hsl }};{% endif %}"{% endif %}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="same-origin">
 <title>{% block title %}Signing{% endblock %} · {{ tenant.name }} {{ product }}</title>
 {% comment %} Fleet design system v0.9.8, vendored once in frontend/public/fds (commit cf449dc, pinned by fds.lock); base Fleet tokens, no brand layer.
    color-scheme meta BEFORE the theme boot (DESIGN.md §11): theme-boot.js and theme.js keep it in step with the choice.
@@ -27,7 +27,7 @@ a{color:hsl(var(--brand-muted-foreground))}
 </style></head><body class="fds-body">
 {% block header %}{% endblock %}
 <main>{% block content %}{% endblock %}</main>
-<footer class="site-footer">{% block footer %}{{ tenant.name }} Dealroom · Confidential documents{% endblock %}{% if tenant.powered_by %}<div>Powered by Fleet</div>{% endif %}</footer>
+<footer class="site-footer">{% block footer %}{{ tenant.name }} Dealroom · Confidential documents{% endblock %}<div>{% fleet_attribution "page" %}</div></footer>
 <script src="{{ asset_prefix }}/fds/theme.js?v=0.9.8" defer></script>
 {% block shell_scripts %}<script src="{{ asset_prefix }}/dealroom/shell.js?v=fds098"></script>
 {% endblock %}

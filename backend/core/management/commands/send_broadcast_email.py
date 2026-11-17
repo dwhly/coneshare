@@ -6,8 +6,10 @@ import time
 from datetime import datetime
 
 from django.conf import settings
-from django.core.mail import get_connection, EmailMessage
+from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.management.base import BaseCommand, CommandError
+
+from dealroom_sign.fleet_mail import attributed_parts
 
 
 class Command(BaseCommand):
@@ -304,13 +306,15 @@ class Command(BaseCommand):
                 self.stdout.flush()
 
                 try:
-                    email_msg = EmailMessage(
+                    text_body, html_body = attributed_parts(body)
+                    email_msg = EmailMultiAlternatives(
                         subject=subject,
-                        body=body,
+                        body=text_body,
                         from_email=from_email,
                         to=[email],
                         connection=connection,
                     )
+                    email_msg.attach_alternative(html_body, 'text/html')
                     email_msg.send(fail_silently=False)
                     self._append_sent_log(log_path, email, name)
                     self.stdout.write(self.style.SUCCESS(" OK"))

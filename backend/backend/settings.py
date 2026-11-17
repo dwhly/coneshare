@@ -616,3 +616,8 @@ SIGN_MESSAGE_DOMAIN = os.environ.get('SIGN_MESSAGE_DOMAIN', 'fleet.test')
 SIGN_MAIL_MAX_BYTES = int(os.environ.get('SIGN_MAIL_MAX_BYTES', str(14 * 1024 * 1024)))
 SIGN_SMTP_SIZE = int(os.environ.get('SIGN_SMTP_SIZE', '0'))
 MIDDLEWARE = ['dealroom_sign.recipient_proxy.RecipientBoundaryMiddleware', *MIDDLEWARE]
+
+# Public Fleet attribution; source URL is pinned by the deployment to its commit.
+FLEET_TENANT_NAME = os.environ.get('FLEET_TENANT_NAME', '')
+FLEET_ABOUT_URL = os.environ.get('FLEET_ABOUT_URL', '')
+FLEET_SOURCE_URL = os.environ.get('FLEET_SOURCE_URL', '')

@@ -103,10 +103,11 @@ def test_invalid_logo_warns_once_and_falls_back_to_tenant_name(tmp_path, filenam
     ]
 
 
-def test_header_defaults_name_logo_and_product_rule(logo, monkeypatch):
+def test_header_defaults_name_logo_and_product_rule(logo, monkeypatch, settings):
     assert 'aria-label="Fleet Sign"' in _render('welcome')
     assert 'aria-label="Fleet Dealroom"' in _render('signed')
     monkeypatch.setenv('FLEET_TENANT_NAME', 'Acme Test Co')
+    settings.FLEET_TENANT_NAME = 'Acme Test Co'
     monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
     monkeypatch.setenv('FLEET_TENANT_CHROME_RULE', '#abcdef')
     monkeypatch.setenv('FLEET_TENANT_SURFACE', 'warm')
@@ -115,7 +116,7 @@ def test_header_defaults_name_logo_and_product_rule(logo, monkeypatch):
     assert 'aria-label="Acme Test Co Sign"' in html and '>Acme Test Co</span>' in html
     assert 'Acme Test Co Dealroom · Every copy' in html
     assert 'data-chrome="dark"' in html and 'data-chrome-rule' in html and 'data-surface="warm"' in html
-    assert '--chrome-base:210 65.3846% 20.3922%' in html and 'Powered by Fleet' in html
+    assert '--chrome-base:210 65.3846% 20.3922%' in html and 'Open-source software run by Acme Test Co, built on the Fleet.' in html and 'Powered by Fleet' not in html
     monkeypatch.setenv('FLEET_TENANT_LOGO', str(logo))
     html = _render('signed')
     assert 'class="fleet-tenant-logo"' in html and 'alt="Acme Test Co"' in html
@@ -138,20 +139,22 @@ def test_fixed_logo_route_hash_and_cache(logo, monkeypatch):
 
 
 @pytest.mark.django_db
-def test_email_cid_band_and_plain_text(access, logo, monkeypatch):
+def test_email_cid_band_and_plain_text(access, logo, monkeypatch, settings):
     effect = enqueue(access, 'invitation', 'tenant')
     original = compose(effect).body
     monkeypatch.setenv('FLEET_TENANT_NAME', 'Acme Test Co')
+    settings.FLEET_TENANT_NAME = 'Acme Test Co'
     monkeypatch.setenv('FLEET_TENANT_CHROME', '#123456')
     monkeypatch.setenv('FLEET_TENANT_LOGO', str(logo))
     monkeypatch.setenv('FLEET_TENANT_CHROME_RULE', '#abcdef')
     monkeypatch.setenv('FLEET_TENANT_POWERED_BY', '1')
     message = compose(effect)
     assert parseaddr(message.from_email)[0] == access.sender['name'] + ' via Acme Test Co Sign'
-    assert message.body == original.replace('Fleet | Dealroom', 'Acme Test Co | Dealroom')
+    assert message.body == original.replace('Fleet | Dealroom', 'Acme Test Co | Dealroom').replace(
+        'This is open-source software built on', 'This is open-source software run by Acme Test Co, built on')
     html = message.alternatives[0][0]
     assert 'background:#123456' in html and 'border-bottom:2px solid #abcdef' in html
-    assert 'src="cid:' in html and 'Powered by Fleet' in html and str(logo) not in html
+    assert 'src="cid:' in html and 'Open-source software run by Acme Test Co, built on the Fleet.' in html and 'Powered by Fleet' not in html and str(logo) not in html
     mime = message.message()
     related = next(p for p in mime.walk() if p.get_content_type() == 'multipart/related')
     image = next(p for p in related.walk() if p.get_content_type() == 'image/png')

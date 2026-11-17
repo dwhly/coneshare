@@ -3,7 +3,7 @@ import hmac
 import secrets
 from datetime import timedelta
 from django.conf import settings
-from django.core.mail import send_mail
+from dealroom_sign.fleet_mail import send_mail
 from django.db import transaction
 from django.middleware.csrf import get_token
 from django.utils import timezone

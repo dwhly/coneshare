@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 from django.utils.dateparse import parse_datetime
 from django.utils import timezone
 from django.utils.translation import gettext as _, override as translation_override
-from django.core.mail import send_mail
+from dealroom_sign.fleet_mail import send_mail
 from django.conf import settings
 from django.db import transaction
 from django.template.loader import render_to_string

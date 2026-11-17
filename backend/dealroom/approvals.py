@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.db import transaction
 from django.urls import resolve
 from django.utils import timezone
-from django.core.mail import send_mail
+from dealroom_sign.fleet_mail import send_mail
 from rest_framework.exceptions import APIException, PermissionDenied, ValidationError
 from rest_framework.test import APIRequestFactory, force_authenticate
 from core.models import APIKey

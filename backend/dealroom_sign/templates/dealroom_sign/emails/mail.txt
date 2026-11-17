@@ -1,4 +1,4 @@
-{{ tenant.name|default:"Fleet" }} | Dealroom
+{% load fleet_attribution %}{{ tenant.name|default:"Fleet" }} | Dealroom
 {% if invitation %}{{ sender }} · Estimated {{ estimated_minutes }} minute{{ estimated_minutes|pluralize }} · Due {{ access.context.due_at }} · {{ access.context.note|truncatechars:80 }}
 
 {% if access.context.incoming %}{{ sender }} (via {{ sending_staff }}’s Dealroom){% else %}{{ sender }}{% endif %} sent you “{{ title }}” to sign.
@@ -27,3 +27,5 @@ Is this legit? {% if invitation %}This invitation uses{% else %}Your completed d
 If the {% if invitation %}button{% else %}link{% endif %} doesn't work, open {{ origin }}/s/access and enter {{ alternate }}.
 {% if invitation %}Report a concern: mailto:{{ report }}{% else %}Reply to report a concern.{% endif %}
 Reply to contact {{ sender }} or arrange a paper copy.
+
+{% fleet_attribution "email-text" %}

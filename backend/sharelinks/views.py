@@ -12,7 +12,7 @@ from pdf2image import convert_from_bytes
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ValidationError as DjangoValidationError
-from django.core.mail import send_mail
+from dealroom_sign.fleet_mail import send_mail
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpResponse
 from django.shortcuts import get_object_or_404
