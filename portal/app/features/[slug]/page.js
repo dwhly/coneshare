@@ -75,7 +75,7 @@ export default async function FeatureDetailPage({ params }) {
           {feature.workflowSteps && (
             <section className="mt-12">
               <h2 className="text-2xl font-bold tracking-tight text-gray-900">Typical Workflow</h2>
-              <ol className="mt-6 space-y-6 border-l border-gray-200 pl-6">
+              <ol className="mt-6 space-y-6 border-l border-gray-200 pl-6">{/* fds-allow-stripe: timeline axis behind the numbered step markers */}
                 {feature.workflowSteps.map((step, index) => (
                   <li key={step} className="relative text-base leading-7 text-gray-700">
                     <span className="absolute -left-[35px] top-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold text-white">
