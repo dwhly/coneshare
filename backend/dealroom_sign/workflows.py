@@ -8,6 +8,7 @@ from django.db.models import Case, IntegerField, Q, Value, When
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
+from . import room_return
 from .nda_template import recipient_fields
 from .client import Documenso, SignError
 from .evidence import ingest, snapshot_fields, instant
@@ -108,6 +109,8 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             raise ValidationError('Idempotency key already used with different inputs.')
         if board_id:
             legacy_request(workflow, board_id, task_ref, requester=requester, title=title)
+        if created:
+            room_return.bind(workflow)
         if created and analysis:
             record_fact(workflow, 'placement.resolved', 'placement:' + workflow.source_sha256,
                         {'source_sha256': workflow.source_sha256, 'recipients_sha256': request_digest(recipients),

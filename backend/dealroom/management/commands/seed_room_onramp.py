@@ -32,6 +32,9 @@ class Command(BaseCommand):
         user = User.objects.filter(email=options['owner'], is_staff=True).first()
         if not user:
             raise CommandError('An existing staff owner is required.')
+        if not (user.name or '').strip() or user.name.strip() == 'Fleet Admin':
+            user.name = 'Dan Whaley'
+            user.save(update_fields=['name'])
         provider = DriveSnapshotProvider(options['folder_id'])
         email = options['visitor'].strip().lower()
         nodes = walk_tree(provider, options['folder_id'])

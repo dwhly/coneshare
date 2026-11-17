@@ -80,7 +80,7 @@ class RecipientChallengeView(APIView):
         active = link.is_active and (not link.expires_at or link.expires_at > timezone.now())
         sender = link.dataroom.created_by if active else None
         sender_name = sender.name if sender else ''
-        # A signed invitation may identify a different inviter. Previewing it never verifies a visitor.
+        # Validate the invitation, then use the owner’s current display name. Previewing never verifies a visitor.
         token = request.headers.get('X-Room-Invitation')
         if token:
             sender_name = ''
@@ -89,7 +89,7 @@ class RecipientChallengeView(APIView):
                 if payload['room'] == str(link.dataroom_id):
                     _, grant, _ = select_grant(link, payload['email'])
                     if str(grant.pk) == payload['grant'] and grant.email == payload['email']:
-                        sender_name = payload.get('sender_name') or getattr(grant.created_by, 'name', '')
+                        sender_name = sender.name if sender else ''
             except (signing.BadSignature, KeyError, TypeError, PermissionDenied):
                 pass
         return Response({'csrf_token': get_token(request), 'brand': load_brand(),
@@ -187,7 +187,7 @@ class RecipientRoomView(APIView):
             version = item.document.versions.filter(is_primary=True).first()
             if not version or hasattr(version, 'executedartifact'):
                 continue
-            files.append({'id': str(item.pk), 'name': item.name or item.document.name, 'folder_id': str(item.folder_id or ''), 'page_count': version.num_pages or 1, 'version_number': version.version_number, 'published_at': version.metadata.get('drive_source', {}).get('published_at', version.created_at.isoformat()), 'download_level': file_decision.effective_download_level, 'page_url': f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}', 'download_url': f'/api/v1/links/{slug}/download-file/?dataroom_document_id={item.pk}'})
+            files.append({'id': str(item.pk), 'name': item.name or item.document.name, 'folder_id': str(item.folder_id or ''), 'page_count': version.num_pages or 1, 'sheet_count': version.num_pages if version.type == 'spreadsheet' and version.render_status == 'ready' else None, 'version_number': version.version_number, 'published_at': version.metadata.get('drive_source', {}).get('published_at', version.created_at.isoformat()), 'download_level': file_decision.effective_download_level, 'page_url': f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}', 'download_url': f'/api/v1/links/{slug}/download-file/?dataroom_document_id={item.pk}'})
         orders = list(link.dataroom.item_orders.all())
         file_order = {str(row.dataroom_document_id): row.position for row in orders if row.dataroom_document_id}
         folder_order = {str(row.folder_id): row.position for row in orders if row.folder_id}

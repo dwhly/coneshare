@@ -25,6 +25,7 @@ from sharelinks.models import Viewer
 
 from . import storage as product_storage
 from .board_auth import BoardProxyAuthentication
+from . import room_return
 from .client import SignError
 from .counterparty_mail import retry_email
 from .evidence import fields_for_snapshot, projection as evidence_projection
@@ -207,6 +208,7 @@ class RecipientNdaView(APIView):
         workflow = Workflow.objects.filter(room=room, member_id=str(member.pk), member_email=member.email.strip().lower(), policy_revision=str(policy.revision)).order_by('-created_at').first()
         return Response({'required': True, 'accepted': accepted, 'state': workflow.state if workflow else 'not_started',
                          'can_enter': bool(workflow and workflow.state == 'awaiting_signature' and workflow.signing_token and workflow.signer_projection and workflow.signer_projection[0].get('email', '').strip().lower() == member.email.strip().lower() and not accepted),
+                         'email_sent': bool(workflow and workflow.signer_accesses.filter(email=member.email.strip().lower(), invite_state='succeeded').exists()),
                          'overdue': bool(workflow and workflow.state in {'awaiting_seal', 'quarantined', 'failed', 'distributing', 'uncertain', 'cancelled', 'declined'} and (timezone.now() - workflow.created_at).total_seconds() > 60)})
 
     @extend_schema(request=None, responses=dict)
@@ -223,6 +225,7 @@ class RecipientNdaView(APIView):
                 raise ValidationError('Room owner has not configured signing.')
             existing = Workflow.objects.filter(room=room, purpose='nda', member_id=str(member.pk), policy_revision=str(policy.revision)).order_by('-created_at').first()
             if existing:
+                room_return.bind(existing)
                 return Response({'state': existing.state}, status=201)
             try:
                 work = command(owner=room.created_by, room=room, version=policy.source_version,
@@ -255,6 +258,7 @@ class RecipientNdaEnterView(RecipientNdaView):
             email=member.email.strip().lower(), native_token__isnull=False).first()
         if not access or access.native_token != work.signing_token:
             raise PermissionDenied('Signing is not ready for this verified member.')
+        room_return.bind(work)
         return Response({'signing_url': origin() + '/s/nda/' + issue_handoff(access, member)})
 
 

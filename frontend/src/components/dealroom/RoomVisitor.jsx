@@ -61,13 +61,18 @@ export default function RoomVisitor({ room, brand, onRequest, base }) {
   const changes = previous.at ? room.files.filter(f => f.published_at > previous.at) : [];
   const ordered = [...(room.start_here || []).map(id => room.files.find(f => f.id === id)).filter(Boolean), ...room.files.filter(f => !(room.start_here || []).includes(f.id))];
   if (file) return <VisitorReader file={file} files={ordered} member={room.member} onBack={() => setFile(null)} onSelect={open} initialPage={page} onProgress={progress} onRequest={onRequest} />;
-  function fileRow(f, n, badge) { return <button key={f.id} className="w-full text-left flex items-center gap-3 rounded-xl border bg-white p-4 shadow-sm hover:border-gray-300" onClick={() => open(f)}><span className="font-mono text-xs text-muted-foreground">{String(n + 1).padStart(2, '0')}</span><FileTypeIcon type={f.name} /><span className="flex-1"><strong className="block text-sm">{f.name}</strong><span className="text-xs text-muted-foreground">{f.page_count} {f.page_count === 1 ? 'page' : 'pages'}</span></span>{badge && <StatusPill tone="info">{badge}</StatusPill>}<ChevronRight className="w-4 h-4" /></button>; }
+  function fileRow(f, badge) {
+    const spreadsheet = /\.(xlsx?|csv|ods)$/i.test(f.name);
+    const count = spreadsheet ? f.sheet_count : f.page_count;
+    const unit = spreadsheet ? 'sheet' : 'page';
+    return <button key={f.id} className="w-full text-left flex items-center gap-3 rounded-lg px-3 py-3 hover:bg-gray-50" onClick={() => open(f)}><FileTypeIcon type={f.name} /><span className="flex-1 min-w-0"><strong className="block text-sm break-words">{f.name}</strong>{count > 0 && <span className="text-xs text-muted-foreground">{count} {unit}{count === 1 ? '' : 's'}</span>}</span>{badge && <StatusPill tone="info">{badge}</StatusPill>}<ChevronRight className="w-4 h-4 shrink-0" /></button>;
+  }
   function folderSection(parent = '', ancestors = []) {
     return room.folders.filter(f => (f.parent_id || '') === parent && !ancestors.includes(f.id)).map(f =>
-      <details key={f.id} open aria-label={f.name} className="rounded-xl border bg-gray-50/40 p-3 sm:p-4">
+      <details key={f.id} open aria-label={f.name} className={ancestors.length ? 'pl-3 sm:pl-4' : 'rounded-xl border px-3 py-2 sm:px-4'}>
         <summary className="cursor-pointer text-sm font-semibold py-2"><Folder className="inline h-4 w-4 mr-2" />{f.name}</summary>
-        <div className="space-y-3 pt-3">
-          {room.files.filter(file => file.folder_id === f.id).map((file, n) => fileRow(file, n))}
+        <div>
+          {room.files.filter(file => file.folder_id === f.id).map(file => fileRow(file))}
           {folderSection(f.id, [...ancestors, f.id])}
         </div>
       </details>);
@@ -75,21 +80,20 @@ export default function RoomVisitor({ room, brand, onRequest, base }) {
   return <main className="min-h-screen bg-white pb-12">
     <header className="border-b px-5 py-4 flex flex-wrap items-center justify-between gap-3"><div className="flex items-center gap-3"><img className="h-8 w-8" src={brand.brandLogoUrl} alt="" /><strong>{brand.brandName}</strong><span className="text-muted-foreground">| Dealroom</span></div><div className="flex items-center gap-3"><span className="text-xs text-muted-foreground">{room.member.name} · {room.member.org}</span><ThemeToggle /></div></header>
     <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 space-y-7">
-      {room.nda_signed && <StatusPill tone="success">NDA signed</StatusPill>}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">{room.nda_signed && <StatusPill tone="success">NDA signed</StatusPill>}<p className="text-sm text-muted-foreground">Documents you open are watermarked with your company and individual details. Your signed NDA is yours, unwatermarked.</p></div>
       <div><p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Prepared for {room.member.org || room.member.name}</p><h1 className="text-3xl font-bold tracking-tight">{room.name}</h1></div>
       {room.note && <div className="rounded-2xl border border-gray-200 bg-gray-50/40 p-6 shadow-sm"><p className="text-base leading-7 whitespace-pre-wrap">{room.note}</p><p className="text-xs text-muted-foreground mt-3">A note from your host</p></div>}
-      {previous.at && <Card title={`Welcome back, ${room.member.name.split(' ')[0]}`} subtitle="What changed since you were here"><div className="space-y-3">{changes.map((f, n) => fileRow(f, n, f.version_number > 1 ? 'Updated' : 'Added'))}{!changes.length && <p className="text-sm text-muted-foreground">You’re up to date. No new documents since your last visit.</p>}{room.answers?.length > 0 && <button className="dr-btn" onClick={() => setShowAnswers(!showAnswers)}>Read the answers from the team</button>}{room.files.some(f => f.id === previous.file) && <button className="dr-btn" onClick={() => open(room.files.find(f => f.id === previous.file), previous.page || 1)}>Pick up where you stopped · page {previous.page || 1}</button>}</div></Card>}
+      {previous.at && <Card title={`Welcome back, ${room.member.name.split(' ')[0]}`} subtitle="What changed since you were here"><div className="space-y-3">{changes.map(f => fileRow(f, f.version_number > 1 ? 'Updated' : 'Added'))}{!changes.length && <p className="text-sm text-muted-foreground">You’re up to date. No new documents since your last visit.</p>}{room.answers?.length > 0 && <button className="dr-btn" onClick={() => setShowAnswers(!showAnswers)}>Read the answers from the team</button>}{room.files.some(f => f.id === previous.file) && <button className="dr-btn" onClick={() => open(room.files.find(f => f.id === previous.file), previous.page || 1)}>Pick up where you stopped · page {previous.page || 1}</button>}</div></Card>}
 
-      {!query && (room.start_here || []).length > 0 && <section><h2 className="text-xl font-semibold mb-4">Start here</h2><div className="grid md:grid-cols-2 gap-3">{room.start_here.map(id => room.files.find(f => f.id === id)).filter(Boolean).map((f, n) => fileRow(f, n))}</div></section>}
+      {!query && (room.start_here || []).length > 0 && <section><h2 className="text-xl font-semibold mb-4">Start here</h2><div className="grid md:grid-cols-2 gap-1 rounded-xl border p-2">{room.start_here.map(id => room.files.find(f => f.id === id)).filter(Boolean).map(f => fileRow(f))}</div></section>}
       <section><div className="flex flex-wrap gap-4 items-center justify-between mb-4"><h2 className="text-xl font-semibold">All documents · {room.files.length}</h2><input className="dr-input sm:max-w-xs" aria-label="Search documents" placeholder="Search documents" value={query} onChange={e => setQuery(e.target.value)} /></div>
         <div className="space-y-3">
           {!query && folderSection()}
-          {room.files.filter(f => query ? f.name.toLowerCase().includes(query.toLowerCase()) : !f.folder_id).map((f, n) => fileRow(f, n))}
+          {query ? room.files.filter(f => f.name.toLowerCase().includes(query.toLowerCase())).map(f => fileRow(f)) : room.files.some(f => !f.folder_id) && <section aria-label="Other documents" className="rounded-xl border px-3 py-2 sm:px-4"><h3 className="text-sm font-semibold py-2 pl-4"><Folder className="inline h-4 w-4 mr-2" />Other documents</h3>{room.files.filter(f => !f.folder_id).map(f => fileRow(f))}</section>}
         </div>
       </section>
       {room.answers?.length > 0 && <section><button className="dr-btn" onClick={() => setShowAnswers(!showAnswers)}>Answers from the team · {room.answers.length}</button>{showAnswers && room.answers.map(a => <div key={a.id} className="rounded-xl border p-5 mt-3"><StatusPill>{a.faq ? 'Room FAQ' : 'Private to your firm'}</StatusPill><p className="text-sm mt-3 whitespace-pre-wrap">{a.text}</p></div>)}</section>}
       {room.signed_nda?.signed && <PersonalNda initial={room.signed_nda} base={base} />}
-      <p className="text-xs text-muted-foreground">Every copy you open is watermarked with your company and individual details.</p>
     </div>
   </main>;
 }

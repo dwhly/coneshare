@@ -1,0 +1,152 @@
+Round 5 verification — 2026-11-17
+Base: agent/room-proto @ 90948b76726344d71076047bfcc8407f2de87265.
+No commit, staging, deployment or schema migration. Documenso fork untouched.
+
+FAILING-FIRST
+Before product edits:
+  dealroom/tests/test_room_round5.py: 11 failed, 2 passed (24.81s).
+  RoomSigningLoop.test.jsx: 4 failed (12.35s).
+These covered request/return binding, same-tab start and readiness polling, unsigned
+resume, owner naming, seed defaults, and layout. The completion fixture was then
+corrected to record observe_completion, matching the real reconciliation contract.
+The extra room-invitation email test was also run before its implementation:
+  1 failed, 13 deselected (14.61s): owner absent from invitation body/From.
+The final regression file was replayed against an unchanged git-archive of HEAD;
+result: 14 failed, 2 passed, 26 warnings in 26.91s (the expected missing R5 behavior). No existing expectations were weakened or skipped.
+
+BACKEND
+Same requested selection and supplied runner as round 4, in Bash:
+  mkdir -p /root/worktrees/room-proto/.testtmp
+  function mktemp() { command mktemp -d /root/worktrees/room-proto/.testtmp/sendlocal.XXXX; }
+  export -f mktemp
+  /root/work/sign-product/run-send-local.sh /root/worktrees/room-proto \
+    dealroom/tests tests/dealroom tests/cloudfiles/test_tasks.py
+Initial broad run: 204 passed, 260 warnings in 152.57s.
+Final run: 207 passed, 266 warnings in 156.73s (0:02:36).
+Sixteen new cases in backend/dealroom/tests/test_room_round5.py cover:
+  - Trusted configured origin stored against the actual workflow and room;
+    caller return_url ignored, resume idempotent, later gateway config cannot replace it.
+  - Direct entry before email delivery, one-use handoff consumption.
+  - Callback, session-context and native completion terminal paths, each while
+    awaiting the seal and after completion, on a gateway with a different SITE_DOMAIN.
+  - Browser signed=true cannot confirm an unsigned request; another workflow's
+    callback is rejected using the current signer session.
+  - NDA invitation subject/body/From/Reply-To use the owner display name and existing
+    tenant mail conventions; old personal-link name snapshots do not override it.
+  - Seed changes blank and Fleet Admin names to Dan Whaley; keeps other display names.
+  - Room invitation body and brand-based From name identify the owner.
+  - Backup email acknowledgement appears only after recorded mail success.
+  - Sheet counts are returned only for ready spreadsheet renders.
+All prior permission, sealed-copy identity/hash, sender placement and room tests remain
+in the selection, including unchanged test_review_v09_send.py.
+Existing short test-secret JWT and pypdf deprecation warnings remain.
+
+EXISTING TEST CHANGES — TWO CASES ONLY
+1. backend/dealroom/tests/test_room_polish.py:
+   test_invitation_preview_uses_signed_inviter_without_redeeming renamed to
+   test_invitation_preview_uses_current_owner_without_redeeming. The fixture now saves
+   the owner's name; R5 resolves the current owner instead of a token's stale inviter
+   snapshot. The privacy, explicit verification and revoked-grant checks remain.
+2. frontend/src/tests/pages/RoomRound3.test.jsx:
+   visitor shows collapsible folders in sender order, note first, and a separate
+   personal NDA last: only the watermark copy expectation changes to the R5 wording.
+All other existing backend/frontend tests are unchanged.
+
+FRONTEND
+36 passed across 10 files (10.04s). The 9 round-four files plus the new signing-loop file:
+  cd .testtmp/frontend
+  npx vitest run --cache=false \
+    src/tests/pages/RoomSigningLoop.test.jsx \
+    src/tests/pages/RoomNdaPlacement.test.jsx \
+    src/tests/pages/RoomRound3.test.jsx \
+    src/tests/pages/RoomWatermarkSettings.test.jsx \
+    src/tests/pages/RoomPolish.test.jsx \
+    src/tests/pages/RoomOnramp.test.jsx \
+    src/tests/pages/DealroomRecipient.test.jsx \
+    src/tests/pages/DealroomRoomDetail.test.jsx \
+    src/tests/pages/DealroomPages.test.jsx \
+    src/tests/components/dealroom/GlueShellSelect.test.js
+New path added only to vitest.whitelist.json; no Vite/Vitest config edited.
+The new tests exercise delayed readiness and direct navigation without email,
+unsigned Continue signing, actual email status copy, and ordered unfiled rows with
+spreadsheet sheet counts or no count. All 32 round-four cases pass.
+
+SIGNING-ADAPTER REGRESSION — SAME EXTRA SELECTION AS ROUND 4
+78 passed, 1 failed in 68.72s:
+  dealroom_sign/tests/test_workflows.py
+  dealroom_sign/tests/test_placement_send.py
+  dealroom_sign/tests/test_recipient_proxy.py
+PRE-EXISTING: test_recipient_allowlist_is_built_from_served_routes, test_workflows.py:374.
+The room aliases resolve to dealroom.pages; the assertion accesses view_class on a function.
+Reproduced on an unchanged git-archive of HEAD 90948b76: same failure in 10.38s.
+No test was changed or skipped to hide it.
+
+BUILD AND BROWSER
+  cd .testtmp/frontend
+  npx vite build
+Result: passed in 15.10s. Existing bundle-size/Browserslist/baseline-browser notices remain.
+Node 22.22.3. npm ci ran only in a disposable copy using a project-local cache and
+registry.npmjs.org. The worktree lockfile is unchanged.
+
+Built app via Vite preview on 127.0.0.1:4175, same browser command pattern as round 4:
+  PYTHONPATH=.testtmp/browser-tools PLAYWRIGHT_BROWSERS_PATH=$PWD/.testtmp/browsers \
+    /root/work/sign-product/send-venv/bin/python docs/room-proto/round5-smoke.py
+Browser tools were installed in .testtmp/browser-tools for Python 3.12, Chromium in
+.testtmp/browsers. The script renders the actual dealroom_sign recipient.html entry
+page with fictional data and the existing Fleet assets. Room API responses and the
+external signer completion are intercepted fixtures, as in previous rounds.
+The signing capture is the gateway's real consent/entry screen, not the native
+Documenso editor. No live signatures, SMTP messages or sealed artifacts were produced.
+The download assertion uses a fictional PDF; backend tests separately check the real
+sealed-copy endpoint's identity binding and exact artifact bytes.
+
+Chromium at 1440x1000 and 390x844: passed; no page errors or horizontal overflow.
+Verified invitation → same-tab one-time entry; Back → Continue signing → fresh entry;
+confirmation waits for sealing, download is offered, explicit Enter opens the room;
+owner note, badge/notice, sheet labels, Other documents, separate signed NDA;
+no page errors or horizontal overflow, exactly one browser page throughout.
+Fourteen captures in docs/room-proto/round5-screenshots/:
+  invite, signing, continue-signing, confirmation, room-top, room-bottom, room-full
+  at both desktop and phone sizes. Full captures supplement the required viewport images.
+Representative desktop/phone room, confirmation and gateway images visually reviewed.
+
+REGISTRY, SCHEMA AND BOUNDARIES
+  cd backend
+  python manage.py dealroom_registry
+328 operations, 115 staff operations; passed, catalog unchanged.
+  python manage.py spectacular --file ../.testtmp/round5-openapi.yml --validate
+0 errors; 65 warning occurrences / 28 unique (existing generic schema warnings).
+Both use the supplied runner's dummy SECRET_KEY, FIELD_ENCRYPTION_KEY,
+CORE_API_URL and INTERNAL_API_TOKEN, with an in-memory scratch database.
+No schema or migration changes. Return binding uses the existing ObservedSignEvent
+JSON payload (kind/source_id room.return): trusted origin and room_id, keyed to workflow.
+It is created in the room application, read by the shared gateway and not overwritten.
+The route is constructed from that workflow's room entry link, not query/body URLs.
+Legacy workflows acquire a binding when started/continued through this room application.
+A legacy workflow without a binding retains its configured SITE_DOMAIN fallback;
+continue it once through :9447 before exercising a cross-origin return.
+Non-NDA signing retains its existing terminal behavior. Session/CSRF, room access,
+reconciliation, consent and sealing checks remain authoritative.
+React escapes copy; gateway templates autoescape; client navigation validates HTTP(S).
+No new untrusted HTML or browser-controlled return redirect is accepted.
+
+GATEWAY PORTING — EXACT dealroom_sign FILES
+  backend/dealroom_sign/room_return.py                          (new)
+  backend/dealroom_sign/workflows.py
+  backend/dealroom_sign/views.py
+  backend/dealroom_sign/recipient_proxy.py
+  backend/dealroom_sign/counterparty.py
+  backend/dealroom_sign/counterparty_mail.py
+  backend/dealroom_sign/templates/dealroom_sign/recipient.html
+The shared :9445 preview Send image must receive these changes before a live walkthrough
+can return to this branch. This worktree has not modified or redeployed that shared image.
+The room app must keep SITE_DOMAIN set to its own :9447 origin when creating the binding.
+Use the existing seed to update the fictional owner display name; existing mail snapshots
+are immutable, so a new visitor NDA request picks up the corrected sender snapshot.
+
+CLEANUP
+git diff --check passed. Vite/Vitest configs, lockfile and .agent/memory.md unchanged.
+Preview server stopped; disposable frontend, npm cache, browser packages/downloads,
+baseline archive, SQLite test databases and .testtmp removed. No node_modules remains.
+No git add/commit, deployment, migration or memory update was performed.
+Completion marker: room-proto-r5.done (HEAD remains 90948b76726344d71076047bfcc8407f2de87265).

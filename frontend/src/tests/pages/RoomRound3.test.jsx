@@ -45,5 +45,5 @@ test('visitor shows collapsible folders in sender order, note first, and a separ
   expect(screen.getByText('Your signed NDA')).toBeInTheDocument();
   expect(screen.getByText(/Signed /)).toHaveTextContent('2026');
   expect(screen.getByRole('link', { name: 'Download your signed NDA' })).toHaveAttribute('href', signed.download_url);
-  expect(screen.getByText('Every copy you open is watermarked with your company and individual details.')).toBeInTheDocument();
+  expect(screen.getByText('Documents you open are watermarked with your company and individual details. Your signed NDA is yours, unwatermarked.')).toBeInTheDocument();
 });

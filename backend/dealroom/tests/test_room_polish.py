@@ -97,9 +97,10 @@ def test_preverification_brand_and_sender_never_include_room_name(staff, room, o
 
 
 @pytest.mark.django_db
-def test_invitation_preview_uses_signed_inviter_without_redeeming(room, owner):
+def test_invitation_preview_uses_current_owner_without_redeeming(room, owner):
     grant = ShareLinkAccessGrant.objects.create(share_link=room.roompolicy.entry_link, email='maya@northwind.test')
     owner.name = 'Dan Whaley'
+    owner.save(update_fields=['name'])
     token = personal_url(room, grant, owner).split('#personal=')[1]
     client = APIClient()
     url = f'/api/v1/dealroom/recipient/{room.roompolicy.entry_link.slug}/challenge/'

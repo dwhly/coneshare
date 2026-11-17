@@ -188,3 +188,49 @@ The [browser runner](docs/room-proto/round4-smoke.py) uses fictional intercepted
 | Blocked sharing | [Desktop](docs/room-proto/round4-screenshots/blocked-share-desktop.png) | [Phone](docs/room-proto/round4-screenshots/blocked-share-phone.png) |
 
 Vite/Vitest configs, dependency lockfile and project memory are unchanged. Temporary dependencies and test files are removed at completion. No commit, staging, migration or deployment was performed.
+
+## Round 5 — 17 November 2026
+
+Built on `agent/room-proto` at `90948b76726344d71076047bfcc8407f2de87265`. Changes remain uncommitted and undeployed. Product code is brand-neutral; Fleet components and the existing signer gateway are reused. The Documenso fork is untouched.
+
+**Review the NDA now starts signing in the same tab.** The explicit personal-invitation click verifies that visitor, creates or resumes their NDA request, waits for signing readiness, then opens the existing one-time handoff. Email delivery is independent of entry. The gateway and returning visitor screen say **We’ve also emailed you this link** after recorded delivery; the preparation screen explains that email is a backup. Returning unsigned offers **Continue signing**. The honour-system room-entry button is removed. Preparation errors and a bounded readiness wait leave an explicit retry path.
+
+**The shared gateway now returns to the workflow’s room confirmation.** Creating or continuing an NDA in the room application stores its configured origin and room ID in an existing `ObservedSignEvent` JSON record bound to the workflow. The gateway reads that record and constructs the confirmation route using the workflow’s room entry link. Its own `SITE_DOMAIN`, browser `return_url`, and browser completion claims cannot replace the binding. Callback, native completion and session-context terminal pages all use this return after authoritative signing confirmation, including while sealing is pending. The round-three confirmation retains **Enter the data room**, **Download your signed NDA**, and the copy-by-email line; access/download readiness remains server-checked.
+
+**Names now follow the owner’s display name.** NDA mail uses `User.name` rather than Django’s unused first/last-name fields, retains the tenant/From and Reply-To conventions, and identifies room NDA invitations as Dealroom mail. Room invitations identify the owner in the body and branded From name. Invitation previews read the current owner even when an older personal link contains “Fleet Admin”. The seed changes only blank or “Fleet Admin” owner names to **Dan Whaley**.
+
+**Room polish:** the requested watermark sentence sits beside the NDA badge, with no contradictory footer notice. Unfiled rows live in an aligned **Other documents** section. Per-list number badges are removed while sender order remains intact. Spreadsheets show a verified sheet count or no count. Folders have compact rows and a single outer border; nested rows/folders no longer create card-in-card borders.
+
+### Gateway porting requirement
+
+The shared recipient origin `:9445` is served by the preview Send image. This worktree does not update that running image. Port **all seven** adapter files below to its branch/image before the live walkthrough:
+
+- `backend/dealroom_sign/room_return.py` — new workflow-bound room-origin helper.
+- `backend/dealroom_sign/workflows.py` — bind new NDA workflows.
+- `backend/dealroom_sign/views.py` — bind resumed/entered workflows; expose backup-email delivery status.
+- `backend/dealroom_sign/recipient_proxy.py` — use the binding for terminal pages, including session context.
+- `backend/dealroom_sign/counterparty.py` — snapshot the actual owner display name.
+- `backend/dealroom_sign/counterparty_mail.py` — room NDA From name uses the Dealroom convention.
+- `backend/dealroom_sign/templates/dealroom_sign/recipient.html` — backup-email acknowledgement on signing entry.
+
+Keep the room application's `SITE_DOMAIN` set to its own `:9447` origin. New NDA requests bind it automatically. For an already-created legacy workflow, choose **Continue signing** through the room once to establish its binding; unbound legacy workflows retain the configured-site fallback. Run the existing `seed_room_onramp --owner <existing-staff-email>` to update placeholder fictional owner names. Already-sent mail and stored sender snapshots are not rewritten; use a new visitor NDA request to inspect corrected mail. No migration is needed.
+
+### Round 5 verification
+
+**207 backend tests and 36 frontend tests passed; the production build and both Chromium viewport runs passed.** Sixteen new backend cases and four new frontend cases cover the loop, names and polish. The finalized new backend file produces **14 failures / 2 passes on unchanged HEAD**; the initial tests were also run before the corresponding product edits. The extra adapter selection is **78 passed / 1 pre-existing failure**, reproduced unchanged on the baseline. Registry validation passed (328 operations); OpenAPI has zero errors and the existing warnings.
+
+The [verification record](docs/room-proto/round5-verification.txt) contains the same round-four command selections, failing-first evidence, the two requirement-driven changes to existing tests, and the unchanged-HEAD reproduction of the known signing-adapter route-manifest failure. No existing test was weakened or skipped. Vite/Vitest configs, dependency lockfile and project memory are unchanged.
+
+The [browser runner](docs/room-proto/round5-smoke.py) captures the built application at **1440×1000** and **390×844**, including Back/Continue, same-tab entry, confirmation polling/download, and the revised room. It uses fictional intercepted APIs and the **real gateway consent/entry template**. Native Documenso editing/completion, SMTP and live sealing are external boundaries and were simulated, not exercised. Backend regressions separately test actual DB binding, one-time handoffs, gateway handlers and sealed-copy access.
+
+| State | Desktop | Phone |
+| --- | --- | --- |
+| Invitation | [Desktop](docs/room-proto/round5-screenshots/invite-desktop.png) | [Phone](docs/room-proto/round5-screenshots/invite-phone.png) |
+| Signing entry, same tab | [Desktop](docs/room-proto/round5-screenshots/signing-desktop.png) | [Phone](docs/room-proto/round5-screenshots/signing-phone.png) |
+| Return unsigned | [Desktop](docs/room-proto/round5-screenshots/continue-signing-desktop.png) | [Phone](docs/room-proto/round5-screenshots/continue-signing-phone.png) |
+| Dealroom confirmation | [Desktop](docs/room-proto/round5-screenshots/confirmation-desktop.png) | [Phone](docs/room-proto/round5-screenshots/confirmation-phone.png) |
+| Room top | [Desktop](docs/room-proto/round5-screenshots/room-top-desktop.png) | [Phone](docs/room-proto/round5-screenshots/room-top-phone.png) |
+| Room bottom | [Desktop](docs/room-proto/round5-screenshots/room-bottom-desktop.png) | [Phone](docs/room-proto/round5-screenshots/room-bottom-phone.png) |
+| Full room | [Desktop](docs/room-proto/round5-screenshots/room-full-desktop.png) | [Phone](docs/room-proto/round5-screenshots/room-full-phone.png) |
+
+No staging, commit, migration, deployment or memory update was performed. Temporary dependencies and `.testtmp` are removed at completion.

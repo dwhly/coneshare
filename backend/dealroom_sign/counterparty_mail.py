@@ -100,7 +100,7 @@ def compose(effect, *, files=None, force_link=False, smtp_size=0):
     report = address(getattr(settings, 'SIGN_REPORT_EMAIL', 'support@fleet.test'))
     # The app is "Sign" while signing and "Dealroom" once signed (owner, 15 Nov 2026): the From name matches the header.
     tenant = get_tenant_brand()
-    from_email = formataddr((sender + ' via ' + tenant.name + (' Sign' if invitation else ' Dealroom'), address(settings.SIGN_FROM_EMAIL)))
+    from_email = formataddr((sender + ' via ' + tenant.name + (' Sign' if invitation and access.workflow.purpose != 'nda' else ' Dealroom'), address(settings.SIGN_FROM_EMAIL)))
     subject = f'{sender} sent you “{title}” to sign' if invitation else f'“{title}” fully signed'
     projection = {p.get('email', '').lower(): p for p in access.workflow.signer_projection}
     parties = []

@@ -1,4 +1,5 @@
 """Prototype orchestration over existing room, grant, version and activity records."""
+from email.utils import formataddr, parseaddr
 from io import BytesIO
 
 from django.conf import settings
@@ -15,6 +16,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter
 from cloudfiles.providers.base import CloudProviderError
 from cloudfiles.providers.drive_snapshot import DriveSnapshotProvider
 from dealroom_sign.fleet_mail import send_mail
+from dealroom_sign.presentation import display_name
 from dealroom_sign.models import NdaPolicy
 from dealroom_sign import nda_template
 from sharelinks.models import ShareLinkAccessGrant, Viewer, ViewerOrganisation
@@ -45,7 +47,7 @@ def firm_key(email):
 
 def personal_url(room, grant, sender=None):
     token = signing.dumps({'room': str(room.pk), 'grant': str(grant.pk), 'email': grant.email,
-                          'sender_name': getattr(sender or grant.created_by, 'name', '')}, salt='room-personal')
+                          'sender_name': getattr(room.created_by, 'name', '')}, salt='room-personal')
     return f'/view/{room.roompolicy.entry_link.slug}#personal={token}'
 
 
@@ -197,8 +199,11 @@ class RoomOnrampMixin:
             record('room.invited', organization=room.organization, actor=request.user, room_id=room.pk,
                    target_id=grant.pk, data={'email': email, 'firm': firm_key(email), 'note': note})
             brand = load_brand()
-            body = f'{note}\n\n{room.name}\n{settings.SITE_DOMAIN.rstrip("/")}{url}\n\nYour personal link. No account needed. NDA in Sign; watermarked pages; downloads off. Link expires in 30 days.'
-            transaction.on_commit(lambda email=email, body=body: send_mail(f'{room.name} · your room invitation', body, brand['email_sender'], [email]))
+            sender = display_name(room.created_by.name)
+            label, address = parseaddr(brand['email_sender'])
+            from_email = formataddr((f"{sender} via {label or brand['name']}", address))
+            body = f'{sender} invited you.\n\n{note}\n\n{room.name}\n{settings.SITE_DOMAIN.rstrip("/")}{url}\n\nYour personal link. No account needed. NDA in Sign; watermarked pages; downloads off. Link expires in 30 days.'
+            transaction.on_commit(lambda email=email, body=body, from_email=from_email: send_mail(f'{room.name} · your room invitation', body, from_email, [email]))
             invitations.append({'email': email, 'url': url})
         return Response({'invitations': invitations}, status=201)
 

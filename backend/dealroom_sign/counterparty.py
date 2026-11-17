@@ -99,7 +99,7 @@ def observe_completion(access, completed):
 
 def sender_snapshot(workflow):
     row = SignatureRequest.objects.filter(workflow=workflow).first()
-    staff = {'name': display_name(workflow.owner.get_full_name()),
+    staff = {'name': display_name(workflow.owner.name),
              'email': workflow.owner.email, 'company': workflow.room.organization.name}
     sender = staff
     context = row.source_context if row else {}
