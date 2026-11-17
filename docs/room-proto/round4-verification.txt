@@ -1,0 +1,133 @@
+Round 4 verification — 2026-11-17
+Base: agent/room-proto @ 57bf8a62c597d7763e6422213408ad23b55e94e6.
+No commit, staging, migration or deployment. Documenso fork untouched.
+
+BACKEND
+Final result: 191 passed, 240 warnings in 138.72s (0:02:18)
+Same requested selection and supplied runner as round 3, in Bash:
+  mkdir -p /root/worktrees/room-proto/.testtmp
+  function mktemp() { command mktemp -d /root/worktrees/room-proto/.testtmp/sendlocal.XXXX; }
+  export -f mktemp
+  /root/work/sign-product/run-send-local.sh /root/worktrees/room-proto \
+    dealroom/tests tests/dealroom tests/cloudfiles/test_tasks.py
+Twelve new regression tests in dealroom/tests/test_room_round4.py cover:
+  - Suggestions on the real fixture's blank Signature rule, with the bottom of the box
+    compared directly to its text-layer rule y coordinate; four recipient fields.
+  - Two different visitors use exactly the confirmed type/page/coordinates; placement
+    is not called for either visitor. Invitation names and editable company defaults
+    reach the actual Documenso envelope payload builder.
+  - Unconfirmed invitation returns 409 with "Place the NDA fields", creating no grant;
+    confirmation permits sharing; selecting another version clears confirmation.
+  - Standalone entry upload creates no ordinary room document and remains unconfirmed.
+  - Repeat seed succeeds even when identity placement holds, prints "confirmed 4 fields
+    on page 1", and retains all twelve ordinary documents, including the Mutual NDA in Legal.
+  - Stale revision and outside-page geometry are rejected.
+  - A required NDA with no policy also blocks sharing.
+  - Source PDF preview is authenticated, pinned to the revision, and private/no-store.
+  - The company-to-company fixture is not suggested as a blank recipient template.
+  - Another room cannot select a standalone entry upload belonging to this room.
+  - Invalid replacement PDF leaves the confirmed source intact.
+  - Reset checks confirmation before contacting/cancelling the existing remote envelope.
+The existing short test-secret JWT and pypdf renderer deprecation warnings remain.
+
+EXISTING TEST CHANGES — FOUR CASES ONLY (all in test_room_round3.py)
+1. test_runtime_nda_uses_real_counterparty_line_even_with_old_policy_fields renamed to
+   test_runtime_nda_requires_confirmation_even_with_old_policy_fields: legacy coordinates
+   without sender confirmation now return needs_sender instead of running visitor placement.
+2. test_seed_uses_real_placement_and_populates_folders: uses the new Investor NDA fixture,
+   page 1 and the blank Signature label/rule instead of Maya's named block on page 2.
+3. test_seed_reports_unattributable_nda renamed to
+   test_seed_uses_blank_recipient_fallback_when_identity_placement_holds: a name-placement
+   hold now falls back to blank labels and the seed confirms them, instead of raising.
+4. test_reset_nda_replaces_old_policy_coordinates_with_placement renamed to
+   test_reset_nda_reuses_confirmed_policy_coordinates: confirms the test policy first,
+   then verifies reset preserves those exact positions without rerunning placement.
+All other existing backend tests, including test_review_v09_send.py, are unchanged.
+All existing frontend test files are unchanged.
+
+FAILING-FIRST
+Before product edits, all five initial new backend cases failed: the suggestion/upload
+surface did not exist, confirmation was rejected, sharing was not blocked, and the seed
+raised "NDA placement needs the sender: Unknown visitor". Five failed in 14.16 seconds.
+The placement frontend tests were written before EntryNda existed; the initial run failed
+module resolution. Their passing run exercises actual pointer events, normalized drag and
+resize coordinates, the confirmation API payload, add/delete, replacement and blocked-share UI.
+A later reset-order regression first failed because remote.find had already been called
+before the missing confirmation was rejected; it passes after moving the check before IO.
+First broad run: 187 passed, one operation/MCP parity failure; regenerated the catalog.
+Next broad run: 190 passed in 146.37 seconds. Final run adds the reset-order case above.
+
+FRONTEND
+32 passed across 9 files, 11.95 seconds:
+  cd .testtmp/frontend
+  npx vitest run --cache=false \
+    src/tests/pages/RoomNdaPlacement.test.jsx \
+    src/tests/pages/RoomRound3.test.jsx \
+    src/tests/pages/RoomWatermarkSettings.test.jsx \
+    src/tests/pages/RoomPolish.test.jsx \
+    src/tests/pages/RoomOnramp.test.jsx \
+    src/tests/pages/DealroomRecipient.test.jsx \
+    src/tests/pages/DealroomRoomDetail.test.jsx \
+    src/tests/pages/DealroomPages.test.jsx \
+    src/tests/components/dealroom/GlueShellSelect.test.js
+Four new cases; all 28 existing round-3 cases passed unchanged.
+New test path added to vitest.whitelist.json; no Vite or Vitest config changed.
+
+SIGNING-ADAPTER REGRESSION (same extra selection as round 3)
+78 passed, 1 failed in 74.69 seconds:
+  dealroom_sign/tests/test_workflows.py
+  dealroom_sign/tests/test_placement_send.py
+  dealroom_sign/tests/test_recipient_proxy.py
+PRE-EXISTING failure: test_recipient_allowlist_is_built_from_served_routes, line 374.
+The room aliases resolve to dealroom.pages; its assertion accesses view_class on a function.
+Reproduced on an unchanged git-archive of current HEAD 57bf8a62: 1 failed in 12.39 seconds,
+same AttributeError. No existing test was altered or skipped to hide this failure.
+
+BUILD, BROWSER AND FIXTURE
+npx vite build passed in the disposable frontend copy, 16.89 seconds, Node 22.22.3.
+Existing bundle-size, Browserslist and baseline-browser-mapping notices remain.
+Dependency installation was confined to .testtmp/frontend. Only its disposable lockfile
+mirror URLs were normalized to registry.npmjs.org; the checked-in lockfile is unchanged.
+
+The deterministic ReportLab generator is:
+  backend/dealroom/tests/fixtures/make_investor_nda.py
+Regeneration was verified byte-identical. It produces Investor NDA (fictional).pdf: Harbor Light Analytics, Inc.; Dan Whaley, CEO,
+pre-signed; blank recipient Signature, Name, Company and Date. The existing Drive NDA
+and placement/harbor.pdf fixtures were not changed.
+
+Chromium: 1440x1000 and 390x844, production bundle via Vite preview on 127.0.0.1:4175:
+  PYTHONPATH=.testtmp/browser-tools PLAYWRIGHT_BROWSERS_PATH=$PWD/.testtmp/browsers \
+    /root/work/sign-product/send-venv/bin/python docs/room-proto/round4-smoke.py
+First generate .testtmp/suggestions.json in the backend environment with
+  json.dumps(dealroom_sign.nda_template.suggestions(fixture.read_bytes())).
+The browser serves the real fixture through an intercepted authenticated PDF endpoint;
+existing usePdfDocument/PdfPage render the actual PDF. Suggestions come from the real
+backend helper. Room APIs and confirmation persistence are fictional intercepted data.
+Backend tests separately exercise real policy/audit DB persistence and version scoping.
+Verified blocked sharing, drag, resize, exact saved payload, confirmation and reloading
+saved coordinates at both viewport sizes. No page errors or horizontal overflow.
+Ten screenshots in docs/room-proto/round4-screenshots/: suggestions (viewport + full-page),
+after drag, confirmed, blocked-share at each size. Representative captures visually reviewed.
+Live signing/sealing, deployed-host uploads, email delivery and deployment were not exercised.
+
+SCHEMA, AUTHORIZATION AND CLEANUP
+No schema change or migration. Positions remain a list in existing NdaPolicy.fields JSON;
+confirmation uses existing Activity JSON, bound to policy revision, source hash and field hash.
+This preserves the native list shape for the older preview process sharing the database.
+Changing the source creates a new revision, empties fields, and cannot reuse confirmation.
+Blank-rule parsing runs inside the existing resource-limited PDF worker; it proposes only,
+and ambiguous/no-rule documents remain manually placeable. The seed explicitly confirms
+only the known fictional fixture, using the same validator and confirmation helper as the UI.
+Native NAME uses recipient.name; Company uses TEXT with fieldMeta.text and readOnly:false.
+No arbitrary field metadata is accepted from callers. Native text options reference:
+  https://docs.documenso.com/docs/developers/api/fields
+NDA source bytes are owner-scoped; new uploads do not become room content. Existing PDF
+selection checks room membership. Both personal invitations and grant/link creation check
+readiness. React escapes labels/filenames, and PDF URLs are generated relative routes;
+no untrusted HTML or user-controlled executable URL is added.
+328 operations, 115 staff operations; registry check passed. 129 typed MCP tools generated.
+OpenAPI: 0 errors, 65 warning occurrences / 28 unique (existing generic schema warnings).
+git diff --check passed. Protected configs, dependency lockfile and .agent/memory.md unchanged.
+Temporary frontend/dependencies, browser tools/downloads, test databases, baseline archive,
+OpenAPI scratch output and .testtmp removed. No node_modules remains in this worktree.
+No git add/commit, deployment, migration or memory update was performed.

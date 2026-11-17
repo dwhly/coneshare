@@ -18,6 +18,7 @@ resource.setrlimit(resource.RLIMIT_CPU, (CPU_SECONDS, CPU_SECONDS))
 
 # Import only after the limits cover parser startup as well as extraction.
 from .placement import PARSE_REASONS, extract, prepare_blocks  # noqa: E402
+from .template_geometry import blank_fields  # noqa: E402
 
 
 def main():
@@ -27,7 +28,11 @@ def main():
         return
     try:
         signers = json.loads(sys.stdin.buffer.readline(65536))
-        blocks, sizes, roles = extract(sys.stdin.buffer.read(50 * 1024 * 1024 + 1),
+        pdf = sys.stdin.buffer.read(50 * 1024 * 1024 + 1)
+        if isinstance(signers, dict) and signers.get('template'):
+            print(json.dumps({'template_fields': blank_fields(pdf, time.monotonic() + float(sys.argv[1]))}))
+            return
+        blocks, sizes, roles = extract(pdf,
                                       deadline=time.monotonic() + float(sys.argv[1]))
         prepare_blocks(blocks, roles, signers)
         result = {'blocks': [asdict(b) for b in blocks], 'sizes': sizes, 'roles': roles}

@@ -8,6 +8,7 @@ from django.db.models import Case, IntegerField, Q, Value, When
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
+from .nda_template import recipient_fields
 from .client import Documenso, SignError
 from .evidence import ingest, snapshot_fields, instant
 from .legacy import legacy_request
@@ -60,7 +61,7 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             metadata['title'] = title
     existing = Workflow.objects.filter(owner=owner, idempotency_key=idempotency_key).first()
     if existing:
-        normalized = validate_recipients(recipients, None, page_count=500, automatic=automatic)
+        normalized = validate_recipients(recipients, None, page_count=500, automatic=automatic, trusted_nda=purpose == 'nda')
         data = {'room': str(room.pk), 'version': str(version.pk), 'sha256': existing.source_sha256,
                 'recipients': normalized, 'purpose': purpose, 'member': str(member.pk) if member else '',
                 'policy': str(policy.revision) if policy else ''}
@@ -74,7 +75,7 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
                 legacy_request(existing, board_id, task_ref, requester=requester, title=title)
         return existing
     pdf = source_bytes(version)
-    recipients = validate_recipients(recipients, pdf, automatic=automatic)
+    recipients = validate_recipients(recipients, pdf, automatic=automatic, trusted_nda=purpose == 'nda')
     if purpose == 'nda':
         if not member or len(recipients) != 1 or recipients[0]['email'] != member.email.strip().lower():
             raise ValidationError('NDA signer must match the verified member.')
@@ -399,6 +400,7 @@ def reset_nda(workflow):
         if str(policy.revision) != work.policy_revision:
             raise ValidationError('The NDA policy has changed; start its current revision.')
         member = Viewer.objects.get(pk=work.member_id, email=work.member_email)
+        fields = recipient_fields(policy, member)
         credential = SignCredential.objects.get(owner=work.owner, enabled=True)
         with Documenso(credential) as client:
             ids = [work.envelope_id] if work.envelope_id else [e['id'] for e in client.find(work.external_id)]
@@ -410,7 +412,8 @@ def reset_nda(workflow):
             policy_revision=work.policy_revision).count()
         replacement = command(owner=work.owner, room=work.room, version=policy.source_version,
             recipients=[{'email': member.email, 'name': member.name,
-                         'company': member.recipient_org.name if member.recipient_org else ''}], placement='auto',
+                         'company': member.recipient_org.name if member.recipient_org else '',
+                         'fields': fields}], placement='sender',
             idempotency_key=f'nda:{work.room_id}:{member.pk}:{policy.revision}:g{generation}',
             purpose='nda', member=member, policy=policy)
         work.state = 'cancelled'

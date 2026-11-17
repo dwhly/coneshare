@@ -20,6 +20,7 @@ from .domains import guarded_domain
 from .hooks import human_staff
 from .registry import registry, TIERS
 from .onramp import RoomOnrampMixin
+from dealroom_sign.nda_template import require_share_ready
 
 
 class BrandView(APIView):
@@ -179,11 +180,13 @@ class GrantViewSet(StaffViewSet):
 
     def perform_create(self, serializer):
         room = serializer.validated_data.pop('room')
+        require_share_ready(room)
         policy = RoomPolicy.objects.get(room=room)
         grant = serializer.save(share_link=policy.entry_link, created_by=self.request.user)
         self.fact('grant.created', grant)
     def perform_update(self, serializer):
         serializer.validated_data.pop('room', None)
+        require_share_ready(serializer.instance.share_link.dataroom)
         grant = serializer.save()
         self.fact('grant.updated', grant)
     def perform_destroy(self, instance):
@@ -200,6 +203,7 @@ class EntryLinkViewSet(StaffViewSet):
         room = serializer.validated_data.get('dataroom')
         if not RoomPolicy.objects.filter(room=room).exists():
             raise ValidationError('Room policy required.')
+        require_share_ready(room)
         link = serializer.save(created_by=self.request.user, restrict_to_grants=True, requires_email=True, requires_email_verification=True, enable_watermark=True, enable_qna=False)
         canonical = room.roompolicy.entry_link
         for setting in canonical.dataroom_settings.all():

@@ -1,9 +1,7 @@
 import io
-import uuid
 from urllib.parse import urlencode
 
 from PIL import Image
-from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -34,6 +32,7 @@ from .exports import (
     SnapshotChanged, Unavailable, download, existing_artifact,
     manifest as artifact_manifest, resolve_artifact,
 )
+from . import nda_template
 from .models import CounterpartyEffect, NdaAcceptance, NdaPolicy, SignCredential, SignatureRequest, Workflow
 from .operations import require_export_actor
 from .presentation import referrer_policy
@@ -46,7 +45,7 @@ from .serializers import (
     SendInputSerializer, SignatureExportInputSerializer, WorkflowSerializer,
 )
 from .storage import source_bytes
-from .validation import digest, validate_recipients
+from .validation import digest
 from .workflows import PlacementRequired, command
 
 
@@ -161,34 +160,22 @@ class SigningNdaPolicyView(APIView):
     def get(self, request, room_id):
         room = staff_room(request, room_id)
         policy = NdaPolicy.objects.filter(room=room).first()
-        return Response(NdaPolicySerializer(policy).data if policy else {'enabled': False})
+        return Response(nda_template.describe(policy))
 
     @extend_schema(request=NdaPolicyInputSerializer, responses=NdaPolicySerializer)
     def put(self, request, room_id):
         room = staff_room(request, room_id)
-        if set(request.data) - {'version_id', 'fields', 'enabled'}:
-            raise ValidationError('Unknown policy fields.')
-        version = room_version(room, request.data.get('version_id'))
-        pdf = source_bytes(version)
-        fields = request.data.get('fields', [])
-        validate_recipients([{'email': 'placeholder@example.test', 'name': 'Placeholder', 'fields': fields}], pdf,
-                            automatic=not fields)
-        enabled = request.data.get('enabled', True)
-        if type(enabled) is not bool:
-            raise ValidationError('enabled must be a boolean.')
-        from django.db import transaction
-        with transaction.atomic():
-            Dataroom.objects.select_for_update().get(pk=room.pk)
-            policy = NdaPolicy.objects.filter(room=room).first()
-            revision = policy.revision if policy and (policy.source_version_id == version.pk and
-                policy.source_sha256 == digest(pdf) and policy.fields == fields) else uuid.uuid4()
-            policy, _ = NdaPolicy.objects.update_or_create(room=room, defaults={
-                'revision': revision, 'source_version': version, 'source_sha256': digest(pdf), 'fields': fields, 'enabled': enabled,
-            })
-        from dealroom.activity import record
-        record('nda.policy_updated', organization=request.user.organization, actor=request.auth if isinstance(request.auth, APIKey) else request.user,
-               room_id=room.pk, data={'revision': str(policy.revision), 'enabled': enabled})
-        return Response(NdaPolicySerializer(policy).data)
+        serializer = NdaPolicyInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        version = get_object_or_404(DocumentVersion.objects.select_related('document'),
+            pk=data['version_id'], document__organization=room.organization, document__deleted_at__isnull=True)
+        if version.metadata.get('entry_nda_room') != str(room.pk):
+            version = room_version(room, data['version_id'])
+        policy = nda_template.save_policy(room, request.user, version, source_bytes(version),
+            fields=data.get('fields'), confirm=data.get('confirm', False), revision=data.get('revision'),
+            enabled=data['enabled'])
+        return Response(nda_template.describe(policy))
 
 
 def member_context(request, room_id):
@@ -227,19 +214,22 @@ class RecipientNdaView(APIView):
         SessionAuthentication().enforce_csrf(request)
         room, member = member_context(request, room_id)
         policy = get_object_or_404(NdaPolicy, room=room, enabled=True)
-        if not SignCredential.objects.filter(owner=room.created_by, enabled=True).exists():
-            raise ValidationError('Room owner has not configured signing.')
         from django.db import transaction
         with transaction.atomic():
-            NdaPolicy.objects.select_for_update().get(pk=policy.pk)
+            policy = NdaPolicy.objects.select_for_update().get(pk=policy.pk)
+            if not nda_template.confirmed(policy):
+                return Response({'status': 'needs_sender', 'reason': 'Place the NDA fields before sharing this room.'}, status=409)
+            if not SignCredential.objects.filter(owner=room.created_by, enabled=True).exists():
+                raise ValidationError('Room owner has not configured signing.')
             existing = Workflow.objects.filter(room=room, purpose='nda', member_id=str(member.pk), policy_revision=str(policy.revision)).order_by('-created_at').first()
             if existing:
                 return Response({'state': existing.state}, status=201)
             try:
                 work = command(owner=room.created_by, room=room, version=policy.source_version,
                     recipients=[{'email': member.email, 'name': member.name,
-                                 'company': member.recipient_org.name if member.recipient_org else ''}],
-                    placement='auto', idempotency_key=f'nda:{room.pk}:{member.pk}:{policy.revision}',
+                                 'company': member.recipient_org.name if member.recipient_org else '',
+                                 'fields': nda_template.recipient_fields(policy, member)}],
+                    placement='sender', idempotency_key=f'nda:{room.pk}:{member.pk}:{policy.revision}',
                     purpose='nda', member=member, policy=policy)
             except PlacementRequired as exc:
                 return Response(exc.result, status=409)

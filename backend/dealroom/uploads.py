@@ -42,7 +42,9 @@ def queue_preview(version):
     transaction.on_commit(lambda: task.delay(str(version.pk)))
 
 
-def upload(room, actor, file, folder_id=None):
+def upload(room, actor, file, folder_id=None, *, entry_nda=False):
+    if entry_nda and Path(file.name).suffix.lower() != '.pdf':
+        raise ValidationError('Choose a PDF for the entry NDA.')
     pages = validate_upload(file)
     ext = Path(file.name).suffix.lower()
     folder = None
@@ -61,9 +63,14 @@ def upload(room, actor, file, folder_id=None):
     document = create_document_from_upload(user, vault, key, Path(file.name).name, file.size, ALLOWED[ext], track_user_quota=False)
     version = document.versions.get(is_primary=True)
     version.metadata = {**version.metadata, 'source_sha256': source_hash.hexdigest()}
+    if entry_nda:
+        version.metadata['entry_nda_room'] = str(room.pk)
     if pages:
         version.num_pages = pages
     version.save(update_fields=['metadata', 'num_pages'])
+    if entry_nda:
+        queue_preview(version)
+        return version
     item = DataroomDocument.objects.create(dataroom=room, document=document, folder=folder, name=document.name, is_direct_upload=True)
     for link in room.share_links.filter(is_active=True):
         ShareLinkDataroomSetting.objects.update_or_create(share_link=link, dataroom_document=item, defaults={'enable_watermark':True, 'allow_download':False})

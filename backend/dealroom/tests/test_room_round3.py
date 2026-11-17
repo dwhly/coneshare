@@ -7,7 +7,7 @@ from unittest.mock import Mock
 import pdfplumber
 import pytest
 from PIL import Image, ImageChops
-from django.core.management import call_command, CommandError
+from django.core.management import call_command
 from django.test import RequestFactory
 from django.utils import timezone
 from rest_framework.test import APIClient
@@ -16,9 +16,10 @@ from datarooms.models import Dataroom, DataroomItemOrder
 from dealroom.onramp import personal_url
 from dealroom.drive import import_tree, walk_tree
 from dealroom.watermarks import effective_style
+from dealroom_sign import nda_template
 from dealroom_sign.models import ExecutedArtifact, NdaAcceptance, NdaPolicy, SignCredential, Workflow
 from dealroom_sign.validation import digest
-from dealroom_sign.workflows import envelope_meta, reset_nda
+from dealroom_sign.workflows import reset_nda
 from dealroom_sign.recipient_proxy import terminal
 from documents.models import Document, DocumentVersion
 from sharelinks.models import ShareLinkAccessGrant, ShareLinkDataroomSetting, Viewer
@@ -26,7 +27,7 @@ from sharelinks.views import _apply_watermark_to_image, _generate_watermarked_pd
 from dealroom.tests.test_drive_onramp import room, snapshot, storage
 
 HARBOR = Path(__file__).resolve().parents[2] / 'dealroom_sign/tests/fixtures/placement/harbor.pdf'
-DEMO = Path(__file__).parent / 'fixtures/drive/harbor-light/nda.pdf'
+DEMO = Path(__file__).parent / 'fixtures/Investor NDA (fictional).pdf'
 
 
 def version_for(room, pdf, name="Mutual NDA.pdf"):
@@ -51,28 +52,18 @@ def visitor(room, email='lee@harborlight.fleet.test', name='Lee Harbor'):
 
 
 @pytest.mark.django_db
-def test_runtime_nda_uses_real_counterparty_line_even_with_old_policy_fields(room, monkeypatch, settings):
-    settings.SIGN_RECIPIENT_ORIGIN = "https://sign.test"
+def test_runtime_nda_requires_confirmation_even_with_old_policy_fields(room, monkeypatch, settings):
     pdf = HARBOR.read_bytes()
     version = version_for(room, pdf)
-    policy = NdaPolicy.objects.create(room=room, source_version=version, source_sha256=digest(pdf),
+    NdaPolicy.objects.create(room=room, source_version=version, source_sha256=digest(pdf),
         fields=[{'type': 'SIGNATURE', 'page': 2, 'positionX': 10, 'positionY': 70, 'width': 30, 'height': 10}])
     client, member = visitor(room)
     SignCredential.objects.create(owner=room.created_by, team_id=1, token='api_fictional')
     monkeypatch.setattr('dealroom_sign.workflows.source_bytes', lambda v: pdf)
     response = client.post(f'/api/v1/dealroom-sign/nda/{room.pk}/')
-    assert response.status_code == 201, response.data
-    work = Workflow.objects.get(room=room)
-    field = next(f for f in work.recipients[0]['fields'] if f['type'] == 'SIGNATURE')
-    with pdfplumber.open(BytesIO(pdf)) as document:
-        page = document.pages[1]
-        caption = next(w for w in page.extract_words() if w['text'] == 'Lee')
-        line = max((l for l in page.lines if l['top'] < caption['top']), key=lambda l: l['top'])
-        assert field['page'] == 2
-        assert line['top'] - 35 <= field['positionY'] * page.height / 100 <= line['top']
-        assert abs((field['positionY'] + field['height']) * page.height / 100 - line['top']) < 4
-    assert work.observedsignevent_set.filter(kind='placement.resolved').exists()
-    assert envelope_meta(work)['redirectUrl'].endswith('/s/return/' + str(work.pk))
+    assert response.status_code == 409, response.data
+    assert response.data['status'] == 'needs_sender'
+    assert not Workflow.objects.filter(room=room).exists()
 
 
 @pytest.mark.django_db
@@ -96,20 +87,21 @@ def test_seed_uses_real_placement_and_populates_folders(snapshot, owner, storage
     assert room.folders.filter(dataroomdocument__isnull=False).exists()
     field = next(f for f in NdaPolicy.objects.get(room=room).fields if f['type'] == 'SIGNATURE')
     with pdfplumber.open(DEMO) as document:
-        page = document.pages[1]
-        caption = next(w for w in page.extract_words() if w['text'] == 'Maya')
-        line = max((l for l in page.lines if l['top'] < caption['top']), key=lambda l: l['top'])
-        assert field['page'] == 2
+        page = document.pages[0]
+        caption = next(w for w in page.extract_words() if w['text'] == 'Signature:')
+        line = next(l for l in page.lines if abs(l['top'] - caption['bottom']) < 5)
+        assert field['page'] == 1
         assert line['top'] - 35 <= field['positionY'] * page.height / 100 <= line['top']
 
 
 @pytest.mark.django_db
-def test_seed_reports_unattributable_nda(snapshot, owner, storage, monkeypatch):
+def test_seed_uses_blank_recipient_fallback_when_identity_placement_holds(snapshot, owner, storage, monkeypatch):
     monkeypatch.setattr('dealroom_sign.placement.place', lambda *a, **k: {
         'status': 'needs_sender', 'fields': [], 'reason': 'No attributable signature cues.'})
-    with pytest.raises(CommandError, match='NDA placement.*No attributable'):
-        call_command('seed_room_onramp', owner=owner.email, stdout=StringIO())
-    assert not NdaPolicy.objects.exists()
+    out = StringIO()
+    call_command('seed_room_onramp', owner=owner.email, stdout=out)
+    assert 'confirmed 4 fields on page 1' in out.getvalue()
+    assert nda_template.confirmed(NdaPolicy.objects.get())
 
 
 @pytest.fixture
@@ -244,10 +236,12 @@ def test_visitor_folders_follow_sender_order_with_note(room, snapshot, storage, 
 
 
 @pytest.mark.django_db
-def test_reset_nda_replaces_old_policy_coordinates_with_placement(signed, monkeypatch):
+def test_reset_nda_reuses_confirmed_policy_coordinates(signed, monkeypatch):
     policy = NdaPolicy.objects.get(room=signed.room)
     policy.fields = [{'type': 'SIGNATURE', 'page': 2, 'positionX': 10, 'positionY': 70, 'width': 30, 'height': 10}]
     policy.save()
+    nda_template.save_policy(signed.room, signed.room.created_by, policy.source_version, signed.pdf,
+        fields=policy.fields, confirm=True, revision=str(policy.revision))
     SignCredential.objects.create(owner=signed.room.created_by, team_id=1, token='api_fictional')
     remote = Mock()
     remote.find.return_value = []
@@ -258,8 +252,8 @@ def test_reset_nda_replaces_old_policy_coordinates_with_placement(signed, monkey
     monkeypatch.setattr('dealroom_sign.workflows.source_bytes', lambda v: signed.pdf)
     replacement = reset_nda(signed.work)
     field = next(f for f in replacement.recipients[0]['fields'] if f['type'] == 'SIGNATURE')
-    assert field['page'] == 2 and 40 < field['positionY'] < 48
-    assert replacement.observedsignevent_set.filter(kind='placement.resolved').exists()
+    assert field['page'] == 2 and field['positionY'] == 70
+    assert not replacement.observedsignevent_set.filter(kind='placement.resolved').exists()
 
 
 @pytest.mark.django_db

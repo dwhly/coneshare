@@ -161,3 +161,30 @@ Chromium captures use **1440×1000** and **390×844** viewports. Full-page compa
 - Workspace default: [desktop](docs/room-proto/round3-screenshots/workspace-settings-desktop.png), [phone](docs/room-proto/round3-screenshots/workspace-settings-phone.png). Room override: [desktop](docs/room-proto/round3-screenshots/room-settings-desktop.png), [phone](docs/room-proto/round3-screenshots/room-settings-phone.png).
 
 The screenshot runner is `round3-smoke.py`; `round3-watermark-assets.py` creates its temporary renderer assets. The browser checks preparation polling, a real browser attachment download, explicit room entry, folder collapse, nested file placement, personal NDA separation, and persistence payloads for both settings controls. No page errors or phone horizontal overflow were observed.
+
+## Round 4 — 17 November 2026
+
+Built on `agent/room-proto` at `57bf8a62c597d7763e6422213408ad23b55e94e6`. Changes remain uncommitted and undeployed. Product code is brand-neutral and reuses Fleet controls and the existing PDF page renderer. The Documenso fork is untouched.
+
+**Room Settings → Entry NDA** now accepts a separate PDF upload or an existing room PDF. A separate upload stays outside ordinary room content. The new deterministic [Investor NDA fixture](<backend/dealroom/tests/fixtures/Investor NDA (fictional).pdf>) names Harbor Light Analytics, Inc. as discloser, with a fictional pre-signed Dan Whaley, CEO block and blank recipient Signature, Name, Company and Date rules. Its [generator](backend/dealroom/tests/fixtures/make_investor_nda.py) is checked in; the existing company-to-company NDA remains an ordinary Legal document.
+
+The existing `dealroom_sign` placement engine runs with a placeholder recipient. Geometry is accepted only for the blank recipient block. When identity placement holds, a bounded text-layer pass finds labelled blank rules and shows **Suggested — check**. The sender can drag, resize, delete, or add Signature, Name, Company, Date and Initials boxes, with keyboard movement/resizing as well. **Use these positions** is the explicit confirmation step. Documents without clear blank rules remain manually placeable; suggestions never authorize signing.
+
+Confirmed positions persist in the existing `NdaPolicy.fields` JSON list. Confirmation is an existing Activity JSON record bound to the policy revision, source hash and field hash. **No migration or schema change is needed**, and the native field-list shape remains compatible with the older preview process sharing the database. Selecting another file clears confirmation; a stale editor cannot confirm an older revision.
+
+Every visitor start and reset uses the confirmed geometry without name-based placement. Native Name fields use the invitation name; Company fields receive editable native text defaults when known. Invitations and grant/link creation are blocked until a required entry NDA is confirmed, and the sender sees **Place the NDA fields**. Reset checks confirmation before contacting the existing remote envelope.
+
+`seed_room_onramp` now uploads the separate investor fixture, suggests and explicitly confirms it through the same policy helper as the sender, and prints **`confirmed 4 fields on page 1`**. Repeating it retains confirmed positions and the twelve ordinary room documents. Existing room/Sign credentials and the snapshot setting described above still apply; no live invitation was sent.
+
+Round-four verification: **191 backend tests and 32 frontend tests passed; the production build and both Chromium viewport runs passed**. Commands, failing-first results, the four requirement-driven changes to existing round-three backend tests, and limitations are recorded in [round4-verification.txt](docs/room-proto/round4-verification.txt). All existing frontend tests are unchanged. The extra adapter selection still has the previously documented route-manifest failure: 78 passed, one failed; the same failure was reproduced on unchanged HEAD. Live Sign sealing and deployed-host operations were not exercised.
+
+The [browser runner](docs/room-proto/round4-smoke.py) uses fictional intercepted room APIs, real backend suggestion geometry and the real PDF rendered by the existing PDF.js components. It verifies drag/resize, confirmation and reopening saved positions at **1440×1000** and **390×844**, with no page errors or horizontal overflow. Captures:
+
+| State | Desktop | Phone |
+| --- | --- | --- |
+| Suggestions | [Viewport](docs/room-proto/round4-screenshots/placement-suggestions-desktop.png) · [Full page](docs/room-proto/round4-screenshots/placement-suggestions-desktop-full.png) | [Viewport](docs/room-proto/round4-screenshots/placement-suggestions-phone.png) · [Full page](docs/room-proto/round4-screenshots/placement-suggestions-phone-full.png) |
+| After a drag | [Desktop](docs/room-proto/round4-screenshots/placement-after-drag-desktop.png) | [Phone](docs/room-proto/round4-screenshots/placement-after-drag-phone.png) |
+| Positions confirmed | [Desktop](docs/room-proto/round4-screenshots/positions-confirmed-desktop.png) | [Phone](docs/room-proto/round4-screenshots/positions-confirmed-phone.png) |
+| Blocked sharing | [Desktop](docs/room-proto/round4-screenshots/blocked-share-desktop.png) | [Phone](docs/room-proto/round4-screenshots/blocked-share-phone.png) |
+
+Vite/Vitest configs, dependency lockfile and project memory are unchanged. Temporary dependencies and test files are removed at completion. No commit, staging, migration or deployment was performed.

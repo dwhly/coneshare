@@ -116,9 +116,9 @@ def classify(view, method):
         entry['widens_access'] = False
     if name == 'WorkspaceSettingsView':
         entry.update(widens_access=False, human_only=not read)
-    if name == 'RoomViewSet' and action in ('upload', 'folders', 'drive_review', 'drive_import', 'drive_updates', 'outline', 'answer'):
+    if name == 'RoomViewSet' and action in ('upload', 'folders', 'drive_review', 'drive_import', 'drive_updates', 'outline', 'answer', 'entry_nda', 'entry_nda_source'):
         entry['widens_access'] = False
-    if name == 'RoomViewSet' and action == 'outline' and not read:
+    if name == 'RoomViewSet' and action in ('outline', 'entry_nda') and not read:
         entry['human_only'] = True
     if name == 'RoomViewSet' and action == 'invite':
         entry['widens_access'] = True

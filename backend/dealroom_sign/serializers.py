@@ -57,7 +57,9 @@ class CredentialInputSerializer(serializers.Serializer):
     team_id = serializers.IntegerField(min_value=1)
 
 
-class NdaPolicyInputSerializer(serializers.Serializer):
+class NdaPolicyInputSerializer(StrictInputSerializer):
+    confirm = serializers.BooleanField(default=False)
+    revision = serializers.UUIDField(required=False)
     version_id = serializers.CharField(max_length=64)
     fields = FieldInputSerializer(many=True, required=False)
     enabled = serializers.BooleanField(default=True)

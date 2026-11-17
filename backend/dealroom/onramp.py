@@ -1,18 +1,22 @@
 """Prototype orchestration over existing room, grant, version and activity records."""
+from io import BytesIO
+
 from django.conf import settings
+from django.http import FileResponse
 from django.core import signing
 from django.db import transaction
 from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from rest_framework.response import Response
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 from cloudfiles.providers.base import CloudProviderError
 from cloudfiles.providers.drive_snapshot import DriveSnapshotProvider
 from dealroom_sign.fleet_mail import send_mail
 from dealroom_sign.models import NdaPolicy
+from dealroom_sign import nda_template
 from sharelinks.models import ShareLinkAccessGrant, Viewer, ViewerOrganisation
 from .activity import record
 from .brand import load_brand
@@ -20,6 +24,7 @@ from .domains import guarded_domain
 from .drive import (SERIES_A, SLOTS, room_state, save_state, ensure_template, review,
                     import_tree, check_updates, publish_update)
 from .models import Activity
+from .uploads import upload, validate_upload
 
 
 def provider_error(fn):
@@ -107,11 +112,14 @@ class RoomOnrampMixin:
         state['slots'] = {slot: id for slot, id in state['slots'].items() if id in present_ids}
         missing = [slot for slot in SLOTS.values() if slot['id'] not in state['slots']
                    and slot['id'] not in state['not_needed']]
+        nda_policy = NdaPolicy.objects.filter(room=room, enabled=True).first()
+        nda_confirmed = nda_template.confirmed(nda_policy)
         return Response({**state, 'groups': SERIES_A, 'slot_definitions': SLOTS, 'documents': documents,
             'missing_slots': missing if state['template'] else [],
             'needs_you': pending, 'needs_you_count': len(pending), 'invitations': [e.data for e in invites],
             'drive_checked_at': checked.created_at.isoformat() if checked else None,
-            'nda_configured': NdaPolicy.objects.filter(room=room, enabled=True).exists(),
+            'nda_configured': nda_confirmed,
+            'share_blocked': bool((state.get('require_nda') or nda_policy) and not nda_confirmed),
             'policy': {'status': room.roompolicy.status, 'expires_at': room.roompolicy.expires_at},
             'drive_enabled': bool(settings.DEALROOM_DRIVE_SNAPSHOT_DIR)})
 
@@ -166,6 +174,8 @@ class RoomOnrampMixin:
     @action(detail=True, methods=['post'])
     def invite(self, request, pk=None):
         room = self.get_object()
+        type(room).objects.select_for_update().get(pk=room.pk)
+        nda_template.require_share_ready(room)
         people = request.data.get('emails', [])
         notes = request.data.get('notes', {})
         if not isinstance(people, list) or not 1 <= len(people) <= 50 or not isinstance(notes, dict):
@@ -205,3 +215,38 @@ class RoomOnrampMixin:
         record('room.request_answered', organization=room.organization, actor=request.user, room_id=room.pk,
             target_id=question.pk, data={'text': text, 'firm': question.data['firm'], 'faq': faq})
         return Response({'status': 'answered'})
+
+    @extend_schema(request=dict, responses=dict)
+    @action(detail=True, methods=['get', 'post'], url_path='entry-nda')
+    def entry_nda(self, request, pk=None):
+        room = self.get_object()
+        if room.created_by_id != request.user.pk:
+            raise PermissionDenied('Only the room owner can place its entry NDA.')
+        if request.method == 'POST':
+            if 'file' not in request.FILES:
+                raise ValidationError('Choose a PDF for the entry NDA.')
+            file = request.FILES['file']
+            validate_upload(file)
+            pdf = file.read()
+            file.seek(0)
+            version = upload(room, request.user, file, entry_nda=True)
+            policy = nda_template.save_policy(room, request.user, version, pdf)
+        else:
+            policy = NdaPolicy.objects.filter(room=room).first()
+        return Response(nda_template.describe(policy, suggest=True), status=201 if request.method == 'POST' else 200)
+
+    @extend_schema(parameters=[OpenApiParameter('revision', str, required=True)], responses={(200, 'application/pdf'): bytes})
+    @action(detail=True, methods=['get'], url_path='entry-nda-source')
+    def entry_nda_source(self, request, pk=None):
+        room = self.get_object()
+        if room.created_by_id != request.user.pk:
+            raise PermissionDenied('Only the room owner can preview its entry NDA.')
+        policy = NdaPolicy.objects.filter(room=room).first()
+        if not policy or request.query_params.get('revision') != str(policy.revision):
+            raise ValidationError('The NDA changed. Reload it before placing fields.')
+        pdf = nda_template.source_bytes(policy.source_version)
+        if nda_template.digest(pdf) != policy.source_sha256:
+            raise ValidationError('The NDA source changed. Select it again.')
+        response = FileResponse(BytesIO(pdf), content_type='application/pdf')
+        response['Cache-Control'] = 'private, no-store'
+        return response

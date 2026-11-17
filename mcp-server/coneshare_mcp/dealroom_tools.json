@@ -645,6 +645,10 @@
       "properties": {
         "body": {
           "properties": {
+            "confirm": {
+              "default": false,
+              "type": "boolean"
+            },
             "enabled": {
               "default": true,
               "type": "boolean"
@@ -716,6 +720,10 @@
                 "type": "object"
               },
               "type": "array"
+            },
+            "revision": {
+              "format": "uuid",
+              "type": "string"
             },
             "version_id": {
               "maxLength": 64,
@@ -3241,6 +3249,91 @@
       "id"
     ],
     "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_entry_nda_get",
+    "operation_id": "dealroom_RoomViewSet_entry_nda_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/entry-nda/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_entry_nda_post",
+    "operation_id": "dealroom_RoomViewSet_entry_nda_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/entry-nda/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_entry_nda_source_get",
+    "operation_id": "dealroom_RoomViewSet_entry_nda_source_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "revision"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/entry-nda-source/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [
+      "revision"
+    ],
     "recipient": false
   },
   {

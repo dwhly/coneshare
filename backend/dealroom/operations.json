@@ -1919,6 +1919,36 @@
     "tier": "read_write",
     "widens_access": false
   },
+  "dealroom_RoomViewSet_entry_nda_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RoomViewSet_entry_nda_get",
+    "path": "/api/v1/dealroom/rooms/{pk}/entry-nda/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_entry_nda_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_RoomViewSet_entry_nda_post",
+    "path": "/api/v1/dealroom/rooms/{pk}/entry-nda/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_entry_nda_source_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RoomViewSet_entry_nda_source_get",
+    "path": "/api/v1/dealroom/rooms/{pk}/entry-nda-source/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
   "dealroom_RoomViewSet_folders_post": {
     "boundary": "staff",
     "human_only": false,

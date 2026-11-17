@@ -1,8 +1,9 @@
 """Seed the fictional on-ramp in an existing staff account; never creates credentials."""
-from django.conf import settings
+from pathlib import Path
+
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
-from django.utils import timezone
 
 from core.models import User
 from cloudfiles.providers.drive_snapshot import DriveSnapshotProvider
@@ -12,7 +13,8 @@ from dealroom.models import RoomPolicy
 from dealroom.onramp import personal_url
 from dealroom.activity import record
 from dealroom_sign.models import NdaPolicy
-from dealroom_sign import placement
+from dealroom_sign import nda_template
+from dealroom.uploads import upload
 from sharelinks.models import ShareLink, ShareLinkAccessGrant, Viewer, ViewerOrganisation
 
 
@@ -32,17 +34,7 @@ class Command(BaseCommand):
             raise CommandError('An existing staff owner is required.')
         provider = DriveSnapshotProvider(options['folder_id'])
         email = options['visitor'].strip().lower()
-        visitor = Viewer.objects.filter(organization=user.organization, email=email).first()
-        signer = {'email': email, 'name': visitor.name if visitor else 'Maya Chen',
-                  'company': visitor.recipient_org.name if visitor and visitor.recipient_org else 'Northwind Ventures'}
         nodes = walk_tree(provider, options['folder_id'])
-        nda_node = next((n for n in nodes if n['type'] == 'file' and 'mutual nda' in n['name'].lower()), None)
-        if not nda_node:
-            raise CommandError('NDA placement: the snapshot needs a Mutual NDA PDF.')
-        with provider.download_file(nda_node['id'])['content'] as source:
-            analysis = placement.place(source.read(), [signer])
-        if analysis['status'] != 'placed':
-            raise CommandError('NDA placement needs the sender: ' + analysis['reason'])
         room, _ = Dataroom.objects.get_or_create(organization=user.organization, name='Harbor Light Analytics · Series A',
                                                defaults={'created_by': user, 'enable_qna': False})
         if room.created_by_id != user.pk:
@@ -59,12 +51,23 @@ class Command(BaseCommand):
         state['start_here'] = [state['slots'][s] for s in ('model', 'deck') if s in state['slots']]
         state['require_nda'] = True
         save_state(room, user, state)
-        nda_item = room.documents.filter(document__name__icontains='Mutual NDA').first()
-        if nda_item:
-            version = nda_item.document.versions.get(is_primary=True)
-            NdaPolicy.objects.get_or_create(room=room, defaults={'source_version': version,
-                'source_sha256': version.metadata['source_sha256'], 'enabled': True,
-                'fields': placement.to_native_fields(analysis, email)})
+        fixture = Path(__file__).resolve().parents[2] / 'tests/fixtures/Investor NDA (fictional).pdf'
+        pdf = fixture.read_bytes()
+        policy = NdaPolicy.objects.filter(room=room).first()
+        if not policy or policy.source_sha256 != nda_template.digest(pdf):
+            version = upload(room, user, SimpleUploadedFile(fixture.name, pdf, content_type='application/pdf'), entry_nda=True)
+            policy = nda_template.save_policy(room, user, version, pdf)
+        if not policy.enabled:
+            policy = nda_template.save_policy(room, user, policy.source_version, pdf)
+        if not nda_template.confirmed(policy):
+            fields = nda_template.suggestions(pdf)
+            if not fields:
+                raise CommandError('Place the NDA fields: no blank recipient signature rule was found.')
+            policy = nda_template.save_policy(room, user, policy.source_version, pdf, fields=fields,
+                confirm=True, revision=str(policy.revision))
+        for page in sorted({f['page'] for f in policy.fields}):
+            count = sum(f['page'] == page for f in policy.fields)
+            self.stdout.write(f'confirmed {count} fields on page {page}')
         firm, _ = ViewerOrganisation.objects.get_or_create(organization=user.organization, name='Northwind Ventures',
             defaults={'email_domains': [], 'created_by': user})
         Viewer.objects.get_or_create(organization=user.organization, email=email,
