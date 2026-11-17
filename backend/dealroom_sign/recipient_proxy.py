@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.http import content_disposition_header
 
+from .room_return import confirmation_url
 from .client import Documenso, SignError, identifier
 from .counterparty import (COOKIE, access_state, capability, consent, consume_handoff,
     disclosure_hash, get_session, keyed_hash, new_session, provision, require_auth, resolve,
@@ -216,7 +217,8 @@ def limit(request, purpose='entry', maximum=30):
 def terminal(request, access, envelope):
     state = access_state(access)
     if state == 'signed' and access.workflow.purpose == 'nda' and access.workflow.state == 'done':
-        return redirect(settings.SITE_DOMAIN.rstrip('/') + '/signing/nda/' + str(access.workflow.room_id))
+        destination = confirmation_url(access.workflow)
+        return redirect(destination or settings.SITE_DOMAIN.rstrip('/') + '/signing/nda/' + str(access.workflow.room_id))
     return page(request, state if state != 'welcome' else 'checking', access=access)
 
 
@@ -335,6 +337,8 @@ def handle(request):
     if path == '/s/session/context' and request.method == 'GET':
         envelope = reconcile_native(access)
         state = access_state(access)
+        if state == 'signed':
+            return terminal(request, access, envelope)
         return page(request, state if state != 'welcome' or eligible(access, envelope) else 'waiting', access=access)
     if path == '/s/session/sign' and request.method == 'POST':
         envelope = reconcile_native(access)
