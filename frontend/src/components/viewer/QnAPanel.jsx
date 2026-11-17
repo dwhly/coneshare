@@ -131,7 +131,7 @@ export function QnAPanel({
 
   return (
     <aside
-      className="fixed inset-y-0 right-0 z-30 flex w-full flex-col border-l bg-card shadow-xl sm:max-w-xl lg:w-[34rem] lg:max-w-none xl:w-[38rem]"
+      className="fixed inset-y-0 right-0 z-30 flex w-full flex-col border-l bg-card shadow-xl sm:max-w-xl lg:w-[34rem] lg:max-w-none xl:w-[38rem]" // fds-allow-stripe: neutral hairline of a docked side panel
       aria-label={t('qna.panelLabel', { defaultValue: 'Q&A panel' })}
     >
       <header className="border-b px-5 py-4">

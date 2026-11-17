@@ -132,7 +132,7 @@ export function TransferOwnershipDialog({
                       onClick={() => setSelectedUser(u)}
                       className={`w-full flex items-center justify-between p-3 cursor-pointer transition-colors text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary ${
                         isSelected
-                          ? 'bg-primary/10 border-l-4 border-l-primary'
+                          ? 'bg-primary/10'
                           : 'hover:bg-muted/50'
                       }`}
                     >

@@ -53,7 +53,7 @@ export function DocumentViewerHeader({
           <span className="truncate max-w-[120px] sm:max-w-[200px] text-sm sm:text-base">{brandName}</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-1.5 pl-2 border-l border-border text-[10px] text-muted-foreground select-none">
+        <div className="hidden md:flex items-center gap-1.5 pl-2 border-l border-border text-[10px] text-muted-foreground select-none">{/* fds-allow-stripe: neutral toolbar group separator */}
           <span>
             {t('viewer.poweredBy')}{' '}
             <a

@@ -224,10 +224,10 @@ export function MoveDestinationDialog({
                   type="button"
                   aria-pressed={selectedDestination?.id === null}
                   onClick={() => setSelectedDestination({ id: null })}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left border-b border-border border-l-4 transition-colors group ${
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left border-b border-border transition-colors group ${
                     selectedDestination?.id === null
-                      ? 'bg-foreground/5 border-l-foreground '
-                      : 'border-l-transparent hover:bg-accent '
+                      ? 'bg-foreground/5 '
+                      : 'hover:bg-accent '
                   }`}
                 >
                   <div className="flex items-center space-x-2.5 min-w-0">
@@ -296,10 +296,10 @@ export function MoveDestinationDialog({
                     return (
                       <div
                         key={folder.id}
-                        className={`flex items-center justify-between px-3.5 py-2 border-l-4 transition-colors ${
+                        className={`flex items-center justify-between px-3.5 py-2 transition-colors ${
                           isSelected
-                            ? 'bg-foreground/5 border-l-foreground '
-                            : 'border-l-transparent hover:bg-accent '
+                            ? 'bg-foreground/5 '
+                            : 'hover:bg-accent '
                         } ${isFolderDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                       >
                         <button

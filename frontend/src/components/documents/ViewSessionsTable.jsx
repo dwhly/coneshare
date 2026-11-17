@@ -165,7 +165,7 @@ function DataroomVisitRow({ visit }) {
         </span>
       </div>
       {isExpanded && (hasPageViews || hasLinkClicks) && (
-        <div className="ml-8 mt-2 border-l pl-4 space-y-3">
+        <div className="ml-8 mt-2 rounded-md bg-muted/50 p-3 space-y-3">
           {hasPageViews && (
             <PageViewsChart pageViews={visit.page_views} documentType={visit.dataroom_document_type} />
           )}
