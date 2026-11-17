@@ -27,11 +27,15 @@ from pdfminer.psparser import PSEOF, PSKeyword, literal_name
 
 LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|name|title|date|its)\b[:\s]*', re.I)
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ROLE_DESCRIPTION = re.compile(
+    r'(?:\b(?:between|and|by|with)\s+)'
+    r'([A-Z][\w&.,\' -]{2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
+    r'(?:,\s*[^()]{0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
+    r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.7'
+VERSION = 'c2a.21'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
-MODEL_SIGNATURE_CAPTION = 'Hand of the covenanting party:'
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
 MAX_EDGES = 5000
@@ -131,6 +135,22 @@ def behalf_parts(text):
     return None
 
 
+PARTY_ROLE_WORDS = {
+    'recipient', 'recipients', 'discloser', 'disclosers', 'counterparty', 'counterparties',
+    'company', 'companies', 'party', 'parties', 'guarantor', 'guarantors',
+    'purchaser', 'purchasers', 'buyer', 'buyers', 'seller', 'sellers',
+    'licensor', 'licensors', 'licensee', 'licensees', 'employer', 'employers',
+    'employee', 'employees',
+}
+
+
+def party_role_text(text):
+    words = tokens(text)
+    if words[:1] == ['the']:
+        words = words[1:]
+    return bool(words) and all(word in PARTY_ROLE_WORDS for word in words)
+
+
 def person_text(text):
     behalf = behalf_parts(text)
     if behalf:
@@ -142,7 +162,7 @@ def person_text(text):
     caption = NAME_CAPTION.match(text)
     stripped = NAME_CAPTION.sub('', text).strip()
     name = IDENTITY_SPLIT.split(stripped)[0].strip()
-    if (COMPANY.search(name) or ROLE.fullmatch(name) or BLOCK_WORDING.fullmatch(name)
+    if (party_role_text(name) or COMPANY.search(name) or ROLE.fullmatch(name) or BLOCK_WORDING.fullmatch(name)
             or name.lower() in {'accepted and agreed', 'compensation summary', 'base salary'}):
         return ''
     # Explicit Name captions are authoritative even with lower case or initials.
@@ -159,9 +179,74 @@ def identity_parts(text):
     return [text] + [part.strip('() ') for part in IDENTITY_SPLIT.split(NAME_CAPTION.sub('', text))[1:]]
 
 
-def printed_names(block):
-    return [tokens(name) for label in (block.raw_labels or block.labels)
-            for part in identity_parts(label['text']) if (name := person_text(part))]
+def witness_block(block):
+    return bool(re.fullmatch(r'(?:witness|attest|attestation)\s*:?\s*',
+                             block.line.label.get('text', ''), re.I))
+
+
+def printed_name_evidence(block, blocks=()):
+    if witness_block(block):
+        return [], True
+
+    def column(other):
+        return (min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0]),
+                other.line.x1)
+
+    # Witnesses bound the columns, but cannot receive party identity scores.
+    parties = [other for other in [block, *blocks]
+               if other.line.page == block.line.page]
+    # Aligned rules are one column even when their lengths differ.
+    columns = {}
+    for other in parties:
+        left, right = column(other)
+        columns[left] = max(columns.get(left, right), right)
+    left = column(block)[0]
+    own = (left, columns[left])
+    others = [(x, right) for x, right in columns.items() if x != left]
+    neighbours = {(column(other)[0], columns[column(other)[0]]) for other in parties
+                  if abs(other.line.y - block.line.y) < 30 and column(other)[0] != left}
+
+    names, ambiguous = [], False
+    for row in (block.raw_labels or block.labels):
+        printed = [tokens(name) for part in identity_parts(row['text'])
+                   if (name := person_text(part))]
+        if not printed:
+            continue
+
+        def distance(bounds):
+            return max(bounds[0] - row['rect'][2], row['rect'][0] - bounds[1], 0)
+
+        distances = sorted(distance(bounds) for bounds in [own, *others])
+        tied = len(distances) > 1 and distances[1] <= distances[0] + 2
+        # Use the existing same-band boundary: staggered outdented captions
+        # still belong to their nearest column, but a shared gutter is uncertain.
+        gutter = any(own[1] < other[0] and row['rect'][0] < other[0] and row['rect'][2] > own[1]
+                     or other[1] < own[0] and row['rect'][0] < own[0] and row['rect'][2] > other[1]
+                     for other in neighbours)
+        ambiguous |= tied or gutter
+        if not tied and not gutter and all(distance(other) > distance(own) + 2 for other in others):
+            names.extend(printed)
+    return names, ambiguous
+
+
+def printed_names(block, blocks=()):
+    return printed_name_evidence(block, blocks)[0]
+
+
+def heading_crosses_gutter(block, blocks):
+    """A shared heading row cannot grant either column company credit."""
+    left = min(block.line.x0, block.line.label.get('rect', [block.line.x0])[0])
+    for other in blocks:
+        if other.line.page != block.line.page or abs(other.line.y - block.line.y) >= 30:
+            continue
+        other_left = min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0])
+        for row in (block.raw_labels or block.labels):
+            if row['text'] != block.heading:
+                continue
+            if (block.line.x1 < other_left and row['rect'][0] < other_left and row['rect'][2] > other_left
+                    or other.line.x1 < left and row['rect'][0] < other.line.x1 and row['rect'][2] > other.line.x1):
+                return True
+    return False
 
 
 def company_text(text):
@@ -195,7 +280,7 @@ def safe_label(label, roles, signers=(), *, companies=None):
         return dict(label, text=behalf[1] if companies is None or behalf[1] in companies else '[company]')
     if company_text(text) and companies is not None and text not in companies:
         return dict(label, text='[company]')
-    if accounted_label(text, roles) or text == MODEL_SIGNATURE_CAPTION:
+    if accounted_label(text, roles) or text == 'Hand of the covenanting party:':
         return dict(label, text=text[:120])
     return dict(label, text='[redacted]')
 
@@ -412,9 +497,110 @@ def check_annotations(page):
         raise ValueError('form_fields') from None
 
 
+def subordinating_host(line, rules, texts, roles):
+    """Return the recognised host whose block contains an unknown caption."""
+    column = line.label['rect'][0]
+    for host in rules:
+        witness = host.label.get('text', '').rstrip(': ').casefold() == 'witness'
+        if not (host.semantic == 'SIGNATURE' or witness):
+            continue
+        if not (5 < line.y - host.y <= 125
+                and host.x1 > column and host.label.get('rect', [host.x0])[0] < line.x1):
+            continue
+        between = [t for t in texts if host.y < t['rect'][1] < line.y
+                   and t is not line.label and t['rect'][0] < line.x1
+                   and t['rect'][2] > column - 5]
+        if any(company_text(t['text']) or behalf_parts(t['text']) or person_text(t['text'])
+               or t['text'].rstrip(': ').lower() in roles
+               # A Witness's own name row closes its identity group, including
+               # an empty caption. A later unknown line remains a candidate.
+               or (witness and NAME_CAPTION.match(t['text'])) for t in between):
+            continue
+        return host
+    return None
+
+
+def subordinate_caption(line, rules, texts, roles):
+    """An unknown caption is a companion only within a recognised host's block."""
+    return subordinating_host(line, rules, texts, roles) is not None
+
+
+def conflicting_company_headings(block, extent, texts, rules, roles):
+    """Veto mixed company ownership after partitioning; never add identity scores."""
+    def company_heading(text):
+        # Standalone legal-form wording (e.g. LLC) names no second company.
+        return company_text(text) and not BLOCK_WORDING.fullmatch(text)
+
+    headings = [(t, norm(t['text'])) for t in block.raw_labels if company_heading(t['text'])]
+    companies = {name for _, name in headings}
+    if len(companies) > 1:
+        return True
+    if not headings:
+        return False
+    first_heading = min(t['rect'][1] for t, _ in headings)
+    leading_names = [t for t in block.raw_labels if t['rect'][1] < first_heading and person_text(t['text'])]
+    if not leading_names:
+        return False
+    # A leading typed name may belong to an earlier company just outside the
+    # 90 pt window (C8). Follow only its contiguous identity rows, stopping at
+    # a real host or prose. OTHER captions cannot conceal that ownership.
+    start = min(t['rect'][1] for t in leading_names)
+    _, _, left, right = extent
+    events = [(t['rect'][1], t) for t in texts if start - 90 <= t['rect'][1] < start
+              and t['rect'][0] < right and t['rect'][2] > left]
+    events += [(r.y, None) for r in rules if start - 90 <= r.y < start
+               and r.semantic not in COMPANION_SEMANTICS
+               and r.x1 > left and r.label.get('rect', [r.x0])[0] < right]
+    for _, row in sorted(events, key=lambda event: event[0], reverse=True):
+        if row is None:
+            break
+        if any(r.semantic == 'OTHER' and row is r.label for r in rules):
+            continue
+        if company_heading(row['text']):
+            return norm(row['text']) not in companies
+        if not (identity_label(row['text'], roles) or accounted_label(row['text'], roles)):
+            break
+    return False
+
+
+def shared_company_heading(block, blocks, texts, roles):
+    """A row spanning two party columns has unresolved company ownership.
+
+    Inspect geometry before heading attribution: touching or overlapping text
+    can merge company tokens, or exceed the heading length limit altogether.
+    Losing the readable company must not turn that evidence into no identity.
+    """
+    left = min(block.line.x0, block.line.label.get('rect', [block.line.x0])[0])
+    for other in blocks:
+        if (other is block or other.line.page != block.line.page
+                or abs(other.line.y - block.line.y) >= 30):
+            continue
+        other_left = min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0])
+        if not (block.line.x1 < other_left or other.line.x1 < left):
+            continue
+        for row in texts:
+            x0, _, x1, bottom = row['rect']
+            if not (2 <= block.line.y - bottom < 90 and 2 <= other.line.y - bottom < 90
+                    and x0 < block.line.x1 and x1 > left
+                    and x0 < other.line.x1 and x1 > other_left):
+                continue
+            text = re.sub(r'[/:]', ' ', row['text'])
+            words = re.findall(r'[A-Za-z]+', text)
+            # Collisions can erase legal-form tokens and mapped role names.
+            # Keep a capitalized heading unresolved even when neither company
+            # can still be read; this predicate never grants identity credit.
+            heading_shaped = (words and re.fullmatch(r"[A-Za-z0-9&.,'’() -]+", text)
+                              and all(w[0].isupper() or w.lower() in STOP for w in words)
+                              and not LABEL.match(row['text']))
+            if (heading_shaped or company_text(text) or behalf_parts(row['text'])
+                    or row['text'].rstrip(': ').lower() in roles):
+                return True
+    return False
+
+
 def extract(pdf, *, deadline=None):
     blocks, sizes, roles = [], {}, {}
-    pages, extents = {}, []
+    pages, extents, absorbed_names = {}, [], {}
     with pdfplumber.open(io.BytesIO(pdf)) as doc:
         if not 1 <= len(doc.pages) <= 500:
             raise ValueError('page_limit')
@@ -446,7 +632,7 @@ def extract(pdf, *, deadline=None):
                         raise ValueError('identity_unreadable')
             if pno <= 2:
                 opening = ' '.join(w['text'] for w in words)
-                for match in ROLE_DEF.finditer(opening):
+                for match in (*ROLE_DEF.finditer(opening), *ROLE_DESCRIPTION.finditer(opening)):
                     company, role = match.groups()
                     if COMPANY.search(company):
                         roles[role.lower()] = company.strip(' ,')
@@ -481,11 +667,25 @@ def extract(pdf, *, deadline=None):
                     if match:
                         lab = match.group(1).lower()
                         line.semantic = 'SIGNATURE' if lab in {'signature', 'signed', 'sign here', 'by'} else 'NAME' if 'name' in lab else 'DATE' if lab == 'date' else 'TITLE'
-                    elif (SHORT_CAPTION.fullmatch(line.label['text'])
-                          and line.label['text'].rstrip(': ').casefold() != 'witness'
-                          and line.label['text'] != MODEL_SIGNATURE_CAPTION):
-                        # Keep the existing model-reviewed signature caption a host.
+                    elif re.fullmatch(r'(?:email|e-mail|address|phone|tel|company)\s*:\s*', line.label['text'], re.I):
                         line.semantic = 'OTHER'
+            absorbed_names[pno] = []
+            for line in unique:
+                if (not line.semantic and SHORT_CAPTION.fullmatch(line.label.get('text', ''))
+                        and line.label['text'].rstrip(': ').casefold() != 'witness'
+                        and subordinate_caption(line, unique, texts, roles)):
+                    host = subordinating_host(line, unique, texts, roles)
+                    line.semantic = 'OTHER'
+                    # Only structural subordination can hide a signature's
+                    # typed identity. The six unconditional contact captions
+                    # above deliberately do not participate in this veto.
+                    if host is not None:
+                        caption = dict(rect=[min(line.label['rect'][0], line.x0),
+                                             line.label['rect'][1],
+                                             max(line.label['rect'][2], line.x1), line.y])
+                        absorbed_names[pno].extend((host, caption, t) for t in texts
+                                                  if t['rect'][1] > host.y
+                                                  and person_text(t['text']))
             hosts = []
             for line in unique:
                 if line.semantic in COMPANION_SEMANTICS or line.y < 110:
@@ -513,10 +713,14 @@ def extract(pdf, *, deadline=None):
                 identity = ' | '.join(t['text'] for t in labels)
                 known = line.semantic == 'SIGNATURE' or bool(below) or bool(re.search(r'accepted|agreed|executed', heading['text'] if heading else '', re.I))
                 unusual = bool(line.label and not line.semantic and heading)
-                if not known and not unusual:
+                block = Block('', line, labels, heading['text'] if heading else '', identity, unusual,
+                              uncertain_identity=len(below) != len(captions))
+                # Retain uncaptioned witness geometry unless its subordinate
+                # identity is already handled by the absorbed-name veto.
+                if not known and not unusual and (not witness_block(block)
+                        or any(host is line for host, _, _ in absorbed_names[pno])):
                     continue
-                hosts.append(Block('', line, labels, heading['text'] if heading else '', identity, unusual,
-                                   uncertain_identity=len(below) != len(captions)))
+                hosts.append(block)
             for extra in unique:
                 if extra.semantic not in {'NAME', 'DATE'}:
                     continue
@@ -581,9 +785,56 @@ def extract(pdf, *, deadline=None):
     for i, block in enumerate(blocks):
         block.id = f'b{i}'
     neutral = running_rows(pages)
+
+    def inside_extent(text, extent):
+        top, bottom, left, right = extent
+        return (top <= text['rect'][1] <= bottom
+                and text['rect'][0] < right and text['rect'][2] > left)
+
+    host_extents = {id(block.line): extent for block, extent in extents}
+    for pno, names in absorbed_names.items():
+        retained = []
+        for host, caption, text in names:
+            extent = host_extents.get(id(host))
+            if extent is not None and not (
+                    inside_extent(text, extent)
+                    or any(block.line.page == pno and inside_extent(caption, other)
+                           and inside_extent(text, other) for block, other in extents)):
+                continue
+            # An intervening host can own both the absorbed caption and its
+            # name, regardless of which rule subordinated it first. If that
+            # rule formed no block, keep the name so the veto fails closed.
+            retained.append(text)
+        absorbed_names[pno] = retained
+    mixed_heading_names = {}
+    unresolved_heading_pages = set()
     for block, extent in extents:
-        if not printed_names(block):
+        texts, rules, _ = pages[block.line.page]
+        if shared_company_heading(block, blocks, texts, roles):
+            unresolved_heading_pages.add(block.line.page)
+        top, bottom, left, right = extent
+        # Apply after partitioning so no later attribution can clear the veto.
+        if any(top <= t['rect'][1] <= bottom and t['rect'][0] < right and t['rect'][2] > left
+               for t in absorbed_names[block.line.page]):
+            block.uncertain_identity = True
+        if conflicting_company_headings(block, extent, texts, rules, roles):
+            block.uncertain_identity = True
+            mixed_heading_names.setdefault(block.line.page, []).extend(
+                t for t in block.raw_labels
+                if any(person_text(part) for part in identity_parts(t['text'])))
+        if not printed_names(block, blocks):
             block.company_only_blocked = company_only_veto(block, extent, pages, roles, blocks, neutral)
+    # A mixed-company block cannot lend its printed name to another block.
+    # Propagate by the same physical row on the same page, after collecting
+    # every conflict, so traversal order cannot clear or miss a veto.
+    # A shared heading leaves the page's companies unresolved even when text
+    # collision has erased the company tokens that would otherwise compete.
+    for block, extent in extents:
+        printed, ambiguous = printed_name_evidence(block, blocks)
+        if (block.line.page in unresolved_heading_pages and not (printed and not ambiguous)
+                or any(inside_extent(text, extent)
+                       for text in mixed_heading_names.get(block.line.page, []))):
+            block.uncertain_identity = True
     return blocks, sizes, roles
 
 
@@ -610,7 +861,7 @@ def accounted_label(text, roles):
 
 
 def unresolved_person(text, roles):
-    if sentence_text(text) or person_text(text) or accounted_label(text, roles):
+    if party_role_text(text) or sentence_text(text) or person_text(text) or accounted_label(text, roles):
         return False
     prefix = LABEL.match(text)
     if prefix and prefix.group(1).lower() != 'date' and text[prefix.end():].strip():
@@ -622,9 +873,11 @@ def unresolved_person(text, roles):
 def prepare_blocks(blocks, roles, signers):
     """Score raw evidence locally, then discard it before worker output."""
     for block in blocks:
-        block.scores = [score(s, block, roles) for s in signers]
-        if not printed_names(block) and sum(v >= 4 for v in block.scores) != 1:
+        block.scores = [score(s, block, roles, blocks) for s in signers]
+        if not printed_names(block, blocks) and sum(v >= 4 for v in block.scores) != 1:
             block.scores = [0] * len(signers)
+    # Every score needs the original role labels, before output redaction.
+    for block in blocks:
         # A company word in arbitrary prose is not permission to emit that prose.
         # Only a mapped role company or a heading contributing to an accepted
         # local identity score may survive as a company label.
@@ -645,11 +898,13 @@ def prepare_blocks(blocks, roles, signers):
         block.raw_labels = []
 
 
-def score(signer, block, roles):
+def score(signer, block, roles, blocks=()):
     if block.uncertain_identity:
         return 0
     name = tokens(signer.get('name', ''))
-    printed = printed_names(block)
+    printed, ambiguous = printed_name_evidence(block, blocks)
+    if ambiguous:
+        return 0
     if not printed and block.company_only_blocked:
         return 0
     # A printed full name is authoritative, including when company/domain agree.
@@ -674,7 +929,43 @@ def score(signer, block, roles):
     company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
     heading = roles.get(block.heading.rstrip(': ').lower(), block.heading)
     heading = (behalf_parts(heading) or ('', heading))[1]
-    if similarity(company, heading):
+    if similarity(company, heading) and not heading_crosses_gutter(block, blocks):
+        # Company-only identity must be unique on the page. Every matching
+        # heading competes, even when a veto or geometry removes its score.
+        if not value:
+            for other in blocks:
+                if other is block or other.line.page != block.line.page:
+                    continue
+                other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
+                other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
+                if similarity(company, other_heading):
+                    return value
+            # A domain cannot resolve a third party's unnamed signing block.
+            # Explicit company and printed-name evidence keep their own paths.
+            if not signer.get('company'):
+                for other in blocks:
+                    if (other is block or witness_block(other)
+                            or printed_names(other, blocks)):
+                        continue
+                    other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
+                    other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
+                    named = (not party_role_text(other_heading)
+                             and (company_text(other_heading) and any(t not in STOP for t in tokens(other_heading))
+                                  or person_text(other_heading)))
+                    # A named role still needs one unclaimed signing block.
+                    # Two blocks for its company leave the role assignment
+                    # unresolved unless a printed person distinguishes them.
+                    if named and party_role_text(other.heading):
+                        for peer in blocks:
+                            if (peer is other or witness_block(peer)
+                                    or printed_names(peer, blocks)):
+                                continue
+                            peer_heading = roles.get(peer.heading.rstrip(': ').lower(), peer.heading)
+                            peer_heading = (behalf_parts(peer_heading) or ('', peer_heading))[1]
+                            if similarity(other_heading, peer_heading):
+                                return value
+                    if not named and sum(not witness_block(b) for b in blocks) >= 3:
+                        return value
         value += 4
     return value
 
