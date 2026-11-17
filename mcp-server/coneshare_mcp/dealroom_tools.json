@@ -724,7 +724,6 @@
             }
           },
           "required": [
-            "fields",
             "version_id"
           ],
           "type": "object"
@@ -2863,6 +2862,70 @@
     "human_only": false,
     "method": "GET",
     "multipart": false,
+    "name": "dealroom_RecipientSignedNdaView_endpoint_get",
+    "operation_id": "dealroom_RecipientSignedNdaView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/signed-nda/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RecipientSignedNdaDownloadView_endpoint_get",
+    "operation_id": "dealroom_RecipientSignedNdaDownloadView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/signed-nda/download/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
     "name": "dealroom_RoomViewSet_list_get",
     "operation_id": "dealroom_RoomViewSet_list_get",
     "parameters": {
@@ -3574,6 +3637,54 @@
     "path_params": [
       "id"
     ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_WorkspaceSettingsView_endpoint_get",
+    "operation_id": "dealroom_WorkspaceSettingsView_endpoint_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {},
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/workspace-settings/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_WorkspaceSettingsView_endpoint_patch",
+    "operation_id": "dealroom_WorkspaceSettingsView_endpoint_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "watermark_style": {
+              "description": "* `diagonal` - diagonal\n* `edge` - edge",
+              "enum": [
+                "diagonal",
+                "edge"
+              ],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/workspace-settings/",
+    "path_params": [],
     "query_params": [],
     "recipient": false
   },

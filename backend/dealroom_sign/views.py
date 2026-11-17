@@ -171,7 +171,8 @@ class SigningNdaPolicyView(APIView):
         version = room_version(room, request.data.get('version_id'))
         pdf = source_bytes(version)
         fields = request.data.get('fields', [])
-        validate_recipients([{'email': 'placeholder@example.test', 'name': 'Placeholder', 'fields': fields}], pdf)
+        validate_recipients([{'email': 'placeholder@example.test', 'name': 'Placeholder', 'fields': fields}], pdf,
+                            automatic=not fields)
         enabled = request.data.get('enabled', True)
         if type(enabled) is not bool:
             raise ValidationError('enabled must be a boolean.')
@@ -234,9 +235,14 @@ class RecipientNdaView(APIView):
             existing = Workflow.objects.filter(room=room, purpose='nda', member_id=str(member.pk), policy_revision=str(policy.revision)).order_by('-created_at').first()
             if existing:
                 return Response({'state': existing.state}, status=201)
-            work = command(owner=room.created_by, room=room, version=policy.source_version,
-                recipients=[{'email': member.email, 'name': member.name, 'fields': policy.fields}],
-                idempotency_key=f'nda:{room.pk}:{member.pk}:{policy.revision}', purpose='nda', member=member, policy=policy)
+            try:
+                work = command(owner=room.created_by, room=room, version=policy.source_version,
+                    recipients=[{'email': member.email, 'name': member.name,
+                                 'company': member.recipient_org.name if member.recipient_org else ''}],
+                    placement='auto', idempotency_key=f'nda:{room.pk}:{member.pk}:{policy.revision}',
+                    purpose='nda', member=member, policy=policy)
+            except PlacementRequired as exc:
+                return Response(exc.result, status=409)
         return Response({'state': work.state}, status=201)
 
 
@@ -317,6 +323,8 @@ class SigningNdaResetView(APIView):
         work = get_object_or_404(Workflow, pk=workflow_id, room=room, purpose='nda')
         try:
             replacement = reset_nda(work)
+        except PlacementRequired as exc:
+            return Response(exc.result, status=409)
         except SignError as exc:
             raise ValidationError({'code': exc.code}) from None
         return Response(WorkflowSerializer(replacement).data, status=201)

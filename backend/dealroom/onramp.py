@@ -59,7 +59,7 @@ class RoomOnrampMixin:
             type(room).objects.select_for_update().get(pk=room.pk)
         state = room_state(room)
         if request.method == 'PATCH':
-            allowed = {'template', 'note', 'start_here', 'slots', 'not_needed', 'require_nda'}
+            allowed = {'template', 'note', 'start_here', 'slots', 'not_needed', 'require_nda', 'watermark_style'}
             if set(request.data) - allowed:
                 raise ValidationError('Unknown outline fields.')
             if request.data.get('template') == 'series_a':
@@ -67,6 +67,8 @@ class RoomOnrampMixin:
                 state.setdefault('require_nda', True)
             if 'note' in request.data:
                 state['note'] = serializers.CharField(max_length=3000, allow_blank=True).run_validation(request.data['note'])
+            if 'watermark_style' in request.data:
+                state['watermark_style'] = serializers.ChoiceField(choices=['diagonal', 'edge'], allow_null=True).run_validation(request.data['watermark_style'])
             ids = {str(i) for i in room.documents.values_list('pk', flat=True)}
             if 'start_here' in request.data:
                 selected = request.data['start_here']

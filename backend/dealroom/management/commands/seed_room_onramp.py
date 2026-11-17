@@ -12,6 +12,7 @@ from dealroom.models import RoomPolicy
 from dealroom.onramp import personal_url
 from dealroom.activity import record
 from dealroom_sign.models import NdaPolicy
+from dealroom_sign import placement
 from sharelinks.models import ShareLink, ShareLinkAccessGrant, Viewer, ViewerOrganisation
 
 
@@ -30,6 +31,18 @@ class Command(BaseCommand):
         if not user:
             raise CommandError('An existing staff owner is required.')
         provider = DriveSnapshotProvider(options['folder_id'])
+        email = options['visitor'].strip().lower()
+        visitor = Viewer.objects.filter(organization=user.organization, email=email).first()
+        signer = {'email': email, 'name': visitor.name if visitor else 'Maya Chen',
+                  'company': visitor.recipient_org.name if visitor and visitor.recipient_org else 'Northwind Ventures'}
+        nodes = walk_tree(provider, options['folder_id'])
+        nda_node = next((n for n in nodes if n['type'] == 'file' and 'mutual nda' in n['name'].lower()), None)
+        if not nda_node:
+            raise CommandError('NDA placement: the snapshot needs a Mutual NDA PDF.')
+        with provider.download_file(nda_node['id'])['content'] as source:
+            analysis = placement.place(source.read(), [signer])
+        if analysis['status'] != 'placed':
+            raise CommandError('NDA placement needs the sender: ' + analysis['reason'])
         room, _ = Dataroom.objects.get_or_create(organization=user.organization, name='Harbor Light Analytics · Series A',
                                                defaults={'created_by': user, 'enable_qna': False})
         if room.created_by_id != user.pk:
@@ -38,7 +51,6 @@ class Command(BaseCommand):
             'created_by': user, 'restrict_to_grants': True, 'requires_email': True,
             'requires_email_verification': True, 'enable_watermark': True, 'enable_qna': False})
         RoomPolicy.objects.get_or_create(room=room, defaults={'entry_link': link})
-        nodes = walk_tree(provider, options['folder_id'])
         matches = match_template(nodes)
         choices = {f['id']: f['slot'] for f in matches['matched']}
         import_tree(room, user, {options['folder_id']: provider}, nodes, '' if options['keep_folders'] else 'series_a', choices)
@@ -52,8 +64,7 @@ class Command(BaseCommand):
             version = nda_item.document.versions.get(is_primary=True)
             NdaPolicy.objects.get_or_create(room=room, defaults={'source_version': version,
                 'source_sha256': version.metadata['source_sha256'], 'enabled': True,
-                'fields': [{'type': 'SIGNATURE', 'page': version.num_pages or 2, 'positionX': 10, 'positionY': 70, 'width': 30, 'height': 10}]})
-        email = options['visitor'].strip().lower()
+                'fields': placement.to_native_fields(analysis, email)})
         firm, _ = ViewerOrganisation.objects.get_or_create(organization=user.organization, name='Northwind Ventures',
             defaults={'email_domains': [], 'created_by': user})
         Viewer.objects.get_or_create(organization=user.organization, email=email,

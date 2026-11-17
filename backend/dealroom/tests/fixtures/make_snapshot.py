@@ -4,6 +4,7 @@ from io import BytesIO
 from pathlib import Path
 from reportlab.pdfgen.canvas import Canvas
 from openpyxl import Workbook
+from make_nda import nda_bytes
 
 ROOT = Path(__file__).parent / 'drive' / 'harbor-light'
 ROOT.mkdir(parents=True, exist_ok=True)
@@ -52,6 +53,6 @@ for id, title, parent, mime in [
                 canvas.drawString(48, 620 - 22 * n, line)
             canvas.showPage()
         canvas.save()
-        (ROOT / path).write_bytes(out.getvalue())
+        (ROOT / path).write_bytes(nda_bytes() if id == 'nda' else out.getvalue())
     nodes.append(dict(id=id, name=title, mimeType=mime, parents=[parent], modifiedTime='2026-11-17T09:00:00Z', webViewLink=f'https://drive.google.com/file/d/{id}/view', path=path, exportedMimeType=SHEET if sheet else PDF))
 (ROOT / 'manifest.json').write_text(json.dumps(dict(root_id='harbor-light', root_name='TEST (fictional) Harbor Light Analytics - Series A data room', taken_at='2026-11-17T09:00:00Z', nodes=nodes), indent=2) + '\n')

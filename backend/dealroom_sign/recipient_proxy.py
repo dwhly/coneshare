@@ -215,8 +215,9 @@ def limit(request, purpose='entry', maximum=30):
 
 def terminal(request, access, envelope):
     state = access_state(access)
-    if state == 'signed' and access.workflow.purpose == 'nda' and access.workflow.state == 'done':
-        return redirect(settings.SITE_DOMAIN.rstrip('/') + '/signing/nda/' + str(access.workflow.room_id))
+    if state == 'signed' and access.workflow.purpose == 'nda':
+        slug = access.workflow.room.roompolicy.entry_link.slug
+        return redirect(settings.SITE_DOMAIN.rstrip('/') + '/view/' + slug + '?nda=complete')
     return page(request, state if state != 'welcome' else 'checking', access=access)
 
 

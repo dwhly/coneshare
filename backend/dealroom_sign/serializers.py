@@ -59,7 +59,7 @@ class CredentialInputSerializer(serializers.Serializer):
 
 class NdaPolicyInputSerializer(serializers.Serializer):
     version_id = serializers.CharField(max_length=64)
-    fields = FieldInputSerializer(many=True)
+    fields = FieldInputSerializer(many=True, required=False)
     enabled = serializers.BooleanField(default=True)
 
 

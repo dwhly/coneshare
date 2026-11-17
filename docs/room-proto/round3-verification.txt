@@ -1,0 +1,97 @@
+Round 3 verification — 2026-11-17
+Base: agent/room-proto @ 582a03ba4a93024e3da4c7a752311ef132ed2325.
+No commit, staging, deployment, migration, live Sign operation or mail delivery.
+
+BACKEND (same suite selection as round 2, plus new tests collected under dealroom/tests)
+Final result: 179 passed, 220 warnings, 129.84 seconds (0:02:09).
+Command (Bash, repository root):
+  mkdir -p .testtmp
+  function mktemp() { command mktemp -d /root/worktrees/room-proto/.testtmp/sendlocal.XXXX; }
+  export -f mktemp
+  /root/work/sign-product/run-send-local.sh /root/worktrees/room-proto dealroom/tests tests/dealroom tests/cloudfiles/test_tasks.py
+The runner and its environment are unchanged; only its scratch mktemp is redirected.
+The 164 round-2 cases remain unchanged. Round 3 adds 15 cases covering:
+  - Existing Harbor Light PDF's counterparty signature page/y-band from its PDF text/rules.
+  - Automatic runtime placement despite old policy coordinates; placement evidence + redirectUrl.
+  - Uncertain runtime placement holds; uncertain seed placement raises a visible error.
+  - Seeded NDA placement and populated folders; reset also uses automatic placement.
+  - Preparation status -> exact sealed-artifact bytes, private download and date.
+  - Visitor identity isolation, absence of public access, no room-closure/download-ceiling restriction on own copy.
+  - Signed return reaches the Dealroom confirmation while the workflow awaits its seal.
+  - Workspace style default, second-room inheritance, per-room override/reset, input validation.
+  - Both styles in image/PDF renderers AND actual viewer/download HTTP endpoints.
+  - Saved sender folder order and creation-order fallback, with the host note.
+Warnings: existing short test-secret JWT warnings; newly exercised PDF renderer also reports pypdf's
+existing replace_contents deprecation. No production credentials are used.
+
+FRONTEND
+28 passed across 8 files, 9.80 seconds, on the final frontend source.
+Disposable .testtmp/frontend copy, unchanged Vite/Vitest configurations:
+  npx vitest run --cache=false \
+    src/tests/pages/RoomRound3.test.jsx \
+    src/tests/pages/RoomWatermarkSettings.test.jsx \
+    src/tests/pages/RoomPolish.test.jsx \
+    src/tests/pages/RoomOnramp.test.jsx \
+    src/tests/pages/DealroomRecipient.test.jsx \
+    src/tests/pages/DealroomRoomDetail.test.jsx \
+    src/tests/pages/DealroomPages.test.jsx \
+    src/tests/components/dealroom/GlueShellSelect.test.js
+All original 23 round-2 tests are unchanged. Five new tests verify confirmation/entry/download,
+preparing-to-ready polling, note/folder/personal-copy layout, workspace persistence and room inheritance.
+New test paths were added to vitest.whitelist.json (not its protected config).
+Existing test changes: NONE. No copy expectation change was required.
+
+FAILING-FIRST
+Before product edits, RoomRound3.test.jsx failed all 3 cases: no confirmation/download/polling UI,
+and no collapsible folder sections. Watermark settings tests were added before the component existed
+and initially failed module resolution. They pass with the actual Fleet SelectMenu interaction.
+Before backend edits, the new suite failed on the old signature coordinates, missing needs_sender
+response, absent copy endpoints/confirmation redirect, absent workspace setting and Edge renderer,
+and alphabetical visitor folder order. Test harness issues (fixture relation name, source mock
+keyword arguments, configured fictional signing origin, duplicate fixture document name and the
+existing callback's HTTP 303) were corrected without altering existing tests.
+A separate new reset test failed on the old positionY=70 before changing reset to automatic placement.
+A final fallback-order test failed with alphabetically sorted folders before switching the fallback
+to the sender's creation order. Final new backend cases all pass.
+
+ADDITIONAL SIGNING-ADAPTER REGRESSION RUN (outside the requested round-2 selection)
+78 passed, 1 failed in 69.58 seconds:
+  dealroom_sign/tests/test_workflows.py
+  dealroom_sign/tests/test_placement_send.py
+  dealroom_sign/tests/test_recipient_proxy.py
+The single failure is PRE-EXISTING:
+  test_workflows.py::test_recipient_allowlist_is_built_from_served_routes
+It expects every recipient manifest route to resolve to dealroom_sign; the prior prototype's
+/signing/room and /signing/nda aliases resolve to dealroom.pages and the assertion then tries
+view_class on a function. Reproduced unchanged on a git-archive checkout of HEAD 582a03ba:
+  1 failed in 11.07 seconds, same AttributeError at test_workflows.py:374.
+No existing test was changed, skipped, or excluded from either run to hide this failure.
+
+BUILD AND BROWSER
+npx vite build passed in the disposable frontend copy, 16.85 seconds (final frontend source).
+Existing bundle-size, Browserslist and baseline-browser-mapping notices remain.
+Node 22.22.3. Dependencies installed only in .testtmp/frontend; the scratch lockfile's package
+mirror URLs were normalized to registry.npmjs.org. The repository lockfile is unchanged.
+
+Python Playwright/Chromium installed only in .testtmp/browser-tools and .testtmp/browsers.
+Vite preview on 127.0.0.1:4175, production bundle.
+  PYTHONPATH=.testtmp/browser-tools PLAYWRIGHT_BROWSERS_PATH=$PWD/.testtmp/browsers \
+    /root/work/sign-product/send-venv/bin/python docs/room-proto/round3-smoke.py
+Run round3-watermark-assets.py first in the backend test environment to generate its temporary images.
+All API data is fictional and intercepted; renderer images are real product outputs.
+The download in the browser is a fixture attachment, not a live sealed Sign document.
+Both viewport sizes passed: 1440x1000 and 390x844.
+Confirmed preparation polling, enabled attachment download, explicit room entry, nested collapsible
+folders, host note, separate dated personal NDA, both style images, workspace/room settings changes.
+No browser page errors or horizontal phone overflow. Twenty screenshots captured, with representative captures visually inspected for every surface;
+Edge contains only the bottom line, and full-page companions include the entire rendered page.
+
+REGISTRY AND CLEANUP
+Served operation registry regenerated: 325 operations, 112 staff operations.
+Typed MCP catalog regenerated from OpenAPI; new private-copy and workspace-settings routes included.
+OpenAPI: 0 errors (62 pre-existing schema warning occurrences / 28 unique).
+Protected files unchanged: frontend/vite.config.js, frontend/vitest.whitelist.config.js, .agent/memory.md.
+No Documenso fork changes. The changed backend/dealroom_sign files are the Dealroom-owned adapter.
+git diff --check passed. Temporary frontend/dependencies, Python/browser tools, baseline archive,
+renderer assets, test databases and generated OpenAPI scratch output removed.
+No node_modules or .testtmp remains from this work. No staging, commit, deployment or memory edit.

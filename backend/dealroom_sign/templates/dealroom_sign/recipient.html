@@ -35,6 +35,6 @@
 {% elif state == 'disclosure' %}<h1>Electronic records and signatures</h1><p>By agreeing, you consent to review and sign this document electronically. You can read and save the original PDF before consenting. Keep a copy of the signed PDF and signing certificate sent after completion.</p><p>You need a browser and a PDF reader. To arrange a paper copy or withdraw before signing, reply to the sender of your invitation.</p>
 {% else %}<h1>Open the link in your {{ tenant.name }} Dealroom email</h1><p>Use your personal invitation to continue.</p>{% endif %}
 </div></div>{% endblock %}
-{% block footer %}{{ tenant.name }} Dealroom · Every copy is watermarked to the person it was issued to{% endblock %}
+{% block footer %}{{ tenant.name }} Dealroom · Every copy you open is watermarked with your company and individual details.{% endblock %}
 
 {% block scripts %}<script src="/s/assets/entry.js" defer></script>{% endblock %}

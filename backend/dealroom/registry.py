@@ -91,6 +91,8 @@ RECIPIENT = {'ShareLinkViewDataView', 'ShareLinkPublicMetaView', 'ShareLinkQnATh
 STAFF = {'PreferencesView', 'RoomViewSet', 'OrgViewSet', 'MemberViewSet', 'GrantViewSet', 'EntryLinkViewSet', 'ApprovalViewSet', 'ActivityViewSet', 'DriftViewSet', 'OperationViewSet', 'CopyViewSet', 'AgentKeyViewSet', 'OriginalExceptionViewSet', 'FilePolicyViewSet'}
 UPSTREAM_READ = {'DataroomViewSet', 'DataroomFolderViewSet', 'DataroomDocumentViewSet', 'DocumentViewSet', 'FolderViewSet', 'OrganizationViewSet', 'UserViewSet'}
 HUMAN_ONLY = {('ApprovalViewSet', 'approve'), ('ApprovalViewSet', 'reject')}
+PUBLIC.update({'RecipientSignedNdaView', 'RecipientSignedNdaDownloadView'})
+STAFF.add('WorkspaceSettingsView')
 
 
 def classify(view, method):
@@ -112,6 +114,8 @@ def classify(view, method):
         entry['human_only'] = True
     if name == 'PreferencesView':
         entry['widens_access'] = False
+    if name == 'WorkspaceSettingsView':
+        entry.update(widens_access=False, human_only=not read)
     if name == 'RoomViewSet' and action in ('upload', 'folders', 'drive_review', 'drive_import', 'drive_updates', 'outline', 'answer'):
         entry['widens_access'] = False
     if name == 'RoomViewSet' and action == 'outline' and not read:

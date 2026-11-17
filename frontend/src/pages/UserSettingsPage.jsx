@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/Avatar";
 import { SettingsTabs } from "../components/settings/SettingsTabs";
 import { SUPPORTED_LANGUAGES } from "../lib/constants";
 import { getAvatarInitial } from "../utils/formatters";
+import WatermarkSettings from "../components/dealroom/WatermarkSettings";
 import { Loader2 } from "lucide-react";
 
 function UserSettingsPage() {
@@ -120,6 +121,7 @@ function UserSettingsPage() {
       <div className="mx-auto max-w-3xl">
         <h1 className="text-2xl font-bold mb-6">{t('settings.title')}</h1>
         <SettingsTabs />
+        <div className="mb-6"><WatermarkSettings /></div>
         {isLoading ? (
           <div className="flex h-64 items-center justify-center">
             <Loader2 className="h-8 w-8 animate-spin text-info" />

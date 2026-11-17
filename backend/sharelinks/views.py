@@ -2609,6 +2609,9 @@ def _apply_watermark_to_image(image: Image, watermark_text: str, identity: dict 
     AmForge: when ``identity`` is given, also draws the structured
     'Issued to …' footer and the vertical margin line.
     """
+    if identity and identity.get('watermark_style') == 'edge':
+        from dealroom.watermarks import edge_image
+        return edge_image(image, amforge.footer_text(identity))
     txt_layer = Image.new('RGBA', image.size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(txt_layer)
 
@@ -2743,6 +2746,14 @@ def _generate_watermarked_pdf(document, primary_version, watermark_text, request
             font_name = 'Helvetica'
 
         def _build_watermark_page(page_width, page_height):
+            if identity and identity.get('watermark_style') == 'edge':
+                from dealroom.watermarks import edge_canvas
+                buffer = BytesIO()
+                overlay = canvas.Canvas(buffer, pagesize=(page_width, page_height))
+                edge_canvas(overlay, page_width, page_height, amforge.footer_text(identity), font_name)
+                overlay.save()
+                buffer.seek(0)
+                return PdfReader(buffer).pages[0]
             # --- Logic mirrored from Pillow implementation ---
             font_size = max(WATERMARK_MIN_FONT_SIZE, int(page_width / WATERMARK_FONT_SIZE_RATIO))
 

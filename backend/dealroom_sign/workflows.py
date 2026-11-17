@@ -46,8 +46,6 @@ def record_fact(workflow, kind, source_id, data=None, *, actor=None):
 def command(*, owner, room, version, recipients, idempotency_key, purpose='room_document',
             member=None, policy=None, board_id=None, task_ref=None, requester=None, title=None, placement=None):
     automatic = placement == 'auto' or (placement is None and isinstance(recipients, list) and all(not r.get('fields') for r in recipients))
-    if automatic and purpose != 'room_document':
-        raise ValidationError('Automatic placement is limited to document sends.')
     if not idempotency_key or len(idempotency_key) > 200:
         raise ValidationError('An idempotency key of at most 200 characters is required.')
     metadata = {'placement': 'auto'} if automatic else {}
@@ -126,7 +124,7 @@ class PlacementRequired(Exception):
 
 def check_placement(workflow):
     fact = ObservedSignEvent.objects.filter(workflow=workflow, kind='placement.resolved').first()
-    if not fact and workflow.purpose == 'room_document' and workflow.external_id.startswith('dealroom:') and ':manual:' not in workflow.external_id:
+    if not fact and workflow.external_id.startswith('dealroom:') and ':manual:' not in workflow.external_id:
         raise SignError('placement_evidence_missing')
     if fact:
         data = fact.payload.get('data', {})
@@ -411,7 +409,8 @@ def reset_nda(workflow):
         generation = Workflow.objects.filter(room=work.room, purpose='nda', member_id=work.member_id,
             policy_revision=work.policy_revision).count()
         replacement = command(owner=work.owner, room=work.room, version=policy.source_version,
-            recipients=[{'email': member.email, 'name': member.name, 'fields': policy.fields}],
+            recipients=[{'email': member.email, 'name': member.name,
+                         'company': member.recipient_org.name if member.recipient_org else ''}], placement='auto',
             idempotency_key=f'nda:{work.room_id}:{member.pk}:{policy.revision}:g{generation}',
             purpose='nda', member=member, policy=policy)
         work.state = 'cancelled'

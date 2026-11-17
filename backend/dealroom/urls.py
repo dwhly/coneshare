@@ -1,11 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from . import views, recipient, downloads
+from . import views, recipient, downloads, nda, watermarks
 
 router = DefaultRouter()
 for name, cls in [('rooms', views.RoomViewSet), ('orgs', views.OrgViewSet), ('members', views.MemberViewSet), ('grants', views.GrantViewSet), ('share-links', views.EntryLinkViewSet), ('approvals', views.ApprovalViewSet), ('activity', views.ActivityViewSet), ('drift', views.DriftViewSet), ('operations', views.OperationViewSet), ('copies', views.CopyViewSet), ('agent-keys', views.AgentKeyViewSet), ('file-policies', views.FilePolicyViewSet), ('original-exceptions', views.OriginalExceptionViewSet)]:
     router.register(name, cls, basename='dealroom-' + name)
 urlpatterns = [
+    path('workspace-settings/', watermarks.WorkspaceSettingsView.as_view()),
+    path('recipient/<slug:slug>/signed-nda/', nda.RecipientSignedNdaView.as_view()),
+    path('recipient/<slug:slug>/signed-nda/download/', nda.RecipientSignedNdaDownloadView.as_view()),
     path('recipient/<slug:slug>/personal/', recipient.RecipientPersonalView.as_view()),
     path('recipient/<slug:slug>/requests/', recipient.RecipientRequestView.as_view()),
     path('preferences/', views.PreferencesView.as_view(), name='dealroom-preferences'),

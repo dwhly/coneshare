@@ -1829,6 +1829,26 @@
     "tier": "read_only",
     "widens_access": false
   },
+  "dealroom_RecipientSignedNdaDownloadView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RecipientSignedNdaDownloadView_endpoint_get",
+    "path": "/api/v1/dealroom/recipient/{slug}/signed-nda/download/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_RecipientSignedNdaView_endpoint_get": {
+    "boundary": "public",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_RecipientSignedNdaView_endpoint_get",
+    "path": "/api/v1/dealroom/recipient/{slug}/signed-nda/",
+    "reason": "Authentication/presentation or recipient-proof boundary.",
+    "tier": "read_only",
+    "widens_access": false
+  },
   "dealroom_RoomViewSet_answer_post": {
     "boundary": "staff",
     "human_only": false,
@@ -1995,6 +2015,26 @@
     "method": "POST",
     "operation_id": "dealroom_RoomViewSet_upload_post",
     "path": "/api/v1/dealroom/rooms/{pk}/upload/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_WorkspaceSettingsView_endpoint_get": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "GET",
+    "operation_id": "dealroom_WorkspaceSettingsView_endpoint_get",
+    "path": "/api/v1/dealroom/workspace-settings/",
+    "reason": "Phase-one staff business operation.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_WorkspaceSettingsView_endpoint_patch": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "PATCH",
+    "operation_id": "dealroom_WorkspaceSettingsView_endpoint_patch",
+    "path": "/api/v1/dealroom/workspace-settings/",
     "reason": "Phase-one staff business operation.",
     "tier": "read_write",
     "widens_access": false

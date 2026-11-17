@@ -24,6 +24,8 @@ from sharelinks.views import _is_dataroom_folder_path_visible
 from .policy import select_grant, evaluate
 from .brand import load_brand
 from .activity import record
+from .nda import copy_status
+from .watermarks import effective_style
 
 
 class ChallengeInput(serializers.Serializer):
@@ -183,10 +185,15 @@ class RecipientRoomView(APIView):
             except PermissionDenied:
                 continue
             version = item.document.versions.filter(is_primary=True).first()
-            if not version:
+            if not version or hasattr(version, 'executedartifact'):
                 continue
             files.append({'id': str(item.pk), 'name': item.name or item.document.name, 'folder_id': str(item.folder_id or ''), 'page_count': version.num_pages or 1, 'version_number': version.version_number, 'published_at': version.metadata.get('drive_source', {}).get('published_at', version.created_at.isoformat()), 'download_level': file_decision.effective_download_level, 'page_url': f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}', 'download_url': f'/api/v1/links/{slug}/download-file/?dataroom_document_id={item.pk}'})
-        all_folders = {str(f.pk): f for f in link.dataroom.folders.order_by('name', 'pk')}
+        orders = list(link.dataroom.item_orders.all())
+        file_order = {str(row.dataroom_document_id): row.position for row in orders if row.dataroom_document_id}
+        folder_order = {str(row.folder_id): row.position for row in orders if row.folder_id}
+        files.sort(key=lambda f: (file_order.get(f['id'], float('inf')), f['id']))
+        all_folders = {str(f.pk): f for f in sorted(link.dataroom.folders.order_by('created_at', 'pk'),
+            key=lambda f: folder_order.get(str(f.pk), float('inf')))}
         visible_folder_ids = {item['folder_id'] for item in files if item['folder_id']}
         for id in list(visible_folder_ids):
             folder = all_folders.get(id)
@@ -207,6 +214,7 @@ class RecipientRoomView(APIView):
         return Response({'id': str(link.dataroom_id), 'name': link.dataroom.name,
             'member': {'name': member.name, 'email': member.email, 'org': member.recipient_org.name if member.recipient_org else ''},
             'folders': folders, 'files': files, 'brand': load_brand(), 'note': invite.data['note'] if invite else state['note'],
+            'signed_nda': copy_status(request, link, member), 'watermark_style': effective_style(link),
             'start_here': [i for i in state['start_here'] if i in {f['id'] for f in files}], 'answers': answers,
             'nda_signed': bool(nda and NdaAcceptance.objects.filter(room=link.dataroom, member_id=str(member.pk),
                 policy_revision=str(nda.revision)).exists())})

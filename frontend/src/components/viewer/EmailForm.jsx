@@ -193,9 +193,7 @@ export function EmailForm({
           <div className="p-2.5 rounded-lg bg-muted border border-border/70 text-[11px] text-muted-foreground leading-normal flex items-start gap-2">
             <Info className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
             <span>
-              {t('amforge.viewer.watermarkNotice', {
-                defaultValue: 'Your name, organisation and email are watermarked on every page and copy, and access is logged.',
-              })}
+              {t('amforge.viewer.watermarkNotice')}
             </span>
           </div>
 

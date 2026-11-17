@@ -44,7 +44,7 @@
     <div id="pages" class="pages"></div>
   </section>
 </div>
-{% endblock %}{% block footer %}{{ tenant.name }} Dealroom · Every copy is watermarked to the person it was issued to{% endblock %}{% block scripts %}<script>
+{% endblock %}{% block footer %}{{ tenant.name }} Dealroom · Every copy you open is watermarked with your company and individual details.{% endblock %}{% block scripts %}<script>
 const {h,drPager}=window.drShell;
 const slug='{{ slug|escapejs }}', roomId='{{ room_id|escapejs }}';let csrf='',challenge='';
 const el=id=>document.getElementById(id);
@@ -60,7 +60,7 @@ const pager=drPager(el('files-foot'),{noun:'document',onPage:()=>showList()});
 async function load(){try{const room=await api(prefix+'/room/');el('verify').hidden=true;el('nda').hidden=true;el('message').hidden=true;
   el('context-room').textContent=room.name;who(room.member);files=room.files;showList();return true}
   catch(e){if(e.data?.code==='nda_required'||JSON.stringify(e.data).includes('nda_required')){el('verify').hidden=true;el('nda').hidden=false;head('One step before you enter','Your email is verified. The room owner asks everyone to sign an NDA first.');try{who(JSON.parse(sessionStorage.getItem(KEY)))}catch(_){}await ndaStatus()}return false}}
-function showList(){head('Documents',files.length?'Every copy you open is watermarked with your name.':'Nothing has been shared in this room yet.');el('viewer').hidden=true;el('page-actions').hidden=true;el('contents').hidden=false;
+function showList(){head('Documents',files.length?'Every copy you open is watermarked with your company and individual details.':'Nothing has been shared in this room yet.');el('viewer').hidden=true;el('page-actions').hidden=true;el('contents').hidden=false;
   pager.render(files.length);
   el('files').replaceChildren(...(files.length?pager.slice(files).map(f=>{const pages=f.page_count||1;const tr=h('tr',{});
     const open=h('a',{class:'dr-btn dr-btn--sm',href:f.page_url,rel:'noreferrer',text:'View',onclick:e=>{e.preventDefault();view(f)}});

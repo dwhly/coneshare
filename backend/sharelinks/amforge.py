@@ -201,7 +201,11 @@ def issue_copy(share_link, request, document, kind, dataroom_document=None, auth
                 "Issued %s copy %s link=%s document=%s email=%s",
                 kind, copy.copy_id, share_link.id, getattr(document, 'id', None), copy.viewer_email,
             )
-    return _identity_dict(copy, ip_address)
+    identity = _identity_dict(copy, ip_address)
+    if getattr(settings, 'DEALROOM_ENABLED', False):
+        from dealroom.watermarks import effective_style
+        identity['watermark_style'] = effective_style(share_link)
+    return identity
 
 
 def anonymous_identity(request, viewer_email: str = '') -> dict:
