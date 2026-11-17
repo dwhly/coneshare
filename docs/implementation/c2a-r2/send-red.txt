@@ -1,0 +1,156 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________ test_r2_missing_auto_fact_stops_before_remote_write ______________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (2ba5c115-c9eb-4c99-9938-9955a32d7114)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_r2_missing_auto_fact_stops_before_remote_write(fixture):
+        work = send(fixture)
+        ObservedSignEvent.objects.filter(workflow=work, kind='placement.resolved').delete()
+        client = Mock()
+        with pytest.raises(SignError, match='placement_evidence_missing'):
+>           execute(work, client)
+
+backend/dealroom_sign/tests/test_placement_send.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/dealroom_sign/workflows.py:196: in execute
+    pdf = source_bytes(workflow.source_version)
+backend/dealroom_sign/storage.py:29: in source_bytes
+    response.raise_for_status()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [404 Not Found]>
+
+    def raise_for_status(self) -> Response:
+        """
+        Raise the `HTTPStatusError` if one occurred.
+        """
+        request = self._request
+        if request is None:
+            raise RuntimeError(
+                "Cannot call `raise_for_status` as the request "
+                "instance has not been set on this response."
+            )
+    
+        if self.is_success:
+            return self
+    
+        if self.has_redirect_location:
+            message = (
+                "{error_type} '{0.status_code} {0.reason_phrase}' for url '{0.url}'\n"
+                "Redirect location: '{0.headers[location]}'\n"
+                "For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/{0.status_code}"
+            )
+        else:
+            message = (
+                "{error_type} '{0.status_code} {0.reason_phrase}' for url '{0.url}'\n"
+                "For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/{0.status_code}"
+            )
+    
+        status_class = self.status_code // 100
+        error_types = {
+            1: "Informational response",
+            3: "Redirect response",
+            4: "Client error",
+            5: "Server error",
+        }
+        error_type = error_types.get(status_class, "Invalid status code")
+        message = message.format(self, error_type=error_type)
+>       raise HTTPStatusError(message, request=request, response=self)
+E       httpx.HTTPStatusError: Client error '404 Not Found' for url 'http://127.0.0.1:18080/files/download/d5f0683f-c09c-43c7-a125-5fc84f3c3723'
+E       For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+
+/tmp/send-c2a-r2-venv/lib/python3.13/site-packages/httpx/_models.py:829: HTTPStatusError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7G0TVEQ897NJQFQ41S1JEEC
+________________ test_r2_date_only_envelope_and_native_metadata ________________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (273e95db-9ad5-429d-8470-b92615e46223)>, credential=<SignCredential: SignCredential object (1)>)
+
+    def test_r2_date_only_envelope_and_native_metadata(fixture):
+        from dealroom_sign.workflows import envelope_meta
+        work = send(fixture)
+>       assert envelope_meta(work)['dateFormat'] == 'yyyy-MM-dd'
+E       KeyError: 'dateFormat'
+
+backend/dealroom_sign/tests/test_placement_send.py:152: KeyError
+__________ test_r2_nearby_sentinel_reaches_neither_model_nor_history ___________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (d8ce2d30-552f-47c5-aa02-f85e3af6d355)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7f5dd82d16d0>
+
+    def test_r2_nearby_sentinel_reaches_neither_model_nor_history(fixture, settings):
+        from dealroom_sign.placement import place
+        from dealroom_sign.tests.test_placement_r2 import nearby_body_pdf, opaque_reply
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)], 'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        model = Mock(side_effect=opaque_reply)
+        def resolve(pdf, signers):
+            return place(pdf, signers, model_client=model)
+        with patch('dealroom_sign.workflows.source_bytes', return_value=nearby_body_pdf()), patch('dealroom_sign.workflows.place', side_effect=resolve):
+>           work = command(owner=fixture.user, room=fixture.room, version=fixture.version,
+                           recipients=[{k:v for k,v in LEE[0].items() if k != 'side'}],
+                           idempotency_key='r2-private', board_id='board-c2a', placement='auto')
+
+backend/dealroom_sign/tests/test_placement_send.py:167: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def command(*, owner, room, version, recipients, idempotency_key, purpose='room_document',
+                member=None, policy=None, board_id=None, task_ref=None, requester=None, title=None, placement=None):
+        automatic = placement == 'auto' or (placement is None and isinstance(recipients, list) and all(not r.get('fields') for r in recipients))
+        if automatic and purpose != 'room_document':
+            raise ValidationError('Automatic placement is limited to document sends.')
+        if not idempotency_key or len(idempotency_key) > 200:
+            raise ValidationError('An idempotency key of at most 200 characters is required.')
+        metadata = {'placement': 'auto'} if automatic else {}
+        if requester is not None or title is not None:
+            if not board_id or purpose != 'room_document':
+                raise ValidationError('Sender metadata requires a board document request.')
+            if requester is not None:
+                requester = requester_snapshot(requester)
+                metadata['requester'] = requester
+            if title is not None:
+                title = clean_title(title)
+                metadata['title'] = title
+        existing = Workflow.objects.filter(owner=owner, idempotency_key=idempotency_key).first()
+        if existing:
+            normalized = validate_recipients(recipients, None, page_count=500, automatic=automatic)
+            data = {'room': str(room.pk), 'version': str(version.pk), 'sha256': existing.source_sha256,
+                    'recipients': normalized, 'purpose': purpose, 'member': str(member.pk) if member else '',
+                    'policy': str(policy.revision) if policy else ''}
+            if board_id:
+                data.update(board_id=board_id, task_ref=task_ref)
+            data.update(metadata)
+            if request_digest(data) != existing.request_sha256 or (member and existing.member_email != member.email.strip().lower()) or (policy and policy.source_sha256 != existing.source_sha256):
+                raise ValidationError('Idempotency key already used with different inputs.')
+            if board_id:
+                with transaction.atomic():
+                    legacy_request(existing, board_id, task_ref, requester=requester, title=title)
+            return existing
+        pdf = source_bytes(version)
+        recipients = validate_recipients(recipients, pdf, automatic=automatic)
+        if purpose == 'nda':
+            if not member or len(recipients) != 1 or recipients[0]['email'] != member.email.strip().lower():
+                raise ValidationError('NDA signer must match the verified member.')
+            if not policy or digest(pdf) != policy.source_sha256:
+                raise ValidationError('NDA source revision changed.')
+        data = {'room': str(room.pk), 'version': str(version.pk), 'sha256': digest(pdf),
+                'recipients': recipients, 'purpose': purpose,
+                'member': str(member.pk) if member else '', 'policy': str(policy.revision) if policy else ''}
+        if board_id:
+            data.update(board_id=board_id, task_ref=task_ref)
+        data.update(metadata)
+        fingerprint = request_digest(data)
+        analysis = None
+        if automatic:
+            analysis = place(pdf, recipients)
+            if analysis['status'] != 'placed':
+>               raise PlacementRequired(analysis)
+E               dealroom_sign.workflows.PlacementRequired: Couldn't tell where Lee Harbor signs and dates. Placement review comes next; nothing was sent.
+
+backend/dealroom_sign/workflows.py:96: PlacementRequired
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_r2_missing_auto_fact_stops_before_remote_write
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_r2_date_only_envelope_and_native_metadata
+FAILED backend/dealroom_sign/tests/test_placement_send.py::test_r2_nearby_sentinel_reaches_neither_model_nor_history
+3 failed, 11 deselected in 11.18s

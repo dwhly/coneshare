@@ -1,0 +1,72 @@
+...........................................................F..F...F..... [ 20%]
+........................................................................ [ 40%]
+........................................................................ [ 60%]
+..............................................................ssssssssss [ 80%]
+ssss.....ssssssssssssssssssssssssssssssssssssssssssss...............     [100%]
+=================================== FAILURES ===================================
+_____________ CloudEditionTest.test_detail_pages_program_and_epic ______________
+
+self = <tests.test_cloud_edition.CloudEditionTest testMethod=test_detail_pages_program_and_epic>
+
+    def test_detail_pages_program_and_epic(self):
+        a = self.app(ALEX)
+        for view, qs in (("biz-wall", ["?program=Program%20North", "?program=Unassigned", "?epic=notion.co:e1",
+                                       "?program=Nope", "?epic=notion.tasks:t1", "?program="]),
+                         ("eng-wall", ["?program=Platform", "?epic=jira.epics:ENG-20"]),
+                         ("biz-tasks", ["?program=x"])):
+            for q in qs:
+                got, want = self.fn(f"/api/views/{view}/cards{q}"), a.get(f"/api/views/{view}/cards{q}")
+                self.assertEqual(got["status"], want.status_code, (view, q))
+                if want.status_code == 200:
+>                   self.assertEqual(self.strip(got["body"]), self.strip(want.json()), (view, q))
+E                   AssertionError: {'vie[149 chars]': {'0': 'Later', '1': 'Normal', '2': 'High', [11022 chars]1'}}} != {'vie[149 chars]': {'3': 'Urgent', '2': 'High', '1': 'Normal',[11090 chars]1'}}}
+E                   Diff is 26894 characters long. Set self.maxDiff to None to see it. : ('biz-wall', '?program=Program%20North')
+
+tests/test_cloud_edition.py:297: AssertionError
+_____ CloudEditionTest.test_function_serves_the_same_endpoints_and_shapes ______
+
+self = <tests.test_cloud_edition.CloudEditionTest testMethod=test_function_serves_the_same_endpoints_and_shapes>
+
+    def test_function_serves_the_same_endpoints_and_shapes(self):
+        for email in (ALEX, SAM):
+            a = self.app(email)
+            me = self.fn("/api/me", email)["body"]
+            self.assertLess(me.pop("relay_age"), 60)
+            self.assertEqual({**me, "via": "x"}, {**a.get("/api/me").json(), "via": "x"}, email)
+            self.assertEqual(self.fn("/api/theme", email)["body"], a.get("/api/theme").json(), email)
+            for v in [x["id"] for x in me["views"]]:
+                got = self.fn(f"/api/views/{v}/cards", email)["body"]
+                want = a.get(f"/api/views/{v}/cards").json()
+>               self.assertEqual(self.strip(got), self.strip(want), (email, v))
+E               AssertionError: {'vie[149 chars]': {'0': 'Later', '1': 'Normal', '2': 'High', [17545 chars]4'}}} != {'vie[149 chars]': {'3': 'Urgent', '2': 'High', '1': 'Normal',[17623 chars]4'}}}
+E               Diff is 45555 characters long. Set self.maxDiff to None to see it. : ('alex@example.test', 'biz-wall')
+
+tests/test_cloud_edition.py:280: AssertionError
+__________ CloudEditionTest.test_relay_publishes_the_tailnet_payload ___________
+
+self = <tests.test_cloud_edition.CloudEditionTest testMethod=test_relay_publishes_the_tailnet_payload>
+
+    def test_relay_publishes_the_tailnet_payload(self):
+        for view in ("biz-wall", "biz-tasks", "eng-wall", "private"):
+            want = self.app(ALEX).get(f"/api/views/{view}/cards").json()
+>           self.assertEqual(self.strip(self.snapshot(view)), self.strip(want), view)      # the same payload
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: {'vie[4684 chars]'}, 'cards': {'notion.co:e1': {'id': 'notion.c[13036 chars]4'}}} != {'vie[4684 chars]'}, 'dictate': False, 'offers': [], 'prompt_st[13088 chars]4'}}}
+E           Diff is 43924 characters long. Set self.maxDiff to None to see it. : biz-wall
+
+tests/test_cloud_edition.py:260: AssertionError
+=============================== warnings summary ===============================
+../../../usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+tests/test_service.py::PreviewReadOnlyTests::test_writes_refused_reads_allowed
+  /root/worktrees/board-s1/tests/test_service.py:767: HermesPluginCompatWarning: hermes plugin compat: `hermes_cli.kanban_db.connect` moved to `hermes_cli.kanban_db_connect.connect`. The old path is kept only for external plugins and is removed on 2026-09-14; update your import.
+    self.assertNotEqual(kanban_db.get_task(kanban_db.connect(board=BOARD), tid).status, "done")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_cloud_edition.py::CloudEditionTest::test_detail_pages_program_and_epic
+FAILED tests/test_cloud_edition.py::CloudEditionTest::test_function_serves_the_same_endpoints_and_shapes
+FAILED tests/test_cloud_edition.py::CloudEditionTest::test_relay_publishes_the_tailnet_payload
+3 failed, 295 passed, 58 skipped, 2 warnings in 33.06s

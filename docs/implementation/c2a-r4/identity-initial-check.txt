@@ -1,0 +1,364 @@
+....................F................................................... [ 69%]
+...........................F.FFF                                         [100%]
+=================================== FAILURES ===================================
+_ test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales] _
+
+title = 'Senior Vice President of Sales'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}...44, 377.656, 405.91999999999996], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+        assert result['status'] == 'placed', result
+        assert len(result['fields']) == sum(map(len, GOLDENS[name].values()))
+        for index, boxes in GOLDENS[name].items():
+            actual = [f for f in result['fields'] if f['signer'] == signers[index]['email']]
+            for typ, page, *rect in boxes:
+                field = next(f for f in actual if f['type'] == typ)
+                assert field['page'] == page
+>               assert [field[k] * size / 100 for k, size in zip(('x', 'y', 'w', 'h'), (612, 792, 612, 792))] == pytest.approx(rect, abs=EXPECTED['tolerance_pt'])
+E               assert [352.54400148..., 12.99999888] == approx([359.2...13 ± 2.0e+00])
+E                 
+E                 comparison failed. Mismatched elements: 2 / 4:
+E                 Max absolute difference: 16.68399772
+E                 Max relative difference: 0.3125748839802395
+E                 Index | Obtained     | Expected        
+E                 0     | 352.54400148 | 359.21 ± 2.0e+00
+E                 2     | 53.37600228  | 70.06 ± 2.0e+00
+
+dealroom_sign/tests/test_placement.py:45: AssertionError
+__________ test_configured_provider_uses_bounded_minimal_request[ok] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787d5dcede50>
+mode = 'ok'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+            factory.assert_called_once()
+            assert 0 < factory.call_args.kwargs['timeout'] <= 12
+            assert factory.call_args.kwargs['follow_redirects'] is False
+            assert captured['url'] == 'https://openrouter.ai/api/v1/chat/completions'
+            assert captured['json']['model'] == 'fixture/cheap-tier'
+            assert captured['json']['max_tokens'] == 2000
+>           assert 'PRIVATE BODY SENTINEL' not in json.dumps(captured)
+
+dealroom_sign/tests/test_placement.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+/usr/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+/usr/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.encoder.JSONEncoder object at 0x787d674791f0>
+o = Timeout(connect=11.753792022005655, read=2, write=11.753792022005655, pool=1)
+
+    def default(self, o):
+        """Implement this method in a subclass such that it returns
+        a serializable object for ``o``, or calls the base implementation
+        (to raise a ``TypeError``).
+    
+        For example, to support arbitrary iterators, you could
+        implement default like this::
+    
+            def default(self, o):
+                try:
+                    iterable = iter(o)
+                except TypeError:
+                    pass
+                else:
+                    return list(iterable)
+                # Let the base class default method raise the TypeError
+                return super().default(o)
+    
+        """
+>       raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
+E       TypeError: Object of type Timeout is not JSON serializable
+
+/usr/lib/python3.12/json/encoder.py:180: TypeError
+______ test_configured_provider_uses_bounded_minimal_request[http_error] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787d5dceef90>
+mode = 'http_error'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+            factory.assert_called_once()
+            assert 0 < factory.call_args.kwargs['timeout'] <= 12
+            assert factory.call_args.kwargs['follow_redirects'] is False
+            assert captured['url'] == 'https://openrouter.ai/api/v1/chat/completions'
+            assert captured['json']['model'] == 'fixture/cheap-tier'
+            assert captured['json']['max_tokens'] == 2000
+>           assert 'PRIVATE BODY SENTINEL' not in json.dumps(captured)
+
+dealroom_sign/tests/test_placement.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+/usr/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+/usr/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.encoder.JSONEncoder object at 0x787d674791f0>
+o = Timeout(connect=11.780283231986687, read=2, write=11.780283231986687, pool=1)
+
+    def default(self, o):
+        """Implement this method in a subclass such that it returns
+        a serializable object for ``o``, or calls the base implementation
+        (to raise a ``TypeError``).
+    
+        For example, to support arbitrary iterators, you could
+        implement default like this::
+    
+            def default(self, o):
+                try:
+                    iterable = iter(o)
+                except TypeError:
+                    pass
+                else:
+                    return list(iterable)
+                # Let the base class default method raise the TypeError
+                return super().default(o)
+    
+        """
+>       raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
+E       TypeError: Object of type Timeout is not JSON serializable
+
+/usr/lib/python3.12/json/encoder.py:180: TypeError
+_______ test_configured_provider_uses_bounded_minimal_request[oversized] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787d5f5ddd90>
+mode = 'oversized'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+            factory.assert_called_once()
+            assert 0 < factory.call_args.kwargs['timeout'] <= 12
+            assert factory.call_args.kwargs['follow_redirects'] is False
+            assert captured['url'] == 'https://openrouter.ai/api/v1/chat/completions'
+            assert captured['json']['model'] == 'fixture/cheap-tier'
+            assert captured['json']['max_tokens'] == 2000
+>           assert 'PRIVATE BODY SENTINEL' not in json.dumps(captured)
+
+dealroom_sign/tests/test_placement.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+/usr/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+/usr/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.encoder.JSONEncoder object at 0x787d674791f0>
+o = Timeout(connect=11.756732393056154, read=2, write=11.756732393056154, pool=1)
+
+    def default(self, o):
+        """Implement this method in a subclass such that it returns
+        a serializable object for ``o``, or calls the base implementation
+        (to raise a ``TypeError``).
+    
+        For example, to support arbitrary iterators, you could
+        implement default like this::
+    
+            def default(self, o):
+                try:
+                    iterable = iter(o)
+                except TypeError:
+                    pass
+                else:
+                    return list(iterable)
+                # Let the base class default method raise the TypeError
+                return super().default(o)
+    
+        """
+>       raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
+E       TypeError: Object of type Timeout is not JSON serializable
+
+/usr/lib/python3.12/json/encoder.py:180: TypeError
+_____ test_configured_provider_uses_bounded_minimal_request[invalid_json] ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787d5dc3d910>
+mode = 'invalid_json'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+            factory.assert_called_once()
+            assert 0 < factory.call_args.kwargs['timeout'] <= 12
+            assert factory.call_args.kwargs['follow_redirects'] is False
+            assert captured['url'] == 'https://openrouter.ai/api/v1/chat/completions'
+            assert captured['json']['model'] == 'fixture/cheap-tier'
+            assert captured['json']['max_tokens'] == 2000
+>           assert 'PRIVATE BODY SENTINEL' not in json.dumps(captured)
+
+dealroom_sign/tests/test_placement.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+/usr/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+/usr/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.encoder.JSONEncoder object at 0x787d674791f0>
+o = Timeout(connect=11.771157645038329, read=2, write=11.771157645038329, pool=1)
+
+    def default(self, o):
+        """Implement this method in a subclass such that it returns
+        a serializable object for ``o``, or calls the base implementation
+        (to raise a ``TypeError``).
+    
+        For example, to support arbitrary iterators, you could
+        implement default like this::
+    
+            def default(self, o):
+                try:
+                    iterable = iter(o)
+                except TypeError:
+                    pass
+                else:
+                    return list(iterable)
+                # Let the base class default method raise the TypeError
+                return super().default(o)
+    
+        """
+>       raise TypeError(f'Object of type {o.__class__.__name__} '
+                        f'is not JSON serializable')
+E       TypeError: Object of type Timeout is not JSON serializable
+
+/usr/lib/python3.12/json/encoder.py:180: TypeError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales]
+FAILED dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[ok]
+FAILED dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[http_error]
+FAILED dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[oversized]
+FAILED dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[invalid_json]
+5 failed, 99 passed, 8 deselected in 29.06s

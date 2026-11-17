@@ -1,0 +1,38 @@
+{
+  "head": "1efaca25aeb96a2de506980d8eb4e7bc11caf00d",
+  "analysis_version": "c2a.6",
+  "send": {
+    "passed": 916,
+    "failed": 0,
+    "skipped": 0,
+    "duration_seconds": 384.3
+  },
+  "baseline": {
+    "head": "1efaca25",
+    "failed": 55,
+    "passed_controls": 4,
+    "duration_seconds": 28.84
+  },
+  "exact_goldens": [
+    "bare",
+    "nda",
+    "offer",
+    "roles",
+    "witness",
+    "harbor",
+    "unusual"
+  ],
+  "existing_tests_and_fixtures_unchanged": true,
+  "git_index_empty": true,
+  "sha256": {
+    "backend/dealroom_sign/placement.py": "7b975bb2f74f3a72f717fe79c1b91e21a663d3701e38f775b547383045569711",
+    "backend/dealroom_sign/tests/test_placement_r6.py": "d606e2aca35aeb1e089df15f0df79d66c83b54e17dd2bebb3dad637d15380c98",
+    "backend/dealroom_sign/tests/test_send_r6.py": "a3e5603df9810db6d35eaac15ca88df5cc8b95bcca9ed5581cd71450ccbc1e71",
+    "docs/implementation/c1b-report.md": "27b0d9273ef50fe248e12a430b68ef1346d11f675554e6c0e5c1e367ae1896c5",
+    "docs/implementation/c2a-runbook.md": "2a9eee34242c7bfff0d60df7feaf3406c930fa51f5a27dfc1c68146ee879b2b7",
+    "docs/implementation/c2a-r6/send-signing-suite.txt": "e6a5f102d9415135019db0d80fe0d6a90c08a4d49d8d090078c725176571b35c",
+    "docs/implementation/c2a-r6/baseline-send-red.txt": "1807b760450a380aa719cf4e2366b494cb38548c6de30edf9cd4be77260a2c7c",
+    "docs/implementation/c2a-r6/placements.json": "18cf236e95e9f70e2ec1d98a383f2a076cf85cf22423fa976a86bade50d70a78"
+  },
+  "edd_sha256": "2ba90053c13b15f3b7cac8826f7ec22966d11395557ef346d47454df41aa84c4"
+}

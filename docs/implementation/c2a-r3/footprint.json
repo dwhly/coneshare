@@ -1,0 +1,33 @@
+{
+  "send": {
+    "head": "adc218d7",
+    "branch": "agent/c1b-counterparty",
+    "index_empty": true,
+    "status": [
+      " M backend/dealroom/uploads.py",
+      " M backend/dealroom/views.py",
+      " M backend/dealroom_sign/placement.py",
+      " M backend/dealroom_sign/placement_worker.py",
+      " M backend/dealroom_sign/workflows.py",
+      " M docs/implementation/c1b-report.md",
+      "?? backend/dealroom_sign/tests/test_placement_r3.py",
+      "?? backend/dealroom_sign/tests/test_placement_resources_r3.py",
+      "?? backend/dealroom_sign/tests/test_send_r3.py",
+      "?? docs/implementation/c2a-r3/"
+    ]
+  },
+  "board": {
+    "head": "58599f1",
+    "branch": "agent/sign-s1",
+    "index_empty": true,
+    "status": [
+      " M hermes_board/app.py",
+      " M hermes_board/dealroom.py",
+      " M tests/test_dealroom_sign.py",
+      "?? tests/test_dealroom_c2a_r3.py"
+    ]
+  },
+  "goldens_unchanged": true,
+  "existing_send_placement_tests_unchanged": true,
+  "memory_unchanged": true
+}

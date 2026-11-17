@@ -1,0 +1,412 @@
+FFFFF.F...F..F...F..F...F..F...F..F...F..F...F.FF..                      [100%]
+=================================== FAILURES ===================================
+_ test_reviewer_wrong_signer_goldens[harbor-Pat Smith-pat@harborlight.fleet.test] _
+
+printed = 'harbor', name = 'Pat Smith', email = 'pat@harborlight.fleet.test'
+
+    @pytest.mark.parametrize('printed,name,email', [
+        ('harbor', 'Pat Smith', 'pat@harborlight.fleet.test'),
+        ('harbor', 'Other Person', 'person@ar.com'),
+        ('Jordan Lee', 'Dan Lee', 'dan@gmail.com'),
+        ('Joann Lee', 'Ann Lee', 'ann@gmail.com'),
+        ('harbor', 'Pat Lee', 'pat@harborlight.fleet.test'),
+    ])
+    def test_reviewer_wrong_signer_goldens(printed, name, email):
+        pdf = (FIXTURES / 'harbor.pdf').read_bytes() if printed == 'harbor' else named_pdf(printed)
+        result = placement.place(pdf, [{'name': name, 'email': email}])
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:37: AssertionError
+____ test_reviewer_wrong_signer_goldens[harbor-Other Person-person@ar.com] _____
+
+printed = 'harbor', name = 'Other Person', email = 'person@ar.com'
+
+    @pytest.mark.parametrize('printed,name,email', [
+        ('harbor', 'Pat Smith', 'pat@harborlight.fleet.test'),
+        ('harbor', 'Other Person', 'person@ar.com'),
+        ('Jordan Lee', 'Dan Lee', 'dan@gmail.com'),
+        ('Joann Lee', 'Ann Lee', 'ann@gmail.com'),
+        ('harbor', 'Pat Lee', 'pat@harborlight.fleet.test'),
+    ])
+    def test_reviewer_wrong_signer_goldens(printed, name, email):
+        pdf = (FIXTURES / 'harbor.pdf').read_bytes() if printed == 'harbor' else named_pdf(printed)
+        result = placement.place(pdf, [{'name': name, 'email': email}])
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:37: AssertionError
+_____ test_reviewer_wrong_signer_goldens[Jordan Lee-Dan Lee-dan@gmail.com] _____
+
+printed = 'Jordan Lee', name = 'Dan Lee', email = 'dan@gmail.com'
+
+    @pytest.mark.parametrize('printed,name,email', [
+        ('harbor', 'Pat Smith', 'pat@harborlight.fleet.test'),
+        ('harbor', 'Other Person', 'person@ar.com'),
+        ('Jordan Lee', 'Dan Lee', 'dan@gmail.com'),
+        ('Joann Lee', 'Ann Lee', 'ann@gmail.com'),
+        ('harbor', 'Pat Lee', 'pat@harborlight.fleet.test'),
+    ])
+    def test_reviewer_wrong_signer_goldens(printed, name, email):
+        pdf = (FIXTURES / 'harbor.pdf').read_bytes() if printed == 'harbor' else named_pdf(printed)
+        result = placement.place(pdf, [{'name': name, 'email': email}])
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],...ate:'}], 'line': [112.0, 394.0, 260.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:37: AssertionError
+_____ test_reviewer_wrong_signer_goldens[Joann Lee-Ann Lee-ann@gmail.com] ______
+
+printed = 'Joann Lee', name = 'Ann Lee', email = 'ann@gmail.com'
+
+    @pytest.mark.parametrize('printed,name,email', [
+        ('harbor', 'Pat Smith', 'pat@harborlight.fleet.test'),
+        ('harbor', 'Other Person', 'person@ar.com'),
+        ('Jordan Lee', 'Dan Lee', 'dan@gmail.com'),
+        ('Joann Lee', 'Ann Lee', 'ann@gmail.com'),
+        ('harbor', 'Pat Lee', 'pat@harborlight.fleet.test'),
+    ])
+    def test_reviewer_wrong_signer_goldens(printed, name, email):
+        pdf = (FIXTURES / 'harbor.pdf').read_bytes() if printed == 'harbor' else named_pdf(printed)
+        result = placement.place(pdf, [{'name': name, 'email': email}])
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],...ate:'}], 'line': [112.0, 394.0, 260.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:37: AssertionError
+_ test_reviewer_wrong_signer_goldens[harbor-Pat Lee-pat@harborlight.fleet.test] _
+
+printed = 'harbor', name = 'Pat Lee', email = 'pat@harborlight.fleet.test'
+
+    @pytest.mark.parametrize('printed,name,email', [
+        ('harbor', 'Pat Smith', 'pat@harborlight.fleet.test'),
+        ('harbor', 'Other Person', 'person@ar.com'),
+        ('Jordan Lee', 'Dan Lee', 'dan@gmail.com'),
+        ('Joann Lee', 'Ann Lee', 'ann@gmail.com'),
+        ('harbor', 'Pat Lee', 'pat@harborlight.fleet.test'),
+    ])
+    def test_reviewer_wrong_signer_goldens(printed, name, email):
+        pdf = (FIXTURES / 'harbor.pdf').read_bytes() if printed == 'harbor' else named_pdf(printed)
+        result = placement.place(pdf, [{'name': name, 'email': email}])
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 7, 'score': 7, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:37: AssertionError
+__________ test_unnamed_signer_never_takes_named_block[Pat Smith-nda] __________
+
+fixture = 'nda', other_name = 'Pat Smith'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 5, 'score': 5, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32bd0a00>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+________ test_unnamed_signer_never_takes_named_block[Pat Smith-harbor] _________
+
+fixture = 'harbor', other_name = 'Pat Smith'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 5, 'score': 5, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32b7d080>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+___________ test_unnamed_signer_never_takes_named_block[Pat Lee-nda] ___________
+
+fixture = 'nda', other_name = 'Pat Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 8, 'score': 8, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32c27e00>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+_________ test_unnamed_signer_never_takes_named_block[Pat Lee-harbor] __________
+
+fixture = 'harbor', other_name = 'Pat Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 8, 'score': 8, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32b8d2f0>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+___________ test_unnamed_signer_never_takes_named_block[Ann Lee-nda] ___________
+
+fixture = 'nda', other_name = 'Ann Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 8, 'score': 8, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32b8c860>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+_________ test_unnamed_signer_never_takes_named_block[Ann Lee-harbor] __________
+
+fixture = 'harbor', other_name = 'Ann Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 8, 'score': 8, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32b7ca00>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+___________ test_unnamed_signer_never_takes_named_block[Dan Lee-nda] ___________
+
+fixture = 'nda', other_name = 'Dan Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 8, 'score': 8, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32b7f100>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+_________ test_unnamed_signer_never_takes_named_block[Dan Lee-harbor] __________
+
+fixture = 'harbor', other_name = 'Dan Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 8, 'score': 8, ...}],...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32c27100>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+_____________ test_unnamed_signer_never_takes_named_block[Lee-nda] _____________
+
+fixture = 'nda', other_name = 'Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 5, 'score': 11, ...}]...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32c26f60>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+___________ test_unnamed_signer_never_takes_named_block[Lee-harbor] ____________
+
+fixture = 'harbor', other_name = 'Lee'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 5, 'score': 11, ...}]...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32b8f9f0>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+___________ test_unnamed_signer_never_takes_named_block[Harbor-nda] ____________
+
+fixture = 'nda', other_name = 'Harbor'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 11, 'score': 11, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32c28040>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+__________ test_unnamed_signer_never_takes_named_block[Harbor-harbor] __________
+
+fixture = 'harbor', other_name = 'Harbor'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    @pytest.mark.parametrize('other_name', ['Pat Smith', 'Pat Lee', 'Ann Lee', 'Dan Lee', 'Lee', 'Harbor'])
+    def test_unnamed_signer_never_takes_named_block(fixture, other_name):
+        pdf = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        result = placement.place(pdf, [{'name': other_name, 'email': 'pat@harborlight.fleet.test',
+                                       'company': 'Harbor Light Analytics, Inc.', 'title': 'COO'}])
+        blocks, _, _ = placement.extract(pdf)
+        for field in result['fields']:
+            if field['type'] == 'SIGNATURE':
+                # Role-only blanks remain valid; any printed person must match completely.
+                block = next(b for b in blocks if [b.line.x0, b.line.y, b.line.x1] == field['evidence']['line'])
+>               assert not any(name in block.identity for name in ('Lee Harbor', 'Dan Whaley', 'Jordan Reyes')), result
+E               AssertionError: {'analysis_version': 'c2a.1', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 11, 'score': 11, ...}...4, 378.1735, 429.27000000000004], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E               assert not True
+E                +  where True = any(<generator object test_unnamed_signer_never_takes_named_block.<locals>.<genexpr> at 0x793c32c28fb0>)
+
+backend/dealroom_sign/tests/test_placement_r2.py:52: AssertionError
+_________________ test_role_definition_is_anchored_to_company __________________
+
+    def test_role_definition_is_anchored_to_company():
+        _, _, roles = placement.extract((FIXTURES / 'roles.pdf').read_bytes())
+>       assert roles == {'discloser': 'Fleet Test Co.', 'recipient': 'Harbor Light Analytics, Inc.'}
+E       AssertionError: assert {'discloser':...lytics, Inc.'} == {'discloser':...lytics, Inc.'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'discloser': 'CONFIDENTIALITY AGREEMENT This Agreement is made by Fleet Test Co.'} != {'discloser': 'Fleet Test Co.'}
+E         Use -v to get more diff
+
+backend/dealroom_sign/tests/test_placement_r2.py:57: AssertionError
+______________ test_short_company_and_domain_are_not_identity[ar] ______________
+
+hint = 'ar'
+
+    @pytest.mark.parametrize('hint', ['ar', 'ey', 'co'])
+    def test_short_company_and_domain_are_not_identity(hint):
+        block = placement.Block('b0', placement.Line(1, 72, 300, 400, 'drawn'), [],
+                                'Harbor Light Analytics, Inc.', 'Harbor Light Analytics, Inc.', False)
+>       assert placement.score({'name': 'Pat Smith', 'email': 'pat@' + hint + '.com', 'company': hint}, block, {}) == 0
+E       AssertionError: assert 4 == 0
+E        +  where 4 = <function score at 0x793c33981e40>({'company': 'ar', 'email': 'pat@ar.com', 'name': 'Pat Smith'}, Block(id='b0', line=Line(page=1, x0=72, x1=300, y=400, kind='drawn', label={}, semantic=''), labels=[], heading='Harbor Light Analytics, Inc.', identity='Harbor Light Analytics, Inc.', unusual=False, extras={}), {})
+E        +    where <function score at 0x793c33981e40> = placement.score
+
+backend/dealroom_sign/tests/test_placement_r2.py:64: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_reviewer_wrong_signer_goldens[harbor-Pat Smith-pat@harborlight.fleet.test]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_reviewer_wrong_signer_goldens[harbor-Other Person-person@ar.com]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_reviewer_wrong_signer_goldens[Jordan Lee-Dan Lee-dan@gmail.com]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_reviewer_wrong_signer_goldens[Joann Lee-Ann Lee-ann@gmail.com]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_reviewer_wrong_signer_goldens[harbor-Pat Lee-pat@harborlight.fleet.test]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Pat Smith-nda]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Pat Smith-harbor]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Pat Lee-nda]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Pat Lee-harbor]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Ann Lee-nda]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Ann Lee-harbor]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Dan Lee-nda]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Dan Lee-harbor]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Lee-nda]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Lee-harbor]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Harbor-nda]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unnamed_signer_never_takes_named_block[Harbor-harbor]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_role_definition_is_anchored_to_company
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_short_company_and_domain_are_not_identity[ar]
+19 failed, 32 passed in 6.20s

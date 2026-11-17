@@ -1,0 +1,33 @@
+Failed to initialize GeoIP2: GeoIP path must be provided via parameter or the GEOIP_PATH setting.
+............................................flate input=611954 bytes, expanded=600 MiB, elapsed=2.06s, parent RSS growth=128 KiB
+..F
+=================================== FAILURES ===================================
+_______________________ test_many_hairlines_are_bounded ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-259/test_many_hairlines_are_bounde0')
+
+    def test_many_hairlines_are_bounded(tmp_path):
+        # Supervise the old implementation too, so a red run cannot occupy a worker indefinitely.
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        for i in range(100_000):
+            c.line(72, 100 + i * .005, 300, 100 + i * .005)
+        c.save()
+        pdf = tmp_path / 'many-lines.pdf'
+        pdf.write_bytes(out.getvalue())
+        program = "from pathlib import Path; import json; from dealroom_sign.placement import place; print(json.dumps(place(Path(__import__('sys').argv[1]).read_bytes(), [{'name':'Lee Harbor','email':'lee@example.test'}])))"
+        started = time.monotonic()
+        try:
+            run = subprocess.run([sys.executable, '-c', program, str(pdf)], capture_output=True, text=True, timeout=4)
+        except subprocess.TimeoutExpired:
+            pytest.fail('100,000 hairlines exceeded the four-second wall-clock budget')
+        assert time.monotonic() - started < 4
+        result = json.loads(run.stdout)
+        assert result['status'] == 'needs_sender'
+>       assert result['reason_code'] in {'parse_limit', 'placement_timeout'}
+E       AssertionError: assert 'placement_unavailable' in {'parse_limit', 'placement_timeout'}
+
+backend/dealroom_sign/tests/test_placement_r2.py:103: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_many_hairlines_are_bounded
+1 failed, 46 passed, 26 warnings in 26.05s

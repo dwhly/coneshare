@@ -1,0 +1,80 @@
+{
+  "targeted": {
+    "passed": 106,
+    "failed": 0
+  },
+  "full_suite": {
+    "passed": 922,
+    "failed": 45,
+    "skipped": 0,
+    "seconds": 426.16
+  },
+  "new_test_baseline": {
+    "base": "be30d623",
+    "failed": 31,
+    "passed": 20
+  },
+  "failure_baseline": {
+    "base": "be30d623",
+    "failed": 45,
+    "same_failure_ids": true,
+    "seconds": 60.23
+  },
+  "full_suite_failures": [
+    "dealroom_sign/tests/test_gate3_routes.py::test_minor13_alternate_access_csrf_origin_and_previous_cookie",
+    "dealroom_sign/tests/test_recipient_proxy.py::test_scanner_get_does_not_enter_and_enter_requires_csrf_and_exact_origin",
+    "dealroom_sign/tests/test_recipient_proxy.py::test_expired_personal_link_renders_closed_window_without_metadata_or_session",
+    "dealroom_sign/tests/test_review_r2.py::test_path_room_cannot_be_overridden[query-who-viewed]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_room_cannot_be_overridden[query-sources]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_room_cannot_be_overridden[query-nda-policy]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_room_cannot_be_overridden[body-who-viewed]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_room_cannot_be_overridden[body-sources]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_room_cannot_be_overridden[body-nda-policy]",
+    "dealroom_sign/tests/test_review_r2.py::test_two_members_only_see_subject_executed_folders",
+    "dealroom_sign/tests/test_review_r2.py::test_staff_resets_one_member_with_fresh_generation[failed]",
+    "dealroom_sign/tests/test_review_r2.py::test_staff_resets_one_member_with_fresh_generation[quarantined]",
+    "dealroom_sign/tests/test_review_r2.py::test_staff_resets_one_member_with_fresh_generation[distributing]",
+    "dealroom_sign/tests/test_review_r2.py::test_staff_resets_one_member_with_fresh_generation[uncertain]",
+    "dealroom_sign/tests/test_review_r2.py::test_staff_resets_one_member_with_fresh_generation[awaiting_seal]",
+    "dealroom_sign/tests/test_review_r2.py::test_staff_resets_one_member_with_fresh_generation[cancelled]",
+    "dealroom_sign/tests/test_review_r2.py::test_staff_resets_one_member_with_fresh_generation[declined]",
+    "dealroom_sign/tests/test_review_r2.py::test_reset_requires_confirmed_cancellation",
+    "dealroom_sign/tests/test_review_r2.py::test_policy_toggle_keeps_acceptance_revision",
+    "dealroom_sign/tests/test_review_r2.py::test_credential_team_change_warns_before_stranding_work",
+    "dealroom_sign/tests/test_review_r2.py::test_member_start_can_enter_identity_and_revocation",
+    "dealroom_sign/tests/test_review_r2.py::test_subject_can_open_own_nda_evidence",
+    "dealroom_sign/tests/test_review_r2.py::test_approved_nda_edit_takes_effect",
+    "dealroom_sign/tests/test_review_r2.py::test_ordinary_file_cannot_expose_private_executed_folder",
+    "dealroom_sign/tests/test_review_r2.py::test_different_verified_member_cannot_enter_signing",
+    "dealroom_sign/tests/test_review_r2.py::test_scoped_workflow_query_uses_actual_target[retrieve]",
+    "dealroom_sign/tests/test_review_r2.py::test_scoped_workflow_query_uses_actual_target[list]",
+    "dealroom_sign/tests/test_review_r2.py::test_stuck_nda_status_identifies_subject_for_staff",
+    "dealroom_sign/tests/test_review_r2.py::test_path_conflicts_rejected_for_human_staff[query-who-viewed]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_conflicts_rejected_for_human_staff[query-sources]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_conflicts_rejected_for_human_staff[query-nda-policy]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_conflicts_rejected_for_human_staff[body-who-viewed]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_conflicts_rejected_for_human_staff[body-sources]",
+    "dealroom_sign/tests/test_review_r2.py::test_path_conflicts_rejected_for_human_staff[body-nda-policy]",
+    "dealroom_sign/tests/test_review_r2.py::test_quarantined_completed_envelope_can_restart_without_destroying_evidence",
+    "dealroom_sign/tests/test_workflows.py::test_agent_send_has_no_effect_before_human_approval",
+    "dealroom_sign/tests/test_workflows.py::test_nda_gate_edits_require_approval[change0]",
+    "dealroom_sign/tests/test_workflows.py::test_nda_gate_edits_require_approval[change1]",
+    "dealroom_sign/tests/test_workflows.py::test_nda_gate_edits_require_approval[change2]",
+    "dealroom_sign/tests/test_workflows.py::test_agent_never_configures_raw_sign_credential",
+    "dealroom_sign/tests/test_workflows.py::test_status_projection_never_exposes_signing_token",
+    "dealroom_sign/tests/test_workflows.py::test_scoped_key_cannot_query_other_room",
+    "dealroom_sign/tests/test_workflows.py::test_recipient_cannot_use_staff_agent_as_email_proof",
+    "dealroom_sign/tests/test_workflows.py::test_preview_queue_recovers_lost_dispatch_without_touching_canonical",
+    "dealroom_sign/tests/test_placement_transport_r4.py::test_blocked_socket_releases_model_slot_within_read_grace"
+  ],
+  "failure_categories": {
+    "redis_socket_denied": 43,
+    "loopback_socket_denied": 1,
+    "preview_dispatch_assertion": 1
+  },
+  "seven_goldens_exact_against": [
+    "c2a-r4",
+    "c2a-r5"
+  ],
+  "full_suite_verification": "blocked_by_sandbox_socket_restrictions"
+}

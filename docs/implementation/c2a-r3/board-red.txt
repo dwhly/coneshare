@@ -1,0 +1,382 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+________ test_two_cards_same_pdf_same_minute_use_own_uploaded_versions _________
+
+collision_client = (<starlette.testclient.TestClient object at 0x7b06132af110>, <tests.test_dealroom_c2a_r3.CollisionDealroom object at 0x7b06146d7f10>)
+
+    def test_two_cards_same_pdf_same_minute_use_own_uploaded_versions(collision_client):
+        client, fake = collision_client
+        started = time.monotonic()
+        with patch('hermes_board.app.time.strftime', return_value='Nov 15 1430'):
+            replies = [send_card(client, 'Fictional offer one'), send_card(client, 'Fictional offer two')]
+>       assert [r.status_code for r in replies] == [200, 200], [r.text for r in replies]
+E       AssertionError: ['{"workflow_id":"wf-uploaded-1","title":"Offer","signers":[{"name":"Lee Harbor","email":"lee@harborlight.fleet.test"}...://dealroom.test/datarooms/room-1","card_id":"hk.t-biz:t_6406d3f4"}', '{"detail":"Name lookup would wait 60 seconds"}']
+E       assert [200, 504] == [200, 200]
+E         
+E         At index 1 diff: 504 != 200
+E         Use -v to get more diff
+
+tests/test_dealroom_c2a_r3.py:73: AssertionError
+_________________ test_same_name_foreign_upload_never_selected _________________
+
+collision_client = (<starlette.testclient.TestClient object at 0x7b0612a0eb90>, <tests.test_dealroom_c2a_r3.CollisionDealroom object at 0x7b06132c5250>)
+
+    def test_same_name_foreign_upload_never_selected(collision_client):
+        client, fake = collision_client
+        fake.foreign = True
+        reply = send_card(client, 'Fictional parallel offer')
+        assert reply.status_code == 200, reply.text
+>       assert fake.sent == ['uploaded-2']
+E       AssertionError: assert ['foreign'] == ['uploaded-2']
+E         
+E         At index 0 diff: 'foreign' != 'uploaded-2'
+E         Use -v to get more diff
+
+tests/test_dealroom_c2a_r3.py:87: AssertionError
+____________ test_hash_mismatch_holds_without_send[bad_upload_hash] ____________
+
+collision_client = (<starlette.testclient.TestClient object at 0x7b06128b1690>, <tests.test_dealroom_c2a_r3.CollisionDealroom object at 0x7b06129dde10>)
+bad_hash = 'bad_upload_hash'
+
+    @pytest.mark.parametrize('bad_hash', ['bad_upload_hash', 'bad_source_hash'])
+    def test_hash_mismatch_holds_without_send(collision_client, bad_hash):
+        client, fake = collision_client
+        setattr(fake, bad_hash, True)
+        reply = send_card(client, 'Fictional changed source')
+>       assert reply.status_code == 409, reply.text
+E       AssertionError: {"workflow_id":"wf-uploaded-1","title":"Offer","signers":[{"name":"Lee Harbor","email":"lee@harborlight.fleet.test"}],"by":"dan@x.com","created":"2026-11-15T18:58:42.913Z","room_id":"room-1","state":"awaiting_signature","word":"Out for signature","tone":"info","signed":0,"total":1,"error":"","opened":0,"completed_at":null,"people":[{"name":"Lee Harbor","email":"lee@harborlight.fleet.test","status":"waiting","signed_at":null}],"files":{},"room_link":"https://dealroom.test/datarooms/room-1","card_id":"hk.t-biz:t_532eb1c3"}
+E       assert 200 == 409
+E        +  where 200 = <Response [200 OK]>.status_code
+
+tests/test_dealroom_c2a_r3.py:97: AssertionError
+____________ test_hash_mismatch_holds_without_send[bad_source_hash] ____________
+
+collision_client = (<starlette.testclient.TestClient object at 0x7b061294a550>, <tests.test_dealroom_c2a_r3.CollisionDealroom object at 0x7b06128cd050>)
+bad_hash = 'bad_source_hash'
+
+    @pytest.mark.parametrize('bad_hash', ['bad_upload_hash', 'bad_source_hash'])
+    def test_hash_mismatch_holds_without_send(collision_client, bad_hash):
+        client, fake = collision_client
+        setattr(fake, bad_hash, True)
+        reply = send_card(client, 'Fictional changed source')
+>       assert reply.status_code == 409, reply.text
+E       AssertionError: {"workflow_id":"wf-uploaded-1","title":"Offer","signers":[{"name":"Lee Harbor","email":"lee@harborlight.fleet.test"}],"by":"dan@x.com","created":"2026-11-15T18:58:43.100Z","room_id":"room-1","state":"awaiting_signature","word":"Out for signature","tone":"info","signed":0,"total":1,"error":"","opened":0,"completed_at":null,"people":[{"name":"Lee Harbor","email":"lee@harborlight.fleet.test","status":"waiting","signed_at":null}],"files":{},"room_link":"https://dealroom.test/datarooms/room-1","card_id":"hk.t-biz:t_ece70586"}
+E       assert 200 == 409
+E        +  where 200 = <Response [200 OK]>.status_code
+
+tests/test_dealroom_c2a_r3.py:97: AssertionError
+______________ test_disconnected_post_is_unknown_outcome[error0] _______________
+
+error = RemoteDisconnected('closed')
+
+    @pytest.mark.parametrize('error', [http.client.RemoteDisconnected('closed'), ConnectionResetError('reset'),
+                                       http.client.IncompleteRead(b'partial')])
+    def test_disconnected_post_is_unknown_outcome(error):
+        client = dr.Dealroom('https://send.example.test')
+        with patch('urllib.request.urlopen', side_effect=error), pytest.raises(dr.DealroomError) as caught:
+>           client._call('POST', '/dealroom-sign/envelopes/', {}, auth=False)
+
+tests/test_dealroom_c2a_r3.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+hermes_board/dealroom.py:83: in _call
+    with urllib.request.urlopen(req, timeout=self.timeout, context=self.ctx) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='urlopen' id='135266032576592'>
+args = (<urllib.request.Request object at 0x7b0613bfa1d0>,)
+kwargs = {'timeout': 30, 'context': <ssl.SSLContext object at 0x7b06129416d0>}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               http.client.RemoteDisconnected: closed
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: RemoteDisconnected
+______________ test_disconnected_post_is_unknown_outcome[error1] _______________
+
+error = ConnectionResetError('reset')
+
+    @pytest.mark.parametrize('error', [http.client.RemoteDisconnected('closed'), ConnectionResetError('reset'),
+                                       http.client.IncompleteRead(b'partial')])
+    def test_disconnected_post_is_unknown_outcome(error):
+        client = dr.Dealroom('https://send.example.test')
+        with patch('urllib.request.urlopen', side_effect=error), pytest.raises(dr.DealroomError) as caught:
+>           client._call('POST', '/dealroom-sign/envelopes/', {}, auth=False)
+
+tests/test_dealroom_c2a_r3.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+hermes_board/dealroom.py:83: in _call
+    with urllib.request.urlopen(req, timeout=self.timeout, context=self.ctx) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='urlopen' id='135266011699792'>
+args = (<urllib.request.Request object at 0x7b061293f810>,)
+kwargs = {'timeout': 30, 'context': <ssl.SSLContext object at 0x7b0612942de0>}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               ConnectionResetError: reset
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: ConnectionResetError
+______________ test_disconnected_post_is_unknown_outcome[error2] _______________
+
+error = IncompleteRead(7 bytes read)
+
+    @pytest.mark.parametrize('error', [http.client.RemoteDisconnected('closed'), ConnectionResetError('reset'),
+                                       http.client.IncompleteRead(b'partial')])
+    def test_disconnected_post_is_unknown_outcome(error):
+        client = dr.Dealroom('https://send.example.test')
+        with patch('urllib.request.urlopen', side_effect=error), pytest.raises(dr.DealroomError) as caught:
+>           client._call('POST', '/dealroom-sign/envelopes/', {}, auth=False)
+
+tests/test_dealroom_c2a_r3.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+hermes_board/dealroom.py:83: in _call
+    with urllib.request.urlopen(req, timeout=self.timeout, context=self.ctx) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='urlopen' id='135266002484368'>
+args = (<urllib.request.Request object at 0x7b0612070e50>,)
+kwargs = {'timeout': 30, 'context': <ssl.SSLContext object at 0x7b0612943da0>}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               http.client.IncompleteRead: IncompleteRead(7 bytes read)
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: IncompleteRead
+_______________ test_sqlite_busy_is_retryable_and_never_uploads ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-265/test_sqlite_busy_is_retryable_0')
+
+    def test_sqlite_busy_is_retryable_and_never_uploads(tmp_path):
+        upload = Mock()
+        with patch.object(dr, 'sqlite3', SimpleNamespace(connect=Mock(side_effect=sqlite3.OperationalError('database is locked')), OperationalError=sqlite3.OperationalError)):
+            with pytest.raises(dr.DealroomError) as caught:
+>               dr.SubmissionSources(tmp_path / 'sources.sqlite3').resolve('key', upload)
+
+tests/test_dealroom_c2a_r3.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+hermes_board/dealroom.py:44: in resolve
+    with sqlite3.connect(self.path, timeout=90) as db:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='135266010993680'>
+args = (PosixPath('/tmp/pytest-of-root/pytest-265/test_sqlite_busy_is_retryable_0/sources.sqlite3'),)
+kwargs = {'timeout': 90}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               sqlite3.OperationalError: database is locked
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: OperationalError
+____________________ test_busy_route_is_service_unavailable ____________________
+
+collision_client = (<starlette.testclient.TestClient object at 0x7b0613d34190>, <tests.test_dealroom_c2a_r3.CollisionDealroom object at 0x7b0612a0cb50>)
+
+    def test_busy_route_is_service_unavailable(collision_client):
+        client, fake = collision_client
+        with patch.object(dr, 'sqlite3', SimpleNamespace(connect=Mock(side_effect=sqlite3.OperationalError('database is locked')), OperationalError=sqlite3.OperationalError)):
+>           reply = send_card(client, 'Fictional busy offer')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dealroom_c2a_r3.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_dealroom_c2a_r3.py:63: in send_card
+    return client.post(f'/api/views/biz/cards/{cid}/signature', headers=H, json={
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:555: in post
+    return super().post(
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/httpx2/_client.py:1209: in post
+    return self.request(
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:454: in request
+    return super().request(
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/httpx2/_client.py:803: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/httpx2/_client.py:985: in send
+    response = self._send_handling_auth(
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/httpx2/_client.py:1013: in _send_handling_auth
+    response = self._send_handling_redirects(
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/httpx2/_client.py:1048: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/httpx2/_client.py:1081: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:356: in handle_request
+    raise exc
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/anyio/from_thread.py:347: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/anyio/from_thread.py:272: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/fastapi/applications.py:1160: in __call__
+    await super().__call__(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/errors.py:186: in __call__
+    raise exc
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/base.py:193: in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+hermes_board/app.py:438: in headers
+    resp = await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/base.py:168: in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/base.py:144: in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/gzip.py:29: in __call__
+    await responder(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/gzip.py:130: in __call__
+    await super().__call__(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/gzip.py:46: in __call__
+    await self.app(scope, receive, self.send_with_compression)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/routing.py:680: in app
+    await route.handle(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/routing.py:276: in handle
+    await self.app(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/fastapi/routing.py:119: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/fastapi/routing.py:105: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/fastapi/routing.py:431: in app
+    raw_response = await run_endpoint_function(
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/fastapi/routing.py:315: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/anyio/to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2779: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:1124: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+hermes_board/app.py:1069: in api_signature_send
+    return sig_send_impl(view, cid, body, user)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+hermes_board/app.py:1143: in sig_send_impl
+    vid = submission_sources.resolve(key, upload_source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+hermes_board/dealroom.py:44: in resolve
+    with sqlite3.connect(self.path, timeout=90) as db:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='135266012551696'>
+args = (PosixPath('/tmp/hb-sign-49x_o28o/sig.submissions.sqlite3'),)
+kwargs = {'timeout': 90}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               sqlite3.OperationalError: database is locked
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: OperationalError
+=============================== warnings summary ===============================
+../../../usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_dealroom_c2a_r3.py::test_two_cards_same_pdf_same_minute_use_own_uploaded_versions
+FAILED tests/test_dealroom_c2a_r3.py::test_same_name_foreign_upload_never_selected
+FAILED tests/test_dealroom_c2a_r3.py::test_hash_mismatch_holds_without_send[bad_upload_hash]
+FAILED tests/test_dealroom_c2a_r3.py::test_hash_mismatch_holds_without_send[bad_source_hash]
+FAILED tests/test_dealroom_c2a_r3.py::test_disconnected_post_is_unknown_outcome[error0]
+FAILED tests/test_dealroom_c2a_r3.py::test_disconnected_post_is_unknown_outcome[error1]
+FAILED tests/test_dealroom_c2a_r3.py::test_disconnected_post_is_unknown_outcome[error2]
+FAILED tests/test_dealroom_c2a_r3.py::test_sqlite_busy_is_retryable_and_never_uploads
+FAILED tests/test_dealroom_c2a_r3.py::test_busy_route_is_service_unavailable
+9 failed, 1 warning in 2.52s

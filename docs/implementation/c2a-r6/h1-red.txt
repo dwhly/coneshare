@@ -1,0 +1,48 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_h1_previous_caption_stays_with_its_host[False-110] ____________
+
+gap = 110, other_name = False
+
+    @pytest.mark.parametrize('gap', [110, 140])
+    @pytest.mark.parametrize('other_name', [False, True])
+    def test_h1_previous_caption_stays_with_its_host(gap, other_name):
+        result = placement.place(stacked_caption_pdf(gap, other_name=other_name), [TWO[1], PAT[0]])
+        if other_name:
+            assert result['status'] == 'needs_sender', result
+            assert result['fields'] == []
+            assert result['assignments'][1]['confidence'] == 'low'
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:71: AssertionError
+___________ test_h1_previous_caption_stays_with_its_host[False-140] ____________
+
+gap = 140, other_name = False
+
+    @pytest.mark.parametrize('gap', [110, 140])
+    @pytest.mark.parametrize('other_name', [False, True])
+    def test_h1_previous_caption_stays_with_its_host(gap, other_name):
+        result = placement.place(stacked_caption_pdf(gap, other_name=other_name), [TWO[1], PAT[0]])
+        if other_name:
+            assert result['status'] == 'needs_sender', result
+            assert result['fields'] == []
+            assert result['assignments'][1]['confidence'] == 'low'
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:71: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h1_previous_caption_stays_with_its_host[False-110]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_h1_previous_caption_stays_with_its_host[False-140]
+2 failed, 2 passed, 18 deselected in 1.31s

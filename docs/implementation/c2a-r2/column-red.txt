@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__ test_date_in_close_right_column_with_unlabelled_signature_is_not_borrowed ___
+
+    def test_date_in_close_right_column_with_unlabelled_signature_is_not_borrowed():
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 480, 'Lee Harbor')
+        c.drawString(72, 450, 'Signature:')
+        c.line(140, 448, 280, 448)
+        c.line(300, 470, 500, 470)
+        c.drawString(300, 440, 'Date:')
+        c.line(340, 438, 500, 438)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:270: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_date_in_close_right_column_with_unlabelled_signature_is_not_borrowed
+1 failed, 76 deselected in 1.18s

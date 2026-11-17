@@ -1,0 +1,62 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+..........................................................F.F........... [ 74%]
+.........................                                                [100%]
+=================================== FAILURES ===================================
+______________________________ test_golden[offer] ______________________________
+
+name = 'offer'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'offer'
+signers = [{'email': 'jordan.reyes.1987@gmail.com', 'name': 'Jordan Reyes', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+_____________________________ test_golden[witness] _____________________________
+
+name = 'witness'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'witness'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}, {'company': 'Fleet Test Co.', 'email': 'dan@fleettest.fleet.test', 'name': 'Dan Whaley', 'side': 'us'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+=============================== warnings summary ===============================
+dealroom_sign/tests/test_placement_r3.py: 39 warnings
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/pypdf/_page.py:1368: DeprecationWarning: Calling `PageObject.replace_contents()` for pages not assigned to a writer is deprecated and will be removed in pypdf 7.0.0. Attach the page to the writer first or use `PdfWriter(clone_from=...)` directly. The existing approach has proved being unreliable.
+    self.replace_contents(ContentStream(new_content_array, self.pdf))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement.py::test_golden[offer] - AssertionE...
+FAILED dealroom_sign/tests/test_placement.py::test_golden[witness] - Assertio...
+2 failed, 95 passed, 39 warnings in 33.95s

@@ -1,0 +1,43 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________________ test_schema_mcp_static_parity _________________________
+
+    @pytest.mark.django_db
+    def test_schema_mcp_static_parity():
+        tools = json.loads((Path(__file__).resolve().parents[3] / 'mcp-server/coneshare_mcp/dealroom_tools.json').read_text())
+        ids = {t['operation_id'] for t in tools}
+        enabled = {oid for oid, entry in registry().items() if entry['boundary'] == 'staff'}
+>       assert enabled <= ids
+E       AssertionError: assert {'core_Organi...ist_get', ...} <= {'core_Organi...ist_get', ...}
+E         
+E         Extra items in the left set:
+E         'dealroom_sign_SignatureEmailRetryView_endpoint_post'
+E         'dealroom_sign_SignatureSignerRevokeView_endpoint_post'
+
+backend/tests/dealroom/test_foundation.py:154: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7G9C9JDCXG9NN5YWS5KBF1H
+__ test_company_only_requires_one_signer_even_if_other_signer_has_named_block __
+
+    def test_company_only_requires_one_signer_even_if_other_signer_has_named_block():
+        pdf = title_body_pdf('Harbor Light Analytics, Inc.', extra_block=True)
+        signers = LEE + PAT
+        def confirm_all(payload):
+            return {'assignments': [
+                {'signer': s['id'], 'block_id': payload['candidates'][i]['id'],
+                 'confidence': 'high', 'evidence': 'Hand of the covenanting party:'}
+                for i, s in enumerate(payload['signers'])]}
+        model = Mock(side_effect=confirm_all)
+        result = placement.place(pdf, signers, model_client=model)
+>       assert result['fields'] == []
+E       AssertionError: assert [{'confidence...age': 1, ...}] == []
+E         
+E         Left contains 4 more items, first extra item: {'confidence': 'model-high', 'evidence': {'label_text': 'Lee Harbor | Hand of the covenanting party:', 'labels': [{'re...Hand of the covenanting party:'}], 'line': [245.0, 244.0, 465.0], 'line_kind': 'drawn'}, 'h': 3.661616, 'page': 1, ...}
+E         Use -v to get more diff
+
+backend/dealroom_sign/tests/test_placement_r3.py:169: AssertionError
+=========================== short test summary info ============================
+FAILED backend/tests/dealroom/test_foundation.py::test_schema_mcp_static_parity
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_company_only_requires_one_signer_even_if_other_signer_has_named_block
+2 failed in 9.68s

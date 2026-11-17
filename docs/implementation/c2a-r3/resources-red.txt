@@ -1,0 +1,245 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+__________ test_parse_burst_beyond_slots_holds_without_starting_child __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1a29a90>
+
+    def test_parse_burst_beyond_slots_holds_without_starting_child(monkeypatch):
+        monkeypatch.setattr(placement, 'PARSE_SLOTS', threading.BoundedSemaphore(2), raising=False)
+        entered, release = threading.Barrier(3), threading.Event()
+        class Child:
+            returncode = 0
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def communicate(self, *args, **kwargs):
+                entered.wait(timeout=3)
+                release.wait(timeout=3)
+                return json.dumps({'blocks': [], 'sizes': {}, 'roles': {}}).encode(), b''
+        popen = Mock(side_effect=lambda *a, **k: Child())
+        monkeypatch.setattr(placement.subprocess, 'Popen', popen)
+        with ThreadPoolExecutor(3) as pool:
+            active = [pool.submit(placement.place, b'%PDF', LEE) for _ in range(2)]
+            entered.wait(timeout=3)
+            try:
+>               held = pool.submit(placement.place, b'%PDF', LEE).result(timeout=1)
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = None, timeout = 1
+
+    def result(self, timeout=None):
+        """Return the result of the call that the future represents.
+    
+        Args:
+            timeout: The number of seconds to wait for the result if the future
+                isn't done. If None, then there is no limit on the wait time.
+    
+        Returns:
+            The result of the call that the future represents.
+    
+        Raises:
+            CancelledError: If the future was cancelled.
+            TimeoutError: If the future didn't finish executing before the given
+                timeout.
+            Exception: If the call raised then that exception will be raised.
+        """
+        try:
+            with self._condition:
+                if self._state in [CANCELLED, CANCELLED_AND_NOTIFIED]:
+                    raise CancelledError()
+                elif self._state == FINISHED:
+                    return self.__get_result()
+    
+                self._condition.wait(timeout)
+    
+                if self._state in [CANCELLED, CANCELLED_AND_NOTIFIED]:
+                    raise CancelledError()
+                elif self._state == FINISHED:
+                    return self.__get_result()
+                else:
+>                   raise TimeoutError()
+E                   TimeoutError
+
+/usr/lib/python3.12/concurrent/futures/_base.py:458: TimeoutError
+____________ test_failed_child_is_unavailable_not_bad_document[1-] _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1a2b0b0>
+returncode = 1, output = b''
+
+    @pytest.mark.parametrize('returncode,output', [(1, b''), (-9, b''), (0, b''), (0, b'{bad')])
+    def test_failed_child_is_unavailable_not_bad_document(monkeypatch, returncode, output):
+        child = Mock(returncode=returncode)
+        child.__enter__ = Mock(return_value=child)
+        child.__exit__ = Mock(return_value=False)
+        child.communicate.return_value = output, b''
+        monkeypatch.setattr(placement.subprocess, 'Popen', Mock(return_value=child))
+        result = placement.place(b'%PDF', LEE)
+>       assert result['reason_code'] == 'placement_unavailable'
+E       AssertionError: assert 'unreadable_pdf' == 'placement_unavailable'
+E         
+E         - placement_unavailable
+E         + unreadable_pdf
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:57: AssertionError
+____________ test_failed_child_is_unavailable_not_bad_document[-9-] ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1a2bda0>
+returncode = -9, output = b''
+
+    @pytest.mark.parametrize('returncode,output', [(1, b''), (-9, b''), (0, b''), (0, b'{bad')])
+    def test_failed_child_is_unavailable_not_bad_document(monkeypatch, returncode, output):
+        child = Mock(returncode=returncode)
+        child.__enter__ = Mock(return_value=child)
+        child.__exit__ = Mock(return_value=False)
+        child.communicate.return_value = output, b''
+        monkeypatch.setattr(placement.subprocess, 'Popen', Mock(return_value=child))
+        result = placement.place(b'%PDF', LEE)
+>       assert result['reason_code'] == 'placement_unavailable'
+E       AssertionError: assert 'unreadable_pdf' == 'placement_unavailable'
+E         
+E         - placement_unavailable
+E         + unreadable_pdf
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:57: AssertionError
+____________ test_failed_child_is_unavailable_not_bad_document[0-] _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1a29b50>
+returncode = 0, output = b''
+
+    @pytest.mark.parametrize('returncode,output', [(1, b''), (-9, b''), (0, b''), (0, b'{bad')])
+    def test_failed_child_is_unavailable_not_bad_document(monkeypatch, returncode, output):
+        child = Mock(returncode=returncode)
+        child.__enter__ = Mock(return_value=child)
+        child.__exit__ = Mock(return_value=False)
+        child.communicate.return_value = output, b''
+        monkeypatch.setattr(placement.subprocess, 'Popen', Mock(return_value=child))
+        result = placement.place(b'%PDF', LEE)
+>       assert result['reason_code'] == 'placement_unavailable'
+E       AssertionError: assert 'unreadable_pdf' == 'placement_unavailable'
+E         
+E         - placement_unavailable
+E         + unreadable_pdf
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:57: AssertionError
+__________ test_failed_child_is_unavailable_not_bad_document[0-{bad] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1a2a9f0>
+returncode = 0, output = b'{bad'
+
+    @pytest.mark.parametrize('returncode,output', [(1, b''), (-9, b''), (0, b''), (0, b'{bad')])
+    def test_failed_child_is_unavailable_not_bad_document(monkeypatch, returncode, output):
+        child = Mock(returncode=returncode)
+        child.__enter__ = Mock(return_value=child)
+        child.__exit__ = Mock(return_value=False)
+        child.communicate.return_value = output, b''
+        monkeypatch.setattr(placement.subprocess, 'Popen', Mock(return_value=child))
+        result = placement.place(b'%PDF', LEE)
+>       assert result['reason_code'] == 'placement_unavailable'
+E       AssertionError: assert 'unreadable_pdf' == 'placement_unavailable'
+E         
+E         - placement_unavailable
+E         + unreadable_pdf
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:57: AssertionError
+_____________ test_child_has_minimal_env_and_works_outside_backend _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1a2a960>
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-253/test_child_has_minimal_env_and0')
+
+    def test_child_has_minimal_env_and_works_outside_backend(monkeypatch, tmp_path):
+        original = subprocess.Popen
+        seen = []
+        def launch(*args, **kwargs):
+            seen.append(kwargs)
+            return original(*args, **kwargs)
+        monkeypatch.setenv('SECRET_KEY', 'fictional-secret')
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-key')
+        monkeypatch.setenv('DATABASE_URL', 'fictional-db')
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr(placement.subprocess, 'Popen', launch)
+        result = placement.place((FIXTURES / 'harbor.pdf').read_bytes(), LEE)
+        assert result['status'] == 'placed', result
+>       assert not {'SECRET_KEY', 'OPENROUTER_API_KEY', 'DATABASE_URL', 'PYTHONPATH'} & set(seen[0]['env'])
+E       KeyError: 'env'
+
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_resources_r3.py:74: KeyError
+__________ test_worker_health_reports_enforced_memory_and_cpu_limits ___________
+
+    def test_worker_health_reports_enforced_memory_and_cpu_limits():
+        run = subprocess.run([sys.executable, '-m', 'dealroom_sign.placement_worker', '--health'],
+                             cwd=Path(placement.__file__).resolve().parents[1], capture_output=True, timeout=3)
+        health = json.loads(run.stdout)
+>       assert health['status'] == 'ok'
+E       KeyError: 'status'
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:82: KeyError
+__________ test_flate_expansion_is_bounded_and_parent_rss_stays_flat ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1afe6f0>
+
+    def test_flate_expansion_is_bounded_and_parent_rss_stays_flat(monkeypatch):
+        pdf = compressed_large_pdf()
+        original = subprocess.Popen
+        # The red implementation has no cap. Keep the regression safe on that version too.
+        def supervised(*args, **kwargs):
+            kwargs['preexec_fn'] = lambda: resource.setrlimit(resource.RLIMIT_AS, (1024**3, 1024**3))
+            return original(*args, **kwargs)
+        monkeypatch.setattr(placement.subprocess, 'Popen', supervised)
+        before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        start = time.monotonic()
+        result = placement.place(pdf, LEE)
+        elapsed = time.monotonic() - start
+        growth_kib = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - before
+        assert result['status'] == 'needs_sender'
+>       assert result['reason_code'] == 'placement_unavailable', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'unreadable_pdf' == 'placement_unavailable'
+E         
+E         - placement_unavailable
+E         + unreadable_pdf
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:119: AssertionError
+___________ test_slow_dripping_model_releases_slot_at_total_deadline ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75eaa1afd550>
+
+    def test_slow_dripping_model_releases_slot_at_total_deadline(monkeypatch):
+        slots = threading.BoundedSemaphore(1)
+        monkeypatch.setattr(placement, 'MODEL_SLOTS', slots)
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        monkeypatch.setenv('PLACE_MODEL', 'fixture/model')
+        closed = threading.Event()
+        class Stream:
+            def __enter__(self): return self
+            def __exit__(self, *args): closed.set()
+            def raise_for_status(self): pass
+            def iter_bytes(self):
+                for _ in range(100):
+                    time.sleep(.02)
+                    yield b' '
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        client.stream.return_value = Stream()
+        monkeypatch.setattr(placement.httpx, 'Client', Mock(return_value=client))
+        with pytest.raises(TimeoutError):
+            placement.bounded_model(None, {}, time.monotonic() + .1)
+>       assert closed.wait(.3), 'per-read timeout let the upstream retain a model slot'
+E       AssertionError: per-read timeout let the upstream retain a model slot
+E       assert False
+E        +  where False = <bound method Event.wait of <threading.Event at 0x75eaa1afd970: unset>>(0.3)
+E        +    where <bound method Event.wait of <threading.Event at 0x75eaa1afd970: unset>> = <threading.Event at 0x75eaa1afd970: unset>.wait
+
+backend/dealroom_sign/tests/test_placement_resources_r3.py:146: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_parse_burst_beyond_slots_holds_without_starting_child
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_failed_child_is_unavailable_not_bad_document[1-]
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_failed_child_is_unavailable_not_bad_document[-9-]
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_failed_child_is_unavailable_not_bad_document[0-]
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_failed_child_is_unavailable_not_bad_document[0-{bad]
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_child_has_minimal_env_and_works_outside_backend
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_worker_health_reports_enforced_memory_and_cpu_limits
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_flate_expansion_is_bounded_and_parent_rss_stays_flat
+FAILED backend/dealroom_sign/tests/test_placement_resources_r3.py::test_slow_dripping_model_releases_slot_at_total_deadline
+9 failed in 10.22s

@@ -1,0 +1,24 @@
+{
+  "send": {
+    "head": "ef62c4da8fe5a15f7d5463944ad50cd01d815a39",
+    "index_empty": true,
+    "files_sha256": {
+      "backend/dealroom_sign/placement.py": "93eb46c4d91a11e8183fb655b97de9561b58ae7bef590c116d937cb593eacf05",
+      "backend/dealroom_sign/tests/test_placement_r3.py": "768bcd82ec571856195a94fef057f5333af1584f6cf64a962e4ff2b178db0fce",
+      "backend/dealroom_sign/tests/test_placement_r4.py": "505cf4040c14f36d9b40a860ca6e721384c00840b3fbae1e04c3a677111c4d96",
+      "backend/dealroom_sign/tests/test_placement_transport_r4.py": "1537ab825619e0fb8d8449c7d7363e92b505f8b463fe411cff810776407341a0",
+      "backend/dealroom_sign/tests/test_send_r4.py": "71de4bf1f20953eb9d303637cdad3751e46ce628d3c939394a0427ad1b7ff035"
+    }
+  },
+  "board": {
+    "head": "11d1606799866358a7fef186a57e879a83e8cf5f",
+    "index_empty": true,
+    "files_sha256": {
+      "hermes_board/dealroom.py": "d3401449cda192ae91c2ca5175bd11272cf848053f4b9036b03531cc70e9966e",
+      "tests/test_dealroom_c2a_r4.py": "fedef38aa108f1d5b1f670f95c01d3b82c2642d40cd072b90df2d2fd9ea079a6"
+    }
+  },
+  "goldens_unchanged": true,
+  "memory_unchanged": true,
+  "existing_tests_unchanged_except_stronger_r3_property": true
+}

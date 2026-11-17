@@ -1,0 +1,73 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_matched_name_does_not_override_unresolved_person_like_line[Pat Smith?] __
+
+unknown = 'Pat Smith?'
+
+    @pytest.mark.parametrize('unknown', ['Pat Smith?', 'By: unreadable [name]', 'SIGNED by unreadable [name]'])
+    def test_matched_name_does_not_override_unresolved_person_like_line(unknown):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 510, 'Lee Harbor')
+        c.drawString(72, 488, unknown)
+        c.drawString(72, 450, 'Signature: __________________________')
+        c.drawString(72, 400, 'Date: __________________________')
+        c.save()
+        result = placement.place(out.getvalue(), LEE)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],...99, 392.484, 277.48799999999994], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:155: AssertionError
+_ test_matched_name_does_not_override_unresolved_person_like_line[By: unreadable [name]] _
+
+unknown = 'By: unreadable [name]'
+
+    @pytest.mark.parametrize('unknown', ['Pat Smith?', 'By: unreadable [name]', 'SIGNED by unreadable [name]'])
+    def test_matched_name_does_not_override_unresolved_person_like_line(unknown):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 510, 'Lee Harbor')
+        c.drawString(72, 488, unknown)
+        c.drawString(72, 450, 'Signature: __________________________')
+        c.drawString(72, 400, 'Date: __________________________')
+        c.save()
+        result = placement.place(out.getvalue(), LEE)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],...99, 392.484, 277.48799999999994], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:155: AssertionError
+_ test_matched_name_does_not_override_unresolved_person_like_line[SIGNED by unreadable [name]] _
+
+unknown = 'SIGNED by unreadable [name]'
+
+    @pytest.mark.parametrize('unknown', ['Pat Smith?', 'By: unreadable [name]', 'SIGNED by unreadable [name]'])
+    def test_matched_name_does_not_override_unresolved_person_like_line(unknown):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 510, 'Lee Harbor')
+        c.drawString(72, 488, unknown)
+        c.drawString(72, 450, 'Signature: __________________________')
+        c.drawString(72, 400, 'Date: __________________________')
+        c.save()
+        result = placement.place(out.getvalue(), LEE)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}],...99, 392.484, 277.48799999999994], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:155: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_matched_name_does_not_override_unresolved_person_like_line[Pat Smith?]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_matched_name_does_not_override_unresolved_person_like_line[By: unreadable [name]]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_matched_name_does_not_override_unresolved_person_like_line[SIGNED by unreadable [name]]
+3 failed, 1 passed, 37 deselected in 1.27s

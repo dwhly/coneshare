@@ -1,0 +1,412 @@
+...................................................FFFFFFFFFFFFFFFFF     [100%]
+=================================== FAILURES ===================================
+______________________ test_total_deadline_includes_model ______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72192dd22c10>
+
+    def test_total_deadline_includes_model(monkeypatch):
+        monkeypatch.setenv('PLACEMENT_TOTAL_SECONDS', '0.4')
+        def slow_model(payload):
+            time.sleep(1)
+            return {'assignments': []}
+        started = time.monotonic()
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=slow_model)
+>       assert time.monotonic() - started < 0.8
+E       assert (845765.189443216 - 845764.182586497) < 0.8
+E        +  where 845765.189443216 = <built-in function monotonic>()
+E        +    where <built-in function monotonic> = time.monotonic
+
+backend/dealroom_sign/tests/test_placement_r2.py:74: AssertionError
+_______________________ test_many_hairlines_are_bounded ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-207/test_many_hairlines_are_bounde0')
+
+    def test_many_hairlines_are_bounded(tmp_path):
+        # Supervise the old implementation too, so a red run cannot occupy a worker indefinitely.
+        import subprocess
+        import sys
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        for i in range(100_000):
+            c.line(72, 100 + i * .005, 300, 100 + i * .005)
+        c.save()
+        pdf = tmp_path / 'many-lines.pdf'
+        pdf.write_bytes(out.getvalue())
+        program = "from pathlib import Path; import json; from dealroom_sign.placement import place; print(json.dumps(place(Path(__import__('sys').argv[1]).read_bytes(), [{'name':'Lee Harbor','email':'lee@example.test'}])))"
+        started = time.monotonic()
+        try:
+>           run = subprocess.run([sys.executable, '-c', program, str(pdf)], capture_output=True, text=True, timeout=4)
+
+backend/dealroom_sign/tests/test_placement_r2.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/subprocess.py:556: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/subprocess.py:1222: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/subprocess.py:2155: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: -9 args: ['/tmp/send-c2a-r2-venv/bin/python', '-c', "fro...>
+endtime = 845769.97365422, orig_timeout = 4, stdout_seq = [], stderr_seq = []
+skip_check_and_raise = False
+
+    def _check_timeout(self, endtime, orig_timeout, stdout_seq, stderr_seq,
+                       skip_check_and_raise=False):
+        """Convenience for checking if a timeout has expired."""
+        if endtime is None:
+            return
+        if skip_check_and_raise or _time() > endtime:
+>           raise TimeoutExpired(
+                    self.args, orig_timeout,
+                    output=b''.join(stdout_seq) if stdout_seq else None,
+                    stderr=b''.join(stderr_seq) if stderr_seq else None)
+E           subprocess.TimeoutExpired: Command '['/tmp/send-c2a-r2-venv/bin/python', '-c', "from pathlib import Path; import json; from dealroom_sign.placement import place; print(json.dumps(place(Path(__import__('sys').argv[1]).read_bytes(), [{'name':'Lee Harbor','email':'lee@example.test'}])))", '/tmp/pytest-of-root/pytest-207/test_many_hairlines_are_bounde0/many-lines.pdf']' timed out after 4 seconds
+
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/subprocess.py:1269: TimeoutExpired
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-207/test_many_hairlines_are_bounde0')
+
+    def test_many_hairlines_are_bounded(tmp_path):
+        # Supervise the old implementation too, so a red run cannot occupy a worker indefinitely.
+        import subprocess
+        import sys
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        for i in range(100_000):
+            c.line(72, 100 + i * .005, 300, 100 + i * .005)
+        c.save()
+        pdf = tmp_path / 'many-lines.pdf'
+        pdf.write_bytes(out.getvalue())
+        program = "from pathlib import Path; import json; from dealroom_sign.placement import place; print(json.dumps(place(Path(__import__('sys').argv[1]).read_bytes(), [{'name':'Lee Harbor','email':'lee@example.test'}])))"
+        started = time.monotonic()
+        try:
+            run = subprocess.run([sys.executable, '-c', program, str(pdf)], capture_output=True, text=True, timeout=4)
+        except subprocess.TimeoutExpired:
+>           pytest.fail('100,000 hairlines exceeded the four-second wall-clock budget')
+E           Failed: 100,000 hairlines exceeded the four-second wall-clock budget
+
+backend/dealroom_sign/tests/test_placement_r2.py:97: Failed
+_________________ test_page_caps_precede_deduplication[edges] __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72192c7e50f0>
+resource = 'edges'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+        with pytest.raises(ValueError, match='parse_limit'):
+>           placement.extract(b'fixture')
+
+backend/dealroom_sign/tests/test_placement_r2.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pdf = b'fixture'
+
+    def extract(pdf):
+        blocks, sizes, roles = [], {}, {}
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            if not 1 <= len(doc.pages) <= 500:
+                raise ValueError('page_limit')
+>           opening = ' '.join((p.extract_text() or '') for p in doc.pages[:2]).replace('\n', ' ')
+E           TypeError: sequence item 0: expected str instance, Mock found
+
+backend/dealroom_sign/placement.py:110: TypeError
+_________________ test_page_caps_precede_deduplication[chars] __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72192c6b2580>
+resource = 'chars'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+        with pytest.raises(ValueError, match='parse_limit'):
+>           placement.extract(b'fixture')
+
+backend/dealroom_sign/tests/test_placement_r2.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pdf = b'fixture'
+
+    def extract(pdf):
+        blocks, sizes, roles = [], {}, {}
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            if not 1 <= len(doc.pages) <= 500:
+                raise ValueError('page_limit')
+>           opening = ' '.join((p.extract_text() or '') for p in doc.pages[:2]).replace('\n', ' ')
+E           TypeError: sequence item 0: expected str instance, Mock found
+
+backend/dealroom_sign/placement.py:110: TypeError
+_________________ test_page_caps_precede_deduplication[words] __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72192c6b2820>
+resource = 'words'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+        with pytest.raises(ValueError, match='parse_limit'):
+>           placement.extract(b'fixture')
+
+backend/dealroom_sign/tests/test_placement_r2.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pdf = b'fixture'
+
+    def extract(pdf):
+        blocks, sizes, roles = [], {}, {}
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            if not 1 <= len(doc.pages) <= 500:
+                raise ValueError('page_limit')
+>           opening = ' '.join((p.extract_text() or '') for p in doc.pages[:2]).replace('\n', ' ')
+E           TypeError: sequence item 0: expected str instance, Mock found
+
+backend/dealroom_sign/placement.py:110: TypeError
+____________ test_distinct_model_failure_outcomes[failure0-timeout] ____________
+
+failure = TimeoutError('private'), outcome = 'timeout'
+
+    @pytest.mark.parametrize('failure,outcome', [(TimeoutError('private'), 'timeout'), (ValueError('private'), 'invalid_reply'), (RuntimeError('private'), 'error')])
+    def test_distinct_model_failure_outcomes(failure, outcome):
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=Mock(side_effect=failure))
+>       assert result['model']['outcome'] == outcome
+E       AssertionError: assert 'unavailable' == 'timeout'
+E         
+E         - timeout
+E         + unavailable
+
+backend/dealroom_sign/tests/test_placement_r2.py:124: AssertionError
+_________ test_distinct_model_failure_outcomes[failure1-invalid_reply] _________
+
+failure = ValueError('private'), outcome = 'invalid_reply'
+
+    @pytest.mark.parametrize('failure,outcome', [(TimeoutError('private'), 'timeout'), (ValueError('private'), 'invalid_reply'), (RuntimeError('private'), 'error')])
+    def test_distinct_model_failure_outcomes(failure, outcome):
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=Mock(side_effect=failure))
+>       assert result['model']['outcome'] == outcome
+E       AssertionError: assert 'unavailable' == 'invalid_reply'
+E         
+E         - invalid_reply
+E         + unavailable
+
+backend/dealroom_sign/tests/test_placement_r2.py:124: AssertionError
+_____________ test_distinct_model_failure_outcomes[failure2-error] _____________
+
+failure = RuntimeError('private'), outcome = 'error'
+
+    @pytest.mark.parametrize('failure,outcome', [(TimeoutError('private'), 'timeout'), (ValueError('private'), 'invalid_reply'), (RuntimeError('private'), 'error')])
+    def test_distinct_model_failure_outcomes(failure, outcome):
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=Mock(side_effect=failure))
+>       assert result['model']['outcome'] == outcome
+E       AssertionError: assert 'unavailable' == 'error'
+E         
+E         - error
+E         + unavailable
+
+backend/dealroom_sign/tests/test_placement_r2.py:124: AssertionError
+__________________ test_not_configured_and_fixed_parse_reason __________________
+
+    def test_not_configured_and_fixed_parse_reason():
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE)
+>       assert result['model']['outcome'] == 'not_configured'
+E       AssertionError: assert 'unavailable' == 'not_configured'
+E         
+E         - not_configured
+E         + unavailable
+
+backend/dealroom_sign/tests/test_placement_r2.py:131: AssertionError
+__________ test_nearby_body_is_redacted_and_model_identity_is_minimal __________
+
+    def test_nearby_body_is_redacted_and_model_identity_is_minimal():
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(nearby_body_pdf(), [dict(LEE[0], company='Harbor Light Analytics', title='COO')], model_client=model)
+>       assert model.call_count == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = <Mock id='125452448311888'>.call_count
+
+backend/dealroom_sign/tests/test_placement_r2.py:159: AssertionError
+___________________ test_caption_cannot_claim_next_block[23] ___________________
+
+gap = 23
+
+    @pytest.mark.parametrize('gap', [23, 35, 55])
+    def test_caption_cannot_claim_next_block(gap):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 500, 'Signature:')
+        c.line(140, 498, 310, 498)
+        c.drawString(72, 498-gap-9, 'Lee Harbor')
+        c.drawString(72, 498-gap-35, 'Signature:')
+        c.line(140, 498-gap-37, 310, 498-gap-37)
+        c.drawString(72, 498-gap-65, 'Date:')
+        c.line(112, 498-gap-67, 265, 498-gap-67)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:181: AssertionError
+___________________ test_caption_cannot_claim_next_block[35] ___________________
+
+gap = 35
+
+    @pytest.mark.parametrize('gap', [23, 35, 55])
+    def test_caption_cannot_claim_next_block(gap):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 500, 'Signature:')
+        c.line(140, 498, 310, 498)
+        c.drawString(72, 498-gap-9, 'Lee Harbor')
+        c.drawString(72, 498-gap-35, 'Signature:')
+        c.line(140, 498-gap-37, 310, 498-gap-37)
+        c.drawString(72, 498-gap-65, 'Date:')
+        c.line(112, 498-gap-67, 265, 498-gap-67)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:181: AssertionError
+___________________ test_caption_cannot_claim_next_block[55] ___________________
+
+gap = 55
+
+    @pytest.mark.parametrize('gap', [23, 35, 55])
+    def test_caption_cannot_claim_next_block(gap):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 500, 'Signature:')
+        c.line(140, 498, 310, 498)
+        c.drawString(72, 498-gap-9, 'Lee Harbor')
+        c.drawString(72, 498-gap-35, 'Signature:')
+        c.line(140, 498-gap-37, 310, 498-gap-37)
+        c.drawString(72, 498-gap-65, 'Date:')
+        c.line(112, 498-gap-67, 265, 498-gap-67)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:181: AssertionError
+______________ test_date_cannot_be_borrowed_from_next_column[320] ______________
+
+label_x = 320
+
+    @pytest.mark.parametrize('label_x', [320, 180])
+    def test_date_cannot_be_borrowed_from_next_column(label_x):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 480, 'Lee Harbor')
+        c.drawString(72, 450, 'Signature:')
+        c.line(140, 448, 270, 448)
+        c.drawString(label_x, 440, 'Date:')
+        c.line(360, 438, 510, 438)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:194: AssertionError
+______________ test_date_cannot_be_borrowed_from_next_column[180] ______________
+
+label_x = 180
+
+    @pytest.mark.parametrize('label_x', [320, 180])
+    def test_date_cannot_be_borrowed_from_next_column(label_x):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 480, 'Lee Harbor')
+        c.drawString(72, 450, 'Signature:')
+        c.line(140, 448, 270, 448)
+        c.drawString(label_x, 440, 'Date:')
+        c.line(360, 438, 510, 438)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:194: AssertionError
+______________ test_native_signature_is_tight_and_bottom_anchored ______________
+
+    def test_native_signature_is_tight_and_bottom_anchored():
+        result = placement.place((FIXTURES / 'harbor.pdf').read_bytes(), LEE)
+        field = next(f for f in placement.to_native_fields(result, LEE[0]['email']) if f['type'] == 'SIGNATURE')
+>       assert field['height'] * 792 / 100 <= 18
+E       assert ((3.661616 * 792) / 100) <= 18
+
+backend/dealroom_sign/tests/test_placement_r2.py:200: AssertionError
+______________ test_pdf_dependency_closure_is_pinned_and_licensed ______________
+
+    def test_pdf_dependency_closure_is_pinned_and_licensed():
+        from importlib.metadata import distribution
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[2]
+        requirements = (root / 'requirements.txt').read_text()
+        for name in ['pypdfium2', 'cryptography', 'charset-normalizer', 'cffi', 'pycparser']:
+>           assert name + '==' + distribution(name).version in requirements
+E           AssertionError: assert (('pypdfium2' + '==') + '5.15.2') in 'asgiref==3.9.1\nDjango==5.2.17\nsqlparse==0.6.0\ndjangorestframework==3.18.2\ndrf-spectacular==0.28.0\npython-ulid==3...=3.2.13\nopenapi-spec-validator==0.7.1\n\ngunicorn==23.0.0\nsentry-sdk==2.60.0\nopenpyxl==3.1.5\nzipstream-ng==1.8.0\n'
+E            +  where '5.15.2' = <importlib.metadata.PathDistribution object at 0x72192c3b9ea0>.version
+E            +    where <importlib.metadata.PathDistribution object at 0x72192c3b9ea0> = <function distribution at 0x721935cfc4a0>('pypdfium2')
+
+backend/dealroom_sign/tests/test_placement_r2.py:211: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_total_deadline_includes_model
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_many_hairlines_are_bounded
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_page_caps_precede_deduplication[edges]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_page_caps_precede_deduplication[chars]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_page_caps_precede_deduplication[words]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_distinct_model_failure_outcomes[failure0-timeout]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_distinct_model_failure_outcomes[failure1-invalid_reply]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_distinct_model_failure_outcomes[failure2-error]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_not_configured_and_fixed_parse_reason
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_nearby_body_is_redacted_and_model_identity_is_minimal
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_caption_cannot_claim_next_block[23]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_caption_cannot_claim_next_block[35]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_caption_cannot_claim_next_block[55]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_date_cannot_be_borrowed_from_next_column[320]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_date_cannot_be_borrowed_from_next_column[180]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_native_signature_is_tight_and_bottom_anchored
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_pdf_dependency_closure_is_pinned_and_licensed
+17 failed, 51 passed in 12.41s

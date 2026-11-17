@@ -1,0 +1,43 @@
+..........................................................F............. [ 40%]
+........................................................................ [ 81%]
+.................................                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_envelope_carries_room_context_and_fleet_subject _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Project Atlas · Glue...kflow: Workflow object (df997f51-dc29-48d7-b842-4cc4fc564610)>, credential=<SignCredential: SignCredential object (1)>)
+pdf = b'%PDF-1.3\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<\n/Producer (pypdf)\n>>\nendobj\n2 0 obj\n<<\n/Type /Pages\n/Count 1\n/Kids ...n0000000113 00000 n \n0000000162 00000 n \ntrailer\n<<\n/Size 5\n/Root 3 0 R\n/Info 1 0 R\n>>\nstartxref\n256\n%%EOF\n'
+
+    @override_settings(SITE_DOMAIN='https://send.example.test', SIGN_RECIPIENT_ORIGIN='https://recipient.example.test:9445')
+    def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
+        # Sign's "Back to room" link is documentMeta.redirectUrl (the room's signing page); the signer name is the
+        # recipient name.
+        from urllib.parse import urlparse
+        from dealroom_sign.workflows import envelope_meta, return_url
+        fixture.room.name = 'Project Atlas · Glue review'
+        fixture.room.save()
+        work = Workflow.objects.get(pk=fixture.work.pk)
+        assert return_url(work) == f'https://recipient.example.test:9445/s/return/{work.pk}'
+        assert envelope_meta(work) == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'dateFormat': 'yyyy-MM-dd'}
+        work.purpose = 'nda'
+        url = urlparse(return_url(work))
+        assert f'{url.scheme}://{url.netloc}{url.path}' == f'https://recipient.example.test:9445/s/return/{work.pk}'
+        assert url.query == '' and url.fragment == ''
+        sent = []
+        def respond(request):
+            sent.append(request)
+            return httpx.Response(200, json={'id': 'envelope_new'})
+        with Documenso(fixture.credential, httpx.MockTransport(respond)) as client:
+            assert client.create(work, pdf, meta=envelope_meta(work)) == 'envelope_new'
+        payload = _multipart_payload(sent[0])
+>       assert payload['meta'] == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work), 'distributionMethod': 'NONE', 'emailSettings': NATIVE_EMAIL_OFF}
+E       AssertionError: assert {'dateFormat'...c564610', ...} == {'distributio... sign Source'}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'dateFormat': 'yyyy-MM-dd'}
+E         Use -v to get more diff
+
+backend/dealroom_sign/tests/test_workflows.py:460: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_workflows.py::test_envelope_carries_room_context_and_fleet_subject
+1 failed, 176 passed in 84.17s (0:01:24)

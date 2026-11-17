@@ -545,3 +545,969 @@ the parser uses the [documented pdfplumber geometry API](https://github.com/jsvi
 No key was retrieved, no real document was sent to a provider, no invitation was
 sent, and no deployment was performed. Model acceptance against a configured live
 provider and the complete native signing/sealing walk remain deployment checks.
+
+## C2a r2 — Gate 3 fixes and native field rendering
+
+Starting HEADs: Send `8b79285e`, Board `ce62d68`. Sign and the recipient proxy
+remain unchanged. All work is unstaged. The test environment is outside the
+repository at `/tmp/send-c2a-r2-venv`; tracked `.agent/` content is preserved.
+
+In r2, printed full names retained inside the narrow extraction window vetoed a
+different signer before company/domain scoring. The completed r3 section below
+documents the expanded raw-evidence check.
+Names match whole tokens, surname-only matching is removed, and company/domain
+hints require at least four characters. Case, initials, apostrophes, long captions
+and incomplete identities fail closed where a full match cannot be established.
+Role definitions start at their explicit `by`/`between`/`and`/`with` boundary.
+All seven original `expected.json` golden regions and their tolerance are unchanged.
+
+Placement has a configurable 12-second total deadline, including the model.
+Parsing runs in a killable child interpreter with a default three-second budget
+inside that deadline. Raw per-page limits are 5,000 edges, 20,000 characters and
+4,000 words, checked before grouping/de-duplication. Word extraction happens once;
+edge de-duplication uses neighboring spatial buckets. The 100,000-hairline test
+asserts a hold within four seconds. Timeout returns `needs_sender`, empty fields,
+`reason_code: placement_timeout`, and exactly “Placement took too long”.
+
+Only bounded name/company/role patterns and fixed field labels leave extraction.
+The model receives opaque signer IDs and names, with no emails or unnecessary
+company/title hints. A sentence immediately above a signature line is absent from
+both model input and persisted History. Caption ownership cannot cross a previous
+signature block; companion dates require local label adjacency and column ownership.
+User-visible parser reasons come from fixed codes. Model outcomes distinguish
+`not_configured`, `timeout`, `invalid_reply`, and `error`.
+
+Automatic workflows have a durable `auto` marker in their existing correlation ID,
+so deleting the placement fact cannot bypass the worker check. New manual workflows
+have a `manual` marker. Legacy room-document workflows whose placement mode cannot
+be established also hold if evidence is missing; no schema migration is required.
+The worker still checks source and recipient digests before remote writes.
+
+Board treats socket/read timeouts as `outcome_unknown` and keeps this message by
+the form: “We couldn't confirm whether it was sent. Check History before trying
+again.” The submission key hashes room, PDF SHA-256, ordered signers, board and card.
+A SQLite mapping beside Board's state file persists the uploaded version before
+send, so retries and restarts reuse the same source. Existing room files obtain
+their hash through the authorized selected-source query. Replayed successful
+responses do not append duplicate local History records.
+
+The complete pdfplumber runtime dependency closure is pinned: pypdfium2 5.15.2,
+cryptography 50.0.2, charset-normalizer 3.5.2, cffi 2.1.1 and pycparser 3.12,
+with the existing Pillow 13.0.0 pin. Distribution licences, including PDFium's
+third-party notices and Pillow's bundled notices, are retained in
+`backend/dealroom_sign/licenses/`.
+
+### C2a r2 red → green
+
+| Item | Red evidence | Final coverage |
+| --- | --- | --- |
+| H1 reviewer cases, fixture-wide wrong-signer properties; N4 anchored roles | [H1 red](c2a-r2/h1-red.txt): 19 failed, 32 passed | [H1 green](c2a-r2/h1-green.txt): 91 passed; all original goldens intact |
+| H1 uppercase, lowercase, initials, apostrophes and long captions | [Variants red](c2a-r2/identity-variants-red.txt): 5 failed; [unrecognized-caption red](c2a-r2/unrecognized-red.txt): 2 failed | Final placement suite |
+| M1 total deadline; M2 caps and 100,000 hairlines; M3 nearby sentinel and opaque IDs; L1/L2 attribution; L3 dependencies; N1/N2 reasons/outcomes; signature anchoring | [Engine red](c2a-r2/engine-red.txt): 17 failed, 51 passed | Final placement suite |
+| M3 History sentinel; N3 missing fact; date-only envelope and native metadata | [Send red](c2a-r2/send-red.txt): 3 failed | Final placement suite |
+| Authorized selected-source content hash for Board retries | [Source red](c2a-r2/source-red.txt): 1 failed | Final placement suite |
+| M1 Board open/read timeouts, wrapped socket timeout, retry key/source, key inputs and persistent form message | [Board red](c2a-r2/board-red.txt): 8 failed, 43 deselected | [Board focused](c2a-r2/board-focused.txt), including restart/concurrent-retry checks |
+
+No test was skipped, deleted or weakened. Existing model stubs now return the
+opaque ID supplied by the payload; the no-configuration assertion requires its
+specific outcome; the HTTP timeout assertion requires the remaining deadline
+instead of 30 seconds. The native position assertion checks the corrected box;
+the independent golden region assertions remain unchanged.
+
+### C2a r2 overlays and Sign schema evidence
+
+Sign was inspected read-only: `packages/lib/types/field-meta.ts` supports
+`fontSize` for signature/date fields but has no signature alignment option;
+`render-signature-field.ts` centres signature text vertically. Send converts the
+unchanged measured region into an 18 pt native signature box ending on the rule,
+with signature fontSize 18 and DATE fontSize 10. Only these exact internal metadata
+values are accepted; caller-supplied rich metadata remains refused.
+
+Sign's `document-meta.ts` and `constants/date-formats.ts` allow `yyyy-MM-dd` at
+envelope level; `dd MMM yyyy` is absent from the allowlist. The date-only option is
+passed through the existing create payload.
+
+[Seven-fixture contact sheet](c2a-r2/contact.png),
+[recorded placements/native fields](c2a-r2/placements.json),
+[Harbor native boxes](c2a-r2/harbor-overlay.png).
+The [before detail](c2a-r2/harbor-before-detail.png) and
+[after detail](c2a-r2/harbor-after-detail.png) come from Sign's actual
+`insertFieldInPDFV2` export renderer, merged onto Harbor page 2. The
+[measured ink gap](c2a-r2/render-metrics.json) falls from **8.2 pt to 1.7 pt**;
+the native box bottom is on the rule at **367.2 pt**. The date fits on one line.
+[Full after rendering](c2a-r2/harbor-after-rendered.png) and
+[rendered PDF](c2a-r2/harbor-after-rendered.pdf) are retained.
+
+These are native rendering proofs, not a live invitation, deployment or newly
+sealed production PDF. No provider request or real signing transaction was made.
+[Reproduction commands and settings](c2a-r2/README.md) are included.
+
+Board final full suite: **281 passed, 3 unchanged baseline failures, 58 inherited
+skips** ([log](c2a-r2/board-suite.txt)). The failures are
+`test_detail_pages_program_and_epic`, `test_function_serves_the_same_endpoints_and_shapes`,
+and `test_relay_publishes_the_tailnet_payload` in `test_cloud_edition.py`.
+Restoring starting-HEAD production files reproduced **the same 3 failures / 14
+passes** ([baseline](c2a-r2/board-baseline.txt)); r2 files were restored in `finally`.
+The focused signing/timeout/retry/browser suite has **53 passes**.
+The [100,000-hairline timing](c2a-r2/hairline-timing.json) is **3.01 seconds**.
+
+The [first full Send run](c2a-r2/send-first-run.txt) had **571 passes / 1 failure**:
+an exact envelope metadata assertion still expected the previous dictionary without
+`dateFormat`. Its exact expected dictionaries (local metadata and the captured native payload)
+were extended with the required date-only format; no other assertion was relaxed.
+
+A final L1 boundary regression covers a heading above an unlabeled previous rule:
+[red](c2a-r2/heading-red.txt) **1 failed** →
+[green](c2a-r2/heading-green.txt) **18 passed**, including the original goldens and
+caption cases. Both headings and captions now stop at a preceding signature rule.
+The full suite below was rerun after this final change.
+
+The L2 close-column regression also covers an **unlabeled** right-hand signature
+rule. Date ownership checks raw rules as well as recognized blocks, so a narrow
+column gutter cannot let the left signer borrow that column's date:
+[column red](c2a-r2/column-red.txt) **1 failed** →
+[complete engine green](c2a-r2/engine-green.txt) **117 passed**. This is included in the final full run.
+
+**Final Send `dealroom_sign/tests`: 576 passed, 0 failed, 0 skipped**
+([full log](c2a-r2/send-suite.txt), 270.36 s). This run includes all final heading
+and close-column fixes. The complete placement engine has **117 passes**; the
+five reviewer wrong-signer cases and the 42 fixture-wide identity checks pass.
+The seven original expected placements are unchanged.
+
+Both worktrees pass `git diff --check`. Starting HEADs are unchanged and staging
+is empty. [Footprint evidence](c2a-r2/footprint.txt) confirms Sign is clean, the
+recipient proxy and tracked `.agent/memory.md` are unchanged, and `expected.json`
+is byte-identical to the starting version. The only remaining test failures are
+the three reproduced Board cloud-edition baseline failures described above.
+
+## C2a r3 — stopped on an existing-test/spec conflict
+
+Starting HEADs: Send `adc218d7`, Board `58599f1`. The entire Gate 3 r2 review
+was read before implementation. **This round is blocked; no production code or
+existing tests have been changed.** The brief explicitly requires: “If an
+existing test contradicts a finding, stop and explain in the report.”
+
+### B1 conflict requiring a decision
+
+The review's concrete B1 fix says: “An above-line that fails `identity_label`
+makes the block uncertain, mirroring `:245`.”
+
+The existing
+`backend/dealroom_sign/tests/test_placement_r2.py::test_nearby_body_is_redacted_and_model_identity_is_minimal`
+(lines 158–168) requires the opposite behavior for its fixture:
+
+- `nearby_body_pdf()` prints `Lee Harbor, Harbor Light Analytics` at y=390,
+  then `PRIVATE NEARBY SENTINEL: the special terms remain confidential.` at
+  y=370, then the unusual signature label at y=350 and rule at y=348.
+- The body line is in the same column, within 90 pt above that rule, with no
+  intervening rule. It fails `identity_label`.
+- The existing test requires one model call and `status == 'placed'`.
+- Applying the review's unconditional uncertainty rule makes the block
+  uncertain. `score()` then returns zero; model eligibility fails; the result
+  holds. That contradicts both existing assertions.
+
+The review's broader principle specifically restricts **company/domain-only**
+confidence, whereas this existing fixture also has the signer's matching printed
+name. A decision is needed on whether a matching full name permits a separately
+recognised body sentence to be redacted without making the block uncertain, or
+whether this existing test must change to require a hold. Neither interpretation
+has been silently selected, and the existing test has not been weakened.
+
+### r3 verification and finding status
+
+The specified Send runner initially exited 127 because
+`.agent/c2a-venv/bin/python` does not exist. Its supported `C2A_PYTHON` override,
+using the r2 environment already documented above, ran the conflicting existing
+test successfully:
+
+```sh
+C2A_PYTHON=/tmp/send-c2a-r2-venv/bin/python \
+  bash /root/worktrees/send-c1b/docs/implementation/c2a/run_send_tests.sh \
+  backend/dealroom_sign/tests/test_placement_r2.py::test_nearby_body_is_redacted_and_model_identity_is_minimal
+```
+
+Result: **1 passed in 0.80 s**. This is a baseline verification, not an r3 fix
+or red→green result. No new regression tests or implementation changes were made
+after identifying the conflict.
+
+| Finding | r3 status / red→green evidence |
+| --- | --- |
+| B1 raw identity extent and fixture-wide property | Stopped on the conflict above; existing behavior verified green; no fix claimed. |
+| H1 upload version/hash binding | Not started following the required stop. |
+| M-a child memory/concurrency bounds | Not started following the required stop. |
+| M-b title-case text redaction | Not started following the required stop. |
+| L-a full company/domain matching | Not started following the required stop. |
+| L-b disconnected POST outcome | Not started following the required stop. |
+| L-c SQLite busy response | Not started following the required stop. |
+| L-d child environment/cwd/health check | Not started following the required stop. |
+| N-a model total deadline and slot recovery | Not started following the required stop. |
+| N-b missing placement evidence quarantine | Not started following the required stop. |
+| N-c report accuracy | The r2 claim above must be read as applying only to names retained inside its narrow evidence window. B1 remains unfixed. |
+
+**r3 final counts:** Send focused baseline **1 passed, 0 failed, 0 skipped**;
+Send full suite **not run**; Board suite **not run**. The earlier r2 full-suite
+counts are historical and are not represented as r3 results. No live service
+calls were made. Golden fixtures, date-only metadata, baseline anchoring, project
+memory, and both indexes remain unchanged. No commit or push was performed.
+
+## C2a r3 — manager decision applied; second existing-test conflict
+
+The manager decision resolves the previous `nearby_body_pdf` conflict: a matching
+printed full name permits nearby non-person-like body text to be redacted without
+holding placement. That test remains unchanged and passes. The review and the
+updated r3 brief were read in full. Starting HEADs remain Send `adc218d7` and
+Board `58599f1`.
+
+**Implementation stopped under the brief's explicit rule: “If an existing test
+contradicts a finding, stop and explain in the report.”** A separate conflict
+exists between the manager's unconditional rule, “Company or domain evidence
+alone never yields `high`,” and the requirement to preserve all seven goldens.
+
+### Concrete conflict: company-only goldens
+
+`backend/dealroom_sign/tests/test_placement.py::test_golden[roles]` and
+`::test_golden[witness]` both call `assert_golden`, which requires `placed`, the
+expected fields/coordinates, and confidence `high` or `model-high`. Neither
+fixture contains either signer's printed name, as verified directly from the
+PDF text rather than `block.identity`:
+
+| Fixture | Actual identity evidence | Current result |
+| --- | --- | --- |
+| `roles.pdf` | Blank printed-name lines beneath `RECIPIENT` / `DISCLOSER`; opening role definitions map those headings to Harbor Light Analytics, Inc. / Fleet Test Co. | Both signers score 4, margin 4, confidence `high`; six fields; `placed`. |
+| `witness.pdf` | Company headings above blank `By`, `Name`, `Title`, and `Date` lines; no printed person names. | Both signers score 4, margin 4, confidence `high`; six fields; `placed`. |
+
+[Raw-PDF and scoring evidence](c2a-r3/company-only-evidence.json) records the
+extracted pages, absence of both signer names, headings, role mappings, and
+assignments. No provider was called. Changing these cases to hold would break
+both existing goldens. Keeping their current confidence would violate the
+manager's unconditional company/domain-only prohibition. No exception was
+silently inferred.
+
+The review itself allows company/domain-only confidence when the entire block
+extent has no person-like or unaccounted-for text. A decision is pending on
+whether that exception remains permitted (preserving the goldens), or whether
+the two goldens are now explicitly authorized to require a hold. No existing
+test, fixture, or production file has been changed.
+
+### Verification and finding status
+
+Command used with the supplied Python environment:
+
+```sh
+C2A_PYTHON=/root/work/sign-product/send-venv/bin/python \
+  bash /root/worktrees/send-c1b/docs/implementation/c2a/run_send_tests.sh \
+  'backend/dealroom_sign/tests/test_placement.py::test_golden[roles]' \
+  'backend/dealroom_sign/tests/test_placement.py::test_golden[witness]' \
+  backend/dealroom_sign/tests/test_placement_r2.py::test_nearby_body_is_redacted_and_model_identity_is_minimal
+```
+
+[Baseline log](c2a-r3/conflict-baseline.txt): **3 passed in 1.35 s**. This verifies
+the conflict and the already-resolved sentinel case; it is not red/green fix
+evidence. No implementation or new regression tests were added after the stop.
+
+| Finding | This resumed r3 attempt: test / red → green |
+| --- | --- |
+| B1 | Existing `test_golden[roles]` / `[witness]` verified green; specification conflict above prevents a compliant fix. No red → green claimed. |
+| H1 | Not started after the required stop; no upload/collision regression or live recheck claimed. |
+| M-a | Not started; memory and concurrency bounds remain unresolved. |
+| M-b | Not started; title-case body redaction remains unresolved. |
+| L-a | Not started; generic domain/company matching remains unresolved. |
+| L-b | Not started; disconnected POST outcome remains unresolved. |
+| L-c | Not started; SQLite busy handling remains unresolved. |
+| L-d | Not started; child environment/cwd/health checks remain unresolved. |
+| N-a / N1 | Not started; model deadline/slot recovery remains unresolved. |
+| N-b / N2 | Not started; missing-evidence quarantine behavior remains unchanged. |
+| N-c / N3 | The earlier r2 name-veto claim applies only to retained evidence, not the full raw-text extent. B1 is still unfixed; this report makes no broader claim. |
+
+**Final counts for this resumed r3 attempt:** Send focused baseline **3 passed,
+0 failed, 0 skipped**; full Send suite **not run**; Board suite **not run**.
+Historical r2 suite counts are not r3 results. All seven fixtures, all existing
+tests, date-only metadata, signature baseline anchoring, and project memory
+remain unchanged. No calls to real services, commits, or pushes were made. Only
+this report, its evidence files, and the requested completion marker are written;
+the marker explicitly records the blocked outcome rather than successful fixes.
+
+## C2a r3 — completed fixes after both manager decisions
+
+This section supersedes the two r3 stop reports above. Starting HEADs are still
+Send `adc218d7` and Board `58599f1`. The full Gate 3 r2 review and both manager
+decisions were applied. Existing tests and all seven golden PDFs/expected boxes
+remain intact. [Final placement evidence](c2a-r3/placements.json) records all
+seven outcomes against the unchanged golden assertions. The Board's existing shared fake gained the two new upload response
+fields and returns a fresh version ID on each upload, preserving the existing
+retry test's ability to detect an accidental re-upload. No existing assertion was
+weakened, skipped, or deleted.
+
+### Identity and privacy
+
+Identity decisions now use every raw text row in the signature column, bounded
+by the previous rule or 90 points above, and the next signature rule or 125 points
+below. This deliberately includes the full lower window even when a companion
+occurs sooner. Inline names, intervening company headings, role suffixes, spaced
+captions, and NAME/TITLE companions participate before any redaction. Multiple
+names on one raw line also participate. Unknown person-like text holds; any other
+person's name vetoes that signer. A matched full name can coexist with non-person
+prose, preserving the unchanged nearby-body sentinel test.
+
+Company/domain-only confidence requires fully accounted, unnamed raw evidence
+and exactly one matching signer in the whole send. The `roles.pdf` and
+`witness.pdf` goldens retain their original placements under that exception.
+Single generic company words cannot match a longer company name; full company
+names and compound domains such as `harborlight` still work.
+
+Scoring runs in the disposable parse worker. Before its response, it clears raw
+evidence and emits a person string only when its tokens match a supplied signer;
+other person-like strings become `[printed name]`, and arbitrary prose becomes
+`[redacted]`. Recognized company, role and field labels remain available. The
+model receives sanitized candidates, opaque signer IDs and names. Result fields,
+placement facts and History use that same sanitized evidence. Holds expose no
+partial fields.
+
+**N-c / N3 correction:** the earlier r2 claim about a printed-name veto applied
+only to names retained in r2's narrow evidence window. The r3 claim applies to
+raw evidence throughout the bounded column extent described above, before
+redaction; it is not a claim to interpret all text on arbitrary PDF pages.
+
+### Upload identity and resource handling
+
+Send upload responses now include the exact upload's `version_id` and `sha256`,
+matching the version metadata and `document.uploaded` fact. Board uses that ID,
+checks the response hash against its PDF, and checks the authorized source hash
+again before sending, including on retries. Filename polling has been removed.
+Collision-renamed uploads and unrelated uploads with the original name cannot
+change the selected version. The SQLite mapping still persists the version
+before a send, so uncertain retries keep the same deterministic key and source.
+
+Each parser child has a 768 MiB address-space ceiling and a CPU ceiling (four
+seconds for the default three-second wall budget, capped at eight seconds).
+Two parse slots per application process are acquired without waiting; excess
+requests hold as `placement_busy`. A timed-out child is killed and reaped and its
+slot released. Empty/malformed output, failed exits and launch failures report
+`placement_unavailable`. Recognized parser allocation failures report
+`parse_limit`; malformed documents still report `unreadable_pdf`.
+
+The child receives only `LANG` and `LC_ALL`, with an explicit backend working
+directory. Its `--health` command verifies parser import and the enforced OS
+limits without credentials or service calls. [Health output](c2a-r3/worker-health.json)
+reports 805306368 bytes and eight CPU seconds. HTTP model calls now check a
+monotonic total deadline as chunks arrive and close the transport on that deadline,
+including when no decoded chunk arrives, allowing the model thread to release its
+slot. The existing bounded request deadline remains in force.
+
+Dropped POST connections produce `outcome_unknown` with the existing “Check
+History” message. SQLite operational errors produce a retryable 503 busy response;
+lock contention waits at most one second instead of 90. Missing automatic
+placement evidence now quarantines a workflow before any remote write, matching
+the changed-evidence behavior.
+
+### Test-first evidence, red then green
+
+Tests were added before each implementation group. After correcting two test
+fixture issues (overlapping inserted PDF text and an overly broad SQLite mock),
+the final regression fixtures were also replayed against the original Send HEAD,
+with working changes restored in `finally`: [baseline replay](c2a-r3/final-regressions-red.txt)
+**43 failed, 13 passed**. Five additional raw-suffix/role assertions were then
+red before their fixes: [suffix red](c2a-r3/raw-suffix-red.txt). The final r3 Send
+regression group is [green](c2a-r3/final-regressions-green.txt). Initial intermediate
+logs are retained; they are not substitutes for the final suite results below.
+
+| Finding | Regression that pins the behavior | Red → green evidence |
+| --- | --- | --- |
+| **B1** | `test_other_person_in_whole_raw_extent_never_gets_high` (12 layouts); `test_inserted_raw_person_vetoes_across_fixtures` (raw PDF text, all seven fixtures); `test_company_only_requires_every_raw_line_accounted_for`; `test_matched_name_does_not_override_unresolved_person_like_line`; `test_second_person_in_same_raw_line_also_vetoes`; unique-company-signer check | All 12 review layouts fail on HEAD; the raw fixture property fails on `roles` and `witness`; unknown prose/person suffix cases fail too. [Red](c2a-r3/final-regressions-red.txt), [suffix red](c2a-r3/raw-suffix-red.txt) → [green](c2a-r3/final-regressions-green.txt). Existing positive-name/non-name, company-only goldens, date metadata and baseline anchoring tests remain unchanged. |
+| **H1** | Board `test_two_cards_same_pdf_same_minute_use_own_uploaded_versions`, `test_same_name_foreign_upload_never_selected`, both `test_hash_mismatch_holds_without_send` cases; Send upload/version/activity test and two-workflow integration test | [Board red](c2a-r3/board-red.txt), [Send red](c2a-r3/final-regressions-red.txt) → [Board focused green](c2a-r3/board-green.txt), [Send green](c2a-r3/final-regressions-green.txt). Both cards return 200, zero polling calls, distinct uploaded versions, matching hashes. |
+| **M-a** | `test_parse_burst_beyond_slots_holds_without_starting_child`; failed-child cases; health/resource test; `test_flate_expansion_is_bounded_and_parent_rss_stays_flat`; timeout kill/reap/slot test | [Resource red](c2a-r3/resources-red.txt), [timeout red](c2a-r3/timeout-red.txt) → [resource green](c2a-r3/resources-contract-green.txt). A 611,954-byte PDF expanding to 600 MiB holds in 2.09 s with 0 KiB measured parent peak-RSS growth in the recorded run. |
+| **M-b** | `test_title_case_body_never_leaves_local_evidence` (all three review strings, including an unselected unusual candidate); `test_title_case_body_not_persisted_to_history`; fixed role/company/label checks | The original implementation leaks the nearest title-case line in the model payload. [Red](c2a-r3/final-regressions-red.txt) → [green](c2a-r3/final-regressions-green.txt); model input, result, persisted facts and History are checked. |
+| **L-a** | `test_single_company_word_is_not_domain_identity` (light, ventures, capital, partners, group, holdings, global), with compound/full-company controls | Seven failed on HEAD in [red](c2a-r3/final-regressions-red.txt) → [green](c2a-r3/final-regressions-green.txt). |
+| **L-b** | Board `test_disconnected_post_is_unknown_outcome`: `RemoteDisconnected`, `ConnectionResetError`, `IncompleteRead` | Three failures in [Board red](c2a-r3/board-red.txt) → [Board green](c2a-r3/board-green.txt), including exact status and History message. |
+| **L-c** | Board `test_sqlite_busy_is_retryable_and_never_uploads`, `test_busy_route_is_service_unavailable` | [Board red](c2a-r3/board-red.txt) → [Board green](c2a-r3/board-green.txt); 503 and no upload/send. |
+| **L-d** | `test_child_has_minimal_env_and_works_outside_backend`, `test_worker_health_reports_enforced_memory_and_cpu_limits` | [Red](c2a-r3/resources-red.txt) → [green](c2a-r3/resources-contract-green.txt); placement works from a temporary cwd and credentials/PYTHONPATH are absent from child env. |
+| **N-a / N1** | `test_slow_dripping_model_releases_slot_at_total_deadline`, `test_model_total_budget_closes_transport_even_without_decoded_chunks` | [Slow-drip red](c2a-r3/resources-red.txt), [transport red](c2a-r3/model-transport-red.txt) → [green](c2a-r3/resources-contract-green.txt); transport closes and model slot is available again. |
+| **N-b / N2** | `test_missing_auto_evidence_is_quarantined_before_remote_write` | Original state remains `queued`; [red](c2a-r3/send-contract-red.txt) → [green](c2a-r3/resources-contract-green.txt), with `placement_evidence_missing` and no create/distribute calls. |
+| **N-c / N3** | Documentation correction above | No behavior change or artificial test. Historical claim is qualified and the actual r3 boundary is stated. |
+
+The existing hairline test exposed a narrow compatibility issue during the
+resource work: allocation exhaustion must remain `parse_limit`, and
+`TimeoutError` must be caught before `OSError` (its superclass). A regression
+captured kill/reap/slot recovery before that fix. No existing test was changed to
+accept a different result. Both manager decisions remain honored; no further
+specification conflict required stopping.
+
+### Final verification and limits
+
+- **Send signing suite:** **639 passed, 0 failed, 0 skipped**, 319.33 s
+  ([final log](c2a-r3/send-signing-suite.txt)). This includes all 576 pre-existing
+  signing tests plus 63 r3 regression cases, including the unchanged date-only
+  stamp, baseline anchoring and seven fixture outcomes.
+- **Board full suite:** **290 passed, 3 failed, 58 skipped**, 37.11 s
+  ([final log](c2a-r3/board-suite.txt)). The only failures are the three supplied
+  `test_cloud_edition` baseline cases: `test_detail_pages_program_and_epic`,
+  `test_function_serves_the_same_endpoints_and_shapes`, and
+  `test_relay_publishes_the_tailnet_payload`.
+- **r3 regression groups:** Send **63 passed** ([log](c2a-r3/final-regressions-green.txt));
+  Board's existing signing tests plus the nine new cases **62 passed**
+  ([focused log](c2a-r3/board-green.txt)). The final full suites above include them.
+- `git diff --check` passes in both repositories. [Footprint evidence](c2a-r3/footprint.json)
+  confirms the original HEADs, empty indexes, unchanged goldens, unchanged existing
+  Send placement tests, and unchanged project memory.
+
+An additional expanded run covering `backend/dealroom_sign/tests` plus
+`backend/tests/dealroom` produced **743 passed, 1 failed, 0 skipped** before the
+last seven regression additions ([expanded log](c2a-r3/send-suite.txt)). The one
+failure is `test_schema_mcp_static_parity`: the static MCP tool list omits the
+already-served `SignatureEmailRetryView` and `SignatureSignerRevokeView`
+operations. The exact same failure was verified against original Send HEAD
+`adc218d7` ([baseline evidence](c2a-r3/foundation-baseline-and-unique-red.txt)).
+Those route definitions and the static MCP inventory are outside this C2a fix
+and remain unchanged. This is an additional pre-existing foundation failure,
+not a passing check or a regression introduced by r3.
+
+The baseline check also demonstrates that the company-only uniqueness test
+fails when a model confirms both assignments; the final implementation holds it
+([green](c2a-r3/company-unique-green.txt)).
+
+The Board runner's hard-coded `/root/.hermes/cache/scratch` directory is read-only
+in this session. The exact supplied runner was used with an exported shell
+`mktemp` wrapper directing only its disposable home to `/tmp`; the runner itself
+was not edited:
+
+```bash
+function mktemp() { command mktemp -d /tmp/c2a-boardhome.XXXXXX; }
+export -f mktemp
+bash /root/work/sign-product/run-board-tests.sh /root/worktrees/board-s1
+```
+
+Send uses the supplied interpreter and runner:
+
+```bash
+C2A_PYTHON=/root/work/sign-product/send-venv/bin/python \
+  bash /root/worktrees/send-c1b/docs/implementation/c2a/run_send_tests.sh \
+  backend/dealroom_sign/tests
+```
+
+The additional foundation run used the same command with `backend/tests/dealroom`
+appended; its baseline failure is reported separately above.
+
+No live-service recheck was performed, per the prohibition on calls to real
+services. Its replacement is the Board collision fake plus the Send integration
+check using real Django document/version/workflow records and local PDF bytes,
+with storage, rendering and external transports stubbed. That check creates two
+workflows from two same-named uploads and verifies both `source_sha256` values.
+The parser concurrency ceiling is per application process; deployment worker
+count still determines the aggregate ceiling. The health check assumes the
+Linux resource module used by deployment.
+
+No schema/dependency changes, migrations, commits, pushes, or Sign-repository
+operations were made. All implementation and test changes are unstaged. Deploy the Send upload-response
+change before or together with Board; a new Board receiving an older upload
+response holds with 409 rather than guessing a version. Project
+memory remains unchanged unless the separate optional memory draft is explicitly
+approved. The completion marker is written beside the r3 brief after verification.
+
+## C2a r4
+
+This round addresses Gate 3 r3 against Send `ef62c4da` and Board `11d1606`.
+The fixes remain uncommitted. The review was read in full, including the cases
+that already held. No existing test was weakened, skipped, or deleted. The only
+edit to an existing test extends the r3 seven-fixture insertion property with a
+name at `line.x1 + 30` on the rule's own row; its original above/below checks
+remain. The parser analysis version is now `c2a.4`.
+
+### Identity fixes, in review order
+
+**B-1:** raw identity evidence includes the row band on either side of a rule,
+including printed names below its x-span. Neighbouring rule columns bound the
+band, and text in a shared gap participates in both blocks. Names are scored
+before any redaction, so company evidence cannot defeat a different printed
+person. A full `Name:` caption also no longer gets classified as an empty `bare`
+label when there is no company heading. Tests cover the single-row and 2×2 grid
+forms, names on the left and under the rule, matching and mismatched signers,
+with and without a company, plus separate and ambiguous side-by-side columns.
+
+**H-1:** `Title:` and `Its:` never yield a printed person. Recognized role phrases
+are accounted; an unrecognized remainder such as `Title: Lee Harbor` stays
+unresolved and holds. Role recognition covers the review's head words,
+modifiers, connectors, abbreviations and common department suffixes. Ordinary
+field labels, authorized/authorised signatory, party headings with colons,
+acceptance wording, duly authorized/authorised, legal-form words and parsed
+`Date:` values are accounted. ASCII spaced hyphens split name/role suffixes.
+`Name / title` remains one caption prefix during splitting. Heading selection
+prefers actual identity evidence over standalone block wording. All review title
+and wording variants are checked against Harbor's unchanged golden boxes. The
+extra-long title fixture reduces only its caption font and restores the font
+before the date, avoiding overlapping text or altered underscore geometry.
+
+**H-2:** stacked hosts are partitioned using the previous host's last companion
+or close caption and the next host's first attributable label. The previous
+extent ends before that label group; the next excludes the previous caption.
+Equidistant identities remain uncertain for both hosts. Without a separator,
+the existing previous-caption ambiguity guard remains. Individual headings and
+below-rule names with side dates place for Dan and Lee at both 80- and 110-point
+rule spacing; Pat still holds. The twelve r3 raw-extent mismatch cases and all
+r2 caption/previous-rule tests are retained.
+
+### Red → green evidence by finding
+
+Each behavior group was exercised before its fix. The final test fixtures were
+also replayed against the reviewed committed production files, restored in
+`finally` by [replay_baselines.py](c2a-r4/replay_baselines.py). The final Send
+baseline replay is **52 failed, 41 passed**; Board's three initial reservation
+cases are **1 failed, 2 passed** on its starting commit. Passing baseline cases
+are positive/negative controls, not claimed regressions. Initial iteration logs
+are retained, including fixture corrections; the final replay and final suite
+results are the authoritative evidence.
+
+| Finding | Baseline failure and final behavior | Evidence |
+| --- | --- | --- |
+| **B-1** | 11 same-row identity cases, shared-gap uncertainty, and `roles`/`witness` right-side insertion cases fail on `ef62c4da` (14 failures). Correct names place; different or ambiguous names hold with no fields/high assignment. | [Baseline red](c2a-r4/baseline-send-red.txt), [new regressions green](c2a-r4/regressions-green.txt), [full Send suite](c2a-r4/send-signing-suite.txt) |
+| **H-1** | 27 role/wording/suffix cases fail on the starting implementation. All review wording is accounted without moving golden boxes; `Title: Lee Harbor` still holds. | [Initial red](c2a-r4/h1-red.txt), [final baseline red](c2a-r4/baseline-send-red.txt), [green](c2a-r4/regressions-green.txt) |
+| **H-2** | Three of the four named stacked layouts fail on the starting implementation; all four now place on their exact respective rules. Mismatched signers and equidistant rows hold. | [Initial red](c2a-r4/h2-red.txt), [final baseline red](c2a-r4/baseline-send-red.txt), [green](c2a-r4/regressions-green.txt) |
+| **L-1** | A real loopback HTTP socket drips chunks then blocks: the old implementation retains its model slot past the two-second grace. Set the HTTP client's timeout to `httpx.Timeout(remaining, read=min(2, remaining), pool=min(1, remaining))`; the caller still returns at the total deadline. | [Socket red](c2a-r4/l1-red.txt), [socket and existing deadline controls green](c2a-r4/l1-green.txt), [final regression green](c2a-r4/regressions-green.txt) |
+| **L-2** | Four final privacy cases fail on baseline: selected/unselected model candidates and both corresponding History paths. Company-like prose is now `[company]` unless it is a mapped role value or the heading contributing to a local identity score. The same restriction applies to company suffixes and all emitted label/heading/companion paths. Raw text remains local. | [Baseline red](c2a-r4/baseline-send-red.txt), [History red](c2a-r4/l2-history-red.txt), [model/result/History/log green](c2a-r4/regressions-green.txt) |
+| **L-3** | An unrelated concurrent upload gets 503 on Board baseline. A committed per-key reservation now releases the SQLite write lock before upload, then stores the verified version. Same-key retries wait at most one second for completion, otherwise return busy without another upload. | [Baseline red](c2a-r4/baseline-board-red.txt), [focused signing green](c2a-r4/l3-green.txt), [full Board suite](c2a-r4/board-suite.txt) |
+| **L-4** | As the review explicitly recommends for this slice, upload idempotency is deferred and the orphan risk is documented. A lost response can leave an unreferenced upload; retries still use only their own hash-verified version. No unsupported claim of orphan cleanup is made. | [Operator runbook](c2a-runbook.md#upload-reservations-and-uncertain-responses). Documentation-only; no artificial test. Existing unknown-outcome and hash checks remain in the suites. |
+| **N-1** | Three leading-domain-token examples fail on baseline. `acme` now matches `Acme Holdings, Inc.` and analogous generic suffixes; later tokens and omitted distinctive words remain rejected. | [Baseline red](c2a-r4/baseline-send-red.txt), [green](c2a-r4/regressions-green.txt), unchanged r3 single-token controls |
+| **N-2** | The finite 90-point-above/125-point-below row-start window is explicitly documented, including the 100-point-above example. No page-wide identity guarantee is claimed. | [Runbook](c2a-runbook.md#identity-extent) and EDD counterparty §4.4. Documentation-only, as requested. |
+| **N-3** | Deployment arithmetic documents per-process slots: synchronous workers × 768 MiB child address-space ceiling, plus parent/stack overhead; threaded workers × min(threads, 2) × 768 MiB. A synchronous worker does not exhaust its own two parse slots. | [Runbook](c2a-runbook.md#parser-and-model-capacity). No semaphore behavior change. |
+
+The Board reservation table is created automatically in its existing local
+SQLite store; completed mappings need no conversion. Reservations expire after
+120 seconds following a crash. Owner tokens prevent an expired uploader from
+overwriting a newer reservation. Additional tests cover expiry and stale-owner
+rejection. There is no Django schema change, dependency change, migration,
+external model call, or deployment in this round.
+
+### Golden outcomes and retained safeguards
+
+[Exact comparison](c2a-r4/golden-comparison.json) and
+[recorded placements](c2a-r4/placements.json) compare every field's signer, type,
+page, x/y/w/h and confidence with the r3 artifact, using exact equality, not only
+the existing golden tolerance. Native field dictionaries also match exactly,
+including the date-only metadata and baseline-anchored 18-point signatures.
+The fixture PDF bytes and expected geometry files are unchanged.
+
+| PDF | Outcome | Fields | Exact r3 field/native geometry |
+| --- | --- | ---: | --- |
+| `bare` | `bare`, held | 0 | unchanged |
+| `nda` | `placed` | 4 | unchanged |
+| `offer` | `placed` | 2 | unchanged |
+| `roles` | `placed` | 6 | unchanged |
+| `witness` | `placed` | 6 | unchanged |
+| `harbor` | `placed` | 2 | unchanged |
+| `unusual` | `placed` with local model stub | 2 | unchanged |
+
+The review's phrase “all seven goldens are placed” is corrected here: the bare
+fixture intentionally holds, as it did before. No existing test/product-rule
+conflict required a relaxation. Previous inline-name, distant-caption,
+second-person, unknown-person, company-only uniqueness, parser-resource,
+transport, hash-verification, retry, and missing-evidence-quarantine assertions
+remain part of the unchanged mandatory suites. Company-only confidence still
+requires unnamed, fully accounted local evidence and a unique matching signer.
+
+### Final verification
+
+- **Send:** **725 passed, 0 failed, 0 skipped**, 328.12 s
+  ([full log](c2a-r4/send-signing-suite.txt)): all 639 existing tests plus 86
+  new r4 cases. The extended seven-fixture property is included.
+- **Board:** **295 passed, 3 failed, 58 skipped**, 33.13 s
+  ([full log](c2a-r4/board-suite.txt)): all 290 baseline passing tests plus five
+  new reservation cases. The only failures are the three supplied
+  `test_cloud_edition` baseline cases: `test_detail_pages_program_and_epic`,
+  `test_function_serves_the_same_endpoints_and_shapes`, and
+  `test_relay_publishes_the_tailnet_payload`.
+- **New Send regressions:** **86 passed**, 37.91 s
+  ([focused log](c2a-r4/regressions-green.txt)); final baseline replay was
+  **52 failed, 41 passed**, 50.69 s, including the extended fixture property.
+- **Goldens:** all seven outcomes preserved; every field and native field
+  dictionary matches r3 exactly. Six place and `bare` holds with no fields.
+- `git diff --check` passes for Send, Board, and the edited EDD document.
+  [Footprint](c2a-r4/footprint.json) records source/test hashes, unchanged HEADs,
+  empty Git indexes, unchanged fixtures and project memory, and the sole
+  existing-test change (the stronger r3 insertion property).
+
+Both supplied runner scripts are used verbatim. Their hard-coded scratch root
+is read-only in this sandbox, so the evidence wrappers export a
+shell `mktemp` function directing only disposable directories to `/tmp`:
+
+```bash
+bash docs/implementation/c2a-r4/run-send-tests.sh dealroom_sign/tests
+bash docs/implementation/c2a-r4/run-board-tests.sh
+/root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r4/check_goldens.py
+```
+
+These invoke the requested `/root/work/sign-product/run-send-local.sh
+/root/worktrees/send-c1b dealroom_sign/tests` and `bash
+/root/work/sign-product/run-board-tests.sh /root/worktrees/board-s1` respectively.
+The scripts under `/root/work/sign-product` were not edited. No work was done in
+`send-style` or `sign-style`. No Git staging or commits were performed. The
+completion marker is written beside `counterparty-c2a-r4.md` after verification.
+
+## C2a r5
+
+This round implements Gate 3 r4 against Send `079e2957` and Board `104a2b2`.
+The complete review, including its ruling on the finite-window limit and the
+cases that already held, was read. No existing test was edited, weakened,
+skipped or deleted. Production changes are confined to Send's placement parser
+(`analysis_version = c2a.5`); Board's reservation behavior is unchanged.
+
+### Changes in review order
+
+- **B-1:** unnamed blocks now have a company-only veto walk above and below
+  their local extent, within the existing column band. A rule or prose stops
+  the walk; an unobstructed page edge continues into the adjacent page,
+  including a row starting exactly at its edge. Person-like or unresolved rows
+  set `company_only_blocked`, which can only remove confidence. Distant names
+  never become labels, headings, positive identity, fields or model evidence.
+  Locally named blocks retain their behavior. Tests cover names 100/150/200 pt
+  above, 150/200 pt below, prose/rule stops, both page-break directions,
+  matching distant names supplying no positive evidence, column isolation,
+  named-block controls and exact comparison of all seven goldens.
+- **B-2:** annotations are inspected inside the bounded parser. Non-links
+  hold the whole document as `form_fields`; normal appearances on links hold
+  too. The reason is “Form fields or annotations require placement review.
+  Nothing was sent.” Empty widgets pass only with an explicitly empty `/V`
+  in an acyclic, bounded field/parent chain, no nonempty value anywhere in that
+  chain, and proven text-free appearances. The proof accepts simple
+  rectangle/border operators only. Missing values, text operators, XObjects,
+  images, appearance-state dictionaries, cycles and unsupported content hold.
+  An unresolved `/V` reference uses a distinct sentinel: pdfminer's default
+  `None` cannot be mistaken for proof of an empty field.
+  ReportLab's empty text widget and ordinary links retain placement. Tests
+  include own/inherited values, parent appearances, FreeText/Stamp/Ink/Text,
+  a link with an appearance, and an annotation on another page. Existing
+  page-size/resource checks retain precedence over annotation checks.
+- **H-1:** a matching printed name allows unrecognized `Title:`/`Its:`
+  remainders unless they meet the review's person-like predicate. Company-only
+  scoring remains strict. Roles accept hyphens and `Co-`; the table's ordinary
+  titles are recognized. Execution clauses using “for and on behalf of” supply
+  accounted company evidence and heading candidates, with the optional person
+  extracted and checked locally. Sentence-final lines are neither people nor
+  unresolved people and remain unaccounted prose for company-only scoring.
+  Tests compare title, wording and wrapped-witness variants against Harbor's
+  exact signature/date geometry; another person's execution clause still holds.
+- **M-1:** compound name captions use the proposed caption expression. The
+  unreadable-identity guard applies only to a nonempty, non-label remainder
+  that is not a person. Filled mismatched captions still hold.
+- **M-2:** a previous block with its own person/company heading and no close
+  caption can separate stacked blocks at its rule-row bottom. Side-date
+  headings place on their own rules at both 80 and 110 pt spacing; Pat holds.
+  Previous-caption ambiguity and shared boundary evidence are preserved.
+- **L-1:** empty Email/Address/Phone/Company/Witness captions are accounted;
+  filled values remain unaccounted. **L-2:** an underscore run ends its text
+  group, so a typed Signature/Date row yields two correctly labeled rules.
+  L-2 is implemented now, not deferred.
+- **N-1:** role acronyms use the proposed case-sensitive scoped patterns,
+  including `C[A-Z]{1,2}O`; mixed-case two-word names are no longer roles.
+  **N-2:** partitioning clears uncertainty only when it came from the
+  ambiguous-heading guard. Independent boundary flags survive later pairs.
+
+### Interpretations and small deviations
+
+No finding was skipped. H-1's sentence-final rule was pulled forward while
+closing B-1 because the new walk otherwise misread the existing `witness`
+golden's witness sentence as a person. This preserves the required golden and
+does not narrow the veto. The table's role words were added to the vocabulary:
+without `Proprietor`, for example, the written remainder predicate itself
+classifies “Sole Proprietor” as a person; suffix-form “Account Executive” also
+needs recognition to meet the requested `harbor_variant(title=...)` test.
+
+The typed `Name: ________ Title: ________` Harbor variant adds a real blank name
+rule. It retains the existing NAME-companion behavior rather than suppressing
+a legitimate field solely to make the variant's field count equal the original.
+Its original signature/date fields remain exact, and the test separately
+requires the added NAME field. The seven original PDFs remain byte-for-byte
+unchanged, with exact original field counts and native geometry.
+
+The empty-widget exception is deliberately conservative: even an appearance
+with text operators that might render nothing holds. The supported empty
+ReportLab appearance has only border/background/clip operations. This keeps
+the exception provable without flattening or interpreting annotation text.
+
+### Privacy and retained safeguards
+
+The new walk stores only a boolean outside its local raw evidence; annotation
+values never become placement labels. New workflow checks verify that distant
+identity and annotation holds create no workflow or History event and expose no
+other person's name in the result, exception response, model call or logs.
+Existing same-row, gap-between-columns, second-person, caption-boundary,
+company-only uniqueness, raw-prose redaction, resource, deadline, transport,
+hash-verification, retry and Board reservation tests remain unchanged.
+
+The EDD's r4 limit-acceptance paragraph has been replaced with the r5 confidence
+rule. The [runbook](c2a-runbook.md#identity-extent) describes the veto, annotation
+hold and empty-widget proof. Existing orphan-upload and per-process capacity
+dispositions remain documented. No schema, dependency, migration, deployment
+or external model change was made. No work was done in `send-style`,
+`sign-style` or another host; no Git staging or commits were performed.
+
+### Verification evidence
+
+The supplied Send and Board runners are invoked unchanged through the local
+wrappers, which only redirect their read-only scratch-directory creation to
+`/tmp`, as in r4:
+
+```bash
+bash docs/implementation/c2a-r5/run-send-tests.sh dealroom_sign/tests
+bash docs/implementation/c2a-r5/run-board-tests.sh
+/root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r5/check_goldens.py
+```
+
+They execute `/root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b
+dealroom_sign/tests` and `bash /root/work/sign-product/run-board-tests.sh
+/root/worktrees/board-s1`. The runners themselves were not edited.
+
+The final new tests were replayed against the reviewed production file from
+`079e2957`, restored in `finally` by
+[replay_baseline.py](c2a-r5/replay_baseline.py): **85 failed, 47 passed**, 49.48 s.
+Passing baseline cases are controls, not claimed regressions. Initial per-group
+red/green logs are retained; the final baseline replay and final full suite are
+the authoritative results. The first full verification attempt was interrupted
+after the exact-page-edge regression was discovered, then restarted after its
+fix; the interrupted log is not counted as verification.
+The subsequent 856-test run passed before the missing-value-reference check
+was added. Its log is retained as intermediate evidence; final verification
+below includes that correction and its additional test.
+
+| Finding | Failures on `079e2957` | Final behavior checked |
+| --- | ---: | --- |
+| B-1 | 13 | Distant/cross-page person evidence vetoes company-only; rule/prose stops, column bands, named controls and all seven exact goldens hold |
+| B-2 | 15 | Filled, inherited, visible or unproven annotation evidence holds; proven empty widgets/plain links preserve placement |
+| H-1 | 33 | Review titles, execution clauses, title-remainder predicate and wrapped sentence preserve exact boxes; mismatches still hold |
+| M-1 | 8 | Compound captions parse; filled mismatches hold; typed Name/Title retains its legitimate NAME companion |
+| M-2 | 2 | Both stacked heading/side-date spacings place each person on their own rule |
+| L-1 | 5 | Empty contact/company/witness labels are accounted; filled values hold |
+| L-2 | 1 | One typed Signature/Date row yields both fields |
+| N-1 | 4 | Mixed-case person names are not roles; uppercase CHRO is recognized |
+| N-2 | 1 | Independent uncertainty survives partitioning |
+| History | 3 | These new holds create no workflow/event and disclose no other person's name |
+
+[Baseline log](c2a-r5/baseline-send-red.txt),
+[machine-readable counts](c2a-r5/baseline-summary.json),
+[exact-page-edge red](c2a-r5/page-edge-red.txt) and
+[green](c2a-r5/page-edge-green.txt) record the regressions.
+[Missing-value red](c2a-r5/missing-value-red.txt) and the
+[18 annotation cases green](c2a-r5/missing-value-green.txt) verify the strict
+empty-widget exception, including an unresolved value reference.
+[Golden comparison](c2a-r5/golden-comparison.json) and
+[placements](c2a-r5/placements.json) record exact equality with r4 for every
+field and native field dictionary: `bare` holds with zero fields; `nda`, `offer`,
+`roles`, `witness`, `harbor` and the stubbed-model `unusual` place unchanged.
+
+### Final verification
+
+- **Send:** **857 passed, 0 failed, 0 skipped**, 361.41 s
+  ([full log](c2a-r5/send-signing-suite.txt)): all 725 existing tests and all
+  132 new r5 cases (129 placement cases and three workflow/History cases).
+- **Board:** **295 passed, 3 failed, 58 skipped**, 33.06 s
+  ([full log](c2a-r5/board-suite.txt)). The failures are exactly the supplied
+  `test_cloud_edition` baseline cases: `test_detail_pages_program_and_epic`,
+  `test_function_serves_the_same_endpoints_and_shapes`, and
+  `test_relay_publishes_the_tailnet_payload`. Board code and tests are unchanged.
+- **Goldens:** all seven r4 outcomes, field counts, coordinates, confidence
+  and native field dictionaries remain exact. Six place; `bare` holds.
+- **Failing first:** final baseline replay is **85 failed, 47 passed** on
+  `079e2957`; every new case passes in the final full Send suite.
+- `git diff --check` passes for Send, Board and the edited EDD document.
+  [Footprint](c2a-r5/footprint.json) records the verified source/test hashes,
+  unchanged HEADs, empty Git indexes, clean Board worktree, and unchanged
+  existing tests, fixture PDFs and project memory.
+
+All changes remain unstaged and uncommitted. The completion marker is
+`/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-r5.done`.
+
+## C2a r6
+
+Implemented the [Gate 3 r5 follow-ups](../../../dealroom-sign-edd/docs/edd/reviews/counterparty-c2a-gate3-r5.md)
+from Send base `1efaca25`, in the requested order: H-2, H-1, then the medium
+findings and nits. `analysis_version` is now **`c2a.6`**. Changes are confined to
+Send placement, new tests/evidence, this report/runbook, and the explicitly
+requested EDD rule paragraph. Board, `send-style`, `sign-style`, other hosts,
+existing tests, fixture PDFs, dependencies, migrations and project memory were
+not changed. Nothing was staged or committed.
+
+### Fixes and failing-first evidence
+
+| Finding | Failures on `1efaca25` | Implemented behavior |
+| --- | ---: | --- |
+| H-2 | 18 | `Email`, `E-mail`, `Address`, `Phone`, `Tel`, `Company` rules have `OTHER` semantics. All companion kinds are excluded from hosts, heading boundary candidates, following/neighbor boundaries, side-date blockers and walk rule stops. Each of the review's three identity outcomes is exercised for all six labels; a matched signer uses the original By rule. Empty E-mail/Tel captions are accounted like the other empty contact captions. |
+| H-1 | 2 | An upward walk stops at rows whose top falls in another host's `(rule.y, rule.y + 125]` extent in the same band. Stacked named-sender/company-only-counterparty blocks place at both 110 and 140 pt spacings; a different name inside the counterparty block still holds (two passing baseline controls). |
+| M-1 | 13 | Page-number rows and digit-normalised rows repeated at y ±2 pt on at least two distinct pages are neutral in the walk. Repeated headers place, including ±2 pt offsets and changing digits. Footer patterns do not hide the next page's name. Nonrepeated headers and a 3 pt shift retain the veto (two passing baseline controls). Local evidence is unchanged. |
+| M-2 | 13 | Added every proposed company suffix. Execution-clause names use the capitalised PERSON predicate and exclude roles; `the Director`, `The Director` and `Managing Director` become role wording. All cases retain the exact Harbor boxes. |
+| M-3 | 1 | Apply `BLOCK_WORDING.fullmatch` after splitting the name head; the comma witness paragraph keeps the exact Harbor boxes. |
+| N-1 | 2 | Apply the title-remainder predicate to the head before a comma; both Title/Its with a different person's name hold. |
+| N-2 | 2 | Bare capitalised person rows ending in a period retain the second-person veto, in uppercase and title case. |
+| History/privacy | 4 | Contact-rule, cross-page-footer, title-remainder and period-name holds create no workflow or History event, return no fields, call no model and expose no other person's name in results, exceptions or logs. |
+
+Each production fix followed a failing test. Initial red/green group logs are
+under [c2a-r6](c2a-r6/). The final tests were also replayed against the **exact
+review base** by [replay_baseline.py](c2a-r6/replay_baseline.py), restoring the
+working production file in `finally`: **55 failed, 4 passed**, 28.84 s.
+The four passing cases are preservation controls, not claimed regressions.
+[Full baseline log](c2a-r6/baseline-send-red.txt) and
+[machine-readable counts](c2a-r6/baseline-summary.json) record every case.
+
+### Accepted deferral and narrow deviation
+
+- **L-1:** retained the conservative annotation hold accepted by the reviewer
+  for v1. Absent-`/V` empty-widget relaxation and `/Sig` placement hints are
+  deferred to C2b exactly as suggested. Changing this now would contradict the
+  existing explicit absent-value hold test and the review's annotation-chain
+  preservation requirement. Existing annotation tests remain unchanged.
+- **N-2:** preserved the exact known prose fragment `Effective Date.`. A literal
+  PERSON-plus-period exclusion would classify that wrapped witness-clause
+  ending as a person, violating existing tests. Other bare capitalised person
+  rows retain their veto; no existing test was weakened or changed.
+
+No other finding was skipped. The EDD §4.4 and
+[runbook](c2a-runbook.md#identity-extent) document these rules. No new raw PDF text
+crosses the parser boundary: running-text detection remains local, and only the
+existing boolean veto affects company-only scores.
+
+### Verification
+
+The requested runner is invoked unchanged via
+[run-send-tests.sh](c2a-r6/run-send-tests.sh), which redirects only its read-only
+scratch-directory creation to `/tmp` (the same workaround used in r5):
+
+```bash
+bash docs/implementation/c2a-r6/run-send-tests.sh dealroom_sign/tests
+# Executes /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+/root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r6/check_goldens.py
+```
+
+The 184-case r5+r6 targeted placement run passed. The independent
+[golden comparison](c2a-r6/golden-comparison.json) records all seven exact r5
+outcomes, coordinates, confidence and native field dictionaries; six place and
+`bare` holds. [Placements](c2a-r6/placements.json) include the new analysis version.
+The unusual-label fixture uses the existing model stub; no live model was called.
+The unchanged r5 checks cover rule/prose stops, inclusive adjacent-page edges,
+neighbour column bands, named blocks ignoring distant evidence, distant names
+never adding confidence, bare-document holds, annotation privacy and parent
+chains, and preservation of independent partition uncertainty. The final suite
+also retains all earlier resource, transport, assignment and workflow checks.
+
+The initial full run recorded **914 passed, 2 failed**: both failures were in
+new workflow fixtures passing the golden-only `side` property to an API that
+rejects it before placement. The corrected fixtures now use accepted API fields;
+the final baseline replay above confirms both cases fail on the intended missing
+placement hold. The [initial full log](c2a-r6/send-signing-suite-initial.txt) is
+retained as diagnostic evidence, not final verification. Existing tests were
+unchanged. Running rows are skipped before the previous-host row stop so they
+remain neutral even where their geometry overlaps another host's extent.
+
+### Final result
+
+- **Send: 916 passed, 0 failed, 0 skipped**, 384.30 s; all **857 existing**
+  tests and **59 new** cases (55 placement, four workflow/History).
+  [Full log](c2a-r6/send-signing-suite.txt) records the result and 82 warnings.
+- **Failing first:** the final r6 tests on `1efaca25` produce **55 failures and
+  four passing preservation controls**; every case passes on `c2a.6`.
+- **Seven goldens:** exact outcomes, field geometry/confidence and native fields
+  against r5, which already matched r4. Six place; `bare` holds with no fields.
+- **Scope/checks:** Send and the edited EDD pass `git diff --check`.
+  [Footprint](c2a-r6/footprint.json) records the final code/test/doc hashes,
+  unchanged HEAD, empty Git index and unchanged existing tests/fixtures.
+  Board and other hosts were not accessed or modified for this patch.
+- **Completion marker:**
+  `/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-r6.done`.
+
+All changes remain unstaged and uncommitted.
+
+## C2a r7
+
+Implemented Gate 3 r6 H-1, L-1, L-2 and N-1 from Send base `be30d623` on
+`agent/c1b-counterparty`. `analysis_version` is **`c2a.7`**. All edits are inside
+`/root/worktrees/send-c1b`; existing tests, fixture PDFs, r4/r5 placement
+artifacts and project memory are unchanged. Nothing was staged or committed.
+
+### Changes and failing-first evidence
+
+| Finding | Failures on `be30d623` | Result |
+| --- | ---: | --- |
+| H-1 | 13 | Replaced the closed contact vocabulary with the structural short-caption predicate. Such rules are `OTHER`, never hosts or boundaries. Their own blank captions are neutral locally and in the walk, so `Notice Address:` cannot masquerade as a person. All five requested captions exercise the three typed-identity outcomes; matching identities use the original By/Date rules at 400/430 pt. |
+| L-1 | 4 | Repeated rows are neutral only where `top < 72` or `bottom > height - 72`. The duplicated body name at y=300 holds. Tests cover strict margin edges and page-number neutrality anywhere; existing running-header cases still place. |
+| L-2 | 7 | Period-ending prose uses the last-word set `date`, `agreement`, `above`, `below`, `hereof`. Closing/Execution/Commencement Date and the other endings retain exact Harbor boxes. Uppercase/title-case Dan Whaley with a final period still holds. |
+| N-1 | 1 | Hold reasons use “sign and date” for multiple named subjects and “signs and dates” for one, including one missing signer in a larger request. |
+| Workflow/privacy | 6 | Each new contact hold and the repeated body-name hold creates no workflow/History event, returns no fields, calls no model and exposes no other person's name in results, exceptions or logs. |
+
+The requested four regressions were written and run before production edits:
+[initial failing-first log](c2a-r7/failing-first.txt). That initial run also
+contained a mistaken preservation-control fixture: the Harbor PDF contains
+both named signers, so it could not exercise “one missing signer.” The test now
+uses the single-block contact PDF and retains its exact singular-reason
+assertion. No existing test was edited or weakened.
+
+The final **51 new cases** (45 placement and six workflow/privacy) were replayed
+against the exact `be30d623` production file by
+[replay_baseline.py](c2a-r7/replay_baseline.py), which restores the working file
+in `finally`: **31 failed, 20 passed**, 27.79 s. The passing cases are preservation
+controls, not claimed regressions. The [baseline log](c2a-r7/baseline-send-red.txt)
+and [failure inventory](c2a-r7/baseline-summary.json) record every failure.
+
+### Required golden preservation and narrow deviation
+
+The literal proposed H-1 predicate also matches the existing model-reviewed
+signature caption `Hand of the covenanting party:`. Applying it literally made
+the mandatory `unusual` golden `bare`, as recorded in
+[initial targeted results](c2a-r7/initial-targeted.txt). To satisfy the explicit
+requirement that all seven goldens remain exact, that already-recognized caption
+retains its existing host/model path alongside the Witness host exception.
+There is no new contact-label vocabulary and no change to the golden fixture,
+`assert_golden`, expected fields, confidence, or model stub.
+
+The same run showed that `Notice Address:` must be treated as an attached blank
+caption when its rule becomes `OTHER`; otherwise its two capitalised words
+cause a false identity hold. Only labels actually attached to `OTHER` rules are
+excluded from scoring/walking. Unattached text, filled values and surrounding
+typed identities retain their checks. `OTHER` rules also cannot shorten the
+upper extent boundary.
+
+The [runbook](c2a-runbook.md#identity-extent) and
+[local EDD note](c2a-r7/edd-note.md) document the resulting rules and exception.
+The external EDD worktree was not edited. Because this worktree has no EDD brief,
+the [local brief record](c2a-r7/counterparty-c2a-r7.md), EDD note and completion
+marker are kept together under `docs/implementation/c2a-r7/`.
+
+### Verification
+
+The supplied runner is invoked directly and unchanged, with the requested URL:
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+/root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r7/check_goldens.py
+```
+
+- **Targeted r6/r7:** **106 passed**, 43.35 s
+  ([log](c2a-r7/targeted-green.txt)).
+- **Seven goldens:** all exact against **both r4 and r5**, on outcome, signer,
+  type, page, x/y/w/h, confidence and native field dictionaries. Six place;
+  `bare` holds with zero fields. Each placed fixture also passes `assert_golden`.
+  [Comparison](c2a-r7/golden-comparison.json),
+  [placements](c2a-r7/placements.json),
+  [checker](c2a-r7/check_goldens.py). The unusual fixture uses the existing stub;
+  no live model was called.
+- **Full signing suite:** **922 passed, 45 failed, 0 skipped**, 426.16 s;
+  all 967 cases ran, including all 51 new cases. The
+  [full log](c2a-r7/send-signing-suite.txt) records 74 warnings. This is **not a
+  green full-suite verification** in the current sandbox.
+- **Environment/baseline check:** all **45 failures reproduce on untouched
+  `be30d623`**, 60.23 s ([baseline replay](c2a-r7/baseline-infrastructure.txt)).
+  Forty-three failures report denied Redis access at `127.0.0.1:16379`
+  (`Operation not permitted`); the transport test cannot create its loopback
+  HTTP socket. The remaining preview-dispatch assertion also reproduces on
+  baseline; its renderer reads dynamic settings through the same Redis cache
+  and its wrapper suppresses dispatch exceptions. The separate
+  [route recheck](c2a-r7/route-failure-recheck.txt) confirms the socket denial.
+  No tests were skipped, changed, or given replacement mocks. Socket access
+  must be available to obtain a green full-suite result with the supplied runner;
+  approval escalation is unavailable in this environment.
+- **Scope/checks:** `git diff --check` passes; HEAD remains `be30d623`, the index
+  is empty, and existing tests, fixture PDFs, r4/r5 artifacts and memory remain
+  unchanged. [Footprint](c2a-r7/footprint.json) records source/test/document
+  hashes and [verification summary](c2a-r7/verification-summary.json) records
+  the identical full-suite/baseline failure inventory.
+- **Completion marker:**
+  [counterparty-c2a-r7.done](c2a-r7/counterparty-c2a-r7.done), beside the local
+  brief record. It explicitly records implementation completion and the
+  outstanding full-suite environment limitation.
+
+All changes remain unstaged and uncommitted.

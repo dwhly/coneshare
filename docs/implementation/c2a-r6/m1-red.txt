@@ -1,0 +1,267 @@
+FFFFFFFFF..FFFF                                                          [100%]
+=================================== FAILURES ===================================
+_ test_m1_repeated_running_header_is_neutral[0-Mutual Non-Disclosure Agreement] _
+
+header = 'Mutual Non-Disclosure Agreement', drift = 0
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+____ test_m1_repeated_running_header_is_neutral[0-Execution Version {page}] ____
+
+header = 'Execution Version {page}', drift = 0
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+_ test_m1_repeated_running_header_is_neutral[0-Mutual NDA \u2013 Signature Page] _
+
+header = 'Mutual NDA – Signature Page', drift = 0
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+_ test_m1_repeated_running_header_is_neutral[2-Mutual Non-Disclosure Agreement] _
+
+header = 'Mutual Non-Disclosure Agreement', drift = 2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+____ test_m1_repeated_running_header_is_neutral[2-Execution Version {page}] ____
+
+header = 'Execution Version {page}', drift = 2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+_ test_m1_repeated_running_header_is_neutral[2-Mutual NDA \u2013 Signature Page] _
+
+header = 'Mutual NDA – Signature Page', drift = 2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+_ test_m1_repeated_running_header_is_neutral[-2-Mutual Non-Disclosure Agreement] _
+
+header = 'Mutual Non-Disclosure Agreement', drift = -2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+___ test_m1_repeated_running_header_is_neutral[-2-Execution Version {page}] ____
+
+header = 'Execution Version {page}', drift = -2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+_ test_m1_repeated_running_header_is_neutral[-2-Mutual NDA \u2013 Signature Page] _
+
+header = 'Mutual NDA – Signature Page', drift = -2
+
+    @pytest.mark.parametrize('header', [
+        'Mutual Non-Disclosure Agreement', 'Execution Version {page}', 'Mutual NDA – Signature Page',
+    ])
+    @pytest.mark.parametrize('drift', [0, 2, -2])
+    def test_m1_repeated_running_header_is_neutral(header, drift):
+        result = placement.place(running_text_pdf(header, drift=drift), PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r6.py:109: AssertionError
+________ test_m1_page_number_does_not_hide_next_page_name[Page 1 of 2] _________
+
+footer = 'Page 1 of 2'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+_____________ test_m1_page_number_does_not_hide_next_page_name[1] ______________
+
+footer = '1'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+___________ test_m1_page_number_does_not_hide_next_page_name[- 1 -] ____________
+
+footer = '- 1 -'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+___________ test_m1_page_number_does_not_hide_next_page_name[1 / 2] ____________
+
+footer = '1 / 2'
+
+    @pytest.mark.parametrize('footer', ['Page 1 of 2', '1', '- 1 -', '1 / 2'])
+    def test_m1_page_number_does_not_hide_next_page_name(footer):
+>       assert_held(placement.place(running_text_pdf(footer=footer), PAT))
+
+dealroom_sign/tests/test_placement_r6.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.6', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 600.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[0-Mutual Non-Disclosure Agreement]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[0-Execution Version {page}]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[0-Mutual NDA \u2013 Signature Page]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[2-Mutual Non-Disclosure Agreement]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[2-Execution Version {page}]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[2-Mutual NDA \u2013 Signature Page]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[-2-Mutual Non-Disclosure Agreement]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[-2-Execution Version {page}]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_repeated_running_header_is_neutral[-2-Mutual NDA \u2013 Signature Page]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[Page 1 of 2]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[1]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[- 1 -]
+FAILED dealroom_sign/tests/test_placement_r6.py::test_m1_page_number_does_not_hide_next_page_name[1 / 2]
+13 failed, 2 passed, 22 deselected in 3.96s

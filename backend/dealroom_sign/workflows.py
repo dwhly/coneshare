@@ -95,7 +95,7 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
         if analysis['status'] != 'placed':
             raise PlacementRequired(analysis)
         recipients = [dict(r, fields=to_native_fields(analysis, r['email'])) for r in recipients]
-        recipients = validate_recipients(recipients, pdf)
+        recipients = validate_recipients(recipients, pdf, trusted_placement=True)
     command_id = uuid.uuid4()
     with transaction.atomic():
         workflow, created = Workflow.objects.get_or_create(owner=owner, idempotency_key=idempotency_key, defaults={
@@ -103,7 +103,7 @@ def command(*, owner, room, version, recipients, idempotency_key, purpose='room_
             'member_id': str(member.pk) if member else '', 'member_email': member.email.strip().lower() if member else '',
             'policy_revision': str(policy.revision) if policy else '', 'source_version': version,
             'source_sha256': digest(pdf), 'recipients': recipients, 'title': title or version.document.name,
-            'external_id': f'dealroom:{getattr(settings, "SIGN_DEPLOYMENT_ID", "chief")}:{command_id}',
+            'external_id': f'dealroom:{getattr(settings, "SIGN_DEPLOYMENT_ID", "chief")}:{"auto" if automatic else "manual"}:{command_id}',
         })
         if workflow.request_sha256 != fingerprint:
             raise ValidationError('Idempotency key already used with different inputs.')
@@ -120,12 +120,14 @@ class PlacementRequired(Exception):
     def __init__(self, result):
         self.result = {'status': 'needs_sender', 'reason': result['reason'],
                        'suggestions': result['fields'], 'placement_status': result['status'],
-                       'model': result['model']}
+                       'model': result['model'], 'reason_code': result.get('reason_code', 'placement_review')}
         super().__init__(result['reason'])
 
 
 def check_placement(workflow):
     fact = ObservedSignEvent.objects.filter(workflow=workflow, kind='placement.resolved').first()
+    if not fact and workflow.purpose == 'room_document' and workflow.external_id.startswith('dealroom:') and ':manual:' not in workflow.external_id:
+        raise SignError('placement_evidence_missing')
     if fact:
         data = fact.payload.get('data', {})
         analysis = data.get('placement', {})
@@ -146,7 +148,7 @@ def envelope_meta(workflow):
     """Room context Sign can show (spec: dealroom-shell.md §4) and the Fleet Dealroom email subject.
     The signer's name is already the recipient name (the verified room member's name for NDAs)."""
     title = workflow.title[:-4] if workflow.title.lower().endswith('.pdf') else workflow.title
-    meta = {'subject': f'Fleet Dealroom: please sign {title}'[:254]}
+    meta = {'subject': f'Fleet Dealroom: please sign {title}'[:254], 'dateFormat': 'yyyy-MM-dd'}
     if return_url(workflow):
         meta['redirectUrl'] = return_url(workflow)
     return meta
@@ -346,7 +348,7 @@ def process(workflow_id):
             next_attempt_at=timezone.now()+timedelta(seconds=900 if workflow.state == 'done' else 15))
     except SignError as exc:
         workflow.refresh_from_db()
-        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch', 'release_mail_settings_mismatch', 'placement_evidence_changed'}:
+        if exc.code in {'sealed_bytes_conflict', 'duplicate_external_id', 'signer_identity_changed', 'source_hash_changed', 'envelope_items_changed', 'envelope_correlation_mismatch', 'nda_identity_mismatch', 'sign_team_mismatch', 'release_mail_settings_mismatch', 'placement_evidence_changed', 'placement_evidence_missing'}:
             workflow.state = 'quarantined'
         elif not workflow.envelope_id and workflow.state == 'creating':
             workflow.state = 'uncertain' if exc.uncertain else 'failed'

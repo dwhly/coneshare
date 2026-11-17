@@ -1,0 +1,125 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_r6_holds_keep_other_names_out_of_history[title] _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (05438f7e-5727-4f7d-9a56-c7dfe54fbcb8)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x768f4cf049b0>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x768f4c4fd0a0>
+source_kind = 'title'
+
+    @pytest.mark.parametrize('source_kind', ['contact', 'footer', 'title', 'period'])
+    def test_r6_holds_keep_other_names_out_of_history(fixture, settings, caplog, source_kind):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)],
+            'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        if source_kind == 'contact':
+            source = contact_rule_pdf('Email', 'Lee Harbor')
+        elif source_kind == 'footer':
+            source = running_text_pdf(footer='Page 1 of 2')
+        else:
+            source = harbor_variant(wording='Title: Dan Whaley, CEO' if source_kind == 'title' else 'DAN WHALEY.')
+        signers = PAT if source_kind in {'contact', 'footer'} else LEE
+        other_name = 'lee harbor' if signers is PAT else 'dan whaley'
+        model, analyzed = Mock(), []
+        counts = (Workflow.objects.count(), ObservedSignEvent.objects.count())
+    
+        def analyze(pdf, signers):
+            result = place(pdf, signers, model_client=model)
+            analyzed.append(result)
+            return result
+    
+        with patch('dealroom_sign.workflows.source_bytes', return_value=source), \
+             patch('dealroom_sign.workflows.place', side_effect=analyze), \
+             pytest.raises(PlacementRequired) as caught:
+>           command(owner=fixture.user, room=fixture.room, version=fixture.version,
+                    recipients=signers, idempotency_key='r6-private', board_id='board-c2a', placement='auto')
+
+dealroom_sign/tests/test_send_r6.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom_sign/workflows.py:79: in command
+    recipients = validate_recipients(recipients, pdf, automatic=automatic)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+pdf = b'%PDF-1.3\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<\n/PageMode /UseNone\n/Pages 2 0 R\n/Type /Catalog\n>>\nendobj\n2 0 obj\n<<\...fo 10 0 R\n/ID [ <a5c5af2557224b080e92f8f56ddec47a> <a5c5af2557224b080e92f8f56ddec47a> ]\n>>\nstartxref\n2917\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None, automatic=False, trusted_placement=False):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'title', 'role', 'signingOrder', 'fields'}:
+>               raise ValidationError('Unsupported recipient property.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Unsupported recipient property.', code='invalid')]
+
+dealroom_sign/validation.py:33: ValidationError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7K7E1V4Q5AEV0YSW6ZKHPG6
+____________ test_r6_holds_keep_other_names_out_of_history[period] _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Test Room>, version=...kflow: Workflow object (28d355b2-4807-46b2-ab83-58789a378c11)>, credential=<SignCredential: SignCredential object (1)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x768f4c4fe840>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x768f4cbebb60>
+source_kind = 'period'
+
+    @pytest.mark.parametrize('source_kind', ['contact', 'footer', 'title', 'period'])
+    def test_r6_holds_keep_other_names_out_of_history(fixture, settings, caplog, source_kind):
+        settings.BOARD_SIGN_BOARDS = {'board-c2a': {'owner_ids': [str(fixture.user.pk)],
+            'room_ids': [str(fixture.room.pk)], 'team_ids': [3]}}
+        if source_kind == 'contact':
+            source = contact_rule_pdf('Email', 'Lee Harbor')
+        elif source_kind == 'footer':
+            source = running_text_pdf(footer='Page 1 of 2')
+        else:
+            source = harbor_variant(wording='Title: Dan Whaley, CEO' if source_kind == 'title' else 'DAN WHALEY.')
+        signers = PAT if source_kind in {'contact', 'footer'} else LEE
+        other_name = 'lee harbor' if signers is PAT else 'dan whaley'
+        model, analyzed = Mock(), []
+        counts = (Workflow.objects.count(), ObservedSignEvent.objects.count())
+    
+        def analyze(pdf, signers):
+            result = place(pdf, signers, model_client=model)
+            analyzed.append(result)
+            return result
+    
+        with patch('dealroom_sign.workflows.source_bytes', return_value=source), \
+             patch('dealroom_sign.workflows.place', side_effect=analyze), \
+             pytest.raises(PlacementRequired) as caught:
+>           command(owner=fixture.user, room=fixture.room, version=fixture.version,
+                    recipients=signers, idempotency_key='r6-private', board_id='board-c2a', placement='auto')
+
+dealroom_sign/tests/test_send_r6.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom_sign/workflows.py:79: in command
+    recipients = validate_recipients(recipients, pdf, automatic=automatic)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+recipients = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+pdf = b'%PDF-1.3\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<\n/PageMode /UseNone\n/Pages 2 0 R\n/Type /Catalog\n>>\nendobj\n2 0 obj\n<<\...fo 10 0 R\n/ID [ <a5c5af2557224b080e92f8f56ddec47a> <a5c5af2557224b080e92f8f56ddec47a> ]\n>>\nstartxref\n2906\n%%EOF\n'
+
+    def validate_recipients(recipients, pdf, *, page_count=None, automatic=False, trusted_placement=False):
+        try:
+            if page_count is None:
+                page_count = len(PdfReader(io.BytesIO(pdf)).pages)
+        except Exception:
+            raise ValidationError('A valid PDF source is required.') from None
+        if not 1 <= page_count <= 500 or not isinstance(recipients, list) or not 1 <= len(recipients) <= 20:
+            raise ValidationError('Invalid page or recipient count.')
+        normalized = []
+        emails = set()
+        for recipient in recipients:
+            if set(recipient) - {'email', 'name', 'company', 'title', 'role', 'signingOrder', 'fields'}:
+>               raise ValidationError('Unsupported recipient property.')
+E               rest_framework.exceptions.ValidationError: [ErrorDetail(string='Unsupported recipient property.', code='invalid')]
+
+dealroom_sign/validation.py:33: ValidationError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_send_r6.py::test_r6_holds_keep_other_names_out_of_history[title]
+FAILED dealroom_sign/tests/test_send_r6.py::test_r6_holds_keep_other_names_out_of_history[period]
+2 failed, 2 deselected in 10.95s

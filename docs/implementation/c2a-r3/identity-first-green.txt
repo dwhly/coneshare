@@ -1,0 +1,1207 @@
+FFFFFFFFFFFF..FF......F...FFFFFFFFFF.FFFFFFFFFF......F.....FFF...FFFFFFF [ 46%]
+F.FFF...................................................F....FFFFF.....F [ 93%]
+..........                                                               [100%]
+=================================== FAILURES ===================================
+__________ test_other_person_in_whole_raw_extent_never_gets_high[by] ___________
+
+layout = 'by'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+________ test_other_person_in_whole_raw_extent_never_gets_high[signed] _________
+
+layout = 'signed'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+________ test_other_person_in_whole_raw_extent_never_gets_high[heading] ________
+
+layout = 'heading'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor \u2013 COO] _
+
+layout = 'format:Lee Harbor – COO'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor (COO)] _
+
+layout = 'format:Lee Harbor (COO)'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor / COO] _
+
+layout = 'format:Lee Harbor / COO'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_ test_other_person_in_whole_raw_extent_never_gets_high[format:LEE HARBOR / COO] _
+
+layout = 'format:LEE HARBOR / COO'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:22:text] _____
+
+layout = 'below:22:text'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:26:text] _____
+
+layout = 'below:26:text'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:45:text] _____
+
+layout = 'below:45:text'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:26:rule] _____
+
+layout = 'below:26:rule'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+_____ test_other_person_in_whole_raw_extent_never_gets_high[below:65:rule] _____
+
+layout = 'below:65:rule'
+
+    @pytest.mark.parametrize('layout', ['by', 'signed', 'heading', 'format:Lee Harbor – COO',
+        'format:Lee Harbor (COO)', 'format:Lee Harbor / COO', 'format:LEE HARBOR / COO',
+        'below:22:text', 'below:26:text', 'below:45:text', 'below:26:rule', 'below:65:rule'])
+    def test_other_person_in_whole_raw_extent_never_gets_high(layout):
+        pdf = extent_pdf(layout)
+        with pdfplumber.open(io.BytesIO(pdf)) as doc:
+            assert 'lee harbor' in doc.pages[0].extract_text().lower()
+        result = placement.place(pdf, PAT)
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],....68, 452.07, 243.24000000000007], 'line_kind': 'underscores'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r3.py:47: AssertionError
+____________ test_inserted_raw_person_vetoes_across_fixtures[offer] ____________
+
+fixture = 'offer'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    def test_inserted_raw_person_vetoes_across_fixtures(fixture):
+        original = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        blocks, _, _ = placement.extract(original)
+        # Use independently measured boxes when a fixture has no detected hosts (bare).
+        targets = [(b.line.page, b.line.label.get('rect', [b.line.x0])[0], b.line.y) for b in blocks]
+        if not targets:
+            targets = [(1, 72, 450)]
+        rng = random.Random(613)
+        for page, x, y in targets:
+            for offset in (rng.uniform(-65, -30), rng.uniform(24, 45)):
+                stream = io.BytesIO()
+                c = canvas.Canvas(stream, pagesize=(612, 792))
+                c.setFont('Helvetica', 8)
+                c.drawString(x, 792 - y - offset - 8, 'Name: Lee Harbor')
+                c.save()
+                reader = PdfReader(io.BytesIO(original))
+                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])
+                writer = PdfWriter()
+                writer.append_pages_from_reader(reader)
+                output = io.BytesIO()
+                writer.write(output)
+                pdf = output.getvalue()
+                with pdfplumber.open(io.BytesIO(pdf)) as doc:
+>                   assert 'Lee Harbor' in doc.pages[page - 1].extract_text()
+E                   AssertionError: assert 'Lee Harbor' in 'Fleet Test Co.\nDear Jordan Reyes,\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in...$150,000\nEquity 10,000 options\nSincerely, Dan Whaley, CEO\nAccepted and agreed:\nDate: _______________\nJordan Reyes'
+E                    +  where 'Fleet Test Co.\nDear Jordan Reyes,\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in...$150,000\nEquity 10,000 options\nSincerely, Dan Whaley, CEO\nAccepted and agreed:\nDate: _______________\nJordan Reyes' = <bound method Page.extract_text of <Page:1>>()
+E                    +    where <bound method Page.extract_text of <Page:1>> = <Page:1>.extract_text
+
+backend/dealroom_sign/tests/test_placement_r3.py:76: AssertionError
+____________ test_inserted_raw_person_vetoes_across_fixtures[roles] ____________
+
+fixture = 'roles'
+
+    @pytest.mark.parametrize('fixture', list(EXPECTED['fixtures']))
+    def test_inserted_raw_person_vetoes_across_fixtures(fixture):
+        original = (FIXTURES / (fixture + '.pdf')).read_bytes()
+        blocks, _, _ = placement.extract(original)
+        # Use independently measured boxes when a fixture has no detected hosts (bare).
+        targets = [(b.line.page, b.line.label.get('rect', [b.line.x0])[0], b.line.y) for b in blocks]
+        if not targets:
+            targets = [(1, 72, 450)]
+        rng = random.Random(613)
+        for page, x, y in targets:
+            for offset in (rng.uniform(-65, -30), rng.uniform(24, 45)):
+                stream = io.BytesIO()
+                c = canvas.Canvas(stream, pagesize=(612, 792))
+                c.setFont('Helvetica', 8)
+                c.drawString(x, 792 - y - offset - 8, 'Name: Lee Harbor')
+                c.save()
+                reader = PdfReader(io.BytesIO(original))
+                reader.pages[page - 1].merge_page(PdfReader(stream).pages[0])
+                writer = PdfWriter()
+                writer.append_pages_from_reader(reader)
+                output = io.BytesIO()
+                writer.write(output)
+                pdf = output.getvalue()
+                with pdfplumber.open(io.BytesIO(pdf)) as doc:
+>                   assert 'Lee Harbor' in doc.pages[page - 1].extract_text()
+E                   AssertionError: assert 'Lee Harbor' in 'Agreed by the Parties:\nRNaEmCe:I LPeIeE HNarTbor\nSignature: ______________________________\nPrinted name: _________...LOSER\nSignature: ______________________________\nPrinted name: ___________________________\nDate: ___________________'
+E                    +  where 'Agreed by the Parties:\nRNaEmCe:I LPeIeE HNarTbor\nSignature: ______________________________\nPrinted name: _________...LOSER\nSignature: ______________________________\nPrinted name: ___________________________\nDate: ___________________' = <bound method Page.extract_text of <Page:3>>()
+E                    +    where <bound method Page.extract_text of <Page:3>> = <Page:3>.extract_text
+
+backend/dealroom_sign/tests/test_placement_r3.py:76: AssertionError
+_____________ test_matching_printed_name_can_resolve_label_prefix ______________
+
+    def test_matching_printed_name_can_resolve_label_prefix():
+>       assert placement.place(extent_pdf('by'), LEE)['status'] == 'placed'
+E       AssertionError: assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement_r3.py:90: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[True-Project Falcon Acquisition Terms] _
+
+text = 'Project Falcon Acquisition Terms', extra_block = True
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+>           assert result['status'] == 'placed', result
+E           AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E           assert 'needs_sender' == 'placed'
+E             
+E             - placed
+E             + needs_sender
+
+backend/dealroom_sign/tests/test_placement_r3.py:119: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[True-Strictly Private And Confidential] _
+
+text = 'Strictly Private And Confidential', extra_block = True
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+>           assert result['status'] == 'placed', result
+E           AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E           assert 'needs_sender' == 'placed'
+E             
+E             - placed
+E             + needs_sender
+
+backend/dealroom_sign/tests/test_placement_r3.py:119: AssertionError
+_ test_title_case_body_never_leaves_local_evidence[True-Purchase Price Remains Confidential] _
+
+text = 'Purchase Price Remains Confidential', extra_block = True
+
+    @pytest.mark.parametrize('text', ['Project Falcon Acquisition Terms', 'Strictly Private And Confidential',
+                                     'Purchase Price Remains Confidential'])
+    @pytest.mark.parametrize('extra_block', [False, True])
+    def test_title_case_body_never_leaves_local_evidence(text, extra_block):
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(title_body_pdf(text, extra_block=extra_block), LEE, model_client=model)
+        assert text not in json.dumps(result)
+        assert text not in json.dumps([call.args for call in model.call_args_list])
+        if extra_block:
+>           assert result['status'] == 'placed', result
+E           AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E           assert 'needs_sender' == 'placed'
+E             
+E             - placed
+E             + needs_sender
+
+backend/dealroom_sign/tests/test_placement_r3.py:119: AssertionError
+_ test_single_company_word_is_not_domain_identity[light-Harbor Light Analytics] _
+
+domain = 'light', company = 'Harbor Light Analytics'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x721efd908680>('light', 'Harbor Light Analytics')
+E        +    where <function similarity at 0x721efd908680> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+_ test_single_company_word_is_not_domain_identity[ventures-Acme Ventures LLC] __
+
+domain = 'ventures', company = 'Acme Ventures LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x721efd908680>('ventures', 'Acme Ventures LLC')
+E        +    where <function similarity at 0x721efd908680> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+__ test_single_company_word_is_not_domain_identity[capital-Acme Capital LLC] ___
+
+domain = 'capital', company = 'Acme Capital LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x721efd908680>('capital', 'Acme Capital LLC')
+E        +    where <function similarity at 0x721efd908680> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+_ test_single_company_word_is_not_domain_identity[partners-Acme Partners LLC] __
+
+domain = 'partners', company = 'Acme Partners LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x721efd908680>('partners', 'Acme Partners LLC')
+E        +    where <function similarity at 0x721efd908680> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+____ test_single_company_word_is_not_domain_identity[group-Acme Group LLC] _____
+
+domain = 'group', company = 'Acme Group LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x721efd908680>('group', 'Acme Group LLC')
+E        +    where <function similarity at 0x721efd908680> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+_ test_single_company_word_is_not_domain_identity[holdings-Acme Holdings LLC] __
+
+domain = 'holdings', company = 'Acme Holdings LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x721efd908680>('holdings', 'Acme Holdings LLC')
+E        +    where <function similarity at 0x721efd908680> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+___ test_single_company_word_is_not_domain_identity[global-Acme Global LLC] ____
+
+domain = 'global', company = 'Acme Global LLC'
+
+    @pytest.mark.parametrize('domain,company', [('light', 'Harbor Light Analytics'), ('ventures', 'Acme Ventures LLC'),
+        ('capital', 'Acme Capital LLC'), ('partners', 'Acme Partners LLC'), ('group', 'Acme Group LLC'),
+        ('holdings', 'Acme Holdings LLC'), ('global', 'Acme Global LLC')])
+    def test_single_company_word_is_not_domain_identity(domain, company):
+>       assert placement.similarity(domain, company) == 0
+E       AssertionError: assert 1.0 == 0
+E        +  where 1.0 = <function similarity at 0x721efd908680>('global', 'Acme Global LLC')
+E        +    where <function similarity at 0x721efd908680> = placement.similarity
+
+backend/dealroom_sign/tests/test_placement_r3.py:129: AssertionError
+_______________________________ test_golden[nda] _______________________________
+
+name = 'nda'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'nda'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}, {'company': 'Fleet Test Co.', 'email': 'dan@fleettest.fleet.test', 'name': 'Dan Whaley', 'side': 'us'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+______________________________ test_golden[offer] ______________________________
+
+name = 'offer'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'offer'
+signers = [{'email': 'jordan.reyes.1987@gmail.com', 'name': 'Jordan Reyes', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+______________________________ test_golden[roles] ______________________________
+
+name = 'roles'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'roles'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}, {'company': 'Fleet Test Co.', 'email': 'dan@fleettest.fleet.test', 'name': 'Dan Whaley', 'side': 'us'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+_____________________________ test_golden[witness] _____________________________
+
+name = 'witness'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'witness'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}, {'company': 'Fleet Test Co.', 'email': 'dan@fleettest.fleet.test', 'name': 'Dan Whaley', 'side': 'us'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+_____________________________ test_golden[harbor] ______________________________
+
+name = 'harbor'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+____________________ test_bare_always_asks_even_with_model _____________________
+
+    def test_bare_always_asks_even_with_model():
+        model = Mock()
+        result = run('bare', model_client=model)
+>       assert result['status'] == 'bare'
+E       AssertionError: assert 'needs_sender' == 'bare'
+E         
+E         - bare
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:59: AssertionError
+_____________ test_unusual_label_model_golden_and_minimal_payload ______________
+
+    def test_unusual_label_model_golden_and_minimal_payload():
+        model = Mock(side_effect=model_answer)
+        result = run('unusual', model_client=model)
+>       assert_golden(result, 'unusual', LEE)
+
+backend/dealroom_sign/tests/test_placement.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'unusual'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+___________________ test_model_unavailable_visible[failure0] ___________________
+
+failure = TimeoutError('secret provider body')
+
+    @pytest.mark.parametrize('failure', [TimeoutError('secret provider body'), ValueError('invalid JSON')])
+    def test_model_unavailable_visible(failure):
+        result = run('unusual', model_client=Mock(side_effect=failure))
+        assert result['status'] == 'needs_sender'
+>       assert 'unavailable' in result['reason'].lower()
+E       AssertionError: assert 'unavailable' in 'pdf could not be read. placement review is required.'
+E        +  where 'pdf could not be read. placement review is required.' = <built-in method lower of str object at 0x721efda0ad30>()
+E        +    where <built-in method lower of str object at 0x721efda0ad30> = 'PDF could not be read. Placement review is required.'.lower
+
+backend/dealroom_sign/tests/test_placement.py:85: AssertionError
+___________________ test_model_unavailable_visible[failure1] ___________________
+
+failure = ValueError('invalid JSON')
+
+    @pytest.mark.parametrize('failure', [TimeoutError('secret provider body'), ValueError('invalid JSON')])
+    def test_model_unavailable_visible(failure):
+        result = run('unusual', model_client=Mock(side_effect=failure))
+        assert result['status'] == 'needs_sender'
+>       assert 'unavailable' in result['reason'].lower()
+E       AssertionError: assert 'unavailable' in 'pdf could not be read. placement review is required.'
+E        +  where 'pdf could not be read. placement review is required.' = <built-in method lower of str object at 0x721efda0ad30>()
+E        +    where <built-in method lower of str object at 0x721efda0ad30> = 'PDF could not be read. Placement review is required.'.lower
+
+backend/dealroom_sign/tests/test_placement.py:85: AssertionError
+______________________ test_no_key_does_not_call_provider ______________________
+
+    def test_no_key_does_not_call_provider():
+        result = run('unusual')
+        assert result['status'] == 'needs_sender'
+>       assert result['model']['outcome'] == 'not_configured'
+E       AssertionError: assert 'not_needed' == 'not_configured'
+E         
+E         - not_configured
+E         + not_needed
+
+backend/dealroom_sign/tests/test_placement.py:92: AssertionError
+_____________________ test_rules_success_never_calls_model _____________________
+
+    def test_rules_success_never_calls_model():
+        model = Mock()
+>       assert run('harbor', model_client=model)['status'] == 'placed'
+E       AssertionError: assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:114: AssertionError
+___________ test_rotated_pages_fail_closed_without_moving_fields[90] ___________
+
+rotation = 90
+
+    @pytest.mark.parametrize('rotation', [90, 180, 270])
+    def test_rotated_pages_fail_closed_without_moving_fields(rotation):
+        reader = PdfReader(io.BytesIO((FIXTURES / 'harbor.pdf').read_bytes()))
+        reader.pages[1].rotate(rotation)
+        out = io.BytesIO()
+        writer = PdfWriter()
+        writer.append_pages_from_reader(reader)
+        writer.write(out)
+        # Until normalized prepare is available, rotated sources must be reviewed.
+        result = place(out.getvalue(), LEE)
+        assert result['status'] == 'needs_sender'
+>       assert 'rotation' in result['reason'].lower()
+E       AssertionError: assert 'rotation' in 'pdf could not be read. placement review is required.'
+E        +  where 'pdf could not be read. placement review is required.' = <built-in method lower of str object at 0x721efda0ad30>()
+E        +    where <built-in method lower of str object at 0x721efda0ad30> = 'PDF could not be read. Placement review is required.'.lower
+
+backend/dealroom_sign/tests/test_placement.py:156: AssertionError
+__________ test_rotated_pages_fail_closed_without_moving_fields[180] ___________
+
+rotation = 180
+
+    @pytest.mark.parametrize('rotation', [90, 180, 270])
+    def test_rotated_pages_fail_closed_without_moving_fields(rotation):
+        reader = PdfReader(io.BytesIO((FIXTURES / 'harbor.pdf').read_bytes()))
+        reader.pages[1].rotate(rotation)
+        out = io.BytesIO()
+        writer = PdfWriter()
+        writer.append_pages_from_reader(reader)
+        writer.write(out)
+        # Until normalized prepare is available, rotated sources must be reviewed.
+        result = place(out.getvalue(), LEE)
+        assert result['status'] == 'needs_sender'
+>       assert 'rotation' in result['reason'].lower()
+E       AssertionError: assert 'rotation' in 'pdf could not be read. placement review is required.'
+E        +  where 'pdf could not be read. placement review is required.' = <built-in method lower of str object at 0x721efda0ad30>()
+E        +    where <built-in method lower of str object at 0x721efda0ad30> = 'PDF could not be read. Placement review is required.'.lower
+
+backend/dealroom_sign/tests/test_placement.py:156: AssertionError
+__________ test_rotated_pages_fail_closed_without_moving_fields[270] ___________
+
+rotation = 270
+
+    @pytest.mark.parametrize('rotation', [90, 180, 270])
+    def test_rotated_pages_fail_closed_without_moving_fields(rotation):
+        reader = PdfReader(io.BytesIO((FIXTURES / 'harbor.pdf').read_bytes()))
+        reader.pages[1].rotate(rotation)
+        out = io.BytesIO()
+        writer = PdfWriter()
+        writer.append_pages_from_reader(reader)
+        writer.write(out)
+        # Until normalized prepare is available, rotated sources must be reviewed.
+        result = place(out.getvalue(), LEE)
+        assert result['status'] == 'needs_sender'
+>       assert 'rotation' in result['reason'].lower()
+E       AssertionError: assert 'rotation' in 'pdf could not be read. placement review is required.'
+E        +  where 'pdf could not be read. placement review is required.' = <built-in method lower of str object at 0x721efda0ad30>()
+E        +    where <built-in method lower of str object at 0x721efda0ad30> = 'PDF could not be read. Placement review is required.'.lower
+
+backend/dealroom_sign/tests/test_placement.py:156: AssertionError
+________________ test_validate_rejects_unusable_fields[overlap] ________________
+
+change = 'overlap'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        result = run('harbor')
+        fields = result['fields']
+>       if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+E       IndexError: list index out of range
+
+backend/dealroom_sign/tests/test_placement.py:193: IndexError
+_______________ test_validate_rejects_unusable_fields[nonfinite] _______________
+
+change = 'nonfinite'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+>       if change == 'nonfinite': fields[0]['x'] = float('nan')
+E       IndexError: list index out of range
+
+backend/dealroom_sign/tests/test_placement.py:194: IndexError
+________________ test_validate_rejects_unusable_fields[offpage] ________________
+
+change = 'offpage'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+>       if change == 'offpage': fields[0]['x'] = 99
+E       IndexError: list index out of range
+
+backend/dealroom_sign/tests/test_placement.py:195: IndexError
+_________________ test_validate_rejects_unusable_fields[page] __________________
+
+change = 'page'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+>       if change == 'page': fields[0]['page'] = 0
+E       IndexError: list index out of range
+
+backend/dealroom_sign/tests/test_placement.py:196: IndexError
+_____________ test_validate_rejects_unusable_fields[extra_signer] ______________
+
+change = 'extra_signer'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+        if change == 'page': fields[0]['page'] = 0
+>       if change == 'extra_signer': fields.append(dict(fields[0], signer='unrequested@example.test', page=3))
+E       IndexError: list index out of range
+
+backend/dealroom_sign/tests/test_placement.py:197: IndexError
+_______________ test_validate_rejects_unusable_fields[duplicate] _______________
+
+change = 'duplicate'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+        if change == 'page': fields[0]['page'] = 0
+        if change == 'extra_signer': fields.append(dict(fields[0], signer='unrequested@example.test', page=3))
+>       if change == 'duplicate': fields.append(dict(fields[0], page=3))
+E       IndexError: list index out of range
+
+backend/dealroom_sign/tests/test_placement.py:198: IndexError
+__________________ test_validate_rejects_unusable_fields[low] __________________
+
+change = 'low'
+
+    @pytest.mark.parametrize('change', ['overlap', 'nonfinite', 'offpage', 'page', 'extra_signer', 'duplicate', 'low'])
+    def test_validate_rejects_unusable_fields(change):
+        result = run('harbor')
+        fields = result['fields']
+        if change == 'overlap': fields[1].update({k: fields[0][k] for k in ('x', 'y', 'w', 'h')})
+        if change == 'nonfinite': fields[0]['x'] = float('nan')
+        if change == 'offpage': fields[0]['x'] = 99
+        if change == 'page': fields[0]['page'] = 0
+        if change == 'extra_signer': fields.append(dict(fields[0], signer='unrequested@example.test', page=3))
+        if change == 'duplicate': fields.append(dict(fields[0], page=3))
+>       if change == 'low': fields[0]['confidence'] = 'low'
+E       IndexError: list index out of range
+
+backend/dealroom_sign/tests/test_placement.py:199: IndexError
+__________ test_configured_provider_uses_bounded_minimal_request[ok] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x721efd255d90>
+mode = 'ok'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+>       assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+E       AssertionError: assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:229: AssertionError
+______ test_configured_provider_uses_bounded_minimal_request[http_error] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x721efd2579e0>
+mode = 'http_error'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+>           factory.assert_called_once()
+
+backend/dealroom_sign/tests/test_placement.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='125477421662336'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_______ test_configured_provider_uses_bounded_minimal_request[oversized] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x721efd256b10>
+mode = 'oversized'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+>           factory.assert_called_once()
+
+backend/dealroom_sign/tests/test_placement.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='125477421677840'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+_____ test_configured_provider_uses_bounded_minimal_request[invalid_json] ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x721efd35d8b0>
+mode = 'invalid_json'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+>           factory.assert_called_once()
+
+backend/dealroom_sign/tests/test_placement.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='125477422746176'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+/usr/lib/python3.12/unittest/mock.py:923: AssertionError
+______________________ test_total_deadline_includes_model ______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x721efd274860>
+
+    def test_total_deadline_includes_model(monkeypatch):
+        monkeypatch.setenv('PLACEMENT_TOTAL_SECONDS', '0.4')
+        def slow_model(payload):
+            time.sleep(1)
+            return {'assignments': []}
+        started = time.monotonic()
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=slow_model)
+        assert time.monotonic() - started < 0.8
+        assert result['status'] == 'needs_sender'
+>       assert result['reason'] == 'Placement took too long'
+E       AssertionError: assert 'PDF could no... is required.' == 'Placement took too long'
+E         
+E         - Placement took too long
+E         + PDF could not be read. Placement review is required.
+
+backend/dealroom_sign/tests/test_placement_r2.py:80: AssertionError
+____________ test_distinct_model_failure_outcomes[failure0-timeout] ____________
+
+failure = TimeoutError('private'), outcome = 'timeout'
+
+    @pytest.mark.parametrize('failure,outcome', [(TimeoutError('private'), 'timeout'), (ValueError('private'), 'invalid_reply'), (RuntimeError('private'), 'error')])
+    def test_distinct_model_failure_outcomes(failure, outcome):
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=Mock(side_effect=failure))
+>       assert result['model']['outcome'] == outcome
+E       AssertionError: assert 'not_needed' == 'timeout'
+E         
+E         - timeout
+E         + not_needed
+
+backend/dealroom_sign/tests/test_placement_r2.py:126: AssertionError
+_________ test_distinct_model_failure_outcomes[failure1-invalid_reply] _________
+
+failure = ValueError('private'), outcome = 'invalid_reply'
+
+    @pytest.mark.parametrize('failure,outcome', [(TimeoutError('private'), 'timeout'), (ValueError('private'), 'invalid_reply'), (RuntimeError('private'), 'error')])
+    def test_distinct_model_failure_outcomes(failure, outcome):
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=Mock(side_effect=failure))
+>       assert result['model']['outcome'] == outcome
+E       AssertionError: assert 'not_needed' == 'invalid_reply'
+E         
+E         - invalid_reply
+E         + not_needed
+
+backend/dealroom_sign/tests/test_placement_r2.py:126: AssertionError
+_____________ test_distinct_model_failure_outcomes[failure2-error] _____________
+
+failure = RuntimeError('private'), outcome = 'error'
+
+    @pytest.mark.parametrize('failure,outcome', [(TimeoutError('private'), 'timeout'), (ValueError('private'), 'invalid_reply'), (RuntimeError('private'), 'error')])
+    def test_distinct_model_failure_outcomes(failure, outcome):
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE, model_client=Mock(side_effect=failure))
+>       assert result['model']['outcome'] == outcome
+E       AssertionError: assert 'not_needed' == 'error'
+E         
+E         - error
+E         + not_needed
+
+backend/dealroom_sign/tests/test_placement_r2.py:126: AssertionError
+__________________ test_not_configured_and_fixed_parse_reason __________________
+
+    def test_not_configured_and_fixed_parse_reason():
+        result = placement.place((FIXTURES / 'unusual.pdf').read_bytes(), LEE)
+>       assert result['model']['outcome'] == 'not_configured'
+E       AssertionError: assert 'not_needed' == 'not_configured'
+E         
+E         - not_configured
+E         + not_needed
+
+backend/dealroom_sign/tests/test_placement_r2.py:133: AssertionError
+__________ test_nearby_body_is_redacted_and_model_identity_is_minimal __________
+
+    def test_nearby_body_is_redacted_and_model_identity_is_minimal():
+        model = Mock(side_effect=opaque_reply)
+        result = placement.place(nearby_body_pdf(), [dict(LEE[0], company='Harbor Light Analytics', title='COO')], model_client=model)
+>       assert model.call_count == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = <Mock id='125477425834720'>.call_count
+
+backend/dealroom_sign/tests/test_placement_r2.py:161: AssertionError
+______________ test_native_signature_is_tight_and_bottom_anchored ______________
+
+    def test_native_signature_is_tight_and_bottom_anchored():
+        result = placement.place((FIXTURES / 'harbor.pdf').read_bytes(), LEE)
+>       field = next(f for f in placement.to_native_fields(result, LEE[0]['email']) if f['type'] == 'SIGNATURE')
+E       StopIteration
+
+backend/dealroom_sign/tests/test_placement_r2.py:201: StopIteration
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[by]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[signed]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[heading]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor \u2013 COO]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor (COO)]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:Lee Harbor / COO]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[format:LEE HARBOR / COO]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:22:text]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:26:text]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:45:text]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:26:rule]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_other_person_in_whole_raw_extent_never_gets_high[below:65:rule]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[offer]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_inserted_raw_person_vetoes_across_fixtures[roles]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_matching_printed_name_can_resolve_label_prefix
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[True-Project Falcon Acquisition Terms]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[True-Strictly Private And Confidential]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_title_case_body_never_leaves_local_evidence[True-Purchase Price Remains Confidential]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[light-Harbor Light Analytics]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[ventures-Acme Ventures LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[capital-Acme Capital LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[partners-Acme Partners LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[group-Acme Group LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[holdings-Acme Holdings LLC]
+FAILED backend/dealroom_sign/tests/test_placement_r3.py::test_single_company_word_is_not_domain_identity[global-Acme Global LLC]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[nda] - Asse...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[offer] - As...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[roles] - As...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[witness] - ...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[harbor] - A...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_bare_always_asks_even_with_model
+FAILED backend/dealroom_sign/tests/test_placement.py::test_unusual_label_model_golden_and_minimal_payload
+FAILED backend/dealroom_sign/tests/test_placement.py::test_model_unavailable_visible[failure0]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_model_unavailable_visible[failure1]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_no_key_does_not_call_provider
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rules_success_never_calls_model
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rotated_pages_fail_closed_without_moving_fields[90]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rotated_pages_fail_closed_without_moving_fields[180]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_rotated_pages_fail_closed_without_moving_fields[270]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[overlap]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[nonfinite]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[offpage]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[page]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[extra_signer]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[duplicate]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_validate_rejects_unusable_fields[low]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[ok]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[http_error]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[oversized]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[invalid_json]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_total_deadline_includes_model
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_distinct_model_failure_outcomes[failure0-timeout]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_distinct_model_failure_outcomes[failure1-invalid_reply]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_distinct_model_failure_outcomes[failure2-error]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_not_configured_and_fixed_parse_reason
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_nearby_body_is_redacted_and_model_identity_is_minimal
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_native_signature_is_tight_and_bottom_anchored
+57 failed, 97 passed, 20 warnings in 46.78s

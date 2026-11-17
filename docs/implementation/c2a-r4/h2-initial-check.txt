@@ -1,0 +1,80 @@
+....................F.....................................F............. [ 31%]
+........................................................................ [ 62%]
+..............................................F......................... [ 94%]
+.............                                                            [100%]
+=================================== FAILURES ===================================
+_ test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales] _
+
+title = 'Senior Vice President of Sales'
+
+    @pytest.mark.parametrize('title', TITLES)
+    def test_golden_harbor_role_suffix_keeps_exact_boxes(title):
+>       assert_golden(placement.place(harbor_variant(title=title), LEE), 'harbor', LEE)
+
+dealroom_sign/tests/test_placement_r4.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+___ test_stacked_individual_blocks_place_without_neighbour_veto[80-headings] ___
+
+layout = 'headings', gap = 80
+
+    @pytest.mark.parametrize('layout', ['headings', 'captions'])
+    @pytest.mark.parametrize('gap', [80, 110])
+    def test_stacked_individual_blocks_place_without_neighbour_veto(layout, gap):
+        result = placement.place(stacked_pdf(layout, gap), TWO)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r4.py:151: AssertionError
+______________________________ test_golden[offer] ______________________________
+
+name = 'offer'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'offer'
+signers = [{'email': 'jordan.reyes.1987@gmail.com', 'name': 'Jordan Reyes', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.3', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+=============================== warnings summary ===============================
+dealroom_sign/tests/test_placement_r3.py: 39 warnings
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/pypdf/_page.py:1368: DeprecationWarning: Calling `PageObject.replace_contents()` for pages not assigned to a writer is deprecated and will be removed in pypdf 7.0.0. Attach the page to the writer first or use `PdfWriter(clone_from=...)` directly. The existing approach has proved being unreliable.
+    self.replace_contents(ContentStream(new_content_array, self.pdf))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r4.py::test_golden_harbor_role_suffix_keeps_exact_boxes[Senior Vice President of Sales]
+FAILED dealroom_sign/tests/test_placement_r4.py::test_stacked_individual_blocks_place_without_neighbour_veto[80-headings]
+FAILED dealroom_sign/tests/test_placement.py::test_golden[offer] - AssertionE...
+3 failed, 226 passed, 39 warnings in 79.13s (0:01:19)

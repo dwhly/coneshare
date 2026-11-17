@@ -1,0 +1,56 @@
+FF........                                                               [100%]
+=================================== FAILURES ===================================
+_________________ test_h1_execution_clause_is_a_heading[False] _________________
+
+named = False
+
+    @pytest.mark.parametrize('named', [False, True])
+    def test_h1_execution_clause_is_a_heading(named):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.setFont('Helvetica', 9)
+        clause = 'Signed ' + ('by LEE HARBOR ' if named else '') + 'for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+        c.drawString(72, 490, clause)
+        c.drawString(72, 450, 'By:')
+        c.line(100, 448, 290, 448)
+        c.drawString(72, 410, 'Date:')
+        c.line(110, 408, 290, 408)
+        c.save()
+        result = placement.place(out.getvalue(), LEE if named else PAT)
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:333: AssertionError
+_________________ test_h1_execution_clause_is_a_heading[True] __________________
+
+named = True
+
+    @pytest.mark.parametrize('named', [False, True])
+    def test_h1_execution_clause_is_a_heading(named):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.setFont('Helvetica', 9)
+        clause = 'Signed ' + ('by LEE HARBOR ' if named else '') + 'for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+        c.drawString(72, 490, clause)
+        c.drawString(72, 450, 'By:')
+        c.line(100, 448, 290, 448)
+        c.drawString(72, 410, 'Date:')
+        c.line(110, 408, 290, 408)
+        c.save()
+        result = placement.place(out.getvalue(), LEE if named else PAT)
+        assert result['status'] == 'placed', result
+        blocks, _, _ = placement.extract(out.getvalue())
+>       assert blocks[0].heading == clause
+E       AssertionError: assert '' == 'Signed by LE...YTICS LIMITED'
+E         
+E         - Signed by LEE HARBOR for and on behalf of HARBOR LIGHT ANALYTICS LIMITED
+
+dealroom_sign/tests/test_placement_r5.py:335: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_execution_clause_is_a_heading[False]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_execution_clause_is_a_heading[True]
+2 failed, 8 passed, 114 deselected in 1.79s

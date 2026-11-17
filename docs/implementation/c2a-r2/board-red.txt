@@ -1,0 +1,343 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+____________ test_c2a_r2_timeout_is_outcome_unknown[open-failure0] _____________
+
+failure = TimeoutError('private socket'), phase = 'open'
+
+    @pytest.mark.parametrize('failure', [TimeoutError('private socket'), urllib.error.URLError(TimeoutError('private socket'))])
+    @pytest.mark.parametrize('phase', ['open', 'read'])
+    def test_c2a_r2_timeout_is_outcome_unknown(failure, phase):
+        from unittest.mock import MagicMock
+        client = dr.Dealroom('https://send.example.test')
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.side_effect = failure
+        with patch.object(client, 'token', return_value='test'), patch('urllib.request.urlopen', side_effect=failure if phase == 'open' else None, return_value=response):
+            with pytest.raises(dr.DealroomError) as caught:
+>               client._call('POST', '/dealroom-sign/envelopes/', {})
+
+tests/test_dealroom_sign.py:563: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+hermes_board/dealroom.py:47: in _call
+    with urllib.request.urlopen(req, timeout=self.timeout, context=self.ctx) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='urlopen' id='139926717652752'>
+args = (<urllib.request.Request object at 0x7f433a4771d0>,)
+kwargs = {'timeout': 30, 'context': <ssl.SSLContext object at 0x7f433b4b3f50>}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               TimeoutError: private socket
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: TimeoutError
+____________ test_c2a_r2_timeout_is_outcome_unknown[open-failure1] _____________
+
+failure = URLError(TimeoutError('private socket')), phase = 'open'
+
+    @pytest.mark.parametrize('failure', [TimeoutError('private socket'), urllib.error.URLError(TimeoutError('private socket'))])
+    @pytest.mark.parametrize('phase', ['open', 'read'])
+    def test_c2a_r2_timeout_is_outcome_unknown(failure, phase):
+        from unittest.mock import MagicMock
+        client = dr.Dealroom('https://send.example.test')
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.side_effect = failure
+        with patch.object(client, 'token', return_value='test'), patch('urllib.request.urlopen', side_effect=failure if phase == 'open' else None, return_value=response):
+            with pytest.raises(dr.DealroomError) as caught:
+                client._call('POST', '/dealroom-sign/envelopes/', {})
+>       assert caught.value.status == 504
+E       AssertionError: assert 503 == 504
+E        +  where 503 = DealroomError('Dealroom unreachable: private socket').status
+E        +    where DealroomError('Dealroom unreachable: private socket') = <ExceptionInfo DealroomError('Dealroom unreachable: private socket') tblen=2>.value
+
+tests/test_dealroom_sign.py:564: AssertionError
+____________ test_c2a_r2_timeout_is_outcome_unknown[read-failure0] _____________
+
+failure = TimeoutError('private socket'), phase = 'read'
+
+    @pytest.mark.parametrize('failure', [TimeoutError('private socket'), urllib.error.URLError(TimeoutError('private socket'))])
+    @pytest.mark.parametrize('phase', ['open', 'read'])
+    def test_c2a_r2_timeout_is_outcome_unknown(failure, phase):
+        from unittest.mock import MagicMock
+        client = dr.Dealroom('https://send.example.test')
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.side_effect = failure
+        with patch.object(client, 'token', return_value='test'), patch('urllib.request.urlopen', side_effect=failure if phase == 'open' else None, return_value=response):
+            with pytest.raises(dr.DealroomError) as caught:
+>               client._call('POST', '/dealroom-sign/envelopes/', {})
+
+tests/test_dealroom_sign.py:563: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+hermes_board/dealroom.py:48: in _call
+    raw = r.read(); return json.loads(raw) if raw else {}
+          ^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: in _execute_mock_call
+    raise effect
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/runner.py:361: in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/runner.py:250: in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/pluggy/_caller.py:197: in __call__
+    return self._hookexec(
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/pluggy/_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/logging.py:878: in pytest_runtest_call
+    yield
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/capture.py:906: in pytest_runtest_call
+    return (yield)
+            ^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/skipping.py:268: in pytest_runtest_call
+    return (yield)
+            ^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/runner.py:184: in pytest_runtest_call
+    item.runtest()
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/python.py:1798: in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/pluggy/_caller.py:197: in __call__
+    return self._hookexec(
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/pluggy/_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/python.py:187: in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_dealroom_sign.py:563: in test_c2a_r2_timeout_is_outcome_unknown
+    client._call('POST', '/dealroom-sign/envelopes/', {})
+hermes_board/dealroom.py:47: in _call
+    with urllib.request.urlopen(req, timeout=self.timeout, context=self.ctx) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='urlopen' id='139926717652752'>
+args = (<urllib.request.Request object at 0x7f433a4771d0>,)
+kwargs = {'timeout': 30, 'context': <ssl.SSLContext object at 0x7f433b4b3f50>}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               TimeoutError: private socket
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/unittest/mock.py:1183: TimeoutError
+____________ test_c2a_r2_timeout_is_outcome_unknown[read-failure1] _____________
+
+failure = URLError(TimeoutError('private socket')), phase = 'read'
+
+    @pytest.mark.parametrize('failure', [TimeoutError('private socket'), urllib.error.URLError(TimeoutError('private socket'))])
+    @pytest.mark.parametrize('phase', ['open', 'read'])
+    def test_c2a_r2_timeout_is_outcome_unknown(failure, phase):
+        from unittest.mock import MagicMock
+        client = dr.Dealroom('https://send.example.test')
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.side_effect = failure
+        with patch.object(client, 'token', return_value='test'), patch('urllib.request.urlopen', side_effect=failure if phase == 'open' else None, return_value=response):
+            with pytest.raises(dr.DealroomError) as caught:
+                client._call('POST', '/dealroom-sign/envelopes/', {})
+>       assert caught.value.status == 504
+E       AssertionError: assert 503 == 504
+E        +  where 503 = DealroomError('Dealroom unreachable: private socket').status
+E        +    where DealroomError('Dealroom unreachable: private socket') = <ExceptionInfo DealroomError('Dealroom unreachable: private socket') tblen=2>.value
+
+tests/test_dealroom_sign.py:564: AssertionError
+__________ test_c2a_r2_retry_reuses_submission_key_and_source[upload] __________
+
+source = 'upload'
+
+    @pytest.mark.parametrize('source', ['upload', 'dealroom'])
+    def test_c2a_r2_retry_reuses_submission_key_and_source(source):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        body = {'filename': 'NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+                'signers': [{'name': 'Lee Harbor', 'email': 'lee@harborlight.fleet.test'}]}
+        if source == 'dealroom':
+            body['doc'] = {'source': 'dealroom', 'room_id': 'room-1', 'version_id': 'ver-9', 'name': 'NDA.pdf'}
+        attempts = []
+        def send(self, room, version, signers, page, key, **kwargs):
+            attempts.append((room, version, key))
+            if len(attempts) == 1:
+                raise dr.DealroomError("We couldn't confirm whether it was sent. Check History before trying again.", 504,
+                                       result={'status':'outcome_unknown', 'reason':"We couldn't confirm whether it was sent. Check History before trying again."})
+            return {'id': 'wf-retry', 'state': 'queued'}
+        with patch.object(FakeDealroom, 'send', send), patch.object(FakeDealroom, 'wait_version', side_effect=['ver-first', 'ver-second']):
+            first = client.post('/api/views/biz/signatures', json=body, headers=H)
+            assert first.status_code == 504
+>           assert first.json()['status'] == 'outcome_unknown'
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'status'
+
+tests/test_dealroom_sign.py:587: KeyError
+_________ test_c2a_r2_retry_reuses_submission_key_and_source[dealroom] _________
+
+source = 'dealroom'
+
+    @pytest.mark.parametrize('source', ['upload', 'dealroom'])
+    def test_c2a_r2_retry_reuses_submission_key_and_source(source):
+        with patch.object(dr, 'Dealroom', FakeDealroom):
+            client = app_with()
+        body = {'filename': 'NDA.pdf', 'pdf_b64': base64.b64encode(PDF).decode(),
+                'signers': [{'name': 'Lee Harbor', 'email': 'lee@harborlight.fleet.test'}]}
+        if source == 'dealroom':
+            body['doc'] = {'source': 'dealroom', 'room_id': 'room-1', 'version_id': 'ver-9', 'name': 'NDA.pdf'}
+        attempts = []
+        def send(self, room, version, signers, page, key, **kwargs):
+            attempts.append((room, version, key))
+            if len(attempts) == 1:
+                raise dr.DealroomError("We couldn't confirm whether it was sent. Check History before trying again.", 504,
+                                       result={'status':'outcome_unknown', 'reason':"We couldn't confirm whether it was sent. Check History before trying again."})
+            return {'id': 'wf-retry', 'state': 'queued'}
+        with patch.object(FakeDealroom, 'send', send), patch.object(FakeDealroom, 'wait_version', side_effect=['ver-first', 'ver-second']):
+            first = client.post('/api/views/biz/signatures', json=body, headers=H)
+            assert first.status_code == 504
+>           assert first.json()['status'] == 'outcome_unknown'
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'status'
+
+tests/test_dealroom_sign.py:587: KeyError
+__________ test_c2a_r2_submission_key_covers_content_order_room_card ___________
+
+    def test_c2a_r2_submission_key_covers_content_order_room_card():
+        signers = [{'name':'Lee Harbor', 'email':'lee@example.test'}, {'name':'Dan Whaley', 'email':'dan@example.test'}]
+>       key = dr.submission_key('room-1', hashlib.sha256(PDF).hexdigest(), signers, 'card-1', board_id='board-1')
+              ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'hermes_board.dealroom' has no attribute 'submission_key'
+
+tests/test_dealroom_sign.py:595: AttributeError
+______________ test_c2a_r2_browser_keeps_unknown_outcome_visible _______________
+
+    def test_c2a_r2_browser_keeps_unknown_outcome_visible():
+>       subprocess.run(['node', str(Path(__file__).with_name('brand_labels_ui_harness.cjs')), 'c2a_timeout'],
+                       check=True, capture_output=True, text=True)
+
+tests/test_dealroom_sign.py:605: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['node', '/root/worktrees/board-s1/tests/brand_labels_ui_harness.cjs', 'c2a_timeout'],)
+kwargs = {'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['node', '/root/worktrees/board-s1/tests/brand_labels_ui_harness.cjs', 'c2a_timeout']' returned non-zero exit status 1.
+
+/usr/local/lib/hermes-agent/.hermes-runtime/python/generation-1785633958-482107-859d8c43/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/subprocess.py:571: CalledProcessError
+=============================== warnings summary ===============================
+../../work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1507
+../../work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1507
+  /root/work/sign-product/board-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1507: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio
+    self._mark_plugins_for_rewrite(hook, disable_autoload)
+
+../../../usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53
+  /usr/local/lib/hermes-agent/venv/lib/python3.11/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_timeout_is_outcome_unknown[open-failure0]
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_timeout_is_outcome_unknown[open-failure1]
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_timeout_is_outcome_unknown[read-failure0]
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_timeout_is_outcome_unknown[read-failure1]
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_retry_reuses_submission_key_and_source[upload]
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_retry_reuses_submission_key_and_source[dealroom]
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_submission_key_covers_content_order_room_card
+FAILED tests/test_dealroom_sign.py::test_c2a_r2_browser_keeps_unknown_outcome_visible
+8 failed, 43 deselected, 3 warnings in 1.20s

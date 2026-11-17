@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_b1_cross_page_walk_includes_row_at_page_top _______________
+
+    def test_b1_cross_page_walk_includes_row_at_page_top():
+        writer = PdfWriter(clone_from=io.BytesIO(distant_identity_pdf(split='below')))
+        writer.pages[1].add_transformation((1, 0, 0, 1, 0, 34.07))
+        out = io.BytesIO()
+        writer.write(out)
+        with placement.pdfplumber.open(io.BytesIO(out.getvalue())) as doc:
+            assert doc.pages[1].extract_words()[0]['top'] == pytest.approx(0, abs=1e-8)
+>       assert_held(placement.place(out.getvalue(), PAT))
+
+dealroom_sign/tests/test_placement_r5.py:441: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 700.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+
+    def assert_held(result):
+>       assert result['status'] == 'needs_sender', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...}],...ate:'}], 'line': [350.0, 700.0, 510.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+dealroom_sign/tests/test_placement_r5.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r5.py::test_b1_cross_page_walk_includes_row_at_page_top
+1 failed, 127 deselected in 0.57s

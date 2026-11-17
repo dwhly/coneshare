@@ -1,0 +1,421 @@
+.............................................................FFF...F...F [ 66%]
+..F..F.........................F.FFF                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_caption_cannot_claim_next_block[23] ___________________
+
+gap = 23
+
+    @pytest.mark.parametrize('gap', [23, 35, 55])
+    def test_caption_cannot_claim_next_block(gap):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 500, 'Signature:')
+        c.line(140, 498, 310, 498)
+        c.drawString(72, 498-gap-9, 'Lee Harbor')
+        c.drawString(72, 498-gap-35, 'Signature:')
+        c.line(140, 498-gap-37, 310, 498-gap-37)
+        c.drawString(72, 498-gap-65, 'Date:')
+        c.line(112, 498-gap-67, 265, 498-gap-67)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:181: AssertionError
+___________________ test_caption_cannot_claim_next_block[35] ___________________
+
+gap = 35
+
+    @pytest.mark.parametrize('gap', [23, 35, 55])
+    def test_caption_cannot_claim_next_block(gap):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 500, 'Signature:')
+        c.line(140, 498, 310, 498)
+        c.drawString(72, 498-gap-9, 'Lee Harbor')
+        c.drawString(72, 498-gap-35, 'Signature:')
+        c.line(140, 498-gap-37, 310, 498-gap-37)
+        c.drawString(72, 498-gap-65, 'Date:')
+        c.line(112, 498-gap-67, 265, 498-gap-67)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:181: AssertionError
+___________________ test_caption_cannot_claim_next_block[55] ___________________
+
+gap = 55
+
+    @pytest.mark.parametrize('gap', [23, 35, 55])
+    def test_caption_cannot_claim_next_block(gap):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 500, 'Signature:')
+        c.line(140, 498, 310, 498)
+        c.drawString(72, 498-gap-9, 'Lee Harbor')
+        c.drawString(72, 498-gap-35, 'Signature:')
+        c.line(140, 498-gap-37, 310, 498-gap-37)
+        c.drawString(72, 498-gap-65, 'Date:')
+        c.line(112, 498-gap-67, 265, 498-gap-67)
+        c.save()
+>       assert placement.place(out.getvalue(), LEE)['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:181: AssertionError
+______________ test_pdf_dependency_closure_is_pinned_and_licensed ______________
+
+    def test_pdf_dependency_closure_is_pinned_and_licensed():
+        from importlib.metadata import distribution
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[2]
+        requirements = (root / 'requirements.txt').read_text()
+        for name in ['pypdfium2', 'cryptography', 'charset-normalizer', 'cffi', 'pycparser']:
+>           assert name + '==' + distribution(name).version in requirements
+E           AssertionError: assert (('pypdfium2' + '==') + '5.15.2') in 'asgiref==3.9.1\nDjango==5.2.17\nsqlparse==0.6.0\ndjangorestframework==3.18.2\ndrf-spectacular==0.28.0\npython-ulid==3...=3.2.13\nopenapi-spec-validator==0.7.1\n\ngunicorn==23.0.0\nsentry-sdk==2.60.0\nopenpyxl==3.1.5\nzipstream-ng==1.8.0\n'
+E            +  where '5.15.2' = <importlib.metadata.PathDistribution object at 0x7ab910199b80>.version
+E            +    where <importlib.metadata.PathDistribution object at 0x7ab910199b80> = <function distribution at 0x7ab91954c4a0>('pypdfium2')
+
+backend/dealroom_sign/tests/test_placement_r2.py:211: AssertionError
+_____________________________ test_golden[witness] _____________________________
+
+name = 'witness'
+
+    @pytest.mark.parametrize('name', ['nda', 'offer', 'roles', 'witness', 'harbor'])
+    def test_golden(name):
+>       assert_golden(run(name), name, OFFER if name == 'offer' else LEE if name == 'harbor' else TWO)
+
+backend/dealroom_sign/tests/test_placement.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'witness'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}, {'company': 'Fleet Test Co.', 'email': 'dan@fleettest.fleet.test', 'name': 'Dan Whaley', 'side': 'us'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'placed'
+E         
+E         - placed
+E         + bare
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+_____________ test_unusual_label_model_golden_and_minimal_payload ______________
+
+    def test_unusual_label_model_golden_and_minimal_payload():
+        model = Mock(side_effect=model_answer)
+        result = run('unusual', model_client=model)
+>       assert_golden(result, 'unusual', LEE)
+
+backend/dealroom_sign/tests/test_placement.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 10, 'score': 10, ...}], 'fields': [], 'method': 'rules', ...}
+name = 'unusual'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.2', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 10, 'score': 10, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:38: AssertionError
+______________________ test_no_key_does_not_call_provider ______________________
+
+    def test_no_key_does_not_call_provider():
+        result = run('unusual')
+        assert result['status'] == 'needs_sender'
+>       assert result['model']['outcome'] == 'unavailable'
+E       AssertionError: assert 'not_configured' == 'unavailable'
+E         
+E         - unavailable
+E         + not_configured
+
+backend/dealroom_sign/tests/test_placement.py:92: AssertionError
+__________ test_configured_provider_uses_bounded_minimal_request[ok] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ab910118600>
+mode = 'ok'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+>       assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+E       AssertionError: assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+backend/dealroom_sign/tests/test_placement.py:229: AssertionError
+______ test_configured_provider_uses_bounded_minimal_request[http_error] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ab91011b070>
+mode = 'http_error'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+>           factory.assert_called_once_with(timeout=30, follow_redirects=False)
+
+backend/dealroom_sign/tests/test_placement.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:991: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='134935257470960'>, args = ()
+kwargs = {'follow_redirects': False, 'timeout': 30}
+expected = call(timeout=30, follow_redirects=False)
+actual = call(timeout=11.751812880975194, follow_redirects=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7ab9100013a0>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: mock(timeout=30, follow_redirects=False)
+E             Actual: mock(timeout=11.751812880975194, follow_redirects=False)
+
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:979: AssertionError
+_______ test_configured_provider_uses_bounded_minimal_request[oversized] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ab91011b9a0>
+mode = 'oversized'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+>           factory.assert_called_once_with(timeout=30, follow_redirects=False)
+
+backend/dealroom_sign/tests/test_placement.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:991: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='134935257471968'>, args = ()
+kwargs = {'follow_redirects': False, 'timeout': 30}
+expected = call(timeout=30, follow_redirects=False)
+actual = call(timeout=11.751580851967447, follow_redirects=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7ab910001620>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: mock(timeout=30, follow_redirects=False)
+E             Actual: mock(timeout=11.751580851967447, follow_redirects=False)
+
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:979: AssertionError
+_____ test_configured_provider_uses_bounded_minimal_request[invalid_json] ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ab90fe85ef0>
+mode = 'invalid_json'
+
+    @pytest.mark.parametrize('mode', ['ok', 'missing_model', 'http_error', 'oversized', 'invalid_json'])
+    def test_configured_provider_uses_bounded_minimal_request(monkeypatch, mode):
+        monkeypatch.setenv('OPENROUTER_API_KEY', 'fictional-provider-key')
+        if mode != 'missing_model':
+            monkeypatch.setenv('PLACE_MODEL', 'fixture/cheap-tier')
+        client = Mock()
+        client.__enter__ = Mock(return_value=client)
+        client.__exit__ = Mock(return_value=False)
+        stream = Mock()
+        stream.__enter__ = Mock(return_value=stream)
+        stream.__exit__ = Mock(return_value=False)
+        captured = {}
+    
+        def respond(method, url, **kwargs):
+            captured.update(method=method, url=url, **kwargs)
+            payload = json.loads(kwargs['json']['messages'][1]['content'])
+            body = json.dumps({'choices': [{'message': {'content': json.dumps(model_answer(payload))}}]}).encode()
+            stream.iter_bytes.return_value = [b'x' * 32001 if mode == 'oversized' else b'invalid' if mode == 'invalid_json' else body]
+            if mode == 'http_error':
+                stream.raise_for_status.side_effect = httpx.HTTPError('private-provider-error')
+            return stream
+    
+        client.stream.side_effect = respond
+        factory = Mock(return_value=client)
+        monkeypatch.setattr(placement.httpx, 'Client', factory)
+        result = run('unusual')
+        assert result['status'] == ('placed' if mode == 'ok' else 'needs_sender')
+        if mode == 'missing_model':
+            factory.assert_not_called()
+        else:
+>           factory.assert_called_once_with(timeout=30, follow_redirects=False)
+
+backend/dealroom_sign/tests/test_placement.py:233: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:991: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='134935260111808'>, args = ()
+kwargs = {'follow_redirects': False, 'timeout': 30}
+expected = call(timeout=30, follow_redirects=False)
+actual = call(timeout=11.75236840301659, follow_redirects=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7ab910001e40>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: mock(timeout=30, follow_redirects=False)
+E             Actual: mock(timeout=11.75236840301659, follow_redirects=False)
+
+/root/.local/share/uv/python/cpython-3.13.14-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:979: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_caption_cannot_claim_next_block[23]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_caption_cannot_claim_next_block[35]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_caption_cannot_claim_next_block[55]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_pdf_dependency_closure_is_pinned_and_licensed
+FAILED backend/dealroom_sign/tests/test_placement.py::test_golden[witness] - ...
+FAILED backend/dealroom_sign/tests/test_placement.py::test_unusual_label_model_golden_and_minimal_payload
+FAILED backend/dealroom_sign/tests/test_placement.py::test_no_key_does_not_call_provider
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[ok]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[http_error]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[oversized]
+FAILED backend/dealroom_sign/tests/test_placement.py::test_configured_provider_uses_bounded_minimal_request[invalid_json]
+11 failed, 97 passed in 36.27s

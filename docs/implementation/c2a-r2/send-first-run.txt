@@ -1,0 +1,36 @@
+........................................................................ [ 12%]
+........................................................................ [ 25%]
+........................................................................ [ 37%]
+........................................................................ [ 50%]
+........................................................................ [ 62%]
+.................F...................................................... [ 75%]
+........................................................................ [ 88%]
+....................................................................     [100%]
+=================================== FAILURES ===================================
+_____________ test_envelope_carries_room_context_and_fleet_subject _____________
+
+fixture = namespace(org=<Organization: Test Organization>, user=<User: owner@example.test>, room=<Dataroom: Project Atlas · Glue...kflow: Workflow object (2001d251-aa74-48c8-a2ba-87abd8a04dc6)>, credential=<SignCredential: SignCredential object (1)>)
+pdf = b'%PDF-1.3\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<\n/Producer (pypdf)\n>>\nendobj\n2 0 obj\n<<\n/Type /Pages\n/Count 1\n/Kids ...n0000000113 00000 n \n0000000162 00000 n \ntrailer\n<<\n/Size 5\n/Root 3 0 R\n/Info 1 0 R\n>>\nstartxref\n256\n%%EOF\n'
+
+    @override_settings(SITE_DOMAIN='https://send.example.test', SIGN_RECIPIENT_ORIGIN='https://recipient.example.test:9445')
+    def test_envelope_carries_room_context_and_fleet_subject(fixture, pdf):
+        # Sign's "Back to room" link is documentMeta.redirectUrl (the room's signing page); the signer name is the
+        # recipient name.
+        from urllib.parse import urlparse
+        from dealroom_sign.workflows import envelope_meta, return_url
+        fixture.room.name = 'Project Atlas · Glue review'
+        fixture.room.save()
+        work = Workflow.objects.get(pk=fixture.work.pk)
+        assert return_url(work) == f'https://recipient.example.test:9445/s/return/{work.pk}'
+>       assert envelope_meta(work) == {'subject': 'Fleet Dealroom: please sign Source', 'redirectUrl': return_url(work)}
+E       AssertionError: assert {'dateFormat'... sign Source'} == {'redirectUrl... sign Source'}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'dateFormat': 'yyyy-MM-dd'}
+E         Use -v to get more diff
+
+backend/dealroom_sign/tests/test_workflows.py:448: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_workflows.py::test_envelope_carries_room_context_and_fleet_subject
+1 failed, 571 passed, 43 warnings in 234.58s (0:03:54)

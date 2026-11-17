@@ -1,0 +1,68 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_minor13_alternate_access_csrf_origin_and_previous_cookie _________
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django_redis/cache.py:29: in _decorator
+    return method(self, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django_redis/cache.py:89: in add
+    return self.client.add(*args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django_redis/client/default.py:278: in add
+    return self.set(key, value, timeout, version=version, client=client, nx=True)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django_redis/client/default.py:224: in set
+    raise ConnectionInterrupted(connection=client) from e
+E   django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 1 connecting to 127.0.0.1:16379. Operation not permitted.
+
+During handling of the above exception, another exception occurred:
+dealroom_sign/tests/test_gate3_routes.py:68: in test_minor13_alternate_access_csrf_origin_and_previous_cookie
+    assert post(browser, '/s/access', {'code': 'INVALID'}).status_code == 403
+dealroom_sign/tests/test_gate3_routes.py:39: in post
+    return browser.post(path, data, content_type='application/json', HTTP_X_CSRFTOKEN=browser.cookies['csrftoken'].value,
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1156: in post
+    response = super().post(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:499: in post
+    return self.generic(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1090: in request
+    self.check_exception(response)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:805: in check_exception
+    raise exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+dealroom_sign/recipient_proxy.py:472: in __call__
+    response = handle(request)
+dealroom_sign/recipient_proxy.py:279: in handle
+    limit(request)
+dealroom_sign/recipient_proxy.py:209: in limit
+    if cache.add(key, 1, timeout=60):
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django_redis/cache.py:36: in _decorator
+    raise e.__cause__  # noqa: B904
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django_redis/client/default.py:214: in set
+    return bool(client.set(nkey, nvalue, nx=nx, px=timeout, xx=xx))
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/redis/commands/core.py:2335: in set
+    return self.execute_command("SET", *pieces, **options)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/redis/client.py:605: in execute_command
+    return self._execute_command(*args, **options)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/redis/client.py:611: in _execute_command
+    conn = self.connection or pool.get_connection()
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/redis/utils.py:183: in wrapper
+    return func(*args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/redis/connection.py:1483: in get_connection
+    connection.connect()
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/redis/connection.py:384: in connect
+    raise ConnectionError(self._error_message(e))
+E   redis.exceptions.ConnectionError: Error 1 connecting to 127.0.0.1:16379. Operation not permitted.
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M7KJV9Z9W5V6KD64G8072KEG
+----------------------------- Captured stdout call -----------------------------
+2026-11-17 01:44:52,530 [WARNING] django.security.csrf:253 log_response() - Recipient request failed (request details withheld)
+2026-11-17 01:44:52,532 [WARNING] django.request:253 log_response() - Recipient request failed (request details withheld)
+2026-11-17 01:44:53,015 [ERROR] django.request:253 log_response() - Recipient request failed (request details withheld)
+------------------------------ Captured log call -------------------------------
+WARNING  django.security.csrf:log.py:253 Recipient request failed (request details withheld)
+WARNING  django.request:log.py:253 Recipient request failed (request details withheld)
+ERROR    django.request:log.py:253 Recipient request failed (request details withheld)
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_gate3_routes.py::test_minor13_alternate_access_csrf_origin_and_previous_cookie
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 11.17s

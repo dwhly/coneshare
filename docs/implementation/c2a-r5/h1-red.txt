@@ -1,0 +1,777 @@
+FFFFFFFFFFFFFFFFFFFF..F.....FFFF.F....F...FF                             [100%]
+=================================== FAILURES ===================================
+_________ test_h1_title_wording_keeps_exact_golden[Title:-Co-Founder] __________
+
+title = 'Co-Founder', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+______ test_h1_title_wording_keeps_exact_golden[Title:-CEO & Co-Founder] _______
+
+title = 'CEO & Co-Founder', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_title_wording_keeps_exact_golden[Title:-Vice-President] ________
+
+title = 'Vice-President', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+__________ test_h1_title_wording_keeps_exact_golden[Title:-Chairman] ___________
+
+title = 'Chairman', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+____________ test_h1_title_wording_keeps_exact_golden[Title:-Chair] ____________
+
+title = 'Chair', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+__________ test_h1_title_wording_keeps_exact_golden[Title:-Attorney] ___________
+
+title = 'Attorney', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_________ test_h1_title_wording_keeps_exact_golden[Title:-Consultant] __________
+
+title = 'Consultant', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_title_wording_keeps_exact_golden[Title:-Chief of Staff] ________
+
+title = 'Chief of Staff', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+______ test_h1_title_wording_keeps_exact_golden[Title:-Account Executive] ______
+
+title = 'Account Executive', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_title_wording_keeps_exact_golden[Title:-Sole Proprietor] _______
+
+title = 'Sole Proprietor', caption = 'Title:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+__________ test_h1_title_wording_keeps_exact_golden[Its:-Co-Founder] ___________
+
+title = 'Co-Founder', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_title_wording_keeps_exact_golden[Its:-CEO & Co-Founder] ________
+
+title = 'CEO & Co-Founder', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+________ test_h1_title_wording_keeps_exact_golden[Its:-Vice-President] _________
+
+title = 'Vice-President', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+___________ test_h1_title_wording_keeps_exact_golden[Its:-Chairman] ____________
+
+title = 'Chairman', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_____________ test_h1_title_wording_keeps_exact_golden[Its:-Chair] _____________
+
+title = 'Chair', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+___________ test_h1_title_wording_keeps_exact_golden[Its:-Attorney] ____________
+
+title = 'Attorney', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+__________ test_h1_title_wording_keeps_exact_golden[Its:-Consultant] ___________
+
+title = 'Consultant', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+________ test_h1_title_wording_keeps_exact_golden[Its:-Chief of Staff] _________
+
+title = 'Chief of Staff', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_title_wording_keeps_exact_golden[Its:-Account Executive] _______
+
+title = 'Account Executive', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+________ test_h1_title_wording_keeps_exact_golden[Its:-Sole Proprietor] ________
+
+title = 'Sole Proprietor', caption = 'Its:'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_title_wording_keeps_exact_golden[suffix-Vice-President] ________
+
+title = 'Vice-President', caption = 'suffix'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+______ test_h1_title_wording_keeps_exact_golden[suffix-Account Executive] ______
+
+title = 'Account Executive', caption = 'suffix'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_title_wording_keeps_exact_golden[suffix-Sole Proprietor] _______
+
+title = 'Sole Proprietor', caption = 'suffix'
+
+    @pytest.mark.parametrize('title', NEW_TITLES)
+    @pytest.mark.parametrize('caption', ['Title:', 'Its:', 'suffix'])
+    def test_h1_title_wording_keeps_exact_golden(title, caption):
+        pdf = harbor_variant(title=title) if caption == 'suffix' else harbor_variant(wording=caption + ' ' + title)
+>       exact_harbor(placement.place(pdf, LEE))
+
+dealroom_sign/tests/test_placement_r5.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+______________ test_h1_behalf_wording_keeps_exact_golden[Signed ] ______________
+
+prefix = 'Signed '
+
+    @pytest.mark.parametrize('prefix', ['Signed ', 'Signed by LEE HARBOR ', '', 'by LEE HARBOR '])
+    def test_h1_behalf_wording_keeps_exact_golden(prefix):
+        wording = prefix + 'for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+>       exact_harbor(placement.place(harbor_variant(wording=wording), LEE))
+
+dealroom_sign/tests/test_placement_r5.py:192: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_______ test_h1_behalf_wording_keeps_exact_golden[Signed by LEE HARBOR ] _______
+
+prefix = 'Signed by LEE HARBOR '
+
+    @pytest.mark.parametrize('prefix', ['Signed ', 'Signed by LEE HARBOR ', '', 'by LEE HARBOR '])
+    def test_h1_behalf_wording_keeps_exact_golden(prefix):
+        wording = prefix + 'for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+>       exact_harbor(placement.place(harbor_variant(wording=wording), LEE))
+
+dealroom_sign/tests/test_placement_r5.py:192: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+__________ test_h1_behalf_wording_keeps_exact_golden[by LEE HARBOR ] ___________
+
+prefix = 'by LEE HARBOR '
+
+    @pytest.mark.parametrize('prefix', ['Signed ', 'Signed by LEE HARBOR ', '', 'by LEE HARBOR '])
+    def test_h1_behalf_wording_keeps_exact_golden(prefix):
+        wording = prefix + 'for and on behalf of HARBOR LIGHT ANALYTICS LIMITED'
+>       exact_harbor(placement.place(harbor_variant(wording=wording), LEE))
+
+dealroom_sign/tests/test_placement_r5.py:192: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_____ test_h1_company_only_title_rules_stay_strict[Title: Co-Founder-True] _____
+
+wording = 'Title: Co-Founder', placed = True
+
+    @pytest.mark.parametrize('wording,placed', [('Title: Lee Harbor', False), ('Title: Co-Founder', True),
+                                              ('Title: unfamiliar occupation', False)])
+    def test_h1_company_only_title_rules_stay_strict(wording, placed):
+        result = placement.place(extent_pdf('format:' + wording), PAT)
+        if placed:
+>           assert result['status'] == 'placed', result
+E           AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E           assert 'needs_sender' == 'placed'
+E             
+E             - placed
+E             + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:215: AssertionError
+_ test_h1_positive_name_title_remainder_predicate[Title: unfamiliar occupation-True] _
+
+wording = 'Title: unfamiliar occupation', placed = True
+
+    @pytest.mark.parametrize('wording,placed', [('Title: Lee Harbor', False), ('Its: Pat Smith', False),
+        ('Title: unfamiliar occupation', True), ('Title: Chief of Partnerships', True)])
+    def test_h1_positive_name_title_remainder_predicate(wording, placed):
+        result = placement.place(harbor_variant(wording=wording), LEE)
+        if placed:
+>           exact_harbor(result)
+
+dealroom_sign/tests/test_placement_r5.py:225: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+_ test_h1_positive_name_title_remainder_predicate[Title: Chief of Partnerships-True] _
+
+wording = 'Title: Chief of Partnerships', placed = True
+
+    @pytest.mark.parametrize('wording,placed', [('Title: Lee Harbor', False), ('Its: Pat Smith', False),
+        ('Title: unfamiliar occupation', True), ('Title: Chief of Partnerships', True)])
+    def test_h1_positive_name_title_remainder_predicate(wording, placed):
+        result = placement.place(harbor_variant(wording=wording), LEE)
+        if placed:
+>           exact_harbor(result)
+
+dealroom_sign/tests/test_placement_r5.py:225: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+
+    def exact_harbor(result):
+        baseline = json.loads((Path(__file__).resolve().parents[3] /
+                               'docs/implementation/c2a-r4/placements.json').read_text())['harbor']
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.5', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r5.py:171: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Co-Founder]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-CEO & Co-Founder]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Vice-President]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Chairman]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Chair]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Attorney]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Consultant]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Chief of Staff]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Account Executive]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Title:-Sole Proprietor]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Co-Founder]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-CEO & Co-Founder]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Vice-President]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Chairman]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Chair]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Attorney]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Consultant]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Chief of Staff]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Account Executive]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[Its:-Sole Proprietor]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[suffix-Vice-President]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[suffix-Account Executive]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_title_wording_keeps_exact_golden[suffix-Sole Proprietor]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_behalf_wording_keeps_exact_golden[Signed ]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_behalf_wording_keeps_exact_golden[Signed by LEE HARBOR ]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_behalf_wording_keeps_exact_golden[by LEE HARBOR ]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_company_only_title_rules_stay_strict[Title: Co-Founder-True]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_positive_name_title_remainder_predicate[Title: unfamiliar occupation-True]
+FAILED dealroom_sign/tests/test_placement_r5.py::test_h1_positive_name_title_remainder_predicate[Title: Chief of Partnerships-True]
+29 failed, 15 passed, 35 deselected in 14.85s

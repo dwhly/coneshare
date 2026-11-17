@@ -1,0 +1,226 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________ test_page_caps_precede_deduplication[edges] __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x794b8eb27590>
+resource = 'edges'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+        with pytest.raises(ValueError, match='parse_limit'):
+>           placement.extract(b'fixture')
+
+dealroom_sign/tests/test_placement_r2.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom_sign/placement.py:362: in extract
+    check_annotations(page)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+page = <Mock id='133365423569424'>
+
+    def check_annotations(page):
+        try:
+            annotations = resolve1(page.page_obj.annots or [])
+            if not isinstance(annotations, (list, tuple)):
+                raise ValueError
+            for ref in annotations:
+                annotation = resolve1(ref)
+                subtype = literal_name(annotation.get('Subtype'))
+                if subtype == 'Link' and not resolve1(annotation.get('AP', {})).get('N'):
+                    continue
+                if subtype == 'Widget' and empty_widget(annotation):
+                    continue
+                raise ValueError
+        except Exception:
+            # No annotation value or parser detail crosses the worker boundary.
+>           raise ValueError('form_fields') from None
+E           ValueError: form_fields
+
+dealroom_sign/placement.py:350: ValueError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x794b8eb27590>
+resource = 'edges'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+>       with pytest.raises(ValueError, match='parse_limit'):
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'parse_limit'
+E        Input: 'form_fields'
+
+dealroom_sign/tests/test_placement_r2.py:119: AssertionError
+_________________ test_page_caps_precede_deduplication[chars] __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x794b8eb49e20>
+resource = 'chars'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+        with pytest.raises(ValueError, match='parse_limit'):
+>           placement.extract(b'fixture')
+
+dealroom_sign/tests/test_placement_r2.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom_sign/placement.py:362: in extract
+    check_annotations(page)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+page = <Mock id='133365423711216'>
+
+    def check_annotations(page):
+        try:
+            annotations = resolve1(page.page_obj.annots or [])
+            if not isinstance(annotations, (list, tuple)):
+                raise ValueError
+            for ref in annotations:
+                annotation = resolve1(ref)
+                subtype = literal_name(annotation.get('Subtype'))
+                if subtype == 'Link' and not resolve1(annotation.get('AP', {})).get('N'):
+                    continue
+                if subtype == 'Widget' and empty_widget(annotation):
+                    continue
+                raise ValueError
+        except Exception:
+            # No annotation value or parser detail crosses the worker boundary.
+>           raise ValueError('form_fields') from None
+E           ValueError: form_fields
+
+dealroom_sign/placement.py:350: ValueError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x794b8eb49e20>
+resource = 'chars'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+>       with pytest.raises(ValueError, match='parse_limit'):
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'parse_limit'
+E        Input: 'form_fields'
+
+dealroom_sign/tests/test_placement_r2.py:119: AssertionError
+_________________ test_page_caps_precede_deduplication[words] __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x794b8eb4ae70>
+resource = 'words'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+        with pytest.raises(ValueError, match='parse_limit'):
+>           placement.extract(b'fixture')
+
+dealroom_sign/tests/test_placement_r2.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom_sign/placement.py:362: in extract
+    check_annotations(page)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+page = <Mock id='133365423717216'>
+
+    def check_annotations(page):
+        try:
+            annotations = resolve1(page.page_obj.annots or [])
+            if not isinstance(annotations, (list, tuple)):
+                raise ValueError
+            for ref in annotations:
+                annotation = resolve1(ref)
+                subtype = literal_name(annotation.get('Subtype'))
+                if subtype == 'Link' and not resolve1(annotation.get('AP', {})).get('N'):
+                    continue
+                if subtype == 'Widget' and empty_widget(annotation):
+                    continue
+                raise ValueError
+        except Exception:
+            # No annotation value or parser detail crosses the worker boundary.
+>           raise ValueError('form_fields') from None
+E           ValueError: form_fields
+
+dealroom_sign/placement.py:350: ValueError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x794b8eb4ae70>
+resource = 'words'
+
+    @pytest.mark.parametrize('resource', ['edges', 'chars', 'words'])
+    def test_page_caps_precede_deduplication(monkeypatch, resource):
+        page = Mock()
+        page.rotation = 0
+        page.cropbox = page.mediabox = page.bbox = (0, 0, 612, 792)
+        page.width, page.height, page.page_number = 612, 792, 1
+        page.edges = [{}] * (5001 if resource == 'edges' else 0)
+        page.chars = [{}] * (20001 if resource == 'chars' else 0)
+        page.extract_words.return_value = [{}] * (4001 if resource == 'words' else 0)
+        doc = Mock(pages=[page])
+        doc.__enter__ = Mock(return_value=doc)
+        doc.__exit__ = Mock(return_value=False)
+        monkeypatch.setattr(placement.pdfplumber, 'open', Mock(return_value=doc))
+>       with pytest.raises(ValueError, match='parse_limit'):
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'parse_limit'
+E        Input: 'form_fields'
+
+dealroom_sign/tests/test_placement_r2.py:119: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r2.py::test_page_caps_precede_deduplication[edges]
+FAILED dealroom_sign/tests/test_placement_r2.py::test_page_caps_precede_deduplication[chars]
+FAILED dealroom_sign/tests/test_placement_r2.py::test_page_caps_precede_deduplication[words]
+3 failed, 74 deselected in 0.45s

@@ -1,0 +1,52 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______ test_unlabelled_unrecognized_caption_cannot_be_ignored[jordan lee] ______
+
+name = 'jordan lee'
+
+    @pytest.mark.parametrize('name', ['jordan lee', 'Alexanderthefirst ' * 8 + 'Harbor'])
+    def test_unlabelled_unrecognized_caption_cannot_be_ignored(name):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 480, 'Harbor Light Analytics, Inc.')
+        c.drawString(72, 450, 'Signature:')
+        c.line(140, 448, 310, 448)
+        c.drawString(72, 430, name)
+        c.drawString(72, 400, 'Date:')
+        c.line(112, 398, 260, 398)
+        c.save()
+        result = placement.place(out.getvalue(), [{'name':'Pat Smith', 'email':'pat@harborlight.fleet.test'}])
+>       assert result['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:243: AssertionError
+_ test_unlabelled_unrecognized_caption_cannot_be_ignored[Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Harbor] _
+
+name = 'Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Harbor'
+
+    @pytest.mark.parametrize('name', ['jordan lee', 'Alexanderthefirst ' * 8 + 'Harbor'])
+    def test_unlabelled_unrecognized_caption_cannot_be_ignored(name):
+        out = io.BytesIO()
+        c = canvas.Canvas(out, pagesize=(612, 792))
+        c.drawString(72, 480, 'Harbor Light Analytics, Inc.')
+        c.drawString(72, 450, 'Signature:')
+        c.line(140, 448, 310, 448)
+        c.drawString(72, 430, name)
+        c.drawString(72, 400, 'Date:')
+        c.line(112, 398, 260, 398)
+        c.save()
+        result = placement.place(out.getvalue(), [{'name':'Pat Smith', 'email':'pat@harborlight.fleet.test'}])
+>       assert result['status'] == 'needs_sender'
+E       AssertionError: assert 'placed' == 'needs_sender'
+E         
+E         - needs_sender
+E         + placed
+
+backend/dealroom_sign/tests/test_placement_r2.py:243: AssertionError
+=========================== short test summary info ============================
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unlabelled_unrecognized_caption_cannot_be_ignored[jordan lee]
+FAILED backend/dealroom_sign/tests/test_placement_r2.py::test_unlabelled_unrecognized_caption_cannot_be_ignored[Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Alexanderthefirst Harbor]
+2 failed, 73 deselected in 0.96s

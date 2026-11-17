@@ -22,6 +22,12 @@ pypdf==6.21.4
 # MIT text/line geometry for automatic signature placement.
 pdfplumber==0.11.9
 pdfminer.six==20251230
+# Complete PDF parser runtime closure; notices in dealroom_sign/licenses/.
+pypdfium2==5.15.2
+cryptography==50.0.2
+charset-normalizer==3.5.2
+cffi==2.1.1
+pycparser==3.12
 dropbox==12.0.2
 django-redis==6.0.0
 httpx==0.28.1

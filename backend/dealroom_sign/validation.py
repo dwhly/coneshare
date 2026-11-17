@@ -18,7 +18,7 @@ def request_digest(data):
     return digest(json.dumps(data, sort_keys=True, separators=(',', ':')).encode())
 
 
-def validate_recipients(recipients, pdf, *, page_count=None, automatic=False):
+def validate_recipients(recipients, pdf, *, page_count=None, automatic=False, trusted_placement=False):
     try:
         if page_count is None:
             page_count = len(PdfReader(io.BytesIO(pdf)).pages)
@@ -58,7 +58,9 @@ def validate_recipients(recipients, pdf, *, page_count=None, automatic=False):
             if field.get('identifier', 0) != 0:
                 raise ValidationError('Field must reference the pinned source item.')
             # Rich metadata is validated upstream, before distribution. Do not accept arbitrary overrides.
-            if field.get('fieldMeta') is not None:
+            if field.get('fieldMeta') is not None and not (trusted_placement and field.get('fieldMeta') == {
+                    'type': field['type'].lower(), 'fontSize': {'SIGNATURE': 18, 'DATE': 10}.get(field['type'])
+            } and field['type'] in {'SIGNATURE', 'DATE'}):
                 raise ValidationError('Rich field metadata requires the native editor in this slice.')
         order = recipient.get('signingOrder', 1)
         if type(order) is not int or not 1 <= order <= 20:
