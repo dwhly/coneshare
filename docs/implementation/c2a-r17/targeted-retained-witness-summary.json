@@ -1,0 +1,57 @@
+{
+  "counts": {
+    "passed": 4158,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 4158,
+  "groups": {
+    "test_a2_witness_column_keeps_its_name": {
+      "passed": 480
+    },
+    "test_wider_witness_sweep": {
+      "passed": 2496
+    },
+    "test_f_three_parties": {
+      "passed": 288
+    },
+    "test_f_heading_gaps": {
+      "passed": 864
+    },
+    "test_b1_review_reproduction_real_worker": {
+      "passed": 2
+    },
+    "test_b2_review_reproduction_real_worker": {
+      "passed": 2
+    },
+    "test_crossing_heading_supplies_no_company_score_to_either_column": {
+      "passed": 4
+    },
+    "test_witness_column_never_owns_party_name": {
+      "passed": 6
+    },
+    "test_gutter_scores_only_when_columns_are_staggered": {
+      "passed": 8
+    },
+    "test_tied_name_cannot_fall_back_to_company_score": {
+      "passed": 4
+    },
+    "test_name_crossing_gutter_cannot_identify_either_party": {
+      "passed": 4
+    }
+  },
+  "failures": [],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "4158",
+      "time": "50.832",
+      "timestamp": "2026-11-17T16:18:21.320844",
+      "hostname": "h-do1"
+    }
+  ]
+}

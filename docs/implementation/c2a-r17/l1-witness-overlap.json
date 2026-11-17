@@ -1,0 +1,1347 @@
+{
+  "summary": {
+    "r16": {
+      "cases": 6,
+      "wrong": 6,
+      "holds": 0
+    },
+    "r17": {
+      "cases": 6,
+      "wrong": 0,
+      "holds": 6
+    },
+    "l1": {
+      "cases": 6,
+      "wrong": 6,
+      "holds": 0
+    }
+  },
+  "records": [
+    {
+      "candidate": "r16",
+      "role": "Witness:",
+      "reverse": false,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.16",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r17",
+      "role": "Witness:",
+      "reverse": false,
+      "party_scores": [
+        0
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": false,
+      "result": {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "l1",
+      "role": "Witness:",
+      "reverse": false,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r16",
+      "role": "Witness:",
+      "reverse": true,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.16",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r17",
+      "role": "Witness:",
+      "reverse": true,
+      "party_scores": [
+        0
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": false,
+      "result": {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "92",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "l1",
+      "role": "Witness:",
+      "reverse": true,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r16",
+      "role": "Attest:",
+      "reverse": false,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.16",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r17",
+      "role": "Attest:",
+      "reverse": false,
+      "party_scores": [
+        0
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": false,
+      "result": {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "l1",
+      "role": "Attest:",
+      "reverse": false,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r16",
+      "role": "Attest:",
+      "reverse": true,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.16",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r17",
+      "role": "Attest:",
+      "reverse": true,
+      "party_scores": [
+        0
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": false,
+      "result": {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "92",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "l1",
+      "role": "Attest:",
+      "reverse": true,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r16",
+      "role": "Attestation:",
+      "reverse": false,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.16",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r17",
+      "role": "Attestation:",
+      "reverse": false,
+      "party_scores": [
+        0
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": false,
+      "result": {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "l1",
+      "role": "Attestation:",
+      "reverse": false,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r16",
+      "role": "Attestation:",
+      "reverse": true,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.16",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "r17",
+      "role": "Attestation:",
+      "reverse": true,
+      "party_scores": [
+        0
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": false,
+      "result": {
+        "status": "needs_sender",
+        "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "92",
+            "score": 0,
+            "margin": 0,
+            "confidence": "low"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "candidate": "l1",
+      "role": "Attestation:",
+      "reverse": true,
+      "party_scores": [
+        6
+      ],
+      "witness_scores": [
+        0
+      ],
+      "wrong": true,
+      "result": {
+        "status": "placed",
+        "reason": "",
+        "reason_code": "placed",
+        "fields": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "SIGNATURE",
+            "page": 1,
+            "x": 16.666667,
+            "y": 34.090909,
+            "w": 30.718954,
+            "h": 3.661616,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Name: Pat Smith",
+              "labels": [
+                {
+                  "text": "Name: Pat Smith",
+                  "rect": [
+                    300,
+                    312,
+                    375,
+                    322
+                  ]
+                }
+              ],
+              "line": [
+                102,
+                300,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          },
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "type": "DATE",
+            "page": 1,
+            "x": 17.156863,
+            "y": 43.686869,
+            "w": 30.228758,
+            "h": 1.641414,
+            "confidence": "high",
+            "evidence": {
+              "label_text": "Date:",
+              "labels": [
+                {
+                  "text": "Date:",
+                  "rect": [
+                    72,
+                    350,
+                    95,
+                    360
+                  ]
+                }
+              ],
+              "line": [
+                105,
+                360,
+                290
+              ],
+              "line_kind": "drawn"
+            }
+          }
+        ],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "72",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.17",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    }
+  ]
+}

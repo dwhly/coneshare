@@ -1,0 +1,1291 @@
+{
+  "counts": {
+    "passed": 15497,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 15498,
+  "groups": {
+    "test_capabilities_are_stable_opaque_and_rotated": {
+      "passed": 1
+    },
+    "test_enter_and_consent_rotate_sessions_and_invalidate_previous": {
+      "passed": 1
+    },
+    "test_code_verification_rotates_only_validated_scoped_state": {
+      "passed": 1
+    },
+    "test_signing_and_room_deadlines_are_independent": {
+      "passed": 1
+    },
+    "test_void_and_generation_invalidate_sessions": {
+      "passed": 1
+    },
+    "test_session_deadlines_idle_and_absolute": {
+      "passed": 1
+    },
+    "test_nda_handoff_single_use_expiry_and_binding": {
+      "passed": 1
+    },
+    "test_native_email_audit_alert_is_deduplicated": {
+      "passed": 1
+    },
+    "test_deadline_uses_native_release_even_when_first_reconcile_is_delayed": {
+      "passed": 1
+    },
+    "test_capability_request_logging_does_not_include_bearer_or_request": {
+      "passed": 1
+    },
+    "test_native_email_alert_survives_history_projection": {
+      "passed": 1
+    },
+    "test_invitation_headers_content_and_brand": {
+      "passed": 1
+    },
+    "test_incoming_staff_invitation_names_requester_and_preserves_staff_identity": {
+      "passed": 1
+    },
+    "test_final_copy_size_threshold_and_real_filenames": {
+      "passed": 3
+    },
+    "test_final_mime_cap_falls_back_as_a_pair_and_room_expiry_holds_mail": {
+      "passed": 1
+    },
+    "test_final_bytes_are_verified_against_stored_manifest": {
+      "passed": 1
+    },
+    "test_mail_effect_deduplicates_and_timeout_is_not_retried": {
+      "passed": 1
+    },
+    "test_interrupted_effect_is_uncertain_and_waiting_signer_is_not_invited": {
+      "passed": 1
+    },
+    "test_mime_hash_matches_the_message_actually_sent_and_size_rejection_uses_link": {
+      "passed": 1
+    },
+    "test_incoming_requester_must_be_bound_before_native_release": {
+      "passed": 1
+    },
+    "test_m1_preparation_failure_remains_draft_with_backoff_and_history": {
+      "passed": 1
+    },
+    "test_m1_attempt_marker_is_immediately_before_native_distribute": {
+      "passed": 1
+    },
+    "test_minor5_release_checks_auth_readback": {
+      "passed": 2
+    },
+    "test_minor5_post_distribution_native_mail_is_verified": {
+      "passed": 3
+    },
+    "test_m4_reconcile_preserves_concurrent_lease_errors_and_retry_schedule": {
+      "passed": 1
+    },
+    "test_m4_completed_reconcile_never_stages_again": {
+      "passed": 1
+    },
+    "test_minor9_sweep_observes_late_native_mail_on_done_workflow": {
+      "passed": 1
+    },
+    "test_m2_preparation_failure_retries_with_backoff": {
+      "passed": 2
+    },
+    "test_m2_definite_preacceptance_failure_retries": {
+      "passed": 3
+    },
+    "test_m2_six_attempts_over_about_24h_then_failed_history": {
+      "passed": 1
+    },
+    "test_nit6_each_failed_delivery_attempt_has_history": {
+      "passed": 1
+    },
+    "test_m3_private_final_mail_and_nit5_distinct_copy": {
+      "passed": 1
+    },
+    "test_minor2_final_date_is_stable_completion_time": {
+      "passed": 1
+    },
+    "test_minor3_plain_text_is_not_html_escaped": {
+      "passed": 1
+    },
+    "test_minor4_smtp_timeout_is_bounded": {
+      "passed": 1
+    },
+    "test_minor6_capability_key_has_no_secret_key_fallback": {
+      "passed": 3
+    },
+    "test_minor7_cc_deadline_is_publication_plus_year": {
+      "passed": 1
+    },
+    "test_minor8_default_due_time_is_in_sender_timezone": {
+      "passed": 1
+    },
+    "test_minor11_code_history_survives_rotation": {
+      "passed": 1
+    },
+    "test_minor1_relay_size_rejection_recomposes_pair_once": {
+      "passed": 2
+    },
+    "test_minor1_cap_uses_actual_smtp_crlf_bytes": {
+      "passed": 1
+    },
+    "test_minor10_requester_gets_separate_copy_without_other_capability": {
+      "passed": 2
+    },
+    "test_m2_audited_sender_retry_of_failed_effect": {
+      "passed": 3
+    },
+    "test_minor5_retry_after_uncertain_distribution_rechecks_mail_settings": {
+      "passed": 1
+    },
+    "test_m2_link_recompose_failure_is_known_preacceptance": {
+      "passed": 1
+    },
+    "test_m2_retry_visibility_matches_readonly_role": {
+      "passed": 1
+    },
+    "test_m2_nonowner_writer_retry_records_actual_actor": {
+      "passed": 1
+    },
+    "test_major2_waiting_has_no_history_or_repeated_sweep_cost": {
+      "passed": 1
+    },
+    "test_minor11_waiting_does_not_overwrite_interrupted_worker": {
+      "passed": 1
+    },
+    "test_minor2_company_survives_command_validation": {
+      "passed": 1
+    },
+    "test_minor3_requester_copy_reuses_existing_recipient": {
+      "passed": 2
+    },
+    "test_minor4_nda_has_no_requester_copy": {
+      "passed": 1
+    },
+    "test_minor5_missing_key_stops_before_distribute": {
+      "passed": 1
+    },
+    "test_minor6_done_watch_expires_and_active_work_has_priority": {
+      "passed": 1
+    },
+    "test_minor6_done_outage_adds_no_history": {
+      "passed": 2
+    },
+    "test_nit4_empty_native_token_denied": {
+      "passed": 3
+    },
+    "test_nit6_final_footer_refers_to_link": {
+      "passed": 1
+    },
+    "test_nit12_release_mismatch_is_held_once": {
+      "passed": 1
+    },
+    "test_major3_multiple_signers_have_neutral_rows_and_no_addresses": {
+      "passed": 1
+    },
+    "test_major2_waiting_does_not_consume_limit_and_reconcile_wakes_it": {
+      "passed": 1
+    },
+    "test_nit5_retry_requires_explicit_board_binding": {
+      "passed": 1
+    },
+    "test_major3_address_valued_display_labels_stay_private": {
+      "passed": 1
+    },
+    "test_waiting_rechecks_have_independent_per_pass_cap": {
+      "passed": 2
+    },
+    "test_waiting_outage_keeps_bounded_preparation_retry_policy": {
+      "passed": 1
+    },
+    "test_report_discloses_waiting_outage_retry_exhaustion": {
+      "passed": 1
+    },
+    "test_minor13_consent_csrf_origin_rotation_and_planted_cookie": {
+      "passed": 1
+    },
+    "test_minor13_alternate_access_csrf_origin_and_previous_cookie": {
+      "passed": 1
+    },
+    "test_minor13_code_verification_csrf_origin_wrong_session_five_attempt_lockout": {
+      "passed": 1
+    },
+    "test_minor13_nda_handoff_http_cookie_redirect_and_replay": {
+      "passed": 1
+    },
+    "test_m7_nda_return_only_redirects_after_verified_publication": {
+      "passed": 1
+    },
+    "test_minor13_forwarding_requires_single_ip_and_key": {
+      "passed": 1
+    },
+    "test_minor13_hmac_purposes_are_disjoint": {
+      "passed": 1
+    },
+    "test_nit2_rate_keys_use_only_validated_canonical_ip": {
+      "passed": 1
+    },
+    "test_minor10_requester_link_downloads_same_copy_but_never_forwards_native_write": {
+      "passed": 1
+    },
+    "test_r4_nit8_hmac_call_sites": {
+      "passed": 8
+    },
+    "test_html_header_and_meta_allow_only_same_origin_referrers": {
+      "passed": 5
+    },
+    "test_browser_policy_drives_real_entry_consent_and_download_forms": {
+      "passed": 1
+    },
+    "test_alternate_form_and_code_fetch_use_document_policy": {
+      "passed": 1
+    },
+    "test_nda_handoff_lands_on_same_origin_consent_and_return": {
+      "passed": 1
+    },
+    "test_all_recipient_posts_still_reject_noncanonical_origin": {
+      "passed": 21
+    },
+    "test_assets_in_repository_and_actual_docker_copy_layout": {
+      "passed": 25
+    },
+    "test_asset_roots_fail_closed_for_missing_paths_extensions_and_symlinks": {
+      "passed": 1
+    },
+    "test_missing_staff_names_never_render_none": {
+      "passed": 5
+    },
+    "test_outgoing_requester_overrides_owner_for_mail_and_context": {
+      "passed": 1
+    },
+    "test_incoming_and_outgoing_requesters_share_validation": {
+      "passed": 10
+    },
+    "test_board_send_persists_requester_and_clean_display_title_with_replay_binding": {
+      "passed": 1
+    },
+    "test_invitation_and_context_pluralize_counts": {
+      "passed": 3
+    },
+    "test_due_zone_is_shown_once": {
+      "passed": 2
+    },
+    "test_existing_context_cleans_extension_and_board_filename_suffix": {
+      "passed": 1
+    },
+    "test_nda_room_page_header_and_meta_match_same_origin_policy": {
+      "passed": 1
+    },
+    "test_invalid_sender_metadata_is_rejected_before_workflow_creation": {
+      "passed": 5
+    },
+    "test_signer_cannot_set_requester_via_staff_send_endpoint": {
+      "passed": 1
+    },
+    "test_deployment_html_does_not_override_referrer_policy": {
+      "passed": 2
+    },
+    "test_requester_missing_display_name_has_same_safe_fallback": {
+      "passed": 8
+    },
+    "test_viewer_pdf_versions_sign_serves_are_allowed": {
+      "passed": 2
+    },
+    "test_viewer_pdf_other_versions_are_denied": {
+      "passed": 6
+    },
+    "test_viewer_pdf_stays_bound_to_this_signer_and_document": {
+      "passed": 4
+    },
+    "test_api_default_creates_signature_and_date": {
+      "passed": 1
+    },
+    "test_api_hold_is_typed_and_creates_no_workflow": {
+      "passed": 2
+    },
+    "test_placement_persists_workflow_and_history_evidence": {
+      "passed": 1
+    },
+    "test_auto_retry_does_not_recompute_and_changed_hints_rejected": {
+      "passed": 1
+    },
+    "test_native_gets_exact_source_and_evidence_fields": {
+      "passed": 1
+    },
+    "test_changed_source_never_creates_or_distributes": {
+      "passed": 1
+    },
+    "test_worker_checks_persisted_placement_before_any_remote_write": {
+      "passed": 3
+    },
+    "test_native_payload_omits_internal_signer_hints": {
+      "passed": 1
+    },
+    "test_r2_missing_auto_fact_stops_before_remote_write": {
+      "passed": 1
+    },
+    "test_r2_date_only_envelope_and_native_metadata": {
+      "passed": 1
+    },
+    "test_r2_nearby_sentinel_reaches_neither_model_nor_history": {
+      "passed": 1
+    },
+    "test_r2_selected_source_hash_is_authorized_and_matches_bytes": {
+      "passed": 1
+    },
+    "test_board_actor_and_cross_board_denied": {
+      "passed": 1
+    },
+    "test_last_activity_uses_real_events_not_fetch_or_poll_time": {
+      "passed": 1
+    },
+    "test_activity_preserves_actor_recipient_pages_and_original_source_ids": {
+      "passed": 1
+    },
+    "test_history_orders_real_activity_before_pagination": {
+      "passed": 1
+    },
+    "test_domain_fallback_viewer_gets_no_requests_evidence_or_exports": {
+      "passed": 1
+    },
+    "test_board_context_via_service_or_dev_is_not_human_staff": {
+      "passed": 4
+    },
+    "test_hmac_timestamp_body_query_and_actor_are_bound": {
+      "passed": 1
+    },
+    "test_audit_recipient_attribution_and_pagination": {
+      "passed": 1
+    },
+    "test_unknown_audit_fields_stay_unknown": {
+      "passed": 1
+    },
+    "test_version_page_proxy_has_no_raw_url": {
+      "passed": 1
+    },
+    "test_export_scope_log_and_checksum": {
+      "passed": 1
+    },
+    "test_agent_key_cannot_export_partial_or_audit": {
+      "passed": 4
+    },
+    "test_agent_can_export_scoped_original_final_certificate": {
+      "passed": 3
+    },
+    "test_partial_stamped_final_bytes_unchanged": {
+      "passed": 1
+    },
+    "test_import_is_idempotent_and_never_verifies_legacy_identity": {
+      "passed": 1
+    },
+    "test_product_registry_tool_parity": {
+      "passed": 1
+    },
+    "test_snapshot_crop_binds_native_item_recipient_and_page": {
+      "passed": 1
+    },
+    "test_product_filter_cursor_and_no_later_slice_endpoints": {
+      "passed": 1
+    },
+    "test_product_request_revoked_room_and_binding_are_rechecked": {
+      "passed": 1
+    },
+    "test_legacy_admin_reads_cannot_bypass_snapshot_boundary": {
+      "passed": 1
+    },
+    "test_new_signature_invalidates_unpinned_partial_snapshot": {
+      "passed": 1
+    },
+    "test_legacy_board_send_creates_product_request_and_import_is_idempotent": {
+      "passed": 2
+    },
+    "test_legacy_board_send_request_failure_rolls_back_workflow": {
+      "passed": 1
+    },
+    "test_overview_exposes_only_the_requested_boards_configured_rooms": {
+      "passed": 1
+    },
+    "test_legacy_board_send_unconfigured_room_creates_no_rows": {
+      "passed": 1
+    },
+    "test_api_key_cannot_create_board_originated_envelopes": {
+      "passed": 8
+    },
+    "test_envelope_registry_documents_api_key_board_metadata_rejection": {
+      "passed": 1
+    },
+    "test_legacy_replay_preserves_imported_operator_creator": {
+      "passed": 1
+    },
+    "test_api_key_pages_denied_detail_redacted_and_binding_email_used": {
+      "passed": 3
+    },
+    "test_board_needs_you_and_evidence_use_case_insensitive_binding_email": {
+      "passed": 1
+    },
+    "test_unpinned_partial_export_reuses_page_snapshot": {
+      "passed": 1
+    },
+    "test_sender_revocation_requires_human_owner_and_invalidates_personal_access": {
+      "passed": 1
+    },
+    "test_proxy_forwarding_is_an_allowlist": {
+      "passed": 1
+    },
+    "test_unsessioned_native_url_has_help_without_upstream_or_metadata": {
+      "passed": 1
+    },
+    "test_recipient_host_and_listener_are_both_required": {
+      "passed": 4
+    },
+    "test_scanner_get_does_not_enter_and_enter_requires_csrf_and_exact_origin": {
+      "passed": 1
+    },
+    "test_batch_scope_rejects_wrong_tokens_fields_items_and_unknown_members": {
+      "passed": 1
+    },
+    "test_return_does_not_trust_browser_completion_or_other_request": {
+      "passed": 1
+    },
+    "test_native_completion_uses_pinned_secondary_document_id_and_no_override": {
+      "passed": 1
+    },
+    "test_native_post_requires_origin_json_consent_and_source_hash": {
+      "passed": 1
+    },
+    "test_live_native_read_returns_exact_bytes_strips_cookies_and_rejects_external_redirect": {
+      "passed": 1
+    },
+    "test_superjson_undefined_optional_values_are_checked_without_allowing_identity_changes": {
+      "passed": 1
+    },
+    "test_native_read_batch_is_scoped_and_contains_no_external_attachment_or_other_token": {
+      "passed": 1
+    },
+    "test_recipient_csp_retains_native_nonce_and_disables_frames": {
+      "passed": 1
+    },
+    "test_status_batch_distinguishes_waiting_cosigner_from_sealing": {
+      "passed": 1
+    },
+    "test_expired_personal_link_renders_closed_window_without_metadata_or_session": {
+      "passed": 1
+    },
+    "test_path_room_cannot_be_overridden": {
+      "passed": 6
+    },
+    "test_two_members_only_see_subject_executed_folders": {
+      "passed": 1
+    },
+    "test_staff_resets_one_member_with_fresh_generation": {
+      "passed": 7
+    },
+    "test_reset_requires_confirmed_cancellation": {
+      "passed": 1
+    },
+    "test_native_reset_invalidates_old_envelope": {
+      "passed": 3
+    },
+    "test_staff_page_displays_stuck_nda_recovery": {
+      "passed": 1
+    },
+    "test_agent_catalog_has_no_recipient_signing_capabilities": {
+      "passed": 1
+    },
+    "test_policy_toggle_keeps_acceptance_revision": {
+      "passed": 1
+    },
+    "test_duplicate_command_does_not_fetch_or_parse_pdf": {
+      "passed": 1
+    },
+    "test_every_pdf_signature_must_validate": {
+      "passed": 3
+    },
+    "test_valid_multisignature_pdf_accepted": {
+      "passed": 1
+    },
+    "test_unexpected_errors_increment_attempts_and_backoff": {
+      "passed": 1
+    },
+    "test_credential_team_change_warns_before_stranding_work": {
+      "passed": 1
+    },
+    "test_staff_port_is_tailnet_only": {
+      "passed": 1
+    },
+    "test_member_start_can_enter_identity_and_revocation": {
+      "passed": 1
+    },
+    "test_subject_can_open_own_nda_evidence": {
+      "passed": 1
+    },
+    "test_approved_nda_edit_takes_effect": {
+      "passed": 1
+    },
+    "test_ordinary_file_cannot_expose_private_executed_folder": {
+      "passed": 1
+    },
+    "test_different_verified_member_cannot_enter_signing": {
+      "passed": 1
+    },
+    "test_scoped_workflow_query_uses_actual_target": {
+      "passed": 2
+    },
+    "test_stuck_nda_status_identifies_subject_for_staff": {
+      "passed": 1
+    },
+    "test_path_conflicts_rejected_for_human_staff": {
+      "passed": 6
+    },
+    "test_quarantined_completed_envelope_can_restart_without_destroying_evidence": {
+      "passed": 1
+    },
+    "test_upload_response_pins_version_hash_and_activity": {
+      "passed": 1
+    },
+    "test_title_case_body_not_persisted_to_history": {
+      "passed": 1
+    },
+    "test_missing_auto_evidence_is_quarantined_before_remote_write": {
+      "passed": 1
+    },
+    "test_two_same_named_uploads_create_distinct_workflows_with_exact_source_hash": {
+      "passed": 1
+    },
+    "test_company_word_body_is_absent_from_history": {
+      "passed": 2
+    },
+    "test_r5_holds_keep_other_names_out_of_history": {
+      "passed": 3
+    },
+    "test_r6_holds_keep_other_names_out_of_history": {
+      "passed": 4
+    },
+    "test_r7_holds_keep_other_names_out_of_history": {
+      "passed": 6
+    },
+    "test_credential_ciphertext_not_raw": {
+      "passed": 1
+    },
+    "test_idempotency_same_command_and_changed_inputs_rejected": {
+      "passed": 1
+    },
+    "test_invalid_placement_rejected": {
+      "passed": 6
+    },
+    "test_no_default_signature_placement": {
+      "passed": 1
+    },
+    "test_nda_email_must_equal_verified_member": {
+      "passed": 1
+    },
+    "test_nda_distribution_none": {
+      "passed": 1
+    },
+    "test_remote_errors_do_not_expose_tokens": {
+      "passed": 1
+    },
+    "test_lost_create_response_never_recreated": {
+      "passed": 1
+    },
+    "test_multiple_external_id_matches_quarantined": {
+      "passed": 1
+    },
+    "test_ambiguous_distribution_never_resent": {
+      "passed": 1
+    },
+    "test_rebound_signer_quarantines_before_acceptance": {
+      "passed": 1
+    },
+    "test_partial_signer_cannot_complete": {
+      "passed": 1
+    },
+    "test_source_hash_checked_before_adoption": {
+      "passed": 1
+    },
+    "test_duplicate_completion_files_once_and_accepts_atomically": {
+      "passed": 1
+    },
+    "test_certificate_failure_keeps_gate_closed": {
+      "passed": 1
+    },
+    "test_conflicting_sealed_bytes_never_overwrite": {
+      "passed": 1
+    },
+    "test_gate_requires_current_policy_and_current_identity": {
+      "passed": 1
+    },
+    "test_lease_blocks_concurrent_workers": {
+      "passed": 1
+    },
+    "test_webhook_hint_auth_and_no_payload_trust": {
+      "passed": 3
+    },
+    "test_webhook_enqueue_failure_retryable": {
+      "passed": 1
+    },
+    "test_agent_send_has_no_effect_before_human_approval": {
+      "passed": 1
+    },
+    "test_nda_gate_edits_require_approval": {
+      "passed": 3
+    },
+    "test_agent_never_configures_raw_sign_credential": {
+      "passed": 1
+    },
+    "test_status_projection_never_exposes_signing_token": {
+      "passed": 1
+    },
+    "test_scoped_key_cannot_query_other_room": {
+      "passed": 1
+    },
+    "test_recipient_cannot_use_staff_agent_as_email_proof": {
+      "passed": 1
+    },
+    "test_revoke_after_signature_still_denies_access": {
+      "passed": 1
+    },
+    "test_every_served_glue_operation_has_a_tool_and_mutation_classification": {
+      "passed": 1
+    },
+    "test_recipient_allowlist_is_built_from_served_routes": {
+      "passed": 1
+    },
+    "test_same_item_replaced_in_sign_does_not_accept_new_source": {
+      "passed": 1
+    },
+    "test_sign_credential_team_binding_checked": {
+      "passed": 1
+    },
+    "test_audit_catchup_reads_all_pages": {
+      "passed": 1
+    },
+    "test_preview_queue_recovers_lost_dispatch_without_touching_canonical": {
+      "passed": 1
+    },
+    "test_api_schema_does_not_silently_drop_rich_field_requirements": {
+      "passed": 1
+    },
+    "test_envelope_carries_room_context_and_fleet_subject": {
+      "passed": 1
+    },
+    "test_nda_return_url_and_envelope_meta_carry_no_room_name": {
+      "passed": 1
+    },
+    "test_status_lists_title_and_recipient_names_only": {
+      "passed": 1
+    },
+    "test_status_lists_each_artifact_with_its_document": {
+      "passed": 1
+    },
+    "test_release_updates_reads_back_then_distributes_without_native_mail": {
+      "passed": 2
+    },
+    "test_metadata_mismatch_never_distributes": {
+      "passed": 4
+    },
+    "test_editor_readback_is_bound_to_envelope_team_and_correlation": {
+      "passed": 6
+    },
+    "test_signed_file_is_named_after_the_agreement": {
+      "passed": 1
+    },
+    "test_unsafe_characters_and_extension": {
+      "passed": 1
+    },
+    "test_nit11_generator_sets_private_modes": {
+      "passed": 1
+    },
+    "test_nit11_generator_preserves_existing_keys": {
+      "passed": 3
+    },
+    "test_nit11_proxy_creation_failure_does_not_append_env": {
+      "passed": 1
+    },
+    "test_minor7_report_discloses_network_lock_tradeoff": {
+      "passed": 1
+    },
+    "test_minor10_report_limits_mutation_claim": {
+      "passed": 1
+    },
+    "test_minor1_key_still_fails_closed_without_pytest_fixture": {
+      "passed": 1
+    },
+    "test_staff_page_is_fleet_only_and_has_no_template_leaks": {
+      "passed": 1
+    },
+    "test_visitor_page_has_fleet_lockup_and_an_empty_room_context": {
+      "passed": 1
+    },
+    "test_layer_order_statement_is_the_first_stylesheet_on_every_entry_page": {
+      "passed": 1
+    },
+    "test_counterparty_pages_and_emails_keep_fleet_brand_and_isolated_assets": {
+      "passed": 1
+    },
+    "test_golden": {
+      "passed": 5
+    },
+    "test_bare_always_asks_even_with_model": {
+      "passed": 1
+    },
+    "test_unusual_label_model_golden_and_minimal_payload": {
+      "passed": 1
+    },
+    "test_model_unavailable_visible": {
+      "passed": 2
+    },
+    "test_no_key_does_not_call_provider": {
+      "passed": 1
+    },
+    "test_invalid_model_assignments_ask": {
+      "passed": 6
+    },
+    "test_rules_success_never_calls_model": {
+      "passed": 1
+    },
+    "test_two_signers_cannot_take_one_line": {
+      "passed": 1
+    },
+    "test_duplicate_signers_rejected": {
+      "passed": 1
+    },
+    "test_unknown_signer_is_not_assigned_from_generic_signature_cue": {
+      "passed": 1
+    },
+    "test_invalid_pdf_fails_closed": {
+      "passed": 1
+    },
+    "test_missing_date_line_asks": {
+      "passed": 1
+    },
+    "test_rotated_pages_fail_closed_without_moving_fields": {
+      "passed": 3
+    },
+    "test_cropbox_requires_review": {
+      "passed": 1
+    },
+    "test_runtime_pins_licenses_and_ci": {
+      "passed": 1
+    },
+    "test_assignment_uses_actual_block_score_and_feasible_margin": {
+      "passed": 1
+    },
+    "test_validate_rejects_unusable_fields": {
+      "passed": 7
+    },
+    "test_configured_provider_uses_bounded_minimal_request": {
+      "passed": 5
+    },
+    "test_b1_out_of_slot_identity_holds": {
+      "passed": 240
+    },
+    "test_b1_name_below_caption_holds": {
+      "passed": 60
+    },
+    "test_signature_out_of_slot_controls_unchanged": {
+      "passed": 48
+    },
+    "test_h1_out_of_slot_stacks_still_hold": {
+      "passed": 40
+    },
+    "test_m1_non_exempt_contact_out_of_slot_holds": {
+      "passed": 56
+    },
+    "test_six_contact_captions_remain_exempt": {
+      "passed": 48
+    },
+    "test_seven_goldens_exact": {
+      "passed": 7
+    },
+    "test_b1_identity_inside_subordinating_host_holds": {
+      "passed": 1020
+    },
+    "test_m1_other_host_keeps_its_own_identity": {
+      "passed": 16
+    },
+    "test_signature_host_extent_controls_unchanged": {
+      "passed": 204
+    },
+    "test_subordinating_rule_without_block_keeps_identity_veto": {
+      "failed": 1
+    },
+    "test_matrix1_intervening_host_holds": {
+      "passed": 120
+    },
+    "test_matrix2_widened_stacks_hold": {
+      "passed": 270
+    },
+    "test_same_band_right_host_retains_absorbed_identity": {
+      "passed": 1
+    },
+    "test_b1_review_reproduction_holds": {
+      "passed": 1
+    },
+    "test_same_band_caption_label_and_rule_hold": {
+      "passed": 42
+    },
+    "test_b1_short_caption_sweep_holds": {
+      "passed": 864
+    },
+    "test_l1_name_outside_absorbed_rule_preserves_printed_name_policy": {
+      "passed": 2
+    },
+    "test_l2_separate_own_company_line_preserves_scoring": {
+      "passed": 40
+    },
+    "test_b1_review_reproduction_real_worker_holds": {
+      "passed": 1
+    },
+    "test_two_column_grid_no_pat_on_our_line": {
+      "passed": 3456
+    },
+    "test_fixed_geometry_sweep_no_pat_on_our_line": {
+      "passed": 360
+    },
+    "test_staggered_without_mixed_heading_stays_placed": {
+      "passed": 2
+    },
+    "test_l1_printed_name_in_our_column_remains_authoritative": {
+      "passed": 2
+    },
+    "test_separate_printing_of_same_name_is_not_vetoed": {
+      "passed": 2
+    },
+    "test_review_reproduction_real_worker": {
+      "passed": 4
+    },
+    "test_m1_suffixless_heading": {
+      "passed": 640
+    },
+    "test_m2_second_printed_name": {
+      "passed": 2592
+    },
+    "test_nearest_column_and_two_point_ties": {
+      "passed": 24
+    },
+    "test_same_column_stacked_blocks_and_other_page_do_not_tie": {
+      "passed": 2
+    },
+    "test_label_is_part_of_the_column_even_before_rule_start": {
+      "passed": 1
+    },
+    "test_aligned_rule_lengths_share_column": {
+      "passed": 4
+    },
+    "test_witness_column_never_owns_party_name": {
+      "passed": 6
+    },
+    "test_gutter_scores_only_when_columns_are_staggered": {
+      "passed": 8
+    },
+    "test_tied_name_cannot_fall_back_to_company_score": {
+      "passed": 4
+    },
+    "test_name_crossing_gutter_cannot_identify_either_party": {
+      "passed": 4
+    },
+    "test_a2_witness_column_keeps_its_name": {
+      "passed": 480
+    },
+    "test_wider_witness_sweep": {
+      "passed": 2496
+    },
+    "test_f_three_parties": {
+      "passed": 288
+    },
+    "test_f_heading_gaps": {
+      "passed": 864
+    },
+    "test_b1_review_reproduction_real_worker": {
+      "passed": 2
+    },
+    "test_b2_review_reproduction_real_worker": {
+      "passed": 2
+    },
+    "test_crossing_heading_supplies_no_company_score_to_either_column": {
+      "passed": 4
+    },
+    "test_reviewer_wrong_signer_goldens": {
+      "passed": 5
+    },
+    "test_unnamed_signer_never_takes_named_block": {
+      "passed": 42
+    },
+    "test_role_definition_is_anchored_to_company": {
+      "passed": 1
+    },
+    "test_short_company_and_domain_are_not_identity": {
+      "passed": 3
+    },
+    "test_total_deadline_includes_model": {
+      "passed": 1
+    },
+    "test_many_hairlines_are_bounded": {
+      "passed": 1
+    },
+    "test_page_caps_precede_deduplication": {
+      "passed": 3
+    },
+    "test_distinct_model_failure_outcomes": {
+      "passed": 3
+    },
+    "test_not_configured_and_fixed_parse_reason": {
+      "passed": 1
+    },
+    "test_nearby_body_is_redacted_and_model_identity_is_minimal": {
+      "passed": 1
+    },
+    "test_caption_cannot_claim_next_block": {
+      "passed": 3
+    },
+    "test_date_cannot_be_borrowed_from_next_column": {
+      "passed": 2
+    },
+    "test_native_signature_is_tight_and_bottom_anchored": {
+      "passed": 1
+    },
+    "test_pdf_dependency_closure_is_pinned_and_licensed": {
+      "passed": 1
+    },
+    "test_printed_name_variants_veto_company_match": {
+      "passed": 4
+    },
+    "test_named_caption_is_not_dropped_when_it_is_long": {
+      "passed": 1
+    },
+    "test_unlabelled_unrecognized_caption_cannot_be_ignored": {
+      "passed": 2
+    },
+    "test_heading_cannot_cross_a_previous_unlabelled_rule": {
+      "passed": 1
+    },
+    "test_date_in_close_right_column_with_unlabelled_signature_is_not_borrowed": {
+      "passed": 1
+    },
+    "test_other_person_in_whole_raw_extent_never_gets_high": {
+      "passed": 12
+    },
+    "test_inserted_raw_person_vetoes_across_fixtures": {
+      "passed": 7
+    },
+    "test_company_only_requires_every_raw_line_accounted_for": {
+      "passed": 3
+    },
+    "test_matching_printed_name_can_resolve_label_prefix": {
+      "passed": 1
+    },
+    "test_title_case_body_never_leaves_local_evidence": {
+      "passed": 6
+    },
+    "test_single_company_word_is_not_domain_identity": {
+      "passed": 7
+    },
+    "test_compound_domain_and_full_company_still_match": {
+      "passed": 1
+    },
+    "test_matched_name_does_not_override_unresolved_person_like_line": {
+      "passed": 3
+    },
+    "test_company_only_requires_one_signer_even_if_other_signer_has_named_block": {
+      "passed": 1
+    },
+    "test_second_person_in_same_raw_line_also_vetoes": {
+      "passed": 3
+    },
+    "test_fixed_role_company_and_field_labels_remain_available": {
+      "passed": 4
+    },
+    "test_rule_row_name_controls_identity": {
+      "passed": 16
+    },
+    "test_side_by_side_company_blocks_keep_their_own_names": {
+      "passed": 1
+    },
+    "test_golden_harbor_role_suffix_keeps_exact_boxes": {
+      "passed": 12
+    },
+    "test_golden_harbor_block_wording_keeps_exact_boxes": {
+      "passed": 31
+    },
+    "test_ascii_hyphen_role_preserves_printed_identity": {
+      "passed": 2
+    },
+    "test_unnamed_company_block_accounts_for_roles": {
+      "passed": 3
+    },
+    "test_title_person_remains_unresolved_and_holds": {
+      "passed": 1
+    },
+    "test_stacked_individual_blocks_place_without_neighbour_veto": {
+      "passed": 4
+    },
+    "test_stacked_individual_blocks_do_not_accept_company_only": {
+      "passed": 2
+    },
+    "test_company_word_body_is_absent_from_model_and_result": {
+      "passed": 3
+    },
+    "test_leading_domain_token_can_omit_only_generic_company_words": {
+      "passed": 3
+    },
+    "test_single_domain_token_cannot_omit_distinctive_company_words": {
+      "passed": 3
+    },
+    "test_name_in_gap_between_party_columns_makes_both_uncertain": {
+      "passed": 1
+    },
+    "test_equidistant_row_between_stacked_rules_is_not_discarded": {
+      "passed": 1
+    },
+    "test_b1_far_heading_vetoes_company_only": {
+      "passed": 3
+    },
+    "test_b1_far_caption_vetoes_company_only": {
+      "passed": 2
+    },
+    "test_b1_walk_stops_at_prose_or_other_rule": {
+      "passed": 2
+    },
+    "test_b1_walk_crosses_page_edge": {
+      "passed": 2
+    },
+    "test_b1_distant_name_never_adds_confidence": {
+      "passed": 6
+    },
+    "test_b1_all_seven_goldens_exact": {
+      "passed": 7
+    },
+    "test_b2_annotations_hold_entire_document": {
+      "passed": 10
+    },
+    "test_b2_proven_empty_widget_and_plain_link_keep_placement": {
+      "passed": 3
+    },
+    "test_h1_title_wording_keeps_exact_golden": {
+      "passed": 30
+    },
+    "test_h1_behalf_wording_keeps_exact_golden": {
+      "passed": 4
+    },
+    "test_h1_behalf_other_person_vetoes_named_signer": {
+      "passed": 1
+    },
+    "test_h1_wrapped_sentence_is_not_a_name_but_blocks_company_only": {
+      "passed": 2
+    },
+    "test_h1_company_only_title_rules_stay_strict": {
+      "passed": 3
+    },
+    "test_h1_positive_name_title_remainder_predicate": {
+      "passed": 4
+    },
+    "test_m1_compound_name_caption_keeps_exact_golden": {
+      "passed": 8
+    },
+    "test_m1_compound_caption_keeps_mismatched_person_veto": {
+      "passed": 1
+    },
+    "test_m2_stacked_headings_with_side_dates": {
+      "passed": 4
+    },
+    "test_l1_empty_contact_labels_only_are_accounted": {
+      "passed": 10
+    },
+    "test_l2_single_typed_row_signature_and_date": {
+      "passed": 1
+    },
+    "test_n1_mixed_case_role_shaped_names_veto_company_only": {
+      "passed": 3
+    },
+    "test_n1_uppercase_role_abbreviations_remain_accounted": {
+      "passed": 7
+    },
+    "test_n2_partition_preserves_independent_uncertainty": {
+      "passed": 1
+    },
+    "test_h1_execution_clause_is_a_heading": {
+      "passed": 2
+    },
+    "test_h1_sentence_rule_retains_name_suffixes_and_initials": {
+      "passed": 4
+    },
+    "test_b2_unproven_empty_widget_holds": {
+      "passed": 5
+    },
+    "test_b1_named_block_does_not_use_distant_veto": {
+      "passed": 1
+    },
+    "test_b1_veto_respects_neighbour_column_band": {
+      "passed": 1
+    },
+    "test_h1_wrapped_witness_paragraph_keeps_exact_golden": {
+      "passed": 1
+    },
+    "test_b1_cross_page_walk_includes_row_at_page_top": {
+      "passed": 1
+    },
+    "test_h2_contact_rule_preserves_typed_identity": {
+      "passed": 18
+    },
+    "test_h1_previous_caption_stays_with_its_host": {
+      "passed": 4
+    },
+    "test_m1_repeated_running_header_is_neutral": {
+      "passed": 9
+    },
+    "test_m1_nonrepeated_header_retains_identity_veto": {
+      "passed": 2
+    },
+    "test_m1_page_number_does_not_hide_next_page_name": {
+      "passed": 4
+    },
+    "test_m2_behalf_company_suffix_keeps_exact_golden": {
+      "passed": 10
+    },
+    "test_m2_behalf_role_is_not_a_person": {
+      "passed": 3
+    },
+    "test_m3_comma_witness_paragraph_keeps_exact_golden": {
+      "passed": 1
+    },
+    "test_n1_title_person_before_comma_still_vetoes": {
+      "passed": 2
+    },
+    "test_n2_period_name_still_vetoes_named_block": {
+      "passed": 2
+    },
+    "test_h1_short_contact_caption_preserves_typed_identity": {
+      "passed": 15
+    },
+    "test_l1_repeated_body_name_retains_identity_veto": {
+      "passed": 2
+    },
+    "test_l1_page_number_is_neutral_in_body": {
+      "passed": 4
+    },
+    "test_l1_repeated_row_respects_strict_margin_edges": {
+      "passed": 5
+    },
+    "test_l2_prose_ending_keeps_exact_harbor_boxes": {
+      "passed": 7
+    },
+    "test_l2_period_name_still_holds": {
+      "passed": 2
+    },
+    "test_n1_hold_reason_agrees_with_signer_count": {
+      "passed": 2
+    },
+    "test_n1_one_missing_signer_keeps_singular_reason": {
+      "passed": 1
+    },
+    "test_seven_goldens_remain_exact_against_r4_and_r5": {
+      "passed": 7
+    },
+    "test_b1_unusual_host_never_places_on_neighbour": {
+      "passed": 25
+    },
+    "test_b1_signature_controls_keep_previous_outcome": {
+      "passed": 17
+    },
+    "test_second_company_holds_without_subordinate_rule": {
+      "passed": 15
+    },
+    "test_m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+      "passed": 5
+    },
+    "test_l1_only_authorised_signatory_uses_model_on_its_own_line": {
+      "passed": 1
+    },
+    "test_n1_no_fixture_caption_constant": {
+      "passed": 1
+    },
+    "test_subordinate_caption_host_band_and_distance": {
+      "passed": 8
+    },
+    "test_subordinate_caption_cannot_cross_identity_heading": {
+      "passed": 4
+    },
+    "test_contact_vocabulary_is_other_without_preceding_host": {
+      "passed": 6
+    },
+    "test_b1_heading_variants_hold": {
+      "passed": 60
+    },
+    "test_b1_same_row_right_behalf_holds": {
+      "passed": 5
+    },
+    "test_h1_stacked_signers_hold": {
+      "passed": 40
+    },
+    "test_caption_identity_slot_edges": {
+      "passed": 15
+    },
+    "test_absorbed_identity_vetoes_every_overlapping_host": {
+      "passed": 1
+    },
+    "test_parse_burst_beyond_slots_holds_without_starting_child": {
+      "passed": 1
+    },
+    "test_failed_child_is_unavailable_not_bad_document": {
+      "passed": 4
+    },
+    "test_child_has_minimal_env_and_works_outside_backend": {
+      "passed": 1
+    },
+    "test_worker_health_reports_enforced_memory_and_cpu_limits": {
+      "passed": 1
+    },
+    "test_flate_expansion_is_bounded_and_parent_rss_stays_flat": {
+      "passed": 1
+    },
+    "test_slow_dripping_model_releases_slot_at_total_deadline": {
+      "passed": 1
+    },
+    "test_parse_timeout_kills_reaps_and_releases_slot": {
+      "passed": 1
+    },
+    "test_model_total_budget_closes_transport_even_without_decoded_chunks": {
+      "passed": 1
+    },
+    "test_blocked_socket_releases_model_slot_within_read_grace": {
+      "passed": 1
+    },
+    "test_board_settings_read_from_env": {
+      "passed": 4
+    },
+    "test_board_settings_default_when_env_absent": {
+      "passed": 2
+    },
+    "test_malformed_board_json_fails_at_startup": {
+      "passed": 6
+    },
+    "test_invalid_board_shape_fails_at_startup": {
+      "passed": 16
+    },
+    "test_board_scope_requires_lists": {
+      "passed": 24
+    }
+  },
+  "failures": [
+    {
+      "classname": "dealroom_sign.tests.test_placement_r11",
+      "case": "test_subordinating_rule_without_block_keeps_identity_veto",
+      "status": "failed",
+      "details": "def test_subordinating_rule_without_block_keeps_identity_veto():\n        source = rows_pdf([\n            (290, 'Witness:', True), (300, 'By:', True, 330),\n            (360, 'Firma:', True, 260), (372, 'Name: Pat Smith', False, 280),\n        ])\n        blocks, _, roles = placement.extract(source)\n>       assert [block.line.y for block in blocks] == [300]\nE       assert [290.0, 300.0] == [300]\nE         \nE         At index 0 diff: 290.0 != 300\nE         Left contains one more item: 300.0\nE         Use -v to get more diff\n\ndealroom_sign/tests/test_placement_r11.py:130: AssertionError"
+    }
+  ],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "1",
+      "skipped": "0",
+      "tests": "15498",
+      "time": "1349.102",
+      "timestamp": "2026-11-17T16:19:25.149029",
+      "hostname": "h-do1"
+    }
+  ]
+}

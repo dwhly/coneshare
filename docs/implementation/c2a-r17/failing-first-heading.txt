@@ -1,0 +1,102 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC.-False] _
+
+heading = 'HARBOR LIGHT ANALYTICS, INC.', reverse = False
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError
+_ test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC.-True] _
+
+heading = 'HARBOR LIGHT ANALYTICS, INC.', reverse = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError
+_ test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC-False] _
+
+heading = 'HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC', reverse = False
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError
+_ test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC-True] _
+
+heading = 'HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC', reverse = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+>       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r17/failing-first-heading.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r17.py::test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC.-False]
+FAILED dealroom_sign/tests/test_placement_r17.py::test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC.-True]
+FAILED dealroom_sign/tests/test_placement_r17.py::test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC-False]
+FAILED dealroom_sign/tests/test_placement_r17.py::test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC-True]
+4 failed, 4132 deselected in 0.69s

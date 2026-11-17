@@ -1,0 +1,75 @@
+diff --git a/backend/dealroom_sign/placement.py b/backend/dealroom_sign/placement.py
+index 2828f0fd..9db4509e 100644
+--- a/backend/dealroom_sign/placement.py
++++ b/backend/dealroom_sign/placement.py
+@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
+ ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
+ GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
+-VERSION = 'c2a.16'
++VERSION = 'c2a.17'
+ SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+ COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+ PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
+@@ -171,9 +171,9 @@ def printed_name_evidence(block, blocks=()):
+         return (min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0]),
+                 other.line.x1)
+ 
+-    # A witness signs next to a party, but is never that party.
++    # Witnesses bound the columns, but cannot receive party identity scores.
+     parties = [other for other in [block, *blocks]
+-               if other.line.page == block.line.page and not witness_block(other)]
++               if other.line.page == block.line.page]
+     # Aligned rules are one column even when their lengths differ.
+     columns = {}
+     for other in parties:
+@@ -212,6 +212,22 @@ def printed_names(block, blocks=()):
+     return printed_name_evidence(block, blocks)[0]
+ 
+ 
++def heading_crosses_gutter(block, blocks):
++    """A shared heading row cannot supply either column's company identity."""
++    left = min(block.line.x0, block.line.label.get('rect', [block.line.x0])[0])
++    for other in blocks:
++        if other.line.page != block.line.page or abs(other.line.y - block.line.y) >= 30:
++            continue
++        other_left = min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0])
++        for row in (block.raw_labels or block.labels):
++            if row['text'] != block.heading:
++                continue
++            if (block.line.x1 < other_left and row['rect'][0] < other_left and row['rect'][2] > block.line.x1
++                    or other.line.x1 < left and row['rect'][0] < left and row['rect'][2] > other.line.x1):
++                return True
++    return False
++
++
+ def company_text(text):
+     return bool(COMPANY.search(text) and re.fullmatch(r"[A-Za-z&.,'’ -]+", text)
+                 and all(w[0].isupper() or w.lower() in STOP for w in re.findall(r"[A-Za-z]+", text)))
+@@ -641,10 +657,14 @@ def extract(pdf, *, deadline=None):
+                 identity = ' | '.join(t['text'] for t in labels)
+                 known = line.semantic == 'SIGNATURE' or bool(below) or bool(re.search(r'accepted|agreed|executed', heading['text'] if heading else '', re.I))
+                 unusual = bool(line.label and not line.semantic and heading)
+-                if not known and not unusual:
++                block = Block('', line, labels, heading['text'] if heading else '', identity, unusual,
++                              uncertain_identity=len(below) != len(captions))
++                # Retain uncaptioned witness geometry unless its subordinate
++                # identity is already handled by the absorbed-name veto.
++                if not known and not unusual and (not witness_block(block)
++                        or any(host is line for host, _, _ in absorbed_names[pno])):
+                     continue
+-                hosts.append(Block('', line, labels, heading['text'] if heading else '', identity, unusual,
+-                                   uncertain_identity=len(below) != len(captions)))
++                hosts.append(block)
+             for extra in unique:
+                 if extra.semantic not in {'NAME', 'DATE'}:
+                     continue
+@@ -846,7 +866,7 @@ def score(signer, block, roles, blocks=()):
+     company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
+     heading = roles.get(block.heading.rstrip(': ').lower(), block.heading)
+     heading = (behalf_parts(heading) or ('', heading))[1]
+-    if similarity(company, heading):
++    if similarity(company, heading) and not heading_crosses_gutter(block, blocks):
+         value += 4
+     return value
+ 

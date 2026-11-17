@@ -19,7 +19,7 @@ def test_witness_column_never_owns_party_name(role, reverse):
     if reverse:
         blocks.reverse()
     placement.prepare_blocks(blocks, {}, PAT)
-    assert party.scores == [6]
+    assert party.scores == [0]
     assert witness.scores == [0]
 
 

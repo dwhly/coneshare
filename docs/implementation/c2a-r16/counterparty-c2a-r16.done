@@ -1,9 +1,0 @@
-coder rc=0 head=d88bfb889f3863796b276a6f0aef3da57539c4c3
-failing-first: nearest existing=2 failed/0 passed; new=14 failed/4 passed; crossing=4 failed/0 passed
-chosen: nearest columns; witness/attestation excluded; ties and same-band gutter intersections score zero; no b-prime
-reason: a witness signs next to a party but is never that party; the named witness fixture is held by its party-gutter crossing
-families: 10698 cases; wrong=0; goldens=7 exact except analysis_version
-full-suite: passed=11362 failed=0 errors=0 skipped=0; completed without -x
-existing-test changes=0; SHA-256 checked=245; new tests=22; no fixture changes
-version=c2a.16; no staging or commit
-blockers: none

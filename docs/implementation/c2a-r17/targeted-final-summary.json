@@ -1,0 +1,69 @@
+{
+  "counts": {
+    "passed": 5399,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "total": 5399,
+  "groups": {
+    "test_a2_witness_column_keeps_its_name": {
+      "passed": 480
+    },
+    "test_wider_witness_sweep": {
+      "passed": 2496
+    },
+    "test_f_three_parties": {
+      "passed": 288
+    },
+    "test_f_heading_gaps": {
+      "passed": 864
+    },
+    "test_b1_review_reproduction_real_worker": {
+      "passed": 2
+    },
+    "test_b2_review_reproduction_real_worker": {
+      "passed": 2
+    },
+    "test_crossing_heading_supplies_no_company_score_to_either_column": {
+      "passed": 4
+    },
+    "test_witness_column_never_owns_party_name": {
+      "passed": 6
+    },
+    "test_gutter_scores_only_when_columns_are_staggered": {
+      "passed": 8
+    },
+    "test_tied_name_cannot_fall_back_to_company_score": {
+      "passed": 4
+    },
+    "test_name_crossing_gutter_cannot_identify_either_party": {
+      "passed": 4
+    },
+    "test_b1_identity_inside_subordinating_host_holds": {
+      "passed": 1020
+    },
+    "test_m1_other_host_keeps_its_own_identity": {
+      "passed": 16
+    },
+    "test_signature_host_extent_controls_unchanged": {
+      "passed": 204
+    },
+    "test_subordinating_rule_without_block_keeps_identity_veto": {
+      "passed": 1
+    }
+  },
+  "failures": [],
+  "suites": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "5399",
+      "time": "366.985",
+      "timestamp": "2026-11-17T16:43:40.227090",
+      "hostname": "h-do1"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "test_runs": {
+    "failing-first": {
+      "passed": 3846,
+      "failed": 308,
+      "errors": 0,
+      "skipped": 0
+    },
+    "failing-first-heading": {
+      "passed": 0,
+      "failed": 4,
+      "errors": 0,
+      "skipped": 0
+    },
+    "targeted-green": {
+      "passed": 4046,
+      "failed": 112,
+      "errors": 0,
+      "skipped": 0
+    },
+    "targeted-retained-witness": {
+      "passed": 4158,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "r11-preserved": {
+      "passed": 1,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "targeted-final": {
+      "passed": 5399,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "retained-witness-candidate/full-suite": {
+      "passed": 15497,
+      "failed": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "full-suite": {
+      "passed": 15498,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "preservation": {
+    "tracked_files_hash_checked": 1636,
+    "changed_tracked_files": [
+      "backend/dealroom_sign/placement.py",
+      "backend/dealroom_sign/tests/test_placement_r16.py"
+    ],
+    "only_permitted_test_assertion_changed": true,
+    "all_other_tracked_tests_fixtures_and_evidence_hash_exact": true,
+    "memory_unchanged": true,
+    "head": "75837b04da05c3b736d6f48648536627bd062ca0",
+    "index_changes": [],
+    "whitespace_check_rc": 0,
+    "source_matches_comparison": true
+  }
+}

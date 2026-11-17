@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="0.694" timestamp="2026-11-17T16:16:20.432898" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r17" name="test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC.-False]" time="0.007"><failure message="assert [[4], [4]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">heading = 'HARBOR LIGHT ANALYTICS, INC.', reverse = False
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r17" name="test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC.-True]" time="0.002"><failure message="assert [[4], [4]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">heading = 'HARBOR LIGHT ANALYTICS, INC.', reverse = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r17" name="test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC-False]" time="0.002"><failure message="assert [[4], [4]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">heading = 'HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC', reverse = False
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r17" name="test_crossing_heading_supplies_no_company_score_to_either_column[HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC-True]" time="0.002"><failure message="assert [[4], [4]] == [[0], [0]]&#10;  &#10;  At index 0 diff: [4] != [0]&#10;  Use -v to get more diff">heading = 'HARBOR LIGHT ANALYTICS, INC. NORTHWIND TRADERS LLC', reverse = True
+
+    @pytest.mark.parametrize('reverse', [False, True])
+    @pytest.mark.parametrize('heading', [HARBOR, HARBOR + ' NORTHWIND TRADERS LLC'])
+    def test_crossing_heading_supplies_no_company_score_to_either_column(heading, reverse):
+        row = {'text': heading, 'rect': [72, 260, 480, 270]}
+        blocks = []
+        for x, end in [(72, 290), (330, 548)]:
+            label = {'text': 'By:', 'rect': [x, 280, x + 20, 290]}
+            line = placement.Line(1, x + 30, end, 290, 'drawn', label, 'SIGNATURE')
+            blocks.append(placement.Block(str(x), line, [row], heading, '', False, raw_labels=[row]))
+        if reverse:
+            blocks.reverse()
+        placement.prepare_blocks(blocks, {}, PAT)
+&gt;       assert [block.scores for block in blocks] == [[0], [0]]
+E       assert [[4], [4]] == [[0], [0]]
+E         
+E         At index 0 diff: [4] != [0]
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r17.py:139: AssertionError</failure></testcase></testsuite></testsuites>
