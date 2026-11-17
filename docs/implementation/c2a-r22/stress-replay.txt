@@ -1,0 +1,286 @@
+250 cells; new raw wrong 0
+500 cells; new raw wrong 0
+750 cells; new raw wrong 0
+1000 cells; new raw wrong 0
+1250 cells; new raw wrong 0
+1500 cells; new raw wrong 0
+1750 cells; new raw wrong 0
+2000 cells; new raw wrong 0
+2250 cells; new raw wrong 0
+2500 cells; new raw wrong 0
+{
+  "cases": 2706,
+  "groups": {
+    "Recitals northwind": {
+      "cases": 192,
+      "r21_raw_wrong": 48,
+      "r21_placed": 48,
+      "r22_raw_wrong": 48,
+      "r22_placed": 48,
+      "new_raw_wrong": 0,
+      "r21_holds": 144,
+      "r22_holds": 144
+    },
+    "Recitals affiliate": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 152,
+      "r22_raw_wrong": 0,
+      "r22_holds": 152,
+      "new_raw_wrong": 0,
+      "r21_placed": 40,
+      "r22_placed": 40
+    },
+    "Recitals misspelled_M1": {
+      "cases": 192,
+      "r21_raw_wrong": 48,
+      "r21_placed": 48,
+      "r22_raw_wrong": 48,
+      "r22_placed": 48,
+      "new_raw_wrong": 0,
+      "r21_holds": 144,
+      "r22_holds": 144
+    },
+    "Recitals role_word": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 192,
+      "r22_raw_wrong": 0,
+      "r22_holds": 192,
+      "new_raw_wrong": 0
+    },
+    "Recitals conflict_hla_nw": {
+      "cases": 192,
+      "r21_raw_wrong": 48,
+      "r21_placed": 48,
+      "r22_raw_wrong": 0,
+      "r22_holds": 192,
+      "new_raw_wrong": 0,
+      "r21_holds": 144
+    },
+    "Recitals conflict_nw_hla": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 160,
+      "r22_raw_wrong": 0,
+      "r22_holds": 192,
+      "new_raw_wrong": 0,
+      "r21_placed": 32
+    },
+    "Recitals description_inline": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 192,
+      "r22_raw_wrong": 0,
+      "r22_holds": 174,
+      "new_raw_wrong": 0,
+      "r22_placed": 18
+    },
+    "Recitals description_wrapped": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 192,
+      "r22_raw_wrong": 0,
+      "r22_holds": 174,
+      "new_raw_wrong": 0,
+      "r22_placed": 18
+    },
+    "Recitals simple_between": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 178,
+      "r22_raw_wrong": 0,
+      "r22_holds": 178,
+      "new_raw_wrong": 0,
+      "r21_placed": 14,
+      "r22_placed": 14
+    },
+    "Recitals subsidiary": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 152,
+      "r22_raw_wrong": 0,
+      "r22_holds": 160,
+      "new_raw_wrong": 0,
+      "r21_placed": 40,
+      "r22_placed": 32
+    },
+    "Recitals hereinafter": {
+      "cases": 192,
+      "r21_raw_wrong": 0,
+      "r21_holds": 160,
+      "r22_raw_wrong": 0,
+      "r22_holds": 160,
+      "new_raw_wrong": 0,
+      "r21_placed": 32,
+      "r22_placed": 32
+    },
+    "Page probes nw_page2": {
+      "cases": 72,
+      "r21_raw_wrong": 24,
+      "r21_placed": 24,
+      "r22_raw_wrong": 24,
+      "r22_placed": 24,
+      "new_raw_wrong": 0,
+      "r21_holds": 48,
+      "r22_holds": 48
+    },
+    "Page probes nw_page3": {
+      "cases": 72,
+      "r21_raw_wrong": 0,
+      "r21_holds": 72,
+      "r22_raw_wrong": 0,
+      "r22_holds": 72,
+      "new_raw_wrong": 0
+    },
+    "Page probes nw_after_sigs_only": {
+      "cases": 72,
+      "r21_raw_wrong": 0,
+      "r21_holds": 72,
+      "r22_raw_wrong": 0,
+      "r22_holds": 72,
+      "new_raw_wrong": 0
+    },
+    "Page probes nw_section1": {
+      "cases": 72,
+      "r21_raw_wrong": 24,
+      "r21_placed": 24,
+      "r22_raw_wrong": 24,
+      "r22_placed": 24,
+      "new_raw_wrong": 0,
+      "r21_holds": 48,
+      "r22_holds": 48
+    },
+    "Page probes conflict_pages12": {
+      "cases": 72,
+      "r21_raw_wrong": 24,
+      "r21_placed": 24,
+      "r22_raw_wrong": 0,
+      "r22_holds": 72,
+      "new_raw_wrong": 0,
+      "r21_holds": 48
+    },
+    "Page probes conflict_section1": {
+      "cases": 72,
+      "r21_raw_wrong": 24,
+      "r21_placed": 24,
+      "r22_raw_wrong": 0,
+      "r22_holds": 72,
+      "new_raw_wrong": 0,
+      "r21_holds": 48
+    },
+    "Page probes the_recipient_page2": {
+      "cases": 72,
+      "r21_raw_wrong": 12,
+      "r21_holds": 60,
+      "r22_raw_wrong": 12,
+      "r22_holds": 60,
+      "new_raw_wrong": 0,
+      "r21_placed": 12,
+      "r22_placed": 12
+    },
+    "M2 36 failing probes": {
+      "cases": 36,
+      "r21_raw_wrong": 36,
+      "r21_placed": 36,
+      "r22_raw_wrong": 0,
+      "r22_holds": 36,
+      "new_raw_wrong": 0
+    },
+    "B2 54 worker cells": {
+      "cases": 54,
+      "r21_raw_wrong": 0,
+      "r21_holds": 39,
+      "r22_raw_wrong": 0,
+      "r22_holds": 39,
+      "new_raw_wrong": 0,
+      "r21_placed": 15,
+      "r22_placed": 15
+    }
+  },
+  "transitions": {
+    "Recitals northwind": {
+      "raw_wrong -> raw_wrong": 48,
+      "needs_sender -> needs_sender": 144
+    },
+    "Recitals affiliate": {
+      "needs_sender -> needs_sender": 152,
+      "placed -> placed": 40
+    },
+    "Recitals misspelled_M1": {
+      "raw_wrong -> raw_wrong": 48,
+      "needs_sender -> needs_sender": 144
+    },
+    "Recitals role_word": {
+      "needs_sender -> needs_sender": 192
+    },
+    "Recitals conflict_hla_nw": {
+      "raw_wrong -> needs_sender": 48,
+      "needs_sender -> needs_sender": 144
+    },
+    "Recitals conflict_nw_hla": {
+      "needs_sender -> needs_sender": 160,
+      "placed -> needs_sender": 32
+    },
+    "Recitals description_inline": {
+      "needs_sender -> needs_sender": 174,
+      "needs_sender -> placed": 18
+    },
+    "Recitals description_wrapped": {
+      "needs_sender -> needs_sender": 174,
+      "needs_sender -> placed": 18
+    },
+    "Recitals simple_between": {
+      "needs_sender -> needs_sender": 178,
+      "placed -> placed": 14
+    },
+    "Recitals subsidiary": {
+      "needs_sender -> needs_sender": 152,
+      "placed -> placed": 32,
+      "placed -> needs_sender": 8
+    },
+    "Recitals hereinafter": {
+      "needs_sender -> needs_sender": 160,
+      "placed -> placed": 32
+    },
+    "Page probes nw_page2": {
+      "raw_wrong -> raw_wrong": 24,
+      "needs_sender -> needs_sender": 48
+    },
+    "Page probes nw_page3": {
+      "needs_sender -> needs_sender": 72
+    },
+    "Page probes nw_after_sigs_only": {
+      "needs_sender -> needs_sender": 72
+    },
+    "Page probes nw_section1": {
+      "raw_wrong -> raw_wrong": 24,
+      "needs_sender -> needs_sender": 48
+    },
+    "Page probes conflict_pages12": {
+      "raw_wrong -> needs_sender": 24,
+      "needs_sender -> needs_sender": 48
+    },
+    "Page probes conflict_section1": {
+      "raw_wrong -> needs_sender": 24,
+      "needs_sender -> needs_sender": 48
+    },
+    "Page probes the_recipient_page2": {
+      "needs_sender -> needs_sender": 60,
+      "raw_wrong -> raw_wrong": 12
+    },
+    "M2 36 failing probes": {
+      "raw_wrong -> needs_sender": 36
+    },
+    "B2 54 worker cells": {
+      "needs_sender -> needs_sender": 39,
+      "placed -> placed": 15
+    }
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 180,
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33"
+  }
+}

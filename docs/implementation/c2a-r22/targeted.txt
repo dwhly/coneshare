@@ -1,0 +1,26 @@
+........................................................................ [ 16%]
+........................................................................ [ 33%]
+........................................................................ [ 50%]
+........................................................................ [ 67%]
+........................................................................ [ 84%]
+..............................................................FF..       [100%]
+=================================== FAILURES ===================================
+________ test_description_stops_before_next_capitalised_company[, and ] ________
+dealroom_sign/tests/test_placement_r22.py:50: in test_description_stops_before_next_capitalised_company
+    assert [m.group(1) for m in matches] == ['Harbor Light Analytics, Inc.']
+E   AssertionError: assert ['Fleet Test ...lytics, Inc.'] == ['Harbor Ligh...lytics, Inc.']
+E     
+E     At index 0 diff: 'Fleet Test Co., a Delaware corporation, and Harbor Light Analytics, Inc.' != 'Harbor Light Analytics, Inc.'
+E     Use -v to get more diff
+________ test_description_stops_before_next_capitalised_company[ and ] _________
+dealroom_sign/tests/test_placement_r22.py:50: in test_description_stops_before_next_capitalised_company
+    assert [m.group(1) for m in matches] == ['Harbor Light Analytics, Inc.']
+E   AssertionError: assert ['Fleet Test ...lytics, Inc.'] == ['Harbor Ligh...lytics, Inc.']
+E     
+E     At index 0 diff: 'Fleet Test Co., a Delaware corporation and Harbor Light Analytics, Inc.' != 'Harbor Light Analytics, Inc.'
+E     Use -v to get more diff
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r22/targeted.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r22.py::test_description_stops_before_next_capitalised_company[, and ]
+FAILED dealroom_sign/tests/test_placement_r22.py::test_description_stops_before_next_capitalised_company[ and ]
+2 failed, 424 passed in 16.30s

@@ -29,12 +29,12 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 ROLE_DESCRIPTION = re.compile(
     r'(?:\b(?:between|and|by|with)\s+)'
-    r'([A-Z][\w&.,\' -]{2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
-    r'(?:,\s*[^()]{0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
+    r'([A-Z](?:(?!,?\s+and\s+[A-Z])[\w&.,\' -]){2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
+    r'(?:,\s*(?:(?!,?\s+and\s+[A-Z])[^()]){0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.21'
+VERSION = 'c2a.22'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -632,10 +632,19 @@ def extract(pdf, *, deadline=None):
                         raise ValueError('identity_unreadable')
             if pno <= 2:
                 opening = ' '.join(w['text'] for w in words)
-                for match in (*ROLE_DEF.finditer(opening), *ROLE_DESCRIPTION.finditer(opening)):
+                definitions = list(ROLE_DEF.finditer(opening))
+                # Both grammars may reach the same quoted role. Its direct
+                # definition owns that occurrence; separate clauses still
+                # contribute independent definitions and can conflict.
+                defined_roles = {match.span(2) for match in definitions}
+                descriptions = (match for match in ROLE_DESCRIPTION.finditer(opening)
+                                if match.span(2) not in defined_roles)
+                for match in (*definitions, *descriptions):
                     company, role = match.groups()
                     if COMPANY.search(company):
-                        roles[role.lower()] = company.strip(' ,')
+                        company, prior = company.strip(' ,'), roles.get(role.lower())
+                        conflict = prior and not (similarity(prior, company) or similarity(company, prior))
+                        roles[role.lower()] = role if conflict else company
             lines = []
             for edge in page.edges:
                 if abs(edge['bottom'] - edge['top']) < 1.5 and edge['x1'] - edge['x0'] >= 50:

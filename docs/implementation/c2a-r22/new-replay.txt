@@ -1,0 +1,69 @@
+new 250 r22 wrong 0
+{
+  "part": "new",
+  "cases": 420,
+  "groups": {
+    "M2 conflict probes": {
+      "cases": 36,
+      "r20_wrong": 24,
+      "r20_raw_wrong": 24,
+      "r20_model_calls": 0,
+      "r20_placed": 24,
+      "r21_wrong": 24,
+      "r21_raw_wrong": 24,
+      "r21_model_calls": 0,
+      "r21_placed": 24,
+      "conf_wrong": 0,
+      "conf_raw_wrong": 0,
+      "conf_model_calls": 0,
+      "conf_holds": 36,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 36,
+      "full_result_diffs": 24,
+      "r20_holds": 12,
+      "r21_holds": 12
+    },
+    "L1 recital matrix": {
+      "cases": 384,
+      "r20_wrong": 36,
+      "r20_raw_wrong": 36,
+      "r20_model_calls": 0,
+      "r20_holds": 316,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 384,
+      "conf_wrong": 0,
+      "conf_raw_wrong": 0,
+      "conf_model_calls": 0,
+      "conf_holds": 384,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 348,
+      "full_result_diffs": 120,
+      "r20_placed": 68,
+      "r22_placed": 36
+    }
+  },
+  "transitions": {
+    "M2 conflict probes": {
+      "wrong -> needs_sender": 24,
+      "needs_sender -> needs_sender": 12
+    },
+    "L1 recital matrix": {
+      "needs_sender -> needs_sender": 348,
+      "needs_sender -> placed": 36
+    }
+  },
+  "source_sha256": {
+    "r20": "c747a21aefadcaadaf794a1811ab7810bb74bbf5d206841136053e27fda395d9",
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "conf": "3d4ddc756b54566096c2d839bee3f26058b4e257ebc8c9cf7f20a48b0a4c7579",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 144
+}

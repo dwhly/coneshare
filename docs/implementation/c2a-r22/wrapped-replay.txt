@@ -1,0 +1,104 @@
+wrapped 250 r22 wrong 0
+wrapped 500 r22 wrong 0
+wrapped 750 r22 wrong 0
+wrapped 1000 r22 wrong 0
+wrapped 1250 r22 wrong 0
+wrapped 1500 r22 wrong 0
+wrapped 1750 r22 wrong 0
+wrapped 2000 r22 wrong 0
+wrapped 2250 r22 wrong 0
+wrapped 2500 r22 wrong 0
+wrapped 2750 r22 wrong 0
+wrapped 3000 r22 wrong 0
+wrapped 3250 r22 wrong 0
+wrapped 3500 r22 wrong 0
+wrapped 3750 r22 wrong 0
+wrapped 4000 r22 wrong 0
+wrapped 4250 r22 wrong 0
+wrapped 4500 r22 wrong 0
+wrapped 4750 r22 wrong 0
+wrapped 5000 r22 wrong 0
+wrapped 5250 r22 wrong 0
+{
+  "part": "wrapped",
+  "cases": 5280,
+  "groups": {
+    "Wrapped matrix same": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1270,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1270,
+      "full_result_diffs": 0,
+      "r21_placed": 50,
+      "r22_placed": 50
+    },
+    "Wrapped matrix guarantor": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1220,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1220,
+      "full_result_diffs": 0,
+      "r21_placed": 100,
+      "r22_placed": 100
+    },
+    "Wrapped matrix split": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1270,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1270,
+      "full_result_diffs": 0,
+      "r21_placed": 50,
+      "r22_placed": 50
+    },
+    "Wrapped matrix witness": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1320,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1320,
+      "full_result_diffs": 0
+    }
+  },
+  "transitions": {
+    "Wrapped matrix same": {
+      "needs_sender -> needs_sender": 1270,
+      "placed -> placed": 50
+    },
+    "Wrapped matrix guarantor": {
+      "needs_sender -> needs_sender": 1220,
+      "placed -> placed": 100
+    },
+    "Wrapped matrix split": {
+      "needs_sender -> needs_sender": 1270,
+      "placed -> placed": 50
+    },
+    "Wrapped matrix witness": {
+      "needs_sender -> needs_sender": 1320
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}
