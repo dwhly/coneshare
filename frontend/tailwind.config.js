@@ -38,6 +38,24 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      // No left-stripe accents (owner decision 2026-11-15): Typography's blockquote draws a 0.25rem inline-start rule.
+      // A quote is a muted tinted block instead (DESIGN.md: no coloured edge on quotes, callouts or cards).
+      typography: {
+        DEFAULT: {
+          css: {
+            blockquote: {
+              borderInlineStartWidth: "0",
+              borderLeftWidth: "0",
+              backgroundColor: "hsl(var(--muted))",
+              borderRadius: "var(--radius-control)",
+              paddingInlineStart: "1em",
+              paddingInlineEnd: "1em",
+              paddingTop: "0.25em",
+              paddingBottom: "0.25em",
+            },
+          },
+        },
+      },
     },
   },
   plugins: [
