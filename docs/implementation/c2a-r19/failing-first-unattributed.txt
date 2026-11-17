@@ -1,0 +1,56 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+...F.F                                                                   [100%]
+=================================== FAILURES ===================================
+__ test_shared_heading_remains_identity_without_heading_attribution[True- / ] __
+
+separator = ' / ', affiliate = True
+
+    @pytest.mark.parametrize('separator', [' / ', ' - ', ': '])
+    @pytest.mark.parametrize('affiliate', [False, True])
+    def test_shared_heading_remains_identity_without_heading_attribution(separator, affiliate):
+        heading = 'FLEET TEST CO. INTERNATIONAL HOLDINGS' + separator + HARBOR
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 160),
+                (350, 'Date:', True, 40, 160), (290, 'By:', True, 280, 400),
+                (350, 'Date:', True, 280, 400)]
+        if affiliate:
+            rows += [(410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                     (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), PAT, model)
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:103: AssertionError
+__ test_shared_heading_remains_identity_without_heading_attribution[True-: ] ___
+
+separator = ': ', affiliate = True
+
+    @pytest.mark.parametrize('separator', [' / ', ' - ', ': '])
+    @pytest.mark.parametrize('affiliate', [False, True])
+    def test_shared_heading_remains_identity_without_heading_attribution(separator, affiliate):
+        heading = 'FLEET TEST CO. INTERNATIONAL HOLDINGS' + separator + HARBOR
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 160),
+                (350, 'Date:', True, 40, 160), (290, 'By:', True, 280, 400),
+                (350, 'Date:', True, 280, 400)]
+        if affiliate:
+            rows += [(410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                     (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), PAT, model)
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:103: AssertionError
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r19/failing-first-unattributed.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r19.py::test_shared_heading_remains_identity_without_heading_attribution[True- / ]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_shared_heading_remains_identity_without_heading_attribution[True-: ]
+2 failed, 4 passed, 196 deselected in 0.38s

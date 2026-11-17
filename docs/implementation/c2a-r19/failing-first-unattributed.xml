@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="6" time="0.389" timestamp="2026-11-17T18:50:27.075208" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_shared_heading_remains_identity_without_heading_attribution[False- / ]" time="0.016" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_shared_heading_remains_identity_without_heading_attribution[False- - ]" time="0.010" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_shared_heading_remains_identity_without_heading_attribution[False-: ]" time="0.010" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_shared_heading_remains_identity_without_heading_attribution[True- / ]" time="0.013"><failure message="AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}&#10;assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])&#10;  &#10;  At index 0 diff: 'placed' != 'needs_sender'&#10;  Use -v to get more diff">separator = ' / ', affiliate = True
+
+    @pytest.mark.parametrize('separator', [' / ', ' - ', ': '])
+    @pytest.mark.parametrize('affiliate', [False, True])
+    def test_shared_heading_remains_identity_without_heading_attribution(separator, affiliate):
+        heading = 'FLEET TEST CO. INTERNATIONAL HOLDINGS' + separator + HARBOR
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 160),
+                (350, 'Date:', True, 40, 160), (290, 'By:', True, 280, 400),
+                (350, 'Date:', True, 280, 400)]
+        if affiliate:
+            rows += [(410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                     (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), PAT, model)
+&gt;       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:103: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_shared_heading_remains_identity_without_heading_attribution[True- - ]" time="0.012" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_shared_heading_remains_identity_without_heading_attribution[True-: ]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}&#10;assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])&#10;  &#10;  At index 0 diff: 'placed' != 'needs_sender'&#10;  Use -v to get more diff">separator = ': ', affiliate = True
+
+    @pytest.mark.parametrize('separator', [' / ', ' - ', ': '])
+    @pytest.mark.parametrize('affiliate', [False, True])
+    def test_shared_heading_remains_identity_without_heading_attribution(separator, affiliate):
+        heading = 'FLEET TEST CO. INTERNATIONAL HOLDINGS' + separator + HARBOR
+        rows = [(250, heading, False, 40), (290, 'By:', True, 40, 160),
+                (350, 'Date:', True, 40, 160), (290, 'By:', True, 280, 400),
+                (350, 'Date:', True, 280, 400)]
+        if affiliate:
+            rows += [(410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                     (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), PAT, model)
+&gt;       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:103: AssertionError</failure></testcase></testsuite></testsuites>

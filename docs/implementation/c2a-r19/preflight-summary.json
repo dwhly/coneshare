@@ -1,0 +1,133 @@
+{
+  "base": "9ebf85a0",
+  "source_sha256": {
+    "r18": "81ce4f08e69a9b9fb0754c9fa2bd52b18ffc1251251e8f7c2c3301f7c9cdcab8",
+    "candidate": "c60ed48de22761374ed86857d142a147a9f9c83a0f9f9eac185e457bdf7bf0c8",
+    "narrower": "674c8cc780577dabcb10fa1c2f8d4d54c80409ec1e5835d86451ce6b31e8c3e4",
+    "chosen": "81ce4f08e69a9b9fb0754c9fa2bd52b18ffc1251251e8f7c2c3301f7c9cdcab8"
+  },
+  "cases": 1678,
+  "groups": {
+    "Affiliate matrix": {
+      "cases": 1536,
+      "r18_wrong": 0,
+      "r18_placed": 116,
+      "r18_holds": 1420,
+      "r18_bare": 0,
+      "r18_model_calls": 0,
+      "candidate_wrong": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1536,
+      "candidate_bare": 0,
+      "candidate_model_calls": 0,
+      "narrower_wrong": 0,
+      "narrower_placed": 116,
+      "narrower_holds": 1420,
+      "narrower_bare": 0,
+      "narrower_model_calls": 0,
+      "chosen_wrong": 0,
+      "chosen_placed": 116,
+      "chosen_holds": 1420,
+      "chosen_bare": 0,
+      "chosen_model_calls": 0,
+      "candidate_full_diffs": 696,
+      "narrower_full_diffs": 512,
+      "chosen_full_diffs": 0
+    },
+    "r18 B1 reproduction": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "r18_model_calls": 0,
+      "candidate_wrong": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_model_calls": 0,
+      "narrower_wrong": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_model_calls": 0,
+      "chosen_wrong": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_model_calls": 0,
+      "candidate_full_diffs": 0,
+      "narrower_full_diffs": 0,
+      "chosen_full_diffs": 0
+    },
+    "Veto matrix": {
+      "cases": 140,
+      "r18_wrong": 84,
+      "r18_placed": 84,
+      "r18_holds": 56,
+      "r18_bare": 0,
+      "r18_model_calls": 0,
+      "candidate_wrong": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 140,
+      "candidate_bare": 0,
+      "candidate_model_calls": 0,
+      "narrower_wrong": 84,
+      "narrower_placed": 84,
+      "narrower_holds": 56,
+      "narrower_bare": 0,
+      "narrower_model_calls": 0,
+      "chosen_wrong": 84,
+      "chosen_placed": 84,
+      "chosen_holds": 56,
+      "chosen_bare": 0,
+      "chosen_model_calls": 0,
+      "candidate_full_diffs": 84,
+      "narrower_full_diffs": 0,
+      "chosen_full_diffs": 0
+    }
+  },
+  "external_http_calls": 0,
+  "transitions": {
+    "Affiliate matrix": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1420,
+        "placed -> needs_sender": 116
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1420,
+        "placed -> placed": 116
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1420,
+        "placed -> placed": 116
+      }
+    },
+    "r18 B1 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "Veto matrix": {
+      "candidate": {
+        "wrong -> needs_sender": 84,
+        "needs_sender -> needs_sender": 56
+      },
+      "narrower": {
+        "wrong -> wrong": 84,
+        "needs_sender -> needs_sender": 56
+      },
+      "chosen": {
+        "wrong -> wrong": 84,
+        "needs_sender -> needs_sender": 56
+      }
+    }
+  },
+  "worker_evaluations": 8
+}

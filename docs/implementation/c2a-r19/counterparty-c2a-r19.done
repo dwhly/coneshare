@@ -1,0 +1,8 @@
+coder rc=0 head=9ebf85a0720a6cefdf07a8ab10e0d2fbf38b474e
+Failing first: unchanged r18 112 failed / 84 passed (veto 84/56, collision 8/8, identity 20/20); slash/colon 2 failed / 4 passed; mapped-role collisions 3 failed / 3 passed; historical competition assertions 108 failed / 372 passed.
+Chosen rule: same-page company uniqueness across all role-mapped, behalf-stripped matching headings regardless of veto/score/crossing; M-1 shared/colliding heading rows hold the page; VERSION=c2a.19. Narrower rejected: veto wrong=84; 116 affiliate correct placements become holds.
+Competition: exact 480 cases; raw r18/candidate/r19=348/300/240; candidate residue=60 collisions held + 240 sole-domain-company matches justified case by case; zero unjustified wrong; no known different legal entity placement remains.
+Full suite: 17832 passed, 0 failed, 0 errors, 0 skipped; completion without -x; all 17144 prior nodes retained; final-source hash verified.
+Test changes: only new test_placement_r19.py (208), test_placement_r19_review.py (480), placement_r19_review_cases.py; no existing test/fixture/evidence/done marker changed; 1746 starting file hashes checked.
+Evidence: 29876 exact-family evaluations; every family zero unjustified wrong; seven goldens/native fields exact except analysis_version; hold cost per family in results-r19.md and hold-costs.json; HTTP=0.
+Blockers: none. No commit; HEAD/index/memory unchanged.

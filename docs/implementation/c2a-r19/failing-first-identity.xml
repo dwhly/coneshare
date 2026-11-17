@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="20" skipped="0" tests="40" time="0.459" timestamp="2026-11-17T18:47:32.095692" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-uncertain-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.004" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-uncertain-RECIPIENT:-roles1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-uncertain-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-uncertain-RECIPIENT:-roles3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-company_veto-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-company_veto-RECIPIENT:-roles1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-company_veto-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-company_veto-RECIPIENT:-roles3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-name-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-name-RECIPIENT:-roles1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-name-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-name-RECIPIENT:-roles3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-prose-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-prose-RECIPIENT:-roles1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-prose-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-prose-RECIPIENT:-roles3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-ordinary-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-ordinary-RECIPIENT:-roles1]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-ordinary-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[False-ordinary-RECIPIENT:-roles3]" time="0.001" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-uncertain-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'HARBOR LIGHT ANALYTICS, INC.', roles = {}, reason = 'uncertain'
+same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-uncertain-RECIPIENT:-roles1]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'uncertain', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-uncertain-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.', roles = {}
+reason = 'uncertain', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-uncertain-RECIPIENT:-roles3]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:'
+roles = {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'uncertain', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-company_veto-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'HARBOR LIGHT ANALYTICS, INC.', roles = {}, reason = 'company_veto'
+same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-company_veto-RECIPIENT:-roles1]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'company_veto', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-company_veto-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.', roles = {}
+reason = 'company_veto', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-company_veto-RECIPIENT:-roles3]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:'
+roles = {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'company_veto', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-name-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'HARBOR LIGHT ANALYTICS, INC.', roles = {}, reason = 'name'
+same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-name-RECIPIENT:-roles1]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'name', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-name-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.', roles = {}
+reason = 'name', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-name-RECIPIENT:-roles3]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:'
+roles = {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'name', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-prose-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'HARBOR LIGHT ANALYTICS, INC.', roles = {}, reason = 'prose'
+same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-prose-RECIPIENT:-roles1]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'prose', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-prose-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.', roles = {}
+reason = 'prose', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-prose-RECIPIENT:-roles3]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:'
+roles = {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'prose', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-ordinary-HARBOR LIGHT ANALYTICS, INC.-roles0]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'HARBOR LIGHT ANALYTICS, INC.', roles = {}, reason = 'ordinary'
+same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-ordinary-RECIPIENT:-roles1]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:', roles = {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'ordinary', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-ordinary-For and on behalf of HARBOR LIGHT ANALYTICS, INC.-roles2]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.', roles = {}
+reason = 'ordinary', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_company_competition_uses_identity_before_vetoes[True-ordinary-RECIPIENT:-roles3]" time="0.002"><failure message="AssertionError: assert 4 == 0&#10; +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])&#10; +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score">heading = 'RECIPIENT:'
+roles = {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}
+reason = 'ordinary', same_page = True
+
+    @pytest.mark.parametrize('heading,roles', [
+        (HARBOR, {}),
+        ('RECIPIENT:', {'recipient': HARBOR}),
+        ('For and on behalf of ' + HARBOR, {}),
+        ('RECIPIENT:', {'recipient': 'For and on behalf of ' + HARBOR}),
+    ])
+    @pytest.mark.parametrize('reason', ['uncertain', 'company_veto', 'name', 'prose', 'ordinary'])
+    @pytest.mark.parametrize('same_page', [False, True])
+    def test_company_competition_uses_identity_before_vetoes(heading, roles, reason, same_page):
+        def block(x, y, page, text):
+            row = {'text': text, 'rect': [x, y - 40, x + 150, y - 30]}
+            label = {'text': 'By:', 'rect': [x, y - 10, x + 20, y]}
+            line = placement.Line(page, x + 30, x + 180, y, 'drawn', label, 'SIGNATURE')
+            return placement.Block(str((x, y)), line, [row], text, '', False, raw_labels=[row])
+    
+        other = block(40, 290, 1 if same_page else 2, heading)
+        target = block(40, 450, 1, AFFILIATES[0])
+        other.uncertain_identity = reason == 'uncertain'
+        other.company_only_blocked = reason == 'company_veto'
+        if reason in {'name', 'prose'}:
+            text = 'Name: Patricia Smith' if reason == 'name' else 'Address: 100 Harbor Way, Boston MA'
+            other.raw_labels.append({'text': text, 'rect': [40, 302, 180, 312]})
+&gt;       assert placement.score(PAT[0], target, roles, [other, target]) == (0 if same_page else 4)
+E       AssertionError: assert 4 == 0
+E        +  where 4 = &lt;function score at 0x75b11a115bc0&gt;({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440, 60...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'For and on behalf of HARBOR LIGHT ANALYTICS, INC.'}, [Block(id='(40, 290)', line=Line(page=1, x0=70, x1=220, y=290, kind='drawn', label={'text': 'By:', 'rect': [40, 280, 6...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E        +    where &lt;function score at 0x75b11a115bc0&gt; = placement.score
+
+dealroom_sign/tests/test_placement_r19.py:88: AssertionError</failure></testcase></testsuite></testsuites>

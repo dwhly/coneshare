@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="6" time="0.413" timestamp="2026-11-17T19:08:11.186959" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_colliding_mapped_roles_are_unresolved[False--2]" time="0.020"><failure message="AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 550.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}&#10;assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])&#10;  &#10;  At index 0 diff: 'placed' != 'needs_sender'&#10;  Use -v to get more diff">gap = -2, both = False
+
+    @pytest.mark.parametrize('gap', [-2, 0, 2])
+    @pytest.mark.parametrize('both', [False, True])
+    def test_colliding_mapped_roles_are_unresolved(gap, both):
+        second = 40 + stringWidth('DISCLOSER:', 'Helvetica', 10) + gap
+        rows = [(100, 'between FLEET TEST CO. ("Discloser") and HARBOR LIGHT ANALYTICS, INC. ("Recipient")', False, 40),
+                (250, 'DISCLOSER:', False, 40), (250, 'RECIPIENT:', False, second),
+                (290, 'By:', True, 40, 120), (350, 'Date:', True, 40, 120),
+                (290, 'By:', True, 130, 210), (350, 'Date:', True, 130, 210),
+                (450, AFFILIATES[0], False, 40), (490, 'By:', True, 40, 220),
+                (550, 'Date:', True, 40, 220)]
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+&gt;       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 550.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:119: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_colliding_mapped_roles_are_unresolved[False-0]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 550.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}&#10;assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])&#10;  &#10;  At index 0 diff: 'placed' != 'needs_sender'&#10;  Use -v to get more diff">gap = 0, both = False
+
+    @pytest.mark.parametrize('gap', [-2, 0, 2])
+    @pytest.mark.parametrize('both', [False, True])
+    def test_colliding_mapped_roles_are_unresolved(gap, both):
+        second = 40 + stringWidth('DISCLOSER:', 'Helvetica', 10) + gap
+        rows = [(100, 'between FLEET TEST CO. ("Discloser") and HARBOR LIGHT ANALYTICS, INC. ("Recipient")', False, 40),
+                (250, 'DISCLOSER:', False, 40), (250, 'RECIPIENT:', False, second),
+                (290, 'By:', True, 40, 120), (350, 'Date:', True, 40, 120),
+                (290, 'By:', True, 130, 210), (350, 'Date:', True, 130, 210),
+                (450, AFFILIATES[0], False, 40), (490, 'By:', True, 40, 220),
+                (550, 'Date:', True, 40, 220)]
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+&gt;       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 550.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:119: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_colliding_mapped_roles_are_unresolved[False-2]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 550.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}&#10;assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])&#10;  &#10;  At index 0 diff: 'placed' != 'needs_sender'&#10;  Use -v to get more diff">gap = 2, both = False
+
+    @pytest.mark.parametrize('gap', [-2, 0, 2])
+    @pytest.mark.parametrize('both', [False, True])
+    def test_colliding_mapped_roles_are_unresolved(gap, both):
+        second = 40 + stringWidth('DISCLOSER:', 'Helvetica', 10) + gap
+        rows = [(100, 'between FLEET TEST CO. ("Discloser") and HARBOR LIGHT ANALYTICS, INC. ("Recipient")', False, 40),
+                (250, 'DISCLOSER:', False, 40), (250, 'RECIPIENT:', False, second),
+                (290, 'By:', True, 40, 120), (350, 'Date:', True, 40, 120),
+                (290, 'By:', True, 130, 210), (350, 'Date:', True, 130, 210),
+                (450, AFFILIATES[0], False, 40), (490, 'By:', True, 40, 220),
+                (550, 'Date:', True, 40, 220)]
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+&gt;       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.19', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 550.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:119: AssertionError</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_colliding_mapped_roles_are_unresolved[True--2]" time="0.014" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_colliding_mapped_roles_are_unresolved[True-0]" time="0.014" /><testcase classname="dealroom_sign.tests.test_placement_r19" name="test_colliding_mapped_roles_are_unresolved[True-2]" time="0.014" /></testsuite></testsuites>

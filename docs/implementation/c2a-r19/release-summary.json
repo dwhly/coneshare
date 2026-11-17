@@ -1,0 +1,4785 @@
+{
+  "base": "9ebf85a0",
+  "source_sha256": {
+    "r18": "81ce4f08e69a9b9fb0754c9fa2bd52b18ffc1251251e8f7c2c3301f7c9cdcab8",
+    "candidate": "c60ed48de22761374ed86857d142a147a9f9c83a0f9f9eac185e457bdf7bf0c8",
+    "narrower": "de6b4ff76efd51f6652cb094fb09cf790d02166efdef53383b2ba3e48082a1f7",
+    "chosen": "5384bb3d472a0c812e05e93ed3f928ab6cead28b0b6599da599cb7d733fe023c"
+  },
+  "cases": 17204,
+  "groups": {
+    "Matrix 1": {
+      "cases": 120,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 120,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 120,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 120,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 120,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "Matrix 2": {
+      "cases": 270,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 270,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 270,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 270,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 270,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r11 B-1": {
+      "cases": 1020,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1020,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1020,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1020,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1020,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "Signature controls": {
+      "cases": 204,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 6,
+      "r18_holds": 198,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 6,
+      "candidate_holds": 198,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 6,
+      "narrower_holds": 198,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 6,
+      "chosen_holds": 198,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "M-1": {
+      "cases": 16,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 16,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 16,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 16,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 16,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r9 heading matrix": {
+      "cases": 72,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 6,
+      "r18_holds": 66,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 6,
+      "candidate_holds": 66,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 6,
+      "narrower_holds": 66,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 6,
+      "chosen_holds": 66,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r9 H-1": {
+      "cases": 40,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 40,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 40,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 40,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 40,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "Seven goldens": {
+      "cases": 7,
+      "r18_wrong": 0,
+      "r18_model_calls": 1,
+      "r18_placed": 6,
+      "r18_holds": 0,
+      "r18_bare": 1,
+      "r18_golden_diffs": 0,
+      "r18_native_diffs": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 1,
+      "candidate_placed": 6,
+      "candidate_holds": 0,
+      "candidate_bare": 1,
+      "candidate_full_diffs": 0,
+      "candidate_golden_diffs": 0,
+      "candidate_native_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 1,
+      "narrower_placed": 6,
+      "narrower_holds": 0,
+      "narrower_bare": 1,
+      "narrower_full_diffs": 0,
+      "narrower_golden_diffs": 0,
+      "narrower_native_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 1,
+      "chosen_placed": 6,
+      "chosen_holds": 0,
+      "chosen_bare": 1,
+      "chosen_full_diffs": 0,
+      "chosen_golden_diffs": 0,
+      "chosen_native_diffs": 0
+    },
+    "Same-band right host": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r12 B-1 reproduction": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r13 same-band grid": {
+      "cases": 42,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 42,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 42,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 42,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 42,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r12 B-1 sweep": {
+      "cases": 864,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 864,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 864,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 864,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 864,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "L-1 short-rule controls": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "L-2 own-company controls": {
+      "cases": 40,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 20,
+      "r18_holds": 20,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 20,
+      "candidate_holds": 20,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 20,
+      "narrower_holds": 20,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 20,
+      "chosen_holds": 20,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r14 reproduction": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r14 grid": {
+      "cases": 3456,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2436,
+      "r18_holds": 1020,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2436,
+      "candidate_holds": 1020,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2436,
+      "narrower_holds": 1020,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2436,
+      "chosen_holds": 1020,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r14 fixed sweep": {
+      "cases": 360,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 244,
+      "r18_holds": 116,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 244,
+      "candidate_holds": 116,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 244,
+      "narrower_holds": 116,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 244,
+      "chosen_holds": 116,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r14 correct controls": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r14 L-1 (grid subset)": {
+      "cases": 72,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 72,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 72,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 72,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 72,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r15 M1 reproduction": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r15 M2 reproduction": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r15 M1": {
+      "cases": 640,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 640,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 640,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 640,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 640,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r15 M2": {
+      "cases": 2592,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2592,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2592,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2592,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2592,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 reviewer_wrong_signer_goldens": {
+      "cases": 5,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 5,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 5,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 5,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 5,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 unnamed_signer_never_takes_named_block": {
+      "cases": 42,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 12,
+      "r18_holds": 24,
+      "r18_bare": 6,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 12,
+      "candidate_holds": 24,
+      "candidate_bare": 6,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 12,
+      "narrower_holds": 24,
+      "narrower_bare": 6,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 12,
+      "chosen_holds": 24,
+      "chosen_bare": 6,
+      "chosen_full_diffs": 0
+    },
+    "r2 nearby_body_is_redacted_and_model_identity_is_minimal": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 1,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 1,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 1,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 1,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 caption_cannot_claim_next_block": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 3,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 3,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 3,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 3,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 date_cannot_be_borrowed_from_next_column": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 native_signature_is_tight_and_bottom_anchored": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 printed_name_variants_veto_company_match": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 4,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 4,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 4,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 4,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 named_caption_is_not_dropped_when_it_is_long": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 unlabelled_unrecognized_caption_cannot_be_ignored": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 heading_cannot_cross_a_previous_unlabelled_rule": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r2 date_in_close_right_column_with_unlabelled_signature_is_not_borrowed": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 other_person_in_whole_raw_extent_never_gets_high": {
+      "cases": 12,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 12,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 12,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 12,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 12,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 inserted_raw_person_vetoes_across_fixtures": {
+      "cases": 39,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 4,
+      "r18_holds": 35,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 4,
+      "candidate_holds": 35,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 4,
+      "narrower_holds": 35,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 4,
+      "chosen_holds": 35,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 company_only_requires_every_raw_line_accounted_for": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 3,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 3,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 3,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 3,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 matching_printed_name_can_resolve_label_prefix": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 title_case_body_never_leaves_local_evidence": {
+      "cases": 6,
+      "r18_wrong": 0,
+      "r18_model_calls": 3,
+      "r18_placed": 3,
+      "r18_holds": 3,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 3,
+      "candidate_placed": 3,
+      "candidate_holds": 3,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 3,
+      "narrower_placed": 3,
+      "narrower_holds": 3,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 3,
+      "chosen_placed": 3,
+      "chosen_holds": 3,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 matched_name_does_not_override_unresolved_person_like_line": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 3,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 3,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 3,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 3,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 company_only_requires_one_signer_even_if_other_signer_has_named_block": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r3 second_person_in_same_raw_line_also_vetoes": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 3,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 3,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 3,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 3,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 rule_row_name_controls_identity": {
+      "cases": 16,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 8,
+      "r18_holds": 8,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 8,
+      "candidate_holds": 8,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 8,
+      "narrower_holds": 8,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 8,
+      "chosen_holds": 8,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 side_by_side_company_blocks_keep_their_own_names": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 golden_harbor_role_suffix_keeps_exact_boxes": {
+      "cases": 12,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 12,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 12,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 12,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 12,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 golden_harbor_block_wording_keeps_exact_boxes": {
+      "cases": 31,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 31,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 31,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 31,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 31,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 ascii_hyphen_role_preserves_printed_identity": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 unnamed_company_block_accounts_for_roles": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 3,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 3,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 3,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 3,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 title_person_remains_unresolved_and_holds": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 stacked_individual_blocks_place_without_neighbour_veto": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 4,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 4,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 4,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 4,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 stacked_individual_blocks_do_not_accept_company_only": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 name_in_gap_between_party_columns_makes_both_uncertain": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r4 equidistant_row_between_stacked_rules_is_not_discarded": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_far_heading_vetoes_company_only": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 3,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 3,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 3,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 3,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_far_caption_vetoes_company_only": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_walk_stops_at_prose_or_other_rule": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_walk_crosses_page_edge": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_distant_name_never_adds_confidence": {
+      "cases": 6,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 6,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 6,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 6,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 6,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b2_proven_empty_widget_and_plain_link_keep_placement": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 3,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 3,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 3,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 3,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_title_wording_keeps_exact_golden": {
+      "cases": 30,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 30,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 30,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 30,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 30,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_behalf_wording_keeps_exact_golden": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 4,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 4,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 4,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 4,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_behalf_other_person_vetoes_named_signer": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_wrapped_sentence_is_not_a_name_but_blocks_company_only": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_company_only_title_rules_stay_strict": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_positive_name_title_remainder_predicate": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 m1_compound_name_caption_keeps_exact_golden": {
+      "cases": 8,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 8,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 8,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 8,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 8,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 m1_compound_caption_keeps_mismatched_person_veto": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 m2_stacked_headings_with_side_dates": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 l1_empty_contact_labels_only_are_accounted": {
+      "cases": 10,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 5,
+      "r18_holds": 5,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 5,
+      "candidate_holds": 5,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 5,
+      "narrower_holds": 5,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 5,
+      "chosen_holds": 5,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 l2_single_typed_row_signature_and_date": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 n1_mixed_case_role_shaped_names_veto_company_only": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 3,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 3,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 3,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 3,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 n1_uppercase_role_abbreviations_remain_accounted": {
+      "cases": 7,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 7,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 7,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 7,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 7,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_execution_clause_is_a_heading": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b2_unproven_empty_widget_holds": {
+      "cases": 5,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 5,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 5,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 5,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 5,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_named_block_does_not_use_distant_veto": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_veto_respects_neighbour_column_band": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 h1_wrapped_witness_paragraph_keeps_exact_golden": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r5 b1_cross_page_walk_includes_row_at_page_top": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 h2_contact_rule_preserves_typed_identity": {
+      "cases": 18,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 12,
+      "r18_holds": 6,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 12,
+      "candidate_holds": 6,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 12,
+      "narrower_holds": 6,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 12,
+      "chosen_holds": 6,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 h1_previous_caption_stays_with_its_host": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 m1_repeated_running_header_is_neutral": {
+      "cases": 9,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 9,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 9,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 9,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 9,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 m1_nonrepeated_header_retains_identity_veto": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 m1_page_number_does_not_hide_next_page_name": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 4,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 4,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 4,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 4,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 m2_behalf_company_suffix_keeps_exact_golden": {
+      "cases": 10,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 10,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 10,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 10,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 10,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 m2_behalf_role_is_not_a_person": {
+      "cases": 3,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 3,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 3,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 3,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 3,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 m3_comma_witness_paragraph_keeps_exact_golden": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 n1_title_person_before_comma_still_vetoes": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r6 n2_period_name_still_vetoes_named_block": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r7 h1_short_contact_caption_preserves_typed_identity": {
+      "cases": 15,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 15,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 15,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 15,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 15,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r7 l1_repeated_body_name_retains_identity_veto": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r7 l1_page_number_is_neutral_in_body": {
+      "cases": 4,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 4,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 4,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 4,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 4,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r7 l2_prose_ending_keeps_exact_harbor_boxes": {
+      "cases": 7,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 7,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 7,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 7,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 7,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r7 l2_period_name_still_holds": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r7 n1_hold_reason_agrees_with_signer_count": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r7 n1_one_missing_signer_keeps_singular_reason": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r8 b1_unusual_host_never_places_on_neighbour": {
+      "cases": 25,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 25,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 25,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 25,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 25,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r8 b1_signature_controls_keep_previous_outcome": {
+      "cases": 5,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 1,
+      "r18_holds": 4,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 1,
+      "candidate_holds": 4,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 1,
+      "narrower_holds": 4,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 1,
+      "chosen_holds": 4,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+      "cases": 5,
+      "r18_wrong": 0,
+      "r18_model_calls": 5,
+      "r18_placed": 5,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 5,
+      "candidate_placed": 5,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 5,
+      "narrower_placed": 5,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 5,
+      "chosen_placed": 5,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r8 l1_only_authorised_signatory_uses_model_on_its_own_line": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 1,
+      "r18_placed": 1,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 1,
+      "candidate_placed": 1,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 1,
+      "narrower_placed": 1,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 1,
+      "chosen_placed": 1,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r8 contact_vocabulary_is_other_without_preceding_host": {
+      "cases": 6,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 0,
+      "r18_bare": 6,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 0,
+      "candidate_bare": 6,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 0,
+      "narrower_bare": 6,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 0,
+      "chosen_bare": 6,
+      "chosen_full_diffs": 0
+    },
+    "r9 b1_same_row_right_behalf_holds": {
+      "cases": 5,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 5,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 5,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 5,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 5,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r9 absorbed_identity_vetoes_every_overlapping_host": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 b1_out_of_slot_identity_holds": {
+      "cases": 240,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 240,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 240,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 240,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 240,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 b1_name_below_caption_holds": {
+      "cases": 60,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 60,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 60,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 60,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 60,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 signature_out_of_slot_controls_unchanged / title_then_name": {
+      "cases": 12,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 6,
+      "r18_holds": 6,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 6,
+      "candidate_holds": 6,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 6,
+      "narrower_holds": 6,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 6,
+      "chosen_holds": 6,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 signature_out_of_slot_controls_unchanged / tab_gap": {
+      "cases": 12,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 6,
+      "r18_holds": 6,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 6,
+      "candidate_holds": 6,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 6,
+      "narrower_holds": 6,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 6,
+      "chosen_holds": 6,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 signature_out_of_slot_controls_unchanged / indented": {
+      "cases": 12,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 6,
+      "r18_holds": 6,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 6,
+      "candidate_holds": 6,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 6,
+      "narrower_holds": 6,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 6,
+      "chosen_holds": 6,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 signature_out_of_slot_controls_unchanged / caption_row_right": {
+      "cases": 12,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 6,
+      "r18_holds": 6,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 6,
+      "candidate_holds": 6,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 6,
+      "narrower_holds": 6,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 6,
+      "chosen_holds": 6,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 h1_out_of_slot_stacks_still_hold": {
+      "cases": 40,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 40,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 40,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 40,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 40,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 m1_non_exempt_contact_out_of_slot_holds": {
+      "cases": 56,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 56,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 56,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 56,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 56,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r10 six_contact_captions_remain_exempt": {
+      "cases": 48,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 48,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 48,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 48,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 48,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r11 subordinating_rule_without_block_keeps_identity_veto": {
+      "cases": 1,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 1,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 1,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "r14 separate_printing_of_same_name_is_not_vetoed": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 2,
+      "r18_holds": 0,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 2,
+      "candidate_holds": 0,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 2,
+      "narrower_holds": 0,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 2,
+      "chosen_holds": 0,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "L1 ragged stacked controls": {
+      "cases": 384,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 34,
+      "r18_holds": 350,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 34,
+      "candidate_holds": 350,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 34,
+      "narrower_holds": 350,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 34,
+      "chosen_holds": 350,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "L1 centred stacked controls": {
+      "cases": 144,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 48,
+      "r18_holds": 96,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 48,
+      "candidate_holds": 96,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 48,
+      "narrower_holds": 96,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 48,
+      "chosen_holds": 96,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "A2 exact witness captions": {
+      "cases": 480,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 480,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 480,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 480,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 480,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "A2 additional dy=20": {
+      "cases": 96,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 96,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 96,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 96,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 96,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "Witness wider sweep": {
+      "cases": 2496,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2496,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2496,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2496,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2496,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "F three-party permutations": {
+      "cases": 288,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 130,
+      "r18_holds": 158,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 130,
+      "candidate_holds": 158,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 130,
+      "narrower_holds": 158,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 99,
+      "chosen_holds": 189,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 36
+    },
+    "F heading gaps long": {
+      "cases": 432,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 210,
+      "r18_holds": 222,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 210,
+      "candidate_holds": 222,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 210,
+      "narrower_holds": 222,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 162,
+      "chosen_holds": 270,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 54
+    },
+    "F heading gaps short": {
+      "cases": 432,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 216,
+      "r18_holds": 216,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 216,
+      "candidate_holds": 216,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 216,
+      "narrower_holds": 216,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 216,
+      "chosen_holds": 216,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "B1 reproduction": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "B2 reproduction": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "Affiliate matrix": {
+      "cases": 1536,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 116,
+      "r18_holds": 1420,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 1536,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 696,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 116,
+      "narrower_holds": 1420,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1536,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 696
+    },
+    "r18 B1 reproduction": {
+      "cases": 2,
+      "r18_wrong": 0,
+      "r18_model_calls": 0,
+      "r18_placed": 0,
+      "r18_holds": 2,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 2,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 0,
+      "narrower_wrong": 0,
+      "narrower_model_calls": 0,
+      "narrower_placed": 0,
+      "narrower_holds": 2,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 2,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 0
+    },
+    "Veto matrix": {
+      "cases": 140,
+      "r18_wrong": 84,
+      "r18_model_calls": 0,
+      "r18_placed": 84,
+      "r18_holds": 56,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_model_calls": 0,
+      "candidate_placed": 0,
+      "candidate_holds": 140,
+      "candidate_bare": 0,
+      "candidate_full_diffs": 84,
+      "narrower_wrong": 84,
+      "narrower_model_calls": 0,
+      "narrower_placed": 84,
+      "narrower_holds": 56,
+      "narrower_bare": 0,
+      "narrower_full_diffs": 0,
+      "chosen_wrong": 0,
+      "chosen_model_calls": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 140,
+      "chosen_bare": 0,
+      "chosen_full_diffs": 84
+    }
+  },
+  "external_http_calls": 0,
+  "transitions": {
+    "Matrix 1": {
+      "candidate": {
+        "needs_sender -> needs_sender": 120
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 120
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 120
+      }
+    },
+    "Matrix 2": {
+      "candidate": {
+        "needs_sender -> needs_sender": 270
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 270
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 270
+      }
+    },
+    "r11 B-1": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1020
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1020
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1020
+      }
+    },
+    "Signature controls": {
+      "candidate": {
+        "needs_sender -> needs_sender": 198,
+        "placed -> placed": 6
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 198,
+        "placed -> placed": 6
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 198,
+        "placed -> placed": 6
+      }
+    },
+    "M-1": {
+      "candidate": {
+        "placed -> placed": 16
+      },
+      "narrower": {
+        "placed -> placed": 16
+      },
+      "chosen": {
+        "placed -> placed": 16
+      }
+    },
+    "r9 heading matrix": {
+      "candidate": {
+        "needs_sender -> needs_sender": 66,
+        "placed -> placed": 6
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 66,
+        "placed -> placed": 6
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 66,
+        "placed -> placed": 6
+      }
+    },
+    "r9 H-1": {
+      "candidate": {
+        "needs_sender -> needs_sender": 40
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 40
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 40
+      }
+    },
+    "Seven goldens": {
+      "candidate": {
+        "bare -> bare": 1,
+        "placed -> placed": 6
+      },
+      "narrower": {
+        "bare -> bare": 1,
+        "placed -> placed": 6
+      },
+      "chosen": {
+        "bare -> bare": 1,
+        "placed -> placed": 6
+      }
+    },
+    "Same-band right host": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r12 B-1 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r13 same-band grid": {
+      "candidate": {
+        "needs_sender -> needs_sender": 42
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 42
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 42
+      }
+    },
+    "r12 B-1 sweep": {
+      "candidate": {
+        "needs_sender -> needs_sender": 864
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 864
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 864
+      }
+    },
+    "L-1 short-rule controls": {
+      "candidate": {
+        "placed -> placed": 2
+      },
+      "narrower": {
+        "placed -> placed": 2
+      },
+      "chosen": {
+        "placed -> placed": 2
+      }
+    },
+    "L-2 own-company controls": {
+      "candidate": {
+        "placed -> placed": 20,
+        "needs_sender -> needs_sender": 20
+      },
+      "narrower": {
+        "placed -> placed": 20,
+        "needs_sender -> needs_sender": 20
+      },
+      "chosen": {
+        "placed -> placed": 20,
+        "needs_sender -> needs_sender": 20
+      }
+    },
+    "r14 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r14 grid": {
+      "candidate": {
+        "placed -> placed": 2436,
+        "needs_sender -> needs_sender": 1020
+      },
+      "narrower": {
+        "placed -> placed": 2436,
+        "needs_sender -> needs_sender": 1020
+      },
+      "chosen": {
+        "placed -> placed": 2436,
+        "needs_sender -> needs_sender": 1020
+      }
+    },
+    "r14 fixed sweep": {
+      "candidate": {
+        "placed -> placed": 244,
+        "needs_sender -> needs_sender": 116
+      },
+      "narrower": {
+        "placed -> placed": 244,
+        "needs_sender -> needs_sender": 116
+      },
+      "chosen": {
+        "placed -> placed": 244,
+        "needs_sender -> needs_sender": 116
+      }
+    },
+    "r14 correct controls": {
+      "candidate": {
+        "placed -> placed": 2
+      },
+      "narrower": {
+        "placed -> placed": 2
+      },
+      "chosen": {
+        "placed -> placed": 2
+      }
+    },
+    "r14 L-1 (grid subset)": {
+      "candidate": {
+        "needs_sender -> needs_sender": 72
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 72
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 72
+      }
+    },
+    "r15 M1 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r15 M2 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r15 M1": {
+      "candidate": {
+        "needs_sender -> needs_sender": 640
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 640
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 640
+      }
+    },
+    "r15 M2": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2592
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2592
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2592
+      }
+    },
+    "r2 reviewer_wrong_signer_goldens": {
+      "candidate": {
+        "needs_sender -> needs_sender": 5
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 5
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r2 unnamed_signer_never_takes_named_block": {
+      "candidate": {
+        "bare -> bare": 6,
+        "needs_sender -> needs_sender": 24,
+        "placed -> placed": 12
+      },
+      "narrower": {
+        "bare -> bare": 6,
+        "needs_sender -> needs_sender": 24,
+        "placed -> placed": 12
+      },
+      "chosen": {
+        "bare -> bare": 6,
+        "needs_sender -> needs_sender": 24,
+        "placed -> placed": 12
+      }
+    },
+    "r2 nearby_body_is_redacted_and_model_identity_is_minimal": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r2 caption_cannot_claim_next_block": {
+      "candidate": {
+        "needs_sender -> needs_sender": 3
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 3
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r2 date_cannot_be_borrowed_from_next_column": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r2 native_signature_is_tight_and_bottom_anchored": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r2 printed_name_variants_veto_company_match": {
+      "candidate": {
+        "needs_sender -> needs_sender": 4
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 4
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 4
+      }
+    },
+    "r2 named_caption_is_not_dropped_when_it_is_long": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r2 unlabelled_unrecognized_caption_cannot_be_ignored": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r2 heading_cannot_cross_a_previous_unlabelled_rule": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r2 date_in_close_right_column_with_unlabelled_signature_is_not_borrowed": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r3 other_person_in_whole_raw_extent_never_gets_high": {
+      "candidate": {
+        "needs_sender -> needs_sender": 12
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 12
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 12
+      }
+    },
+    "r3 inserted_raw_person_vetoes_across_fixtures": {
+      "candidate": {
+        "needs_sender -> needs_sender": 35,
+        "placed -> placed": 4
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 35,
+        "placed -> placed": 4
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 35,
+        "placed -> placed": 4
+      }
+    },
+    "r3 company_only_requires_every_raw_line_accounted_for": {
+      "candidate": {
+        "needs_sender -> needs_sender": 3
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 3
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r3 matching_printed_name_can_resolve_label_prefix": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r3 title_case_body_never_leaves_local_evidence": {
+      "candidate": {
+        "needs_sender -> needs_sender": 3,
+        "placed -> placed": 3
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 3,
+        "placed -> placed": 3
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 3,
+        "placed -> placed": 3
+      }
+    },
+    "r3 matched_name_does_not_override_unresolved_person_like_line": {
+      "candidate": {
+        "needs_sender -> needs_sender": 3
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 3
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r3 company_only_requires_one_signer_even_if_other_signer_has_named_block": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r3 second_person_in_same_raw_line_also_vetoes": {
+      "candidate": {
+        "needs_sender -> needs_sender": 3
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 3
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r4 rule_row_name_controls_identity": {
+      "candidate": {
+        "needs_sender -> needs_sender": 8,
+        "placed -> placed": 8
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 8,
+        "placed -> placed": 8
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 8,
+        "placed -> placed": 8
+      }
+    },
+    "r4 side_by_side_company_blocks_keep_their_own_names": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r4 golden_harbor_role_suffix_keeps_exact_boxes": {
+      "candidate": {
+        "placed -> placed": 12
+      },
+      "narrower": {
+        "placed -> placed": 12
+      },
+      "chosen": {
+        "placed -> placed": 12
+      }
+    },
+    "r4 golden_harbor_block_wording_keeps_exact_boxes": {
+      "candidate": {
+        "placed -> placed": 31
+      },
+      "narrower": {
+        "placed -> placed": 31
+      },
+      "chosen": {
+        "placed -> placed": 31
+      }
+    },
+    "r4 ascii_hyphen_role_preserves_printed_identity": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      }
+    },
+    "r4 unnamed_company_block_accounts_for_roles": {
+      "candidate": {
+        "placed -> placed": 3
+      },
+      "narrower": {
+        "placed -> placed": 3
+      },
+      "chosen": {
+        "placed -> placed": 3
+      }
+    },
+    "r4 title_person_remains_unresolved_and_holds": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r4 stacked_individual_blocks_place_without_neighbour_veto": {
+      "candidate": {
+        "placed -> placed": 4
+      },
+      "narrower": {
+        "placed -> placed": 4
+      },
+      "chosen": {
+        "placed -> placed": 4
+      }
+    },
+    "r4 stacked_individual_blocks_do_not_accept_company_only": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r4 name_in_gap_between_party_columns_makes_both_uncertain": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r4 equidistant_row_between_stacked_rules_is_not_discarded": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 b1_far_heading_vetoes_company_only": {
+      "candidate": {
+        "needs_sender -> needs_sender": 3
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 3
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r5 b1_far_caption_vetoes_company_only": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r5 b1_walk_stops_at_prose_or_other_rule": {
+      "candidate": {
+        "placed -> placed": 2
+      },
+      "narrower": {
+        "placed -> placed": 2
+      },
+      "chosen": {
+        "placed -> placed": 2
+      }
+    },
+    "r5 b1_walk_crosses_page_edge": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r5 b1_distant_name_never_adds_confidence": {
+      "candidate": {
+        "needs_sender -> needs_sender": 6
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 6
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r5 b2_proven_empty_widget_and_plain_link_keep_placement": {
+      "candidate": {
+        "placed -> placed": 3
+      },
+      "narrower": {
+        "placed -> placed": 3
+      },
+      "chosen": {
+        "placed -> placed": 3
+      }
+    },
+    "r5 h1_title_wording_keeps_exact_golden": {
+      "candidate": {
+        "placed -> placed": 30
+      },
+      "narrower": {
+        "placed -> placed": 30
+      },
+      "chosen": {
+        "placed -> placed": 30
+      }
+    },
+    "r5 h1_behalf_wording_keeps_exact_golden": {
+      "candidate": {
+        "placed -> placed": 4
+      },
+      "narrower": {
+        "placed -> placed": 4
+      },
+      "chosen": {
+        "placed -> placed": 4
+      }
+    },
+    "r5 h1_behalf_other_person_vetoes_named_signer": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 h1_wrapped_sentence_is_not_a_name_but_blocks_company_only": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      }
+    },
+    "r5 h1_company_only_title_rules_stay_strict": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 1
+      }
+    },
+    "r5 h1_positive_name_title_remainder_predicate": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 2
+      }
+    },
+    "r5 m1_compound_name_caption_keeps_exact_golden": {
+      "candidate": {
+        "placed -> placed": 8
+      },
+      "narrower": {
+        "placed -> placed": 8
+      },
+      "chosen": {
+        "placed -> placed": 8
+      }
+    },
+    "r5 m1_compound_caption_keeps_mismatched_person_veto": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 m2_stacked_headings_with_side_dates": {
+      "candidate": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r5 l1_empty_contact_labels_only_are_accounted": {
+      "candidate": {
+        "placed -> placed": 5,
+        "needs_sender -> needs_sender": 5
+      },
+      "narrower": {
+        "placed -> placed": 5,
+        "needs_sender -> needs_sender": 5
+      },
+      "chosen": {
+        "placed -> placed": 5,
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r5 l2_single_typed_row_signature_and_date": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 n1_mixed_case_role_shaped_names_veto_company_only": {
+      "candidate": {
+        "needs_sender -> needs_sender": 3
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 3
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r5 n1_uppercase_role_abbreviations_remain_accounted": {
+      "candidate": {
+        "placed -> placed": 7
+      },
+      "narrower": {
+        "placed -> placed": 7
+      },
+      "chosen": {
+        "placed -> placed": 7
+      }
+    },
+    "r5 h1_execution_clause_is_a_heading": {
+      "candidate": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 b2_unproven_empty_widget_holds": {
+      "candidate": {
+        "needs_sender -> needs_sender": 5
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 5
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r5 b1_named_block_does_not_use_distant_veto": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 b1_veto_respects_neighbour_column_band": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 h1_wrapped_witness_paragraph_keeps_exact_golden": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 b1_cross_page_walk_includes_row_at_page_top": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r6 h2_contact_rule_preserves_typed_identity": {
+      "candidate": {
+        "needs_sender -> needs_sender": 6,
+        "placed -> placed": 12
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 6,
+        "placed -> placed": 12
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 6,
+        "placed -> placed": 12
+      }
+    },
+    "r6 h1_previous_caption_stays_with_its_host": {
+      "candidate": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r6 m1_repeated_running_header_is_neutral": {
+      "candidate": {
+        "placed -> placed": 9
+      },
+      "narrower": {
+        "placed -> placed": 9
+      },
+      "chosen": {
+        "placed -> placed": 9
+      }
+    },
+    "r6 m1_nonrepeated_header_retains_identity_veto": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r6 m1_page_number_does_not_hide_next_page_name": {
+      "candidate": {
+        "needs_sender -> needs_sender": 4
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 4
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 4
+      }
+    },
+    "r6 m2_behalf_company_suffix_keeps_exact_golden": {
+      "candidate": {
+        "placed -> placed": 10
+      },
+      "narrower": {
+        "placed -> placed": 10
+      },
+      "chosen": {
+        "placed -> placed": 10
+      }
+    },
+    "r6 m2_behalf_role_is_not_a_person": {
+      "candidate": {
+        "placed -> placed": 3
+      },
+      "narrower": {
+        "placed -> placed": 3
+      },
+      "chosen": {
+        "placed -> placed": 3
+      }
+    },
+    "r6 m3_comma_witness_paragraph_keeps_exact_golden": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r6 n1_title_person_before_comma_still_vetoes": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r6 n2_period_name_still_vetoes_named_block": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 h1_short_contact_caption_preserves_typed_identity": {
+      "candidate": {
+        "needs_sender -> needs_sender": 15
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 15
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 15
+      }
+    },
+    "r7 l1_repeated_body_name_retains_identity_veto": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 l1_page_number_is_neutral_in_body": {
+      "candidate": {
+        "placed -> placed": 4
+      },
+      "narrower": {
+        "placed -> placed": 4
+      },
+      "chosen": {
+        "placed -> placed": 4
+      }
+    },
+    "r7 l2_prose_ending_keeps_exact_harbor_boxes": {
+      "candidate": {
+        "placed -> placed": 7
+      },
+      "narrower": {
+        "placed -> placed": 7
+      },
+      "chosen": {
+        "placed -> placed": 7
+      }
+    },
+    "r7 l2_period_name_still_holds": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 n1_hold_reason_agrees_with_signer_count": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 n1_one_missing_signer_keeps_singular_reason": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r8 b1_unusual_host_never_places_on_neighbour": {
+      "candidate": {
+        "needs_sender -> needs_sender": 25
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 25
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 25
+      }
+    },
+    "r8 b1_signature_controls_keep_previous_outcome": {
+      "candidate": {
+        "needs_sender -> needs_sender": 4,
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 4,
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 4,
+        "placed -> placed": 1
+      }
+    },
+    "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+      "candidate": {
+        "placed -> placed": 5
+      },
+      "narrower": {
+        "placed -> placed": 5
+      },
+      "chosen": {
+        "placed -> placed": 5
+      }
+    },
+    "r8 l1_only_authorised_signatory_uses_model_on_its_own_line": {
+      "candidate": {
+        "placed -> placed": 1
+      },
+      "narrower": {
+        "placed -> placed": 1
+      },
+      "chosen": {
+        "placed -> placed": 1
+      }
+    },
+    "r8 contact_vocabulary_is_other_without_preceding_host": {
+      "candidate": {
+        "bare -> bare": 6
+      },
+      "narrower": {
+        "bare -> bare": 6
+      },
+      "chosen": {
+        "bare -> bare": 6
+      }
+    },
+    "r9 b1_same_row_right_behalf_holds": {
+      "candidate": {
+        "needs_sender -> needs_sender": 5
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 5
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r9 absorbed_identity_vetoes_every_overlapping_host": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r10 b1_out_of_slot_identity_holds": {
+      "candidate": {
+        "needs_sender -> needs_sender": 240
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 240
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 240
+      }
+    },
+    "r10 b1_name_below_caption_holds": {
+      "candidate": {
+        "needs_sender -> needs_sender": 60
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 60
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 60
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / title_then_name": {
+      "candidate": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "narrower": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "chosen": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / tab_gap": {
+      "candidate": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "narrower": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "chosen": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / indented": {
+      "candidate": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "narrower": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "chosen": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / caption_row_right": {
+      "candidate": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "narrower": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "chosen": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 h1_out_of_slot_stacks_still_hold": {
+      "candidate": {
+        "needs_sender -> needs_sender": 40
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 40
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 40
+      }
+    },
+    "r10 m1_non_exempt_contact_out_of_slot_holds": {
+      "candidate": {
+        "needs_sender -> needs_sender": 56
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 56
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 56
+      }
+    },
+    "r10 six_contact_captions_remain_exempt": {
+      "candidate": {
+        "placed -> placed": 48
+      },
+      "narrower": {
+        "placed -> placed": 48
+      },
+      "chosen": {
+        "placed -> placed": 48
+      }
+    },
+    "r11 subordinating_rule_without_block_keeps_identity_veto": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r14 separate_printing_of_same_name_is_not_vetoed": {
+      "candidate": {
+        "placed -> placed": 2
+      },
+      "narrower": {
+        "placed -> placed": 2
+      },
+      "chosen": {
+        "placed -> placed": 2
+      }
+    },
+    "L1 ragged stacked controls": {
+      "candidate": {
+        "needs_sender -> needs_sender": 350,
+        "placed -> placed": 34
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 350,
+        "placed -> placed": 34
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 350,
+        "placed -> placed": 34
+      }
+    },
+    "L1 centred stacked controls": {
+      "candidate": {
+        "needs_sender -> needs_sender": 96,
+        "placed -> placed": 48
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 96,
+        "placed -> placed": 48
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 96,
+        "placed -> placed": 48
+      }
+    },
+    "A2 exact witness captions": {
+      "candidate": {
+        "needs_sender -> needs_sender": 480
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 480
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 480
+      }
+    },
+    "A2 additional dy=20": {
+      "candidate": {
+        "needs_sender -> needs_sender": 96
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 96
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 96
+      }
+    },
+    "Witness wider sweep": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2496
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2496
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2496
+      }
+    },
+    "F three-party permutations": {
+      "candidate": {
+        "placed -> placed": 130,
+        "needs_sender -> needs_sender": 158
+      },
+      "narrower": {
+        "placed -> placed": 130,
+        "needs_sender -> needs_sender": 158
+      },
+      "chosen": {
+        "placed -> needs_sender": 31,
+        "placed -> placed": 99,
+        "needs_sender -> needs_sender": 158
+      }
+    },
+    "F heading gaps long": {
+      "candidate": {
+        "placed -> placed": 210,
+        "needs_sender -> needs_sender": 222
+      },
+      "narrower": {
+        "placed -> placed": 210,
+        "needs_sender -> needs_sender": 222
+      },
+      "chosen": {
+        "placed -> needs_sender": 48,
+        "needs_sender -> needs_sender": 222,
+        "placed -> placed": 162
+      }
+    },
+    "F heading gaps short": {
+      "candidate": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      },
+      "narrower": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      },
+      "chosen": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      }
+    },
+    "B1 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "B2 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "Affiliate matrix": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1420,
+        "placed -> needs_sender": 116
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1420,
+        "placed -> placed": 116
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1420,
+        "placed -> needs_sender": 116
+      }
+    },
+    "r18 B1 reproduction": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "Veto matrix": {
+      "candidate": {
+        "wrong -> needs_sender": 84,
+        "needs_sender -> needs_sender": 56
+      },
+      "narrower": {
+        "wrong -> wrong": 84,
+        "needs_sender -> needs_sender": 56
+      },
+      "chosen": {
+        "wrong -> needs_sender": 84,
+        "needs_sender -> needs_sender": 56
+      }
+    }
+  },
+  "worker_evaluations": 36,
+  "final_worker_evaluations": 37
+}

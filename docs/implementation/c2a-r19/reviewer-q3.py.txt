@@ -1,0 +1,136 @@
+import sys, time
+from itertools import product, permutations
+from h import *
+from reportlab.pdfbase.pdfmetrics import stringWidth
+from dealroom_sign.tests.test_placement_r3 import PAT
+
+FLEET, HARBOR, TWO = new18.FLEET, new18.HARBOR, new18.TWO
+LONG = new18.LONG_HARBOR
+LONG_FLEET = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+W = lambda s: stringWidth(s, 'Helvetica', 10)
+PE, DE = PAT[0]['email'], TWO[1]['email']
+which = sys.argv[1]
+
+
+def two_col(pat_left, overhang_party, heading, delta, rule_w, fleet_heading, affiliate, aff_col):
+    """The overhanging heading's edge sits `delta` pt INTO the neighbour column (negative = short)."""
+    rows, allowed = [], {}
+    other = FLEET if overhang_party == 'pat' else HARBOR
+    if pat_left == (overhang_party == 'pat'):
+        # overhanging party is on the left; its heading starts at 40 and ends at 40+W(heading)
+        left_x, left_w = 40, rule_w
+        right_x = 40 + W(heading) - delta
+        if right_x <= left_x + left_w + 6:
+            return None
+        right_w = min(180, 600 - right_x)
+        lh_x, rh_x = 40, right_x
+        lh, rh = heading, other
+    else:
+        # overhanging party is on the right; its heading starts `delta` pt before the left rule end
+        left_x, left_w = 40, rule_w
+        right_x = 40 + rule_w + 60
+        right_w = 180
+        rh_x = 40 + rule_w - delta
+        lh_x = 40
+        lh, rh = other, heading
+        if rh_x + W(heading) > 600:
+            return None
+    pat_x, pat_w = (left_x, left_w) if pat_left else (right_x, right_w)
+    fl_x, fl_w = (right_x, right_w) if pat_left else (left_x, left_w)
+    heads = {'pat': (lh if pat_left else rh, lh_x if pat_left else rh_x),
+             'fleet': (rh if pat_left else lh, rh_x if pat_left else lh_x)}
+    for party, x, w in [('pat', pat_x, pat_w), ('fleet', fl_x, fl_w)]:
+        text, hx = heads[party]
+        if party == 'pat' or fleet_heading or overhang_party == 'fleet':
+            rows.append((250, text, False, hx))
+        rows += [(290, 'By:', True, x, x + w), (350, 'Date:', True, x, x + w)]
+    allowed = {PE: (pat_x, 290, pat_x + pat_w), DE: (fl_x, 290, fl_x + fl_w)}
+    if affiliate:
+        ax, aw = (left_x, left_w) if aff_col == 0 else (right_x, right_w)
+        rows += [(410, affiliate, False, ax), (450, 'By:', True, ax, ax + aw), (510, 'Date:', True, ax, ax + aw)]
+    return rows, allowed
+
+
+def l1_cases():
+    for args in product([True, False], ['pat', 'fleet'], range(-12, 13), [100, 120, 150],
+                        [False, True], [None, 'HARBOR LIGHT GROUP, INC.'], [0, 1], [False, True]):
+        pat_left, party, delta, rule_w, fh, aff, aff_col, both = args
+        if aff is None and aff_col:
+            continue
+        for heading in ([LONG, HARBOR] if party == 'pat' else [LONG_FLEET]):
+            out = two_col(pat_left, party, heading, delta, rule_w, fh, aff, aff_col)
+            if out:
+                yield 'L1 boundary ' + party, repr((heading,) + args), out[0], both, out[1]
+
+
+def f_fine():
+    companies = [FLEET, None, 'NORTHWIND TRADERS LLC']
+    for rule_w, gap, order, dy, short, both in product([140, 160], range(4, 61, 2), permutations(range(3)),
+                                                       [0, 20, 60], [False, True], [False, True]):
+        comp = list(companies)
+        comp[1] = 'HARBOR, INC.' if short else HARBOR
+        rows, allowed = [], {}
+        for column, party in enumerate(order):
+            x = 40 + column * (rule_w + gap)
+            y = 290 + (dy if party == 0 else 0)
+            rows += [(y - 40, comp[party], False, x), (y, 'By:', True, x, x + rule_w)]
+            if party == 1:
+                rows.append((y + 12, 'Name: Pat Smith', False, x))
+            rows.append((y + 60, 'Date:', True, x, x + rule_w))
+            if party < 2:
+                allowed[PE if party == 1 else DE] = (x, y, x + rule_w)
+        if x + rule_w > 600:
+            continue
+        yield 'F fine', repr((rule_w, gap, order, dy, short, both)), rows, both, allowed
+        # company-only variant: no printed name, so the heading is the only identity evidence
+        rows2 = [r for r in rows if not (len(r) == 4 and r[1] == 'Name: Pat Smith')]
+        yield 'F fine company-only', repr((rule_w, gap, order, dy, short, both)), rows2, both, allowed
+
+
+def competition():
+    # Pat's real block is zeroed by something other than a crossing heading; a same-family affiliate is on the page.
+    extras = [None, 'Chris Jones', 'See Schedule A attached hereto', 'Name: Chris Jones', 'Witness:']
+    heads = [HARBOR, LONG, 'RECIPIENT:', 'COMPANY', FLEET + ' / ' + HARBOR, None]
+    for head, extra, aff, aff_col, fleet_cross, both in product(
+            heads, extras, ['HARBOR LIGHT GROUP, INC.', 'HARBOR LIGHT VENTURES LLC'], [0, 1],
+            [False, True], [False, True]):
+        rows = []
+        if head:
+            rows.append((250, head, False, 40))
+        rows += [(290, 'By:', True, 40, 220)]
+        if extra:
+            rows.append((302, extra, False, 40))
+        rows += [(350, 'Date:', True, 40, 220)]
+        fleet_text = LONG_FLEET + ' AND AFFILIATES' if fleet_cross else FLEET
+        fx = 280
+        rows += [(250, fleet_text, False, fx), (290, 'By:', True, fx, fx + 180), (350, 'Date:', True, fx, fx + 180)]
+        ax = 40 if aff_col == 0 else 280
+        rows += [(410, aff, False, ax), (450, 'By:', True, ax, ax + 180), (510, 'Date:', True, ax, ax + 180)]
+        allowed = {PE: (40, 290, 220), DE: (fx, 290, fx + 180)}
+        yield 'Competition', repr((head, extra, aff, aff_col, fleet_cross, both)), rows, both, allowed
+
+
+GEN = {'l1': l1_cases, 'f': f_fine, 'comp': competition}
+G, shown = {}, Counter()
+t = time.time()
+with ExitStack() as st:
+    M = modules(st, ('r16', 'r17', 'r18'))
+    for g, c, rows, both, allowed in GEN[which]():
+        C = G.setdefault(g, Counter())
+        C['cases'] += 1
+        res = run_rows(M, rows, both, allowed)
+        for n, (r, w, calls) in res.items():
+            C[n + '_wrong'] += w
+            C[n + '_' + STATUS[r['status']]] += 1
+            C[n + '_calls'] += calls
+        tr = ('W' if res['r17'][1] else res['r17'][0]['status'][0]) + '>' + ('W' if res['r18'][1] else res['r18'][0]['status'][0])
+        C['r17>r18 ' + tr] += 1
+        if res['r18'][1] and shown[g] < 6:
+            shown[g] += 1
+            r = res['r18'][0]
+            print('R18 WRONG', g, c, 'r16', 'W' if res['r16'][1] else res['r16'][0]['status'],
+                  [(f['signer'][:3], f['type'], f['evidence']['line'], f['confidence']) for f in r['fields']])
+print('elapsed', round(time.time() - t), 'http', forbidden.call_count)
+for g, C in G.items():
+    print(g, C['cases'], *['%s %d/%d/%d/%d calls %d' % (n, C[n + '_wrong'], C[n + '_placed'], C[n + '_holds'], C[n + '_bare'], C[n + '_calls']) for n in M])
+    print('   ', {k: v for k, v in C.items() if k.startswith('r17>r18')})

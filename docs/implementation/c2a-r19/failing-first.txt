@@ -1,0 +1,1660 @@
+mktemp: failed to create directory via template ‘/root/.hermes/cache/scratch/sendlocal.XXXX’: Read-only file system
+FFFFFFFFFFFF........FFFFFFFFFFFF........FFFFFFFFFFFF........FFFFFFFFFFFF [ 46%]
+........FFFFFFFFFFFF........FFFFFFFFFFFF........FFFFFFFFFFFF........F.F. [ 92%]
+F.F.F.F.F.F.                                                             [100%]
+=================================== FAILURES ===================================
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-40-False] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-40-True] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-280-False] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-280-True] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-40-False] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-40-True] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-280-False] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-280-True] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-False] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-True] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-False] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-True] _
+
+extra = 'Name: Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-40-False] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-40-True] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-280-False] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-280-True] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-40-False] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-40-True] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-280-False] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-280-True] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-40-False] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-40-True] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-280-False] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-280-True] _
+
+extra = '(Corporate Seal)', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-40-False] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-40-True] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-280-False] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-280-True] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-40-False] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-40-True] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-280-False] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-280-True] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-40-False] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-40-True] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-280-False] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-280-True] _
+
+extra = 'Notary Public', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-40-False] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT GROUP, INC.', affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-40-True] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT GROUP, INC.', affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-280-False] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT GROUP, INC.', affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-280-True] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT GROUP, INC.', affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-40-False] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT VENTURES LLC', affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-40-True] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT VENTURES LLC', affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-280-False] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT VENTURES LLC', affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-280-True] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT VENTURES LLC', affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-40-False] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT ANALYTICS UK LTD', affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-40-True] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT ANALYTICS UK LTD', affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-280-False] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT ANALYTICS UK LTD', affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-280-True] _
+
+extra = 'Address: 100 Harbor Way, Boston MA'
+affiliate = 'HARBOR LIGHT ANALYTICS UK LTD', affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-40-False] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-40-True] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-280-False] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-280-True] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-40-False] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-40-True] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-280-False] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-280-True] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-False] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-True] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-False] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-True] _
+
+extra = 'Patricia Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-40-False] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-40-True] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-280-False] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-280-True] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-40-False] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-40-True] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-280-False] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-280-True] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-40-False] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-40-True] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-280-False] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-280-True] _
+
+extra = 'Name: P. Smith', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-40-False] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-40-True] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [40.0...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-280-False] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-280-True] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT GROUP, INC.'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Date:', 'labels': [{'rect': [280....03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-40-False] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-40-True] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [40....00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-280-False] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-280-True] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT VENTURES LLC'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT VENTURES LLC | By: | Date:', 'labels': [{'rect': [280...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-40-False] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-40-True] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 40, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...00006, 510.07], 'text': 'Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-280-False] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = False
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+_ test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-280-True] _
+
+extra = 'Name: Chris Jones', affiliate = 'HARBOR LIGHT ANALYTICS UK LTD'
+affiliate_x = 280, both = True
+
+    @pytest.mark.parametrize('extra,affiliate,affiliate_x,both', VETO_MATRIX)
+    def test_vetoed_company_still_competes(extra, affiliate, affiliate_x, both):
+        rows, allowed = veto_rows(extra, affiliate, affiliate_x)
+        model = Mock()
+        result = in_process(placement, rows_pdf(rows), signers(both), model)
+>       assert not wrong_fields(result, allowed), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}]
+E        +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT ANALYTICS UK LTD | By: | Date:', 'labels': [{'rect': ...03.9, 510.07], 'text': 'Date:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}] = wrong_fields({'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...ate:'}], 'line': [313.9, 510.0, 460.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (280, 290, 460), 'pat@harborlight.fleet.test': (40, 290, 220)})
+
+dealroom_sign/tests/test_placement_r19.py:42: AssertionError
+__________ test_colliding_heading_row_is_unresolved[False--12-False] ___________
+
+both = False, gap = -12, worker = False
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+___________ test_colliding_heading_row_is_unresolved[False--2-False] ___________
+
+both = False, gap = -2, worker = False
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+___________ test_colliding_heading_row_is_unresolved[False-0-False] ____________
+
+both = False, gap = 0, worker = False
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+___________ test_colliding_heading_row_is_unresolved[False-2-False] ____________
+
+both = False, gap = 2, worker = False
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+___________ test_colliding_heading_row_is_unresolved[True--12-False] ___________
+
+both = False, gap = -12, worker = True
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+___________ test_colliding_heading_row_is_unresolved[True--2-False] ____________
+
+both = False, gap = -2, worker = True
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+____________ test_colliding_heading_row_is_unresolved[True-0-False] ____________
+
+both = False, gap = 0, worker = True
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+____________ test_colliding_heading_row_is_unresolved[True-2-False] ____________
+
+both = False, gap = 2, worker = True
+
+    @pytest.mark.parametrize('both', [False, True])
+    @pytest.mark.parametrize('gap', [-12, -2, 0, 2])
+    @pytest.mark.parametrize('worker', [False, True])
+    def test_colliding_heading_row_is_unresolved(both, gap, worker):
+        fleet = 'FLEET TEST CO. INTERNATIONAL HOLDINGS'
+        harbor_x = 40 + stringWidth(fleet, 'Helvetica', 10) + gap
+        rows = [(250, fleet, False, 40), (250, HARBOR, False, harbor_x),
+                (290, 'By:', True, 40, 160), (350, 'Date:', True, 40, 160),
+                (290, 'By:', True, 280, 400), (350, 'Date:', True, 280, 400),
+                (410, AFFILIATES[0], False, 40), (450, 'By:', True, 40, 220),
+                (510, 'Date:', True, 40, 220)]
+        model = Mock()
+        pdf = rows_pdf(rows)
+        result = (placement.place(pdf, signers(both), model_client=model) if worker
+                  else in_process(placement, pdf, signers(both), model))
+>       assert (result['status'], result['fields']) == ('needs_sender', []), result
+E       AssertionError: {'analysis_version': 'c2a.18', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 510.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 1, ...}], 'method': 'rules', ...}
+E       assert ('placed', [{...ge': 1, ...}]) == ('needs_sender', [])
+E         
+E         At index 0 diff: 'placed' != 'needs_sender'
+E         Use -v to get more diff
+
+dealroom_sign/tests/test_placement_r19.py:62: AssertionError
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r19/failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT GROUP, INC.-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT VENTURES LLC-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT GROUP, INC.-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT VENTURES LLC-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[(Corporate Seal)-HARBOR LIGHT ANALYTICS UK LTD-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT GROUP, INC.-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT VENTURES LLC-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Notary Public-HARBOR LIGHT ANALYTICS UK LTD-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT GROUP, INC.-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT VENTURES LLC-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Address: 100 Harbor Way, Boston MA-HARBOR LIGHT ANALYTICS UK LTD-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT GROUP, INC.-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT VENTURES LLC-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Patricia Smith-HARBOR LIGHT ANALYTICS UK LTD-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT GROUP, INC.-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT VENTURES LLC-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: P. Smith-HARBOR LIGHT ANALYTICS UK LTD-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT GROUP, INC.-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT VENTURES LLC-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-40-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-40-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-280-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_vetoed_company_still_competes[Name: Chris Jones-HARBOR LIGHT ANALYTICS UK LTD-280-True]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[False--12-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[False--2-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[False-0-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[False-2-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[True--12-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[True--2-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[True-0-False]
+FAILED dealroom_sign/tests/test_placement_r19.py::test_colliding_heading_row_is_unresolved[True-2-False]
+92 failed, 64 passed in 4.82s

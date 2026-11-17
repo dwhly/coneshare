@@ -1,0 +1,152 @@
+{
+  "groups": {
+    "F fine company only": {
+      "cases": 3456,
+      "r18_wrong": 0,
+      "r18_placed": 783,
+      "r18_holds": 2673,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_placed": 783,
+      "candidate_holds": 2673,
+      "candidate_bare": 0,
+      "narrower_wrong": 0,
+      "narrower_placed": 783,
+      "narrower_holds": 2673,
+      "narrower_bare": 0,
+      "chosen_wrong": 0,
+      "chosen_placed": 776,
+      "chosen_holds": 2680,
+      "chosen_bare": 0
+    },
+    "F fine printed name": {
+      "cases": 3456,
+      "r18_wrong": 0,
+      "r18_placed": 2524,
+      "r18_holds": 932,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_placed": 2524,
+      "candidate_holds": 932,
+      "candidate_bare": 0,
+      "narrower_wrong": 0,
+      "narrower_placed": 2524,
+      "narrower_holds": 932,
+      "narrower_bare": 0,
+      "chosen_wrong": 0,
+      "chosen_placed": 2022,
+      "chosen_holds": 1434,
+      "chosen_bare": 0
+    },
+    "Reconstructed L1 Pat": {
+      "cases": 3600,
+      "r18_wrong": 94,
+      "r18_placed": 288,
+      "r18_holds": 3312,
+      "r18_bare": 0,
+      "candidate_wrong": 0,
+      "candidate_placed": 194,
+      "candidate_holds": 3406,
+      "candidate_bare": 0,
+      "narrower_wrong": 0,
+      "narrower_placed": 194,
+      "narrower_holds": 3406,
+      "narrower_bare": 0,
+      "chosen_wrong": 0,
+      "chosen_placed": 194,
+      "chosen_holds": 3406,
+      "chosen_bare": 0
+    },
+    "Reconstructed L1 Fleet": {
+      "cases": 1800,
+      "r18_wrong": 496,
+      "r18_placed": 496,
+      "r18_holds": 1304,
+      "r18_bare": 0,
+      "candidate_wrong": 496,
+      "candidate_placed": 496,
+      "candidate_holds": 1304,
+      "candidate_bare": 0,
+      "narrower_wrong": 496,
+      "narrower_placed": 496,
+      "narrower_holds": 1304,
+      "narrower_bare": 0,
+      "chosen_wrong": 256,
+      "chosen_placed": 256,
+      "chosen_holds": 1544,
+      "chosen_bare": 0
+    }
+  },
+  "transitions": {
+    "F fine company only": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2673,
+        "placed -> placed": 783
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2673,
+        "placed -> placed": 783
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2673,
+        "placed -> needs_sender": 7,
+        "placed -> placed": 776
+      }
+    },
+    "F fine printed name": {
+      "candidate": {
+        "placed -> placed": 2524,
+        "needs_sender -> needs_sender": 932
+      },
+      "narrower": {
+        "placed -> placed": 2524,
+        "needs_sender -> needs_sender": 932
+      },
+      "chosen": {
+        "placed -> needs_sender": 502,
+        "placed -> placed": 2022,
+        "needs_sender -> needs_sender": 932
+      }
+    },
+    "Reconstructed L1 Pat": {
+      "candidate": {
+        "placed -> placed": 194,
+        "needs_sender -> needs_sender": 3312,
+        "wrong -> needs_sender": 94
+      },
+      "narrower": {
+        "placed -> placed": 194,
+        "needs_sender -> needs_sender": 3312,
+        "wrong -> needs_sender": 94
+      },
+      "chosen": {
+        "placed -> placed": 194,
+        "needs_sender -> needs_sender": 3312,
+        "wrong -> needs_sender": 94
+      }
+    },
+    "Reconstructed L1 Fleet": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1304,
+        "wrong -> wrong": 496
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1304,
+        "wrong -> wrong": 496
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1304,
+        "wrong -> wrong": 256,
+        "wrong -> needs_sender": 240
+      }
+    }
+  },
+  "cases": 12312,
+  "source_sha256": {
+    "r18": "81ce4f08e69a9b9fb0754c9fa2bd52b18ffc1251251e8f7c2c3301f7c9cdcab8",
+    "candidate": "c60ed48de22761374ed86857d142a147a9f9c83a0f9f9eac185e457bdf7bf0c8",
+    "narrower": "674c8cc780577dabcb10fa1c2f8d4d54c80409ec1e5835d86451ce6b31e8c3e4",
+    "chosen": "a21b789475f34161b425738914d66cf23265bb1fc729c44edc8793603038b012"
+  },
+  "external_http_calls": 0
+}

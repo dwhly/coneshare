@@ -1,0 +1,230 @@
+{
+  "groups": {
+    "Competition": {
+      "cases": 480,
+      "r18_raw_wrong": 348,
+      "r18_wrong": 108,
+      "r18_justified": 240,
+      "r18_placed": 348,
+      "r18_holds": 132,
+      "r18_bare": 0,
+      "candidate_raw_wrong": 300,
+      "candidate_wrong": 60,
+      "candidate_justified": 240,
+      "candidate_placed": 300,
+      "candidate_holds": 180,
+      "candidate_bare": 0,
+      "narrower_raw_wrong": 332,
+      "narrower_wrong": 92,
+      "narrower_justified": 240,
+      "narrower_placed": 332,
+      "narrower_holds": 148,
+      "narrower_bare": 0,
+      "chosen_raw_wrong": 240,
+      "chosen_wrong": 0,
+      "chosen_justified": 240,
+      "chosen_placed": 240,
+      "chosen_holds": 240,
+      "chosen_bare": 0
+    },
+    "L1 boundary pat": {
+      "cases": 3480,
+      "r18_raw_wrong": 94,
+      "r18_wrong": 94,
+      "r18_justified": 0,
+      "r18_placed": 285,
+      "r18_holds": 3195,
+      "r18_bare": 0,
+      "candidate_raw_wrong": 0,
+      "candidate_wrong": 0,
+      "candidate_justified": 0,
+      "candidate_placed": 191,
+      "candidate_holds": 3289,
+      "candidate_bare": 0,
+      "narrower_raw_wrong": 0,
+      "narrower_wrong": 0,
+      "narrower_justified": 0,
+      "narrower_placed": 191,
+      "narrower_holds": 3289,
+      "narrower_bare": 0,
+      "chosen_raw_wrong": 0,
+      "chosen_wrong": 0,
+      "chosen_justified": 0,
+      "chosen_placed": 191,
+      "chosen_holds": 3289,
+      "chosen_bare": 0
+    },
+    "L1 boundary fleet": {
+      "cases": 1800,
+      "r18_raw_wrong": 192,
+      "r18_wrong": 192,
+      "r18_justified": 0,
+      "r18_placed": 192,
+      "r18_holds": 1608,
+      "r18_bare": 0,
+      "candidate_raw_wrong": 192,
+      "candidate_wrong": 192,
+      "candidate_justified": 0,
+      "candidate_placed": 192,
+      "candidate_holds": 1608,
+      "candidate_bare": 0,
+      "narrower_raw_wrong": 192,
+      "narrower_wrong": 192,
+      "narrower_justified": 0,
+      "narrower_placed": 192,
+      "narrower_holds": 1608,
+      "narrower_bare": 0,
+      "chosen_raw_wrong": 0,
+      "chosen_wrong": 0,
+      "chosen_justified": 0,
+      "chosen_placed": 0,
+      "chosen_holds": 1800,
+      "chosen_bare": 0
+    },
+    "F fine": {
+      "cases": 3456,
+      "r18_raw_wrong": 0,
+      "r18_wrong": 0,
+      "r18_justified": 0,
+      "r18_placed": 2524,
+      "r18_holds": 932,
+      "r18_bare": 0,
+      "candidate_raw_wrong": 0,
+      "candidate_wrong": 0,
+      "candidate_justified": 0,
+      "candidate_placed": 2524,
+      "candidate_holds": 932,
+      "candidate_bare": 0,
+      "narrower_raw_wrong": 0,
+      "narrower_wrong": 0,
+      "narrower_justified": 0,
+      "narrower_placed": 2524,
+      "narrower_holds": 932,
+      "narrower_bare": 0,
+      "chosen_raw_wrong": 0,
+      "chosen_wrong": 0,
+      "chosen_justified": 0,
+      "chosen_placed": 2022,
+      "chosen_holds": 1434,
+      "chosen_bare": 0
+    },
+    "F fine company-only": {
+      "cases": 3456,
+      "r18_raw_wrong": 0,
+      "r18_wrong": 0,
+      "r18_justified": 0,
+      "r18_placed": 783,
+      "r18_holds": 2673,
+      "r18_bare": 0,
+      "candidate_raw_wrong": 0,
+      "candidate_wrong": 0,
+      "candidate_justified": 0,
+      "candidate_placed": 783,
+      "candidate_holds": 2673,
+      "candidate_bare": 0,
+      "narrower_raw_wrong": 0,
+      "narrower_wrong": 0,
+      "narrower_justified": 0,
+      "narrower_placed": 783,
+      "narrower_holds": 2673,
+      "narrower_bare": 0,
+      "chosen_raw_wrong": 0,
+      "chosen_wrong": 0,
+      "chosen_justified": 0,
+      "chosen_placed": 776,
+      "chosen_holds": 2680,
+      "chosen_bare": 0
+    }
+  },
+  "transitions": {
+    "Competition": {
+      "candidate": {
+        "needs_sender -> needs_sender": 132,
+        "wrong -> needs_sender": 48,
+        "wrong -> wrong": 60,
+        "placed -> placed": 240
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 132,
+        "wrong -> wrong": 92,
+        "wrong -> needs_sender": 16,
+        "placed -> placed": 240
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 132,
+        "wrong -> needs_sender": 108,
+        "placed -> placed": 240
+      }
+    },
+    "L1 boundary pat": {
+      "candidate": {
+        "placed -> placed": 191,
+        "needs_sender -> needs_sender": 3195,
+        "wrong -> needs_sender": 94
+      },
+      "narrower": {
+        "placed -> placed": 191,
+        "needs_sender -> needs_sender": 3195,
+        "wrong -> needs_sender": 94
+      },
+      "chosen": {
+        "placed -> placed": 191,
+        "needs_sender -> needs_sender": 3195,
+        "wrong -> needs_sender": 94
+      }
+    },
+    "L1 boundary fleet": {
+      "candidate": {
+        "needs_sender -> needs_sender": 1608,
+        "wrong -> wrong": 192
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 1608,
+        "wrong -> wrong": 192
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 1608,
+        "wrong -> needs_sender": 192
+      }
+    },
+    "F fine": {
+      "candidate": {
+        "placed -> placed": 2524,
+        "needs_sender -> needs_sender": 932
+      },
+      "narrower": {
+        "placed -> placed": 2524,
+        "needs_sender -> needs_sender": 932
+      },
+      "chosen": {
+        "placed -> needs_sender": 502,
+        "placed -> placed": 2022,
+        "needs_sender -> needs_sender": 932
+      }
+    },
+    "F fine company-only": {
+      "candidate": {
+        "needs_sender -> needs_sender": 2673,
+        "placed -> placed": 783
+      },
+      "narrower": {
+        "needs_sender -> needs_sender": 2673,
+        "placed -> placed": 783
+      },
+      "chosen": {
+        "needs_sender -> needs_sender": 2673,
+        "placed -> needs_sender": 7,
+        "placed -> placed": 776
+      }
+    }
+  },
+  "cases": 12672,
+  "source_sha256": {
+    "r18": "81ce4f08e69a9b9fb0754c9fa2bd52b18ffc1251251e8f7c2c3301f7c9cdcab8",
+    "candidate": "c60ed48de22761374ed86857d142a147a9f9c83a0f9f9eac185e457bdf7bf0c8",
+    "narrower": "de6b4ff76efd51f6652cb094fb09cf790d02166efdef53383b2ba3e48082a1f7",
+    "chosen": "5384bb3d472a0c812e05e93ed3f928ab6cead28b0b6599da599cb7d733fe023c"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 72
+}

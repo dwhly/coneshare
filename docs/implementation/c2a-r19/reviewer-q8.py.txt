@@ -1,0 +1,29 @@
+import sys
+from itertools import product
+from h import *
+from dealroom_sign.tests.test_placement_r3 import PAT
+FLEET, HARBOR, TWO = new18.FLEET, new18.HARBOR, new18.TWO
+PE, DE = PAT[0]['email'], TWO[1]['email']
+before = "                if other is block or not heading_crosses_gutter(other, blocks):\n                    continue\n"
+SRC['gen'] = SRC['r18'].replace(before, "                if other is block:\n                    continue\n")
+EXTRAS = ['Name: Patricia Smith', 'Patricia Smith', 'Name: P. Smith', 'Address: 100 Harbor Way, Boston MA',
+          '(Corporate Seal)', 'Notary Public', 'Name: Chris Jones']
+AFF = ['HARBOR LIGHT GROUP, INC.', 'HARBOR LIGHT VENTURES LLC', 'HARBOR LIGHT ANALYTICS UK LTD', 'HARBOR LIGHT HOLDINGS, LLC', 'HARBOR LIGHT, LLC']
+cnt = Counter()
+with ExitStack() as st:
+    M = modules(st, ('r16', 'r18', 'gen'))
+    for extra, aff, aff_col, both in product(EXTRAS, AFF, [0, 1], [False, True]):
+        rows = [(250, HARBOR, False, 40), (290, 'By:', True, 40, 220), (302, extra, False, 40),
+                (350, 'Date:', True, 40, 220), (250, FLEET, False, 280), (290, 'By:', True, 280, 460),
+                (350, 'Date:', True, 280, 460)]
+        ax = 40 if aff_col == 0 else 280
+        rows += [(410, aff, False, ax), (450, 'By:', True, ax, ax + 180), (510, 'Date:', True, ax, ax + 180)]
+        res = run_rows(M, rows, both, {PE: (40, 290, 220), DE: (280, 290, 460)})
+        for n in M:
+            cnt[(n, extra)] += res[n][1]
+            cnt[(n, aff)] += res[n][1]
+            cnt[n] += res[n][1]
+        cnt['cases'] += 1
+print('http', forbidden.call_count, 'cases', cnt['cases'], 'wrong r16/r18/gen', cnt['r16'], cnt['r18'], cnt['gen'])
+for k in EXTRAS + AFF:
+    print(repr(k).ljust(40), 'wrong r16/r18/gen', cnt[('r16', k)], cnt[('r18', k)], cnt[('gen', k)])

@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.18'
+VERSION = 'c2a.19'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -542,6 +542,41 @@ def conflicting_company_headings(block, extent, texts, rules, roles):
     return False
 
 
+def shared_company_heading(block, blocks, texts, roles):
+    """A row spanning two party columns has unresolved company ownership.
+
+    Inspect geometry before heading attribution: touching or overlapping text
+    can merge company tokens, or exceed the heading length limit altogether.
+    Losing the readable company must not turn that evidence into no identity.
+    """
+    left = min(block.line.x0, block.line.label.get('rect', [block.line.x0])[0])
+    for other in blocks:
+        if (other is block or other.line.page != block.line.page
+                or abs(other.line.y - block.line.y) >= 30):
+            continue
+        other_left = min(other.line.x0, other.line.label.get('rect', [other.line.x0])[0])
+        if not (block.line.x1 < other_left or other.line.x1 < left):
+            continue
+        for row in texts:
+            x0, _, x1, bottom = row['rect']
+            if not (2 <= block.line.y - bottom < 90 and 2 <= other.line.y - bottom < 90
+                    and x0 < block.line.x1 and x1 > left
+                    and x0 < other.line.x1 and x1 > other_left):
+                continue
+            text = re.sub(r'[/:]', ' ', row['text'])
+            words = re.findall(r'[A-Za-z]+', text)
+            # Collisions can erase legal-form tokens and mapped role names.
+            # Keep a capitalized heading unresolved even when neither company
+            # can still be read; this predicate never grants identity credit.
+            heading_shaped = (words and re.fullmatch(r"[A-Za-z0-9&.,'’() -]+", text)
+                              and all(w[0].isupper() or w.lower() in STOP for w in words)
+                              and not LABEL.match(row['text']))
+            if (heading_shaped or company_text(text) or behalf_parts(row['text'])
+                    or row['text'].rstrip(': ').lower() in roles):
+                return True
+    return False
+
+
 def extract(pdf, *, deadline=None):
     blocks, sizes, roles = [], {}, {}
     pages, extents, absorbed_names = {}, [], {}
@@ -751,8 +786,11 @@ def extract(pdf, *, deadline=None):
             retained.append(text)
         absorbed_names[pno] = retained
     mixed_heading_names = {}
+    unresolved_heading_pages = set()
     for block, extent in extents:
         texts, rules, _ = pages[block.line.page]
+        if shared_company_heading(block, blocks, texts, roles):
+            unresolved_heading_pages.add(block.line.page)
         top, bottom, left, right = extent
         # Apply after partitioning so no later attribution can clear the veto.
         if any(top <= t['rect'][1] <= bottom and t['rect'][0] < right and t['rect'][2] > left
@@ -768,9 +806,12 @@ def extract(pdf, *, deadline=None):
     # A mixed-company block cannot lend its printed name to another block.
     # Propagate by the same physical row on the same page, after collecting
     # every conflict, so traversal order cannot clear or miss a veto.
+    # A shared heading leaves the page's companies unresolved even when text
+    # collision has erased the company tokens that would otherwise compete.
     for block, extent in extents:
-        if any(inside_extent(text, extent)
-               for text in mixed_heading_names.get(block.line.page, [])):
+        if (block.line.page in unresolved_heading_pages
+                or any(inside_extent(text, extent)
+                       for text in mixed_heading_names.get(block.line.page, []))):
             block.uncertain_identity = True
     return blocks, sizes, roles
 
@@ -867,11 +908,11 @@ def score(signer, block, roles, blocks=()):
     heading = roles.get(block.heading.rstrip(': ').lower(), block.heading)
     heading = (behalf_parts(heading) or ('', heading))[1]
     if similarity(company, heading) and not heading_crosses_gutter(block, blocks):
-        # Crossing headings still compete for this company. Removing their
-        # credit must not let an affiliate win on company evidence alone.
+        # Company-only identity must be unique on the page. Every matching
+        # heading competes, even when a veto or geometry removes its score.
         if not value:
             for other in blocks:
-                if other is block or not heading_crosses_gutter(other, blocks):
+                if other is block or other.line.page != block.line.page:
                     continue
                 other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
                 other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
