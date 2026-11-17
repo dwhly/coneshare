@@ -1,0 +1,56 @@
+{
+  "all_replays": {
+    "fix3": {
+      "needs_sender -> needs_sender": 31872,
+      "placed -> placed": 6982,
+      "bare -> bare": 13,
+      "wrong -> wrong": 302,
+      "wrong -> needs_sender": 1680,
+      "placed -> needs_sender": 75
+    },
+    "b2": {
+      "needs_sender -> needs_sender": 33558,
+      "placed -> placed": 6982,
+      "bare -> bare": 13,
+      "wrong -> needs_sender": 297,
+      "needs_sender -> placed": 69,
+      "wrong -> placed": 5
+    },
+    "role_def": {
+      "needs_sender -> needs_sender": 33591,
+      "placed -> placed": 7056,
+      "bare -> bare": 13,
+      "needs_sender -> placed": 264
+    },
+    "r21": {
+      "needs_sender -> needs_sender": 33237,
+      "placed -> placed": 7320,
+      "bare -> bare": 13,
+      "needs_sender -> placed": 354
+    }
+  },
+  "reviewer_matrix": {
+    "fix3": {
+      "needs_sender -> needs_sender": 4340,
+      "wrong -> wrong": 110,
+      "placed -> placed": 120,
+      "wrong -> needs_sender": 680,
+      "placed -> needs_sender": 30
+    },
+    "b2": {
+      "needs_sender -> needs_sender": 5030,
+      "wrong -> needs_sender": 110,
+      "placed -> placed": 120,
+      "needs_sender -> placed": 20
+    },
+    "role_def": {
+      "needs_sender -> needs_sender": 5020,
+      "placed -> placed": 140,
+      "needs_sender -> placed": 120
+    },
+    "r21": {
+      "needs_sender -> needs_sender": 5020,
+      "placed -> placed": 260
+    }
+  }
+}

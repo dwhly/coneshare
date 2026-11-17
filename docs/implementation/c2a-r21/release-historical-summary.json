@@ -1,0 +1,5465 @@
+{
+  "part": "historical",
+  "cases": 17204,
+  "groups": {
+    "Matrix 1": {
+      "cases": 120,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 120,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 120,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 120,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 120,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 120,
+      "r21_full_diffs": 0
+    },
+    "Matrix 2": {
+      "cases": 270,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 270,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 270,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 270,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 270,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 270,
+      "r21_full_diffs": 0
+    },
+    "r11 B-1": {
+      "cases": 1020,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1020,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1020,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1020,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1020,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1020,
+      "r21_full_diffs": 0
+    },
+    "Signature controls": {
+      "cases": 204,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 198,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 198,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 198,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 198,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 198,
+      "r21_full_diffs": 0,
+      "r20_placed": 6,
+      "fix3_placed": 6,
+      "b2_placed": 6,
+      "role_def_placed": 6,
+      "r21_placed": 6
+    },
+    "M-1": {
+      "cases": 16,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 16,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 16,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 16,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 16,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 16,
+      "r21_full_diffs": 0
+    },
+    "r9 heading matrix": {
+      "cases": 72,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 66,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 66,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 66,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 66,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 66,
+      "r21_full_diffs": 0,
+      "r20_placed": 6,
+      "fix3_placed": 6,
+      "b2_placed": 6,
+      "role_def_placed": 6,
+      "r21_placed": 6
+    },
+    "r9 H-1": {
+      "cases": 40,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 40,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 40,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 40,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 40,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 40,
+      "r21_full_diffs": 0
+    },
+    "Seven goldens": {
+      "cases": 7,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 1,
+      "r20_bare": 1,
+      "r20_golden_diffs": 0,
+      "r20_native_diffs": 0,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 1,
+      "fix3_bare": 1,
+      "fix3_golden_diffs": 0,
+      "fix3_native_diffs": 0,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 1,
+      "b2_bare": 1,
+      "b2_golden_diffs": 0,
+      "b2_native_diffs": 0,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 1,
+      "role_def_bare": 1,
+      "role_def_golden_diffs": 0,
+      "role_def_native_diffs": 0,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 1,
+      "r21_bare": 1,
+      "r21_golden_diffs": 0,
+      "r21_native_diffs": 0,
+      "r21_full_diffs": 0,
+      "r20_placed": 6,
+      "fix3_placed": 6,
+      "b2_placed": 6,
+      "role_def_placed": 6,
+      "r21_placed": 6
+    },
+    "Same-band right host": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r12 B-1 reproduction": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r13 same-band grid": {
+      "cases": 42,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 42,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 42,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 42,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 42,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 42,
+      "r21_full_diffs": 0
+    },
+    "r12 B-1 sweep": {
+      "cases": 864,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 864,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 864,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 864,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 864,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 864,
+      "r21_full_diffs": 0
+    },
+    "L-1 short-rule controls": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2,
+      "r21_full_diffs": 0
+    },
+    "L-2 own-company controls": {
+      "cases": 40,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 20,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 20,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 20,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 20,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 20,
+      "r21_full_diffs": 0,
+      "r20_holds": 20,
+      "fix3_holds": 20,
+      "b2_holds": 20,
+      "role_def_holds": 20,
+      "r21_holds": 20
+    },
+    "r14 reproduction": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r14 grid": {
+      "cases": 3456,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2436,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2436,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2436,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2436,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2436,
+      "r21_full_diffs": 0,
+      "r20_holds": 1020,
+      "fix3_holds": 1020,
+      "b2_holds": 1020,
+      "role_def_holds": 1020,
+      "r21_holds": 1020
+    },
+    "r14 fixed sweep": {
+      "cases": 360,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 244,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 244,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 244,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 244,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 244,
+      "r21_full_diffs": 0,
+      "r20_holds": 116,
+      "fix3_holds": 116,
+      "b2_holds": 116,
+      "role_def_holds": 116,
+      "r21_holds": 116
+    },
+    "r14 correct controls": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2,
+      "r21_full_diffs": 0
+    },
+    "r14 L-1 (grid subset)": {
+      "cases": 72,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 72,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 72,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 72,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 72,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 72,
+      "r21_full_diffs": 0
+    },
+    "r15 M1 reproduction": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r15 M2 reproduction": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r15 M1": {
+      "cases": 640,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 640,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 640,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 640,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 640,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 640,
+      "r21_full_diffs": 0
+    },
+    "r15 M2": {
+      "cases": 2592,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2592,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2592,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2592,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2592,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2592,
+      "r21_full_diffs": 0
+    },
+    "r2 reviewer_wrong_signer_goldens": {
+      "cases": 5,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 5,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 5,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 5,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 5,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 5,
+      "r21_full_diffs": 0
+    },
+    "r2 unnamed_signer_never_takes_named_block": {
+      "cases": 42,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_bare": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_bare": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_bare": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_bare": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_bare": 6,
+      "r21_full_diffs": 0,
+      "r20_holds": 24,
+      "fix3_holds": 24,
+      "b2_holds": 24,
+      "role_def_holds": 24,
+      "r21_holds": 24,
+      "r20_placed": 12,
+      "fix3_placed": 12,
+      "b2_placed": 12,
+      "role_def_placed": 12,
+      "r21_placed": 12
+    },
+    "r2 nearby_body_is_redacted_and_model_identity_is_minimal": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 1,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 1,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 1,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 1,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 1,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r2 caption_cannot_claim_next_block": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 3,
+      "r21_full_diffs": 0
+    },
+    "r2 date_cannot_be_borrowed_from_next_column": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r2 native_signature_is_tight_and_bottom_anchored": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r2 printed_name_variants_veto_company_match": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 4,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 4,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 4,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 4,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 4,
+      "r21_full_diffs": 0
+    },
+    "r2 named_caption_is_not_dropped_when_it_is_long": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r2 unlabelled_unrecognized_caption_cannot_be_ignored": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r2 heading_cannot_cross_a_previous_unlabelled_rule": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r2 date_in_close_right_column_with_unlabelled_signature_is_not_borrowed": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r3 other_person_in_whole_raw_extent_never_gets_high": {
+      "cases": 12,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 12,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 12,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 12,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 12,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 12,
+      "r21_full_diffs": 0
+    },
+    "r3 inserted_raw_person_vetoes_across_fixtures": {
+      "cases": 39,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 35,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 35,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 35,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 35,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 35,
+      "r21_full_diffs": 0,
+      "r20_placed": 4,
+      "fix3_placed": 4,
+      "b2_placed": 4,
+      "role_def_placed": 4,
+      "r21_placed": 4
+    },
+    "r3 company_only_requires_every_raw_line_accounted_for": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 3,
+      "r21_full_diffs": 0
+    },
+    "r3 matching_printed_name_can_resolve_label_prefix": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r3 title_case_body_never_leaves_local_evidence": {
+      "cases": 6,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 3,
+      "r20_holds": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 3,
+      "fix3_holds": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 3,
+      "b2_holds": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 3,
+      "role_def_holds": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 3,
+      "r21_holds": 3,
+      "r21_full_diffs": 0,
+      "r20_placed": 3,
+      "fix3_placed": 3,
+      "b2_placed": 3,
+      "role_def_placed": 3,
+      "r21_placed": 3
+    },
+    "r3 matched_name_does_not_override_unresolved_person_like_line": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 3,
+      "r21_full_diffs": 0
+    },
+    "r3 company_only_requires_one_signer_even_if_other_signer_has_named_block": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r3 second_person_in_same_raw_line_also_vetoes": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 3,
+      "r21_full_diffs": 0
+    },
+    "r4 rule_row_name_controls_identity": {
+      "cases": 16,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 8,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 8,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 8,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 8,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 8,
+      "r21_full_diffs": 0,
+      "r20_placed": 8,
+      "fix3_placed": 8,
+      "b2_placed": 8,
+      "role_def_placed": 8,
+      "r21_placed": 8
+    },
+    "r4 side_by_side_company_blocks_keep_their_own_names": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r4 golden_harbor_role_suffix_keeps_exact_boxes": {
+      "cases": 12,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 12,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 12,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 12,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 12,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 12,
+      "r21_full_diffs": 0
+    },
+    "r4 golden_harbor_block_wording_keeps_exact_boxes": {
+      "cases": 31,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 31,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 31,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 31,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 31,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 31,
+      "r21_full_diffs": 0
+    },
+    "r4 ascii_hyphen_role_preserves_printed_identity": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0,
+      "r20_placed": 1,
+      "fix3_placed": 1,
+      "b2_placed": 1,
+      "role_def_placed": 1,
+      "r21_placed": 1
+    },
+    "r4 unnamed_company_block_accounts_for_roles": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 3,
+      "r21_full_diffs": 0
+    },
+    "r4 title_person_remains_unresolved_and_holds": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r4 stacked_individual_blocks_place_without_neighbour_veto": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 4,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 4,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 4,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 4,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 4,
+      "r21_full_diffs": 0
+    },
+    "r4 stacked_individual_blocks_do_not_accept_company_only": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r4 name_in_gap_between_party_columns_makes_both_uncertain": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r4 equidistant_row_between_stacked_rules_is_not_discarded": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_far_heading_vetoes_company_only": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 3,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_far_caption_vetoes_company_only": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_walk_stops_at_prose_or_other_rule": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_walk_crosses_page_edge": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_distant_name_never_adds_confidence": {
+      "cases": 6,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 6,
+      "r21_full_diffs": 0
+    },
+    "r5 b2_proven_empty_widget_and_plain_link_keep_placement": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 3,
+      "r21_full_diffs": 0
+    },
+    "r5 h1_title_wording_keeps_exact_golden": {
+      "cases": 30,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 30,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 30,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 30,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 30,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 30,
+      "r21_full_diffs": 0
+    },
+    "r5 h1_behalf_wording_keeps_exact_golden": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 4,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 4,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 4,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 4,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 4,
+      "r21_full_diffs": 0
+    },
+    "r5 h1_behalf_other_person_vetoes_named_signer": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r5 h1_wrapped_sentence_is_not_a_name_but_blocks_company_only": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0,
+      "r20_placed": 1,
+      "fix3_placed": 1,
+      "b2_placed": 1,
+      "role_def_placed": 1,
+      "r21_placed": 1
+    },
+    "r5 h1_company_only_title_rules_stay_strict": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0,
+      "r20_placed": 1,
+      "fix3_placed": 1,
+      "b2_placed": 1,
+      "role_def_placed": 1,
+      "r21_placed": 1
+    },
+    "r5 h1_positive_name_title_remainder_predicate": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0,
+      "r20_placed": 2,
+      "fix3_placed": 2,
+      "b2_placed": 2,
+      "role_def_placed": 2,
+      "r21_placed": 2
+    },
+    "r5 m1_compound_name_caption_keeps_exact_golden": {
+      "cases": 8,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 8,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 8,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 8,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 8,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 8,
+      "r21_full_diffs": 0
+    },
+    "r5 m1_compound_caption_keeps_mismatched_person_veto": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r5 m2_stacked_headings_with_side_dates": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2,
+      "r21_full_diffs": 0,
+      "r20_holds": 2,
+      "fix3_holds": 2,
+      "b2_holds": 2,
+      "role_def_holds": 2,
+      "r21_holds": 2
+    },
+    "r5 l1_empty_contact_labels_only_are_accounted": {
+      "cases": 10,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 5,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 5,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 5,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 5,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 5,
+      "r21_full_diffs": 0,
+      "r20_holds": 5,
+      "fix3_holds": 5,
+      "b2_holds": 5,
+      "role_def_holds": 5,
+      "r21_holds": 5
+    },
+    "r5 l2_single_typed_row_signature_and_date": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r5 n1_mixed_case_role_shaped_names_veto_company_only": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 3,
+      "r21_full_diffs": 0
+    },
+    "r5 n1_uppercase_role_abbreviations_remain_accounted": {
+      "cases": 7,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 7,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 7,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 7,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 7,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 7,
+      "r21_full_diffs": 0
+    },
+    "r5 h1_execution_clause_is_a_heading": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2,
+      "r21_full_diffs": 0,
+      "r20_holds": 1,
+      "fix3_holds": 1,
+      "b2_holds": 1,
+      "role_def_holds": 1,
+      "r21_holds": 1
+    },
+    "r5 b2_unproven_empty_widget_holds": {
+      "cases": 5,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 5,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 5,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 5,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 5,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 5,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_named_block_does_not_use_distant_veto": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_veto_respects_neighbour_column_band": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r5 h1_wrapped_witness_paragraph_keeps_exact_golden": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r5 b1_cross_page_walk_includes_row_at_page_top": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r6 h2_contact_rule_preserves_typed_identity": {
+      "cases": 18,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 6,
+      "r21_full_diffs": 0,
+      "r20_placed": 12,
+      "fix3_placed": 12,
+      "b2_placed": 12,
+      "role_def_placed": 12,
+      "r21_placed": 12
+    },
+    "r6 h1_previous_caption_stays_with_its_host": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2,
+      "r21_full_diffs": 0,
+      "r20_holds": 2,
+      "fix3_holds": 2,
+      "b2_holds": 2,
+      "role_def_holds": 2,
+      "r21_holds": 2
+    },
+    "r6 m1_repeated_running_header_is_neutral": {
+      "cases": 9,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 9,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 9,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 9,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 9,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 9,
+      "r21_full_diffs": 0
+    },
+    "r6 m1_nonrepeated_header_retains_identity_veto": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r6 m1_page_number_does_not_hide_next_page_name": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 4,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 4,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 4,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 4,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 4,
+      "r21_full_diffs": 0
+    },
+    "r6 m2_behalf_company_suffix_keeps_exact_golden": {
+      "cases": 10,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 10,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 10,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 10,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 10,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 10,
+      "r21_full_diffs": 0
+    },
+    "r6 m2_behalf_role_is_not_a_person": {
+      "cases": 3,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 3,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 3,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 3,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 3,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 3,
+      "r21_full_diffs": 0
+    },
+    "r6 m3_comma_witness_paragraph_keeps_exact_golden": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r6 n1_title_person_before_comma_still_vetoes": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r6 n2_period_name_still_vetoes_named_block": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r7 h1_short_contact_caption_preserves_typed_identity": {
+      "cases": 15,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 15,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 15,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 15,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 15,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 15,
+      "r21_full_diffs": 0
+    },
+    "r7 l1_repeated_body_name_retains_identity_veto": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r7 l1_page_number_is_neutral_in_body": {
+      "cases": 4,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 4,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 4,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 4,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 4,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 4,
+      "r21_full_diffs": 0
+    },
+    "r7 l2_prose_ending_keeps_exact_harbor_boxes": {
+      "cases": 7,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 7,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 7,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 7,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 7,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 7,
+      "r21_full_diffs": 0
+    },
+    "r7 l2_period_name_still_holds": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r7 n1_hold_reason_agrees_with_signer_count": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "r7 n1_one_missing_signer_keeps_singular_reason": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r8 b1_unusual_host_never_places_on_neighbour": {
+      "cases": 25,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 25,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 25,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 25,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 25,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 25,
+      "r21_full_diffs": 0
+    },
+    "r8 b1_signature_controls_keep_previous_outcome": {
+      "cases": 5,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 4,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 4,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 4,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 4,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 4,
+      "r21_full_diffs": 0,
+      "r20_placed": 1,
+      "fix3_placed": 1,
+      "b2_placed": 1,
+      "role_def_placed": 1,
+      "r21_placed": 1
+    },
+    "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+      "cases": 5,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 5,
+      "r20_placed": 5,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 5,
+      "fix3_placed": 5,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 5,
+      "b2_placed": 5,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 5,
+      "role_def_placed": 5,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 5,
+      "r21_placed": 5,
+      "r21_full_diffs": 0
+    },
+    "r8 l1_only_authorised_signatory_uses_model_on_its_own_line": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 1,
+      "r20_placed": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 1,
+      "fix3_placed": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 1,
+      "b2_placed": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 1,
+      "role_def_placed": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 1,
+      "r21_placed": 1,
+      "r21_full_diffs": 0
+    },
+    "r8 contact_vocabulary_is_other_without_preceding_host": {
+      "cases": 6,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_bare": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_bare": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_bare": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_bare": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_bare": 6,
+      "r21_full_diffs": 0
+    },
+    "r9 b1_same_row_right_behalf_holds": {
+      "cases": 5,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 5,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 5,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 5,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 5,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 5,
+      "r21_full_diffs": 0
+    },
+    "r9 absorbed_identity_vetoes_every_overlapping_host": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r10 b1_out_of_slot_identity_holds": {
+      "cases": 240,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 240,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 240,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 240,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 240,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 240,
+      "r21_full_diffs": 0
+    },
+    "r10 b1_name_below_caption_holds": {
+      "cases": 60,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 60,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 60,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 60,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 60,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 60,
+      "r21_full_diffs": 0
+    },
+    "r10 signature_out_of_slot_controls_unchanged / title_then_name": {
+      "cases": 12,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 6,
+      "r21_full_diffs": 0,
+      "r20_holds": 6,
+      "fix3_holds": 6,
+      "b2_holds": 6,
+      "role_def_holds": 6,
+      "r21_holds": 6
+    },
+    "r10 signature_out_of_slot_controls_unchanged / tab_gap": {
+      "cases": 12,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 6,
+      "r21_full_diffs": 0,
+      "r20_holds": 6,
+      "fix3_holds": 6,
+      "b2_holds": 6,
+      "role_def_holds": 6,
+      "r21_holds": 6
+    },
+    "r10 signature_out_of_slot_controls_unchanged / indented": {
+      "cases": 12,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 6,
+      "r21_full_diffs": 0,
+      "r20_holds": 6,
+      "fix3_holds": 6,
+      "b2_holds": 6,
+      "role_def_holds": 6,
+      "r21_holds": 6
+    },
+    "r10 signature_out_of_slot_controls_unchanged / caption_row_right": {
+      "cases": 12,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 6,
+      "r21_full_diffs": 0,
+      "r20_holds": 6,
+      "fix3_holds": 6,
+      "b2_holds": 6,
+      "role_def_holds": 6,
+      "r21_holds": 6
+    },
+    "r10 h1_out_of_slot_stacks_still_hold": {
+      "cases": 40,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 40,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 40,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 40,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 40,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 40,
+      "r21_full_diffs": 0
+    },
+    "r10 m1_non_exempt_contact_out_of_slot_holds": {
+      "cases": 56,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 56,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 56,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 56,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 56,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 56,
+      "r21_full_diffs": 0
+    },
+    "r10 six_contact_captions_remain_exempt": {
+      "cases": 48,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 48,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 48,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 48,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 48,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 48,
+      "r21_full_diffs": 0
+    },
+    "r11 subordinating_rule_without_block_keeps_identity_veto": {
+      "cases": 1,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1,
+      "r21_full_diffs": 0
+    },
+    "r14 separate_printing_of_same_name_is_not_vetoed": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2,
+      "r21_full_diffs": 0
+    },
+    "L1 ragged stacked controls": {
+      "cases": 384,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 350,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 350,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 350,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 350,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 350,
+      "r21_full_diffs": 0,
+      "r20_placed": 34,
+      "fix3_placed": 34,
+      "b2_placed": 34,
+      "role_def_placed": 34,
+      "r21_placed": 34
+    },
+    "L1 centred stacked controls": {
+      "cases": 144,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 96,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 96,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 96,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 96,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 96,
+      "r21_full_diffs": 0,
+      "r20_placed": 48,
+      "fix3_placed": 48,
+      "b2_placed": 48,
+      "role_def_placed": 48,
+      "r21_placed": 48
+    },
+    "A2 exact witness captions": {
+      "cases": 480,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 480,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 480,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 480,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 480,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 480,
+      "r21_full_diffs": 0
+    },
+    "A2 additional dy=20": {
+      "cases": 96,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 96,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 96,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 96,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 96,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 96,
+      "r21_full_diffs": 0
+    },
+    "Witness wider sweep": {
+      "cases": 2496,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2496,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2496,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2496,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2496,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2496,
+      "r21_full_diffs": 0
+    },
+    "F three-party permutations": {
+      "cases": 288,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 189,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 189,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 189,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 189,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 123,
+      "r21_full_diffs": 36,
+      "r21_holds": 165,
+      "r20_placed": 99,
+      "fix3_placed": 99,
+      "b2_placed": 99,
+      "role_def_placed": 99
+    },
+    "F heading gaps long": {
+      "cases": 432,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 270,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 270,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 270,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 270,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 189,
+      "r21_full_diffs": 54,
+      "r21_holds": 243,
+      "r20_placed": 162,
+      "fix3_placed": 162,
+      "b2_placed": 162,
+      "role_def_placed": 162
+    },
+    "F heading gaps short": {
+      "cases": 432,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 216,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 216,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 216,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 216,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 216,
+      "r21_full_diffs": 0,
+      "r20_holds": 216,
+      "fix3_holds": 216,
+      "b2_holds": 216,
+      "role_def_holds": 216,
+      "r21_holds": 216
+    },
+    "B1 reproduction": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "B2 reproduction": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "Affiliate matrix": {
+      "cases": 1536,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1536,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1536,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1536,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1536,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1536,
+      "r21_full_diffs": 0
+    },
+    "r18 B1 reproduction": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "Veto matrix": {
+      "cases": 140,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 140,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 140,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 140,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 140,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 140,
+      "r21_full_diffs": 0
+    }
+  },
+  "transitions": {
+    "Matrix 1": {
+      "fix3": {
+        "needs_sender -> needs_sender": 120
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 120
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 120
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 120
+      }
+    },
+    "Matrix 2": {
+      "fix3": {
+        "needs_sender -> needs_sender": 270
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 270
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 270
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 270
+      }
+    },
+    "r11 B-1": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1020
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1020
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1020
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1020
+      }
+    },
+    "Signature controls": {
+      "fix3": {
+        "needs_sender -> needs_sender": 198,
+        "placed -> placed": 6
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 198,
+        "placed -> placed": 6
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 198,
+        "placed -> placed": 6
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 198,
+        "placed -> placed": 6
+      }
+    },
+    "M-1": {
+      "fix3": {
+        "placed -> placed": 16
+      },
+      "b2": {
+        "placed -> placed": 16
+      },
+      "role_def": {
+        "placed -> placed": 16
+      },
+      "r21": {
+        "placed -> placed": 16
+      }
+    },
+    "r9 heading matrix": {
+      "fix3": {
+        "needs_sender -> needs_sender": 66,
+        "placed -> placed": 6
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 66,
+        "placed -> placed": 6
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 66,
+        "placed -> placed": 6
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 66,
+        "placed -> placed": 6
+      }
+    },
+    "r9 H-1": {
+      "fix3": {
+        "needs_sender -> needs_sender": 40
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 40
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 40
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 40
+      }
+    },
+    "Seven goldens": {
+      "fix3": {
+        "bare -> bare": 1,
+        "placed -> placed": 6
+      },
+      "b2": {
+        "bare -> bare": 1,
+        "placed -> placed": 6
+      },
+      "role_def": {
+        "bare -> bare": 1,
+        "placed -> placed": 6
+      },
+      "r21": {
+        "bare -> bare": 1,
+        "placed -> placed": 6
+      }
+    },
+    "Same-band right host": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r12 B-1 reproduction": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r13 same-band grid": {
+      "fix3": {
+        "needs_sender -> needs_sender": 42
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 42
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 42
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 42
+      }
+    },
+    "r12 B-1 sweep": {
+      "fix3": {
+        "needs_sender -> needs_sender": 864
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 864
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 864
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 864
+      }
+    },
+    "L-1 short-rule controls": {
+      "fix3": {
+        "placed -> placed": 2
+      },
+      "b2": {
+        "placed -> placed": 2
+      },
+      "role_def": {
+        "placed -> placed": 2
+      },
+      "r21": {
+        "placed -> placed": 2
+      }
+    },
+    "L-2 own-company controls": {
+      "fix3": {
+        "placed -> placed": 20,
+        "needs_sender -> needs_sender": 20
+      },
+      "b2": {
+        "placed -> placed": 20,
+        "needs_sender -> needs_sender": 20
+      },
+      "role_def": {
+        "placed -> placed": 20,
+        "needs_sender -> needs_sender": 20
+      },
+      "r21": {
+        "placed -> placed": 20,
+        "needs_sender -> needs_sender": 20
+      }
+    },
+    "r14 reproduction": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r14 grid": {
+      "fix3": {
+        "placed -> placed": 2436,
+        "needs_sender -> needs_sender": 1020
+      },
+      "b2": {
+        "placed -> placed": 2436,
+        "needs_sender -> needs_sender": 1020
+      },
+      "role_def": {
+        "placed -> placed": 2436,
+        "needs_sender -> needs_sender": 1020
+      },
+      "r21": {
+        "placed -> placed": 2436,
+        "needs_sender -> needs_sender": 1020
+      }
+    },
+    "r14 fixed sweep": {
+      "fix3": {
+        "placed -> placed": 244,
+        "needs_sender -> needs_sender": 116
+      },
+      "b2": {
+        "placed -> placed": 244,
+        "needs_sender -> needs_sender": 116
+      },
+      "role_def": {
+        "placed -> placed": 244,
+        "needs_sender -> needs_sender": 116
+      },
+      "r21": {
+        "placed -> placed": 244,
+        "needs_sender -> needs_sender": 116
+      }
+    },
+    "r14 correct controls": {
+      "fix3": {
+        "placed -> placed": 2
+      },
+      "b2": {
+        "placed -> placed": 2
+      },
+      "role_def": {
+        "placed -> placed": 2
+      },
+      "r21": {
+        "placed -> placed": 2
+      }
+    },
+    "r14 L-1 (grid subset)": {
+      "fix3": {
+        "needs_sender -> needs_sender": 72
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 72
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 72
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 72
+      }
+    },
+    "r15 M1 reproduction": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r15 M2 reproduction": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r15 M1": {
+      "fix3": {
+        "needs_sender -> needs_sender": 640
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 640
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 640
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 640
+      }
+    },
+    "r15 M2": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2592
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2592
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2592
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2592
+      }
+    },
+    "r2 reviewer_wrong_signer_goldens": {
+      "fix3": {
+        "needs_sender -> needs_sender": 5
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 5
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 5
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r2 unnamed_signer_never_takes_named_block": {
+      "fix3": {
+        "bare -> bare": 6,
+        "needs_sender -> needs_sender": 24,
+        "placed -> placed": 12
+      },
+      "b2": {
+        "bare -> bare": 6,
+        "needs_sender -> needs_sender": 24,
+        "placed -> placed": 12
+      },
+      "role_def": {
+        "bare -> bare": 6,
+        "needs_sender -> needs_sender": 24,
+        "placed -> placed": 12
+      },
+      "r21": {
+        "bare -> bare": 6,
+        "needs_sender -> needs_sender": 24,
+        "placed -> placed": 12
+      }
+    },
+    "r2 nearby_body_is_redacted_and_model_identity_is_minimal": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r2 caption_cannot_claim_next_block": {
+      "fix3": {
+        "needs_sender -> needs_sender": 3
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 3
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 3
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r2 date_cannot_be_borrowed_from_next_column": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r2 native_signature_is_tight_and_bottom_anchored": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r2 printed_name_variants_veto_company_match": {
+      "fix3": {
+        "needs_sender -> needs_sender": 4
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 4
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 4
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 4
+      }
+    },
+    "r2 named_caption_is_not_dropped_when_it_is_long": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r2 unlabelled_unrecognized_caption_cannot_be_ignored": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r2 heading_cannot_cross_a_previous_unlabelled_rule": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r2 date_in_close_right_column_with_unlabelled_signature_is_not_borrowed": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r3 other_person_in_whole_raw_extent_never_gets_high": {
+      "fix3": {
+        "needs_sender -> needs_sender": 12
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 12
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 12
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 12
+      }
+    },
+    "r3 inserted_raw_person_vetoes_across_fixtures": {
+      "fix3": {
+        "needs_sender -> needs_sender": 35,
+        "placed -> placed": 4
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 35,
+        "placed -> placed": 4
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 35,
+        "placed -> placed": 4
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 35,
+        "placed -> placed": 4
+      }
+    },
+    "r3 company_only_requires_every_raw_line_accounted_for": {
+      "fix3": {
+        "needs_sender -> needs_sender": 3
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 3
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 3
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r3 matching_printed_name_can_resolve_label_prefix": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r3 title_case_body_never_leaves_local_evidence": {
+      "fix3": {
+        "needs_sender -> needs_sender": 3,
+        "placed -> placed": 3
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 3,
+        "placed -> placed": 3
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 3,
+        "placed -> placed": 3
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 3,
+        "placed -> placed": 3
+      }
+    },
+    "r3 matched_name_does_not_override_unresolved_person_like_line": {
+      "fix3": {
+        "needs_sender -> needs_sender": 3
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 3
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 3
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r3 company_only_requires_one_signer_even_if_other_signer_has_named_block": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r3 second_person_in_same_raw_line_also_vetoes": {
+      "fix3": {
+        "needs_sender -> needs_sender": 3
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 3
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 3
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r4 rule_row_name_controls_identity": {
+      "fix3": {
+        "needs_sender -> needs_sender": 8,
+        "placed -> placed": 8
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 8,
+        "placed -> placed": 8
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 8,
+        "placed -> placed": 8
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 8,
+        "placed -> placed": 8
+      }
+    },
+    "r4 side_by_side_company_blocks_keep_their_own_names": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r4 golden_harbor_role_suffix_keeps_exact_boxes": {
+      "fix3": {
+        "placed -> placed": 12
+      },
+      "b2": {
+        "placed -> placed": 12
+      },
+      "role_def": {
+        "placed -> placed": 12
+      },
+      "r21": {
+        "placed -> placed": 12
+      }
+    },
+    "r4 golden_harbor_block_wording_keeps_exact_boxes": {
+      "fix3": {
+        "placed -> placed": 31
+      },
+      "b2": {
+        "placed -> placed": 31
+      },
+      "role_def": {
+        "placed -> placed": 31
+      },
+      "r21": {
+        "placed -> placed": 31
+      }
+    },
+    "r4 ascii_hyphen_role_preserves_printed_identity": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      }
+    },
+    "r4 unnamed_company_block_accounts_for_roles": {
+      "fix3": {
+        "placed -> placed": 3
+      },
+      "b2": {
+        "placed -> placed": 3
+      },
+      "role_def": {
+        "placed -> placed": 3
+      },
+      "r21": {
+        "placed -> placed": 3
+      }
+    },
+    "r4 title_person_remains_unresolved_and_holds": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r4 stacked_individual_blocks_place_without_neighbour_veto": {
+      "fix3": {
+        "placed -> placed": 4
+      },
+      "b2": {
+        "placed -> placed": 4
+      },
+      "role_def": {
+        "placed -> placed": 4
+      },
+      "r21": {
+        "placed -> placed": 4
+      }
+    },
+    "r4 stacked_individual_blocks_do_not_accept_company_only": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r4 name_in_gap_between_party_columns_makes_both_uncertain": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r4 equidistant_row_between_stacked_rules_is_not_discarded": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 b1_far_heading_vetoes_company_only": {
+      "fix3": {
+        "needs_sender -> needs_sender": 3
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 3
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 3
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r5 b1_far_caption_vetoes_company_only": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r5 b1_walk_stops_at_prose_or_other_rule": {
+      "fix3": {
+        "placed -> placed": 2
+      },
+      "b2": {
+        "placed -> placed": 2
+      },
+      "role_def": {
+        "placed -> placed": 2
+      },
+      "r21": {
+        "placed -> placed": 2
+      }
+    },
+    "r5 b1_walk_crosses_page_edge": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r5 b1_distant_name_never_adds_confidence": {
+      "fix3": {
+        "needs_sender -> needs_sender": 6
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 6
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 6
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r5 b2_proven_empty_widget_and_plain_link_keep_placement": {
+      "fix3": {
+        "placed -> placed": 3
+      },
+      "b2": {
+        "placed -> placed": 3
+      },
+      "role_def": {
+        "placed -> placed": 3
+      },
+      "r21": {
+        "placed -> placed": 3
+      }
+    },
+    "r5 h1_title_wording_keeps_exact_golden": {
+      "fix3": {
+        "placed -> placed": 30
+      },
+      "b2": {
+        "placed -> placed": 30
+      },
+      "role_def": {
+        "placed -> placed": 30
+      },
+      "r21": {
+        "placed -> placed": 30
+      }
+    },
+    "r5 h1_behalf_wording_keeps_exact_golden": {
+      "fix3": {
+        "placed -> placed": 4
+      },
+      "b2": {
+        "placed -> placed": 4
+      },
+      "role_def": {
+        "placed -> placed": 4
+      },
+      "r21": {
+        "placed -> placed": 4
+      }
+    },
+    "r5 h1_behalf_other_person_vetoes_named_signer": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 h1_wrapped_sentence_is_not_a_name_but_blocks_company_only": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1,
+        "placed -> placed": 1
+      }
+    },
+    "r5 h1_company_only_title_rules_stay_strict": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 1
+      }
+    },
+    "r5 h1_positive_name_title_remainder_predicate": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2,
+        "placed -> placed": 2
+      }
+    },
+    "r5 m1_compound_name_caption_keeps_exact_golden": {
+      "fix3": {
+        "placed -> placed": 8
+      },
+      "b2": {
+        "placed -> placed": 8
+      },
+      "role_def": {
+        "placed -> placed": 8
+      },
+      "r21": {
+        "placed -> placed": 8
+      }
+    },
+    "r5 m1_compound_caption_keeps_mismatched_person_veto": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 m2_stacked_headings_with_side_dates": {
+      "fix3": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r5 l1_empty_contact_labels_only_are_accounted": {
+      "fix3": {
+        "placed -> placed": 5,
+        "needs_sender -> needs_sender": 5
+      },
+      "b2": {
+        "placed -> placed": 5,
+        "needs_sender -> needs_sender": 5
+      },
+      "role_def": {
+        "placed -> placed": 5,
+        "needs_sender -> needs_sender": 5
+      },
+      "r21": {
+        "placed -> placed": 5,
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r5 l2_single_typed_row_signature_and_date": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 n1_mixed_case_role_shaped_names_veto_company_only": {
+      "fix3": {
+        "needs_sender -> needs_sender": 3
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 3
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 3
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 3
+      }
+    },
+    "r5 n1_uppercase_role_abbreviations_remain_accounted": {
+      "fix3": {
+        "placed -> placed": 7
+      },
+      "b2": {
+        "placed -> placed": 7
+      },
+      "role_def": {
+        "placed -> placed": 7
+      },
+      "r21": {
+        "placed -> placed": 7
+      }
+    },
+    "r5 h1_execution_clause_is_a_heading": {
+      "fix3": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r5 b2_unproven_empty_widget_holds": {
+      "fix3": {
+        "needs_sender -> needs_sender": 5
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 5
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 5
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r5 b1_named_block_does_not_use_distant_veto": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 b1_veto_respects_neighbour_column_band": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 h1_wrapped_witness_paragraph_keeps_exact_golden": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r5 b1_cross_page_walk_includes_row_at_page_top": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r6 h2_contact_rule_preserves_typed_identity": {
+      "fix3": {
+        "needs_sender -> needs_sender": 6,
+        "placed -> placed": 12
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 6,
+        "placed -> placed": 12
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 6,
+        "placed -> placed": 12
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 6,
+        "placed -> placed": 12
+      }
+    },
+    "r6 h1_previous_caption_stays_with_its_host": {
+      "fix3": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "placed -> placed": 2,
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r6 m1_repeated_running_header_is_neutral": {
+      "fix3": {
+        "placed -> placed": 9
+      },
+      "b2": {
+        "placed -> placed": 9
+      },
+      "role_def": {
+        "placed -> placed": 9
+      },
+      "r21": {
+        "placed -> placed": 9
+      }
+    },
+    "r6 m1_nonrepeated_header_retains_identity_veto": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r6 m1_page_number_does_not_hide_next_page_name": {
+      "fix3": {
+        "needs_sender -> needs_sender": 4
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 4
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 4
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 4
+      }
+    },
+    "r6 m2_behalf_company_suffix_keeps_exact_golden": {
+      "fix3": {
+        "placed -> placed": 10
+      },
+      "b2": {
+        "placed -> placed": 10
+      },
+      "role_def": {
+        "placed -> placed": 10
+      },
+      "r21": {
+        "placed -> placed": 10
+      }
+    },
+    "r6 m2_behalf_role_is_not_a_person": {
+      "fix3": {
+        "placed -> placed": 3
+      },
+      "b2": {
+        "placed -> placed": 3
+      },
+      "role_def": {
+        "placed -> placed": 3
+      },
+      "r21": {
+        "placed -> placed": 3
+      }
+    },
+    "r6 m3_comma_witness_paragraph_keeps_exact_golden": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r6 n1_title_person_before_comma_still_vetoes": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r6 n2_period_name_still_vetoes_named_block": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 h1_short_contact_caption_preserves_typed_identity": {
+      "fix3": {
+        "needs_sender -> needs_sender": 15
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 15
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 15
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 15
+      }
+    },
+    "r7 l1_repeated_body_name_retains_identity_veto": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 l1_page_number_is_neutral_in_body": {
+      "fix3": {
+        "placed -> placed": 4
+      },
+      "b2": {
+        "placed -> placed": 4
+      },
+      "role_def": {
+        "placed -> placed": 4
+      },
+      "r21": {
+        "placed -> placed": 4
+      }
+    },
+    "r7 l2_prose_ending_keeps_exact_harbor_boxes": {
+      "fix3": {
+        "placed -> placed": 7
+      },
+      "b2": {
+        "placed -> placed": 7
+      },
+      "role_def": {
+        "placed -> placed": 7
+      },
+      "r21": {
+        "placed -> placed": 7
+      }
+    },
+    "r7 l2_period_name_still_holds": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 n1_hold_reason_agrees_with_signer_count": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "r7 n1_one_missing_signer_keeps_singular_reason": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r8 b1_unusual_host_never_places_on_neighbour": {
+      "fix3": {
+        "needs_sender -> needs_sender": 25
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 25
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 25
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 25
+      }
+    },
+    "r8 b1_signature_controls_keep_previous_outcome": {
+      "fix3": {
+        "needs_sender -> needs_sender": 4,
+        "placed -> placed": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 4,
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 4,
+        "placed -> placed": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 4,
+        "placed -> placed": 1
+      }
+    },
+    "r8 m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+      "fix3": {
+        "placed -> placed": 5
+      },
+      "b2": {
+        "placed -> placed": 5
+      },
+      "role_def": {
+        "placed -> placed": 5
+      },
+      "r21": {
+        "placed -> placed": 5
+      }
+    },
+    "r8 l1_only_authorised_signatory_uses_model_on_its_own_line": {
+      "fix3": {
+        "placed -> placed": 1
+      },
+      "b2": {
+        "placed -> placed": 1
+      },
+      "role_def": {
+        "placed -> placed": 1
+      },
+      "r21": {
+        "placed -> placed": 1
+      }
+    },
+    "r8 contact_vocabulary_is_other_without_preceding_host": {
+      "fix3": {
+        "bare -> bare": 6
+      },
+      "b2": {
+        "bare -> bare": 6
+      },
+      "role_def": {
+        "bare -> bare": 6
+      },
+      "r21": {
+        "bare -> bare": 6
+      }
+    },
+    "r9 b1_same_row_right_behalf_holds": {
+      "fix3": {
+        "needs_sender -> needs_sender": 5
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 5
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 5
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 5
+      }
+    },
+    "r9 absorbed_identity_vetoes_every_overlapping_host": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r10 b1_out_of_slot_identity_holds": {
+      "fix3": {
+        "needs_sender -> needs_sender": 240
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 240
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 240
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 240
+      }
+    },
+    "r10 b1_name_below_caption_holds": {
+      "fix3": {
+        "needs_sender -> needs_sender": 60
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 60
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 60
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 60
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / title_then_name": {
+      "fix3": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "b2": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "role_def": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "r21": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / tab_gap": {
+      "fix3": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "b2": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "role_def": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "r21": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / indented": {
+      "fix3": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "b2": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "role_def": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "r21": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 signature_out_of_slot_controls_unchanged / caption_row_right": {
+      "fix3": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "b2": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "role_def": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      },
+      "r21": {
+        "placed -> placed": 6,
+        "needs_sender -> needs_sender": 6
+      }
+    },
+    "r10 h1_out_of_slot_stacks_still_hold": {
+      "fix3": {
+        "needs_sender -> needs_sender": 40
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 40
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 40
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 40
+      }
+    },
+    "r10 m1_non_exempt_contact_out_of_slot_holds": {
+      "fix3": {
+        "needs_sender -> needs_sender": 56
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 56
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 56
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 56
+      }
+    },
+    "r10 six_contact_captions_remain_exempt": {
+      "fix3": {
+        "placed -> placed": 48
+      },
+      "b2": {
+        "placed -> placed": 48
+      },
+      "role_def": {
+        "placed -> placed": 48
+      },
+      "r21": {
+        "placed -> placed": 48
+      }
+    },
+    "r11 subordinating_rule_without_block_keeps_identity_veto": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1
+      }
+    },
+    "r14 separate_printing_of_same_name_is_not_vetoed": {
+      "fix3": {
+        "placed -> placed": 2
+      },
+      "b2": {
+        "placed -> placed": 2
+      },
+      "role_def": {
+        "placed -> placed": 2
+      },
+      "r21": {
+        "placed -> placed": 2
+      }
+    },
+    "L1 ragged stacked controls": {
+      "fix3": {
+        "needs_sender -> needs_sender": 350,
+        "placed -> placed": 34
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 350,
+        "placed -> placed": 34
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 350,
+        "placed -> placed": 34
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 350,
+        "placed -> placed": 34
+      }
+    },
+    "L1 centred stacked controls": {
+      "fix3": {
+        "needs_sender -> needs_sender": 96,
+        "placed -> placed": 48
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 96,
+        "placed -> placed": 48
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 96,
+        "placed -> placed": 48
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 96,
+        "placed -> placed": 48
+      }
+    },
+    "A2 exact witness captions": {
+      "fix3": {
+        "needs_sender -> needs_sender": 480
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 480
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 480
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 480
+      }
+    },
+    "A2 additional dy=20": {
+      "fix3": {
+        "needs_sender -> needs_sender": 96
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 96
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 96
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 96
+      }
+    },
+    "Witness wider sweep": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2496
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2496
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2496
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2496
+      }
+    },
+    "F three-party permutations": {
+      "fix3": {
+        "needs_sender -> needs_sender": 189,
+        "placed -> placed": 99
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 189,
+        "placed -> placed": 99
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 189,
+        "placed -> placed": 99
+      },
+      "r21": {
+        "needs_sender -> placed": 24,
+        "needs_sender -> needs_sender": 165,
+        "placed -> placed": 99
+      }
+    },
+    "F heading gaps long": {
+      "fix3": {
+        "needs_sender -> needs_sender": 270,
+        "placed -> placed": 162
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 270,
+        "placed -> placed": 162
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 270,
+        "placed -> placed": 162
+      },
+      "r21": {
+        "needs_sender -> placed": 27,
+        "needs_sender -> needs_sender": 243,
+        "placed -> placed": 162
+      }
+    },
+    "F heading gaps short": {
+      "fix3": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      },
+      "b2": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      },
+      "role_def": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      },
+      "r21": {
+        "placed -> placed": 216,
+        "needs_sender -> needs_sender": 216
+      }
+    },
+    "B1 reproduction": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "B2 reproduction": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "Affiliate matrix": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1536
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1536
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1536
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1536
+      }
+    },
+    "r18 B1 reproduction": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "Veto matrix": {
+      "fix3": {
+        "needs_sender -> needs_sender": 140
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 140
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 140
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 140
+      }
+    }
+  },
+  "source_sha256": {
+    "r20": "c747a21aefadcaadaf794a1811ab7810bb74bbf5d206841136053e27fda395d9",
+    "fix3": "c55004247dc5088005193588acd6b0b47a9b094cded4c4f6f0e6cc0fc4633fbb",
+    "b2": "1e76dc3d8fb77f7e1224ff154567ef6165279d97510f5706da0f66cf7d5b615d",
+    "role_def": "95614e30edc4c9afd61b2dcf50452e98a8e4c503fec31813cde58310693b08f8",
+    "r21": "712f04beabd2d51d6174499d3b6943d005bb10f211d725b2e0cfa20b737b4543"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 35
+}

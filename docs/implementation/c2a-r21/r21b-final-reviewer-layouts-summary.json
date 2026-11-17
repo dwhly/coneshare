@@ -1,0 +1,202 @@
+{
+  "cases": 5280,
+  "groups": {
+    "Review matrix same": {
+      "cases": 1320,
+      "r20_wrong": 40,
+      "r20_holds": 1250,
+      "r20_model_calls": 0,
+      "fix3_wrong": 40,
+      "fix3_holds": 1250,
+      "fix3_model_calls": 0,
+      "b2_wrong": 0,
+      "b2_holds": 1290,
+      "b2_model_calls": 0,
+      "role_def_wrong": 0,
+      "role_def_holds": 1270,
+      "role_def_model_calls": 0,
+      "r21_wrong": 0,
+      "r21_holds": 1270,
+      "r21_model_calls": 0,
+      "r20_placed": 70,
+      "fix3_placed": 70,
+      "b2_placed": 30,
+      "role_def_placed": 50,
+      "r21_placed": 50
+    },
+    "Review matrix guarantor": {
+      "cases": 1320,
+      "r20_wrong": 380,
+      "r20_placed": 440,
+      "r20_model_calls": 0,
+      "fix3_wrong": 40,
+      "fix3_holds": 1220,
+      "fix3_model_calls": 0,
+      "b2_wrong": 0,
+      "b2_holds": 1260,
+      "b2_model_calls": 0,
+      "role_def_wrong": 0,
+      "role_def_holds": 1220,
+      "role_def_model_calls": 0,
+      "r21_wrong": 0,
+      "r21_holds": 1220,
+      "r21_model_calls": 0,
+      "r20_holds": 880,
+      "fix3_placed": 100,
+      "b2_placed": 60,
+      "role_def_placed": 100,
+      "r21_placed": 100
+    },
+    "Review matrix split": {
+      "cases": 1320,
+      "r20_wrong": 370,
+      "r20_placed": 400,
+      "r20_model_calls": 0,
+      "fix3_wrong": 30,
+      "fix3_holds": 1260,
+      "fix3_model_calls": 0,
+      "b2_wrong": 0,
+      "b2_holds": 1290,
+      "b2_model_calls": 0,
+      "role_def_wrong": 0,
+      "role_def_holds": 1270,
+      "role_def_model_calls": 0,
+      "r21_wrong": 0,
+      "r21_holds": 1270,
+      "r21_model_calls": 0,
+      "r20_holds": 920,
+      "fix3_placed": 60,
+      "b2_placed": 30,
+      "role_def_placed": 50,
+      "r21_placed": 50
+    },
+    "Review matrix witness": {
+      "cases": 1320,
+      "r20_wrong": 0,
+      "r20_holds": 1290,
+      "r20_model_calls": 0,
+      "fix3_wrong": 0,
+      "fix3_holds": 1320,
+      "fix3_model_calls": 0,
+      "b2_wrong": 0,
+      "b2_holds": 1320,
+      "b2_model_calls": 0,
+      "role_def_wrong": 0,
+      "role_def_holds": 1320,
+      "role_def_model_calls": 0,
+      "r21_wrong": 0,
+      "r21_holds": 1320,
+      "r21_model_calls": 0,
+      "r20_placed": 30
+    }
+  },
+  "cross_page_1800_subset": {
+    "cases": 1800,
+    "r20_wrong": 750,
+    "r20_placed": 760,
+    "fix3_wrong": 70,
+    "fix3_holds": 1720,
+    "b2_wrong": 0,
+    "b2_holds": 1790,
+    "role_def_wrong": 0,
+    "role_def_holds": 1770,
+    "r21_wrong": 0,
+    "r21_holds": 1770,
+    "r20_holds": 1040,
+    "fix3_placed": 80,
+    "b2_placed": 10,
+    "role_def_placed": 30,
+    "r21_placed": 30
+  },
+  "transitions": {
+    "Review matrix same": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1250,
+        "wrong -> wrong": 40,
+        "placed -> placed": 30
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1250,
+        "wrong -> needs_sender": 40,
+        "placed -> placed": 30
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1270,
+        "placed -> placed": 30,
+        "needs_sender -> placed": 20
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1270,
+        "placed -> placed": 50
+      }
+    },
+    "Review matrix guarantor": {
+      "fix3": {
+        "wrong -> needs_sender": 340,
+        "needs_sender -> needs_sender": 880,
+        "wrong -> wrong": 40,
+        "placed -> placed": 60
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1220,
+        "wrong -> needs_sender": 40,
+        "placed -> placed": 60
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1220,
+        "placed -> placed": 60,
+        "needs_sender -> placed": 40
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1220,
+        "placed -> placed": 100
+      }
+    },
+    "Review matrix split": {
+      "fix3": {
+        "wrong -> needs_sender": 340,
+        "needs_sender -> needs_sender": 920,
+        "wrong -> wrong": 30,
+        "placed -> placed": 30
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1260,
+        "wrong -> needs_sender": 30,
+        "placed -> placed": 30
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1270,
+        "placed -> placed": 30,
+        "needs_sender -> placed": 20
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1270,
+        "placed -> placed": 50
+      }
+    },
+    "Review matrix witness": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1290,
+        "placed -> needs_sender": 30
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1320
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1320
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1320
+      }
+    }
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 0,
+  "source_sha256": {
+    "r20": "c747a21aefadcaadaf794a1811ab7810bb74bbf5d206841136053e27fda395d9",
+    "fix3": "c55004247dc5088005193588acd6b0b47a9b094cded4c4f6f0e6cc0fc4633fbb",
+    "b2": "87fbd2b27e79c8f96e072505cfa6a99e0f042d21d3bd675a4833dd39400d58c7",
+    "role_def": "52373f3a172bc1a8048da25557e711c7cd4b68f5aa1bcec4b934088c8f79cdf9",
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311"
+  }
+}

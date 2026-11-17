@@ -1,0 +1,12 @@
+.........F....                                                           [100%]
+=================================== FAILURES ===================================
+______ test_independent_evidence_and_party_count_controls[different_page] ______
+dealroom_sign/tests/test_placement_r20_boundaries.py:47: in test_independent_evidence_and_party_count_controls
+    assert placement.score(signer, target, {}, blocks) == (10 if control == 'printed_signer' else 4)
+E   AssertionError: assert 0 == 4
+E    +  where 0 = <function score at 0x79156a62cd60>({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E    +    where <function score at 0x79156a62cd60> = placement.score
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r21/fix3-existing-boundaries.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r20_boundaries.py::test_independent_evidence_and_party_count_controls[different_page]
+1 failed, 13 passed in 0.23s

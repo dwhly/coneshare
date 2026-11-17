@@ -1,0 +1,11 @@
+diff --git a/backend/dealroom_sign/tests/test_placement_r20_boundaries.py b/backend/dealroom_sign/tests/test_placement_r20_boundaries.py
+index 54541b1f..705d86f0 100644
+--- a/backend/dealroom_sign/tests/test_placement_r20_boundaries.py
++++ b/backend/dealroom_sign/tests/test_placement_r20_boundaries.py
+@@ -44,4 +44,5 @@ def test_independent_evidence_and_party_count_controls(control):
+     signer = dict(PAT[0])
+     if control == 'explicit_company':
+         signer['company'] = 'HARBOR LIGHT GROUP, INC.'
+-    assert placement.score(signer, target, {}, blocks) == (10 if control == 'printed_signer' else 4)
++    assert placement.score(signer, target, {}, blocks) == (
++        0 if control == 'different_page' else (10 if control == 'printed_signer' else 4))

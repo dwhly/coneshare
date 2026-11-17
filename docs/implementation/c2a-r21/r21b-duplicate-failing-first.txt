@@ -1,0 +1,33 @@
+FFFF....                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_duplicate_named_role_requires_independent_identity[None-0-1-RECIPIENT:] _
+dealroom_sign/tests/test_placement_r21b.py:17: in test_duplicate_named_role_requires_independent_identity
+    assert placement.score(PAT[0], target, roles, [target, other, peer]) == expected
+E   AssertionError: assert 4 == 0
+E    +  where 4 = <function score at 0x6ffffabaede0>({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'NORTHWIND TRADERS LLC'}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E    +    where <function score at 0x6ffffabaede0> = placement.score
+_ test_duplicate_named_role_requires_independent_identity[None-0-1-THE RECIPIENT] _
+dealroom_sign/tests/test_placement_r21b.py:17: in test_duplicate_named_role_requires_independent_identity
+    assert placement.score(PAT[0], target, roles, [target, other, peer]) == expected
+E   AssertionError: assert 4 == 0
+E    +  where 4 = <function score at 0x6ffffabaede0>({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'the recipient': 'NORTHWIND TRADERS LLC'}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E    +    where <function score at 0x6ffffabaede0> = placement.score
+_ test_duplicate_named_role_requires_independent_identity[None-0-2-RECIPIENT:] _
+dealroom_sign/tests/test_placement_r21b.py:17: in test_duplicate_named_role_requires_independent_identity
+    assert placement.score(PAT[0], target, roles, [target, other, peer]) == expected
+E   AssertionError: assert 4 == 0
+E    +  where 4 = <function score at 0x6ffffabaede0>({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'NORTHWIND TRADERS LLC'}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E    +    where <function score at 0x6ffffabaede0> = placement.score
+_ test_duplicate_named_role_requires_independent_identity[None-0-2-THE RECIPIENT] _
+dealroom_sign/tests/test_placement_r21b.py:17: in test_duplicate_named_role_requires_independent_identity
+    assert placement.score(PAT[0], target, roles, [target, other, peer]) == expected
+E   AssertionError: assert 4 == 0
+E    +  where 4 = <function score at 0x6ffffabaede0>({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'the recipient': 'NORTHWIND TRADERS LLC'}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E    +    where <function score at 0x6ffffabaede0> = placement.score
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r21/r21b-duplicate-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r21b.py::test_duplicate_named_role_requires_independent_identity[None-0-1-RECIPIENT:]
+FAILED dealroom_sign/tests/test_placement_r21b.py::test_duplicate_named_role_requires_independent_identity[None-0-1-THE RECIPIENT]
+FAILED dealroom_sign/tests/test_placement_r21b.py::test_duplicate_named_role_requires_independent_identity[None-0-2-RECIPIENT:]
+FAILED dealroom_sign/tests/test_placement_r21b.py::test_duplicate_named_role_requires_independent_identity[None-0-2-THE RECIPIENT]
+4 failed, 4 passed in 0.29s

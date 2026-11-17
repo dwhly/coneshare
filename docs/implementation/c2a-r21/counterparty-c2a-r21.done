@@ -1,0 +1,8 @@
+coder rc=1 head=e0ed35e70be90f983fbe4701e758ad812e97e936
+failing-first: 1175 failed, 4421 passed across 5596 final new assertions; draft corrections and raw runs retained.
+shipped: none; candidate implements B-1 document-wide fix3, B-2 role vocabulary, ROLE_DEF, conservative L-1; VERSION = c2a.21; optional witness change deferred.
+full suite: 23970 passed, 2 failed, 0 errors, 0 skipped; completed without -x.
+tests: 5596 added in test_placement_r21.py and test_placement_r21_l1.py, with new placement_r21_review_cases.py; 18376 prior IDs retained; no starting tests, fixtures, evidence or done markers changed.
+replay: 40924 inputs, five cumulative variants, 0 new wrong; 5280 reviewer matrix and its 1800 cross-page subset pass; seven goldens exact except version.
+preservation: 1905 starting files hash-verified; only placement.py changed; HEAD and index unchanged; no commit.
+blockers: frozen r20 different_page assertion contradicts exact fix3 (isolated fix3: 13 passed, 1 failed); mapped-role boundary assertion also rejects the conservative B-2 alias hold. No existing assertion changed; release bar not met.

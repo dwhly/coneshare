@@ -1,0 +1,178 @@
+"""Replay every r20 family and measure the four cumulative release steps.
+
+Usage: check_evidence.py historical|review
+"""
+from collections import Counter, defaultdict
+from contextlib import ExitStack
+import copy
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from tempfile import TemporaryDirectory
+from types import ModuleType
+from unittest.mock import Mock, patch
+
+from variants import variants as build_variants
+
+sys.dont_write_bytecode = True
+ROOT = Path(__file__).resolve().parents[3]
+OUT = Path(__file__).resolve().parent
+PREFIX = os.environ.get('R21_RUN_PREFIX', '')
+sys.path.insert(0, str(ROOT / 'backend'))
+spec = importlib.util.spec_from_file_location('r20_prior', OUT.parent / 'c2a-r19/check_evidence.py')
+prior = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(prior)
+old = prior.old
+from dealroom_sign.tests import placement_r19_review_cases as families
+from dealroom_sign.tests import placement_r20_review_cases as review
+from dealroom_sign.tests.test_placement_r20 import permitted_named_competition
+
+
+def write(name, data):
+    target = OUT / (PREFIX + name + '.json')
+    assert not target.exists(), target
+    target.write_text(json.dumps(data, indent=2) + '\n')
+
+
+def make_module(name, source, stack):
+    module = ModuleType('r20_' + name)
+    module.__file__ = str(ROOT / old.PRODUCT)
+    sys.modules[module.__name__] = module
+    exec(compile(source, module.__name__, 'exec'), module.__dict__)
+    worker_root = Path(stack.enter_context(TemporaryDirectory(prefix='worker-' + name + '-', dir=OUT)))
+    package = worker_root / 'dealroom_sign'
+    package.mkdir()
+    (package / '__init__.py').write_text('')
+    (package / 'placement.py').write_text(source)
+    (package / 'placement_worker.py').write_bytes((ROOT / 'backend/dealroom_sign/placement_worker.py').read_bytes())
+    module.WORKER_CWD = worker_root
+    return module
+
+
+def main(part):
+    assert part in {'historical', 'review'}
+    for key in ['OPENROUTER_API_KEY', 'PLACE_MODEL']:
+        os.environ.pop(key, None)
+    archive = json.loads((OUT.parent / 'c2a-r20' / (
+        'historical-cases.json' if part == 'historical' else 'review-cases.json')).read_text())
+    archived = {(r['group'], r['case']): archive['outcomes'][r['results']['r20']]
+                for r in archive['cases']}
+    source = (ROOT / old.PRODUCT).read_text()
+    baseline = subprocess.check_output(['git', 'show', 'e0ed35e7:' + old.PRODUCT], cwd=ROOT).decode()
+    variants = build_variants(baseline)
+    assert variants['r21'] == source
+    for name, text in variants.items():
+        path = OUT / (PREFIX + part + '-' + name + '.py.txt')
+        assert not path.exists(), path
+        path.write_text(text)
+    groups, records, outcomes, workers, inventory = {}, [], {}, [], {}
+    transitions = defaultdict(lambda: defaultdict(Counter))
+    goldens = json.loads((OUT.parent / 'c2a-r13/placements.json').read_text())
+    forbidden = Mock(side_effect=AssertionError('External HTTP forbidden'))
+
+    def remember(result):
+        digest = hashlib.sha256(json.dumps(result, sort_keys=True).encode()).hexdigest()
+        outcomes[digest] = result
+        return digest
+
+    with ExitStack() as stack:
+        modules = {n: make_module(n, s, stack) for n, s in variants.items()}
+        generator = make_module('generator', subprocess.check_output(
+            ['git', 'show', old.BASE + ':' + old.PRODUCT], cwd=ROOT).decode(), stack)
+        stack.enter_context(patch('httpx.Client.send', forbidden))
+
+        def cases():
+            if part == 'historical':
+                for group, case, pdf, signers, line in old.cases():
+                    yield group, case, pdf, signers, line, None, None
+                for group, case, pdf, signers, line, replies, _ in prior.prior.prior.prior.control_cases(generator, inventory):
+                    yield group, case, pdf, signers, line, replies, None
+                generators = [prior.prior.prior.added_cases, prior.prior.affiliate_cases, prior.new_cases]
+            else:
+                generators = [families.competition, families.l1_cases, families.f_fine, review.realistic_cases]
+            for gen in generators:
+                for group, case, rows, both, allowed in gen():
+                    yield group, case, prior.new.rows_pdf(rows), prior.new.signers(both), None, None, allowed
+            if part == 'review':
+                for both in [False, True]:
+                    yield 'B1 real worker', str(both), prior.new.rows_pdf(review.WORKER_ROWS), prior.new.signers(both), None, None, {review.PE: (300, 300, 480), review.DE: (40, 300, 220)}
+                for case, rows in review.Q4_CASES.items():
+                    for both in [False, True]:
+                        yield 'Q4 ' + ('M1 ambiguity' if case.startswith(('dodge hyphen', 'dodge HLA', 'dodge British')) else 'controls'), repr((case, both)), prior.new.rows_pdf(rows), prior.new.signers(both), None, None, review.ALLOW
+
+        for group, case, pdf, signers, line, replies, allowed in cases():
+            counts = groups.setdefault(group, Counter())
+            counts['cases'] += 1
+            expected = archived.get((group, case))
+            row = {'group': group, 'case': case, 'results': {}, 'wrong': {}, 'raw_wrong': {}, 'model_calls': {}}
+            results = {}
+
+            def client():
+                if group == 'Seven goldens':
+                    return Mock(side_effect=old.model_answer)
+                if replies == []:
+                    return None
+                return Mock(side_effect=copy.deepcopy(replies)) if replies is not None else Mock()
+
+            for name, module in modules.items():
+                model = client()
+                result = old.r14.in_process(module, pdf, signers, model)
+                results[name] = result
+                row['results'][name] = remember(result)
+                wrong = (bool(prior.new.wrong_fields(result, allowed)) if allowed is not None else
+                         bool(old.r15.wrong_pat_fields(result, line)) if line else
+                         old.earlier_wrong(group, case, result, expected))
+                row['raw_wrong'][name] = wrong
+                if group == 'Competition' and permitted_named_competition(case, result, allowed):
+                    wrong = False
+                # Q4's six named-company cases are explicitly ambiguous in the
+                # review; preserve their raw oracle flags and report separately.
+                if group == 'Q4 M1 ambiguity':
+                    wrong = False
+                row['wrong'][name] = wrong
+                row['model_calls'][name] = model.call_count if model is not None else 0
+                counts[name + '_wrong'] += wrong
+                counts[name + '_raw_wrong'] += row['raw_wrong'][name]
+                counts[name + '_model_calls'] += row['model_calls'][name]
+                counts[name + '_' + {'needs_sender': 'holds', 'placed': 'placed', 'bare': 'bare'}[result['status']]] += 1
+                if name == 'r20' and expected is not None:
+                    assert old.versionless(result) == old.versionless(expected), (group, case, 'r20 archive mismatch')
+                if group == 'Seven goldens':
+                    counts[name + '_golden_diffs'] += old.versionless(result) != old.versionless(goldens[case])
+                    for signer in signers:
+                        counts[name + '_native_diffs'] += module.to_native_fields(result, signer['email']) != module.to_native_fields(goldens[case], signer['email'])
+                if name != 'r20':
+                    base_name = list(variants)[list(variants).index(name) - 1]
+                    before = 'wrong' if row['wrong'][base_name] else results[base_name]['status']
+                    after = 'wrong' if wrong else result['status']
+                    transitions[group][name][before + ' -> ' + after] += 1
+                    counts[name + '_full_diffs'] += old.versionless(result) != old.versionless(results[base_name])
+                if group in {'Seven goldens', 'B1 real worker'}:
+                    actual = module.place(pdf, signers, model_client=client())
+                    assert actual == result, (name, group, case, 'worker mismatch')
+                    workers.append({'variant': name, 'group': group, 'case': case, 'result': remember(actual)})
+            records.append(row)
+            if len(records) % 500 == 0:
+                print(f'{part}: {len(records)} cases, r21 wrong={sum(c["r21_wrong"] for c in groups.values())}', flush=True)
+        forbidden.assert_not_called()
+    summary = {'part': part, 'cases': len(records), 'groups': groups, 'transitions': transitions,
+               'source_sha256': {n: hashlib.sha256(s.encode()).hexdigest() for n, s in variants.items()},
+               'external_http_calls': forbidden.call_count, 'worker_evaluations': len(workers)}
+    write(part + '-summary', summary)
+    write(part + '-cases', {'cases': records, 'outcomes': outcomes})
+    write(part + '-workers', workers)
+    if part == 'historical':
+        write('placements', {r['case']: outcomes[r['results']['r21']] for r in records if r['group'] == 'Seven goldens'})
+    print(json.dumps({'cases': len(records), 'groups': len(groups),
+                      'wrong': {n: sum(g[n + '_wrong'] for g in groups.values()) for n in variants}}, indent=2), flush=True)
+    assert all(g['r21_wrong'] == 0 for g in groups.values())
+    if part == 'historical':
+        assert groups['Seven goldens']['r21_golden_diffs'] == groups['Seven goldens']['r21_native_diffs'] == 0
+
+
+if __name__ == '__main__':
+    main(sys.argv[1])

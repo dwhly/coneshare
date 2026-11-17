@@ -1,0 +1,23 @@
+"""An owned printed name can resolve a shared company heading."""
+from unittest.mock import Mock
+
+import pytest
+
+from dealroom_sign import placement
+from dealroom_sign.tests.placement_r19_review_cases import f_fine
+from dealroom_sign.tests.test_placement import no_network  # noqa: F401
+from dealroom_sign.tests.test_placement_r9 import rows_pdf
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests.test_placement_r17 import signers, wrong_fields
+
+
+@pytest.mark.parametrize('both', [False, True])
+def test_printed_name_retains_own_three_party_block(both):
+    case = repr((140, 4, (0, 1, 2), 0, False, both))
+    group, _, rows, _, allowed = next(
+        row for row in f_fine() if row[0] == 'F fine' and row[1] == case)
+    model = Mock()
+    result = in_process(placement, rows_pdf(rows), signers(both), model)
+    assert result['status'] == 'placed', result
+    assert not wrong_fields(result, allowed), result
+    model.assert_not_called()

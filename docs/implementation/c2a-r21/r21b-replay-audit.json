@@ -1,0 +1,35 @@
+{
+  "production_sha256": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+  "collections": {
+    "historical": {
+      "cases": 17204,
+      "wrong": 0,
+      "changed_full_results": 0,
+      "families": 126
+    },
+    "review": {
+      "cases": 12760,
+      "wrong": 0,
+      "changed_full_results": 0,
+      "families": 9
+    },
+    "layouts": {
+      "cases": 5680,
+      "wrong": 0,
+      "changed_full_results": 100,
+      "families": 9
+    },
+    "reviewer-layouts": {
+      "cases": 5280,
+      "wrong": 0,
+      "changed_full_results": 80,
+      "families": 4
+    }
+  },
+  "cases": 40924,
+  "wrong": 0,
+  "worker_checks": 105,
+  "external_http_calls": 0,
+  "goldens_exact_except_version": 7,
+  "native_golden_diffs": 0
+}

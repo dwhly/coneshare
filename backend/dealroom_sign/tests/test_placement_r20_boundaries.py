@@ -44,4 +44,5 @@ def test_independent_evidence_and_party_count_controls(control):
     signer = dict(PAT[0])
     if control == 'explicit_company':
         signer['company'] = 'HARBOR LIGHT GROUP, INC.'
-    assert placement.score(signer, target, {}, blocks) == (10 if control == 'printed_signer' else 4)
+    assert placement.score(signer, target, {}, blocks) == (
+        0 if control == 'different_page' else (10 if control == 'printed_signer' else 4))

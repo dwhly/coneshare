@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="0.831" timestamp="2026-11-17T21:23:27.177585" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r21_l1" name="test_printed_name_retains_own_three_party_block[False]" time="0.018"><failure message="AssertionError: {'analysis_version': 'c2a.20', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r21_l1.py:21: in test_printed_name_retains_own_three_party_block
+    assert result['status'] == ('needs_sender' if both else 'placed'), result
+E   AssertionError: {'analysis_version': 'c2a.20', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r21_l1" name="test_printed_name_retains_own_three_party_block[True]" time="0.017"><failure message="AssertionError: {'analysis_version': 'c2a.20', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert (0 &gt;= 6)">dealroom_sign/tests/test_placement_r21_l1.py:23: in test_printed_name_retains_own_three_party_block
+    assert pat['score'] &gt;= 6 and pat['confidence'] == 'high', result
+E   AssertionError: {'analysis_version': 'c2a.20', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert (0 &gt;= 6)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r21" name="test_descriptive_role_definition_maps_legal_entity[address]" time="0.025"><failure message="KeyError: 'recipient'">dealroom_sign/tests/test_placement_r21.py:73: in test_descriptive_role_definition_maps_legal_entity
+    assert placement.tokens(roles['recipient']) == ['harbor', 'light', 'analytics', 'inc']
+E   KeyError: 'recipient'</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r21" name="test_descriptive_role_definition_maps_legal_entity[hereinafter]" time="0.019"><failure message="KeyError: 'recipient'">dealroom_sign/tests/test_placement_r21.py:73: in test_descriptive_role_definition_maps_legal_entity
+    assert placement.tokens(roles['recipient']) == ['harbor', 'light', 'analytics', 'inc']
+E   KeyError: 'recipient'</failure></testcase></testsuite></testsuites>

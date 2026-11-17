@@ -1,0 +1,24 @@
+coder rc=0 head=e0ed35e70be90f983fbe4701e758ad812e97e936
+changed: role-word classification uses the resolved heading; a named NORTHWIND alias permits score 4; unresolved/role-only aliases hold. Duplicate named-role claims without independent printed identity retain a separate document-wide hold. B-1, ROLE_DEF and L-1 remain; VERSION = 'c2a.21'.
+authorization: manager ruling 1 explicitly permits only different_page expectation 4 -> 0. All other existing expectations, including RECIPIENT:-roles5-4, are unchanged. Eight new duplicate-role regression cases added.
+exact test diff for ruling 1:
+```diff
+diff --git a/backend/dealroom_sign/tests/test_placement_r20_boundaries.py b/backend/dealroom_sign/tests/test_placement_r20_boundaries.py
+index 54541b1f..705d86f0 100644
+--- a/backend/dealroom_sign/tests/test_placement_r20_boundaries.py
++++ b/backend/dealroom_sign/tests/test_placement_r20_boundaries.py
+@@ -44,4 +44,5 @@ def test_independent_evidence_and_party_count_controls(control):
+     signer = dict(PAT[0])
+     if control == 'explicit_company':
+         signer['company'] = 'HARBOR LIGHT GROUP, INC.'
+-    assert placement.score(signer, target, {}, blocks) == (10 if control == 'printed_signer' else 4)
++    assert placement.score(signer, target, {}, blocks) == (
++        0 if control == 'different_page' else (10 if control == 'printed_signer' else 4))
+```
+full suite: 23980 passed, 0 failed, 0 errors, 0 skipped; completed without -x or deselections. All 23972 incoming r21 IDs and 18376 r20 IDs retained.
+replays: 40924 inputs; 0 wrong on every family; 5280 reviewer matrix and its 1800 cross-page subset pass; B-2 cases pass; seven goldens and native fields exact except analysis_version; real workers equal in-process; HTTP calls 0. Existing reviewer-approved raw-flag classifications unchanged.
+hold cost versus incoming r21: 100 correct-to-hold in literal layouts/additions and 60 in the reviewer matrix; historical and review-family results unchanged.
+preservation: 1905 r20 tracked files and 1999 incoming r21 files hash-verified. Only production, the authorized test assertion and requested RESULT update changed among incoming files. Existing fixtures, other tests, evidence and r21 done marker preserved. HEAD and index unchanged; no commit.
+production sha256: 06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311
+result: docs/implementation/c2a-r21/results-r21.md, r21b section.
+blockers: none.

@@ -1,0 +1,24 @@
+{
+  "incoming_files": 1999,
+  "changed_since_r21": [
+    "docs/implementation/c2a-r21/results-r21.md",
+    "backend/dealroom_sign/placement.py",
+    "backend/dealroom_sign/tests/test_placement_r20_boundaries.py"
+  ],
+  "r20_tracked_files": 1905,
+  "changed_since_r20": [
+    "backend/dealroom_sign/placement.py",
+    "backend/dealroom_sign/tests/test_placement_r20_boundaries.py"
+  ],
+  "all_other_hashes_match": true,
+  "authorized_test_diff_exact": true,
+  "mapped_northwind_test_byte_identical": true,
+  "head": "e0ed35e70be90f983fbe4701e758ad812e97e936",
+  "head_unchanged": true,
+  "index_unchanged": true,
+  "production_sha256": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+  "r21_production_changes": [
+    "classify resolved heading",
+    "hold duplicate named-role claims"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "qualified": true,
+  "full_suite": {
+    "passed": 23980,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "replay_inputs": 40924,
+  "wrong": 0,
+  "goldens": 7,
+  "golden_diffs": 0,
+  "native_golden_diffs": 0,
+  "matrix": 5280,
+  "cross_page_subset": {
+    "cases": 1800,
+    "r20_wrong": 750,
+    "r20_placed": 760,
+    "fix3_wrong": 70,
+    "fix3_holds": 1720,
+    "b2_wrong": 0,
+    "b2_holds": 1790,
+    "role_def_wrong": 0,
+    "role_def_holds": 1770,
+    "r21_wrong": 0,
+    "r21_holds": 1770,
+    "r20_holds": 1040,
+    "fix3_placed": 80,
+    "b2_placed": 10,
+    "role_def_placed": 30,
+    "r21_placed": 30
+  },
+  "external_http_calls": 0,
+  "preservation": {
+    "incoming_files": 1999,
+    "changed_since_r21": [
+      "docs/implementation/c2a-r21/results-r21.md",
+      "backend/dealroom_sign/placement.py",
+      "backend/dealroom_sign/tests/test_placement_r20_boundaries.py"
+    ],
+    "r20_tracked_files": 1905,
+    "changed_since_r20": [
+      "backend/dealroom_sign/placement.py",
+      "backend/dealroom_sign/tests/test_placement_r20_boundaries.py"
+    ],
+    "all_other_hashes_match": true,
+    "authorized_test_diff_exact": true,
+    "mapped_northwind_test_byte_identical": true,
+    "head": "e0ed35e70be90f983fbe4701e758ad812e97e936",
+    "head_unchanged": true,
+    "index_unchanged": true,
+    "production_sha256": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r21_production_changes": [
+      "classify resolved heading",
+      "hold duplicate named-role claims"
+    ]
+  }
+}

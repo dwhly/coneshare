@@ -1,0 +1,19 @@
+.....F...F....                                                           [100%]
+=================================== FAILURES ===================================
+_ test_heading_is_normalized_before_identifying_other_party[RECIPIENT:-roles5-4] _
+dealroom_sign/tests/test_placement_r20_boundaries.py:30: in test_heading_is_normalized_before_identifying_other_party
+    assert placement.score(PAT[0], target, roles, [target, other, fleet]) == expected
+E   AssertionError: assert 0 == 4
+E    +  where 0 = <function score at 0x7fdfd41c2d40>({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {'recipient': 'NORTHWIND TRADERS LLC'}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E    +    where <function score at 0x7fdfd41c2d40> = placement.score
+______ test_independent_evidence_and_party_count_controls[different_page] ______
+dealroom_sign/tests/test_placement_r20_boundaries.py:47: in test_independent_evidence_and_party_count_controls
+    assert placement.score(signer, target, {}, blocks) == (10 if control == 'printed_signer' else 4)
+E   AssertionError: assert 0 == 4
+E    +  where 0 = <function score at 0x7fdfd41c2d40>({'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}, Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440,...'', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False), {}, [Block(id='(1, 40, 450)', line=Line(page=1, x0=70, x1=220, y=450, kind='drawn', label={'text': 'By:', 'rect': [40, 440...', unusual=False, extras={}, uncertain_identity=False, scores=[], company_only_blocked=False, ambiguous_heading=False)])
+E    +    where <function score at 0x7fdfd41c2d40> = placement.score
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r21/r21b-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r20_boundaries.py::test_heading_is_normalized_before_identifying_other_party[RECIPIENT:-roles5-4]
+FAILED dealroom_sign/tests/test_placement_r20_boundaries.py::test_independent_evidence_and_party_count_controls[different_page]
+2 failed, 12 passed in 0.30s

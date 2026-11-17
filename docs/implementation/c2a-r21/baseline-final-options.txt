@@ -1,0 +1,30 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____________ test_printed_name_retains_own_three_party_block[False] ____________
+dealroom_sign/tests/test_placement_r21_l1.py:21: in test_printed_name_retains_own_three_party_block
+    assert result['status'] == ('needs_sender' if both else 'placed'), result
+E   AssertionError: {'analysis_version': 'c2a.20', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+____________ test_printed_name_retains_own_three_party_block[True] _____________
+dealroom_sign/tests/test_placement_r21_l1.py:23: in test_printed_name_retains_own_three_party_block
+    assert pat['score'] >= 6 and pat['confidence'] == 'high', result
+E   AssertionError: {'analysis_version': 'c2a.20', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}, {'block_id': 'b1', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert (0 >= 6)
+_________ test_descriptive_role_definition_maps_legal_entity[address] __________
+dealroom_sign/tests/test_placement_r21.py:73: in test_descriptive_role_definition_maps_legal_entity
+    assert placement.tokens(roles['recipient']) == ['harbor', 'light', 'analytics', 'inc']
+E   KeyError: 'recipient'
+_______ test_descriptive_role_definition_maps_legal_entity[hereinafter] ________
+dealroom_sign/tests/test_placement_r21.py:73: in test_descriptive_role_definition_maps_legal_entity
+    assert placement.tokens(roles['recipient']) == ['harbor', 'light', 'analytics', 'inc']
+E   KeyError: 'recipient'
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r21/baseline-final-options.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r21_l1.py::test_printed_name_retains_own_three_party_block[False]
+FAILED dealroom_sign/tests/test_placement_r21_l1.py::test_printed_name_retains_own_three_party_block[True]
+FAILED dealroom_sign/tests/test_placement_r21.py::test_descriptive_role_definition_maps_legal_entity[address]
+FAILED dealroom_sign/tests/test_placement_r21.py::test_descriptive_role_definition_maps_legal_entity[hereinafter]
+4 failed in 0.83s

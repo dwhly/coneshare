@@ -1,0 +1,113 @@
+diff --git a/backend/dealroom_sign/placement.py b/backend/dealroom_sign/placement.py
+index dfb3b163..d259861c 100644
+--- a/backend/dealroom_sign/placement.py
++++ b/backend/dealroom_sign/placement.py
+@@ -27,9 +27,14 @@ from pdfminer.psparser import PSEOF, PSKeyword, literal_name
+ 
+ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|name|title|date|its)\b[:\s]*', re.I)
+ ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
++ROLE_DESCRIPTION = re.compile(
++    r'(?:\b(?:between|and|by|with)\s+)'
++    r'([A-Z][\w&.,\' -]{2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
++    r'(?:,\s*[^()]{0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
++    r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+ STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
+ GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
+-VERSION = 'c2a.20'
++VERSION = 'c2a.21'
+ SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+ COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
+ PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
+@@ -130,6 +135,22 @@ def behalf_parts(text):
+     return None
+ 
+ 
++PARTY_ROLE_WORDS = {
++    'recipient', 'recipients', 'discloser', 'disclosers', 'counterparty', 'counterparties',
++    'company', 'companies', 'party', 'parties', 'guarantor', 'guarantors',
++    'purchaser', 'purchasers', 'buyer', 'buyers', 'seller', 'sellers',
++    'licensor', 'licensors', 'licensee', 'licensees', 'employer', 'employers',
++    'employee', 'employees',
++}
++
++
++def party_role_text(text):
++    words = tokens(text)
++    if words[:1] == ['the']:
++        words = words[1:]
++    return bool(words) and all(word in PARTY_ROLE_WORDS for word in words)
++
++
+ def person_text(text):
+     behalf = behalf_parts(text)
+     if behalf:
+@@ -141,7 +162,7 @@ def person_text(text):
+     caption = NAME_CAPTION.match(text)
+     stripped = NAME_CAPTION.sub('', text).strip()
+     name = IDENTITY_SPLIT.split(stripped)[0].strip()
+-    if (COMPANY.search(name) or ROLE.fullmatch(name) or BLOCK_WORDING.fullmatch(name)
++    if (party_role_text(name) or COMPANY.search(name) or ROLE.fullmatch(name) or BLOCK_WORDING.fullmatch(name)
+             or name.lower() in {'accepted and agreed', 'compensation summary', 'base salary'}):
+         return ''
+     # Explicit Name captions are authoritative even with lower case or initials.
+@@ -611,7 +632,7 @@ def extract(pdf, *, deadline=None):
+                         raise ValueError('identity_unreadable')
+             if pno <= 2:
+                 opening = ' '.join(w['text'] for w in words)
+-                for match in ROLE_DEF.finditer(opening):
++                for match in (*ROLE_DEF.finditer(opening), *ROLE_DESCRIPTION.finditer(opening)):
+                     company, role = match.groups()
+                     if COMPANY.search(company):
+                         roles[role.lower()] = company.strip(' ,')
+@@ -809,7 +830,8 @@ def extract(pdf, *, deadline=None):
+     # A shared heading leaves the page's companies unresolved even when text
+     # collision has erased the company tokens that would otherwise compete.
+     for block, extent in extents:
+-        if (block.line.page in unresolved_heading_pages
++        printed, ambiguous = printed_name_evidence(block, blocks)
++        if (block.line.page in unresolved_heading_pages and not (printed and not ambiguous)
+                 or any(inside_extent(text, extent)
+                        for text in mixed_heading_names.get(block.line.page, []))):
+             block.uncertain_identity = True
+@@ -839,7 +861,7 @@ def accounted_label(text, roles):
+ 
+ 
+ def unresolved_person(text, roles):
+-    if sentence_text(text) or person_text(text) or accounted_label(text, roles):
++    if party_role_text(text) or sentence_text(text) or person_text(text) or accounted_label(text, roles):
+         return False
+     prefix = LABEL.match(text)
+     if prefix and prefix.group(1).lower() != 'date' and text[prefix.end():].strip():
+@@ -922,15 +944,27 @@ def score(signer, block, roles, blocks=()):
+             # Explicit company and printed-name evidence keep their own paths.
+             if not signer.get('company'):
+                 for other in blocks:
+-                    if (other is block or other.line.page != block.line.page or witness_block(other)
++                    if (other is block or witness_block(other)
+                             or printed_names(other, blocks)):
+                         continue
+                     other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
+                     other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
+-                    named = (company_text(other_heading) and any(t not in STOP for t in tokens(other_heading))
+-                             or person_text(other_heading))
+-                    if not named and sum(b.line.page == block.line.page and not witness_block(b)
+-                                         for b in blocks) >= 3:
++                    named = (not party_role_text(other_heading)
++                             and (company_text(other_heading) and any(t not in STOP for t in tokens(other_heading))
++                                  or person_text(other_heading)))
++                    # A named role still needs one unclaimed signing block.
++                    # Two blocks for its company leave the role assignment
++                    # unresolved unless a printed person distinguishes them.
++                    if named and party_role_text(other.heading):
++                        for peer in blocks:
++                            if (peer is other or witness_block(peer)
++                                    or printed_names(peer, blocks)):
++                                continue
++                            peer_heading = roles.get(peer.heading.rstrip(': ').lower(), peer.heading)
++                            peer_heading = (behalf_parts(peer_heading) or ('', peer_heading))[1]
++                            if similarity(other_heading, peer_heading):
++                                return value
++                    if not named and sum(not witness_block(b) for b in blocks) >= 3:
+                         return value
+         value += 4
+     return value

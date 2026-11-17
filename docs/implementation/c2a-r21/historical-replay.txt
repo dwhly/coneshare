@@ -1,0 +1,53 @@
+historical: 500 cases, r21 wrong=0
+historical: 1000 cases, r21 wrong=0
+historical: 1500 cases, r21 wrong=16
+historical: 2000 cases, r21 wrong=32
+historical: 2500 cases, r21 wrong=32
+historical: 3000 cases, r21 wrong=32
+historical: 3500 cases, r21 wrong=32
+historical: 4000 cases, r21 wrong=32
+historical: 4500 cases, r21 wrong=32
+historical: 5000 cases, r21 wrong=32
+historical: 5500 cases, r21 wrong=32
+historical: 6000 cases, r21 wrong=32
+historical: 6500 cases, r21 wrong=32
+historical: 7000 cases, r21 wrong=32
+historical: 7500 cases, r21 wrong=32
+historical: 8000 cases, r21 wrong=32
+historical: 8500 cases, r21 wrong=32
+historical: 9000 cases, r21 wrong=32
+historical: 9500 cases, r21 wrong=32
+historical: 10000 cases, r21 wrong=32
+historical: 10500 cases, r21 wrong=32
+historical: 11000 cases, r21 wrong=40
+historical: 11500 cases, r21 wrong=40
+historical: 12000 cases, r21 wrong=40
+historical: 12500 cases, r21 wrong=40
+historical: 13000 cases, r21 wrong=40
+historical: 13500 cases, r21 wrong=40
+historical: 14000 cases, r21 wrong=40
+historical: 14500 cases, r21 wrong=40
+historical: 15000 cases, r21 wrong=40
+historical: 15500 cases, r21 wrong=40
+historical: 16000 cases, r21 wrong=40
+historical: 16500 cases, r21 wrong=40
+historical: 17000 cases, r21 wrong=40
+{
+  "cases": 17204,
+  "groups": 126,
+  "wrong": {
+    "r20": 0,
+    "fix3": 0,
+    "b2": 40,
+    "role_def": 40,
+    "r21": 40
+  }
+}
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r21/check_evidence.py", line 174, in <module>
+    assert groups['Seven goldens']['r21_golden_diffs'] == groups['Seven goldens']['r21_native_diffs'] == 0
+^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r21/check_evidence.py", line 168, in main
+    if part == 'historical':
+           ^^^^^^^^^^^^^^^^^^
+AssertionError

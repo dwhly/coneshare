@@ -1,0 +1,57 @@
+"""Cumulative release steps, each measured against the preceding step."""
+import importlib.util
+from pathlib import Path
+
+OUT = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('r20_options', OUT.parent / 'c2a-r20/optional_candidates.py')
+options = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(options)
+replace_once = options.replace_once
+
+
+def variants(source):
+    fix3 = replace_once(source,
+        '                    if (other is block or other.line.page != block.line.page or witness_block(other)\n',
+        '                    if (other is block or witness_block(other)\n')
+    fix3 = replace_once(fix3,
+        '                    if not named and sum(b.line.page == block.line.page and not witness_block(b)\n'
+        '                                         for b in blocks) >= 3:',
+        '                    if not named and sum(not witness_block(b) for b in blocks) >= 3:')
+    b2 = replace_once(fix3, 'def person_text(text):\n', '''PARTY_ROLE_WORDS = {
+    'recipient', 'recipients', 'discloser', 'disclosers', 'counterparty', 'counterparties',
+    'company', 'companies', 'party', 'parties', 'guarantor', 'guarantors',
+    'purchaser', 'purchasers', 'buyer', 'buyers', 'seller', 'sellers',
+    'licensor', 'licensors', 'licensee', 'licensees', 'employer', 'employers',
+    'employee', 'employees',
+}
+
+
+def party_role_text(text):
+    words = tokens(text)
+    if words[:1] == ['the']:
+        words = words[1:]
+    return bool(words) and all(word in PARTY_ROLE_WORDS for word in words)
+
+
+def person_text(text):
+''')
+    b2 = replace_once(b2,
+        '    if (COMPANY.search(name) or ROLE.fullmatch(name) or BLOCK_WORDING.fullmatch(name)\n',
+        '    if (party_role_text(name) or COMPANY.search(name) or ROLE.fullmatch(name) or BLOCK_WORDING.fullmatch(name)\n')
+    b2 = replace_once(b2,
+        "    return bool(text.rstrip(': ').lower() in roles or BLOCK_WORDING.fullmatch(text) or ROLE.fullmatch(text)\n",
+        "    return bool(text.rstrip(': ').lower() in roles or party_role_text(text)\n"
+        "                or BLOCK_WORDING.fullmatch(text) or ROLE.fullmatch(text)\n")
+    b2 = replace_once(b2,
+        '                    named = (company_text(other_heading) and any(t not in STOP for t in tokens(other_heading))\n'
+        '                             or person_text(other_heading))',
+        '                    named = (not party_role_text(other_heading)\n'
+        '                             and (company_text(other_heading) and any(t not in STOP for t in tokens(other_heading))\n'
+        '                                  or person_text(other_heading)))')
+    role = options.candidates(b2)['role_def']
+    l1 = replace_once(role,
+        '        if (block.line.page in unresolved_heading_pages\n',
+        '        printed, ambiguous = printed_name_evidence(block, blocks)\n'
+        '        if (block.line.page in unresolved_heading_pages and not (printed and not ambiguous)\n')
+    release = replace_once(l1, "VERSION = 'c2a.20'", "VERSION = 'c2a.21'")
+    return {'r20': source, 'fix3': fix3, 'b2': b2, 'role_def': role, 'r21': release}

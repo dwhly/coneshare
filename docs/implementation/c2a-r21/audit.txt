@@ -1,0 +1,24 @@
+{
+  "preservation": {
+    "starting_files": 1905,
+    "changed": [
+      "backend/dealroom_sign/placement.py"
+    ],
+    "missing": [],
+    "head_unchanged": true,
+    "index_unchanged": true
+  },
+  "full_suite": {
+    "passed": 23970,
+    "failed": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "added_tests": 5596,
+  "source_sha256": "712f04beabd2d51d6174499d3b6943d005bb10f211d725b2e0cfa20b737b4543",
+  "qualified": false,
+  "failures": [
+    "dealroom_sign.tests.test_placement_r20_boundaries::test_heading_is_normalized_before_identifying_other_party[RECIPIENT:-roles5-4]",
+    "dealroom_sign.tests.test_placement_r20_boundaries::test_independent_evidence_and_party_count_controls[different_page]"
+  ]
+}

@@ -1,0 +1,432 @@
+{
+  "part": "review",
+  "cases": 12760,
+  "groups": {
+    "Competition": {
+      "cases": 480,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 96,
+      "r20_model_calls": 0,
+      "r20_holds": 384,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 96,
+      "fix3_model_calls": 0,
+      "fix3_holds": 384,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 96,
+      "b2_model_calls": 0,
+      "b2_holds": 384,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 96,
+      "role_def_model_calls": 0,
+      "role_def_holds": 384,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 96,
+      "r21_model_calls": 0,
+      "r21_holds": 384,
+      "r21_full_diffs": 0,
+      "r20_placed": 96,
+      "fix3_placed": 96,
+      "b2_placed": 96,
+      "role_def_placed": 96,
+      "r21_placed": 96
+    },
+    "L1 boundary pat": {
+      "cases": 3480,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_placed": 191,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_placed": 191,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_placed": 191,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_placed": 191,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 191,
+      "r21_full_diffs": 0,
+      "r20_holds": 3289,
+      "fix3_holds": 3289,
+      "b2_holds": 3289,
+      "role_def_holds": 3289,
+      "r21_holds": 3289
+    },
+    "L1 boundary fleet": {
+      "cases": 1800,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1800,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1800,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1800,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1800,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1800,
+      "r21_full_diffs": 0
+    },
+    "F fine": {
+      "cases": 3456,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 1434,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 1434,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 1434,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 1434,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2325,
+      "r21_full_diffs": 606,
+      "r21_holds": 1131,
+      "r20_placed": 2022,
+      "fix3_placed": 2022,
+      "b2_placed": 2022,
+      "role_def_placed": 2022
+    },
+    "F fine company-only": {
+      "cases": 3456,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2680,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2680,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2680,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2680,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2680,
+      "r21_full_diffs": 0,
+      "r20_placed": 776,
+      "fix3_placed": 776,
+      "b2_placed": 776,
+      "role_def_placed": 776,
+      "r21_placed": 776
+    },
+    "Realistic NDA matrix": {
+      "cases": 48,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 48,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 48,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 48,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 48,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 48,
+      "r21_full_diffs": 0
+    },
+    "B1 real worker": {
+      "cases": 2,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 2,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 2,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 2,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 2,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r21_full_diffs": 0
+    },
+    "Q4 M1 ambiguity": {
+      "cases": 6,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 6,
+      "r20_model_calls": 0,
+      "r20_placed": 6,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 6,
+      "fix3_model_calls": 0,
+      "fix3_placed": 6,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 6,
+      "b2_model_calls": 0,
+      "b2_placed": 6,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 6,
+      "role_def_model_calls": 0,
+      "role_def_placed": 6,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 6,
+      "r21_model_calls": 0,
+      "r21_placed": 6,
+      "r21_full_diffs": 0
+    },
+    "Q4 controls": {
+      "cases": 32,
+      "r20_wrong": 0,
+      "r20_raw_wrong": 0,
+      "r20_model_calls": 0,
+      "r20_holds": 20,
+      "fix3_wrong": 0,
+      "fix3_raw_wrong": 0,
+      "fix3_model_calls": 0,
+      "fix3_holds": 20,
+      "fix3_full_diffs": 0,
+      "b2_wrong": 0,
+      "b2_raw_wrong": 0,
+      "b2_model_calls": 0,
+      "b2_holds": 20,
+      "b2_full_diffs": 0,
+      "role_def_wrong": 0,
+      "role_def_raw_wrong": 0,
+      "role_def_model_calls": 0,
+      "role_def_holds": 20,
+      "role_def_full_diffs": 0,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 20,
+      "r21_full_diffs": 0,
+      "r20_placed": 12,
+      "fix3_placed": 12,
+      "b2_placed": 12,
+      "role_def_placed": 12,
+      "r21_placed": 12
+    }
+  },
+  "transitions": {
+    "Competition": {
+      "fix3": {
+        "needs_sender -> needs_sender": 384,
+        "placed -> placed": 96
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 384,
+        "placed -> placed": 96
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 384,
+        "placed -> placed": 96
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 384,
+        "placed -> placed": 96
+      }
+    },
+    "L1 boundary pat": {
+      "fix3": {
+        "placed -> placed": 191,
+        "needs_sender -> needs_sender": 3289
+      },
+      "b2": {
+        "placed -> placed": 191,
+        "needs_sender -> needs_sender": 3289
+      },
+      "role_def": {
+        "placed -> placed": 191,
+        "needs_sender -> needs_sender": 3289
+      },
+      "r21": {
+        "placed -> placed": 191,
+        "needs_sender -> needs_sender": 3289
+      }
+    },
+    "L1 boundary fleet": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1800
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1800
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1800
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 1800
+      }
+    },
+    "F fine": {
+      "fix3": {
+        "needs_sender -> needs_sender": 1434,
+        "placed -> placed": 2022
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 1434,
+        "placed -> placed": 2022
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 1434,
+        "placed -> placed": 2022
+      },
+      "r21": {
+        "needs_sender -> placed": 303,
+        "needs_sender -> needs_sender": 1131,
+        "placed -> placed": 2022
+      }
+    },
+    "F fine company-only": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2680,
+        "placed -> placed": 776
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2680,
+        "placed -> placed": 776
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2680,
+        "placed -> placed": 776
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2680,
+        "placed -> placed": 776
+      }
+    },
+    "Realistic NDA matrix": {
+      "fix3": {
+        "needs_sender -> needs_sender": 48
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 48
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 48
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 48
+      }
+    },
+    "B1 real worker": {
+      "fix3": {
+        "needs_sender -> needs_sender": 2
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 2
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 2
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 2
+      }
+    },
+    "Q4 M1 ambiguity": {
+      "fix3": {
+        "placed -> placed": 6
+      },
+      "b2": {
+        "placed -> placed": 6
+      },
+      "role_def": {
+        "placed -> placed": 6
+      },
+      "r21": {
+        "placed -> placed": 6
+      }
+    },
+    "Q4 controls": {
+      "fix3": {
+        "needs_sender -> needs_sender": 20,
+        "placed -> placed": 12
+      },
+      "b2": {
+        "needs_sender -> needs_sender": 20,
+        "placed -> placed": 12
+      },
+      "role_def": {
+        "needs_sender -> needs_sender": 20,
+        "placed -> placed": 12
+      },
+      "r21": {
+        "needs_sender -> needs_sender": 20,
+        "placed -> placed": 12
+      }
+    }
+  },
+  "source_sha256": {
+    "r20": "c747a21aefadcaadaf794a1811ab7810bb74bbf5d206841136053e27fda395d9",
+    "fix3": "c55004247dc5088005193588acd6b0b47a9b094cded4c4f6f0e6cc0fc4633fbb",
+    "b2": "1e76dc3d8fb77f7e1224ff154567ef6165279d97510f5706da0f66cf7d5b615d",
+    "role_def": "95614e30edc4c9afd61b2dcf50452e98a8e4c503fec31813cde58310693b08f8",
+    "r21": "712f04beabd2d51d6174499d3b6943d005bb10f211d725b2e0cfa20b737b4543"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 10
+}
