@@ -621,3 +621,6 @@ MIDDLEWARE = ['dealroom_sign.recipient_proxy.RecipientBoundaryMiddleware', *MIDD
 FLEET_TENANT_NAME = os.environ.get('FLEET_TENANT_NAME', '')
 FLEET_ABOUT_URL = os.environ.get('FLEET_ABOUT_URL', '')
 FLEET_SOURCE_URL = os.environ.get('FLEET_SOURCE_URL', '')
+
+# Empty disables the prototype Drive snapshot source; no OAuth credentials needed.
+DEALROOM_DRIVE_SNAPSHOT_DIR = os.environ.get("DEALROOM_DRIVE_SNAPSHOT_DIR", "")

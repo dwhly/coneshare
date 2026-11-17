@@ -1,0 +1,199 @@
+{
+  "root_id": "harbor-light",
+  "root_name": "TEST (fictional) Harbor Light Analytics - Series A data room",
+  "taken_at": "2026-11-17T09:00:00Z",
+  "nodes": [
+    {
+      "id": "company",
+      "name": "01 Company",
+      "mimeType": "application/vnd.google-apps.folder",
+      "parents": [
+        "harbor-light"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/drive/folders/company",
+      "path": null,
+      "exportedMimeType": null
+    },
+    {
+      "id": "financials",
+      "name": "Financials",
+      "mimeType": "application/vnd.google-apps.folder",
+      "parents": [
+        "harbor-light"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/drive/folders/financials",
+      "path": null,
+      "exportedMimeType": null
+    },
+    {
+      "id": "legal",
+      "name": "Legal",
+      "mimeType": "application/vnd.google-apps.folder",
+      "parents": [
+        "harbor-light"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/drive/folders/legal",
+      "path": null,
+      "exportedMimeType": null
+    },
+    {
+      "id": "product",
+      "name": "Product",
+      "mimeType": "application/vnd.google-apps.folder",
+      "parents": [
+        "harbor-light"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/drive/folders/product",
+      "path": null,
+      "exportedMimeType": null
+    },
+    {
+      "id": "overview",
+      "name": "Company overview",
+      "mimeType": "application/vnd.google-apps.document",
+      "parents": [
+        "company"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/overview/view",
+      "path": "overview.pdf",
+      "exportedMimeType": "application/pdf"
+    },
+    {
+      "id": "deck",
+      "name": "Pitch deck.pdf",
+      "mimeType": "application/pdf",
+      "parents": [
+        "company"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/deck/view",
+      "path": "deck.pdf",
+      "exportedMimeType": "application/pdf"
+    },
+    {
+      "id": "model",
+      "name": "Financial model FY26-FY29",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "parents": [
+        "financials"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/model/view",
+      "path": "model.xlsx",
+      "exportedMimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    },
+    {
+      "id": "pnl",
+      "name": "Monthly P&L 2026.xlsx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "parents": [
+        "financials"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/pnl/view",
+      "path": "pnl.xlsx",
+      "exportedMimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    },
+    {
+      "id": "incorporation",
+      "name": "Certificate of incorporation.pdf",
+      "mimeType": "application/pdf",
+      "parents": [
+        "legal"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/incorporation/view",
+      "path": "incorporation.pdf",
+      "exportedMimeType": "application/pdf"
+    },
+    {
+      "id": "cap",
+      "name": "Cap table",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "parents": [
+        "legal"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/cap/view",
+      "path": "cap.xlsx",
+      "exportedMimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    },
+    {
+      "id": "nda",
+      "name": "Mutual NDA.pdf",
+      "mimeType": "application/pdf",
+      "parents": [
+        "legal"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/nda/view",
+      "path": "nda.pdf",
+      "exportedMimeType": "application/pdf"
+    },
+    {
+      "id": "roadmap",
+      "name": "Product roadmap 2027",
+      "mimeType": "application/vnd.google-apps.document",
+      "parents": [
+        "product"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/roadmap/view",
+      "path": "roadmap.pdf",
+      "exportedMimeType": "application/pdf"
+    },
+    {
+      "id": "security",
+      "name": "Security overview.pdf",
+      "mimeType": "application/pdf",
+      "parents": [
+        "product"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/security/view",
+      "path": "security.pdf",
+      "exportedMimeType": "application/pdf"
+    },
+    {
+      "id": "customers",
+      "name": "Customer list - top 10",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "parents": [
+        "harbor-light"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/customers/view",
+      "path": "customers.xlsx",
+      "exportedMimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    },
+    {
+      "id": "notes",
+      "name": "Notes for investors - draft",
+      "mimeType": "application/vnd.google-apps.document",
+      "parents": [
+        "harbor-light"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/notes/view",
+      "path": "notes.pdf",
+      "exportedMimeType": "application/pdf"
+    },
+    {
+      "id": "board",
+      "name": "Board deck Q3 2026.pdf",
+      "mimeType": "application/pdf",
+      "parents": [
+        "harbor-light"
+      ],
+      "modifiedTime": "2026-11-17T09:00:00Z",
+      "webViewLink": "https://drive.google.com/file/d/board/view",
+      "path": "board.pdf",
+      "exportedMimeType": "application/pdf"
+    }
+  ]
+}

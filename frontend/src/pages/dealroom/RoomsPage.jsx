@@ -41,7 +41,7 @@ export default function RoomsPage() {
     <div className="dr-container">
       <PageHead
         title="Rooms"
-        subtitle="Share deal documents with counterparties: verified visitors, NDA first, watermarked copies."
+        subtitle="Your deal rooms, ready for the next conversation."
         actions={
           <>
             <button type="button" className="dr-btn" onClick={() => setOrgOpen(true)}>
@@ -138,7 +138,7 @@ export default function RoomsPage() {
           </div>
         </>
       )}
-      <CreateRoomDialog open={createOpen} onOpenChange={setCreateOpen} onCreated={(room) => (room?.id ? navigate(`/datarooms/${room.id}`) : reload())} />
+      <CreateRoomDialog open={createOpen} onOpenChange={setCreateOpen} onCreated={(room) => (room?.id ? navigate(`/datarooms/${room.id}${room.startDrive ? "?drive=1" : ""}`) : reload())} />
       <AddOrganisationDialog open={orgOpen} onOpenChange={setOrgOpen} />
     </div>
   );

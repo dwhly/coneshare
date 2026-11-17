@@ -45,8 +45,8 @@ def test_visitor_page_never_renders_the_room_name(case, staff, owner, django_cap
         assert SECRET_NAME not in room.content.decode()
     for path in (f'/signing/room/{slug}', f'/signing/nda/{room_id}'):
         page = client.get(path)
-        assert page.status_code == 200, (path, page.status_code)
+        assert page.status_code == 302, (path, page.status_code)
+        assert page.url == f'/view/{slug}'
         html = page.content.decode()
         assert SECRET_NAME not in html and 'Kestrel' not in html, (case, path)
-        assert 'id="context-room"></span>' in html
         assert page['Cache-Control'] == 'private, no-store'

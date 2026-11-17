@@ -3,6 +3,7 @@ import hmac
 import secrets
 from datetime import timedelta
 from django.conf import settings
+from django.core import signing
 from dealroom_sign.fleet_mail import send_mail
 from django.db import transaction
 from django.middleware.csrf import get_token
@@ -15,7 +16,11 @@ from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema
 from sharelinks.models import ShareLink, Viewer, ViewSession, ShareLinkDataroomSetting
 from backend.utils import get_client_ip
-from .models import Challenge, IssuanceBudget
+from .models import Challenge, IssuanceBudget, Activity
+from .drive import room_state
+from .onramp import firm_key
+from dealroom_sign.models import NdaPolicy, NdaAcceptance
+from sharelinks.views import _is_dataroom_folder_path_visible
 from .policy import select_grant, evaluate
 from .brand import load_brand
 from .activity import record
@@ -122,21 +127,26 @@ class RecipientConfirmView(APIView):
             policy, grant, member = select_grant(link, challenge.email)
         except PermissionDenied:
             return Response(refused)
-        member, _ = Viewer.objects.get_or_create(organization=link.organization, email=challenge.email)
-        member.name = challenge.name or member.name or challenge.email
-        member.verified_at = timezone.now()
-        if grant.viewer_organisation_id:
-            member.recipient_org = grant.viewer_organisation
-        member.save()
-        org = member.recipient_org
-        session = ViewSession.objects.create(share_link=link, viewer=member, viewer_email=member.email, viewer_name=member.name, viewer_organisation=org, viewer_organisation_name=org.name if org else '', email_verification_method='verified')
-        request.session.cycle_key()
-        now = timezone.now().timestamp()
-        request.session['dealroom_member'] = {'room_id': str(link.dataroom_id), 'member_id': str(member.pk), 'email': member.email, 'expires': now + 8 * 3600, 'last_seen': now}
-        request.session['authorized_share_links'] = {str(link.pk): {'email_verified': True, 'email_method': 'verified', 'viewer_email': member.email, 'viewer_name': member.name, 'viewer_organisation_name': org.name if org else '', 'view_session_id': str(session.pk), 'password_verified': True}}
-        request.session.set_expiry(8 * 3600)
-        record('member.joined', organization=link.organization, actor=member, room_id=link.dataroom_id, target_id=member.pk)
+        establish_session(request, link, grant, challenge.email, challenge.name)
         return Response({'status': 'verified'})
+
+def establish_session(request, link, grant, email, name=""):
+    member, _ = Viewer.objects.get_or_create(organization=link.organization, email=email)
+    member.name = name or member.name or email
+    member.verified_at = timezone.now()
+    if grant.viewer_organisation_id:
+        member.recipient_org = grant.viewer_organisation
+    member.save()
+    org = member.recipient_org
+    session = ViewSession.objects.create(share_link=link, viewer=member, viewer_email=member.email, viewer_name=member.name, viewer_organisation=org, viewer_organisation_name=org.name if org else '', email_verification_method='verified')
+    request.session.cycle_key()
+    now = timezone.now().timestamp()
+    request.session['dealroom_member'] = {'room_id': str(link.dataroom_id), 'member_id': str(member.pk), 'email': member.email, 'expires': now + 8 * 3600, 'last_seen': now}
+    request.session['authorized_share_links'] = {str(link.pk): {'email_verified': True, 'email_method': 'verified', 'viewer_email': member.email, 'viewer_name': member.name, 'viewer_organisation_name': org.name if org else '', 'view_session_id': str(session.pk), 'password_verified': True}}
+    request.session.set_expiry(8 * 3600)
+    record('member.joined', organization=link.organization, actor=member, room_id=link.dataroom_id, target_id=member.pk)
+    return member
+
 
 
 class RecipientRoomView(APIView):
@@ -158,16 +168,32 @@ class RecipientRoomView(APIView):
             version = item.document.versions.filter(is_primary=True).first()
             if not version:
                 continue
-            files.append({'id': str(item.pk), 'name': item.name or item.document.name, 'folder_id': str(item.folder_id or ''), 'page_count': version.num_pages or 1, 'download_level': file_decision.effective_download_level, 'page_url': f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}', 'download_url': f'/api/v1/links/{slug}/download-file/?dataroom_document_id={item.pk}'})
-        from sharelinks.views import _is_dataroom_folder_path_visible
+            files.append({'id': str(item.pk), 'name': item.name or item.document.name, 'folder_id': str(item.folder_id or ''), 'page_count': version.num_pages or 1, 'version_number': version.version_number, 'published_at': version.metadata.get('drive_source', {}).get('published_at', version.created_at.isoformat()), 'download_level': file_decision.effective_download_level, 'page_url': f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}', 'download_url': f'/api/v1/links/{slug}/download-file/?dataroom_document_id={item.pk}'})
+        all_folders = {str(f.pk): f for f in link.dataroom.folders.order_by('name', 'pk')}
         visible_folder_ids = {item['folder_id'] for item in files if item['folder_id']}
-        folders = [
-            {'id': str(folder.pk), 'name': folder.name}
-            for folder in link.dataroom.folders.order_by('name', 'pk')
-            if str(folder.pk) in visible_folder_ids
-            and _is_dataroom_folder_path_visible(link, folder)
-        ]
-        return Response({'id': str(link.dataroom_id), 'name': link.dataroom.name, 'member': {'name': member.name, 'email': member.email, 'org': member.recipient_org.name if member.recipient_org else ''}, 'folders': folders, 'files': files, 'brand': load_brand()})
+        for id in list(visible_folder_ids):
+            folder = all_folders.get(id)
+            seen = set()
+            while folder and folder.parent_id and str(folder.parent_id) not in seen:
+                seen.add(str(folder.parent_id))
+                visible_folder_ids.add(str(folder.parent_id))
+                folder = all_folders.get(str(folder.parent_id))
+        folders = [{'id': id, 'name': folder.name, 'parent_id': str(folder.parent_id or '')}
+                   for id, folder in all_folders.items() if id in visible_folder_ids
+                   and _is_dataroom_folder_path_visible(link, folder)]
+        state = room_state(link.dataroom)
+        invite = Activity.objects.filter(room_id=str(link.dataroom_id), event_type='room.invited', data__email=member.email).first()
+        firm = firm_key(member.email)
+        answers = [dict(e.data, id=str(e.pk)) for e in Activity.objects.filter(room_id=str(link.dataroom_id),
+            event_type='room.request_answered') if e.data.get('faq') or e.data.get('firm') == firm]
+        nda = NdaPolicy.objects.filter(room=link.dataroom, enabled=True).first()
+        return Response({'id': str(link.dataroom_id), 'name': link.dataroom.name,
+            'member': {'name': member.name, 'email': member.email, 'org': member.recipient_org.name if member.recipient_org else ''},
+            'folders': folders, 'files': files, 'brand': load_brand(), 'note': invite.data['note'] if invite else state['note'],
+            'start_here': [i for i in state['start_here'] if i in {f['id'] for f in files}], 'answers': answers,
+            'nda_signed': bool(nda and NdaAcceptance.objects.filter(room=link.dataroom, member_id=str(member.pk),
+                policy_revision=str(nda.revision)).exists())})
+
 
 
 class RecipientLogoutView(APIView):
@@ -179,3 +205,45 @@ class RecipientLogoutView(APIView):
         csrf(request)
         request.session.flush()
         return Response({'status': 'logged_out'})
+
+
+class RecipientPersonalView(APIView):
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+
+    @extend_schema(request=dict, responses=dict)
+    def post(self, request, slug):
+        csrf(request)
+        link = get_link(slug)
+        try:
+            payload = signing.loads(request.data.get('token', ''), salt='room-personal', max_age=30 * 86400)
+            if payload['room'] != str(link.dataroom_id):
+                raise signing.BadSignature('room mismatch')
+            policy, grant, member = select_grant(link, payload['email'])
+            if str(grant.pk) != payload['grant'] or grant.email != payload['email']:
+                raise signing.BadSignature('grant changed')
+        except (signing.BadSignature, KeyError, TypeError) as exc:
+            raise PermissionDenied('This personal link expired or is no longer available. Ask the sender for a new link.') from exc
+        establish_session(request, link, grant, payload['email'])
+        return Response({'status': 'verified'})
+
+
+class RecipientRequestView(APIView):
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+
+    @extend_schema(request=dict, responses=dict)
+    def post(self, request, slug):
+        csrf(request)
+        link = get_link(slug)
+        item_id = serializers.CharField().run_validation(request.data.get('item_id'))
+        decision = evaluate(request, link, document_id=item_id)
+        kind = serializers.ChoiceField(choices=['question', 'copy']).run_validation(request.data.get('kind'))
+        text = serializers.CharField(max_length=5000).run_validation(request.data.get('text'))
+        page = serializers.IntegerField(min_value=1, max_value=500).run_validation(request.data.get('page', 1))
+        member = Viewer.objects.get(pk=decision.member_id)
+        item = link.dataroom.documents.get(pk=item_id)
+        event = record('room.request', organization=link.organization, actor=member, room_id=link.dataroom_id,
+            target_id=item_id, data={'kind': kind, 'text': text, 'page': page, 'document': item.name or item.document.name,
+                                    'email': member.email, 'firm': firm_key(member.email)})
+        return Response({'id': str(event.pk), 'status': 'sent'}, status=201)

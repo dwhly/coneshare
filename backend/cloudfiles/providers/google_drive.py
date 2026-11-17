@@ -20,6 +20,12 @@ from .base import BaseCloudProvider, CloudProviderError
 
 logger = logging.getLogger(__name__)
 
+GOOGLE_EXPORTS = {
+    'application/vnd.google-apps.document': ('application/pdf', '.pdf'),
+    'application/vnd.google-apps.spreadsheet': ('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', '.xlsx'),
+    'application/vnd.google-apps.presentation': ('application/vnd.openxmlformats-officedocument.presentationml.presentation', '.pptx'),
+}
+
 
 class GoogleDriveProvider(BaseCloudProvider):
     """Google Drive integration."""
@@ -148,22 +154,20 @@ class GoogleDriveProvider(BaseCloudProvider):
         try:
             service = self._get_client()
             folder_id = 'root' if path == '/' else path
-            results = service.files().list(
-                q=f"'{folder_id}' in parents and trashed = false",
-                pageSize=100,
-                fields="nextPageToken, files(id, name, mimeType, size)"
-            ).execute()
-
-            items = []
-            for file in results.get('files', []):
-                is_folder = file.get('mimeType') == 'application/vnd.google-apps.folder'
-                items.append({
-                    'id': file.get('id'),
-                    'name': file.get('name'),
-                    'type': 'folder' if is_folder else 'file',
-                    'path': file.get('id'),
-                    'size': int(file.get('size', 0)) if not is_folder else None,
-                })
+            items, page_token = [], None
+            while True:
+                results = service.files().list(
+                    q=f"'{folder_id}' in parents and trashed = false",
+                    pageSize=100, pageToken=page_token,
+                    fields="nextPageToken, files(id, name, mimeType, size, parents, modifiedTime, webViewLink)"
+                ).execute()
+                for file in results.get('files', []):
+                    is_folder = file.get('mimeType') == 'application/vnd.google-apps.folder'
+                    items.append({**file, 'type': 'folder' if is_folder else 'file',
+                                  'path': file['id'], 'size': int(file.get('size', 0))})
+                page_token = results.get('nextPageToken')
+                if not page_token:
+                    break
             return items
         except (HttpError, RefreshError) as e:
             self._handle_provider_error(e, "list_files")
@@ -171,7 +175,7 @@ class GoogleDriveProvider(BaseCloudProvider):
     def download_file(self, file_id):
         try:
             service = self._get_client()
-            file_metadata = service.files().get(fileId=file_id, fields='name, size, md5Checksum, version, mimeType').execute()
+            file_metadata = service.files().get(fileId=file_id, fields='name, size, md5Checksum, version, mimeType, modifiedTime, webViewLink').execute()
             mime_type = file_metadata.get('mimeType', '')
             name = file_metadata.get('name', 'Untitled')
             etag_or_rev = file_metadata.get('md5Checksum') or str(file_metadata.get('version', ''))
@@ -180,24 +184,9 @@ class GoogleDriveProvider(BaseCloudProvider):
             is_google_apps_file = mime_type.startswith('application/vnd.google-apps.') and mime_type != 'application/vnd.google-apps.folder'
 
             if is_google_apps_file:
-                # Map Google Workspace format to a downloadable export format
-                if mime_type == 'application/vnd.google-apps.document':
-                    export_mime = 'application/pdf'
-                    if not name.lower().endswith('.pdf'):
-                        name += '.pdf'
-                elif mime_type == 'application/vnd.google-apps.spreadsheet':
-                    export_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                    if not name.lower().endswith('.xlsx'):
-                        name += '.xlsx'
-                elif mime_type == 'application/vnd.google-apps.presentation':
-                    export_mime = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-                    if not name.lower().endswith('.pptx'):
-                        name += '.pptx'
-                else:
-                    # Fallback default export as PDF
-                    export_mime = 'application/pdf'
-                    if not name.lower().endswith('.pdf'):
-                        name += '.pdf'
+                export_mime, extension = GOOGLE_EXPORTS.get(mime_type, ('application/pdf', '.pdf'))
+                if not name.lower().endswith(extension):
+                    name += extension
 
                 request = service.files().export_media(fileId=file_id, mimeType=export_mime)
             else:
@@ -220,7 +209,10 @@ class GoogleDriveProvider(BaseCloudProvider):
                 'name': name,
                 'size': actual_size,
                 'content': fh,
-                'etag_or_rev': etag_or_rev
+                'etag_or_rev': etag_or_rev,
+                'content_type': export_mime if is_google_apps_file else mime_type,
+                'modifiedTime': file_metadata.get('modifiedTime', ''),
+                'webViewLink': file_metadata.get('webViewLink', ''),
             }
         except (HttpError, RefreshError) as e:
             self._handle_provider_error(e, "download")

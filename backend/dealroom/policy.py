@@ -53,6 +53,10 @@ def evaluate(request, link, *, document_id=None, download=False, skip_nda=False)
     from django.apps import apps
     sign_enabled = apps.is_installed('dealroom_sign')
     if sign_enabled and not skip_nda:
+        from .drive import room_state
+        from dealroom_sign.models import NdaPolicy
+        if room_state(policy.room).get('require_nda') and not NdaPolicy.objects.filter(room=policy.room, enabled=True).exists():
+            raise PermissionDenied({'code': 'nda_not_configured', 'room_id': str(policy.room.pk)})
         from dealroom_sign.policy import check_nda
         check_nda(policy.room, member)
     level = grant.download_ceiling

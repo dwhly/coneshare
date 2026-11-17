@@ -49,7 +49,7 @@ function TopBarLayout() {
       <main className="overflow-auto">
         {rooms ? (
           <>
-            <DealroomSubnav />
+            {!pathname.startsWith("/datarooms/") && <DealroomSubnav />}
             <Outlet />
           </>
         ) : (

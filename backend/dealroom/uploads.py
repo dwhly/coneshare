@@ -4,25 +4,21 @@ from django.db import transaction
 from rest_framework.exceptions import ValidationError
 from datarooms.models import DataroomDocument, DataroomFolder
 from documents.fileserver import fileserver_client
+from documents.tasks import generate_pdf_pages_task, convert_office_to_pdf_task
 from documents.services import create_document_from_upload, generate_storage_key
-from documents.renderers import get_renderer
+from datarooms.services import get_or_create_dataroom_storage_folder
+from pypdf import PdfReader
+import zipfile
 from sharelinks.models import ShareLinkDataroomSetting
 from .activity import record
 
 ALLOWED = {'.pdf': 'application/pdf', '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation', '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}
 
 
-def upload(room, actor, file, folder_id=None):
-    from pypdf import PdfReader
-    import zipfile
+def validate_upload(file):
     ext = Path(file.name).suffix.lower()
     if ext not in ALLOWED or file.size > 50 * 1024 * 1024:
         raise ValidationError('Supported PDF/DOCX/PPTX/XLSX up to 50 MiB required. Macros and video are disabled.')
-    folder = None
-    if folder_id:
-        folder = DataroomFolder.objects.filter(pk=folder_id, dataroom=room).first()
-        if not folder:
-            raise ValidationError('Folder is not in this room.')
     if ext == '.pdf':
         try:
             pages = len(PdfReader(file).pages)
@@ -38,6 +34,22 @@ def upload(room, actor, file, folder_id=None):
         except Exception as exc:
             raise ValidationError('Unsafe Office package.') from exc
     file.seek(0)
+    return pages if ext == '.pdf' else None
+
+
+def queue_preview(version):
+    task = generate_pdf_pages_task if Path(version.original_storage_key).suffix.lower() == '.pdf' else convert_office_to_pdf_task
+    transaction.on_commit(lambda: task.delay(str(version.pk)))
+
+
+def upload(room, actor, file, folder_id=None):
+    pages = validate_upload(file)
+    ext = Path(file.name).suffix.lower()
+    folder = None
+    if folder_id:
+        folder = DataroomFolder.objects.filter(pk=folder_id, dataroom=room).first()
+        if not folder:
+            raise ValidationError('Folder is not in this room.')
     source_hash = hashlib.sha256()
     for chunk in file.chunks():
         source_hash.update(chunk)
@@ -45,16 +57,17 @@ def upload(room, actor, file, folder_id=None):
     key = generate_storage_key(room.organization_id, file.name)
     fileserver_client.upload_file(key, file, content_type=ALLOWED[ext])
     user = getattr(actor, 'user', actor)
-    document = create_document_from_upload(user, room.vault_folder, key, Path(file.name).name, file.size, ALLOWED[ext])
+    vault = get_or_create_dataroom_storage_folder(room, user)
+    document = create_document_from_upload(user, vault, key, Path(file.name).name, file.size, ALLOWED[ext], track_user_quota=False)
     version = document.versions.get(is_primary=True)
     version.metadata = {**version.metadata, 'source_sha256': source_hash.hexdigest()}
-    version.save(update_fields=['metadata'])
+    if pages:
+        version.num_pages = pages
+    version.save(update_fields=['metadata', 'num_pages'])
     item = DataroomDocument.objects.create(dataroom=room, document=document, folder=folder, name=document.name, is_direct_upload=True)
     for link in room.share_links.filter(is_active=True):
         ShareLinkDataroomSetting.objects.update_or_create(share_link=link, dataroom_document=item, defaults={'enable_watermark':True, 'allow_download':False})
-    if ext == '.pdf':
-        from documents.tasks import generate_pdf_pages_task
-        transaction.on_commit(lambda: generate_pdf_pages_task.delay(str(version.pk)))
+    queue_preview(version)
     record('document.uploaded', organization=room.organization, actor=actor, room_id=room.pk, target_id=document.pk, data={'source_sha256': source_hash.hexdigest(), 'version_id': str(version.pk)})
     item.upload_version_id = str(version.pk)
     item.upload_sha256 = source_hash.hexdigest()

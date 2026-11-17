@@ -26,3 +26,14 @@ test('verification refusal does not render the room or filenames',async()=>{
   fireEvent.change(screen.getByLabelText('Verification code'),{target:{value:'123456'}});fireEvent.click(screen.getByRole('button',{name:'Confirm access'}));
   expect(await screen.findByRole('alert')).toHaveTextContent('Access refused');expect(screen.queryByText('Documents')).not.toBeInTheDocument();
 });
+
+test('a personal invitation cannot silently reuse another visitor identity', async () => {
+  window.history.replaceState({}, '', '/view/atlas#personal=personal-token');
+  mount();
+  const button = await screen.findByRole('button', { name: 'Continue to room' });
+  await waitFor(() => expect(button).not.toBeDisabled());
+  expect(fetch.mock.calls.some(([url]) => url.endsWith('/room/'))).toBe(false);
+  expect(fetch.mock.calls.some(([, options]) => options?.method === 'POST')).toBe(false);
+  fireEvent.click(button);
+  await waitFor(() => expect(fetch.mock.calls.some(([url, options]) => url.endsWith('/personal/') && JSON.parse(options.body).token === 'personal-token')).toBe(true));
+});

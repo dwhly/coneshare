@@ -246,7 +246,7 @@ def validate_document_version_metadata(value):
     if not isinstance(value, dict):
         raise ValidationError("metadata must be a dictionary.")
 
-    allowed_keys = {'cloud_import'}
+    allowed_keys = {'cloud_import', 'drive_source', 'source_sha256'}
     invalid_keys = set(value.keys()) - allowed_keys
     if invalid_keys:
         raise ValidationError(f"Invalid keys in metadata: {', '.join(invalid_keys)}")

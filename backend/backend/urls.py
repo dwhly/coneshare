@@ -22,6 +22,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from dealroom_sign.tenant_brand import tenant_logo
+from dealroom.pages import visitor_room
 
 from core.views import (CustomTokenObtainPairView, LanguagesView, LogoutView, PublicSettingsView,
                         SetPasswordView, SignupRequestView,
@@ -29,6 +30,8 @@ from core.views import (CustomTokenObtainPairView, LanguagesView, LogoutView, Pu
 
 
 urlpatterns = [
+    path("signing/room/<slug:slug>", visitor_room),
+    path("signing/nda/<str:room_id>", visitor_room),
     path('chief/tenant-logo', tenant_logo),
     path('signing/tenant-logo', tenant_logo),
     path("api/v1/dealroom-sign/", include("dealroom_sign.urls")),

@@ -34,7 +34,7 @@ test('room Documents card lists documents inside folders (signed copies), with t
     </MemoryRouter>,
   );
   const cell = await screen.findByText('SPA_signed.pdf');
-  expect(within(cell.closest('td')).getByText('Executed / Agreements')).toBeInTheDocument();
+  expect(within(cell.parentElement).getByText('Executed / Agreements')).toBeInTheDocument();
   expect(screen.getByText('Teaser.pdf')).toBeInTheDocument();
 });
 

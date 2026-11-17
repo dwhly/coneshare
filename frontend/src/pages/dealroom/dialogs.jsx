@@ -62,31 +62,35 @@ function useDialogState(open) {
 
 export function CreateRoomDialog({ open, onOpenChange, onCreated }) {
   const [name, setName] = useState("");
+  const [template, setTemplate] = useState("series_a");
+  const [drive, setDrive] = useState(false);
   const { busy, error, run } = useDialogState(open);
   return (
     <FormDialog
       open={open}
       onOpenChange={onOpenChange}
       title="Create room"
-      description="A room holds the documents you share with one counterparty. Visitors verify their email before they see anything."
+      description="Start with a deal checklist, or bring the folders you already have in Google Drive."
       submitLabel="Create room"
       busy={busy}
       error={error}
       disabled={!name.trim()}
       onSubmit={async () => {
         let created;
-        if (await run(async () => (created = (await api.post("/dealroom/rooms/", { name: name.trim() })).data))) {
+        if (await run(async () => { created = (await api.post("/dealroom/rooms/", { name: name.trim() })).data; await api.patch(`/dealroom/rooms/${created.id}/outline/`, { ...(template ? { template } : {}), require_nda: true }); })) {
           toast.success("Room created");
           setName("");
           onOpenChange(false);
-          onCreated?.(created);
+          onCreated?.({ ...created, startDrive: drive });
         }
       }}
     >
       <div className="dr-field">
         <label htmlFor="room-name">Room name</label>
-        <input id="room-name" className="dr-input" value={name} onChange={(e) => setName(e.target.value)} placeholder="Project Atlas · Diligence" autoFocus required />
+        <input id="room-name" className="dr-input" value={name} onChange={(e) => setName(e.target.value)} placeholder="Harbor Light Analytics · Series A" autoFocus required />
       </div>
+      <div className="dr-field"><span className="dr-label">Start with</span><SelectMenu label="Room template" value={template} onChange={setTemplate} options={[{ value: 'series_a', label: 'Series A · 8 folders and a checklist' }, { value: '', label: 'My own folders' }]} /></div>
+      <label className="text-sm flex items-center gap-2"><input type="checkbox" checked={drive} onChange={e => { setDrive(e.target.checked); if (e.target.checked) setTemplate(''); }} />Start from Google Drive</label>
     </FormDialog>
   );
 }
@@ -240,10 +244,11 @@ export function UploadDialog({ open, onOpenChange, roomId, onUploaded }) {
       onSubmit={async () => {
         const data = new FormData();
         data.append("file", file);
-        if (await run(() => api.post(`/dealroom/rooms/${roomId}/upload/`, data, { headers: { "Content-Type": "multipart/form-data" } }))) {
+        let uploaded;
+        if (await run(async () => { uploaded = (await api.post(`/dealroom/rooms/${roomId}/upload/`, data, { headers: { "Content-Type": "multipart/form-data" } })).data; })) {
           toast.success(`${file.name} uploaded`);
           onOpenChange(false);
-          onUploaded?.();
+          onUploaded?.(uploaded);
         }
       }}
     >

@@ -1,0 +1,12 @@
+Final verification — 2026-11-17
+Backend: 149 passed, 162 warnings, 94.45s
+Command: run-send-local.sh /root/worktrees/room-proto dealroom/tests tests/dealroom tests/cloudfiles/test_tasks.py
+Runner scratch redirected to this worktree with an exported Bash mktemp function; see RESULT.md.
+Frontend: 4 test files, 11 passed
+Command: npx vitest run --cache=false src/tests/pages/DealroomPages.test.jsx src/tests/pages/DealroomRoomDetail.test.jsx src/tests/pages/DealroomRecipient.test.jsx src/tests/pages/RoomOnramp.test.jsx
+Production build: npx vite build — passed
+Browser: Chromium 1440x1000 and 390x844, built application + intercepted fictional API/page fixtures.
+Import confirmation, firm grouping, visitor home/reader, draft retention and copy request passed.
+No browser page errors or horizontal phone overflow.
+No live Sign, email-delivery or OAuth integration was exercised.
+Git diff --check: passed. No Sign source edits. No commits.

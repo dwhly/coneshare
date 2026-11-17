@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useBranding } from '../contexts/BrandingProvider';
+import RoomVisitor from '../components/dealroom/RoomVisitor';
 
 export default function DealroomRecipient() {
   const { slug } = useParams();
@@ -13,18 +14,20 @@ export default function DealroomRecipient() {
   useEffect(() => { window.history.replaceState({}, '', window.location.pathname); }, []);
   const [challenge, setChallenge] = useState(params.get('challenge') || '');
   const [room, setRoom] = useState(null);
-  const [selected, setSelected] = useState(null);
-  const [page, setPage] = useState(1);
+  const [nda, setNda] = useState(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const base = `/api/v1/dealroom/recipient/${encodeURIComponent(slug)}`;
   async function loadRoom() {
     const response = await fetch(`${base}/room/`, { credentials: 'same-origin' });
-    if (response.ok) setRoom(await response.json());
+    const data = await response.json();
+    if (response.ok) { setRoom(data); setNda(null); }
+    else if (data.code === 'nda_required' || data.code === 'nda_not_configured') setNda(data);
+
   }
   useEffect(() => {
     fetch(`${base}/challenge/`, { credentials: 'same-origin' }).then(r => r.json()).then(data => setCsrf(data.csrf_token));
-    loadRoom();
+    if (!params.get('personal')) loadRoom();
   }, [slug]);
   async function submit(event) {
     event.preventDefault(); setBusy(true); setError('');
@@ -37,6 +40,35 @@ export default function DealroomRecipient() {
       if (result.status === 'verified') { window.history.replaceState({}, '', `/view/${slug}`); await loadRoom(); }
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   }
+  async function personal() {
+    setBusy(true); setError('');
+    try {
+      const response = await fetch(`${base}/personal/`, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf }, body: JSON.stringify({ token: params.get('personal') }) });
+      if (!response.ok) { const d = await response.json(); throw new Error(d.detail || 'This personal link is no longer available.'); }
+      await loadRoom();
+    } catch (e) { setError(e.message); } finally { setBusy(false); }
+  }
+  async function signNda() {
+    setBusy(true); setError('');
+    try {
+      const url = `/api/v1/dealroom-sign/nda/${nda.room_id}/`;
+      const options = { method: 'POST', credentials: 'same-origin', headers: { 'X-CSRFToken': csrf } };
+      let response = await fetch(url, options);
+      if (!response.ok) { const d = await response.json(); throw new Error(d.detail || JSON.stringify(d)); }
+      response = await fetch(url, { credentials: 'same-origin' });
+      const status = await response.json();
+      if (status.accepted) return await loadRoom();
+      if (!status.can_enter) { setError('Your NDA is being prepared. Choose Review and sign again in a moment.'); return; }
+      response = await fetch(`${url}enter/`, options);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || 'Signing is not ready.');
+      const destination = new URL(data.signing_url, window.location.origin);
+      if (!['https:', 'http:'].includes(destination.protocol)) throw new Error('Invalid signing address.');
+      window.location.assign(destination.href);
+    } catch (e) { setError(e.message); } finally { setBusy(false); }
+  }
+  if (nda) return <main className="min-h-screen bg-gray-50 flex items-center justify-center p-6"><section className="max-w-lg rounded-xl border bg-white p-8 space-y-5"><h1 className="text-2xl font-semibold">Before you enter</h1><p className="text-sm text-muted-foreground">Review and sign the NDA in Sign. Your signed copy is delivered by the existing Sign workflow, then you return to this room.</p>{nda.code === 'nda_not_configured' ? <p>The host is preparing the NDA. Please come back shortly.</p> : <button className="dr-btn dr-btn--primary" disabled={busy} onClick={signNda}>{busy ? 'Preparing…' : 'Review and sign'}</button>}<button className="dr-btn" onClick={loadRoom}>I’ve signed · open the room</button>{error && <p role="alert" className="text-sm text-red-700">{error}</p>}</section></main>;
+  if (!room && params.get('personal')) return <main className="min-h-screen bg-gray-50 flex items-center justify-center p-6"><section className="max-w-md rounded-xl border bg-white p-8 space-y-5"><h1 className="text-2xl font-semibold">Your personal room invitation</h1><p className="text-sm text-muted-foreground">One link. No account needed. Continue to review the NDA and enter your room.</p><button className="dr-btn dr-btn--primary" disabled={busy || !csrf} onClick={personal}>Continue to room</button>{error && <p role="alert" className="text-sm text-red-700">{error}</p>}</section></main>;
   if (!room) return <main className="min-h-screen bg-muted flex flex-col items-center justify-center p-6">
     <form onSubmit={submit} className="w-full max-w-md rounded-xl border bg-card p-8 shadow-sm space-y-5">
       <div className="flex items-center gap-3"><img src={brand.brandLogoUrl} alt="" className="w-9 h-9"/><strong className="text-xl">{brand.brandName}</strong><span className="text-muted-foreground">Send</span></div>
@@ -49,12 +81,9 @@ export default function DealroomRecipient() {
       <p className="text-xs text-muted-foreground">Every copy is personalized. Access can be revoked by the room owner.</p>
     </form>
   </main>;
-  const file = selected || room.files[0];
-  return <main className="min-h-screen bg-muted">
-    <header className="bg-card border-b px-6 py-4 flex flex-wrap items-center justify-between gap-3"><div className="flex items-center gap-3"><img src={brand.brandLogoUrl} alt="" className="w-8 h-8"/><strong>{brand.brandName}</strong><span className="text-muted-foreground/70">/</span><h1 className="font-medium">{room.name}</h1></div><div className="text-sm text-muted-foreground">{room.member.name} · {room.member.org} · {room.member.email}</div></header>
-    <div className="max-w-screen-2xl mx-auto grid md:grid-cols-[260px_1fr] gap-6 p-6">
-      <aside className="bg-card border rounded-xl p-4 self-start"><h2 className="text-xs tracking-wider font-semibold text-muted-foreground uppercase mb-4">Documents</h2>{room.folders.map(folder=><section key={folder.id} className="mb-5"><h3 className="font-medium text-sm mb-2">{folder.name}</h3>{room.files.filter(f=>f.folder_id===folder.id).map(f=><button key={f.id} onClick={()=>{setSelected(f);setPage(1)}} className={`text-left w-full p-2 rounded-md text-sm ${f.id===file?.id?'bg-muted font-medium':'text-muted-foreground'}`}>{f.name}</button>)}</section>)}{room.files.filter(f=>!f.folder_id).map(f=><button key={f.id} onClick={()=>{setSelected(f);setPage(1)}} className="block py-2 text-sm">{f.name}</button>)}</aside>
-      <section>{file ? <><div className="flex flex-wrap gap-3 items-center justify-between mb-4"><h2 className="font-semibold">{file.name}</h2><div className="flex items-center gap-3 text-sm"><button disabled={page===1} onClick={()=>setPage(p=>p-1)}>Previous</button><span>Page {page} of {file.page_count}</span><button disabled={page>=file.page_count} onClick={()=>setPage(p=>p+1)}>Next</button>{file.download_level!=='none' ? <a className="rounded-md border bg-card px-3 py-2" href={file.download_url}>Download watermarked PDF</a> : <span className="text-muted-foreground">View only</span>}</div></div><img className="mx-auto w-full max-w-[920px] bg-card border shadow-sm" src={file.page_url.replace('/render-page/1/', `/render-page/${page}/`)} alt={`Personalized page ${page} of ${file.name}`} onError={()=>setError('This page is not ready or access has been revoked. Reload to check access.')} />{error && <p role="alert" className="text-danger mt-4">{error}</p>}</> : <p>No documents are available yet.</p>}</section>
-    </div>
-  </main>;
+  return <RoomVisitor room={room} brand={brand} onRequest={async body => {
+    const response = await fetch(`${base}/requests/`, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf }, body: JSON.stringify(body) });
+    if (!response.ok) { const data = await response.json(); throw new Error(data.detail || 'Could not send. Reload to check your access.'); }
+    return response.json();
+  }} />;
 }

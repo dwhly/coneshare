@@ -19,6 +19,7 @@ from .brand import load_brand
 from .domains import guarded_domain
 from .hooks import human_staff
 from .registry import registry, TIERS
+from .onramp import RoomOnrampMixin
 
 
 class BrandView(APIView):
@@ -46,7 +47,7 @@ class StaffViewSet(viewsets.ModelViewSet):
         instance.delete()
 
 
-class RoomViewSet(StaffViewSet):
+class RoomViewSet(RoomOnrampMixin, StaffViewSet):
     serializer_class = RoomSerializer
     def approval_before(self):
         if self.action == 'policy':

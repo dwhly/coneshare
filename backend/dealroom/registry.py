@@ -85,7 +85,7 @@ def widens_access(operation, before, after):
     return False
 
 
-PUBLIC = {'LogoutView', 'CustomTokenObtainPairView', 'TokenRefreshView', 'LanguagesView', 'PublicSettingsView', 'HealthCheckView', 'BrandView', 'RecipientChallengeView', 'RecipientConfirmView', 'RecipientRoomView', 'RecipientLogoutView', 'OriginalDownloadView'}
+PUBLIC = {'LogoutView', 'CustomTokenObtainPairView', 'TokenRefreshView', 'LanguagesView', 'PublicSettingsView', 'HealthCheckView', 'BrandView', 'RecipientChallengeView', 'RecipientConfirmView', 'RecipientRoomView', 'RecipientLogoutView', 'RecipientPersonalView', 'RecipientRequestView', 'OriginalDownloadView'}
 RECIPIENT = {'ShareLinkViewDataView', 'ShareLinkPublicMetaView', 'ShareLinkQnAThreadListCreateView', 'ShareLinkQnASummaryView', 'ShareLinkQnAMessageListCreateView', 'ShareLinkVerifyPasswordView', 'ShareLinkAcceptNDAView', 'ShareLinkRequestAccessView', 'ShareLinkConfirmAccessView', 'ShareLinkPageView', 'WatermarkedPageRenderView', 'ShareLinkFileDownloadView', 'DataroomFolderDownloadView', 'DataroomDownloadAllView', 'RecordPageView', 'RecordLinkClickView', 'ViewSessionViewSet'}
 # All enabled staff surfaces have parity tools; remaining upstream surfaces are denied.
 STAFF = {'PreferencesView', 'RoomViewSet', 'OrgViewSet', 'MemberViewSet', 'GrantViewSet', 'EntryLinkViewSet', 'ApprovalViewSet', 'ActivityViewSet', 'DriftViewSet', 'OperationViewSet', 'CopyViewSet', 'AgentKeyViewSet', 'OriginalExceptionViewSet', 'FilePolicyViewSet'}
@@ -112,8 +112,12 @@ def classify(view, method):
         entry['human_only'] = True
     if name == 'PreferencesView':
         entry['widens_access'] = False
-    if name == 'RoomViewSet' and action in ('upload', 'folders'):
+    if name == 'RoomViewSet' and action in ('upload', 'folders', 'drive_review', 'drive_import', 'drive_updates', 'outline', 'answer'):
         entry['widens_access'] = False
+    if name == 'RoomViewSet' and action == 'outline' and not read:
+        entry['human_only'] = True
+    if name == 'RoomViewSet' and action == 'invite':
+        entry['widens_access'] = True
     if name in STAFF and action == 'create':
         entry['widens_access'] = name not in {'RoomViewSet'}
     if name in {'ApprovalViewSet', 'AgentKeyViewSet', 'OriginalExceptionViewSet'} and not read:

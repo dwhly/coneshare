@@ -317,14 +317,31 @@
       "properties": {
         "body": {
           "properties": {
+            "board_id": {
+              "maxLength": 100,
+              "minLength": 1,
+              "type": "string"
+            },
             "idempotency_key": {
               "maxLength": 200,
               "minLength": 1,
               "type": "string"
             },
+            "placement": {
+              "description": "* `auto` - auto\n* `sender` - sender",
+              "enum": [
+                "auto",
+                "sender"
+              ],
+              "type": "string"
+            },
             "recipients": {
               "items": {
                 "properties": {
+                  "company": {
+                    "maxLength": 200,
+                    "type": "string"
+                  },
                   "email": {
                     "format": "email",
                     "minLength": 1,
@@ -420,19 +437,50 @@
                     "maximum": 20,
                     "minimum": 1,
                     "type": "integer"
+                  },
+                  "title": {
+                    "maxLength": 200,
+                    "type": "string"
                   }
                 },
                 "required": [
                   "email",
-                  "fields",
                   "name"
                 ],
                 "type": "object"
               },
               "type": "array"
             },
+            "requester": {},
             "room_id": {
               "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            "task_ref": {
+              "allOf": [
+                {
+                  "properties": {
+                    "id": {
+                      "maxLength": 500,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "title": {
+                      "maxLength": 500,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ],
+                  "type": "object"
+                }
+              ],
+              "nullable": true
+            },
+            "title": {
+              "maxLength": 500,
               "minLength": 1,
               "type": "string"
             },
@@ -823,6 +871,42 @@
   },
   {
     "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_sign_SignatureEmailRetryView_endpoint_post",
+    "operation_id": "dealroom_sign_SignatureEmailRetryView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "effect_id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "request_id": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "effect_id",
+        "request_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/emails/{effect_id}/retry",
+    "path_params": [
+      "effect_id",
+      "request_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
     "method": "GET",
     "multipart": false,
     "name": "dealroom_sign_SignaturePageListView_endpoint_get",
@@ -912,6 +996,42 @@
       "kind",
       "snapshot_id"
     ],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_sign_SignatureSignerRevokeView_endpoint_post",
+    "operation_id": "dealroom_sign_SignatureSignerRevokeView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "request_id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "signer_id": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id",
+        "signer_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/requests/{request_id}/signers/{signer_id}/revoke-room",
+    "path_params": [
+      "request_id",
+      "signer_id"
+    ],
+    "query_params": [],
     "recipient": false
   },
   {
@@ -2637,6 +2757,78 @@
   },
   {
     "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RecipientPersonalView_endpoint_post",
+    "operation_id": "dealroom_RecipientPersonalView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/personal/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RecipientRequestView_endpoint_post",
+    "operation_id": "dealroom_RecipientRequestView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "csrf_token": {
+          "type": "string"
+        },
+        "recipient_session": {
+          "description": "Cookie value returned by the preceding challenge/confirm tool; no staff key can supply recipient proof.",
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/recipient/{slug}/requests/",
+    "path_params": [
+      "slug"
+    ],
+    "query_params": [],
+    "recipient": true
+  },
+  {
+    "human_only": false,
     "method": "GET",
     "multipart": false,
     "name": "dealroom_RecipientRoomView_endpoint_get",
@@ -2851,6 +3043,147 @@
     "human_only": false,
     "method": "POST",
     "multipart": false,
+    "name": "dealroom_RoomViewSet_answer_post",
+    "operation_id": "dealroom_RoomViewSet_answer_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/answer/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_drive_import_post",
+    "operation_id": "dealroom_RoomViewSet_drive_import_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/drive-import/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_drive_review_post",
+    "operation_id": "dealroom_RoomViewSet_drive_review_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/drive-review/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_drive_updates_get",
+    "operation_id": "dealroom_RoomViewSet_drive_updates_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/drive-updates/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_drive_updates_post",
+    "operation_id": "dealroom_RoomViewSet_drive_updates_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/drive-updates/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
     "name": "dealroom_RoomViewSet_folders_post",
     "operation_id": "dealroom_RoomViewSet_folders_post",
     "parameters": {
@@ -2870,6 +3203,89 @@
       "type": "object"
     },
     "path": "/api/v1/dealroom/rooms/{id}/folders/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_invite_post",
+    "operation_id": "dealroom_RoomViewSet_invite_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/invite/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
+    "method": "GET",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_outline_get",
+    "operation_id": "dealroom_RoomViewSet_outline_get",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/outline/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "PATCH",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_outline_patch",
+    "operation_id": "dealroom_RoomViewSet_outline_patch",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/outline/",
     "path_params": [
       "id"
     ],
