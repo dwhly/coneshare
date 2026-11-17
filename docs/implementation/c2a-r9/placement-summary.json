@@ -1,0 +1,21 @@
+{
+  "analysis_version": "c2a.9",
+  "goldens": 7,
+  "review_matrix": {
+    "B-1": 60,
+    "same_row_right_behalf": 5,
+    "H-1": 40,
+    "signature_controls": 12
+  },
+  "preservation": {
+    "column_bands": 16,
+    "recognised_headings": 50,
+    "no_typed_name": 120,
+    "original_layouts": 25,
+    "forced_subordination": 15,
+    "model_paths": 10,
+    "contacts": 39
+  },
+  "execution": "Real reportlab PDFs through the placement worker, except forced-subordination isolation.",
+  "external_model_calls": 0
+}

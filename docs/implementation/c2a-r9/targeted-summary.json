@@ -1,0 +1,107 @@
+{
+  "command": "SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests/test_placement_r9.py dealroom_sign/tests/test_placement_r6.py dealroom_sign/tests/test_placement_r7.py dealroom_sign/tests/test_placement_r8.py",
+  "base": "5e5ee6ea",
+  "exit_code": 0,
+  "tests": 287,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 88.919,
+  "groups": {
+    "test_b1_heading_variants_hold": {
+      "passed": 60
+    },
+    "test_b1_same_row_right_behalf_holds": {
+      "passed": 5
+    },
+    "test_h1_stacked_signers_hold": {
+      "passed": 40
+    },
+    "test_b1_signature_controls_keep_previous_outcome": {
+      "passed": 17
+    },
+    "test_h2_contact_rule_preserves_typed_identity": {
+      "passed": 18
+    },
+    "test_h1_previous_caption_stays_with_its_host": {
+      "passed": 4
+    },
+    "test_m1_repeated_running_header_is_neutral": {
+      "passed": 9
+    },
+    "test_m1_nonrepeated_header_retains_identity_veto": {
+      "passed": 2
+    },
+    "test_m1_page_number_does_not_hide_next_page_name": {
+      "passed": 4
+    },
+    "test_m2_behalf_company_suffix_keeps_exact_golden": {
+      "passed": 10
+    },
+    "test_m2_behalf_role_is_not_a_person": {
+      "passed": 3
+    },
+    "test_m3_comma_witness_paragraph_keeps_exact_golden": {
+      "passed": 1
+    },
+    "test_n1_title_person_before_comma_still_vetoes": {
+      "passed": 2
+    },
+    "test_n2_period_name_still_vetoes_named_block": {
+      "passed": 2
+    },
+    "test_h1_short_contact_caption_preserves_typed_identity": {
+      "passed": 15
+    },
+    "test_l1_repeated_body_name_retains_identity_veto": {
+      "passed": 2
+    },
+    "test_l1_page_number_is_neutral_in_body": {
+      "passed": 4
+    },
+    "test_l1_repeated_row_respects_strict_margin_edges": {
+      "passed": 5
+    },
+    "test_l2_prose_ending_keeps_exact_harbor_boxes": {
+      "passed": 7
+    },
+    "test_l2_period_name_still_holds": {
+      "passed": 2
+    },
+    "test_n1_hold_reason_agrees_with_signer_count": {
+      "passed": 2
+    },
+    "test_n1_one_missing_signer_keeps_singular_reason": {
+      "passed": 1
+    },
+    "test_seven_goldens_remain_exact_against_r4_and_r5": {
+      "passed": 7
+    },
+    "test_b1_unusual_host_never_places_on_neighbour": {
+      "passed": 25
+    },
+    "test_second_company_holds_without_subordinate_rule": {
+      "passed": 15
+    },
+    "test_m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+      "passed": 5
+    },
+    "test_l1_only_authorised_signatory_uses_model_on_its_own_line": {
+      "passed": 1
+    },
+    "test_n1_no_fixture_caption_constant": {
+      "passed": 1
+    },
+    "test_subordinate_caption_host_band_and_distance": {
+      "passed": 8
+    },
+    "test_subordinate_caption_cannot_cross_identity_heading": {
+      "passed": 4
+    },
+    "test_contact_vocabulary_is_other_without_preceding_host": {
+      "passed": 6
+    }
+  },
+  "raw_suite_logs_retained": false,
+  "passed": 287
+}

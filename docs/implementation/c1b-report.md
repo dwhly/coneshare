@@ -1600,3 +1600,90 @@ temporary XML was converted to the
 The [completion marker](c2a-r8/counterparty-c2a-r8.done) is beside the
 [local brief](c2a-r8/counterparty-c2a-r8.md). Implementation and verification
 are complete. HEAD remains `b651e646`; no staging or commits were performed.
+
+## C2a r9
+
+Implemented the manager-selected main Gate 3 r8 B-1/H-1 fix on
+`agent/c1b-counterparty` at `5e5ee6ea`; `analysis_version` is **`c2a.9`**.
+The full review was read, including L-1, N-1 and the previously held cases.
+
+When `subordinate_caption` makes a rule `OTHER`, a `person_text` row in that
+rule's own caption slot (`0 <= top - rule.y < 22`, `abs(x - column) < 35`)
+vetoes every host whose extent contains it. The veto sets
+`uncertain_identity` after block partitioning, so later attribution cannot
+clear it. Affected hosts score zero and the requested layouts hold with no
+fields or model call. The six unconditional contact captions bypass this
+veto. No new text or fields cross the parser-worker boundary.
+
+### Failing first and requested executions
+
+Before the production edit, **115 failed, 17 passed**, with no errors or
+skips. All 105 new regression cases reproduced a placement instead of a
+hold; the ten manager-approved existing H-1 cases failed for the same reason.
+All twelve Signature controls and the other five existing H-1 cases passed.
+[Failing-first summary](c2a-r9/failing-first-summary.json).
+
+| Review matrix | Cases | Required final outcome |
+| --- | ---: | --- |
+| B-1: C12/C13 × six headings × five captions | 60 | Hold, no fields, zero identity score, no model call |
+| B-1: behalf line on caption row at x=300, all five captions | 5 | Hold, no fields |
+| H-1: both party mirrors × Title: Director / Title: / blank Name: / no row × five captions | 40 | Hold, no fields, zero identity score, no model call |
+| Signature controls: both layouts × six headings | 12 | C12 remains high on 360/395; C13 holds |
+| Caption-slot strict edges and a row overlapping two host extents | 9 | Exact bounds; both containing hosts vetoed |
+
+The only existing test edit changes Lee/LEE and Pat/PAT to holds in
+`test_h1_short_contact_caption_preserves_typed_identity`: **10 of 15 cases**,
+with the required Gate 3 r8 B-1 comment. Its five other expectations, all
+other existing tests, fixture PDFs and r4/r5 placement baselines are intact.
+There are **126 new tests**. [Preservation checks](c2a-r9/preservation-summary.json).
+
+The [runbook](c2a-runbook.md#identity-extent) documents the new veto and L-1:
+the second-company defence can hold correct single-block layouts, intentionally
+in the safe direction. [Local brief](c2a-r9/counterparty-c2a-r9.md).
+
+### Verification
+
+- Targeted r6/r7/r8 plus the initial r9 matrix: **287 passed**, 88.919 s.
+- Nine additional exact-boundary/overlapping-host checks: **9 passed**, 0.870 s.
+- [Executed review placements](c2a-r9/regression-placements.json) cover every
+  B-1 heading/layout/caption, the right-side behalf cases, H-1 stacks and
+  Signature controls, addressing N-1.
+- [Golden placements](c2a-r9/placements.json) and
+  [comparison](c2a-r9/golden-comparison.json) compare all seven goldens with
+  both r4 and r5 on status, geometry, confidence and native fields.
+- [Preservation placements](c2a-r9/preservation-placements.json) replay column
+  bands, recognised headings, blank/absent names, the original C layouts,
+  forced subordination, C7/L-1 model stubs, and contact captions.
+- [Evidence checker](c2a-r9/check_evidence.py) uses real reportlab PDFs and the
+  real parser subprocess, except the explicitly isolated forced-subordination
+  checks. Model paths use stubs; no external model is called.
+
+The full signing suite uses the requested runner and URL:
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+```
+
+Only compact summaries and placements are retained. The
+[summary runner](c2a-r9/run_summary.py) captures suite output in memory, converts
+temporary JUnit XML to counts, then removes the XML. It adds `--tb=short` and
+`--junitxml` for reporting only.
+
+The executed evidence checker passed **117 requested matrix/control outcomes**
+and **275 preservation outcomes**: 16 column-band cases, 50 recognised-heading
+cases, 120 blank/absent-name cases, 25 original C layouts, 15 forced-subordination
+holds, 10 C7/L-1 stub placements and 39 contact cases. All seven goldens are
+exact against both baselines, including native fields; none classifies a rule
+as subordinate. The unusual golden evaluates the predicate once and returns
+false. [Placement summary](c2a-r9/placement-summary.json).
+
+**Final full signing suite: 1,163 passed, 0 failed, 0 errors, 0 skipped,
+82 warnings, 489.330 s** (the original 1,037 plus 126 new tests).
+[Full-suite summary](c2a-r9/full-suite-summary.json) and
+[verification summary](c2a-r9/verification-summary.json).
+
+`git diff --check` passes; the existing report is preserved with this section
+appended. HEAD remains `5e5ee6ea`, the index is empty, and project memory is
+unchanged. The [completion marker](c2a-r9/counterparty-c2a-r9.done) is beside the
+local brief. Implementation, executed evidence and full-suite verification are
+complete. All changes remain unstaged and uncommitted.

@@ -1,0 +1,60 @@
+{
+  "existing_test_edits": {
+    "file": "backend/dealroom_sign/tests/test_placement_r7.py",
+    "only_approved_parameter_change_and_comment": true,
+    "changed_expectations": 10,
+    "unchanged_expectations_in_test": 5
+  },
+  "preserved": {
+    "backend/dealroom_sign/tests/test_placement_r6.py": {
+      "unchanged": true,
+      "sha256": "d606e2aca35aeb1e089df15f0df79d66c83b54e17dd2bebb3dad637d15380c98"
+    },
+    "backend/dealroom_sign/tests/test_placement_r8.py": {
+      "unchanged": true,
+      "sha256": "280296b6cfd607d777106b0298a83d6b325bcf9510a928c5c0a03c3c7c68b142"
+    },
+    ".agent/memory.md": {
+      "unchanged": true,
+      "sha256": "2abeef67b9f7b47afb37f2fa33c91011ab2caec0cf87dea37dcf6dd9216b19a7"
+    },
+    "docs/implementation/c2a-r4/placements.json": {
+      "unchanged": true,
+      "sha256": "dfa43437c788cd652e1497e4f196df729eeffad89272e7bd2231d6b29189dd3e"
+    },
+    "docs/implementation/c2a-r5/placements.json": {
+      "unchanged": true,
+      "sha256": "0eb25340de63db93c28a6a5548ddc27e403e960c5b8763f15b0ffc9c814b2dcd"
+    }
+  },
+  "fixture_pdfs_unchanged": true,
+  "index_empty": true,
+  "head": "5e5ee6ea",
+  "final_code_sha256": {
+    "backend/dealroom_sign/placement.py": "e4f2dc4d23a022bcce9eef41bdf52f77b0db85a80644a61ccf8009c4c22bc005",
+    "backend/dealroom_sign/tests/test_placement_r9.py": "0176b7dcdcd4020567903b819d7fb4be30191560e2dbd0210017eee3e3519b98"
+  },
+  "executed_evidence": {
+    "analysis_version": "c2a.9",
+    "goldens": 7,
+    "review_matrix": {
+      "B-1": 60,
+      "same_row_right_behalf": 5,
+      "H-1": 40,
+      "signature_controls": 12
+    },
+    "preservation": {
+      "column_bands": 16,
+      "recognised_headings": 50,
+      "no_typed_name": 120,
+      "original_layouts": 25,
+      "forced_subordination": 15,
+      "model_paths": 10,
+      "contacts": 39
+    },
+    "execution": "Real reportlab PDFs through the placement worker, except forced-subordination isolation.",
+    "external_model_calls": 0
+  },
+  "report_append_only": true,
+  "diff_check_passed": true
+}

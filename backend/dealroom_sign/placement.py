@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.8'
+VERSION = 'c2a.9'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -474,7 +474,7 @@ def conflicting_company_headings(block, extent, texts, rules, roles):
 
 def extract(pdf, *, deadline=None):
     blocks, sizes, roles = [], {}, {}
-    pages, extents = {}, []
+    pages, extents, absorbed_names = {}, [], {}
     with pdfplumber.open(io.BytesIO(pdf)) as doc:
         if not 1 <= len(doc.pages) <= 500:
             raise ValueError('page_limit')
@@ -543,11 +543,20 @@ def extract(pdf, *, deadline=None):
                         line.semantic = 'SIGNATURE' if lab in {'signature', 'signed', 'sign here', 'by'} else 'NAME' if 'name' in lab else 'DATE' if lab == 'date' else 'TITLE'
                     elif re.fullmatch(r'(?:email|e-mail|address|phone|tel|company)\s*:\s*', line.label['text'], re.I):
                         line.semantic = 'OTHER'
+            absorbed_names[pno] = []
             for line in unique:
                 if (not line.semantic and SHORT_CAPTION.fullmatch(line.label.get('text', ''))
                         and line.label['text'].rstrip(': ').casefold() != 'witness'
                         and subordinate_caption(line, unique, texts, roles)):
                     line.semantic = 'OTHER'
+                    # Only structural subordination can hide a signature's
+                    # typed identity. The six unconditional contact captions
+                    # above deliberately do not participate in this veto.
+                    column = line.label['rect'][0]
+                    absorbed_names[pno].extend(t for t in texts
+                                              if 0 <= t['rect'][1] - line.y < 22
+                                              and abs(t['rect'][0] - column) < 35
+                                              and person_text(t['text']))
             hosts = []
             for line in unique:
                 if line.semantic in COMPANION_SEMANTICS or line.y < 110:
@@ -645,6 +654,11 @@ def extract(pdf, *, deadline=None):
     neutral = running_rows(pages)
     for block, extent in extents:
         texts, rules, _ = pages[block.line.page]
+        top, bottom, left, right = extent
+        # Apply after partitioning so no later attribution can clear the veto.
+        if any(top <= t['rect'][1] <= bottom and t['rect'][0] < right and t['rect'][2] > left
+               for t in absorbed_names[block.line.page]):
+            block.uncertain_identity = True
         if conflicting_company_headings(block, extent, texts, rules, roles):
             block.uncertain_identity = True
         if not printed_names(block):

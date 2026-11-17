@@ -18,7 +18,8 @@ from dealroom_sign.tests.test_placement_r6 import contact_rule_pdf
 
 @pytest.mark.parametrize('label', ['Fax', 'Mobile', 'Contact', 'Attention', 'Notice Address'])
 @pytest.mark.parametrize('name,signers,placed', [
-    ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    # Gate 3 r8 B-1: manager-approved hold for names under subordinate captions.
+    ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, False), ('Pat Smith', PAT, False),
 ])
 def test_h1_short_contact_caption_preserves_typed_identity(label, name, signers, placed):
     result = placement.place(contact_rule_pdf(label, name), signers)

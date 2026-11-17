@@ -1,0 +1,102 @@
+{
+  "analysis_version": "c2a.9",
+  "base": "5e5ee6ea",
+  "branch": "agent/c1b-counterparty",
+  "full_suite": {
+    "command": "SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests",
+    "base": "5e5ee6ea",
+    "exit_code": 0,
+    "tests": 1163,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 489.33,
+    "raw_suite_logs_retained": false,
+    "passed": 1163,
+    "warnings": 82
+  },
+  "new_tests": 126,
+  "failing_first": {
+    "tests": 132,
+    "passed": 17,
+    "failures": 115,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 61.863,
+    "groups": {
+      "test_b1_heading_variants_hold": {
+        "failure": 60
+      },
+      "test_b1_same_row_right_behalf_holds": {
+        "failure": 5
+      },
+      "test_h1_stacked_signers_hold": {
+        "failure": 40
+      },
+      "test_b1_signature_controls_keep_previous_outcome": {
+        "passed": 12
+      },
+      "test_h1_short_contact_caption_preserves_typed_identity": {
+        "passed": 5,
+        "failure": 10
+      }
+    }
+  },
+  "targeted": {
+    "tests": 287,
+    "passed": 287,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 88.919
+  },
+  "boundaries": {
+    "tests": 9,
+    "passed": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 0.87
+  },
+  "executed_placements": {
+    "analysis_version": "c2a.9",
+    "goldens": 7,
+    "review_matrix": {
+      "B-1": 60,
+      "same_row_right_behalf": 5,
+      "H-1": 40,
+      "signature_controls": 12
+    },
+    "preservation": {
+      "column_bands": 16,
+      "recognised_headings": 50,
+      "no_typed_name": 120,
+      "original_layouts": 25,
+      "forced_subordination": 15,
+      "model_paths": 10,
+      "contacts": 39
+    },
+    "execution": "Real reportlab PDFs through the placement worker, except forced-subordination isolation.",
+    "external_model_calls": 0
+  },
+  "existing_test_changes": {
+    "file": "backend/dealroom_sign/tests/test_placement_r7.py",
+    "only_approved_parameter_change_and_comment": true,
+    "changed_expectations": 10,
+    "unchanged_expectations_in_test": 5
+  },
+  "goldens": {
+    "count": 7,
+    "exact_against": [
+      "c2a-r4",
+      "c2a-r5"
+    ],
+    "native_fields_exact": true
+  },
+  "final_code_sha256": {
+    "backend/dealroom_sign/placement.py": "e4f2dc4d23a022bcce9eef41bdf52f77b0db85a80644a61ccf8009c4c22bc005",
+    "backend/dealroom_sign/tests/test_placement_r9.py": "0176b7dcdcd4020567903b819d7fb4be30191560e2dbd0210017eee3e3519b98"
+  },
+  "raw_suite_logs_retained": false,
+  "staged_or_committed": false
+}

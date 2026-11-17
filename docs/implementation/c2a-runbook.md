@@ -31,6 +31,11 @@ closes its identity group. Otherwise the caption retains the r6 unusual-host
 semantics. The six captions Email, E-mail, Address, Phone, Tel and Company
 remain unconditional `OTHER`. Witness remains a signature host. No
 fixture-specific caption exception is used to classify hosts.
+When structural subordination makes a rule `OTHER`, a person row in that rule's
+own caption slot (`0 <= top - rule.y < 22`, `abs(x - column) < 35`) sets
+`uncertain_identity` on every host whose extent contains it, after partitioning.
+Placement holds with no fields; the six unconditional contact captions are
+exempt from this veto (Gate 3 r8 B-1/H-1, manager-approved safe direction).
 `OTHER` rules cannot create hosts, shorten either
 extent edge, bound neighbouring columns or stop the walk. Their attached empty
 captions carry no identity; surrounding typed rows retain their veto. At a page edge, continue from the adjacent page's
@@ -51,6 +56,7 @@ there also sets uncertainty (C8). This check never adds labels or scores and
 cannot be cleared by later partitioning. Behalf wording retains its existing
 interpretation; it is not a second standalone company-heading row. Existing
 neutral legal-form wording such as `LLC` also names no second company.
+This second-company defence can hold correct single-block layouts; that is an intended cost in the safe direction.
 
 Page-number rows are neutral anywhere in this walk. Digit-normalised text
 repeated at the same y ±2 points on at least two distinct pages is neutral only

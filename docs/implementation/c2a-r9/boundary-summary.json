@@ -1,0 +1,20 @@
+{
+  "command": "SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests/test_placement_r9.py -k 'slot_edges or overlapping_host'",
+  "base": "5e5ee6ea",
+  "exit_code": 0,
+  "tests": 9,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 0.87,
+  "groups": {
+    "test_caption_identity_slot_edges": {
+      "passed": 8
+    },
+    "test_absorbed_identity_vetoes_every_overlapping_host": {
+      "passed": 1
+    }
+  },
+  "raw_suite_logs_retained": false,
+  "passed": 9
+}
