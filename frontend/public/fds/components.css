@@ -74,20 +74,33 @@
 /* Numbers in tables/metrics line up */
 .fds-num { font-variant-numeric: tabular-nums; text-align: right; }
 
-/* Callout: inline notice tinted by meaning */
-.fds-callout { border: 1px solid hsl(var(--border)); border-left-width: 3px; border-radius: 0 var(--radius) var(--radius) 0;
+/* Callout: inline notice tinted by meaning. Outline baseline (DESIGN.md §7, FINAL 2026-11-15): a 1px border in the
+   status-border colour around a tinted block, the same radius on every corner. No left stripe (retired pattern);
+   the status word in the text (<strong>) carries the meaning, the colour reinforces it. */
+.fds-callout { border: 1px solid hsl(var(--border)); border-radius: var(--radius);
   padding: var(--space-3) var(--space-4); background: hsl(var(--background)); }
-.fds-callout--danger  { border-left-color: hsl(var(--danger));  background: hsl(var(--danger-subtle)); }
-.fds-callout--warning { border-left-color: hsl(var(--warning)); background: hsl(var(--warning-subtle)); }
-.fds-callout--success { border-left-color: hsl(var(--success)); background: hsl(var(--success-subtle)); }
-.fds-callout--info    { border-left-color: hsl(var(--info));    background: hsl(var(--info-subtle)); }
+.fds-callout--danger  { border-color: hsl(var(--danger-border));  background: hsl(var(--danger-subtle)); }
+.fds-callout--warning { border-color: hsl(var(--warning-border)); background: hsl(var(--warning-subtle)); }
+.fds-callout--success { border-color: hsl(var(--success-border)); background: hsl(var(--success-subtle)); }
+.fds-callout--info    { border-color: hsl(var(--info-border));    background: hsl(var(--info-subtle)); }
 
-/* Theme toggle: use <button class="fds-btn" data-fds-theme-toggle> (theme.js wires it). */
+/* Theme toggle (v0.10): an ICON, last in the header. Markup <button class="fds-btn" data-fds-theme-toggle></button>;
+   theme.js draws sun / moon / sun-moon and sets aria-label + title ("Theme: auto (light)"). 32px ghost button,
+   18px glyph, 44px tap area via ::after, hover tint only where the device can hover (a tap must not leave it stuck). */
+[data-fds-theme-toggle] { box-sizing: border-box; position: relative; display: inline-flex; align-items: center; justify-content: center;
+  flex: none; width: 32px; height: 32px; min-height: 0; padding: 0; gap: 0; border: 1px solid transparent;
+  border-radius: var(--radius-control); background: transparent; color: inherit; font-size: 0; line-height: 0; }
+/* -7px from the PADDING box (inside the 1px border): 30 + 2 x 7 = 44px */
+[data-fds-theme-toggle]::after { content: ""; position: absolute; inset: -7px; }
+[data-fds-theme-toggle]:hover { background: transparent; }
+@media (hover: hover) { [data-fds-theme-toggle]:hover { background: hsl(var(--accent)); } }
+[data-fds-theme-toggle]:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
+[data-fds-theme-toggle] > svg { width: 18px; height: 18px; flex: none; }
 
 /* ==== App header: ONE spec for every product (DESIGN.md §6) ====
    <header class="fds-header">
      <a class="fds-header__mark">Product</a>  <nav class="fds-nav">…<a aria-current="page">…</a></nav>
-     <div class="fds-header__utils"> …product utilities… <button class="fds-btn" data-fds-theme-toggle>Theme</button></div>
+     <div class="fds-header__utils"> …product utilities… <button class="fds-btn" data-fds-theme-toggle></button></div>
    </header>
    Surface = background (never inverted/brand), 1px bottom border, theme toggle LAST at the far right. */
 .fds-header { display: flex; align-items: center; gap: var(--space-4); min-height: var(--shell-height);
@@ -133,12 +146,12 @@
 
 /* ==== Severity on containers (DESIGN.md §7) ====
    RULE: at most ONE nesting level carries a coloured edge. A container whose children carry severity
-   shows its own severity in its header badge, not a second edge. Lab variants (fds-lab.js ?edge=):
-     rail    — 3px left edge (legacy; stacks into "braces" when nested)
-     outline — 1px full border in the status border colour; children = tinted blocks, no edge
-     top     — 2px top edge on the container; children = shaped markers
-     marker  — no coloured edges; header badge + a shaped marker per child (◆ now, ▲ soon, ● later)
-   Products map their own container/child classes onto these per variant. */
+   shows its own severity in its header badge, not a second edge.
+     outline — THE baseline (owner, FINAL 2026-11-15): 1px full border in the container's worst status-border
+               colour; children = tinted blocks, no edge. Products write it at the source, unconditionally.
+     top     — lab variant only (fds-lab.js ?edge=top): 2px top edge on the container; children = shaped markers
+     marker  — lab variant only (?edge=marker): no coloured edges; header badge + a shaped marker per child
+     rail    — RETIRED (a coloured left stripe; no product may draw one: DESIGN.md §7, scripts/check-stripes.py) */
 .fds-marker { display: inline-block; width: 0.62em; height: 0.62em; flex: none; vertical-align: 0.05em; margin-right: 0.4em;
   background: hsl(var(--neutral)); border-radius: 999px; }
 .fds-marker--danger  { background: hsl(var(--danger));  border-radius: 1px; transform: rotate(45deg) scale(0.9); }
