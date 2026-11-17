@@ -1,0 +1,21 @@
+{
+  "analysis_version": "c2a.10",
+  "execution": "Real reportlab PDFs through placement.place and its parser subprocess; local extraction also verifies identity scores.",
+  "cases": {
+    "B-1": 240,
+    "dy_sweep": 60,
+    "Signature_controls": 48,
+    "H-1_out_of_slot": 40,
+    "H-1_existing": 40,
+    "M-1": 56,
+    "exempt_contacts": 48
+  },
+  "goldens_exact": 7,
+  "golden_baselines": [
+    "c2a-r4",
+    "c2a-r5"
+  ],
+  "external_model_calls": 0,
+  "golden_model_stub_calls": 1,
+  "raw_logs_retained": false
+}

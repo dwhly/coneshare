@@ -31,11 +31,12 @@ closes its identity group. Otherwise the caption retains the r6 unusual-host
 semantics. The six captions Email, E-mail, Address, Phone, Tel and Company
 remain unconditional `OTHER`. Witness remains a signature host. No
 fixture-specific caption exception is used to classify hosts.
-When structural subordination makes a rule `OTHER`, a person row in that rule's
-own caption slot (`0 <= top - rule.y < 22`, `abs(x - column) < 35`) sets
-`uncertain_identity` on every host whose extent contains it, after partitioning.
+When structural subordination makes a rule `OTHER`, a typed name at or below a
+subordinated rule, within the absorbing host's extent, sets `uncertain_identity`
+on every containing host after partitioning. This includes names following a
+Title row, after a tab, indented, or on the caption row to the rule's right.
 Placement holds with no fields; the six unconditional contact captions are
-exempt from this veto (Gate 3 r8 B-1/H-1, manager-approved safe direction).
+exempt from this veto (Gate 3 r9 B-1/M-1, manager-approved safe direction).
 `OTHER` rules cannot create hosts, shorten either
 extent edge, bound neighbouring columns or stop the walk. Their attached empty
 captions carry no identity; surrounding typed rows retain their veto. At a page edge, continue from the adjacent page's
@@ -57,6 +58,11 @@ cannot be cleared by later partitioning. Behalf wording retains its existing
 interpretation; it is not a second standalone company-heading row. Existing
 neutral legal-form wording such as `LLC` also names no second company.
 This second-company defence can hold correct single-block layouts; that is an intended cost in the safe direction.
+A single-signer block with a name printed under a "Fax:"-style contact line
+also holds (`ambiguous_identity`), including names outside the old caption slot.
+This approved L-1 cost applies to Fax, Mobile, Contact, Attention, Notice Address,
+Initials and Sign; a correct name printed under `By:` above that contact line
+retains its placement.
 
 Page-number rows are neutral anywhere in this walk. Digit-normalised text
 repeated at the same y ±2 points on at least two distinct pages is neutral only

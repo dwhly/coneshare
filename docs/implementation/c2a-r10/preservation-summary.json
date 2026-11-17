@@ -1,0 +1,25 @@
+{
+  "base_and_head": "4db63354",
+  "branch": "agent/c1b-counterparty",
+  "production_exactly_prescribed_predicate_and_version": true,
+  "host_extent_containment_unchanged": true,
+  "existing_test_files_changed": [
+    "backend/dealroom_sign/tests/test_placement_r9.py"
+  ],
+  "only_existing_test_function_changed": "test_caption_identity_slot_edges",
+  "other_existing_tests_unchanged": true,
+  "new_test_cases": 499,
+  "original_test_cases": 1163,
+  "golden_fixtures_and_r4_r5_baselines_unchanged": true,
+  "report_append_only": true,
+  "project_memory_unchanged": true,
+  "index_empty": true,
+  "no_commit": true,
+  "failing_first_production_matches_base": true,
+  "failing_first_and_final_test_hashes_match": true,
+  "git_diff_check": "passed",
+  "raw_logs_and_temporary_xml_retained": false,
+  "full_suite_passed": 1662,
+  "executed_matrix_cases": 532,
+  "exact_goldens": 7
+}

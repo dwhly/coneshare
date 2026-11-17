@@ -120,18 +120,20 @@ def test_b1_signature_controls_keep_previous_outcome(layout, heading):
 
 
 @pytest.mark.parametrize('dy,dx,uncertain', [
-    (-0.1, 0, False), (0, 0, True), (21.9, 0, True), (22, 0, False),
-    (12, -35, False), (12, -34.9, True), (12, 34.9, True), (12, 35, False),
+    (-12.1, 328, False), (-12, 328, True), (-11.9, 328, True), (0, 328, True),
+    (12, -5.1, False), (12, -5, False), (12, -4.9, True), (12, 35, True),
 ])
 def test_caption_identity_slot_edges(monkeypatch, dy, dx, uncertain):
     # Set exact extracted-row edges to avoid PDF font rounding at strict bounds.
+    # dx now measures x1 from the column; dy edges sit right of the rule so
+    # an above-row name does not independently prevent subordination.
     original = placement.text_rows
 
     def exact_name_position(words):
         rows = original(words)
         name = next(row for row in rows if row['text'] == 'Name: Pat Smith')
         x, top, right, bottom = name['rect']
-        name['rect'] = [72 + dx, 360 + dy, 72 + dx + right - x, 360 + dy + bottom - top]
+        name['rect'] = [72 + dx - (right - x), 360 + dy, 72 + dx, 360 + dy + bottom - top]
         return rows
 
     monkeypatch.setattr(placement, 'text_rows', exact_name_position)

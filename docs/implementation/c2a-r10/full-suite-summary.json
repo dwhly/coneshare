@@ -1,0 +1,22 @@
+{
+  "command": "SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests",
+  "reporting_arguments": [
+    "--tb=short",
+    "--junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r10/full-suite-summary.xml"
+  ],
+  "base": "4db63354",
+  "exit_code": 0,
+  "tests": 1662,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 560.649,
+  "raw_suite_logs_retained": false,
+  "source_sha256": {
+    "backend/dealroom_sign/placement.py": "b6a484d22a88bd0b1b4ae324c9133d028feef0dcb49b67431a56d5d9ac554792",
+    "backend/dealroom_sign/tests/test_placement_r10.py": "a4196297a2a4dd14d7157711bf0844e2d7daa5eced2e1dbf5e2668fb492782b3",
+    "backend/dealroom_sign/tests/test_placement_r9.py": "44e2d446de2f897040435388ce8fc276e2bae12e40b041cf3e4cdf085a38fae0"
+  },
+  "passed": 1662,
+  "warnings": 82
+}

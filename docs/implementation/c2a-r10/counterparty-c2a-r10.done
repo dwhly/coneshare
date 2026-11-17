@@ -1,0 +1,11 @@
+C2a r10 complete
+Branch: agent/c1b-counterparty
+Base / unchanged HEAD: 4db63354
+Analysis version: c2a.10
+Failing first on unchanged production: 391 failed, 116 passed.
+Full signing suite: 1662 passed, 0 failed, 0 errors, 0 skipped; 82 warnings.
+Executed placement evidence: 532 matrix/control cases; 0 external model calls.
+Seven goldens exact against r4 and r5: status, geometry, confidence, native fields.
+Only approved existing-test edit: test_caption_identity_slot_edges.
+Documentation, compact evidence and preservation audit complete.
+git diff --check passed. No staging or commit. Project memory unchanged.

@@ -1687,3 +1687,81 @@ appended. HEAD remains `5e5ee6ea`, the index is empty, and project memory is
 unchanged. The [completion marker](c2a-r9/counterparty-c2a-r9.done) is beside the
 local brief. Implementation, executed evidence and full-suite verification are
 complete. All changes remain unstaged and uncommitted.
+
+## C2a r10
+
+Applied Gate 3 r9 B-1/M-1 on `agent/c1b-counterparty` at `4db63354`;
+`analysis_version` is **`c2a.10`**. Read Blocking B-1, M-1, L-1 and N-1 in
+full. Production changes are limited to the version and the exact prescribed
+`absorbed_names` predicate: `top - rule.y >= -12`, `x1 > column - 5`, and
+`person_text`. Collection remains subordinate-only; the six unconditional
+contact captions remain exempt. Host-extent containment is unchanged.
+
+The [runbook](c2a-runbook.md#identity-extent) now describes **a typed name at
+or below a subordinated rule, within the absorbing host's extent**. It also
+names the accepted single-signer Fax-style hold next to L-1, including the
+out-of-slot forms under the seven non-exempt contact captions.
+
+### Failing first
+
+The final tests ran against unchanged production code at `4db63354` before
+the fix: **391 failed, 116 passed, 0 errors/skips, 127.882 s**.
+[Executed summary and representative failures](c2a-r10/failing-first-summary.json).
+The production hash matches the base commit; test hashes are recorded.
+
+| New test group | Cases | Required r10 outcome |
+| --- | ---: | --- |
+| Four out-of-slot forms × C12/C13 × six headings × five captions | 240 | `needs_sender/ambiguous_identity`, no fields, score zero, no model calls |
+| dy +22/+24/+26/+28/+30/+34 × both layouts × five captions | 60 | Same hold |
+| Signature controls × four forms × both layouts × six headings | 48 | C12 high on 360/420; C13 holds; no model calls |
+| Additional H-1 forms × both mirrors × five captions | 40 | Hold, no fields, no model calls |
+| M-1: four forms × seven non-exempt contacts × Lee/LEE and Pat/PAT | 56 | Same identity hold |
+| Six exempt contacts × four forms × both matching signers | 48 | High on 400/430; no model calls |
+| Exact seven-golden comparison | 7 | Status, geometry, confidence and native fields match r4/r5 |
+
+All 356 B-1/M-1 cases failed first by placing instead of holding. Thirty new
+out-of-slot H-1 variants also placed with the original stack Date at 395;
+ten already held. These extensions are separate from the original 40 H-1
+tests, which remain untouched. The 48 Signature controls, 48 exempt-contact
+controls and seven goldens passed before the fix.
+
+There are **499 new tests**. The **only existing-test edit** is the approved
+eight-case `test_caption_identity_slot_edges`, retargeted to inclusive
+`dy = -12` and strict `x1 > column - 5`, preserving its structure. Five of
+those boundary assertions failed first. No other existing tests or golden
+fixtures/baselines were edited. The [EDD note](c2a-r10/edd-note.md) explains
+the initial new-test draft, the final stack fixture, and reproduction.
+
+### Verification
+
+**Full signing suite: 1,662 passed, 0 failed, 0 errors, 0 skipped,
+82 warnings, 560.649 s** (1,163 existing plus 499 new tests).
+[Full-suite summary](c2a-r10/full-suite-summary.json). Both test-file hashes
+match the failing-first run. The original H-1 stacks still hold and all seven
+goldens are exact against r4 and r5 on status, geometry, confidence and native
+fields.
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+```
+
+The [summary runner](c2a-r10/run_summary.py) adds only `--tb=short` and temporary
+JUnit XML for count collection. Raw output is held in memory and discarded;
+the XML is removed after writing the compact summary.
+
+The [evidence checker](c2a-r10/check_evidence.py) passed **532 executed matrix
+and control cases**, including the original 40 H-1 stacks, with **zero external
+model calls**. [Grouped outcomes](c2a-r10/review-placements.json) retain every
+case ID with its asserted result; [placement summary](c2a-r10/placement-summary.json)
+records the counts. [Golden placements](c2a-r10/placements.json) and
+[comparison](c2a-r10/golden-comparison.json) confirm seven exact goldens;
+the unusual golden uses one local model stub, and no golden subordinates a rule.
+
+[Preservation audit](c2a-r10/preservation-summary.json): the production diff is
+exactly the requested predicate/version change, only the approved existing
+test function changed, fixtures/baselines are intact, the report is appended,
+and the index and project memory are unchanged. `git diff --check` passes.
+HEAD remains `4db63354`; no staging or commits were performed.
+
+Implementation, full-suite verification and executed evidence are complete.
+[Completion marker](c2a-r10/counterparty-c2a-r10.done).

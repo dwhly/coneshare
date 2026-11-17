@@ -29,7 +29,7 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.9'
+VERSION = 'c2a.10'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -554,8 +554,8 @@ def extract(pdf, *, deadline=None):
                     # above deliberately do not participate in this veto.
                     column = line.label['rect'][0]
                     absorbed_names[pno].extend(t for t in texts
-                                              if 0 <= t['rect'][1] - line.y < 22
-                                              and abs(t['rect'][0] - column) < 35
+                                              if t['rect'][1] - line.y >= -12
+                                              and t['rect'][2] > column - 5
                                               and person_text(t['text']))
             hosts = []
             for line in unique:
