@@ -438,7 +438,8 @@ def forward(request, session):
                 content_type = upstream.headers.get('content-type', '').split(';')[0]
                 allowed = {'text/html', 'application/json', 'text/x-script', 'text/javascript', 'application/javascript',
                     'text/css', 'application/pdf', 'image/png', 'image/jpeg', 'image/svg+xml', 'image/webp',
-                    'font/woff', 'font/woff2', 'application/font-woff', 'application/octet-stream'}
+                    'font/woff', 'font/woff2', 'font/ttf', 'font/otf', 'application/font-woff',
+                    'application/octet-stream'}
                 if content_type not in allowed or upstream.headers.get('content-encoding', 'identity') != 'identity':
                     raise SignError('native_content_denied')
                 size = 0
