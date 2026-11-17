@@ -35,6 +35,9 @@ def load_settings(settings_module, boards=None, proxy_key=None):
         'SENTRY_DSN': '',
         'SIGN_WEBHOOK_SECRET': 'settings-test-webhook-secret',
     })
+    if settings_module == 'dealroom_sign.runtime_settings':
+        # Board-setting tests must supply the dedicated runtime's independent transport requirement.
+        env['SIGN_INTERNAL_URL'] = 'http://sign.test'
     for name, value in (
         ('BOARD_SIGN_BOARDS', boards),
         ('BOARD_SIGN_PROXY_KEY', proxy_key),

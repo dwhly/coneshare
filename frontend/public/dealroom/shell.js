@@ -186,13 +186,18 @@
   const themeStatus = h("span", { "aria-live": "polite", "aria-atomic": "true" });
   themeStatus.style.cssText = "position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0";
   document.body.appendChild(themeStatus);
+  let announceTheme = false;
+  document.addEventListener("click", function (event) {
+    if (event.target.closest("[data-fds-theme-toggle]")) announceTheme = true;
+  }, true);
   function syncThemeControls() {
     document.querySelectorAll("[data-fds-theme-toggle]").forEach(function (button) {
       const label = (button.getAttribute("aria-label") || "").replace(/ \(click to change\)$/, "");
       if (!label) return;
       button.setAttribute("title", label);
-      if (themeStatus.textContent !== label) themeStatus.textContent = label;
+      if (announceTheme && themeStatus.textContent !== label) themeStatus.textContent = label;
     });
+    announceTheme = false;
   }
   new MutationObserver(syncThemeControls).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["aria-label"] });
   syncThemeControls();

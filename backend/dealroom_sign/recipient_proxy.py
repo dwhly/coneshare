@@ -454,6 +454,8 @@ def forward(request, session):
                 for name in ('Content-Security-Policy', 'Content-Disposition'):
                     if name in upstream.headers:
                         response[name] = upstream.headers[name]
+                if path == '/chief/sign-tenant-logo' and upstream.status_code == 200 and content_type == 'image/png':
+                    response['Cache-Control'] = upstream.headers.get('Cache-Control', 'private, no-store')
                 return response
     except (httpx.HTTPError, SignError):
         spool.close()
@@ -476,7 +478,10 @@ class RecipientBoundaryMiddleware:
         except (SignError, httpx.HTTPError, SignCredential.DoesNotExist, ValueError, TypeError):
             response = page(request, 'help', status=403)
         response = csrf.process_response(request, response)
-        if request.path not in {'/chief/tenant-logo', '/signing/tenant-logo'} or response.status_code != 200:
+        cacheable_logo = (request.path in {'/chief/tenant-logo', '/signing/tenant-logo', '/chief/sign-tenant-logo'}
+                          and response.status_code == 200
+                          and response.get('Content-Type', '').split(';')[0] == 'image/png')
+        if not cacheable_logo:
             response['Cache-Control'] = 'private, no-store'
         response['Referrer-Policy'] = referrer_policy(response)
         response['X-Content-Type-Options'] = 'nosniff'

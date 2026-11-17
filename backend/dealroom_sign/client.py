@@ -5,6 +5,7 @@ import time
 
 import httpx
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
 
 NATIVE_EMAIL_OFF = dict.fromkeys((
@@ -42,9 +43,12 @@ class Documenso:
     def __init__(self, credential, transport=None):
         if not credential.enabled:
             raise SignError('sign_credential_disabled')
+        self.base_url = settings.SIGN_INTERNAL_URL.strip().rstrip('/')
+        if not self.base_url:
+            raise ImproperlyConfigured('SIGN_INTERNAL_URL is required for Dealroom Sign')
         self.team_id = credential.team_id
         self.http = httpx.Client(
-            base_url=settings.SIGN_INTERNAL_URL.rstrip('/') + '/api/v2/',
+            base_url=self.base_url + '/api/v2/',
             headers={'Authorization': credential.token, 'Accept': 'application/json'},
             timeout=httpx.Timeout(10), follow_redirects=False, transport=transport,
         )
@@ -97,7 +101,7 @@ class Documenso:
         self.request('POST', 'envelope/update', json={'envelopeId': envelope_id,
             'data': {'globalAccessAuth': [], 'globalActionAuth': []},
             'meta': {'reminderSettings': NATIVE_REMINDERS_OFF, 'envelopeExpirationPeriod': SIGNING_PERIOD}})
-        envelope = self.request('POST', settings.SIGN_INTERNAL_URL.rstrip('/') +
+        envelope = self.request('POST', self.base_url +
             '/api/deal/envelope/editor/get', json={'envelopeId': identifier(envelope_id)}).json()
         if (not isinstance(envelope, dict) or envelope.get('id') != envelope_id or
                 envelope.get('teamId') != self.team_id or not external_id or

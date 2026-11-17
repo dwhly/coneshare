@@ -44,7 +44,7 @@ def test_h1_logo_uses_already_proxied_prefix_on_staff_and_recipient(client, logo
     for config in (ROOT / 'deploy').rglob('*nginx.conf'):
         source = config.read_text()
         assert 'location = /chief/tenant-logo' in source, config
-        assert 'location /signing/' in source, config
+        assert ('location /signing/' in source or 'location = /signing/tenant-logo' in source), config
 
 
 @pytest.mark.parametrize('colour', ['#fff', '#abcdef', '#777777'])
@@ -73,13 +73,18 @@ def test_m4_logo_requires_valid_chrome_on_page_and_mail(access, logo, monkeypatc
     assert sum('FLEET_TENANT_LOGO' in r.message for r in caplog.records) == 1
 
 
-def test_l1_internal_url_is_required_in_both_settings_modules():
+def test_l1_internal_url_is_required_only_in_runtime_settings():
     for relative in ['backend/settings.py', 'dealroom_sign/runtime_settings.py']:
         module = ast.parse((ROOT / 'backend' / relative).read_text())
         assignment = next(n.value for n in module.body if isinstance(n, ast.Assign)
                           and any(isinstance(t, ast.Name) and t.id == 'SIGN_INTERNAL_URL' for t in n.targets))
-        with pytest.raises(KeyError, match='SIGN_INTERNAL_URL'):
-            exec(compile(ast.Expression(assignment), relative, 'eval'), {'os': type('Env', (), {'environ': {}})})
+        expression = compile(ast.Expression(assignment), relative, 'eval')
+        environment = {'os': type('Env', (), {'environ': {}})}
+        if relative == 'dealroom_sign/runtime_settings.py':
+            with pytest.raises(KeyError, match='SIGN_INTERNAL_URL'):
+                eval(expression, environment)
+        else:
+            assert eval(expression, environment) == ''
 
 
 def test_l2_fifo_never_blocks_and_configuration_is_warmed_at_boot(tmp_path):
