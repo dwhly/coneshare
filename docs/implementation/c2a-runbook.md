@@ -1,4 +1,4 @@
-# Automatic signature placement operations (C2a r6)
+# Automatic signature placement operations (C2a r7)
 
 Placement holds are fail closed: no fields are sent. A bare document remains a
 hold. Rules resolve clearly attributed blocks; unusual labels may use one
@@ -22,9 +22,13 @@ pair's successful partition.
 edge, walk upward/downward through overlapping rows in the same column band,
 stopping at a non-companion rule or prose. The upward walk also stops at a row
 whose top belongs to another host's `(rule.y, rule.y + 125]` extent in that band.
-`Email`, `E-mail`, `Address`, `Phone`, `Tel` and `Company` rules are `OTHER`
-companions: like `NAME`/`DATE`/`TITLE`, they cannot create hosts, shorten the
-following extent, bound neighbouring columns or stop the walk. At a page edge, continue from the adjacent page's
+Rules whose own label matches `^[A-Za-z][\w .'/&-]{0,30}:\s*$`, without
+matching a known signature/name/title/date label, are `OTHER` companions.
+Witness remains a signature host. The existing model-reviewed caption
+`Hand of the covenanting party:` also retains its host/model path to preserve
+the unusual-label golden. `OTHER` rules cannot create hosts, shorten either
+extent edge, bound neighbouring columns or stop the walk. Their attached empty
+captions carry no identity; surrounding typed rows retain their veto. At a page edge, continue from the adjacent page's
 edge through its block-like rows. Any person-like or unresolved identity row
 blocks company-only placement. A distant name can only remove confidence; it
 cannot identify the signer or add a field. Named blocks retain their local
@@ -32,13 +36,17 @@ identity behavior. Fully accounted local evidence and a unique matching signer
 are still required. The r4 acceptance of a name just outside the local window
 is superseded by this rule.
 
-Page-number rows and digit-normalised text repeated at the same y ±2 points on
-at least two distinct pages are neutral in this walk. They neither stop it nor
-veto company-only confidence. This does not discard any local identity evidence.
+Page-number rows are neutral anywhere in this walk. Digit-normalised text
+repeated at the same y ±2 points on at least two distinct pages is neutral only
+inside the page margins (`top < 72` or `bottom > page height - 72`, in PDF points).
+Repeated body names still veto company-only confidence. Neutral rows neither
+stop the walk nor veto confidence; local identity evidence remains intact.
 Execution clauses recognise the additional company suffixes listed in the EDD
 and distinguish roles from capitalised person names. Comma witness clauses stay
 prose; title remainders before a comma and bare person names ending in a period
-retain their veto. The known `Effective Date.` clause ending remains prose.
+retain their veto. Clause endings whose last word is `date`, `agreement`,
+`above`, `below` or `hereof` remain prose. Hold reasons use “sign and date” for
+multiple named subjects and “signs and dates” for one.
 
 **Annotations hold the entire document** with `form_fields`: “Form fields or
 annotations require placement review. Nothing was sent.” Plain `/Link`

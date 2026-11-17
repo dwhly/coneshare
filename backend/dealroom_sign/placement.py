@@ -29,8 +29,9 @@ LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|nam
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.6'
-OTHER_LABEL = re.compile(r'^(?:email|e-mail|address|phone|tel|company)\b', re.I)
+VERSION = 'c2a.7'
+SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
+MODEL_SIGNATURE_CAPTION = 'Hand of the covenanting party:'
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
 MAX_EDGES = 5000
@@ -107,10 +108,10 @@ IDENTITY_SPLIT = re.compile(r',|\s+[–—/\-]\s+|\s+\(')
 
 def sentence_text(text):
     text = text.strip()
-    # Preserve the known wrapped witness-clause ending as prose. Other short,
+    # Preserve wrapped clause endings as prose. Other short,
     # capitalised person rows must retain their identity even with a final dot.
     name = text[:-1] if text.endswith('.') else ''
-    if (text.casefold() != 'effective date.' and PERSON.fullmatch(name)
+    if (PERSON.fullmatch(name) and name.split()[-1].casefold() not in {'date', 'agreement', 'above', 'below', 'hereof'}
             and all(w[0].isupper() for w in name.split())
             and not ROLE.fullmatch(name) and not COMPANY.search(name)
             and not BLOCK_WORDING.fullmatch(name)):
@@ -194,7 +195,7 @@ def safe_label(label, roles, signers=(), *, companies=None):
         return dict(label, text=behalf[1] if companies is None or behalf[1] in companies else '[company]')
     if company_text(text) and companies is not None and text not in companies:
         return dict(label, text='[company]')
-    if accounted_label(text, roles) or text == 'Hand of the covenanting party:':
+    if accounted_label(text, roles) or text == MODEL_SIGNATURE_CAPTION:
         return dict(label, text=text[:120])
     return dict(label, text='[redacted]')
 
@@ -280,10 +281,12 @@ def partition_stacked_blocks(hosts, texts, roles):
 def running_rows(pages):
     """Identify neutral walk rows locally; keep their text out of worker output."""
     grouped, neutral = {}, set()
-    for pno, (texts, _, _) in pages.items():
+    for pno, (texts, _, height) in pages.items():
         for row in texts:
             if PAGE_NUMBER.fullmatch(row['text']):
                 neutral.add(id(row))
+            if not (row['rect'][1] < 72 or row['rect'][3] > height - 72):
+                continue
             key = re.sub(r'\d+', '#', row['text'])
             grouped.setdefault(key, []).append((row['rect'][1], pno, id(row)))
     for rows in grouped.values():
@@ -326,7 +329,7 @@ def company_only_veto(block, extent, pages, roles, hosts, neutral):
                 if row is None:
                     stopped = True
                     break
-                if id(row) in neutral:
+                if id(row) in neutral or any(r.semantic == 'OTHER' and row is r.label for r in rules):
                     continue
                 if direction < 0 and any(r.y < row['rect'][1] <= r.y + 125 for r in other_hosts):
                     stopped = True
@@ -478,7 +481,10 @@ def extract(pdf, *, deadline=None):
                     if match:
                         lab = match.group(1).lower()
                         line.semantic = 'SIGNATURE' if lab in {'signature', 'signed', 'sign here', 'by'} else 'NAME' if 'name' in lab else 'DATE' if lab == 'date' else 'TITLE'
-                    elif OTHER_LABEL.match(line.label['text']):
+                    elif (SHORT_CAPTION.fullmatch(line.label['text'])
+                          and line.label['text'].rstrip(': ').casefold() != 'witness'
+                          and line.label['text'] != MODEL_SIGNATURE_CAPTION):
+                        # Keep the existing model-reviewed signature caption a host.
                         line.semantic = 'OTHER'
             hosts = []
             for line in unique:
@@ -539,6 +545,7 @@ def extract(pdf, *, deadline=None):
                 sig = block.line
                 column = sig.label.get('rect', [sig.x0])[0]
                 previous = [r.y for r in unique if r.y < sig.y - 5
+                            and r.semantic != 'OTHER'
                             and r.x1 > column and r.label.get('rect', [r.x0])[0] < sig.x1]
                 top = max([sig.y - 90] + previous)
                 bottom = sig.y + 125
@@ -556,7 +563,8 @@ def extract(pdf, *, deadline=None):
                 right = min([page.width] + [r.label.get('rect', [r.x0])[0]
                             for r in neighbours if r.label.get('rect', [r.x0])[0] > sig.x1])
                 block.raw_labels = [t for t in texts if top <= t['rect'][1] <= bottom
-                                    and t['rect'][0] < right and t['rect'][2] > left]
+                                    and t['rect'][0] < right and t['rect'][2] > left
+                                    and not any(r.semantic == 'OTHER' and t is r.label for r in unique)]
                 # Preserve the previous-block caption guard from r2.
                 block.uncertain_identity = (block.heading == '[ambiguous attribution]'
                                             and not any(t['rect'][1] >= sig.y and person_text(t['text'])
@@ -995,7 +1003,9 @@ def place(pdf, signers, *, model_client=None):
     elif not result['reason']:
         result['reason_code'] = 'ambiguous_identity'
         missing = [s['name'] for i, s in enumerate(signers) if i not in accepted or not any(f['signer'] == s['email'] and f['type'] == 'DATE' for f in result['fields'])]
-        result['reason'] = "Couldn't tell where " + ', '.join(missing or [s['name'] for s in signers]) + ' signs and dates. Placement review comes next; nothing was sent.'
+        subjects = missing or [s['name'] for s in signers]
+        verb = 'sign and date' if len(subjects) > 1 else 'signs and dates'
+        result['reason'] = "Couldn't tell where " + ', '.join(subjects) + f' {verb}. Placement review comes next; nothing was sent.'
     if time.monotonic() >= deadline:
         return hold(result, 'placement_timeout', 'Placement took too long')
     if result['status'] != 'placed':

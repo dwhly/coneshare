@@ -1411,3 +1411,103 @@ remain neutral even where their geometry overlaps another host's extent.
   `/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-r6.done`.
 
 All changes remain unstaged and uncommitted.
+
+## C2a r7
+
+Implemented Gate 3 r6 H-1, L-1, L-2 and N-1 from Send base `be30d623` on
+`agent/c1b-counterparty`. `analysis_version` is **`c2a.7`**. All edits are inside
+`/root/worktrees/send-c1b`; existing tests, fixture PDFs, r4/r5 placement
+artifacts and project memory are unchanged. Nothing was staged or committed.
+
+### Changes and failing-first evidence
+
+| Finding | Failures on `be30d623` | Result |
+| --- | ---: | --- |
+| H-1 | 13 | Replaced the closed contact vocabulary with the structural short-caption predicate. Such rules are `OTHER`, never hosts or boundaries. Their own blank captions are neutral locally and in the walk, so `Notice Address:` cannot masquerade as a person. All five requested captions exercise the three typed-identity outcomes; matching identities use the original By/Date rules at 400/430 pt. |
+| L-1 | 4 | Repeated rows are neutral only where `top < 72` or `bottom > height - 72`. The duplicated body name at y=300 holds. Tests cover strict margin edges and page-number neutrality anywhere; existing running-header cases still place. |
+| L-2 | 7 | Period-ending prose uses the last-word set `date`, `agreement`, `above`, `below`, `hereof`. Closing/Execution/Commencement Date and the other endings retain exact Harbor boxes. Uppercase/title-case Dan Whaley with a final period still holds. |
+| N-1 | 1 | Hold reasons use “sign and date” for multiple named subjects and “signs and dates” for one, including one missing signer in a larger request. |
+| Workflow/privacy | 6 | Each new contact hold and the repeated body-name hold creates no workflow/History event, returns no fields, calls no model and exposes no other person's name in results, exceptions or logs. |
+
+The requested four regressions were written and run before production edits:
+[initial failing-first log](c2a-r7/failing-first.txt). That initial run also
+contained a mistaken preservation-control fixture: the Harbor PDF contains
+both named signers, so it could not exercise “one missing signer.” The test now
+uses the single-block contact PDF and retains its exact singular-reason
+assertion. No existing test was edited or weakened.
+
+The final **51 new cases** (45 placement and six workflow/privacy) were replayed
+against the exact `be30d623` production file by
+[replay_baseline.py](c2a-r7/replay_baseline.py), which restores the working file
+in `finally`: **31 failed, 20 passed**, 27.79 s. The passing cases are preservation
+controls, not claimed regressions. The [baseline log](c2a-r7/baseline-send-red.txt)
+and [failure inventory](c2a-r7/baseline-summary.json) record every failure.
+
+### Required golden preservation and narrow deviation
+
+The literal proposed H-1 predicate also matches the existing model-reviewed
+signature caption `Hand of the covenanting party:`. Applying it literally made
+the mandatory `unusual` golden `bare`, as recorded in
+[initial targeted results](c2a-r7/initial-targeted.txt). To satisfy the explicit
+requirement that all seven goldens remain exact, that already-recognized caption
+retains its existing host/model path alongside the Witness host exception.
+There is no new contact-label vocabulary and no change to the golden fixture,
+`assert_golden`, expected fields, confidence, or model stub.
+
+The same run showed that `Notice Address:` must be treated as an attached blank
+caption when its rule becomes `OTHER`; otherwise its two capitalised words
+cause a false identity hold. Only labels actually attached to `OTHER` rules are
+excluded from scoring/walking. Unattached text, filled values and surrounding
+typed identities retain their checks. `OTHER` rules also cannot shorten the
+upper extent boundary.
+
+The [runbook](c2a-runbook.md#identity-extent) and
+[local EDD note](c2a-r7/edd-note.md) document the resulting rules and exception.
+The external EDD worktree was not edited. Because this worktree has no EDD brief,
+the [local brief record](c2a-r7/counterparty-c2a-r7.md), EDD note and completion
+marker are kept together under `docs/implementation/c2a-r7/`.
+
+### Verification
+
+The supplied runner is invoked directly and unchanged, with the requested URL:
+
+```bash
+SIGN_INTERNAL_URL=http://sign.test /root/work/sign-product/run-send-local.sh /root/worktrees/send-c1b dealroom_sign/tests
+/root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r7/check_goldens.py
+```
+
+- **Targeted r6/r7:** **106 passed**, 43.35 s
+  ([log](c2a-r7/targeted-green.txt)).
+- **Seven goldens:** all exact against **both r4 and r5**, on outcome, signer,
+  type, page, x/y/w/h, confidence and native field dictionaries. Six place;
+  `bare` holds with zero fields. Each placed fixture also passes `assert_golden`.
+  [Comparison](c2a-r7/golden-comparison.json),
+  [placements](c2a-r7/placements.json),
+  [checker](c2a-r7/check_goldens.py). The unusual fixture uses the existing stub;
+  no live model was called.
+- **Full signing suite:** **922 passed, 45 failed, 0 skipped**, 426.16 s;
+  all 967 cases ran, including all 51 new cases. The
+  [full log](c2a-r7/send-signing-suite.txt) records 74 warnings. This is **not a
+  green full-suite verification** in the current sandbox.
+- **Environment/baseline check:** all **45 failures reproduce on untouched
+  `be30d623`**, 60.23 s ([baseline replay](c2a-r7/baseline-infrastructure.txt)).
+  Forty-three failures report denied Redis access at `127.0.0.1:16379`
+  (`Operation not permitted`); the transport test cannot create its loopback
+  HTTP socket. The remaining preview-dispatch assertion also reproduces on
+  baseline; its renderer reads dynamic settings through the same Redis cache
+  and its wrapper suppresses dispatch exceptions. The separate
+  [route recheck](c2a-r7/route-failure-recheck.txt) confirms the socket denial.
+  No tests were skipped, changed, or given replacement mocks. Socket access
+  must be available to obtain a green full-suite result with the supplied runner;
+  approval escalation is unavailable in this environment.
+- **Scope/checks:** `git diff --check` passes; HEAD remains `be30d623`, the index
+  is empty, and existing tests, fixture PDFs, r4/r5 artifacts and memory remain
+  unchanged. [Footprint](c2a-r7/footprint.json) records source/test/document
+  hashes and [verification summary](c2a-r7/verification-summary.json) records
+  the identical full-suite/baseline failure inventory.
+- **Completion marker:**
+  [counterparty-c2a-r7.done](c2a-r7/counterparty-c2a-r7.done), beside the local
+  brief record. It explicitly records implementation completion and the
+  outstanding full-suite environment limitation.
+
+All changes remain unstaged and uncommitted.

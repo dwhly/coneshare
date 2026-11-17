@@ -1,0 +1,23 @@
+Implementation complete; full-suite verification requires socket access.
+
+Worktree: /root/worktrees/send-c1b
+Branch: agent/c1b-counterparty
+Base: be30d623
+analysis_version: c2a.7
+No staging or commits.
+
+Targeted r6/r7: 106 passed.
+Final new tests on be30d623: 31 failed, 20 preservation controls passed.
+Seven goldens: exact against c2a-r4 and c2a-r5, including native fields.
+Full requested suite: 922 passed, 45 failed, 0 skipped (967 total).
+All 45 failures reproduce on untouched be30d623.
+The sandbox denies Redis connections and loopback sockets; preview dispatch
+also fails on baseline. No tests were weakened, skipped, deleted or mocked anew.
+
+Narrow H-1 exception: the existing model-reviewed signature caption
+"Hand of the covenanting party:" retains its host/model path to satisfy the
+mandatory unusual golden; the literal short-caption predicate would make it bare.
+
+Report: ../c1b-report.md, section C2a r7
+EDD note: edd-note.md (local; no external-worktree writes)
+Verification: verification-summary.json

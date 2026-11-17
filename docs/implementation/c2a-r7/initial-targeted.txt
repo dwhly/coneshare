@@ -1,0 +1,97 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.2.2, pluggy-1.7.0
+django: version: 5.2.17, settings: backend.settings (from ini)
+rootdir: /root/worktrees/send-c1b/backend
+configfile: pytest.ini
+plugins: django-4.8.0, anyio-4.16.0, bdd-8.1.0
+collected 95 items
+
+dealroom_sign/tests/test_placement_r7.py .........F....F................ [ 32%]
+........F                                                                [ 42%]
+dealroom_sign/tests/test_placement_r6.py ............................... [ 74%]
+........................                                                 [100%]
+
+=================================== FAILURES ===================================
+_ test_h1_short_contact_caption_preserves_typed_identity[Lee Harbor-signers1-True-Notice Address] _
+
+label = 'Notice Address', name = 'Lee Harbor'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Fax', 'Mobile', 'Contact', 'Attention', 'Notice Address'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h1_short_contact_caption_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.7', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r7.py:28: AssertionError
+_ test_h1_short_contact_caption_preserves_typed_identity[Pat Smith-signers2-True-Notice Address] _
+
+label = 'Notice Address', name = 'Pat Smith'
+signers = [{'email': 'pat@harborlight.fleet.test', 'name': 'Pat Smith'}]
+placed = True
+
+    @pytest.mark.parametrize('label', ['Fax', 'Mobile', 'Contact', 'Attention', 'Notice Address'])
+    @pytest.mark.parametrize('name,signers,placed', [
+        ('Lee Harbor', PAT, False), ('Lee Harbor', LEE, True), ('Pat Smith', PAT, True),
+    ])
+    def test_h1_short_contact_caption_preserves_typed_identity(label, name, signers, placed):
+        result = placement.place(contact_rule_pdf(label, name), signers)
+        if not placed:
+            assert_held(result)
+            return
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.7', 'assignments': [{'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E       assert 'needs_sender' == 'placed'
+E         
+E         - placed
+E         + needs_sender
+
+dealroom_sign/tests/test_placement_r7.py:28: AssertionError
+__________ test_seven_goldens_remain_exact_against_r4_and_r5[unusual] __________
+
+name = 'unusual'
+
+    @pytest.mark.parametrize('name', EXPECTED['fixtures'])
+    def test_seven_goldens_remain_exact_against_r4_and_r5(name):
+        signers = EXPECTED['fixtures'][name]['signers']
+        result = placement.place(
+            (FIXTURES / (name + '.pdf')).read_bytes(), signers,
+            model_client=model_answer if name == 'unusual' else None,
+        )
+        if name == 'bare':
+            assert result['status'] == 'bare' and result['fields'] == []
+        else:
+>           assert_golden(result, name, signers)
+
+dealroom_sign/tests/test_placement_r7.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'analysis_version': 'c2a.7', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+name = 'unusual'
+signers = [{'email': 'lee@harborlight.fleet.test', 'name': 'Lee Harbor', 'side': 'them'}]
+
+    def assert_golden(result, name, signers):
+>       assert result['status'] == 'placed', result
+E       AssertionError: {'analysis_version': 'c2a.7', 'assignments': [], 'fields': [], 'method': 'rules', ...}
+E       assert 'bare' == 'placed'
+E         
+E         - placed
+E         + bare
+
+dealroom_sign/tests/test_placement.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r7.py::test_h1_short_contact_caption_preserves_typed_identity[Lee Harbor-signers1-True-Notice Address]
+FAILED dealroom_sign/tests/test_placement_r7.py::test_h1_short_contact_caption_preserves_typed_identity[Pat Smith-signers2-True-Notice Address]
+FAILED dealroom_sign/tests/test_placement_r7.py::test_seven_goldens_remain_exact_against_r4_and_r5[unusual]
+======================== 3 failed, 92 passed in 28.83s =========================
