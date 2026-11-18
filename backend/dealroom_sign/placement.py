@@ -47,7 +47,7 @@ ROLE_DESCRIPTION_WIDE = re.compile(
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.30'
+VERSION = 'c2a.31'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -87,6 +87,8 @@ class Block:
     ambiguous_heading: bool = False
     unclaimed_cross_page: bool = False
     printed_name_blocked: bool = False
+    extended_date_names: list = field(default_factory=list, repr=False)
+    unclaimed_date_rule: bool = False
     unclaimed_signing_peers: list = field(default_factory=list, repr=False)
 
 
@@ -722,9 +724,10 @@ def printed_name_boundary(block, blocks, texts, rules, roles):
                for t in headings):
             return True
         # A Date-first block may leave a blank row before its printed name.
-        # Scale that companion band to two By/Date row pitches, capped at
-        # 50 points for a blank row and an offset name. A completed stack or
-        # intervening signing rule retains the original 22-point boundary.
+        # Scale to two By/Date pitches, capped at 50 points, only provisionally:
+        # prepare_blocks must verify the adopted signer's party and rule out
+        # another unclaimed stack before this wider band can emit fields.
+        # Completed stacks and intervening rules retain the 22-point boundary.
         for date in rules:
             if not (date.semantic == 'DATE' and line.y < date.y < y0 - 22
                     and date.x1 > left
@@ -741,6 +744,10 @@ def printed_name_boundary(block, blocks, texts, rules, roles):
             band = max(22, min(50, 2 * (date.y - line.y))) if date_first and not separate_rule else 22
             if date.y < y0 - band:
                 return True
+            block.extended_date_names.append((names, own_party))
+            block.unclaimed_date_rule = any(
+                r.y >= 110 and r.semantic not in COMPANION_SEMANTICS
+                and not any(b.line is r for b in blocks) for r in rules)
     return False
 
 
@@ -1041,9 +1048,52 @@ def unresolved_person(text, roles):
     return 2 <= len(words) <= 3 and all(w[0].isupper() for w in words)
 
 
+def extended_date_names_owned(block, blocks, roles, signers):
+    """Require party ownership before a name can cross the 22-point Date band."""
+    for names, own_party in getattr(block, 'extended_date_names', ()):
+        matched = [s for s in signers if tokens(s.get('name', '')) in names]
+        if not matched:
+            # An unrequested full name scores zero for every supplied signer;
+            # it cannot lend the expanded band to any emitted field.
+            continue
+        if not own_party:
+            return False
+        for signer in matched:
+            domain = signer['email'].split('@')[-1].split('.')[0].lower()
+            company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
+            if not similarity(company, ' '.join(own_party)):
+                return False
+            mapped = {tuple(t for t in tokens(party) if t not in STOP)
+                      for party in roles.values() if company_text(party)}
+            if any(party != own_party and similarity(company, ' '.join(party))
+                   for party in mapped):
+                return False
+            if block.unclaimed_date_rule:
+                return False
+            for other in blocks:
+                if other is block or other.line.page != block.line.page or witness_block(other):
+                    continue
+                printed = printed_names(other, blocks)
+                if printed:
+                    if any(name in printed for name in names):
+                        return False
+                    continue
+                heading = (behalf_parts(other.heading) or ('', other.heading))[1]
+                key = heading.rstrip(': ').lower()
+                heading = roles.get(key, roles.get(key.removeprefix('the '), heading))
+                if not company_text(heading) or similarity(company, heading):
+                    return False
+            if any(not printed or any(name in printed for name in names)
+                   for printed in block.unclaimed_signing_peers):
+                return False
+    return True
+
+
 def prepare_blocks(blocks, roles, signers):
     """Score raw evidence locally, then discard it before worker output."""
     for block in blocks:
+        if not extended_date_names_owned(block, blocks, roles, signers):
+            block.printed_name_blocked = True
         block.scores = [score(s, block, roles, blocks) for s in signers]
         if not printed_names(block, blocks) and sum(v >= 4 for v in block.scores) != 1:
             block.scores = [0] * len(signers)
@@ -1094,6 +1144,7 @@ def prepare_blocks(blocks, roles, signers):
         for extra in block.extras.values():
             extra.label = safe_label(extra.label, roles, signers, companies=companies)
         block.raw_labels = []
+        block.extended_date_names = []
         block.unclaimed_signing_peers = []
 
 

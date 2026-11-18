@@ -1,0 +1,52 @@
+{
+  "part": "exact_q3b",
+  "cases": 2430,
+  "groups": {
+    "exact_q3b": {
+      "cases": 2430,
+      "r21_c": 1418,
+      "r21_raw_wrong": 92,
+      "r28_c": 924,
+      "r28_raw_wrong": 0,
+      "r29_c": 924,
+      "r29_raw_wrong": 0,
+      "r31_c": 924,
+      "r31_raw_wrong": 0,
+      "r21_to_r31_n_to_p": 0,
+      "r21_to_r31_c_to_w": 0,
+      "r21_to_r31_c_to_n": 494,
+      "r21_to_r31_w_to_n": 92,
+      "r28_to_r31_n_to_p": 0,
+      "r28_to_r31_c_to_w": 0,
+      "r28_to_r31_c_to_n": 0,
+      "r28_to_r31_w_to_n": 0,
+      "r29_to_r31_n_to_p": 0,
+      "r29_to_r31_c_to_w": 0,
+      "r29_to_r31_c_to_n": 0,
+      "r29_to_r31_w_to_n": 0,
+      "r21_n": 920,
+      "r28_n": 1506,
+      "r29_n": 1506,
+      "r31_n": 1506,
+      "r21_w": 92
+    }
+  },
+  "transitions": {
+    "exact_q3b": {
+      "c -> c -> c -> c": 924,
+      "n -> n -> n -> n": 920,
+      "c -> n -> n -> n": 494,
+      "w -> n -> n -> n": 92
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r28": "e5dc8ef0c406b2e5e5fd22f91c7d7327bb80db185b658771f0fccb4eeead6733",
+    "r29": "866637df797137e74b748c85a644629edda206544a6bc8a3b685e31f1c29bae6",
+    "r31": "a8ad8dcc098f3416e46cc519bddf2414fd780fcab48d5ce8fd413f6b1be13566"
+  },
+  "archive_results_exact": true,
+  "baseline_method": "immutable c2a.29 replay archive; baseline sources match git commits",
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

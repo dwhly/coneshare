@@ -1,0 +1,14 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_recital_party_prevents_adoption_by_affiliate[Pat Smith-pat@harborlight.fleet.test-HARBOR LIGHT GROUP, INC.] _
+dealroom_sign/tests/test_placement_r31_recital.py:22: in test_recital_party_prevents_adoption_by_affiliate
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r31/recital-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r31_recital.py::test_recital_party_prevents_adoption_by_affiliate[Pat Smith-pat@harborlight.fleet.test-HARBOR LIGHT GROUP, INC.]
+1 failed, 1 passed in 0.45s

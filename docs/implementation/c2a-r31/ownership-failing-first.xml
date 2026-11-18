@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="14" skipped="0" tests="18" time="0.692" timestamp="2026-11-18T14:29:10.717439" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[False--None-parsed]" time="0.019"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[False-RECIPIENT:-None-none]" time="0.010"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[False-FLEET TEST CO.-None-parsed]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[False-DISCLOSER:-None-parsed]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[False-HARBOR LIGHT ANALYTICS, INC.--parsed]" time="0.016"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[False-HARBOR LIGHT ANALYTICS, INC.-RECIPIENT:-parsed]" time="0.017"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[False-HARBOR LIGHT ANALYTICS, INC.-HARBOR LIGHT ANALYTICS, INC.-parsed]" time="0.019"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[True--None-parsed]" time="0.013"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[True-RECIPIENT:-None-none]" time="0.009"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[True-FLEET TEST CO.-None-parsed]" time="0.015"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[True-DISCLOSER:-None-parsed]" time="0.015"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 6, ...}]...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[True-HARBOR LIGHT ANALYTICS, INC.--parsed]" time="0.016"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[True-HARBOR LIGHT ANALYTICS, INC.-RECIPIENT:-parsed]" time="0.017"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_widening_requires_own_party_and_no_unclaimed_alternative[True-HARBOR LIGHT ANALYTICS, INC.-HARBOR LIGHT ANALYTICS, INC.-parsed]" time="0.017"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_ownership.py:34: in test_widening_requires_own_party_and_no_unclaimed_alternative
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_own_company_or_mapped_role_preserves_recovery[False-HARBOR LIGHT ANALYTICS, INC.]" time="0.014" /><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_own_company_or_mapped_role_preserves_recovery[False-RECIPIENT:]" time="0.013" /><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_own_company_or_mapped_role_preserves_recovery[True-HARBOR LIGHT ANALYTICS, INC.]" time="0.014" /><testcase classname="dealroom_sign.tests.test_placement_r31_ownership" name="test_own_company_or_mapped_role_preserves_recovery[True-RECIPIENT:]" time="0.087" /></testsuite></testsuites>

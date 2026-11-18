@@ -1,0 +1,10 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import os,glob
+os.makedirs('/tmp/r30rev',exist_ok=True)
+for f in ['datefirst.py','g31.py','g32.py','g33.py','g36.py','g40.py','q3new.py','stray.py','probe_e.py','workers.py']:
+    s=open('/tmp/r29rev/'+f).read()
+    s=s.replace(\"startswith('866637df')\",\"startswith('@@R30@@')\").replace(\"startswith('e5dc8ef0')\",\"startswith('866637df')\").replace('@@R30@@','e55bf345')
+    s=s.replace(\"print('worker r29\",\"print('worker r30\")
+    open('/tmp/r30rev/'+f,'w').write(s)
+    print(f, s.count('e55bf345'), s.count('866637df'))
+"

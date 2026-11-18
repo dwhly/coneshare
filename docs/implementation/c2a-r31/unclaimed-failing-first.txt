@@ -1,0 +1,23 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________ test_unclaimed_ruled_stack_prevents_widening[] ________________
+dealroom_sign/tests/test_placement_r31_unclaimed.py:22: in test_unclaimed_ruled_stack_prevents_widening
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)
+___________ test_unclaimed_ruled_stack_prevents_widening[Signature:] ___________
+dealroom_sign/tests/test_placement_r31_unclaimed.py:22: in test_unclaimed_ruled_stack_prevents_widening
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r31/unclaimed-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r31_unclaimed.py::test_unclaimed_ruled_stack_prevents_widening[]
+FAILED dealroom_sign/tests/test_placement_r31_unclaimed.py::test_unclaimed_ruled_stack_prevents_widening[Signature:]
+2 failed in 0.40s

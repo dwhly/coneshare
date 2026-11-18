@@ -1,0 +1,62 @@
+[
+  {
+    "name": "datefirst",
+    "source": "backend/dealroom_sign/tests/fixtures/r30/reviewer-r29-datefirst.py.txt",
+    "sha256": "19e371535c92f481956f74398e8c448572e18243ca03d79f0614e8a0fece3e84",
+    "method": "exact call10 transformation of frozen r29 Write payload; scratch byte equality"
+  },
+  {
+    "name": "q3new",
+    "source": "backend/dealroom_sign/tests/fixtures/r30/reviewer-r29-q3new.py.txt",
+    "sha256": "a2275a2297ef68d839d5bfb290da295ba4411717db504e45aa0ccb3447f39973",
+    "method": "exact call10 transformation of frozen r29 Write payload; scratch byte equality"
+  },
+  {
+    "name": "workers",
+    "source": "backend/dealroom_sign/tests/fixtures/r30/reviewer-r29-workers.py.txt",
+    "sha256": "d06112a85ad62b151e4a2a6536c0845cd6712c5f728e1bd7ffcb507316bbfc16",
+    "method": "exact call10 transformation of frozen r29 Write payload; scratch byte equality"
+  },
+  {
+    "name": "stray",
+    "source": "backend/dealroom_sign/tests/fixtures/r30/reviewer-r29-stray.py.txt",
+    "sha256": "76c98aa48b60f9871fd0178ad59d2b8931a0b4a6ca18f915de73a34c71e53c7a",
+    "method": "exact call10 transformation of frozen r29 Write payload; scratch byte equality"
+  },
+  {
+    "name": "probe_e",
+    "source": "backend/dealroom_sign/tests/fixtures/r30/reviewer-r29-probe_e.py.txt",
+    "sha256": "de260fd57aeeb3a400f47e10302a9d3fb682faa64d185af175cb19703add4c30",
+    "method": "exact call10 transformation of frozen r29 Write payload; scratch byte equality"
+  },
+  {
+    "name": "g31",
+    "source": "backend/dealroom_sign/tests/fixtures/r29/reviewer-r28-call32.py.txt",
+    "sha256": "7514a14fec5eea17e435c72d25ca033e6566675db4639c42b2e9a5a9dd3139fe",
+    "method": "r29 copied r28 payload, r30 call10 hash transformation; scratch byte equality; generator body unchanged"
+  },
+  {
+    "name": "g32",
+    "source": "backend/dealroom_sign/tests/fixtures/r29/reviewer-r28-call33.py.txt",
+    "sha256": "851801dc538c395678416adeb92a2b0243d11e1f16b30689ed00f9d6a37a71b4",
+    "method": "r29 copied r28 payload, r30 call10 hash transformation; scratch byte equality; generator body unchanged"
+  },
+  {
+    "name": "g33",
+    "source": "backend/dealroom_sign/tests/fixtures/r29/reviewer-r28-call34.py.txt",
+    "sha256": "0cd69f4edfda56f5930d6a230174ac804f4695ba3ceb7b3ae771c92a1048a9c0",
+    "method": "r29 copied r28 payload, r30 call10 hash transformation; scratch byte equality; generator body unchanged"
+  },
+  {
+    "name": "g36",
+    "source": "backend/dealroom_sign/tests/fixtures/r29/reviewer-r28-call37.py.txt",
+    "sha256": "9a6225ea3d281de2a6214bb073e1b46275585b1d48ec51be9c62656952a222c8",
+    "method": "r29 copied r28 payload, r30 call10 hash transformation; scratch byte equality; generator body unchanged"
+  },
+  {
+    "name": "g40",
+    "source": "backend/dealroom_sign/tests/fixtures/r29/reviewer-r28-call41.py.txt",
+    "sha256": "019473a4f5bb5ec9a346a778f7791b7f4ea247b481437da6879fd8cc09cc4d0e",
+    "method": "r29 copied r28 payload, r30 call10 hash transformation; scratch byte equality; generator body unchanged"
+  }
+]

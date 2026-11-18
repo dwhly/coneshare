@@ -1,0 +1,6659 @@
+{
+  "inherited/layouts/Review matrix same": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1255,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 65
+      },
+      "r28": {
+        "n_to_n": 1255,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 65
+      },
+      "r21": {
+        "n_to_n": 1255,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 65
+      }
+    }
+  },
+  "inherited/layouts/Review matrix guarantor": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1255,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 65
+      },
+      "r28": {
+        "n_to_n": 1255,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 65
+      },
+      "r21": {
+        "n_to_n": 1190,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 65,
+        "c_to_c": 65
+      }
+    }
+  },
+  "inherited/layouts/Review matrix split": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1290,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 30
+      },
+      "r28": {
+        "n_to_n": 1290,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 30
+      },
+      "r21": {
+        "n_to_n": 1255,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 35,
+        "c_to_c": 30
+      }
+    }
+  },
+  "inherited/layouts/Review matrix witness": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1320,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1320,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1320,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/layouts/Cross-page regression guarantor": {
+    "cases": 120,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/layouts/Cross-page regression split": {
+    "cases": 120,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/layouts/B2 exact worker": {
+    "cases": 12,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r28": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r21": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      }
+    }
+  },
+  "inherited/layouts/B2 role vocabulary": {
+    "cases": 52,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 52,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 52,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 52,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/layouts/ROLE_DEF layouts": {
+    "cases": 96,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 86,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 10
+      },
+      "r28": {
+        "n_to_n": 86,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 10
+      },
+      "r21": {
+        "n_to_n": 84,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 10,
+        "c_to_n": 2
+      }
+    }
+  },
+  "inherited/review/Competition": {
+    "cases": 480,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 480,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 480,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 384,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 96
+      }
+    }
+  },
+  "inherited/review/L1 boundary pat": {
+    "cases": 3480,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 191,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 3289
+      },
+      "r28": {
+        "c_to_c": 191,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 3289
+      },
+      "r21": {
+        "c_to_c": 191,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 3289
+      }
+    }
+  },
+  "inherited/review/L1 boundary fleet": {
+    "cases": 1800,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1800,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1800,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1800,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/review/F fine": {
+    "cases": 3456,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1344,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2112
+      },
+      "r28": {
+        "c_to_c": 1344,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2112
+      },
+      "r21": {
+        "c_to_c": 1344,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1131,
+        "c_to_n": 981
+      }
+    }
+  },
+  "inherited/review/F fine company-only": {
+    "cases": 3456,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3456,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 3456,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2680,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 776
+      }
+    }
+  },
+  "inherited/review/Realistic NDA matrix": {
+    "cases": 48,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/review/B1 real worker": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/review/Q4 M1 ambiguity": {
+    "cases": 6,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/review/Q4 controls": {
+    "cases": 32,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 20,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 20,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 20,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      }
+    }
+  },
+  "inherited/new/M2 conflict probes": {
+    "cases": 36,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 12
+      }
+    }
+  },
+  "inherited/new/L1 recital matrix": {
+    "cases": 384,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 384,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 384,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 384,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/wrapped/Wrapped matrix same": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 50
+      },
+      "r28": {
+        "n_to_n": 1270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 50
+      },
+      "r21": {
+        "n_to_n": 1270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 50
+      }
+    }
+  },
+  "inherited/wrapped/Wrapped matrix guarantor": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 50
+      },
+      "r28": {
+        "n_to_n": 1270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 50
+      },
+      "r21": {
+        "n_to_n": 1220,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 50,
+        "c_to_c": 50
+      }
+    }
+  },
+  "inherited/wrapped/Wrapped matrix split": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1305,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 15
+      },
+      "r28": {
+        "n_to_n": 1305,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 15
+      },
+      "r21": {
+        "n_to_n": 1270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 35,
+        "c_to_c": 15
+      }
+    }
+  },
+  "inherited/wrapped/Wrapped matrix witness": {
+    "cases": 1320,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1320,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1320,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1320,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/Matrix 1": {
+    "cases": 120,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/Matrix 2": {
+    "cases": 270,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 270,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r11 B-1": {
+    "cases": 1020,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/Signature controls": {
+    "cases": 204,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 198,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r28": {
+        "n_to_n": 198,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r21": {
+        "n_to_n": 198,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      }
+    }
+  },
+  "inherited/historical/M-1": {
+    "cases": 16,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 16,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 16,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 16,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r9 heading matrix": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 66,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r28": {
+        "n_to_n": 66,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r21": {
+        "n_to_n": 66,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      }
+    }
+  },
+  "inherited/historical/r9 H-1": {
+    "cases": 40,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 40,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 40,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 40,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/Seven goldens": {
+    "cases": 7,
+    "comparisons": {
+      "r29": {
+        "b_to_b": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r28": {
+        "b_to_b": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      },
+      "r21": {
+        "b_to_b": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 6
+      }
+    }
+  },
+  "inherited/historical/Same-band right host": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r12 B-1 reproduction": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r13 same-band grid": {
+    "cases": 42,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 42,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 42,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 42,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r12 B-1 sweep": {
+    "cases": 864,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 864,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 864,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 864,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/L-1 short-rule controls": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/L-2 own-company controls": {
+    "cases": 40,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 20,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 20
+      },
+      "r28": {
+        "c_to_c": 20,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 20
+      },
+      "r21": {
+        "c_to_c": 20,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 20
+      }
+    }
+  },
+  "inherited/historical/r14 reproduction": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r14 grid": {
+    "cases": 3456,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2436,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1020
+      },
+      "r28": {
+        "c_to_c": 2436,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1020
+      },
+      "r21": {
+        "c_to_c": 2436,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1020
+      }
+    }
+  },
+  "inherited/historical/r14 fixed sweep": {
+    "cases": 360,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 244,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 116
+      },
+      "r28": {
+        "c_to_c": 244,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 116
+      },
+      "r21": {
+        "c_to_c": 244,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 116
+      }
+    }
+  },
+  "inherited/historical/r14 correct controls": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r14 L-1 (grid subset)": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r15 M1 reproduction": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r15 M2 reproduction": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r15 M1": {
+    "cases": 640,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 640,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 640,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 640,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r15 M2": {
+    "cases": 2592,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2592,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2592,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2592,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 reviewer_wrong_signer_goldens": {
+    "cases": 5,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 unnamed_signer_never_takes_named_block": {
+    "cases": 42,
+    "comparisons": {
+      "r29": {
+        "b_to_b": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 24,
+        "c_to_c": 12
+      },
+      "r28": {
+        "b_to_b": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 24,
+        "c_to_c": 12
+      },
+      "r21": {
+        "b_to_b": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 24,
+        "c_to_c": 12
+      }
+    }
+  },
+  "inherited/historical/r2 nearby_body_is_redacted_and_model_identity_is_minimal": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 caption_cannot_claim_next_block": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 date_cannot_be_borrowed_from_next_column": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 native_signature_is_tight_and_bottom_anchored": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 printed_name_variants_veto_company_match": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 named_caption_is_not_dropped_when_it_is_long": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 unlabelled_unrecognized_caption_cannot_be_ignored": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 heading_cannot_cross_a_previous_unlabelled_rule": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r2 date_in_close_right_column_with_unlabelled_signature_is_not_borrowed": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r3 other_person_in_whole_raw_extent_never_gets_high": {
+    "cases": 12,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r3 inserted_raw_person_vetoes_across_fixtures": {
+    "cases": 39,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 3
+      },
+      "r28": {
+        "n_to_n": 35,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 1,
+        "c_to_c": 3
+      },
+      "r21": {
+        "n_to_n": 35,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 1,
+        "c_to_c": 3
+      }
+    }
+  },
+  "inherited/historical/r3 company_only_requires_every_raw_line_accounted_for": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r3 matching_printed_name_can_resolve_label_prefix": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r3 title_case_body_never_leaves_local_evidence": {
+    "cases": 6,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 3
+      },
+      "r28": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 3
+      },
+      "r21": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 3
+      }
+    }
+  },
+  "inherited/historical/r3 matched_name_does_not_override_unresolved_person_like_line": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r3 company_only_requires_one_signer_even_if_other_signer_has_named_block": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r3 second_person_in_same_raw_line_also_vetoes": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 rule_row_name_controls_identity": {
+    "cases": 16,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 8
+      },
+      "r28": {
+        "n_to_n": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 8
+      },
+      "r21": {
+        "n_to_n": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 8
+      }
+    }
+  },
+  "inherited/historical/r4 side_by_side_company_blocks_keep_their_own_names": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 golden_harbor_role_suffix_keeps_exact_boxes": {
+    "cases": 12,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 golden_harbor_block_wording_keeps_exact_boxes": {
+    "cases": 31,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 31,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 31,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 31,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 ascii_hyphen_role_preserves_printed_identity": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      }
+    }
+  },
+  "inherited/historical/r4 unnamed_company_block_accounts_for_roles": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 title_person_remains_unresolved_and_holds": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 stacked_individual_blocks_place_without_neighbour_veto": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 stacked_individual_blocks_do_not_accept_company_only": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 name_in_gap_between_party_columns_makes_both_uncertain": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r4 equidistant_row_between_stacked_rules_is_not_discarded": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_far_heading_vetoes_company_only": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_far_caption_vetoes_company_only": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_walk_stops_at_prose_or_other_rule": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_walk_crosses_page_edge": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_distant_name_never_adds_confidence": {
+    "cases": 6,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b2_proven_empty_widget_and_plain_link_keep_placement": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 h1_title_wording_keeps_exact_golden": {
+    "cases": 30,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 h1_behalf_wording_keeps_exact_golden": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 h1_behalf_other_person_vetoes_named_signer": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 h1_wrapped_sentence_is_not_a_name_but_blocks_company_only": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      }
+    }
+  },
+  "inherited/historical/r5 h1_company_only_title_rules_stay_strict": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      }
+    }
+  },
+  "inherited/historical/r5 h1_positive_name_title_remainder_predicate": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 2
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 2
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 2
+      }
+    }
+  },
+  "inherited/historical/r5 m1_compound_name_caption_keeps_exact_golden": {
+    "cases": 8,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 m1_compound_caption_keeps_mismatched_person_veto": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 m2_stacked_headings_with_side_dates": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      },
+      "r28": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      },
+      "r21": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      }
+    }
+  },
+  "inherited/historical/r5 l1_empty_contact_labels_only_are_accounted": {
+    "cases": 10,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 5
+      },
+      "r28": {
+        "c_to_c": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 5
+      },
+      "r21": {
+        "c_to_c": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 5
+      }
+    }
+  },
+  "inherited/historical/r5 l2_single_typed_row_signature_and_date": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 n1_mixed_case_role_shaped_names_veto_company_only": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 n1_uppercase_role_abbreviations_remain_accounted": {
+    "cases": 7,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 h1_execution_clause_is_a_heading": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1
+      },
+      "r28": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1
+      },
+      "r21": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1
+      }
+    }
+  },
+  "inherited/historical/r5 b2_unproven_empty_widget_holds": {
+    "cases": 5,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_named_block_does_not_use_distant_veto": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_veto_respects_neighbour_column_band": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 h1_wrapped_witness_paragraph_keeps_exact_golden": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r5 b1_cross_page_walk_includes_row_at_page_top": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 h2_contact_rule_preserves_typed_identity": {
+    "cases": 18,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      }
+    }
+  },
+  "inherited/historical/r6 h1_previous_caption_stays_with_its_host": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      },
+      "r28": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      },
+      "r21": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      }
+    }
+  },
+  "inherited/historical/r6 m1_repeated_running_header_is_neutral": {
+    "cases": 9,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 9,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 9,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 9,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 m1_nonrepeated_header_retains_identity_veto": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 m1_page_number_does_not_hide_next_page_name": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 m2_behalf_company_suffix_keeps_exact_golden": {
+    "cases": 10,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 m2_behalf_role_is_not_a_person": {
+    "cases": 3,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 3,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 m3_comma_witness_paragraph_keeps_exact_golden": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 n1_title_person_before_comma_still_vetoes": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r6 n2_period_name_still_vetoes_named_block": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r7 h1_short_contact_caption_preserves_typed_identity": {
+    "cases": 15,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 15,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 15,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 15,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r7 l1_repeated_body_name_retains_identity_veto": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r7 l1_page_number_is_neutral_in_body": {
+    "cases": 4,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r7 l2_prose_ending_keeps_exact_harbor_boxes": {
+    "cases": 7,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r7 l2_period_name_still_holds": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r7 n1_hold_reason_agrees_with_signer_count": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r7 n1_one_missing_signer_keeps_singular_reason": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r8 b1_unusual_host_never_places_on_neighbour": {
+    "cases": 25,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 25,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 25,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 25,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r8 b1_signature_controls_keep_previous_outcome": {
+    "cases": 5,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r28": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      },
+      "r21": {
+        "n_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1
+      }
+    }
+  },
+  "inherited/historical/r8 m1_c7_keeps_400_candidate_and_never_places_on_witness": {
+    "cases": 5,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r8 l1_only_authorised_signatory_uses_model_on_its_own_line": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r8 contact_vocabulary_is_other_without_preceding_host": {
+    "cases": 6,
+    "comparisons": {
+      "r29": {
+        "b_to_b": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "b_to_b": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "b_to_b": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r9 b1_same_row_right_behalf_holds": {
+    "cases": 5,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r9 absorbed_identity_vetoes_every_overlapping_host": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r10 b1_out_of_slot_identity_holds": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 240,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 240,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 240,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r10 b1_name_below_caption_holds": {
+    "cases": 60,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 60,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 60,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 60,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r10 signature_out_of_slot_controls_unchanged / title_then_name": {
+    "cases": 12,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r28": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r21": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      }
+    }
+  },
+  "inherited/historical/r10 signature_out_of_slot_controls_unchanged / tab_gap": {
+    "cases": 12,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r28": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r21": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      }
+    }
+  },
+  "inherited/historical/r10 signature_out_of_slot_controls_unchanged / indented": {
+    "cases": 12,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r28": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r21": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      }
+    }
+  },
+  "inherited/historical/r10 signature_out_of_slot_controls_unchanged / caption_row_right": {
+    "cases": 12,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r28": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      },
+      "r21": {
+        "c_to_c": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 6
+      }
+    }
+  },
+  "inherited/historical/r10 h1_out_of_slot_stacks_still_hold": {
+    "cases": 40,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 40,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 40,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 40,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r10 m1_non_exempt_contact_out_of_slot_holds": {
+    "cases": 56,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 56,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 56,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 56,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r10 six_contact_captions_remain_exempt": {
+    "cases": 48,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r11 subordinating_rule_without_block_keeps_identity_veto": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r14 separate_printing_of_same_name_is_not_vetoed": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "c_to_c": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/L1 ragged stacked controls": {
+    "cases": 384,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 350,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 34
+      },
+      "r28": {
+        "n_to_n": 350,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 34
+      },
+      "r21": {
+        "n_to_n": 350,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 34
+      }
+    }
+  },
+  "inherited/historical/L1 centred stacked controls": {
+    "cases": 144,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 48
+      },
+      "r28": {
+        "n_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 48
+      },
+      "r21": {
+        "n_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 48
+      }
+    }
+  },
+  "inherited/historical/A2 exact witness captions": {
+    "cases": 480,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 480,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 480,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 480,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/A2 additional dy=20": {
+    "cases": 96,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/Witness wider sweep": {
+    "cases": 2496,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2496,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2496,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2496,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/F three-party permutations": {
+    "cases": 288,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 192
+      },
+      "r28": {
+        "c_to_c": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 192
+      },
+      "r21": {
+        "c_to_c": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 165,
+        "c_to_n": 27
+      }
+    }
+  },
+  "inherited/historical/F heading gaps long": {
+    "cases": 432,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 108,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 324
+      },
+      "r28": {
+        "c_to_c": 108,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 324
+      },
+      "r21": {
+        "c_to_c": 108,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 243,
+        "c_to_n": 81
+      }
+    }
+  },
+  "inherited/historical/F heading gaps short": {
+    "cases": 432,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 108,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 324
+      },
+      "r28": {
+        "c_to_c": 108,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 324
+      },
+      "r21": {
+        "c_to_c": 108,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 108,
+        "n_to_n": 216
+      }
+    }
+  },
+  "inherited/historical/B1 reproduction": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/B2 reproduction": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/Affiliate matrix": {
+    "cases": 1536,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1536,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1536,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1536,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/r18 B1 reproduction": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/historical/Veto matrix": {
+    "cases": 140,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 140,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 140,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 140,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/stress/Recitals northwind": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 144
+      }
+    }
+  },
+  "inherited/stress/Recitals affiliate": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 172,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20
+      },
+      "r28": {
+        "n_to_n": 172,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20
+      },
+      "r21": {
+        "n_to_n": 152,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20,
+        "c_to_n": 20
+      }
+    }
+  },
+  "inherited/stress/Recitals misspelled_M1": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 144
+      }
+    }
+  },
+  "inherited/stress/Recitals role_word": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/stress/Recitals conflict_hla_nw": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 48,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 144
+      }
+    }
+  },
+  "inherited/stress/Recitals conflict_nw_hla": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 160,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 32
+      }
+    }
+  },
+  "inherited/stress/Recitals description_inline": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/stress/Recitals description_wrapped": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 192,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/stress/Recitals simple_between": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 184,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 8
+      },
+      "r28": {
+        "n_to_n": 184,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 8
+      },
+      "r21": {
+        "n_to_n": 178,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 8,
+        "c_to_n": 6
+      }
+    }
+  },
+  "inherited/stress/Recitals subsidiary": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 172,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20
+      },
+      "r28": {
+        "n_to_n": 172,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20
+      },
+      "r21": {
+        "n_to_n": 152,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20,
+        "c_to_n": 20
+      }
+    }
+  },
+  "inherited/stress/Recitals hereinafter": {
+    "cases": 192,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 172,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20
+      },
+      "r28": {
+        "n_to_n": 172,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20
+      },
+      "r21": {
+        "n_to_n": 160,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 20,
+        "c_to_n": 12
+      }
+    }
+  },
+  "inherited/stress/Page probes nw_page2": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 48
+      }
+    }
+  },
+  "inherited/stress/Page probes nw_page3": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/stress/Page probes nw_after_sigs_only": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/stress/Page probes nw_section1": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 48
+      }
+    }
+  },
+  "inherited/stress/Page probes conflict_pages12": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 48
+      }
+    }
+  },
+  "inherited/stress/Page probes conflict_section1": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 48
+      }
+    }
+  },
+  "inherited/stress/Page probes the_recipient_page2": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 60,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 12
+      }
+    }
+  },
+  "inherited/stress/M2 36 failing probes": {
+    "cases": 36,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/stress/B2 54 worker cells": {
+    "cases": 54,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 39,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 15
+      },
+      "r28": {
+        "n_to_n": 39,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 15
+      },
+      "r21": {
+        "n_to_n": 39,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 15
+      }
+    }
+  },
+  "inherited/extra/johnson_short": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 164,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76
+      },
+      "r28": {
+        "n_to_n": 164,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76
+      },
+      "r21": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76,
+        "c_to_n": 20
+      }
+    }
+  },
+  "inherited/extra/johnson_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 164,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76
+      },
+      "r28": {
+        "n_to_n": 164,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76
+      },
+      "r21": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76,
+        "c_to_n": 20
+      }
+    }
+  },
+  "inherited/extra/procter_short": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 158,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82
+      },
+      "r28": {
+        "n_to_n": 158,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82
+      },
+      "r21": {
+        "n_to_n": 124,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82,
+        "c_to_n": 34
+      }
+    }
+  },
+  "inherited/extra/procter_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 158,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82
+      },
+      "r28": {
+        "n_to_n": 158,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82
+      },
+      "r21": {
+        "n_to_n": 124,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82,
+        "c_to_n": 34
+      }
+    }
+  },
+  "inherited/extra/group_repeat": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/extra/holdings_repeat": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/extra/light_repeat": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/workers/b1": {
+    "cases": 36,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 26,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 4,
+        "w_to_n": 6
+      }
+    }
+  },
+  "inherited/workers/b2": {
+    "cases": 36,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 12
+      }
+    }
+  },
+  "inherited/boundary/procter_first": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 164,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76
+      },
+      "r28": {
+        "n_to_n": 164,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76
+      },
+      "r21": {
+        "n_to_n": 124,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 76,
+        "c_to_n": 40
+      }
+    }
+  },
+  "inherited/boundary/smith_llp_first": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/boundary/three_lowercase": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/boundary/three_corp": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/boundary/trailing_comma": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/boundary/offices": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/boundary/corporation_offices": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/boundary/lowercase_inc": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 24
+      }
+    }
+  },
+  "inherited/boundary/quoted_joins": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 126,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 114
+      },
+      "r28": {
+        "n_to_n": 126,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 114
+      },
+      "r21": {
+        "n_to_n": 108,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 114,
+        "c_to_n": 18
+      }
+    }
+  },
+  "inherited/boundary/northwind_first": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "n_to_n": 96,
+        "c_to_n": 24
+      }
+    }
+  },
+  "inherited/attack/b1_joint_venture": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/attack/b1_subsidiary": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/attack/b1_successor_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/attack/b1_successor": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/attack/b1_affiliates": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/attack/b2_partners": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 170,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60,
+        "c_to_n": 10
+      }
+    }
+  },
+  "inherited/attack/b2_associates": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 170,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60,
+        "c_to_n": 10
+      }
+    }
+  },
+  "inherited/attack/b2_affiliates": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 170,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60,
+        "c_to_n": 10
+      }
+    }
+  },
+  "inherited/attack/b2_smith": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 168,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60,
+        "c_to_n": 12
+      }
+    }
+  },
+  "inherited/attack/johnson_inc": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 158,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82
+      },
+      "r28": {
+        "n_to_n": 158,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82
+      },
+      "r21": {
+        "n_to_n": 124,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 82,
+        "c_to_n": 34
+      }
+    }
+  },
+  "inherited/attack/ernst_llp": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 120,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 24
+      }
+    }
+  },
+  "inherited/attack/three_llc": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/q2/inc_repeat": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/q2/description_repeat": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/q2/description_repeat_pages": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/q2/conflict_hla_nw": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "n_to_n": 96,
+        "c_to_n": 24
+      }
+    }
+  },
+  "inherited/q2/conflict_nw_hla": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/signature_nw": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "n_to_n": 96,
+        "c_to_n": 24
+      }
+    }
+  },
+  "inherited/q2/signature_hla": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/signature_same": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/q2/three_quoted": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 176,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 64
+      },
+      "r28": {
+        "n_to_n": 176,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 64
+      },
+      "r21": {
+        "n_to_n": 170,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 64,
+        "c_to_n": 6
+      }
+    }
+  },
+  "inherited/q2/three_two_joins": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/q2/three_middle_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/q2/three_last_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/q2/llp_short": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r28": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r21": {
+        "n_to_n": 110,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90,
+        "c_to_n": 40
+      }
+    }
+  },
+  "inherited/q2/llp_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 156,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 84
+      },
+      "r28": {
+        "n_to_n": 156,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 84
+      },
+      "r21": {
+        "n_to_n": 132,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 84,
+        "c_to_n": 24
+      }
+    }
+  },
+  "inherited/q2/smith_short_description": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r28": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r21": {
+        "n_to_n": 106,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/b1_inc_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r28": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r21": {
+        "n_to_n": 106,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/b1_co_address": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r28": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r21": {
+        "n_to_n": 106,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/b1_llc_hereinafter": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r28": {
+        "n_to_n": 150,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90
+      },
+      "r21": {
+        "n_to_n": 106,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 90,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/b1_three": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r28": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      },
+      "r21": {
+        "n_to_n": 180,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 60
+      }
+    }
+  },
+  "inherited/q2/b2_lazy_tail": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/brown_company": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r28": {
+        "n_to_n": 144,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 96,
+        "c_to_n": 44
+      }
+    }
+  },
+  "inherited/q2/research_center": {
+    "cases": 240,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r28": {
+        "n_to_n": 142,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98
+      },
+      "r21": {
+        "n_to_n": 100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 98,
+        "c_to_n": 42
+      }
+    }
+  },
+  "inherited/workers24/b1": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/workers24/b2": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/workers24/h1": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/workers_h1_uncaptioned/h1_uncaptioned": {
+    "cases": 1,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/veto/VETO": {
+    "cases": 1260,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 796,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 464
+      },
+      "r28": {
+        "n_to_n": 796,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 464
+      },
+      "r21": {
+        "n_to_n": 652,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 464,
+        "c_to_n": 144
+      }
+    }
+  },
+  "inherited/h1_review/H1_REVIEW": {
+    "cases": 2160,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r28": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r21": {
+        "w_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 666,
+        "c_to_c": 774,
+        "c_to_n": 624
+      }
+    }
+  },
+  "inherited/h1/H1": {
+    "cases": 2160,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r28": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r21": {
+        "w_to_n": 90,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 672,
+        "c_to_c": 774,
+        "c_to_n": 624
+      }
+    }
+  },
+  "inherited/workers25/msa_supplier": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1
+      }
+    }
+  },
+  "inherited/workers25/nda_member": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/workers25/nda_caption": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/workers25/nda_named": {
+    "cases": 2,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 2,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/q3b/Q3b ordinary": {
+    "cases": 972,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 350,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 622
+      },
+      "r28": {
+        "n_to_n": 350,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 622
+      },
+      "r21": {
+        "n_to_n": 350,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 622
+      }
+    }
+  },
+  "inherited/q3b/Q3b affiliate": {
+    "cases": 1944,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1366,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 578
+      },
+      "r28": {
+        "n_to_n": 1366,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 578
+      },
+      "r21": {
+        "w_to_n": 178,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 706,
+        "c_to_c": 578,
+        "c_to_n": 482
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA same domain": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 19
+      },
+      "r28": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 19
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 19
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA split domain": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12,
+        "c_to_n": 7
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA reverse domain": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12,
+        "c_to_n": 7
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA same explicit": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 19
+      },
+      "r28": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 19
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 19
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA split explicit": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12,
+        "c_to_n": 7
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA reverse explicit": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 12,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12,
+        "c_to_n": 7
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA same both": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      },
+      "r28": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      },
+      "r21": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA split both": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      },
+      "r28": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      },
+      "r21": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      }
+    }
+  },
+  "inherited/ordinary_ndas/Ordinary NDA reverse both": {
+    "cases": 24,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      },
+      "r28": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      },
+      "r21": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 14
+      }
+    }
+  },
+  "inherited/q3b_aligned/Q3b ordinary": {
+    "cases": 486,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 175,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 311
+      },
+      "r28": {
+        "n_to_n": 175,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 311
+      },
+      "r21": {
+        "n_to_n": 175,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 311
+      }
+    }
+  },
+  "inherited/q3b_aligned/Q3b affiliate": {
+    "cases": 1944,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1364,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 580
+      },
+      "r28": {
+        "n_to_n": 1364,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 580
+      },
+      "r21": {
+        "w_to_n": 104,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 782,
+        "c_to_c": 580,
+        "c_to_n": 478
+      }
+    }
+  },
+  "inherited/q3a/Q3a role": {
+    "cases": 2592,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1712,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 880
+      },
+      "r28": {
+        "n_to_n": 1712,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 880
+      },
+      "r21": {
+        "w_to_n": 140,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1358,
+        "c_to_c": 880,
+        "c_to_n": 214
+      }
+    }
+  },
+  "inherited/q3a/Q3a named": {
+    "cases": 864,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 544,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 320
+      },
+      "r28": {
+        "n_to_n": 544,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 320
+      },
+      "r21": {
+        "w_to_n": 80,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 400,
+        "c_to_c": 320,
+        "c_to_n": 64
+      }
+    }
+  },
+  "inherited/q3a/Q3a caption": {
+    "cases": 1080,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 764,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 316
+      },
+      "r28": {
+        "n_to_n": 764,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 316
+      },
+      "r21": {
+        "w_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 596,
+        "c_to_c": 316,
+        "c_to_n": 96
+      }
+    }
+  },
+  "inherited/exact_q3b/exact_q3b": {
+    "cases": 2430,
+    "comparisons": {
+      "r29": {
+        "c_to_c": 924,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1506
+      },
+      "r28": {
+        "c_to_c": 924,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1506
+      },
+      "r21": {
+        "c_to_c": 924,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 920,
+        "c_to_n": 494,
+        "w_to_n": 92
+      }
+    }
+  },
+  "inherited/exhibits/exhibits none": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      },
+      "r28": {
+        "n_to_n": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      },
+      "r21": {
+        "n_to_n": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      }
+    }
+  },
+  "inherited/exhibits/exhibits personal_guarantee": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r28": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r21": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22,
+        "c_to_n": 14
+      }
+    }
+  },
+  "inherited/exhibits/exhibits guarantee_company": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r28": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r21": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22,
+        "c_to_n": 14
+      }
+    }
+  },
+  "inherited/exhibits/exhibits employee_ack": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r28": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r21": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      }
+    }
+  },
+  "inherited/exhibits/exhibits blank_form": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r28": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r21": {
+        "n_to_n": 43,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22,
+        "c_to_n": 7
+      }
+    }
+  },
+  "inherited/exhibits/exhibits joinder": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r28": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22
+      },
+      "r21": {
+        "n_to_n": 43,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 22,
+        "c_to_n": 7
+      }
+    }
+  },
+  "inherited/exhibits/exhibits notary": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 36
+      },
+      "r28": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 36
+      },
+      "r21": {
+        "n_to_n": 36,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 36
+      }
+    }
+  },
+  "inherited/exhibits/exhibits witness_only": {
+    "cases": 72,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      },
+      "r28": {
+        "n_to_n": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      },
+      "r21": {
+        "n_to_n": 30,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      }
+    }
+  },
+  "inherited/three_party/three_party": {
+    "cases": 36,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 18,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12,
+        "c_to_n": 6
+      }
+    }
+  },
+  "inherited/workers26/workers26": {
+    "cases": 10,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 3
+      }
+    }
+  },
+  "inherited/exact_q3c/exact_q3c same_page3": {
+    "cases": 468,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 403,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 55,
+        "c_to_n": 10
+      }
+    }
+  },
+  "inherited/exact_q3c/exact_q3c own_aff_p3": {
+    "cases": 468,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 407,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 51,
+        "c_to_n": 10
+      }
+    }
+  },
+  "inherited/exact_q3c/exact_q3c aff_alone_wit": {
+    "cases": 468,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 353,
+        "c_to_n": 19
+      }
+    }
+  },
+  "inherited/exact_q3c/exact_q3c aff_p3_notary_p3": {
+    "cases": 468,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 458,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 10
+      }
+    }
+  },
+  "inherited/exact_q3c/exact_q3c aff_p3_ack_p3": {
+    "cases": 468,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    }
+  },
+  "inherited/exact_q3c/exact_q3c aff_p3_wit_p2": {
+    "cases": 468,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 468,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 403,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 55,
+        "c_to_n": 10
+      }
+    }
+  },
+  "inherited/exact_q3a/exact_q3a": {
+    "cases": 4536,
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1516
+      },
+      "r28": {
+        "n_to_n": 3020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1516
+      },
+      "r21": {
+        "w_to_n": 292,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2354,
+        "c_to_c": 1516,
+        "c_to_n": 374
+      }
+    }
+  }
+}

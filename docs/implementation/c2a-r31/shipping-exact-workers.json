@@ -1,0 +1,624 @@
+{
+  "cases": 21,
+  "wrong": 0,
+  "model_calls": 0,
+  "external_http_calls": 0,
+  "worker_equals_in_process": true,
+  "source_sha256": "a8ad8dcc098f3416e46cc519bddf2414fd780fcab48d5ce8fd413f6b1be13566",
+  "results": [
+    {
+      "axes": {
+        "sig": "Signature:",
+        "head": "For and on behalf of the Recipient",
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "Signature:",
+        "head": "For and on behalf of the Recipient",
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "Signature:",
+        "head": null,
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "Signature:",
+        "head": null,
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "/s/ Pat Smith",
+        "head": "For and on behalf of the Recipient",
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "/s/ Pat Smith",
+        "head": "For and on behalf of the Recipient",
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "/s/ Pat Smith",
+        "head": null,
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "/s/ Pat Smith",
+        "head": null,
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "DocuSign Envelope ID: 4F2A-11",
+        "head": "For and on behalf of the Recipient",
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "DocuSign Envelope ID: 4F2A-11",
+        "head": "For and on behalf of the Recipient",
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "DocuSign Envelope ID: 4F2A-11",
+        "head": null,
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": "DocuSign Envelope ID: 4F2A-11",
+        "head": null,
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": "For and on behalf of the Recipient",
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": "For and on behalf of the Recipient",
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": null,
+        "x": 340,
+        "aff": false
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 6,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": null,
+        "x": 72,
+        "aff": true
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "A printed name crosses a signing boundary and requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b0",
+            "score": 6,
+            "margin": 2,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": null,
+        "x": 72,
+        "aff": true,
+        "name": "Executed by:"
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "An unclaimed signing block requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b1",
+            "score": 4,
+            "margin": 4,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": null,
+        "x": 72,
+        "aff": true,
+        "name": "Authorised signatory:"
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "An unclaimed signing block requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b1",
+            "score": 4,
+            "margin": 4,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": null,
+        "x": 72,
+        "aff": true,
+        "name": "Signatory: Nom"
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "An unclaimed signing block requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b1",
+            "score": 4,
+            "margin": 4,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": null,
+        "x": 72,
+        "aff": true,
+        "name": "Firma: bare"
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "An unclaimed signing block requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b1",
+            "score": 4,
+            "margin": 4,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    },
+    {
+      "axes": {
+        "sig": null,
+        "head": null,
+        "x": 72,
+        "aff": true,
+        "name": "Unterschrift: Fecha"
+      },
+      "result": {
+        "status": "needs_sender",
+        "reason": "An unclaimed signing block requires placement review.",
+        "reason_code": "ambiguous_identity",
+        "fields": [],
+        "assignments": [
+          {
+            "signer": "pat@harborlight.fleet.test",
+            "block_id": "b1",
+            "score": 4,
+            "margin": 4,
+            "confidence": "high"
+          }
+        ],
+        "analysis_version": "c2a.31",
+        "method": "rules",
+        "model": {
+          "attempted": false,
+          "outcome": "not_needed"
+        }
+      }
+    }
+  ]
+}

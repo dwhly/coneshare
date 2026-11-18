@@ -1,0 +1,1721 @@
+{
+  "inherited/layouts": {
+    "cases": 5680,
+    "raw_counts": {
+      "r29_n": 5504,
+      "r28_n": 5504,
+      "r21_n": 5402,
+      "r31_n": 5504,
+      "r29_c": 176,
+      "r28_c": 176,
+      "r21_c": 278,
+      "r31_c": 176
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5504,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 176
+      },
+      "r28": {
+        "n_to_n": 5504,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 176
+      },
+      "r21": {
+        "n_to_n": 5402,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 176,
+        "c_to_n": 102
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/review": {
+    "cases": 12760,
+    "raw_counts": {
+      "r29_n": 11213,
+      "r28_n": 11213,
+      "r21_n": 9354,
+      "r31_n": 11213,
+      "r21_w": 102,
+      "r29_c": 1547,
+      "r28_c": 1547,
+      "r21_c": 3304,
+      "r31_c": 1547
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 11213,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1547
+      },
+      "r28": {
+        "n_to_n": 11213,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1547
+      },
+      "r21": {
+        "n_to_n": 9354,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 102,
+        "c_to_c": 1547,
+        "c_to_n": 1757
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/new": {
+    "cases": 420,
+    "raw_counts": {
+      "r29_n": 420,
+      "r28_n": 420,
+      "r21_w": 24,
+      "r31_n": 420,
+      "r21_n": 396
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 420,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 420,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 396
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/wrapped": {
+    "cases": 5280,
+    "raw_counts": {
+      "r29_n": 5165,
+      "r28_n": 5165,
+      "r21_n": 5080,
+      "r31_n": 5165,
+      "r29_c": 115,
+      "r28_c": 115,
+      "r21_c": 200,
+      "r31_c": 115
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5165,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 115
+      },
+      "r28": {
+        "n_to_n": 5165,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 115
+      },
+      "r21": {
+        "n_to_n": 5080,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 115,
+        "c_to_n": 85
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/historical": {
+    "cases": 17204,
+    "raw_counts": {
+      "r29_n": 13778,
+      "r28_n": 13777,
+      "r21_n": 13561,
+      "r31_n": 13778,
+      "r29_c": 3413,
+      "r28_c": 3414,
+      "r21_c": 3630,
+      "r31_c": 3413,
+      "r29_b": 13,
+      "r28_b": 13,
+      "r21_b": 13,
+      "r31_b": 13
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 13778,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 3413,
+        "b_to_b": 13
+      },
+      "r28": {
+        "n_to_n": 13777,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 3413,
+        "b_to_b": 13,
+        "c_to_n": 1
+      },
+      "r21": {
+        "n_to_n": 13561,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 3413,
+        "b_to_b": 13,
+        "c_to_n": 217
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/stress": {
+    "cases": 2706,
+    "raw_counts": {
+      "r29_n": 2623,
+      "r28_n": 2623,
+      "r21_w": 288,
+      "r31_n": 2623,
+      "r21_n": 2245,
+      "r29_c": 83,
+      "r28_c": 83,
+      "r21_c": 173,
+      "r31_c": 83
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2623,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 83
+      },
+      "r28": {
+        "n_to_n": 2623,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 83
+      },
+      "r21": {
+        "w_to_n": 288,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2245,
+        "c_to_c": 83,
+        "c_to_n": 90
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/extra": {
+    "cases": 1680,
+    "raw_counts": {
+      "r29_n": 1070,
+      "r28_n": 1070,
+      "r21_n": 836,
+      "r31_n": 1070,
+      "r29_c": 610,
+      "r28_c": 610,
+      "r21_c": 844,
+      "r31_c": 610
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1070,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 610
+      },
+      "r28": {
+        "n_to_n": 1070,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 610
+      },
+      "r21": {
+        "n_to_n": 836,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 610,
+        "c_to_n": 234
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/workers": {
+    "cases": 72,
+    "raw_counts": {
+      "r29_n": 72,
+      "r28_n": 72,
+      "r21_n": 50,
+      "r31_n": 72,
+      "r21_c": 16,
+      "r21_w": 6
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 72,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 50,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 16,
+        "w_to_n": 6
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/boundary": {
+    "cases": 2400,
+    "raw_counts": {
+      "r29_n": 1658,
+      "r28_n": 1658,
+      "r21_n": 1528,
+      "r31_n": 1658,
+      "r29_c": 742,
+      "r28_c": 742,
+      "r21_c": 848,
+      "r31_c": 742,
+      "r21_w": 24
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1658,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 742
+      },
+      "r28": {
+        "n_to_n": 1658,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 742
+      },
+      "r21": {
+        "n_to_n": 1528,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 742,
+        "c_to_n": 106,
+        "w_to_n": 24
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/attack": {
+    "cases": 2880,
+    "raw_counts": {
+      "r29_n": 1922,
+      "r28_n": 1922,
+      "r21_n": 1602,
+      "r31_n": 1922,
+      "r29_c": 958,
+      "r28_c": 958,
+      "r21_c": 1278,
+      "r31_c": 958
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1922,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 958
+      },
+      "r28": {
+        "n_to_n": 1922,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 958
+      },
+      "r21": {
+        "n_to_n": 1602,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 958,
+        "c_to_n": 320
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/q2": {
+    "cases": 5280,
+    "raw_counts": {
+      "r29_n": 3376,
+      "r28_n": 3376,
+      "r21_n": 2648,
+      "r31_n": 3376,
+      "r29_c": 1904,
+      "r28_c": 1904,
+      "r21_c": 2584,
+      "r31_c": 1904,
+      "r21_w": 48
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3376,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1904
+      },
+      "r28": {
+        "n_to_n": 3376,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1904
+      },
+      "r21": {
+        "n_to_n": 2648,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1904,
+        "c_to_n": 680,
+        "w_to_n": 48
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/workers24": {
+    "cases": 5,
+    "raw_counts": {
+      "r29_n": 5,
+      "r28_n": 5,
+      "r21_n": 5,
+      "r31_n": 5
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 5,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/workers_h1_uncaptioned": {
+    "cases": 1,
+    "raw_counts": {
+      "r29_n": 1,
+      "r28_n": 1,
+      "r21_w": 1,
+      "r31_n": 1
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 1,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/veto": {
+    "cases": 1260,
+    "raw_counts": {
+      "r29_n": 796,
+      "r28_n": 796,
+      "r21_n": 652,
+      "r31_n": 796,
+      "r29_c": 464,
+      "r28_c": 464,
+      "r21_c": 608,
+      "r31_c": 464
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 796,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 464
+      },
+      "r28": {
+        "n_to_n": 796,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 464
+      },
+      "r21": {
+        "n_to_n": 652,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 464,
+        "c_to_n": 144
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/h1_review": {
+    "cases": 2160,
+    "raw_counts": {
+      "r29_n": 1386,
+      "r28_n": 1386,
+      "r21_w": 96,
+      "r31_n": 1386,
+      "r21_n": 666,
+      "r29_c": 774,
+      "r28_c": 774,
+      "r21_c": 1398,
+      "r31_c": 774
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r28": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r21": {
+        "w_to_n": 96,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 666,
+        "c_to_c": 774,
+        "c_to_n": 624
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/h1": {
+    "cases": 2160,
+    "raw_counts": {
+      "r29_n": 1386,
+      "r28_n": 1386,
+      "r21_w": 90,
+      "r31_n": 1386,
+      "r21_n": 672,
+      "r29_c": 774,
+      "r28_c": 774,
+      "r21_c": 1398,
+      "r31_c": 774
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r28": {
+        "n_to_n": 1386,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 774
+      },
+      "r21": {
+        "w_to_n": 90,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 672,
+        "c_to_c": 774,
+        "c_to_n": 624
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/workers25": {
+    "cases": 8,
+    "raw_counts": {
+      "r29_n": 8,
+      "r28_n": 8,
+      "r21_w": 7,
+      "r31_n": 8,
+      "r21_n": 1
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 8,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/q3b": {
+    "cases": 2916,
+    "raw_counts": {
+      "r29_n": 1716,
+      "r28_n": 1716,
+      "r21_n": 1056,
+      "r31_n": 1716,
+      "r29_c": 1200,
+      "r28_c": 1200,
+      "r21_c": 1682,
+      "r31_c": 1200,
+      "r21_w": 178
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1716,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1200
+      },
+      "r28": {
+        "n_to_n": 1716,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1200
+      },
+      "r21": {
+        "n_to_n": 1056,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1200,
+        "w_to_n": 178,
+        "c_to_n": 482
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/ordinary_ndas": {
+    "cases": 216,
+    "raw_counts": {
+      "r29_n": 88,
+      "r28_n": 88,
+      "r21_n": 60,
+      "r31_n": 88,
+      "r29_c": 128,
+      "r28_c": 128,
+      "r21_c": 156,
+      "r31_c": 128
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 88,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 128
+      },
+      "r28": {
+        "n_to_n": 88,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 128
+      },
+      "r21": {
+        "n_to_n": 60,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 128,
+        "c_to_n": 28
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/q3b_aligned": {
+    "cases": 2430,
+    "raw_counts": {
+      "r29_n": 1539,
+      "r28_n": 1539,
+      "r21_n": 957,
+      "r31_n": 1539,
+      "r29_c": 891,
+      "r28_c": 891,
+      "r21_c": 1369,
+      "r31_c": 891,
+      "r21_w": 104
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1539,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 891
+      },
+      "r28": {
+        "n_to_n": 1539,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 891
+      },
+      "r21": {
+        "n_to_n": 957,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 891,
+        "w_to_n": 104,
+        "c_to_n": 478
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/q3a": {
+    "cases": 4536,
+    "raw_counts": {
+      "r29_n": 3020,
+      "r28_n": 3020,
+      "r21_w": 292,
+      "r31_n": 3020,
+      "r21_n": 2354,
+      "r29_c": 1516,
+      "r28_c": 1516,
+      "r21_c": 1890,
+      "r31_c": 1516
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1516
+      },
+      "r28": {
+        "n_to_n": 3020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1516
+      },
+      "r21": {
+        "w_to_n": 292,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2354,
+        "c_to_c": 1516,
+        "c_to_n": 374
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/exact_q3b": {
+    "cases": 2430,
+    "raw_counts": {
+      "r29_c": 924,
+      "r28_c": 924,
+      "r21_c": 1418,
+      "r31_c": 924,
+      "r29_n": 1506,
+      "r28_n": 1506,
+      "r21_n": 920,
+      "r31_n": 1506,
+      "r21_w": 92
+    },
+    "comparisons": {
+      "r29": {
+        "c_to_c": 924,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1506
+      },
+      "r28": {
+        "c_to_c": 924,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1506
+      },
+      "r21": {
+        "c_to_c": 924,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 920,
+        "c_to_n": 494,
+        "w_to_n": 92
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/exhibits": {
+    "cases": 576,
+    "raw_counts": {
+      "r29_n": 346,
+      "r28_n": 346,
+      "r21_n": 304,
+      "r31_n": 346,
+      "r29_c": 230,
+      "r28_c": 230,
+      "r21_c": 272,
+      "r31_c": 230
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 346,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 230
+      },
+      "r28": {
+        "n_to_n": 346,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 230
+      },
+      "r21": {
+        "n_to_n": 304,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 230,
+        "c_to_n": 42
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/three_party": {
+    "cases": 36,
+    "raw_counts": {
+      "r29_n": 24,
+      "r28_n": 24,
+      "r21_n": 18,
+      "r31_n": 24,
+      "r29_c": 12,
+      "r28_c": 12,
+      "r21_c": 18,
+      "r31_c": 12
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r28": {
+        "n_to_n": 24,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12
+      },
+      "r21": {
+        "n_to_n": 18,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 12,
+        "c_to_n": 6
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/workers26": {
+    "cases": 10,
+    "raw_counts": {
+      "r29_n": 10,
+      "r28_n": 10,
+      "r21_w": 7,
+      "r31_n": 10,
+      "r21_n": 3
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 10,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 7,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 3
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/exact_q3c": {
+    "cases": 2808,
+    "raw_counts": {
+      "r29_n": 2808,
+      "r28_n": 2808,
+      "r21_n": 2492,
+      "r31_n": 2808,
+      "r21_w": 257,
+      "r21_c": 59
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2808,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 2808,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 2492,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 257,
+        "c_to_n": 59
+      }
+    },
+    "policy_controls": 0
+  },
+  "inherited/exact_q3a": {
+    "cases": 4536,
+    "raw_counts": {
+      "r29_n": 3020,
+      "r28_n": 3020,
+      "r21_w": 292,
+      "r31_n": 3020,
+      "r21_n": 2354,
+      "r29_c": 1516,
+      "r28_c": 1516,
+      "r21_c": 1890,
+      "r31_c": 1516
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 3020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1516
+      },
+      "r28": {
+        "n_to_n": 3020,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 1516
+      },
+      "r21": {
+        "w_to_n": 292,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2354,
+        "c_to_c": 1516,
+        "c_to_n": 374
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/swap": {
+    "cases": 9216,
+    "raw_counts": {
+      "r29_n": 8448,
+      "r28_w": 1920,
+      "r21_w": 1920,
+      "r31_n": 8448,
+      "r28_n": 5088,
+      "r21_n": 5088,
+      "r29_c": 768,
+      "r28_c": 2208,
+      "r21_c": 2208,
+      "r31_c": 768
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 8448,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 768
+      },
+      "r28": {
+        "w_to_n": 1920,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 5088,
+        "c_to_c": 768,
+        "c_to_n": 1440
+      },
+      "r21": {
+        "w_to_n": 1920,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 5088,
+        "c_to_c": 768,
+        "c_to_n": 1440
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/plain": {
+    "cases": 9216,
+    "raw_counts": {
+      "r29_n": 8448,
+      "r28_w": 1920,
+      "r21_w": 1920,
+      "r31_n": 8448,
+      "r28_n": 5088,
+      "r21_n": 5088,
+      "r29_c": 768,
+      "r28_c": 2208,
+      "r21_c": 2208,
+      "r31_c": 768
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 8448,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 768
+      },
+      "r28": {
+        "w_to_n": 1920,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 5088,
+        "c_to_c": 768,
+        "c_to_n": 1440
+      },
+      "r21": {
+        "w_to_n": 1920,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 5088,
+        "c_to_c": 768,
+        "c_to_n": 1440
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/two_columns": {
+    "cases": 288,
+    "raw_counts": {
+      "r29_n": 288,
+      "r28_n": 288,
+      "r21_n": 288,
+      "r31_n": 288
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 288,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 288,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "n_to_n": 288,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/no_rule": {
+    "cases": 648,
+    "raw_counts": {
+      "r29_n": 648,
+      "r28_w": 288,
+      "r21_w": 288,
+      "r31_n": 648,
+      "r28_n": 360,
+      "r21_n": 360
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 648,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "w_to_n": 288,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 360
+      },
+      "r21": {
+        "w_to_n": 288,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 360
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/hidden": {
+    "cases": 1008,
+    "raw_counts": {
+      "r29_n": 1008,
+      "r28_n": 864,
+      "r21_n": 864,
+      "r31_n": 1008,
+      "r28_w": 144,
+      "r21_w": 144
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1008,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 864,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 144
+      },
+      "r21": {
+        "n_to_n": 864,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_n": 144
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/ruleless_name": {
+    "cases": 810,
+    "raw_counts": {
+      "r29_c": 252,
+      "r28_c": 260,
+      "r21_c": 444,
+      "r31_c": 252,
+      "r29_n": 558,
+      "r28_n": 502,
+      "r21_n": 318,
+      "r31_n": 558,
+      "r28_w": 48,
+      "r21_w": 48
+    },
+    "comparisons": {
+      "r29": {
+        "c_to_c": 252,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 558
+      },
+      "r28": {
+        "c_to_c": 252,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 502,
+        "w_to_n": 48,
+        "c_to_n": 8
+      },
+      "r21": {
+        "c_to_c": 252,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 318,
+        "c_to_n": 192,
+        "w_to_n": 48
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/geometry": {
+    "cases": 1728,
+    "raw_counts": {
+      "r29_n": 1728,
+      "r28_w": 256,
+      "r21_w": 256,
+      "r31_n": 1728,
+      "r28_n": 1472,
+      "r21_n": 1472
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 1728,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "w_to_n": 256,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1472
+      },
+      "r21": {
+        "w_to_n": 256,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 1472
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/ordinary_offsets": {
+    "cases": 792,
+    "raw_counts": {
+      "r29_c": 627,
+      "r28_c": 627,
+      "r21_c": 627,
+      "r31_c": 627,
+      "r29_n": 165,
+      "r28_n": 165,
+      "r21_n": 165,
+      "r31_n": 165
+    },
+    "comparisons": {
+      "r29": {
+        "c_to_c": 627,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 165
+      },
+      "r28": {
+        "c_to_c": 627,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 165
+      },
+      "r21": {
+        "c_to_c": 627,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 165
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/stray": {
+    "cases": 2916,
+    "raw_counts": {
+      "r29_n": 2758,
+      "r28_n": 2726,
+      "r21_n": 2661,
+      "r31_n": 2758,
+      "r21_c": 219,
+      "r29_c": 146,
+      "r28_c": 154,
+      "r31_c": 146,
+      "r28_w": 36,
+      "r21_w": 36,
+      "r29_w": 12,
+      "r31_w": 12
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2758,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 146,
+        "w_to_w": 12
+      },
+      "r28": {
+        "n_to_n": 2726,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 146,
+        "c_to_n": 8,
+        "w_to_n": 24,
+        "w_to_w": 12
+      },
+      "r21": {
+        "n_to_n": 2661,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 73,
+        "c_to_c": 146,
+        "w_to_n": 24,
+        "w_to_w": 12
+      }
+    },
+    "policy_controls": 12
+  },
+  "review/date": {
+    "cases": 2844,
+    "raw_counts": {
+      "r29_c": 1525,
+      "r28_c": 2211,
+      "r21_c": 2211,
+      "r31_c": 2211,
+      "r29_n": 1319,
+      "r28_n": 633,
+      "r21_n": 633,
+      "r31_n": 633
+    },
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1525,
+        "n_to_p": 686,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_c": 686,
+        "n_to_n": 633
+      },
+      "r28": {
+        "c_to_c": 2211,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 633
+      },
+      "r21": {
+        "c_to_c": 2211,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 633
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/extended": {
+    "cases": 560,
+    "raw_counts": {
+      "r29_n": 560,
+      "r28_n": 560,
+      "r21_w": 240,
+      "r31_n": 560,
+      "r21_n": 320
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 560,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 560,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 240,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 320
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/variants": {
+    "cases": 700,
+    "raw_counts": {
+      "r29_n": 700,
+      "r28_n": 700,
+      "r21_w": 280,
+      "r31_n": 700,
+      "r21_n": 420
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 700,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "n_to_n": 700,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r21": {
+        "w_to_n": 280,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 420
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/ordinary": {
+    "cases": 300,
+    "raw_counts": {
+      "r29_n": 258,
+      "r28_n": 258,
+      "r21_n": 174,
+      "r31_n": 258,
+      "r29_c": 42,
+      "r28_c": 42,
+      "r21_c": 126,
+      "r31_c": 42
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 258,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      },
+      "r28": {
+        "n_to_n": 258,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42
+      },
+      "r21": {
+        "n_to_n": 174,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 42,
+        "c_to_n": 84
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/stacks": {
+    "cases": 5376,
+    "raw_counts": {
+      "r29_n": 4784,
+      "r28_n": 4784,
+      "r21_n": 3960,
+      "r31_n": 4784,
+      "r21_c": 936,
+      "r29_w": 444,
+      "r28_w": 444,
+      "r21_w": 480,
+      "r31_w": 444,
+      "r29_c": 148,
+      "r28_c": 148,
+      "r31_c": 148
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 4784,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_w": 444,
+        "c_to_c": 148
+      },
+      "r28": {
+        "n_to_n": 4784,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "w_to_w": 444,
+        "c_to_c": 148
+      },
+      "r21": {
+        "n_to_n": 3960,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 788,
+        "w_to_w": 444,
+        "w_to_n": 36,
+        "c_to_c": 148
+      }
+    },
+    "policy_controls": 444
+  },
+  "review/recitals": {
+    "cases": 3354,
+    "raw_counts": {
+      "r29_n": 2922,
+      "r28_n": 2802,
+      "r21_w": 998,
+      "r31_n": 2922,
+      "r21_n": 2044,
+      "r29_c": 312,
+      "r28_c": 312,
+      "r21_c": 312,
+      "r31_c": 312,
+      "r29_w": 120,
+      "r28_w": 240,
+      "r31_w": 120
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 2922,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 312,
+        "w_to_w": 120
+      },
+      "r28": {
+        "n_to_n": 2802,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 312,
+        "w_to_w": 120,
+        "w_to_n": 120
+      },
+      "r21": {
+        "w_to_n": 878,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2044,
+        "c_to_c": 312,
+        "w_to_w": 120
+      }
+    },
+    "policy_controls": 120
+  },
+  "review/r27": {
+    "cases": 4461,
+    "raw_counts": {
+      "r29_c": 1025,
+      "r28_c": 1025,
+      "r21_c": 1109,
+      "r31_c": 1025,
+      "r29_n": 3230,
+      "r28_n": 3090,
+      "r21_n": 2501,
+      "r31_n": 3230,
+      "r21_w": 851,
+      "r29_w": 206,
+      "r28_w": 346,
+      "r31_w": 206
+    },
+    "comparisons": {
+      "r29": {
+        "c_to_c": 1025,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 3230,
+        "w_to_w": 206
+      },
+      "r28": {
+        "c_to_c": 1025,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 3090,
+        "w_to_w": 206,
+        "w_to_n": 140
+      },
+      "r21": {
+        "c_to_c": 1025,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2501,
+        "c_to_n": 84,
+        "w_to_n": 645,
+        "w_to_w": 206
+      }
+    },
+    "policy_controls": 206
+  },
+  "review/workers": {
+    "cases": 6,
+    "raw_counts": {
+      "r29_n": 6,
+      "r28_w": 4,
+      "r21_w": 4,
+      "r31_n": 6,
+      "r28_n": 2,
+      "r21_n": 2
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 6,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0
+      },
+      "r28": {
+        "w_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      },
+      "r21": {
+        "w_to_n": 4,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "n_to_n": 2
+      }
+    },
+    "policy_controls": 0
+  },
+  "review/notices": {
+    "cases": 14112,
+    "raw_counts": {
+      "r29_n": 13100,
+      "r28_n": 13100,
+      "r21_n": 11420,
+      "r31_n": 13100,
+      "r21_c": 2592,
+      "r29_c": 918,
+      "r28_c": 918,
+      "r31_c": 918,
+      "r29_w": 94,
+      "r28_w": 94,
+      "r21_w": 100,
+      "r31_w": 94
+    },
+    "comparisons": {
+      "r29": {
+        "n_to_n": 13100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 918,
+        "w_to_w": 94
+      },
+      "r28": {
+        "n_to_n": 13100,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_c": 918,
+        "w_to_w": 94
+      },
+      "r21": {
+        "n_to_n": 11420,
+        "n_to_p": 0,
+        "n_to_W": 0,
+        "c_to_w": 0,
+        "c_to_n": 1674,
+        "c_to_c": 918,
+        "w_to_w": 94,
+        "w_to_n": 6
+      }
+    },
+    "policy_controls": 94
+  }
+}

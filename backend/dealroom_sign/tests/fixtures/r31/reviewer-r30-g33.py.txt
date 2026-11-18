@@ -1,0 +1,50 @@
+import sys, os, time, hashlib
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+rc = R24.rc
+live = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(live.encode()).hexdigest().startswith('866637df')
+assert hashlib.sha256(open(_p.__file__,'rb').read()).hexdigest().startswith('e55bf345')
+SRC = dict(r28=live, r29=open(_p.__file__).read())
+r26 = '/root/worktrees/send-merge/backend/dealroom_sign/placement.py'
+def mk(n):
+    m = ModuleType('rev28q4c_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+http = Mock(side_effect=AssertionError('http')); calls = Counter()
+def run(pages, people, allowed):
+    b = rc.pages_pdf(pages); out = ''
+    for n, m in M.items():
+        mo = Mock(); r = in_process(m, b, people, mo); calls[n] += mo.call_count
+        out += 'W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n')
+    return out
+X = 72
+FLEET = [(240, 'FLEET TEST CO.', False, X), (270, 'By:', True, X), (300, 'Date:', True, X)]
+AFF = [(520, 'HARBOR LIGHT GROUP, INC.', False, X), (560, 'By:', True, X), (600, 'Date:', True, X)]
+SIGROW = dict(conformed='/s/ Pat Smith', sig_text='Signature:', by_text='By:', blank=None, docusign='DocuSign Envelope ID: 4F2A-11', sign_here='[Sign Here]')
+NAMES = [['Pat Smith, CEO'], ['Name: Pat Smith', 'Title: CEO'], ['Pat Smith']]
+HEADS = ['For and on behalf of the Recipient', 'HARBOR LIGHT ANALYTICS, INC.', None]
+G = Counter(); EX = Counter(); t = time.time()
+with patch('httpx.Client.send', http):
+    for (sk, sr), nm, head, recital, signer, aff in product(SIGROW.items(), NAMES, HEADS, ('parsed', 'none'), ('domain', 'explicit', 'both'), (True, False)):
+        rows = FLEET + ([(340, head, False, X)] if head else []) + ([(370, sr, False, X)] if sr else []) + [(382 + 12 * i, s, False, X) for i, s in enumerate(nm)]
+        if aff: rows += AFF
+        pat = dict(name='Pat Smith', email=rc.PE)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        people = [TWO[1], pat] if signer == 'both' else [pat]
+        k = run([list(rc.RECITALS[recital]), rows], people, dict([(rc.PE, (2, 0, 360, 612)), (rc.DE, (2, 0, 270, 300))]))
+        G[(sk, 'aff' if aff else 'noaff', k)] += 1
+        if 'W' in k: EX[(sk, k, recital, signer, head)] += 1
+print('http', http.call_count, 'model', dict(calls), 'elapsed', round(time.time() - t), 'cells', sum(G.values()))
+for x in sorted(G.items(), key=str): print(x)
+print(sorted(Counter((k[0], k[2], k[3]) for k in EX.elements()).items(), key=str))
+print(sorted(Counter((k[0], k[4]) for k in EX.elements()).items(), key=str))

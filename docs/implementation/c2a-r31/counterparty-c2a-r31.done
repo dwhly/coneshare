@@ -1,0 +1,9 @@
+coder rc=0 head=9a9196bf370edefef0f4b825450bd1b4841f3248
+failing-first: 3085 failed, 15405 passed, 0 errors, 0 skipped; B-1 matrix 3040 failures (1520 each direction), exact workers 28 failures.
+shipped: c2a.31; source sha256=a8ad8dcc098f3416e46cc519bddf2414fd780fcab48d5ce8fd413f6b1be13566; adopted-name company/role ownership, conflicting mapped-party veto, same-page unclaimed-stack/rule veto; unrequested names remain non-signable competition.
+M-1: 686/686 correct recoveries; B-1 18432 cells 0 wrong; H-1 4482 cells 0 wrong; exact r27 700 cells 0 wrong; inherited 82450 cells 0 raw wrong; seven goldens exact except analysis_version.
+vs live c2a.29: n->p=686, c->w=0, n->W=0 in every family; every n->p is a correct M-1 recovery, individually recorded. Vs c2a.28 and r21: c->w=0, n->W=0. 876 pre-existing named-party raw-oracle policy controls unchanged; r13 L-2 all 40 pass.
+full suite: 80088 passed, 0 failed, 0 errors, 0 skipped; complete without -x; all 61598 prior test IDs preserved.
+test changes: four new test files, one capture helper, exact r30 reviewer fixtures; 18490 added tests; no existing tests/fixtures/evidence/.done markers changed; frozen failing-first hashes verified.
+preservation: 4953 pre-existing tracked files hash-identical; placement.py only existing change; all new evidence below 20 MB; no staging or commit.
+blockers: none. Results: docs/implementation/c2a-r31/results-r31.md.

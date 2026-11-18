@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="0.463" timestamp="2026-11-18T14:32:16.362946" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r31_recital" name="test_recital_party_prevents_adoption_by_affiliate[Pat Smith-pat@harborlight.fleet.test-HARBOR LIGHT GROUP, INC.]" time="0.024"><failure message="AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r31_recital.py:22: in test_recital_party_prevents_adoption_by_affiliate
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.30', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r31_recital" name="test_recital_party_prevents_adoption_by_affiliate[Dan Whaley-dan@fleettest.fleet.test-FLEET HOLDINGS, LLC]" time="0.014" /></testsuite></testsuites>

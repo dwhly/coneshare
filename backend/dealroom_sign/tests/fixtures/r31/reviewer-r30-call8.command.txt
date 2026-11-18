@@ -1,0 +1,8 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import glob,re
+for f in sorted(glob.glob('/tmp/r29rev/*.py')):
+    s=open(f).read()
+    print('=====',f,len(s.splitlines()))
+    for i,l in enumerate(s.splitlines()):
+        if re.search(r'SRC|sha256|send-merge|send-c1b|e5dc8ef0|866637df|assert .*hex',l): print(i+1,l[:200])
+"

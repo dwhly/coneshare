@@ -1,0 +1,1 @@
+git -C /root/worktrees/send-c1b log --oneline -3; git -C /root/worktrees/send-c1b status --short | head; git -C /root/worktrees/send-c1b diff 0aa3cbbb 9a9196bf --stat; git -C /root/worktrees/send-c1b diff 0aa3cbbb 9a9196bf --stat -- backend/dealroom_sign/tests
