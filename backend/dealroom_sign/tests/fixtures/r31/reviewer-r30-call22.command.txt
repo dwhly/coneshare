@@ -1,0 +1,25 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import json,hashlib,os
+root='/root/worktrees/send-c1b'
+H=json.load(open(root+'/docs/implementation/c2a-r30/starting-hashes.json'))
+if isinstance(H,dict) and 'files' in H: H=H['files']
+print(type(H).__name__, len(H)); items=H.items() if isinstance(H,dict) else [(x['path'],x['sha256']) for x in H]
+H=dict(items)
+print('placement in snapshot', H.get('backend/dealroom_sign/placement.py','?')[:8])
+tests=[k for k in H if k.startswith('backend/dealroom_sign/tests/')]
+bad=[k for k in tests if not os.path.exists(root+'/'+k) or hashlib.sha256(open(root+'/'+k,'rb').read()).hexdigest()!=H[k]]
+print('snapshot test files', len(tests), 'changed/missing', bad)
+new=[]
+for dp,dn,fn in os.walk(root+'/backend/dealroom_sign/tests'):
+    if '__pycache__' in dp: continue
+    for f in fn:
+        rel=os.path.relpath(os.path.join(dp,f),root)
+        if rel not in H: new.append(rel)
+print('new', len(new)); print(sorted(x for x in new if 'fixtures' not in x)); print(sorted({os.path.dirname(x) for x in new if 'fixtures' in x}))
+other=[]
+for k,v in H.items():
+    if k.startswith('docs/'): continue
+    p=root+'/'+k
+    if not os.path.exists(p) or hashlib.sha256(open(p,'rb').read()).hexdigest()!=v: other.append(k)
+print('non-docs differing from snapshot', other)
+"

@@ -1,0 +1,4 @@
+/root/work/sign-product/send-venv/bin/python -c "
+for f in ['datefirst.py','q3new.py','workers.py']:
+    print('=====',f); print(open('/tmp/r29rev/'+f).read())
+"

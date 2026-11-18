@@ -1,0 +1,18 @@
+import json
+p='/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r28.jsonl'
+uses=[];res={}
+for line in open(p):
+    try: o=json.loads(line)
+    except: continue
+    def walk(x):
+        if isinstance(x,dict):
+            if x.get('type')=='tool_use' and x.get('name')=='Bash': uses.append(x['id'])
+            if x.get('type')=='tool_result': res[x.get('tool_use_id')]=x.get('content')
+            for v in x.values(): walk(v)
+        elif isinstance(x,list):
+            for v in x: walk(v)
+    walk(o)
+for i in (31,32,33,36,40):
+    c=res.get(uses[i]); 
+    if isinstance(c,list): c='\n'.join(d.get('text','') for d in c if isinstance(d,dict))
+    print('=====',i); print(c[:3500])

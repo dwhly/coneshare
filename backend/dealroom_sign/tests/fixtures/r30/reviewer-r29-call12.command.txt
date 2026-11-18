@@ -1,0 +1,2 @@
+/root/work/sign-product/send-venv/bin/python -c "
+for i in (35,36,40): print('=====',i); print(open(f'/tmp/r29rev/call{i:02d}.sh').read())"

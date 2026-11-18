@@ -1,0 +1,9 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import hashlib,difflib
+a=open('/root/worktrees/send-c1b/docs/implementation/c2a-r30/r29-source.py.txt').read()
+b=open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read()
+c=open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+for n,s in [('r29src',a),('disk',b),('send-merge',c),('r30src',open('/root/worktrees/send-c1b/docs/implementation/c2a-r30/release-source.py.txt').read()),('final',open('/root/worktrees/send-c1b/docs/implementation/c2a-r30/final-source.py.txt').read()),('shipping',open('/root/worktrees/send-c1b/docs/implementation/c2a-r30/shipping-source.py.txt').read())]:
+    print(n, hashlib.sha256(s.encode()).hexdigest()[:8], [l for l in s.splitlines() if l.startswith('VERSION')])
+print(''.join(difflib.unified_diff(a.splitlines(1),b.splitlines(1),n=4)))
+"

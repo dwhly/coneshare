@@ -1,0 +1,6 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import re
+for f in ['g31','g32','g33','g36','g40','stray','probe_e']:
+    s=open('/tmp/r30rev/'+f+'.py').read()
+    print(f, 'argv' in s, [l for l in s.splitlines() if 'argv' in l][:3])
+"
