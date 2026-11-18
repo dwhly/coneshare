@@ -1,0 +1,15 @@
+{
+  "base_head": "f450fdaea1ba4ddabdac216c891555b00ba8ce58",
+  "base_head_is_unmodified_commit": true,
+  "working_tree_version": "c2a.27",
+  "source_sha256": "f26d989f0d09494086fb2158e7d6ab3eb4e5c2aaee55e2745a134bdef1fd0f20",
+  "uncommitted": true,
+  "source_snapshot": "r27-source.py.txt",
+  "interpreter": "/root/work/sign-product/send-venv/bin/python",
+  "commands": {
+    "full_suite": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r27/run_tests.py dealroom_sign/tests --tb=short --junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r27/full-suite.xml",
+    "replay": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r27/replay27.py all docs/implementation/c2a-r27/final docs/implementation/c2a-r27/r27-source.py.txt"
+  },
+  "extraction_notes": "r24/r25 canonical tool-call numbers are re-extracted by exact command match to transcripts; preliminary Bash-only numbering is retained under bash-indexed-extraction. Review body hashes omit the terminal newline; both digests are recorded in extraction-verification.json.",
+  "test_drafting": "New tests only: first drafts accidentally included one-signer name-authoritative B controls, asserted zero model stubs over the entire E loop, and demanded a hold for an already-correct Signed block. Drafts and logs retained. Final assertions were frozen before the final failing-first run against unchanged r26. No pre-existing test or fixture edited."
+}

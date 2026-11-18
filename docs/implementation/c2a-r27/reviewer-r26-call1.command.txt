@@ -1,0 +1,1 @@
+cd /root/worktrees/send-c1b && git log --oneline -4 && git diff 701f6aee f450fdae --stat && git diff 701f6aee f450fdae --stat -- backend/dealroom_sign/tests && git diff 701f6aee f450fdae -- backend/dealroom_sign/placement.py; wc -l /root/worktrees/dealroom-sign-edd/docs/edd/reviews/counterparty-c2a-gate3-r25.md

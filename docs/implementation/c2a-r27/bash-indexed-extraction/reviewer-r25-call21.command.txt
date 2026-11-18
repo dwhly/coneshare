@@ -1,0 +1,25 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json
+IDX = 21
+cmds=[]
+for line in open('/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    if not isinstance(o,dict): continue
+    m=o.get('message') or dict()
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use':
+                cmds.append(b['input'].get('command') or b['input'].get('content') or '')
+body = cmds[IDX].split("<<'EOF'\n",1)[1].rsplit('\nEOF',1)[0]
+new = "SRC = dict(r24=show('9a91a4b9'), r25=show('701f6aee'))"
+n=0
+for old in ["SRC = dict(r21=show('afb9aa6e'), r23=show('e2bbb758'), r24=show('9a91a4b9'))", "SRC = dict(r21=show('afb9aa6e'), r24=show('9a91a4b9'))"]:
+    n += body.count(old); body = body.replace(old, new)
+for old, nw in [("h.SRC['r21'] = show('afb9aa6e'); h.SRC['r24'] = show('9a91a4b9')", "h.SRC['r24'] = show('9a91a4b9'); h.SRC['r25'] = show('701f6aee')"), ("('r21', 'r24')", "('r24', 'r25')")]:
+    n += body.count(old); body = body.replace(old, nw)
+print('IDX', IDX, 'subs', n, flush=True)
+exec(compile(body,'fam','exec'), dict(__name__='__main__'))
+EOF

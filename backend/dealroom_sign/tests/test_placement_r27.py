@@ -1,0 +1,48 @@
+"""Recital-bound peer exemptions and structurally retained signing peers."""
+from unittest.mock import Mock
+
+import pytest
+
+from dealroom_sign import placement
+from dealroom_sign.tests import placement_r27_review_cases as review
+from dealroom_sign.tests.test_placement import no_network  # noqa: F401
+from dealroom_sign.tests.test_placement_r14 import in_process
+
+
+@pytest.mark.parametrize('axes,pages,people,allowed', [
+    row for row in review.captured('ABCD')
+    if (row[0]['group'] == 'A' or row[0]['group'] == 'B' and row[0]['signers'] == 2)
+    and row[0]['recital'] != 'none'
+])
+def test_recital_named_party_peer(axes, pages, people, allowed):
+    model = Mock()
+    result = in_process(placement, review.rc.pages_pdf(pages), people, model)
+    assert not review.rc.wrong_fields(result, allowed), (axes, result)
+
+
+@pytest.mark.parametrize('axes,pages,people,allowed', [
+    row for row in review.captured('E')
+    if row[0]['recital'] != 'none' and row[0]['aff'] == 'HARBOR LIGHT GROUP, INC.'
+])
+def test_recital_stack_and_separate_company(axes, pages, people, allowed):
+    model = Mock()
+    result = in_process(placement, review.rc.pages_pdf(pages), people, model)
+    assert not review.rc.wrong_fields(result, allowed), (axes, result)
+
+
+@pytest.mark.parametrize('caption', [
+    'Executed by:', 'Authorised signatory:', 'Authorized signatory:',
+    'Signatory:', 'Signed:', 'Firma:', 'Unterschrift:', 'Signé:',
+    'Autograph:', 'Conforme:', '',
+])
+@pytest.mark.parametrize('heading', [
+    'For and on behalf of the Recipient', 'harbor light analytics, inc.',
+])
+def test_name_date_rule_counts_as_peer_in_worker(caption, heading):
+    pages, people = review.caption_case(caption, heading=heading)
+    pdf = review.rc.pages_pdf(pages)
+    model = Mock()
+    result = placement.place(pdf, people, model_client=model)
+    assert result == in_process(placement, pdf, people, model)
+    assert not review.rc.wrong_fields(result, {review.rc.PE: (2, 0, 370, 612)}), result
+    model.assert_not_called()

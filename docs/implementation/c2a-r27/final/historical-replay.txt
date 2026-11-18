@@ -1,0 +1,64 @@
+historical 240 r27 raw 0
+historical 480 r27 raw 0
+historical 720 r27 raw 0
+historical 960 r27 raw 0
+historical 1200 r27 raw 0
+historical 1440 r27 raw 0
+historical 1680 r27 raw 0
+historical 1920 r27 raw 0
+historical 2160 r27 raw 0
+historical 2400 r27 raw 0
+historical 2640 r27 raw 0
+historical 2880 r27 raw 0
+historical 3120 r27 raw 0
+historical 3360 r27 raw 0
+historical 3600 r27 raw 0
+historical 3840 r27 raw 0
+historical 4080 r27 raw 0
+historical 4320 r27 raw 0
+historical 4560 r27 raw 0
+historical 4800 r27 raw 0
+historical 5040 r27 raw 0
+historical 5280 r27 raw 0
+historical 5520 r27 raw 0
+historical 5760 r27 raw 0
+historical 6000 r27 raw 0
+historical 6240 r27 raw 0
+historical 6480 r27 raw 0
+historical 6720 r27 raw 0
+historical 6960 r27 raw 0
+historical 7200 r27 raw 0
+historical 7440 r27 raw 0
+historical 7680 r27 raw 0
+historical 7920 r27 raw 0
+historical 8160 r27 raw 0
+historical 8400 r27 raw 0
+historical 8640 r27 raw 0
+historical 8880 r27 raw 0
+historical 9120 r27 raw 0
+historical 9360 r27 raw 0
+historical 9600 r27 raw 0
+historical 9840 r27 raw 0
+historical 10080 r27 raw 0
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r27/replay27.py", line 209, in <module>
+    main(part, folder, source)
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r27/replay27.py", line 106, in main
+    for group, case, pdf, people, line, replies, allowed, worker in inputs(part, generator):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r27/replay27.py", line 67, in inputs
+    yield from measure.inputs(part, generator, {})
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r24/measure.py", line 33, in inputs
+    yield from replay.cases(part, generator, inventory)
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r23/replay.py", line 38, in cases
+    for group, case, pdf, people, line, replies, _ in prior.prior.prior.prior.prior.control_cases(generator, inventory):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r15/check_evidence-r15b.py", line 168, in control_cases
+    function(**params)  # Original assertions validate the r14 oracle.
+    ^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r9.py", line 98, in test_b1_same_row_right_behalf_holds
+    assert_identity_hold(behalf_right_pdf(caption), PAT)
+  File "/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r9.py", line 84, in assert_identity_hold
+    placement.prepare_blocks(blocks, roles, signers)
+  File "/root/worktrees/send-c1b/backend/dealroom_sign/placement.py", line 942, in prepare_blocks
+    if block.unclaimed_signing_peers or (not witness_block(block) and not any(block.scores))
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Block' object has no attribute 'unclaimed_signing_peers'

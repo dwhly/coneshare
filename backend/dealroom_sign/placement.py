@@ -47,7 +47,7 @@ ROLE_DESCRIPTION_WIDE = re.compile(
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.26'
+VERSION = 'c2a.27'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -86,6 +86,7 @@ class Block:
     company_only_blocked: bool = False
     ambiguous_heading: bool = False
     unclaimed_cross_page: bool = False
+    unclaimed_signing_peers: list = field(default_factory=list, repr=False)
 
 
 def norm(value):
@@ -612,6 +613,39 @@ def shared_company_heading(block, blocks, texts, roles):
     return False
 
 
+def unclaimed_signing_peers(rules, texts, blocks):
+    """Retain unscored Name/Date stacks hidden by caption attribution."""
+    peers = []
+    for line in rules:
+        if (line.kind != 'drawn' or line.y < 110
+                or any(block.line is line for block in blocks)
+                or line.semantic in {'NAME', 'DATE', 'TITLE'}):
+            continue
+        column = line.label.get('rect', [line.x0])[0]
+        following = [t for t in texts if 0 <= t['rect'][1] - line.y < 125
+                     and abs(t['rect'][0] - column) < 35]
+        following.sort(key=lambda t: t['rect'][1])
+        if not following or not NAME_CAPTION.match(following[0]['text']):
+            continue
+        name = following[0]
+        if name['rect'][1] - line.y >= 22:
+            continue
+        dates = [r for r in rules if r.semantic == 'DATE'
+                 and name['rect'][3] < r.y < line.y + 125
+                 and abs(r.label['rect'][0] - column) < 40]
+        if not dates:
+            continue
+        date = min(dates, key=lambda r: r.y)
+        if any(line.y < r.y < date.y and r is not line
+               and r.semantic not in {'NAME', 'TITLE'}
+               and r.x1 > column and r.label.get('rect', [r.x0])[0] < line.x1
+               for r in rules):
+            continue
+        peers.append([tokens(value) for part in identity_parts(name['text'])
+                      if (value := person_text(part))])
+    return peers
+
+
 def extract(pdf, *, deadline=None):
     blocks, sizes, roles = [], {}, {}
     pages, extents, absorbed_names = {}, [], {}
@@ -798,6 +832,9 @@ def extract(pdf, *, deadline=None):
                 block.labels = block.raw_labels
                 extents.append((block, (top, bottom, left, right)))
             partition_stacked_blocks(hosts, texts, roles)
+            peers = unclaimed_signing_peers(unique, texts, hosts)
+            for block in hosts:
+                block.unclaimed_signing_peers = peers
             blocks.extend(hosts)
             pages[pno] = (texts, unique, page.height)
             page.close()
@@ -902,23 +939,28 @@ def prepare_blocks(blocks, roles, signers):
     # company-only placement, never resolve a tie.
     unclaimed_pages = {
         block.line.page for block in blocks
-        if not witness_block(block) and not any(block.scores)
+        if block.unclaimed_signing_peers or (not witness_block(block) and not any(block.scores))
     }
     for block in blocks:
         names = [tokens(signer.get('name', ''))
                  for signer, value in zip(signers, block.scores) if value == 4]
         same = []
+        own_heading = (behalf_parts(block.heading) or ('', block.heading))[1]
+        recital_party = not roles or any(similarity(c, own_heading) for c in set(roles.values()))
         for other in blocks:
             if other is block or other.line.page != block.line.page or witness_block(other):
                 continue
             printed = printed_names(other, blocks)
-            # A vetoed stack bearing this signer's own name does not add an
-            # independent third party. Mixed or other names still count.
-            if printed and all(name in names for name in printed):
+            # Preserve a separate own-company stack only if the recital
+            # does not identify a different party. A matching printed name
+            # alone cannot exempt a vetoed peer from an affiliate's guard.
+            if recital_party and printed and all(name in names for name in printed):
                 continue
             same.append(other)
+        hidden = sum(not (recital_party and printed and all(name in names for name in printed))
+                     for printed in block.unclaimed_signing_peers)
         block.unclaimed_cross_page = bool(unclaimed_pages - {block.line.page}) or (
-            len(same) >= 2 and any(not any(b.scores) for b in same))
+            len(same) + hidden >= 2 and (hidden or any(not any(b.scores) for b in same)))
     # Every score needs the original role labels, before output redaction.
     for block in blocks:
         # A company word in arbitrary prose is not permission to emit that prose.
@@ -939,6 +981,7 @@ def prepare_blocks(blocks, roles, signers):
         for extra in block.extras.values():
             extra.label = safe_label(extra.label, roles, signers, companies=companies)
         block.raw_labels = []
+        block.unclaimed_signing_peers = []
 
 
 def score(signer, block, roles, blocks=()):

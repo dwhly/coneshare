@@ -1,0 +1,13 @@
+import sys, os, subprocess
+from tempfile import TemporaryDirectory
+with TemporaryDirectory(prefix='rev26-') as scratch:
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', SECRET_KEY='dummy-secret-key-for-ci-tests',
+               DATABASE_URL='sqlite:///' + scratch + '/db.sqlite3', REDIS_URL='redis://127.0.0.1:16379', CELERY_TASK_ALWAYS_EAGER='True',
+               INTERNAL_API_TOKEN='dummy-internal-api-token-for-ci', FIELD_ENCRYPTION_KEY='S-c9WBE3DEJE2R7i-b-sOmegRChW2McTDIOWcrG0-C8=',
+               CORE_API_URL='http://127.0.0.1:18080', SIGN_INTERNAL_URL='http://sign.test', TMPDIR=scratch)
+    for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: env.pop(k, None)
+    r = subprocess.run(['/root/work/sign-product/send-venv/bin/python', '-m', 'pytest', '-q', '-p', 'no:cacheprovider',
+                        'dealroom_sign/tests/test_placement_r26.py', 'dealroom_sign/tests/test_placement_r26b.py', 'dealroom_sign/tests/test_placement_r13.py'],
+                       cwd='/root/worktrees/send-c1b/backend', env=env, capture_output=True, text=True, timeout=540)
+    print(r.returncode); print(r.stdout[-1500:]); print(r.stderr[-1500:])
+print(repr(subprocess.check_output(['git','status','--short'],cwd='/root/worktrees/send-c1b').decode()))

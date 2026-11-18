@@ -1,0 +1,28 @@
+import json
+cmds=[]
+for line in open('/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    if not isinstance(o,dict): continue
+    m=o.get('message') or dict()
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use':
+                cmds.append(b['input'].get('command') or b['input'].get('content') or '')
+# find tool results timings: print outputs containing 'elapsed' or 'secs'
+res=[]
+for line in open('/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    if not isinstance(o,dict): continue
+    m=o.get('message') or dict()
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_result':
+                t=b.get('content'); t=t if isinstance(t,str) else json.dumps(t)
+                import re
+                print([x for x in re.findall(r'(?:elapsed|secs)[^\\n]{0,40}', t)][:6])

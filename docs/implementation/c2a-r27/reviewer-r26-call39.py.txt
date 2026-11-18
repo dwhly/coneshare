@@ -1,0 +1,3 @@
+p='/root/worktrees/send-c1b/docs/implementation/c2a-r26/'
+print(open(p+'low-exemption.txt').read()[-3500:])
+print(open(p+'results-r26.md').read()[:7000])

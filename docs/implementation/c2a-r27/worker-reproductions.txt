@@ -1,0 +1,50 @@
+REVISION r26 REVIEW CALL 29
+c2a.26
+a_address_hl 1 placed W [('pat', 'SIGNATURE', 2, [64.45, 500.0, 220.0], 'high'), ('pat', 'DATE', 2, [73.9, 560.0, 220.0], 'high')] [('pat', 4, 4)] model 0 worker==inproc True
+a_address_hl 2 needs_sender - [] [('dan', 4, 4), ('pat', 4, 4)] model 0 worker==inproc True
+a_address_blank 1 placed W [('pat', 'SIGNATURE', 2, [64.45, 500.0, 220.0], 'high'), ('pat', 'DATE', 2, [73.9, 560.0, 220.0], 'high')] [('pat', 4, 4)] model 0 worker==inproc True
+a_address_blank 2 needs_sender - [] [('dan', 4, 4), ('pat', 4, 4)] model 0 worker==inproc True
+b_shared_name 2 placed W [('dan', 'SIGNATURE', 2, [64.45, 300.0, 220.0], 'high'), ('dan', 'DATE', 2, [73.9, 360.0, 220.0], 'high'), ('pat', 'SIGNATURE', 2, [64.45, 500.0, 220.0], 'high'), ('pat', 'DATE', 2, [73.9, 560.0, 220.0], 'high')] [('dan', 10, 8), ('pat', 4, 4)] model 0 worker==inproc True
+b_shared_name_hl 2 placed W [('dan', 'SIGNATURE', 2, [64.45, 300.0, 220.0], 'high'), ('dan', 'DATE', 2, [73.9, 360.0, 220.0], 'high'), ('pat', 'SIGNATURE', 2, [64.45, 500.0, 220.0], 'high'), ('pat', 'DATE', 2, [73.9, 560.0, 220.0], 'high')] [('dan', 10, 8), ('pat', 4, 4)] model 0 worker==inproc True
+http 0
+a_address_hl [(250, 'DISCLOSER:', False, 40), (262, 'FLEET TEST CO.', False, 40), (300, 'By:', True, 40, 220), (312, 'Name:', False, 40), (324, 'Title:', False, 40), (360, 'Date:', True, 40, 220), (250, 'RECIPIENT:', False, 320), (262, 'HL ANALYTICS, INC.', False, 320), (300, 'By:', True, 320, 500), (312, 'Name: Pat Smith', False, 320), (324, 'Address: 100 Harbor Way', False, 320), (360, 'Date:', True, 320, 500), (462, 'HARBOR LIGHT GROUP, INC.', False, 40), (500, 'By:', True, 40, 220), (512, 'Name:', False, 40), (524, 'Title:', False, 40), (560, 'Date:', True, 40, 220)]
+b_shared_name [(250, 'DISCLOSER:', False, 40), (262, 'FLEET TEST CO.', False, 40), (300, 'By:', True, 40, 220), (312, 'Name: Pat Smith', False, 40), (324, 'Title:', False, 40), (360, 'Date:', True, 40, 220), (250, 'THE SUPPLIER', False, 320), (300, 'By:', True, 320, 500), (312, 'Name:', False, 320), (324, 'Title:', False, 320), (360, 'Date:', True, 320, 500), (462, 'HARBOR LIGHT GROUP, INC.', False, 40), (500, 'By:', True, 40, 220), (512, 'Name:', False, 40), (524, 'Title:', False, 40), (560, 'Date:', True, 40, 220)]
+REVISION r26 REVIEW CALL 43
+Executed by: | For and on behalf of the Recipient | 1 placed [('pat', 'SIGNATURE', [96.45, 560.0, 290.0], 'high'), ('pat', 'DATE', [105.9, 600.0, 290.0], 'high')] model 0 eq True
+Executed by: | For and on behalf of the Recipient | 2 needs_sender [] model 0 eq True
+Executed by: | harbor light analytics, inc. | 1 placed [('pat', 'SIGNATURE', [96.45, 560.0, 290.0], 'high'), ('pat', 'DATE', [105.9, 600.0, 290.0], 'high')] model 0 eq True
+Executed by: | harbor light analytics, inc. | 2 needs_sender [] model 0 eq True
+Authorised signatory: | For and on behalf of the Recipient | 1 placed [('pat', 'SIGNATURE', [96.45, 560.0, 290.0], 'high'), ('pat', 'DATE', [105.9, 600.0, 290.0], 'high')] model 0 eq True
+Authorised signatory: | For and on behalf of the Recipient | 2 needs_sender [] model 0 eq True
+Authorised signatory: | harbor light analytics, inc. | 1 placed [('pat', 'SIGNATURE', [96.45, 560.0, 290.0], 'high'), ('pat', 'DATE', [105.9, 600.0, 290.0], 'high')] model 0 eq True
+Authorised signatory: | harbor light analytics, inc. | 2 needs_sender [] model 0 eq True
+Signatory: | For and on behalf of the Recipient | 1 placed [('pat', 'SIGNATURE', [96.45, 560.0, 290.0], 'high'), ('pat', 'DATE', [105.9, 600.0, 290.0], 'high')] model 0 eq True
+Signatory: | For and on behalf of the Recipient | 2 needs_sender [] model 0 eq True
+Signatory: | harbor light analytics, inc. | 1 placed [('pat', 'SIGNATURE', [96.45, 560.0, 290.0], 'high'), ('pat', 'DATE', [105.9, 600.0, 290.0], 'high')] model 0 eq True
+Signatory: | harbor light analytics, inc. | 2 needs_sender [] model 0 eq True
+http 0
+REVISION r27 REVIEW CALL 29
+c2a.27
+a_address_hl 1 needs_sender - [] [('pat', 4, 4)] model 0 worker==inproc True
+a_address_hl 2 needs_sender - [] [('dan', 4, 4), ('pat', 4, 4)] model 0 worker==inproc True
+a_address_blank 1 needs_sender - [] [('pat', 4, 4)] model 0 worker==inproc True
+a_address_blank 2 needs_sender - [] [('dan', 4, 4), ('pat', 4, 4)] model 0 worker==inproc True
+b_shared_name 2 needs_sender - [] [('dan', 10, 8), ('pat', 4, 4)] model 0 worker==inproc True
+b_shared_name_hl 2 needs_sender - [] [('dan', 10, 8), ('pat', 4, 4)] model 0 worker==inproc True
+http 0
+a_address_hl [(250, 'DISCLOSER:', False, 40), (262, 'FLEET TEST CO.', False, 40), (300, 'By:', True, 40, 220), (312, 'Name:', False, 40), (324, 'Title:', False, 40), (360, 'Date:', True, 40, 220), (250, 'RECIPIENT:', False, 320), (262, 'HL ANALYTICS, INC.', False, 320), (300, 'By:', True, 320, 500), (312, 'Name: Pat Smith', False, 320), (324, 'Address: 100 Harbor Way', False, 320), (360, 'Date:', True, 320, 500), (462, 'HARBOR LIGHT GROUP, INC.', False, 40), (500, 'By:', True, 40, 220), (512, 'Name:', False, 40), (524, 'Title:', False, 40), (560, 'Date:', True, 40, 220)]
+b_shared_name [(250, 'DISCLOSER:', False, 40), (262, 'FLEET TEST CO.', False, 40), (300, 'By:', True, 40, 220), (312, 'Name: Pat Smith', False, 40), (324, 'Title:', False, 40), (360, 'Date:', True, 40, 220), (250, 'THE SUPPLIER', False, 320), (300, 'By:', True, 320, 500), (312, 'Name:', False, 320), (324, 'Title:', False, 320), (360, 'Date:', True, 320, 500), (462, 'HARBOR LIGHT GROUP, INC.', False, 40), (500, 'By:', True, 40, 220), (512, 'Name:', False, 40), (524, 'Title:', False, 40), (560, 'Date:', True, 40, 220)]
+REVISION r27 REVIEW CALL 43
+Executed by: | For and on behalf of the Recipient | 1 needs_sender [] model 0 eq True
+Executed by: | For and on behalf of the Recipient | 2 needs_sender [] model 0 eq True
+Executed by: | harbor light analytics, inc. | 1 needs_sender [] model 0 eq True
+Executed by: | harbor light analytics, inc. | 2 needs_sender [] model 0 eq True
+Authorised signatory: | For and on behalf of the Recipient | 1 needs_sender [] model 0 eq True
+Authorised signatory: | For and on behalf of the Recipient | 2 needs_sender [] model 0 eq True
+Authorised signatory: | harbor light analytics, inc. | 1 needs_sender [] model 0 eq True
+Authorised signatory: | harbor light analytics, inc. | 2 needs_sender [] model 0 eq True
+Signatory: | For and on behalf of the Recipient | 1 needs_sender [] model 0 eq True
+Signatory: | For and on behalf of the Recipient | 2 needs_sender [] model 0 eq True
+Signatory: | harbor light analytics, inc. | 1 needs_sender [] model 0 eq True
+Signatory: | harbor light analytics, inc. | 2 needs_sender [] model 0 eq True
+http 0

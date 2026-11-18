@@ -1,0 +1,6 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import os
+d='/root/worktrees/send-c1b/backend/dealroom_sign/tests'
+print(sorted(f for f in os.listdir(d) if 'r2' in f or 'review' in f))
+print(os.path.exists('/tmp/rev18/q3.py'), os.listdir('/tmp'))
+EOF

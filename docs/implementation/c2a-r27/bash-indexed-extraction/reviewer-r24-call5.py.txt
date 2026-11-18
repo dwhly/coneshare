@@ -1,0 +1,8 @@
+import subprocess, os
+def g(*a): return subprocess.run(['git','-C','/root/worktrees/send-c1b',*a],capture_output=True,text=True).stdout
+print(g('log','--oneline','-4'))
+print(g('status','--short'))
+print(g('diff','--stat','e2bbb758','9a91a4b9'))
+print(g('diff','e2bbb758','9a91a4b9','--','backend/dealroom_sign/placement.py'))
+print(g('diff','e2bbb758','9a91a4b9','--','backend/dealroom_sign/tests/test_placement_r22.py','backend/dealroom_sign/tests/test_placement_r23.py'))
+print(os.listdir('/tmp/rev19') if os.path.isdir('/tmp/rev19') else 'no rev19')

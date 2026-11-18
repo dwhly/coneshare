@@ -1,0 +1,5 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import pathlib
+for f in ['placement_r26_review_cases.py','test_placement_r26.py','test_placement_r26b.py']:
+    print('=====',f); print(pathlib.Path('/root/worktrees/send-c1b/backend/dealroom_sign/tests/'+f).read_text())
+"

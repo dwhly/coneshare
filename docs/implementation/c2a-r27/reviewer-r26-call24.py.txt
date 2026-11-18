@@ -1,0 +1,4 @@
+import re
+s=open('/tmp/rev19/gens.py').read()
+for name in ('def f_fine','def added'):
+    i=s.index(name); print(s[i:i+3500]); print('......')

@@ -1,0 +1,62 @@
+import sys, os, subprocess, time
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from pathlib import Path
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+ROOT = Path('/root/worktrees/send-c1b'); sys.path.insert(0, str(ROOT/'backend'))
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+from dealroom_sign.tests.test_placement_r8 import CAPTIONS
+rc = R24.rc
+def show(c): return subprocess.check_output(['git','show',c+':backend/dealroom_sign/placement.py'],cwd=ROOT).decode()
+r26 = show('f450fdae')
+a = r26.index('        names = [tokens(signer.get'); b = r26.index('        block.unclaimed_cross_page = bool(unclaimed_pages')
+cand5 = r26[:a] + "        same = [o for o in blocks if o is not block and o.line.page == block.line.page and not witness_block(o)]\n" + r26[b:]
+SRC = dict(r25=show('701f6aee'), r26=r26, cand5=cand5)
+def mk(n):
+    m = ModuleType('rev26a_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+forbid = Mock(side_effect=AssertionError('http')); calls = Counter()
+def run(pages, people, allowed):
+    pdf = rc.pages_pdf(pages); out = []; res = {}
+    for n, m in M.items():
+        mo = Mock(); r = in_process(m, pdf, people, mo); calls[n] += mo.call_count
+        out.append('W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n')); res[n] = r
+    return ''.join(out), res
+X = 72
+G = Counter(); EX = []; t = time.time()
+with patch('httpx.Client.send', forbid):
+    for recital, head, cap, aff, acap, signer, fleet in product(
+            ('none', 'parsed', 'address'),
+            ('RECIPIENT:', None, 'HL ANALYTICS, INC.', 'harbor light analytics, inc.', 'For and on behalf of the Recipient', 'THE SUPPLIER'),
+            CAPTIONS + ['By:'],
+            ('HARBOR LIGHT GROUP, INC.', 'HARBOR LIGHT ANALYTICS, INC.'), (None, 'GUARANTOR:'),
+            ('domain', 'explicit', 'both'), ('l2', 'single')):
+        rows = [(240, 'FLEET TEST CO.', False, X), (270, 'By:', True, X)]
+        rows += [(310, 'By:', True, X)] if fleet == 'l2' else [(300, 'Date:', True, X)]
+        if head: rows.append((340, head, False, X))
+        rows += [(370, cap, True, X), (382, 'Name: Pat Smith', False, X), (420, 'Date:', True, X)]
+        if acap: rows.append((490, acap, False, X))
+        rows += [(520, aff, False, X), (560, 'By:', True, X), (600, 'Date:', True, X)]
+        pages = [list(rc.RECITALS[recital]), rows]
+        pat = dict(name='Pat Smith', email=rc.PE)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        people = [TWO[1], pat] if signer == 'both' else [pat]
+        # Pat's own signing block is the named stack; the affiliate line is never Pat's
+        allowed = {rc.PE: (2, 0, 370, 612), rc.DE: (2, 0, 270, 612)}
+        key, res = run(pages, people, allowed)
+        kind = 'affiliate' if aff.startswith('HARBOR LIGHT GROUP') else 'own_company(L-2)'
+        G[(kind, key)] += 1
+        if kind == 'affiliate' and 'W' in key: EX.append((key, recital, head, cap, acap, signer, fleet))
+print('http', forbid.call_count, 'calls', sorted(calls.items()), 'elapsed', round(time.time() - t))
+for x in sorted(G.items(), key=str): print(x)
+C = Counter((k, r, h, s) for k, r, h, c, a, s, f in EX)
+for x in sorted(C.items(), key=str): print(' W', x)
+C2 = Counter((k, c, a, f) for k, r, h, c, a, s, f in EX)
+for x in sorted(C2.items(), key=str): print(' W2', x)

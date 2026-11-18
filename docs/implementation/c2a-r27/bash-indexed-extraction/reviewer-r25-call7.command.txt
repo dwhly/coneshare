@@ -1,0 +1,18 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json
+cmds=[]
+for line in open('/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    m=o.get('message') or {}
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use':
+                cmd=b['input'].get('command') or ''
+                cmds.append(cmd)
+print(len(cmds))
+for i,c in enumerate(cmds):
+    if 'MEMBER' in c or 'Q3' in c or 'q3' in c or 'SUPPLIER' in c:
+        print('=====',i,len(c)); print(c[:300])
+EOF

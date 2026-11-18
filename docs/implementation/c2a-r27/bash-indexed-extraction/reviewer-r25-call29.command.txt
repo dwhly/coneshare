@@ -1,0 +1,8 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import sys, os, subprocess
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
+r = subprocess.run([sys.executable, '-m', 'pytest', '-q', '-p', 'no:cacheprovider', 'dealroom_sign/tests/test_placement_r25.py'], cwd='/root/worktrees/send-c1b/backend', env=env, capture_output=True, text=True, timeout=530)
+print(r.stdout[-1500:], r.stderr[-800:])
+print(repr(subprocess.check_output(['git','status','--short'],cwd='/root/worktrees/send-c1b').decode()))
+EOF

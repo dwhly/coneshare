@@ -1,0 +1,103 @@
+{
+  "L2 single": {
+    "cases": 20,
+    "r26_c": 20,
+    "r26_expected": 20,
+    "r27_c": 20,
+    "r27_expected": 20,
+    "vocabulary_names_c": 20,
+    "vocabulary_names_expected": 20
+  },
+  "L2 both": {
+    "cases": 20,
+    "r26_n": 20,
+    "r26_expected": 20,
+    "r27_n": 20,
+    "r27_expected": 20,
+    "vocabulary_names_n": 20,
+    "vocabulary_names_expected": 20
+  },
+  "A none": {
+    "cases": 21,
+    "r26_n": 17,
+    "r26_expected": 0,
+    "r27_n": 17,
+    "r27_expected": 0,
+    "vocabulary_names_n": 17,
+    "vocabulary_names_expected": 0,
+    "r26_w": 4,
+    "r27_w": 4,
+    "vocabulary_names_w": 4
+  },
+  "A parsed": {
+    "cases": 21,
+    "r26_n": 18,
+    "r26_expected": 0,
+    "r27_n": 21,
+    "r27_expected": 0,
+    "vocabulary_names_n": 21,
+    "vocabulary_names_expected": 0,
+    "r26_w": 3
+  },
+  "A address": {
+    "cases": 21,
+    "r26_n": 18,
+    "r26_expected": 0,
+    "r27_n": 21,
+    "r27_expected": 0,
+    "vocabulary_names_n": 21,
+    "vocabulary_names_expected": 0,
+    "r26_w": 3
+  },
+  "B none": {
+    "cases": 4,
+    "r26_w": 4,
+    "r26_expected": 0,
+    "r27_w": 4,
+    "r27_expected": 0,
+    "vocabulary_names_w": 4,
+    "vocabulary_names_expected": 0
+  },
+  "B parsed": {
+    "cases": 4,
+    "r26_w": 4,
+    "r26_expected": 0,
+    "r27_n": 4,
+    "r27_expected": 0,
+    "vocabulary_names_n": 4,
+    "vocabulary_names_expected": 0
+  },
+  "B address": {
+    "cases": 4,
+    "r26_w": 4,
+    "r26_expected": 0,
+    "r27_n": 4,
+    "r27_expected": 0,
+    "vocabulary_names_n": 4,
+    "vocabulary_names_expected": 0
+  },
+  "E": {
+    "cases": 150,
+    "r26_n": 120,
+    "r26_expected": 0,
+    "r27_n": 150,
+    "r27_expected": 0,
+    "vocabulary_names_n": 150,
+    "vocabulary_names_expected": 0,
+    "r26_w": 30
+  },
+  "captions": {
+    "cases": 22,
+    "r26_w": 18,
+    "r26_expected": 2,
+    "r27_n": 20,
+    "r27_expected": 2,
+    "vocabulary_names_n": 16,
+    "vocabulary_names_expected": 2,
+    "r26_c": 2,
+    "r27_c": 2,
+    "vocabulary_names_c": 2,
+    "vocabulary_names_w": 4,
+    "r26_n": 2
+  }
+}

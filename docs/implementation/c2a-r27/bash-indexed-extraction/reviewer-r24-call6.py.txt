@@ -1,0 +1,3 @@
+import subprocess
+for f in ['/tmp/rev19/h.py','/tmp/rev19/gens.py','/tmp/rev19/run2.py']:
+    s=open(f).read(); print('=====',f,len(s.splitlines())); print(s[:6000])

@@ -1,0 +1,12 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import inspect, sys
+sys.path.insert(0,'/root/worktrees/send-c1b/backend')
+from dealroom_sign.tests import placement_r24_review_cases as R24
+print(inspect.getsource(R24.company_block))
+print(R24.company_block('MEMBER:', R24.HLA, 320))
+print(R24.company_block(None, 'X', 40, 180))
+rc=R24.rc
+print(rc.RECITALS['parsed']); print(rc.PE, rc.DE)
+print(inspect.getsource(rc.pages_pdf)[:1500])
+print(inspect.getsource(rc.wrong_fields))
+EOF

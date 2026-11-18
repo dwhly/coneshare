@@ -1,0 +1,15 @@
+import json
+cmds=[]
+for line in open('/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    if not isinstance(o,dict): continue
+    m=o.get('message') or {}
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use':
+                cmds.append(b['input'].get('command') or b['input'].get('content') or '')
+import hashlib
+for i in (18,19): print(i, hashlib.sha256(cmds[i].encode()).hexdigest()[:12])

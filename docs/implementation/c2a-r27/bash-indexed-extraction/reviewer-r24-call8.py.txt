@@ -1,0 +1,3 @@
+d='/root/worktrees/send-c1b/backend/dealroom_sign/tests/'
+for f in ['placement_r22_review_cases.py','test_placement_r22_conflict_probes.py','test_placement_r22.py']:
+    s=open(d+f).read(); print('=====',f,len(s.splitlines())); print(s[:3500])

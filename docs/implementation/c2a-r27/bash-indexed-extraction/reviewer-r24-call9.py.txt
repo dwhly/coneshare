@@ -1,0 +1,7 @@
+import re
+s=open('/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r14.py').read()
+i=s.find('def in_process'); print(s[i:i+1500])
+s=open('/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py').read()
+print(len(s.splitlines())); 
+for name in ['def block','def pages_pdf','def wrong_fields','RECITALS','def layout_pages','PE =','DE =']:
+    i=s.find(name); print('---',name); print(s[i:i+1400] if name in('def wrong_fields','def layout_pages','RECITALS','def block') else s[i:i+200])

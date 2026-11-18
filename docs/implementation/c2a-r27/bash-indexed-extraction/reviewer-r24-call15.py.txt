@@ -1,0 +1,26 @@
+import sys, os, time, types, subprocess
+sys.dont_write_bytecode = True
+sys.path.insert(0, '/tmp/rev19')
+src = open('/tmp/rev19/h.py').read()
+src = '\n'.join(l for l in src.splitlines() if not l.startswith("assert SRC['r19']"))
+h = types.ModuleType('h'); h.__file__ = '/tmp/rev19/h.py'; sys.modules['h'] = h
+exec(compile(src, 'h', 'exec'), h.__dict__)
+import gens
+from collections import Counter
+from contextlib import ExitStack
+ROOT = h.ROOT
+def show(c): return subprocess.check_output(['git','show',c+':backend/dealroom_sign/placement.py'],cwd=ROOT).decode()
+h.SRC['r21'] = show('afb9aa6e'); h.SRC['r24'] = show('9a91a4b9')
+G = Counter(); t = time.time()
+with ExitStack() as st:
+    M = h.modules(st, ('r21', 'r24'))
+    for fam, gen in (('ffine', gens.f_fine), ('added', gens.added)):
+        t1 = time.time()
+        for g, c, rows, both, allowed in gen():
+            res = h.run_rows(M, rows, both, allowed)
+            key = ''.join('W' if res[n][1] else ('p' if res[n][0]['fields'] else 'n') for n in M)
+            G[(g, key)] += 1
+            G[(g, 'calls')] += sum(res[n][2] for n in M)
+        print(fam, 'secs', round(time.time() - t1), flush=True)
+print('http', h.forbidden.call_count, 'elapsed', round(time.time() - t))
+for x in sorted(G.items(), key=str): print(x)

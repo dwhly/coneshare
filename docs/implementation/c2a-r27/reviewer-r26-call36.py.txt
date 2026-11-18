@@ -1,0 +1,6 @@
+import json, hashlib
+p='/root/worktrees/send-c1b/docs/implementation/c2a-r26/'
+print('disk sha', hashlib.sha256(open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py','rb').read()).hexdigest())
+d=json.load(open(p+'r26b/family-comparison.json'))
+print(type(d), list(d)[:10] if isinstance(d,dict) else len(d))
+print(json.dumps(d if not isinstance(d, dict) else d[list(d)[0]], indent=0)[:1500])

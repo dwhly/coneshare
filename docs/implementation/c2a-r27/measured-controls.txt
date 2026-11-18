@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r27/measure_controls.py", line 103, in <module>
+    main()
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r27/measure_controls.py", line 75, in main
+    model.assert_not_called()
+  File "/usr/lib/python3.12/unittest/mock.py", line 905, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'mock' to not have been called. Called 1 times.
+Calls: [call({'signers': [{'id': 's0', 'name': 'Pat Smith'}], 'candidates': [{'id': 'b2', 'page': 2, 'line': [175.93, 370.0, 290.0], 'labels': [{'text': 'RECIPIENT:', 'rect': [72.0, 340.07, 128.12, 350.07]}, {'text': '[redacted]', 'rect': [72.0, 360.07, 165.93, 370.07]}, {'text': 'Name: Pat Smith', 'rect': [72.0, 382.07, 147.58, 392.07]}, {'text': 'Date:', 'rect': [72.0, 410.07, 95.9, 420.07]}]}]})].

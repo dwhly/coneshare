@@ -1,0 +1,13 @@
+import json
+P='/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r25.jsonl'
+cmds=[]
+for line in open(P):
+    try: d=json.loads(line)
+    except: continue
+    if not isinstance(d,dict) or not isinstance(d.get('message'),dict): continue
+    c=d['message'].get('content')
+    if not isinstance(c,list): continue
+    for x in c:
+        if isinstance(x,dict) and x.get('type')=='tool_use':
+            cmds.append(x['input'].get('command') or json.dumps(x['input']))
+for i in (17,20,25): print('=====',i); print(cmds[i-1])

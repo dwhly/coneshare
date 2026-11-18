@@ -1,0 +1,6 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import subprocess as s
+g=lambda *a: print(s.run(['git','-C','/root/worktrees/send-c1b',*a],capture_output=True,text=True).stdout)
+g('log','--oneline','-4'); g('status','--short'); g('diff','9a91a4b9','701f6aee','--stat'); g('diff','9a91a4b9','701f6aee','--stat','--','backend/dealroom_sign/tests'); g('diff','9a91a4b9','701f6aee','--','backend/dealroom_sign/placement.py')
+import os; print([p for p in os.listdir('/tmp') if 'rev' in p or 'q3' in p.lower()])
+"

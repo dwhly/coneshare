@@ -1,0 +1,13 @@
+import json
+cmds=[]
+for line in open('/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    if not isinstance(o,dict) or not isinstance(o.get('message'),dict): continue
+    c=o['message'].get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use':
+                cmds.append(b['input'].get('command') or b['input'].get('content') or '')
+body = cmds[17].split("<<'EOF'\n",1)[1].rsplit('\nEOF',1)[0]
+print(body[2100:])

@@ -1,0 +1,82 @@
+{
+  "part": "q3b_aligned",
+  "cases": 2430,
+  "groups": {
+    "Q3b ordinary": {
+      "cases": 486,
+      "r21_n": 175,
+      "r21_raw_wrong": 0,
+      "r25_n": 175,
+      "r25_raw_wrong": 0,
+      "r26_n": 175,
+      "r26_raw_wrong": 0,
+      "r27_n": 175,
+      "r27_raw_wrong": 0,
+      "r21_to_r27_n_to_p": 0,
+      "r21_to_r27_c_to_w": 0,
+      "r21_to_r27_c_to_n": 0,
+      "r21_to_r27_w_to_n": 0,
+      "r25_to_r27_n_to_p": 0,
+      "r25_to_r27_c_to_w": 0,
+      "r25_to_r27_c_to_n": 0,
+      "r25_to_r27_w_to_n": 0,
+      "r26_to_r27_n_to_p": 0,
+      "r26_to_r27_c_to_w": 0,
+      "r26_to_r27_c_to_n": 0,
+      "r26_to_r27_w_to_n": 0,
+      "r21_c": 311,
+      "r25_c": 311,
+      "r26_c": 311,
+      "r27_c": 311
+    },
+    "Q3b affiliate": {
+      "cases": 1944,
+      "r21_w": 104,
+      "r21_raw_wrong": 104,
+      "r25_n": 1364,
+      "r25_raw_wrong": 0,
+      "r26_n": 1364,
+      "r26_raw_wrong": 0,
+      "r27_n": 1364,
+      "r27_raw_wrong": 0,
+      "r21_to_r27_n_to_p": 0,
+      "r21_to_r27_c_to_w": 0,
+      "r21_to_r27_c_to_n": 478,
+      "r21_to_r27_w_to_n": 104,
+      "r25_to_r27_n_to_p": 0,
+      "r25_to_r27_c_to_w": 0,
+      "r25_to_r27_c_to_n": 0,
+      "r25_to_r27_w_to_n": 0,
+      "r26_to_r27_n_to_p": 0,
+      "r26_to_r27_c_to_w": 0,
+      "r26_to_r27_c_to_n": 0,
+      "r26_to_r27_w_to_n": 0,
+      "r21_n": 782,
+      "r21_c": 1058,
+      "r25_c": 580,
+      "r26_c": 580,
+      "r27_c": 580
+    }
+  },
+  "transitions": {
+    "Q3b ordinary": {
+      "n -> n -> n -> n": 175,
+      "c -> c -> c -> c": 311
+    },
+    "Q3b affiliate": {
+      "w -> n -> n -> n": 104,
+      "n -> n -> n -> n": 782,
+      "c -> c -> c -> c": 580,
+      "c -> n -> n -> n": 478
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r25": "8988fe1a399c903aeb0c9794c810d2dcb66995beb663ddb89a690e71c179d7a5",
+    "r26": "5683ff7bfc5a77b8a268198d689953c9fedc70b981ae83e64c7fb321f34a5c91",
+    "r27": "f26d989f0d09494086fb2158e7d6ab3eb4e5c2aaee55e2745a134bdef1fd0f20"
+  },
+  "archive_results_exact": true,
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

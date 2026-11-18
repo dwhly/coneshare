@@ -1,0 +1,19 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json, hashlib, re
+P='/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl'
+cmds=[]
+for line in open(P):
+    try: d=json.loads(line)
+    except: continue
+    if not isinstance(d,dict) or not isinstance(d.get('message'),dict): continue
+    c=d['message'].get('content')
+    if not isinstance(c,list): continue
+    for x in c:
+        if isinstance(x,dict) and x.get('type')=='tool_use':
+            cmds.append(x['input'].get('command') or json.dumps(x['input']))
+for i in range(16,28):
+    s=cmds[i-1]
+    body=s[s.index("<<'EOF'\n")+8:s.rindex("\nEOF")] if "<<'EOF'" in s else s
+    srcl=[l for l in body.splitlines() if l.startswith('SRC')]
+    print(i, len(s), hashlib.sha256(body.encode()).hexdigest()[:12], srcl, [l for l in body.splitlines() if 'product(' in l][:2])
+EOF

@@ -1,0 +1,34 @@
+import sys, os, subprocess, time
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from pathlib import Path
+from types import ModuleType
+from collections import Counter
+from unittest.mock import Mock, patch
+ROOT = Path('/root/worktrees/send-c1b'); sys.path.insert(0, str(ROOT/'backend'))
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests.test_placement_r17 import signers
+from dealroom_sign.tests import placement_r24_review_cases as R24
+rc = R24.rc
+def show(c): return subprocess.check_output(['git','show',c+':backend/dealroom_sign/placement.py'],cwd=ROOT).decode()
+SRC = dict(r21=show('afb9aa6e'), r24=show('9a91a4b9'))
+def mk(n):
+    m = ModuleType('rev24_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+forbid = Mock(side_effect=AssertionError('http'))
+calls = Counter()
+def run(pages, people, allowed):
+    pdf = rc.pages_pdf(pages); out = []
+    for n, m in M.items():
+        mo = Mock(); r = in_process(m, pdf, people, mo); calls[n] += mo.call_count
+        out.append('W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n'))
+    return ''.join(out)
+G = Counter(); t = time.time()
+with patch('httpx.Client.send', forbid):
+    for args, pages, people, allowed in R24.cases.matrix(R24.ATTACK | R24.BOUNDARY):
+        G[('atk_bnd ' + ('blocking' if args[0] in R24.BLOCKING else 'other'), run(pages, people, allowed))] += 1
+    for args, pages, both, allowed in rc.cross_page_cases(): G[('r21 cross_page', run(pages, signers(both), allowed))] += 1
+print('http', forbid.call_count, 'calls', sorted(calls.items()), 'elapsed', round(time.time() - t))
+for x in sorted(G.items()): print(x)

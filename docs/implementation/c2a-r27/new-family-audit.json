@@ -1,0 +1,103 @@
+{
+  "scoped_groups": {
+    "A recital": {
+      "cases": 1008,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "B recital": {
+      "cases": 32,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "E affiliate recital": {
+      "cases": 864,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    }
+  },
+  "retained_policy_controls": {
+    "A no_recital": {
+      "cases": 504,
+      "raw_wrong": 12,
+      "scoped_wrong": 0
+    },
+    "B no_recital": {
+      "cases": 32,
+      "raw_wrong": 20,
+      "scoped_wrong": 0
+    },
+    "B recital": {
+      "cases": 32,
+      "raw_wrong": 32,
+      "scoped_wrong": 0
+    },
+    "C no_recital": {
+      "cases": 36,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "C recital": {
+      "cases": 36,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "D blank_name no_recital": {
+      "cases": 21,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "D blank_name recital": {
+      "cases": 42,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "D name_in_affiliate no_recital": {
+      "cases": 21,
+      "raw_wrong": 14,
+      "scoped_wrong": 0
+    },
+    "D name_in_affiliate recital": {
+      "cases": 42,
+      "raw_wrong": 28,
+      "scoped_wrong": 0
+    },
+    "D name_in_affiliate_plus_holdings no_recital": {
+      "cases": 21,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "D name_in_affiliate_plus_holdings recital": {
+      "cases": 42,
+      "raw_wrong": 0,
+      "scoped_wrong": 0
+    },
+    "E affiliate no_recital": {
+      "cases": 432,
+      "raw_wrong": 40,
+      "scoped_wrong": 0
+    },
+    "E own_company no_recital": {
+      "cases": 432,
+      "raw_wrong": 80,
+      "scoped_wrong": 0
+    },
+    "E own_company recital": {
+      "cases": 864,
+      "raw_wrong": 120,
+      "scoped_wrong": 0
+    }
+  },
+  "attack_e": {
+    "baseline_WWW": 50,
+    "recital_WWW": 30,
+    "recital_WWW_held": 30
+  },
+  "no_recital_output_differences": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "D": 0,
+    "E": 0
+  }
+}
