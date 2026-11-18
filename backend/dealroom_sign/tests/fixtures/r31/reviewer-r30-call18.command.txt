@@ -1,8 +1,0 @@
-/root/work/sign-product/send-venv/bin/python -c "
-import sys,inspect; sys.dont_write_bytecode=True
-sys.path.insert(0,'/root/worktrees/send-c1b/backend')
-from dealroom_sign.tests import placement_r24_review_cases as R24
-rc=R24.rc
-print(rc.__name__); print(inspect.getsource(rc.wrong_fields)); print(inspect.getsource(rc.pages_pdf)[:2500]); print(rc.RECITALS); print(rc.PE, getattr(rc,'DE',None))
-from dealroom_sign.tests.test_placement import TWO; print(TWO)
-"

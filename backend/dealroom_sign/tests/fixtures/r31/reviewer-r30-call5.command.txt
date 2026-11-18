@@ -1,5 +1,0 @@
-/root/work/sign-product/send-venv/bin/python -c "
-import os
-for d in ['/tmp/r29rev','/tmp/r28rev','/root/worktrees/send-c1b/docs/implementation/c2a-r30']:
-    print(d, sorted(os.listdir(d)) if os.path.isdir(d) else 'MISSING')
-"

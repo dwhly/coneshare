@@ -1,7 +1,0 @@
-/root/work/sign-product/send-venv/bin/python - <<'EOF'
-import subprocess,time
-for sel in ['BLOCKING','ATTACK']:
-    t=time.time()
-    r=subprocess.run(['/root/work/sign-product/send-venv/bin/python','/tmp/r29rev/inh.py','c45',sel],capture_output=True,text=True,timeout=270,cwd='/tmp/r29rev')
-    print('#####',sel,'rc',r.returncode,round(time.time()-t)); print(r.stdout[-2500:]); print(r.stderr[-1200:])
-EOF

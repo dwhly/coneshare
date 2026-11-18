@@ -1,4 +1,0 @@
-/root/work/sign-product/send-venv/bin/python -c "
-L=open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read().splitlines()
-for i in range(660,746): print(i+1, L[i])
-"

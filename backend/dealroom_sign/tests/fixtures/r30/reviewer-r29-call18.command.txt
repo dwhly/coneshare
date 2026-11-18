@@ -1,1 +1,0 @@
-cd /tmp/r29rev && for f in c26 c35 c53 c48; do timeout 540 /root/work/sign-product/send-venv/bin/python inh.py $f 2>&1 | tail -40; done

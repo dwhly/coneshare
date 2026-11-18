@@ -1,1 +1,0 @@
-cd /root/worktrees/dealroom-sign-edd/docs/edd/reviews; head -c 9000 counterparty-c2a-gate3-r29.md; echo; ls | grep -i r29; git -C /root/worktrees/send-c1b log --oneline -3; git -C /root/worktrees/send-c1b status --short | head

@@ -1,6 +1,0 @@
-import re
-for f in ['c25','c26','c28','c29','c30','c35','c40','c41','c43','c45','c48','c52','c53','c54','c55','c56','c59']:
-    s=open(f'/tmp/r28rev/{f}.sh').read()
-    print('=====',f,len(s))
-    for l in s.split('\n'):
-        if re.search(r"open\(|SRC|startswith|exec\(|import h|sys.argv|argv",l): print('   ',l[:200])

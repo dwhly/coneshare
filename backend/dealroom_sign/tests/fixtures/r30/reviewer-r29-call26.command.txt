@@ -1,7 +1,0 @@
-/root/work/sign-product/send-venv/bin/python - <<'EOF'
-import subprocess,time
-for f in ['c41']:
-    t=time.time()
-    r=subprocess.run(['/root/work/sign-product/send-venv/bin/python','/tmp/r29rev/inh.py',f],capture_output=True,text=True,timeout=560,cwd='/tmp/r29rev')
-    print('#####',f,'rc',r.returncode,round(time.time()-t)); print(r.stdout[-3500:]); print(r.stderr[-1200:])
-EOF
