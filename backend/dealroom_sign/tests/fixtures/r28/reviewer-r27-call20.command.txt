@@ -1,0 +1,15 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json
+ids=[]; res={}
+for line in open('counterparty-c2a-gate3-r26.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    m=o.get('message') or {}
+    c=m.get('content') if isinstance(m,dict) else None
+    if not isinstance(c,list): continue
+    for x in c:
+        if isinstance(x,dict) and x.get('type')=='tool_use': ids.append(x['id'])
+        if isinstance(x,dict) and x.get('type')=='tool_result':
+            cc=x.get('content'); res[x['tool_use_id']]=cc if isinstance(cc,str) else json.dumps(cc)
+for i in (38,42): print(i, res.get(ids[i],'')[:1500])
+EOF

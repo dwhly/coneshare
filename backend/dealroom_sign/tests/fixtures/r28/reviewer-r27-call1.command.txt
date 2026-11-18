@@ -1,0 +1,1 @@
+cd /root/worktrees/dealroom-sign-edd/docs/edd/reviews && wc -l counterparty-c2a-gate3-r26.md && cat counterparty-c2a-gate3-r26.md; git -C /root/worktrees/send-c1b log --oneline -3; git -C /root/worktrees/send-c1b diff f450fdae 1c425e1b --stat

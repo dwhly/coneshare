@@ -1,0 +1,226 @@
+VERDICT: FIX-FIRST
+Counts: blocking 1 · high 0 · medium 0 · low 2 · nit 3
+
+Scope: r27 HEAD `1c425e1b` in `/root/worktrees/send-c1b` (`VERSION = 'c2a.27'`, on-disk `placement.py` sha256 `f26d989f…`), compared with live r26 `f450fdae` (sha256 `5683ff7b…`).
+
+**Bottom line**
+- **r26 B-1 is CLOSED.** All 56 recital-present cells from my r26 attacks A / B / E now hold (A 18, B 8, E 30). So do the 4 real-worker shapes. r27 has 0 W in those cells.
+- **r26 B-2 is CLOSED only for the exact shape I reported.** All 10 real-worker shapes now hold, and r27 has 0 W in my 1,728 recital-present attack-E cells.
+- **r27 is at least as safe as live r26.** Over 49,137 cells, n → p = 0 and c → w = 0.
+  - Every difference is a W → hold (548) or a placement → hold (326; 280 of them are r13 L-2 own-line placements under a misspelt recital, see L-1).
+  - The code makes this structural: every r27 change only widens the veto read at `placement.py:1393`, and that veto can only hold.
+  - **I recommend r27 replace live r26 now**, whatever happens with B-1 below.
+- **B-1 (blocking, pre-existing, not a regression): the B-2 fix depends on vocabulary.**
+  - A hidden signing rule whose name row reads `Nom:` or a bare `Pat Smith`, or whose stack has `Title:` (or `Fecha:`) instead of a `Date:` rule, is still invisible.
+  - Pat then takes the affiliate's line, `high`, on the real worker.
+  - Scope: 220 of 700 recital-present cells in my variant matrix (all also W in r26).
+  - A measured two-line widening (`cand27`, below) closes 130 of them with 0 cost on my ordinary documents and keeps r13 L-2 at 20/20 + 20/20.
+- **Cost on ordinary two-party documents:**
+  - **No extra stack:** 0 extra holds vs r26. That covers NDAs, NDAs with an exhibit, notice or guarantee page, and MSAs (Q2, F fine, added families, r24 matrices: all identical).
+  - **With a rule + `Name:` + `Date:` stack on another page:** extra holds appear only in a table-row exhibit layout, 44 + 24 cells (L-2).
+
+**Method: executed.**
+- **Isolation:**
+  - Interpreter: `/root/work/sign-product/send-venv/bin/python` only, with `sys.dont_write_bytecode` set and `OPENROUTER_API_KEY` / `PLACE_MODEL` popped.
+  - `httpx.Client.send` was patched to raise. **HTTP calls: 0 in every run.**
+  - Model-client mocks: 0 calls everywhere except attack E and the Q4 E rows. There r26 and r27 record identical Mock call counts (360 / 240 / 780), and my r26 run of the same generator recorded 600 per revision (N-2).
+- **Sources:**
+  - r27 is the on-disk file.
+  - r26 is `/root/worktrees/send-merge/backend/dealroom_sign/placement.py`, sha256 `5683ff7bfc5a…`. That equals the r26 hash in my r26 review and in Codex's `starting-hashes.json`.
+  - git is sandbox-blocked for `send-c1b` in this session (N-1). I did not run git through subprocess to get around that.
+  - Each revision was exec'd as its own in-memory module.
+- **Generators:** taken verbatim from my own r26 transcript (`counterparty-c2a-gate3-r26.jsonl`):
+  - attacks A–D: call 42;
+  - attack E: call 38;
+  - B-1 / B-2 worker shapes: calls 43 and 58;
+  - the `/tmp/rev19` families: call 54. Its `SRC` block was replaced with the two on-disk sources; nothing else changed.
+  - The r24 matrices come from `placement_r24_review_cases`.
+  - Q3 and Q4 are new matrices, written for this review.
+- **Oracle:** `rc.wrong_fields` (page, column, and the By/Date span).
+- **Tests run by me:** `test_placement_r13.py`, `test_placement_r26.py`, `test_placement_r26b.py` and `test_placement_r27.py`, with a scratch sqlite DB under /tmp: **5,718 passed, 0 failed**, in 366 s.
+  - Not run by me: the full suite (Codex: 52,424 / 0 / 0 / 0) and the goldens.
+
+## Answers
+
+1. **Shapes A, B, E and attack E re-run on r27. r26 B-1 is closed; B-2 is closed for the shape as reported.**
+   - **Real worker (`placement.place` on disk):** every case below is `needs_sender` / `ambiguous_identity` with 0 fields and 0 model calls, and worker output equals in-process.
+     - A, `Address:`-vetoed own block: 1 and 2 signers.
+     - B, shared name: `THE SUPPLIER` and `HL ANALYTICS` own blocks.
+     - B-2: `Executed by:` / `Authorised signatory:` / `Signatory:` / `Firma:` / `Unterschrift:`, each under both headings.
+     - In r26, all of these were `placed` on `HARBOR LIGHT GROUP, INC.`
+   - **Attacks A–D, exact call 42 (1,869 cells; columns r26 → r27):**
+
+     | Attack | Recital present | No recital |
+     | --- | --- | --- |
+     | A own-named + 2nd row | **W → n 18**, nn 462, pp 528 | WW 12 (L-2 evidence, as in r26), nn 252, pp 240 |
+     | B shared name, 2 signers | **W → n 8**, p → n 2, nn 18, pp 4 | WW 4, nn 11, pp 1 |
+     | B, Pat the only signer | WW 32 (name-authoritative, as in r26) | WW 16 |
+     | C notice blocks | nn 36 | nn 36 |
+     | D blank / name in affiliate | WW 28 (name-authoritative, as in r26), rest nn | WW 14, rest nn |
+
+   - **Attack E, exact call 38 (2,592 cells):**
+     - Affiliate cells with a recital (`parsed` / `address`): **W → n 60**, nn 720, pp 84. r27 W = 0.
+     - Affiliate cells without a recital: WW 40, the same as r26. This is the L-2 no-recital evidence I did not count in r26.
+     - The L-2 own-company line is identical between r26 and r27.
+
+2. **r27 vs live r26: n → p = 0 and c → w = 0 in every family I hold.**
+
+   | Family | Cells | r26 → r27 |
+   | --- | ---: | --- |
+   | A–D (call 42) | 1,869 | W → n 26 · p → n 2 · rest identical |
+   | Attack E (call 38) | 2,592 | W → n 60 · rest identical |
+   | r19 veto / affiliate + B1 / competition / L-1 boundary | 140 / 1,538 / 480 / 5,280 | identical |
+   | F fine (both) / added families | 6,912 / 4,756 | identical |
+   | `R24.BLOCKING` / `ATTACK` / `BOUNDARY` / Q2 matrix | 2,160 / 2,880 / 2,400 / 5,280 | identical |
+   | H-1 cross-page / r24 veto matrix | 2,160 / 1,260 | identical |
+   | Q3 B-2 variants | 700 | W → n 60 · rest identical |
+   | Q3 non-signing stacks | 5,376 | W → n 24 · p → n 44 · rest identical |
+   | Q4 r26c attacks: A / B / E affiliate / E own line | 390 / 156 / 1,404 / 1,404 | W → n 66 / 52 / 260 / 280 (L-1) · rest identical |
+
+   - **Totals:** 49,137 cells; 0 n → p, 0 c → w, 0 W → p.
+   - **Code check:**
+     - `unclaimed_cross_page` is read in one place only, `placement.py:1393`. That is after every signer is accepted, and it returns `hold(...)`.
+     - r27's three changes each widen it:
+       - `unclaimed_pages` gains peer pages;
+       - `recital_party` narrows the exemption, so `same` can only grow;
+       - `len(same) + hidden >= 2 and (hidden or ...)` is a superset of the old condition.
+     - `extract` only adds a list field and clears it after scoring. Scores and margins are unchanged.
+
+3. **Attacking the structural peer.**
+   - **Non-signing stacks, 5,376 cells.** Each page carries one rule + `Name:` row + `Date:` rule stack:
+     - Captions: `Attention:` / `Signature:` / `Witness:` / `Acknowledged:` / `Received by:` / `Employee Signature:` / `Notary Public:`.
+     - Name rows: blank, `Chris Jones`, `Pat Smith`, `Printed name: Lee Harbor`.
+     - Headings: none, `NOTICES:`, `WITNESS:`, `EXHIBIT A - ACKNOWLEDGMENT`.
+     - Placement: on the signature page, on an exhibit page, on the recital page, or as a two-column table row on an exhibit.
+     - Underneath is an ordinary two-party NDA or MSA, with or without a recital, and domain, explicit or both signers.
+
+     | Layout | r26 → r27 |
+     | --- | --- |
+     | Stack on the signature page / exhibit page / recital page | identical (nn 1,180 / 1,180 / 1,176; pp 56 / 44 / 48) |
+     | Two-column table row on an exhibit | **p → n 44** (all `Witness:`-captioned) · **W → n 24** · rest identical |
+
+     - **Wrong placements added by r27: 0.**
+     - 444 cells are WW in both revisions. In each, the stack prints `Name: Pat Smith` under `Attention:` / `Signature:` / `Acknowledged:` / `Received by:` and Pat's real block is unnamed. Name-authoritative policy, unchanged since r25; not counted.
+   - **Signing line with `Print name:` / `Nom:` / `Name (print):` / a bare name / `Name/Title:`, and blocks with `Title:` but no `Date:`:**
+     - 700 recital-present cells: 7 name rows × 4 tails × 5 captions × 2 headings × 2 signer sets.
+     - **220 WW**, all single-signer domain cells → **B-1**.
+     - `Print name:`, `Printed Name:`, `Name (print):` and `Name/Title:` are closed when a `Date:` rule follows. They stay open with `Title:` / `Fecha:` tails.
+     - `Nom:` is open with every tail.
+   - **Ordinary documents with no extra stack:** 0 extra holds. Q2, F fine, the added families, `ordinary none` and all four r24 matrices are identical to r26.
+
+4. **Attacking `r26c`: 0 wrong placements.**
+   - **Recitals tried (13):**
+     - `hla`;
+     - three spellings of the signer's own company (`HL Analytics, Inc.`, `Harbor Lite Analytics LLC`, `Harbor Light Analytics`);
+     - two recitals naming `Harbor Light Group, Inc.` as `Guarantor`, as a second `Recipient` and as `Affiliate`;
+     - two recitals with the misspelt one first;
+     - `three_quoted`, `signature_same`, `signature_hla`, `signature_nw` and `conflict_hla_nw`.
+   - Each was run on a recital page and on the signature page itself, with domain, explicit and both signers.
+   - **Shapes:** A (vetoed own named block), B (shared name) and E (L-2 stack + affiliate), plus E with the own-company line.
+   - **Results:**
+     - A: W → n 66.
+     - B: W → n 52.
+     - E affiliate: W → n 260.
+     - r27 W = 0 in all of A, B and E affiliate.
+   - **E own-company line (L-2 layout under a recital):**
+     - Where the recital spells the company differently from the line (`spell_hl`, `spell_lite`, `two_spell_first`) or names a different party (`signature_hla`, `signature_nw`, `conflict_hla_nw`, `two_hlg_recipient`), r27 holds 280 placements that r26 made (40 per recital) → L-1.
+     - `spell_noinc`, `hla`, `signature_same`, `three_quoted` and the guarantor/affiliate recitals are identical to r26.
+
+5. **Test files: CONFIRMED by file hashes, not by git (N-1).**
+   - Codex's `docs/implementation/c2a-r27/starting-hashes.json` records `backend/dealroom_sign/placement.py` = `5683ff7b…` (r26).
+   - All 81 test files in that snapshot have unchanged sha256 on disk, and none were deleted.
+   - The only new files are `placement_r27_review_cases.py` (56 lines) and `test_placement_r27.py` (48 lines). There are no `.pyc` files.
+   - Outside the tests and `docs/`, the only product difference from r26 is `placement.py`; I diffed the full file.
+
+## Blocking
+
+**B-1. The structural peer recognises only `NAME_CAPTION` + a `DATE` rule, so the B-2 path stays open for common signing stacks (pre-existing; r26 is identical).**
+- **Where:** `placement.py:616-646` (`unclaimed_signing_peers`).
+  - The name row must match `NAME_CAPTION` (`placement.py:114`). `Nom:` and a bare printed name do not.
+  - A rule with `semantic == 'DATE'` must follow within 125 pt. A stack ending in `Title:` (text or rule) or `Fecha:` has none.
+- **Effect:** with a recital naming Harbor Light Analytics as Recipient, Pat is the only signer (domain). Her real signing rule is invisible, the same-page guard has no peer, and Pat goes on the `HARBOR LIGHT GROUP, INC.` line with score 4, margin 4, `high`.
+  - With Dan + Pat as signers it holds.
+  - Execution blocks very often have no date line, so `Executed by: ____ / Name: Pat Smith / Title: CEO` is an ordinary shape.
+- **Scope:** 220 of 700 recital-present variant cells (WW: r26 and r27 both wrong). See Q3.
+- **Reproduction (real worker, on-disk r27):**
+  ```bash
+  /root/work/sign-product/send-venv/bin/python - <<'EOF'
+  import sys, os; sys.dont_write_bytecode = True
+  for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+  sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+  from unittest.mock import Mock, patch
+  from dealroom_sign import placement
+  from dealroom_sign.tests import placement_r24_review_cases as R24
+  rc = R24.rc; X = 72
+  def rows(cap, name, tail):
+      return [(240, 'FLEET TEST CO.', False, X), (270, 'By:', True, X), (300, 'Date:', True, X),
+              (340, 'For and on behalf of the Recipient', False, X), (370, cap, True, X), (382, name, False, X), tail,
+              (520, 'HARBOR LIGHT GROUP, INC.', False, X), (560, 'By:', True, X), (600, 'Date:', True, X)]
+  CASES = [('Executed by: + Name + Title text, no Date', rows('Executed by:', 'Name: Pat Smith', (394, 'Title: CEO', False, X))),
+           ('Authorised signatory: + Name + Title rule', rows('Authorised signatory:', 'Name: Pat Smith', (420, 'Title:', True, X))),
+           ('Signatory: + Nom + Date rule', rows('Signatory:', 'Nom: Pat Smith', (420, 'Date:', True, X))),
+           ('Firma: + bare name + Date rule', rows('Firma:', 'Pat Smith', (420, 'Date:', True, X))),
+           ('Unterschrift: + Name + Fecha rule', rows('Unterschrift:', 'Name: Pat Smith', (420, 'Fecha:', True, X)))]
+  with patch('httpx.Client.send', Mock(side_effect=AssertionError('http'))):
+      for name, rs in CASES:
+          r = placement.place(rc.pages_pdf([list(rc.RECITALS['parsed']), rs]), [dict(name='Pat Smith', email=rc.PE)], model_client=Mock())
+          print(name, '|', r['status'], [(f['type'], f['evidence']['line'], f['confidence']) for f in r['fields']])
+  EOF
+  ```
+  - **Expected:** Pat on the rule at y = 370, or a hold.
+  - **Observed (r27):** all five are `placed`, with SIGNATURE `[96.45, 560.0, 290.0]` and DATE `[105.9, 600.0, 290.0]`, both `high`. That is the affiliate line.
+- **Measured direction, not a fix: `cand27`.** It changes two lines of r27:
+  ```python
+          if not following or not (NAME_CAPTION.match(following[0]['text']) or person_text(following[0]['text'])):
+  ...
+          date_y = min((r.y for r in dates), default=line.y + 60)   # replaces `if not dates: continue` / `date = min(...)`
+          if any(line.y < r.y < date_y and r is not line
+  ```
+  - B-2 variants: 130 of the 220 W → hold, and 90 remain (mostly `Nom:`; a `Nom` / `Nombre` / `Name des Unterzeichners` vocabulary entry or a signer-name match would be needed).
+  - r13 L-2 exact fixtures: 20/20 placed at y = 560 with score 4, and 20/20 both-signer holds.
+  - Ordinary NDA / MSA, with and without a non-signing stack (`Attention:` / `Signature:` / `Witness:` / `Received by:` + `Name:` / `Chris Jones` + `Title:`): 324 cells, identical to r27.
+  - Not run on the full families or the suite.
+
+## Low
+
+**L-1. `r26c` holds r13 L-2 placements when the recital spells the signer's company differently from the signature-page line.**
+- 280 cells (40 per recital) in Q4 E own-line: `HL Analytics, Inc.`, `Harbor Lite Analytics LLC`, the misspelt-first two-recital case, and recitals naming another Recipient.
+- These were placed on the own-company line under the L-2 policy in r26; r27 holds them.
+- r13 L-2's exact fixtures (no recital) are unaffected: 20/20 + 20/20, and the pytest file passes.
+- These are holds that a human resolves, not wrong placements.
+
+**L-2. The structural peer costs holds on a two-column table-row exhibit.**
+- On an otherwise ordinary NDA or MSA, an exhibit page with a `Witness:` rule + `Name:` + `Date:` beside a `Phone:` rule + `Name:` + `Date:` makes every company-only placement in the document hold.
+  - That is the cross-page path: `unclaimed_pages` now includes any page with a peer.
+- 44 correct → hold of 1,344 table cells. The other three stack layouts add 0.
+- Acceptable as holds. It shows the peer test is page-wide and caption-blind, as designed.
+
+## Nits
+
+- **N-1:** I could not run `git -C /root/worktrees/send-c1b …`; the session sandbox only permits git in `dealroom-sign-edd`.
+  - Q5 is therefore answered by sha256 against Codex's `starting-hashes.json`, and r26 is taken from `send-merge` after a hash check.
+  - The worktree's `git status` was not checked by me. No `.pyc` files appear under `tests/`, and pytest ran with `-p no:cacheprovider`, `PYTHONDONTWRITEBYTECODE=1` and a /tmp scratch DB.
+- **N-2 (my r26 prose):** "Model calls: 0 in every cell" was wrong for attack E. My r26 run of call 38 recorded 600 Mock model-client calls per revision; r27 and r26 match each other today.
+  - HTTP was 0 throughout, so isolation holds. The calls are identical across revisions, so they do not affect any comparison.
+- **N-3:** `unclaimed_signing_peers` reads `r.label['rect']` with no default for DATE rules (`placement.py:635`), while the line above uses `.get('rect', ...)`. A DATE rule without a label rect would raise. That is a parse failure, so it would hold, not misplace. Consistency only.
+
+## Holds a human resolves (r27, my runs)
+
+| Run | Holds | Cells |
+| --- | ---: | ---: |
+| A–D (call 42) / attack E (call 38) | 990 / 2,100 | 1,869 / 2,592 |
+| r19 veto / affiliate + B1 / competition / L-1 boundary | 140 / 1,538 / 480 / 5,089 | 140 / 1,538 / 480 / 5,280 |
+| F fine / added families | 5,568 / 4,362 | 6,912 / 4,756 |
+| `BLOCKING` / `ATTACK` / `BOUNDARY` / Q2 matrix | 1,440 / 1,922 / 1,658 / 3,376 | 2,160 / 2,880 / 2,400 / 5,280 |
+| H-1 cross-page / r24 veto matrix | 1,386 / 796 | 2,160 / 1,260 |
+| Q3 B-2 variants / Q3 non-signing stacks | 480 / 4,784 | 700 / 5,376 |
+| Q4 A / B / E affiliate / E own line | 390 / 156 / 1,248 / 1,008 | 390 / 156 / 1,404 / 1,404 |
+| Real-worker shapes (B-1 r26 ×4, B-2 r26 ×10) | 14 | 14 |
+
+## Attacks that held (r27)
+
+- **r26 B-1 (exemption misuse):** 0 W in every recital-present cell, across 13 recital shapes, recitals on the signature page, two recitals and misspellings.
+- **r26 B-2 exact vocabulary:** 0 W with a recital, on the real worker and in 1,728 attack-E cells.
+- **Non-signing rule + `Name:` + `Date:` stacks** (notice, witness, exhibit acknowledgment, table row, recital page): r27 adds 0 wrong placements.
+- **r13 L-2 (immutable):** 20/20 placed + 20/20 holds in-process, and `test_placement_r13.py` passes.
+- **Monotonicity:** in code and in 49,137 cells, r27 never creates or moves a placement relative to r26.

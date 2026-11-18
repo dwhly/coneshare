@@ -1,0 +1,36 @@
+import sys, os, time, hashlib, inspect
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from collections import Counter
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+rc = R24.rc
+r26 = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(r26.encode()).hexdigest().startswith('5683ff7b')
+SRC = dict(r26=r26, r27=open(_p.__file__).read())
+def mk(n):
+    m = ModuleType('rev27m_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+print(inspect.signature(R24.cases.matrix), inspect.signature(R24.cross_page_matrix), inspect.signature(R24.veto_matrix))
+G = Counter(); calls = Counter(); t = time.time()
+http = Mock(side_effect=AssertionError('http'))
+def fams():
+    for name in ('BLOCKING', 'ATTACK', 'BOUNDARY', 'AFFILIATES'):
+        for args, pages, people, allowed in R24.cases.matrix(getattr(R24, name)):
+            yield name, pages, people, allowed
+    for x in R24.cross_page_matrix(): yield ('cross_page',) + tuple(x[-3:])
+    for x in R24.veto_matrix(): yield ('veto24',) + tuple(x[-3:])
+with patch('httpx.Client.send', http):
+    for fam, pages, people, allowed in fams():
+        pdf = rc.pages_pdf(pages); k = ''
+        for n, m in M.items():
+            mo = Mock(); r = in_process(m, pdf, people, mo); calls[n] += mo.call_count
+            k += 'W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n')
+        G[(fam, k)] += 1
+print('http', http.call_count, 'model', dict(calls), 'elapsed', round(time.time() - t))
+for x in sorted(G.items(), key=str): print(x)

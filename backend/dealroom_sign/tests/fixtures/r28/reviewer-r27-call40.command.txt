@@ -1,0 +1,18 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json, hashlib, os
+R = '/root/worktrees/send-c1b/'
+d = json.load(open(R + 'docs/implementation/c2a-r27/starting-hashes.json'))
+print('placement.py in snapshot', d.get('backend/dealroom_sign/placement.py', '')[:12])
+sha = lambda p: hashlib.sha256(open(R + p, 'rb').read()).hexdigest()
+snap = dict((k, v) for k, v in d.items() if k.startswith('backend/dealroom_sign/tests/'))
+disk = []
+for root, dirs, files in os.walk(R + 'backend/dealroom_sign/tests'):
+    dirs[:] = [x for x in dirs if x != '__pycache__']
+    for f in files: disk.append(os.path.relpath(os.path.join(root, f), R))
+changed = [k for k in snap if k in disk and sha(k) != snap[k]]
+missing = [k for k in snap if k not in disk]
+new = sorted(k for k in disk if k not in snap)
+print('snapshot test files', len(snap), 'on disk', len(disk)); print('changed', changed); print('deleted', missing); print('new', new)
+for k in new: print(k, sum(1 for _ in open(R + k)), 'lines')
+pyc = [k for k in disk if k.endswith('.pyc')]; print('pyc', pyc[:5])
+EOF

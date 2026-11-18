@@ -1,0 +1,20 @@
+wrapped 0
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r28/run_replays.py", line 34, in <module>
+    name, code = future.result()
+                 ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r28/run_replays.py", line 15, in run
+    with (OUT / (name + '-run.txt')).open('x') as log:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/root/worktrees/send-c1b/docs/implementation/c2a-r28/new-run.txt'

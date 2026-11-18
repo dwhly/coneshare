@@ -1,0 +1,13 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json, hashlib, os
+d = json.load(open('/root/worktrees/send-c1b/docs/implementation/c2a-r27/starting-hashes.json'))
+print(type(d), list(d)[:10] if isinstance(d, dict) else len(d))
+def walk(o, p=''):
+    if isinstance(o, dict):
+        for k, v in o.items(): yield from walk(v, p + '/' + str(k))
+    elif isinstance(o, list):
+        for i, v in enumerate(o): yield from walk(v, p + '[%d]' % i)
+    else: yield p, o
+hits = [(p, v) for p, v in walk(d) if 'tests' in p or (isinstance(v, str) and 'dealroom_sign/tests' in v)]
+print(len(hits)); print(hits[:8])
+EOF

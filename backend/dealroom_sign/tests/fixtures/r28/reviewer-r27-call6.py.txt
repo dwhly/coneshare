@@ -1,0 +1,8 @@
+import hashlib, difflib, os
+a='/root/worktrees/send-merge/backend/dealroom_sign/placement.py'; b='/root/worktrees/send-c1b/backend/dealroom_sign/placement.py'
+for p in (a,b): print(p, hashlib.sha256(open(p,'rb').read()).hexdigest())
+print(''.join(difflib.unified_diff(open(a).readlines(), open(b).readlines(), 'r26','r27', n=4)))
+ta='/root/worktrees/send-merge/backend/dealroom_sign/tests'; tb='/root/worktrees/send-c1b/backend/dealroom_sign/tests'
+A=set(os.listdir(ta)); B=set(os.listdir(tb))
+print('only r27:', sorted(B-A)); print('only merge:', sorted(A-B))
+print('differ:', [f for f in sorted(A&B) if f.endswith('.py') and open(os.path.join(ta,f),'rb').read()!=open(os.path.join(tb,f),'rb').read()])

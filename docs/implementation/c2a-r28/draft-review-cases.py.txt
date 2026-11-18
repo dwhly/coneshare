@@ -1,0 +1,86 @@
+"""Capture the exact Gate 3 r27 generators from test-local source fixtures."""
+from collections import Counter
+from contextlib import nullcontext
+import copy
+import inspect
+from itertools import product
+from pathlib import Path
+import time
+
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+from dealroom_sign.tests.test_placement_r8 import CAPTIONS
+
+rc = R24.rc
+FIXTURES = Path(__file__).with_name('fixtures') / 'r28'
+
+
+def captured(family):
+    call, start = {
+        'variants': (38, '    NAMES ='),
+        'ordinary': (38, '    # ordinary two-party'),
+        'stacks': (35, 'def stack('),
+        'recitals': (36, "F = 'This Agreement"),
+        'far_names': (33, 'X = 72;'),
+    }[family]
+    source = (FIXTURES / f'reviewer-r27-call{call}.py.txt').read_text()
+    body = source[source.index(start):]
+    if family == 'variants':
+        body = body[:body.index('    # ordinary two-party')]
+    if family in {'variants', 'ordinary'}:
+        # Keep the loop bytes intact, including their original indentation.
+        body = body.split("print('elapsed'", 1)[0]
+        body = 'if True:\n' + body
+    rows = []
+
+    def capture(pages, people, allowed):
+        local = inspect.currentframe().f_back.f_locals
+        axes = {key: copy.deepcopy(local[key]) for key in (
+            'nm', 'tail', 'cap', 'head', 'signer', 'where', 'recital', 'msa',
+            'rk', 'onsig', 'h', 'co', 'line', 'kind',
+        ) if key in local}
+        if family == 'recitals':
+            line = inspect.currentframe().f_back.f_lineno
+            prefix = '\n'.join(body.splitlines()[:line])
+            axes['group'] = max(('A', 'B', 'E'), key=lambda g: prefix.rfind('# ' + g + ':'))
+        rows.append((axes, copy.deepcopy(pages), copy.deepcopy(people), copy.deepcopy(allowed)))
+        return 'nn'
+
+    namespace = dict(R24=R24, rc=rc, TWO=TWO, CAPTIONS=CAPTIONS,
+                     run=capture, Counter=Counter, product=product, time=time,
+                     X=72, G=Counter(), calls=Counter(),
+                     http=type('NoCalls', (), {'call_count': 0})(),
+                     patch=lambda *a, **kw: nullcontext(), print=lambda *a, **kw: None)
+    # call38 builds PDFs inside its loop; preserve the original rows here.
+    namespace['rc'] = type('Rows', (), dict(
+        pages_pdf=staticmethod(lambda pages: pages), RECITALS=rc.RECITALS,
+        PE=rc.PE, DE=rc.DE))
+    exec(compile(body, f'reviewer-r27-call{call}.py.txt', 'exec'), namespace)
+    return rows
+
+
+def workers():
+    source = (FIXTURES / 'reviewer-r27-call34.py.txt').read_text()
+    body = source[source.index('def rows('):source.index('http = Mock(')]
+    namespace = dict(X=72)
+    exec(compile(body, 'reviewer-r27-call34.py.txt', 'exec'), namespace)
+    return [(name, [list(rc.RECITALS['parsed']), rows], [dict(name='Pat Smith', email=rc.PE)],
+             {rc.PE: (2, 0, 370, 612)}) for name, rows in namespace['CASES']]
+
+
+def extended():
+    for name, tail, caption, heading, both in product(
+        ('Nom: Pat Smith', 'Nombre: Pat Smith', 'Name des Unterzeichners: Pat Smith',
+         'Print name: Pat Smith', 'Name (print): Pat Smith', 'Pat Smith',
+         'Identité: Pat Smith'),
+        ('Title:', 'Its:', 'Fecha:', 'Datum:'), CAPTIONS,
+        ('For and on behalf of the Recipient', 'harbor light analytics, inc.'), (False, True),
+    ):
+        rows = [(240, 'FLEET TEST CO.', False, 72), (270, 'By:', True, 72),
+                (300, 'Date:', True, 72), (340, heading, False, 72),
+                (370, caption, True, 72), (382, name, False, 72),
+                (420, tail, True, 72), (520, 'HARBOR LIGHT GROUP, INC.', False, 72),
+                (560, 'By:', True, 72), (600, 'Date:', True, 72)]
+        pat = dict(name='Pat Smith', email=rc.PE)
+        yield (name, tail, caption, heading, both), [list(rc.RECITALS['parsed']), rows], (
+            [TWO[1], pat] if both else [pat]), {rc.PE: (2, 0, 370, 612), rc.DE: (2, 0, 270, 612)}

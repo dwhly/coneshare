@@ -1,0 +1,5 @@
+p = '/root/worktrees/dealroom-sign-edd/docs/edd/reviews/counterparty-c2a-gate3-r27.md'
+s = open(p).read()
+s = s.replace('`placement.py:615-647` (`unclaimed_signing_peers`)', '`placement.py:616-646` (`unclaimed_signing_peers`)').replace('(`placement.py:633`)', '(`placement.py:635`)')
+open(p, 'w').write(s)
+print(s.splitlines()[:2])

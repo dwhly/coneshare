@@ -1,0 +1,51 @@
+{
+  "part": "h1",
+  "cases": 2160,
+  "groups": {
+    "H1": {
+      "cases": 2160,
+      "r21_w": 90,
+      "r21_raw_wrong": 90,
+      "r26_n": 1386,
+      "r26_raw_wrong": 0,
+      "r27_n": 1386,
+      "r27_raw_wrong": 0,
+      "r28_n": 1386,
+      "r28_raw_wrong": 0,
+      "r21_to_r28_n_to_p": 0,
+      "r21_to_r28_c_to_w": 0,
+      "r21_to_r28_c_to_n": 624,
+      "r21_to_r28_w_to_n": 90,
+      "r26_to_r28_n_to_p": 0,
+      "r26_to_r28_c_to_w": 0,
+      "r26_to_r28_c_to_n": 0,
+      "r26_to_r28_w_to_n": 0,
+      "r27_to_r28_n_to_p": 0,
+      "r27_to_r28_c_to_w": 0,
+      "r27_to_r28_c_to_n": 0,
+      "r27_to_r28_w_to_n": 0,
+      "r21_n": 672,
+      "r21_c": 1398,
+      "r26_c": 774,
+      "r27_c": 774,
+      "r28_c": 774
+    }
+  },
+  "transitions": {
+    "H1": {
+      "w -> n -> n -> n": 90,
+      "n -> n -> n -> n": 672,
+      "c -> c -> c -> c": 774,
+      "c -> n -> n -> n": 624
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r26": "5683ff7bfc5a77b8a268198d689953c9fedc70b981ae83e64c7fb321f34a5c91",
+    "r27": "f26d989f0d09494086fb2158e7d6ab3eb4e5c2aaee55e2745a134bdef1fd0f20",
+    "r28": "e5dc8ef0c406b2e5e5fd22f91c7d7327bb80db185b658771f0fccb4eeead6733"
+  },
+  "archive_results_exact": true,
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

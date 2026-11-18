@@ -1,0 +1,13 @@
+import json
+P='counterparty-c2a-gate3-r26.jsonl'
+n=0
+for line in open(P):
+    try: o=json.loads(line)
+    except: continue
+    m=o.get('message') or {}
+    c=m.get('content') if isinstance(m,dict) else None
+    if not isinstance(c,list): continue
+    for x in c:
+        if isinstance(x,dict) and x.get('type')=='tool_use':
+            cmd=x['input'].get('command') or json.dumps(x['input'])[:200]
+            print(n, x['name'], len(cmd), repr(cmd[:110])); n+=1
