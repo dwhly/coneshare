@@ -1,0 +1,31 @@
+{
+  "returncodes": {
+    "extended": 0,
+    "ordinary": 0,
+    "variants": 0,
+    "stacks": 0,
+    "r27": 0,
+    "recitals": 0,
+    "workers": 0,
+    "notices": 0
+  },
+  "initial_returncodes": {
+    "extended": 1,
+    "ordinary": 0,
+    "variants": 0,
+    "stacks": 0,
+    "r27": 1,
+    "recitals": 0,
+    "workers": 0,
+    "notices": 0
+  },
+  "rechecked_families": [
+    "extended",
+    "r27"
+  ],
+  "reason": "Canonicalize tuple/list representation when comparing current generator axes with JSON archive axes; same exact cases and oracle.",
+  "recheck_returncodes": {
+    "extended": 0,
+    "r27": 0
+  }
+}

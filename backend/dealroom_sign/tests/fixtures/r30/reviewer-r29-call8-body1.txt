@@ -1,0 +1,3 @@
+import json,os,glob
+c=[p for p in ['/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r28.jsonl','/root/counterparty-c2a-gate3-r28.jsonl','/root/code/fleet/dealroom/counterparty-c2a-gate3-r28.jsonl'] if os.path.exists(p)]
+print(c)

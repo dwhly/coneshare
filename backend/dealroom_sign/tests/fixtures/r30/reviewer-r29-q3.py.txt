@@ -1,0 +1,11 @@
+import sys, hashlib
+s = open('/tmp/r29rev/call29.sh').read()
+body = s.split("<<'EOF'\n", 1)[1].rsplit('\nEOF', 1)[0]
+reps = [("startswith('f26d989f')", "startswith('e5dc8ef0')"),
+        ("SRC = dict(r27=live, r28=open(_p.__file__).read())",
+         "SRC = dict(r28=live, r29=open(_p.__file__).read())\nassert hashlib.sha256(SRC['r29'].encode()).hexdigest().startswith('866637df')")]
+for a, b in reps:
+    assert body.count(a) == 1, a
+    body = body.replace(a, b)
+print('Q3 columns: live r28 | r29', sys.argv[1:])
+exec(compile(body, 'q3', 'exec'), dict(__name__='__main__'))

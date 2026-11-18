@@ -1,0 +1,7 @@
+coder rc=0 head=0aa3cbbb1331b9416649bfcbdef14ed788cf7684
+failing-first: date matrix/workers 2848 passed, 6 failed, 0 errors, 0 skipped; frozen recovery outputs 0 passed, 686 failed, 0 errors, 0 skipped; r29 reproduces 686/2844 over-holds.
+shipped: VERSION c2a.30; Date-first companion band scales to two By/Date pitches, floor 22/cap 50; populated stacks and intervening signing rules retain 22. All 686 M-1 recoveries correct; 0 wrong in M-1, all 4482 H-1 cells, r27 700 and all 82450 inherited cells. Lows retained; nits verified.
+vs-live c2a.29: n->p=686, all correct M-1 recoveries; c->w=0, n->W=0. Vs c2a.28 and r21: n->p=0, c->w=0, n->W=0 in every measured family. Seven goldens exact except analysis_version.
+full-suite: 61598 passed, 0 failed, 0 errors, 0 skipped; completed without -x; every collected ID exactly once.
+test changes: only new files; 2 regression files, 1 capture adapter, exact reviewer fixtures and frozen correct baseline outputs; 3540 new test IDs. All 58058 old IDs and 4514 existing tracked files other than placement.py preserved by hashes. No existing tests, fixtures, evidence or done markers changed.
+blockers: none. No commit. See results-r30.md and release-bars.json. Retained historical named-party raw flags are unchanged and enumerated by family.

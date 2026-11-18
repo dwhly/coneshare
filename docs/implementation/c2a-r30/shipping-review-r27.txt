@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r30/replay_review_shipping.py", line 100, in <module>
+    main(sys.argv[1])
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r30/replay_review_shipping.py", line 61, in main
+    assert axes == prior['axes'] and index == prior['index']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,50 @@
+{
+  "part": "three_party",
+  "cases": 36,
+  "groups": {
+    "three_party": {
+      "cases": 36,
+      "r21_n": 18,
+      "r21_raw_wrong": 0,
+      "r28_n": 24,
+      "r28_raw_wrong": 0,
+      "r29_n": 24,
+      "r29_raw_wrong": 0,
+      "r30_n": 24,
+      "r30_raw_wrong": 0,
+      "r21_to_r30_n_to_p": 0,
+      "r21_to_r30_c_to_w": 0,
+      "r21_to_r30_c_to_n": 6,
+      "r21_to_r30_w_to_n": 0,
+      "r28_to_r30_n_to_p": 0,
+      "r28_to_r30_c_to_w": 0,
+      "r28_to_r30_c_to_n": 0,
+      "r28_to_r30_w_to_n": 0,
+      "r29_to_r30_n_to_p": 0,
+      "r29_to_r30_c_to_w": 0,
+      "r29_to_r30_c_to_n": 0,
+      "r29_to_r30_w_to_n": 0,
+      "r21_c": 18,
+      "r28_c": 12,
+      "r29_c": 12,
+      "r30_c": 12
+    }
+  },
+  "transitions": {
+    "three_party": {
+      "n -> n -> n -> n": 18,
+      "c -> c -> c -> c": 12,
+      "c -> n -> n -> n": 6
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r28": "e5dc8ef0c406b2e5e5fd22f91c7d7327bb80db185b658771f0fccb4eeead6733",
+    "r29": "866637df797137e74b748c85a644629edda206544a6bc8a3b685e31f1c29bae6",
+    "r30": "e55bf34554ebb97e9d678ded0d9e26892317a025807c88bc78b9bf07fc9a01d4"
+  },
+  "archive_results_exact": true,
+  "baseline_method": "immutable c2a.29 replay archive; baseline sources match git commits",
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r30/measure30.py", line 79, in <module>
+    main(sys.argv[1], sys.argv[2], sys.argv[3:])
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r30/measure30.py", line 52, in main
+    for index, (axes, pages, people, allowed) in enumerate(cells(family)):
+                                                           ^^^^^^^^^^^^^
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r30/measure30.py", line 34, in cells
+    return r30.captured(family)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r30_review_cases.py", line 45, in captured
+    exec(compile(body, f'reviewer-r29-{filename}.py.txt', 'exec'), namespace)
+  File "reviewer-r29-q3new.py.txt", line 59, in <module>
+IndexError: string index out of range

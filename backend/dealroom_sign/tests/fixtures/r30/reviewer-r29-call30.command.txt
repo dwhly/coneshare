@@ -1,0 +1,7 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import subprocess,time
+for w in ['sig_page_below','exhibit_page']:
+    t=time.time()
+    r=subprocess.run(['/root/work/sign-product/send-venv/bin/python','/tmp/r29rev/q3.py',w],capture_output=True,text=True,timeout=280,cwd='/tmp/r29rev')
+    print('#####',w,'rc',r.returncode,round(time.time()-t)); print(r.stdout[-3000:]); print(r.stderr[-1200:])
+EOF

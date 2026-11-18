@@ -47,7 +47,7 @@ ROLE_DESCRIPTION_WIDE = re.compile(
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.29'
+VERSION = 'c2a.30'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -721,13 +721,26 @@ def printed_name_boundary(block, blocks, texts, rules, roles):
         if any(min(line.y, y0) < t['rect'][1] < max(line.y, y0)
                for t in headings):
             return True
-        # A completed signature/date stack cannot absorb a later ruleless
-        # name. Keep the existing adjacent Name-after-Date companion band;
-        # beyond it, Date is a boundary even without a party heading.
-        if any(line.y < r.y < y0 - 22 and r.semantic == 'DATE'
-               and r.x1 > left and r.label.get('rect', [r.x0])[0] < line.x1
-               for r in rules):
-            return True
+        # A Date-first block may leave a blank row before its printed name.
+        # Scale that companion band to two By/Date row pitches, capped at
+        # 50 points for a blank row and an offset name. A completed stack or
+        # intervening signing rule retains the original 22-point boundary.
+        for date in rules:
+            if not (date.semantic == 'DATE' and line.y < date.y < y0 - 22
+                    and date.x1 > left
+                    and date.label.get('rect', [date.x0])[0] < line.x1):
+                continue
+            date_first = not any(
+                line.y < t['rect'][1] < date.y and t is not date.label
+                and t['rect'][0] < line.x1 and t['rect'][2] > left
+                for t in texts)
+            separate_rule = any(
+                line.y < r.y < y0 and r.semantic not in {'DATE', 'NAME', 'TITLE'}
+                and r.x1 > left and r.label.get('rect', [r.x0])[0] < line.x1
+                for r in rules)
+            band = max(22, min(50, 2 * (date.y - line.y))) if date_first and not separate_rule else 22
+            if date.y < y0 - band:
+                return True
     return False
 
 

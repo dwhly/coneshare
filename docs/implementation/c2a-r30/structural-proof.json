@@ -1,0 +1,12 @@
+{
+  "changed_top_level_nodes": [
+    "VERSION",
+    "printed_name_boundary"
+  ],
+  "source_sha256": "e55bf34554ebb97e9d678ded0d9e26892317a025807c88bc78b9bf07fc9a01d4",
+  "prior_column_heading_contact_checks_exact": true,
+  "score_assignment_model_geometry_validation_functions_exact": true,
+  "date_candidate_condition": "The new loop examines only dates satisfying the original 22-point crossing predicate and original column overlap.",
+  "relaxation": "band is always >= 22; it only increases for a Date-first stack without an intervening signing rule, to min(50, 2 * By/Date pitch).",
+  "consequence": "The changed predicate can only remove r29 holds. Results that were already placements cannot move. Correctness of newly released placements is separately checked against r28 and the unchanged geometry oracle in every measured family."
+}
