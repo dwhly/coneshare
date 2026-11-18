@@ -1,0 +1,11 @@
+s=open('/tmp/r29rev/inh.py').read()
+s=s.replace("startswith('866637df')\nlive","startswith('a8ad8dcc')\nlive",1)
+s=s.replace("assert hashlib.sha256(live.encode()).hexdigest().startswith('e5dc8ef0')\nf =","assert hashlib.sha256(live.encode()).hexdigest().startswith('866637df')\nf =")
+s=s.replace("""startswith('e5dc8ef0')",
+                      "SRC""","""startswith('866637df')",
+                      "SRC""")
+s=s.replace("""body = body.replace("startswith('5683ff7b')", "startswith('e5dc8ef0')")""","""body = body.replace("startswith('5683ff7b')", "startswith('866637df')")""")
+s=s.replace("live r28 (send-merge e5dc8ef0) | r29 (disk 866637df)","live c2a.29 (send-merge 866637df) | r31 (disk a8ad8dcc)")
+s=s.replace("'rev29k_'","'rev31k_'")
+assert 'e5dc8ef0' not in s, s
+open('/tmp/r31rev/inh.py','w').write(s); print(s[:900])

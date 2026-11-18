@@ -1,0 +1,46 @@
+import sys, os, hashlib
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+rc = R24.rc; X = 72
+live = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(live.encode()).hexdigest().startswith('866637df')
+assert hashlib.sha256(open(_p.__file__,'rb').read()).hexdigest().startswith('a8ad8dcc')
+SRC = dict(r28=live, r29=open(_p.__file__).read())
+def mk(n):
+    m = ModuleType('rev28q4e_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+G = Counter(); EX = Counter()
+MENTIONS = ['Attention: Pat Smith', 'cc: Pat Smith', 'Pat Smith, CEO', 'Copy to: Pat Smith, Harbor Light Analytics, Inc.', 'Name: Pat Smith']
+with patch('httpx.Client.send', Mock(side_effect=AssertionError('http'))):
+    for mention, dy, dx, fleetname, pat_page, recital, signer in product(MENTIONS, (60, 120, 300), (0, 268), ('none', 'blank', 'dan'), ('same_page_right', 'next_page'), ('parsed', 'none'), ('domain', 'explicit', 'both')):
+        fleet = [(240, 'FLEET TEST CO.', False, X), (270, 'By:', True, X, 290)] + dict(none=[], blank=[(282, 'Name:', False, X)], dan=[(282, 'Name: Dan Whaley', False, X)])[fleetname] + [(310, 'Date:', True, X, 290)]
+        note = [(310 + dy, mention, False, X + dx)]
+        hla = [(240, 'HARBOR LIGHT ANALYTICS, INC.', False, 340), (270, 'By:', True, 340, 560), (282, 'Name:', False, 340), (310, 'Date:', True, 340, 560)]
+        if pat_page == 'same_page_right':
+            if dx: continue
+            pages = [list(rc.RECITALS[recital]), fleet + hla + note]; allowed = (2, 330, 270, 560)
+        else:
+            pages = [list(rc.RECITALS[recital]), fleet + note, [(r[0], r[1], r[2], 72, 290) if r[2] else (r[0], r[1], r[2], 72) for r in hla]]; allowed = (3, 60, 270, 290)
+        pat = dict(name='Pat Smith', email=rc.PE)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        people = [TWO[1], pat] if signer == 'both' else [pat]
+        pdf = rc.pages_pdf(pages); k = ''
+        for n, m in M.items():
+            r = in_process(m, pdf, people, Mock())
+            k += 'W' if rc.wrong_fields(r, dict([(rc.PE, allowed), (rc.DE, (2, 60, 270, 290))])) else ('p' if r['fields'] else 'n')
+        G[(pat_page, k)] += 1
+        if 'W' in k: EX[(pat_page, k, mention, dy, dx, fleetname, signer)] += 1
+for x in sorted(G.items(), key=str): print(x)
+print(sorted(Counter((k[0], k[2]) for k in EX.elements()).items(), key=str))
+print(sorted(Counter((k[0], k[3], k[4], k[5]) for k in EX.elements()).items(), key=str))
+print(sorted(Counter((k[0], k[6]) for k in EX.elements()).items(), key=str))

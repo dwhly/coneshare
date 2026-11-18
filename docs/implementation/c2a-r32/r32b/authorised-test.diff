@@ -1,0 +1,17 @@
+diff --git a/backend/dealroom_sign/tests/test_placement_r30_recoveries.py b/backend/dealroom_sign/tests/test_placement_r30_recoveries.py
+index 7290ddb6..620c3b52 100644
+--- a/backend/dealroom_sign/tests/test_placement_r30_recoveries.py
++++ b/backend/dealroom_sign/tests/test_placement_r30_recoveries.py
+@@ -21,6 +21,10 @@ def test_every_r29_date_first_regression_recovers(index, axes, pages, people, al
+     model = Mock()
+     result = in_process(placement, review.rc.pages_pdf(pages), people, model)
+     assert not review.rc.wrong_fields(result, allowed), (axes, result)
+-    assert {k: v for k, v in result.items() if k != 'analysis_version'} == {
+-        k: v for k, v in expected.items() if k != 'analysis_version'}, (index, axes, result)
++    if axes['recital'] == 'none' and axes['signer'] in {'domain', 'both'}:
++        assert result['status'] == 'needs_sender', (index, axes, result)
++        assert result['fields'] == [], (index, axes, result)
++    else:
++        assert {k: v for k, v in result.items() if k != 'analysis_version'} == {
++            k: v for k, v in expected.items() if k != 'analysis_version'}, (index, axes, result)
+     model.assert_not_called()

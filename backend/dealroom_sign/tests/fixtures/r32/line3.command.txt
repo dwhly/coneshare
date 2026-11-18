@@ -1,0 +1,1 @@
+cd /root/worktrees/send-c1b && git log --oneline -3 && git diff 9a9196bf 8dd65f82 --stat && git diff 9a9196bf 8dd65f82 --stat -- backend/dealroom_sign/tests | tail -3; wc -l /root/worktrees/dealroom-sign-edd/docs/edd/reviews/counterparty-c2a-gate3-r30.md; ls /tmp/r30rev/

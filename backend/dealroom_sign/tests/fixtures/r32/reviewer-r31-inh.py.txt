@@ -1,0 +1,30 @@
+import sys, hashlib
+disk = open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(disk.encode()).hexdigest().startswith('a8ad8dcc')
+live = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(live.encode()).hexdigest().startswith('866637df')
+f = sys.argv[1]; sel = sys.argv[2] if len(sys.argv) > 2 else None
+s = open(f'/tmp/r28rev/{f}.sh').read()
+body = s.split("<<'EOF'\n", 1)[1].rsplit('\nEOF', 1)[0]
+if f == 'c59':
+    lines = body.split('\n')
+    i = next(k for k, l in enumerate(lines) if l.startswith('r27 = open(_p.__file__)'))
+    j = next(k for k, l in enumerate(lines) if l.startswith('SRC = dict(r27=r27, cand27=cand)'))
+    lines[i:j + 1] = ["live = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()",
+                      "assert hashlib.sha256(live.encode()).hexdigest().startswith('866637df')",
+                      "SRC = dict(r27=live, r28=open(_p.__file__).read())"]
+    body = '\n'.join(lines).replace('rev27k_', 'rev31k_')
+elif f != 'c26':
+    assert body.count("startswith('5683ff7b')") == 1, f
+    body = body.replace("startswith('5683ff7b')", "startswith('866637df')")
+if f == 'c45' and sel:
+    if sel == 'Q2':
+        body = body.replace("for name in ('BLOCKING', 'ATTACK', 'BOUNDARY'):", "for name in ():")
+    else:
+        body = body.replace("for name in ('BLOCKING', 'ATTACK', 'BOUNDARY'):", f"for name in ({sel!r},):")
+        body = body.replace("for args, pages, people, allowed in R24.cases.matrix(): yield 'Q2', pages, people, allowed", "pass")
+if f == 'c28' or f in ('c29', 'c30'):
+    pass
+print(f'{f} {sel or ""}: columns = live c2a.29 (send-merge 866637df) | r31 (disk a8ad8dcc); labels inside are stale')
+sys.argv = [f] + sys.argv[3:]
+exec(compile(body, f, 'exec'), dict(__name__='__main__'))

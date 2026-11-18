@@ -1,0 +1,8 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import os,hashlib,glob
+print(os.listdir('/tmp/r30rev'))
+for p in ['/root/worktrees/send-c1b/backend/dealroom_sign/placement.py','/root/worktrees/send-merge/backend/dealroom_sign/placement.py']:
+  s=open(p,'rb').read(); print(p,hashlib.sha256(s).hexdigest()[:8],[l for l in s.decode().splitlines() if l.startswith('VERSION')])
+print(sorted(os.listdir('/root/worktrees/send-c1b/docs/implementation'))[-6:])
+print(os.listdir('/root/worktrees/send-c1b/docs/implementation/c2a-r31') if os.path.exists('/root/worktrees/send-c1b/docs/implementation/c2a-r31') else None)
+"

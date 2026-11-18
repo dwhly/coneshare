@@ -1,0 +1,45 @@
+{
+  "head": "8dd65f82ae560c8563d29f16a0b3d4fad936d9e2",
+  "source_sha256": "a433e6f1a64a2300223c82be7948849b3752ce86482a797f5b4f5141b423361d",
+  "full_suite": {
+    "passed": 94488,
+    "failed": 200,
+    "errors": 0,
+    "skipped": 0
+  },
+  "totals": {
+    "cells": 170935,
+    "r29_wrong": 876,
+    "r29_placed": 26794,
+    "r29_model_calls": 1472,
+    "r32_wrong": 876,
+    "r32_placed": 28960,
+    "r32_model_calls": 1472,
+    "n_to_p": 2166,
+    "n_to_W": 0,
+    "c_to_w": 0,
+    "c_to_hold": 0,
+    "changed_output": 2166,
+    "wrong_unchanged_from_live": 876
+  },
+  "measurement_only": {
+    "cells": 5922,
+    "r29_wrong": 1764,
+    "r29_placed": 2322,
+    "r29_model_calls": 0,
+    "r32_wrong": 1764,
+    "r32_placed": 2322,
+    "r32_model_calls": 0,
+    "n_to_p": 0,
+    "n_to_W": 0,
+    "c_to_w": 0,
+    "c_to_hold": 0,
+    "changed_output": 0,
+    "wrong_unchanged_from_live": 1764
+  },
+  "zero_new_wrong": true,
+  "zero_absolute_wrong": false,
+  "all_old_tests_preserved": true,
+  "seven_goldens_exact": true,
+  "coder_rc": 1
+}

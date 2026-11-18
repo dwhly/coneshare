@@ -47,7 +47,7 @@ ROLE_DESCRIPTION_WIDE = re.compile(
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.31'
+VERSION = 'c2a.32'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -745,6 +745,8 @@ def printed_name_boundary(block, blocks, texts, rules, roles):
             if date.y < y0 - band:
                 return True
             block.extended_date_names.append((names, own_party))
+            # Match extraction's 110-point floor for unlabelled signing rules;
+            # header rules above that floor are not unclaimed signing stacks.
             block.unclaimed_date_rule = any(
                 r.y >= 110 and r.semantic not in COMPANION_SEMANTICS
                 and not any(b.line is r for b in blocks) for r in rules)
@@ -1050,6 +1052,21 @@ def unresolved_person(text, roles):
 
 def extended_date_names_owned(block, blocks, roles, signers):
     """Require party ownership before a name can cross the 22-point Date band."""
+    def company_key(value):
+        # Keep word boundaries and substantive words (including digits). Only
+        # trailing legal suffixes fold; a domain is not an explicit company.
+        parts = re.findall(r"[^\W_]+(?:['’-][^\W_]+)*", value.casefold())
+        legal = {'inc', 'incorporated', 'llc', 'llp', 'ltd', 'limited', 'co',
+                 'corp', 'corporation', 'company', 'gmbh', 'plc'}
+        while parts and parts[-1] in legal:
+            parts.pop()
+        return tuple(parts)
+
+    def heading_company(heading):
+        heading = (behalf_parts(heading) or ('', heading))[1]
+        key = heading.rstrip(': ').lower()
+        return roles.get(key, roles.get(key.removeprefix('the '), heading))
+
     for names, own_party in getattr(block, 'extended_date_names', ()):
         matched = [s for s in signers if tokens(s.get('name', '')) in names]
         if not matched:
@@ -1061,19 +1078,40 @@ def extended_date_names_owned(block, blocks, roles, signers):
         for signer in matched:
             domain = signer['email'].split('@')[-1].split('.')[0].lower()
             company = signer.get('company') or (domain if domain not in GENERIC_DOMAINS else '')
-            if not similarity(company, ' '.join(own_party)):
+            explicit = company_key(signer.get('company') or '')
+            heading = heading_company(block.heading)
+            own_key = company_key(heading)
+            mapped = {company_key(party): party for party in roles.values()
+                      if company_text(party)}
+            exact = bool(explicit and explicit == own_key)
+            recital_owned = own_key in mapped and (
+                explicit == own_key if explicit else similarity(company, mapped[own_key]))
+            if not (exact or recital_owned):
                 return False
-            mapped = {tuple(t for t in tokens(party) if t not in STOP)
-                      for party in roles.values() if company_text(party)}
-            if any(party != own_party and similarity(company, ' '.join(party))
-                   for party in mapped):
+            if any(party != own_key and similarity(company, value)
+                   for party, value in mapped.items()):
                 return False
             if block.unclaimed_date_rule:
                 return False
             for other in blocks:
-                if other is block or other.line.page != block.line.page or witness_block(other):
+                if other is block or witness_block(other):
                     continue
                 printed = printed_names(other, blocks)
+                if other.line.page != block.line.page:
+                    # A direct company heading is stronger than a mapped role;
+                    # exact words are stronger than the general domain hint.
+                    # Only unclaimed ruled blocks compete across pages here.
+                    other_heading = (behalf_parts(other.heading) or ('', other.heading))[1]
+                    direct = (behalf_parts(block.heading) or ('', block.heading))[1]
+                    other_exact = company_key(company) == company_key(other_heading)
+                    own_exact = company_key(company) == company_key(direct)
+                    if (not printed and other.line.kind in {'drawn', 'underscores'}
+                            and company_text(other_heading)
+                            and similarity(company, other_heading)
+                            and (other_exact and not own_exact
+                                 or not similarity(company, direct))):
+                        return False
+                    continue
                 if printed:
                     if any(name in printed for name in names):
                         return False

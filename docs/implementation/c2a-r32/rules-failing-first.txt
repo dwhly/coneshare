@@ -1,0 +1,23 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________ test_better_unclaimed_underscore_block_vetoes_expansion[False] ________
+dealroom_sign/tests/test_placement_r32_rules.py:23: in test_better_unclaimed_underscore_block_vetoes_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)
+________ test_better_unclaimed_underscore_block_vetoes_expansion[True] _________
+dealroom_sign/tests/test_placement_r32_rules.py:23: in test_better_unclaimed_underscore_block_vetoes_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r32/rules-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r32_rules.py::test_better_unclaimed_underscore_block_vetoes_expansion[False]
+FAILED dealroom_sign/tests/test_placement_r32_rules.py::test_better_unclaimed_underscore_block_vetoes_expansion[True]
+2 failed in 0.37s

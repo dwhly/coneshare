@@ -1,0 +1,25 @@
+{
+  "full_suite": {
+    "passed": 94488,
+    "failed": 200,
+    "errors": 0,
+    "skipped": 0
+  },
+  "totals": {
+    "cells": 170935,
+    "r29_wrong": 876,
+    "r29_placed": 26794,
+    "r29_model_calls": 1472,
+    "r32_wrong": 876,
+    "r32_placed": 28960,
+    "r32_model_calls": 1472,
+    "n_to_p": 2166,
+    "n_to_W": 0,
+    "c_to_w": 0,
+    "c_to_hold": 0,
+    "changed_output": 2166,
+    "wrong_unchanged_from_live": 876
+  },
+  "goldens": 7,
+  "preserved": 5249
+}

@@ -1,0 +1,6 @@
+{
+  "replace_all": false,
+  "file_path": "/tmp/r31rev/own.py",
+  "old_string": "    for key, pages, people, allowed in cases(fam):\n        pdf",
+  "new_string": "    for key, pages, people, allowed in cases(fam):\n        if len(sys.argv) > 2 and sys.argv[2] not in key: continue\n        pdf"
+}

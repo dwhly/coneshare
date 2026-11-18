@@ -1,0 +1,162 @@
+VERDICT: APPROVE-WITH-NITS
+Counts: blocking 0 · high 0 · medium 1 · low 0 · nit 2
+
+Scope: r31 on disk in `/root/worktrees/send-c1b` (`VERSION = 'c2a.31'`, `placement.py` sha256 `a8ad8dcc…`, equal to Codex's `docs/implementation/c2a-r31/shipping-source.py.txt`). I compared it with **live c2a.29** in `/root/worktrees/send-merge` (`VERSION = 'c2a.29'`, sha256 `866637df…`). The r30 → r31 `difflib` (against `c2a-r31/r30-source.py.txt`, `e55bf345` = the r30 I reviewed) is `placement.py` only:
+- `VERSION`;
+- two `SignatureBlock` fields (`extended_date_names`, `unclaimed_date_rule`);
+- the Date loop now records the widened-band names instead of accepting them (`placement.py:726-750`);
+- a new `extended_date_names_owned` (`placement.py:1050-1090`), called at the top of `prepare_blocks` (`placement.py:1095-1097`), which sets `printed_name_blocked` unless the ownership test passes;
+- a reset in the redaction loop.
+
+This matches the brief.
+
+**Bottom line**
+- **B-1 is closed.** My exact r30 attack matrix is identical to live r29 on all 18,432 cells in both directions, and the 36-case worker repro holds every case.
+- **vs live c2a.29, across every family I hold (80,439 matrix cells, plus 21 worker reproductions and the 12-gap date-first sweep):**
+  - **0 n → W and 0 c → w.**
+  - The only transition is n → p 686, which is exactly the M-1 set: correct, cell for cell the same as my r29 / r30 breakdown.
+- **The new Q3 ownership attacks (30,150 cells) give one non-blocking finding (M-1).**
+  - **Shape:** with no parsed recital, a printed signer's name in the widened band under an *affiliate-style* heading (`HARBOR LIGHT ANALYTICS HOLDINGS, LLC`, `HARBOR LIGHT GROUP, INC.`, `HARBORLIGHT, LLC`). The ownership test counts that heading as the signer's own company.
+  - **Count:** 576 n → p that my strict oracle scored as wrong.
+  - **Why I do not block:** live c2a.29 makes the *identical* placement for the same document when the name sits 16–20 pt below the Date rule (verified). This is the existing name-authoritative policy at a larger gap, not a new class of wrong signature.
+  - **If you rule that Pat may never be placed on an affiliate's heading:** this becomes blocking, with 576 cells.
+- **Every other Q3 n → p (2,124) is correct.**
+
+**Method: executed.**
+- **Isolation:** the only interpreter was `/root/work/sign-product/send-venv/bin/python`, with `sys.dont_write_bytecode` set, `OPENROUTER_API_KEY` / `PLACE_MODEL` popped, and `httpx.Client.send` patched to raise. **HTTP calls: 0 in every run. Model calls: equal in both columns (0, except the inherited c29 / c30 / c56 / g31 families, where they are equal and unchanged).**
+- **Revisions:** both are exec'd as in-memory modules, and every script asserts `866637df` (live) and `a8ad8dcc` (r31).
+- **Generators:**
+  - My r30 scripts were copied to `/tmp/r31rev/`. The only edits are the disk hash prefix and labels.
+  - **Column labels inside the g-scripts and the inherited scripts are stale:** `r28` / `r26` = live c2a.29, `r29` / `r27` = r31.
+  - The inherited families run through `/tmp/r31rev/inh.py` (my r29 `inh.py` with live `866637df` / disk `a8ad8dcc`).
+  - The new attacks are `/tmp/r31rev/own.py <family> [filter]`. The worker reproductions are `/tmp/r31rev/aff_repro.py` and `/tmp/r31rev/b1_close.py`.
+- **Oracle:** `rc.wrong_fields`, which checks page, column and By/Date span.
+- **Tests run by me:** `test_placement_r31.py`, `_ownership`, `_recital` and `_unclaimed`, with a scratch sqlite DB in a /tmp tempdir: **18,490 passed, 0 failed** (320 s).
+  - Not run by me: the full suite (Codex: 80,088 / 0 / 0 / 0), the goldens, or Codex's 82,450-cell inherited replay. I ran my own inherited families instead (below).
+
+## Answers
+
+1. **B-1: closed.**
+   - **`/tmp/r31rev/band.py plain` and `swap`** (9,216 cells each): both directions are `nn 8,448 · pp 768`, identical between live r29 and r31.
+     - The r30 nW 1,520 + 1,520 are now nn.
+     - r30's correct band recoveries (np 760 / 456) are also given up. That is the right trade.
+   - **`/tmp/r31rev/repro.py`** (real worker, pitch 24 / 30 / 40 × gap 24–54 × HLA block right or not): **36 / 36 `needs_sender` / `ambiguous_identity`**, with 0 fields and 0 model calls. Live r29 holds the same 36; r28 and r21 place them.
+
+2. **Is r31 at least as safe as live r29? Yes, on everything I hold. 0 n → W, 0 c → w.**
+
+   | Family | Cells | live c2a.29 → r31 |
+   | --- | ---: | --- |
+   | r30 B-1 band attack, plain + swap | 18,432 | identical |
+   | M-1 date-first (`q3new.py date`) | 2,844 | **n → p 686** (all correct; gap 12 / 20 / 30 → 68 / 102 / 516; both 202, domain 242, explicit 242; side 309, stacked 377) · nn 633 · pp 1,525 · 0 W |
+   | H-1 hidden / two-col / no-rule / geometry (g31 / g32 / g33 / g36) | 3,672 | identical (all nn) |
+   | H-1 ruleless name (g40) | 810 | identical (nn 558, pp 252) |
+   | Stray person text | 2,916 | identical (WW 12 = my r29 L-1 pre-existing class) |
+   | A–D (c35) | 1,869 | identical (WW 106 name-authoritative, pre-existing) |
+   | r27 B-2 700 (c53) | 700 | identical (nn 700) |
+   | Cross-page / r24 veto (c48) | 3,420 | identical |
+   | Attack E (c29 + c30) | 2,592 | identical (WW = L-2 controls, pre-existing) |
+   | c28 (parsed + none) | 1,728 | identical |
+   | B-2 subset / L-2 / ordinary (c59) | 900 | identical; L-2 20/20 placed, 20/20 both-signer held |
+   | Non-signing stacks (c55) | 5,376 | identical (WW 444 name-authoritative, pre-existing) |
+   | Q4 recitals A / B / E (c56) | 3,354 | identical (WW 120 E L-2 own line, pre-existing) |
+   | r19 veto / affiliate / competition / L-1 (c40) | 7,438 | identical |
+   | F fine / added (c41) | 11,668 | identical |
+   | BLOCKING / ATTACK / BOUNDARY / Q2 (c45) | 12,720 | identical |
+   | **Total** | **80,439** | n → p 686 (M-1, correct); everything else identical |
+
+   - **Real worker, on-disk r31** (`/tmp/r31rev/workers.py`): 21 / 21 `needs_sender` / `ambiguous_identity`, with 0 fields, 0 model calls, and worker == in-process.
+     - The r28 H-1 repro and its 15 variants: 16.
+     - The r27 B-1 shapes: 5.
+   - **Date-first gap sweep** (`/tmp/r31rev/datefirst.py`): r31 places 4 / 4 correct fields at every gap from 10 to 36 pt. The real worker at gap 24 is `placed`, with 4 fields.
+
+3. **Attacking the ownership test (`/tmp/r31rev/own.py`).**
+   - **Common geometry:** pitch 24 / 30 / 40 × gap 24 / 30 / 36 / 44 / 50 × name form `Name: X` / bare `X` / `X, CEO`.
+   - **Results, 30,150 cells in total:**
+
+   | Attack | Cells | live → r31 |
+   | --- | ---: | --- |
+   | Abbreviated / misspelled own heading (`HARBOR LITE…`, `HARBOUR LIGHT…`, `HLA, INC.`, `H.L. ANALYTICS`, `HARBOR LIGHT, INC.`, `HARBORLIGHT ANALYTICS INC.`, `HLA:` with an `("HLA")` recital, `Harbor Light Analytics`) × recital parsed / none / abbr × signer domain / explicit / both × Fleet block right or not | 6,480 | nn 5,652 · **n → p 828, all on Pat's own block (correct)** · 0 W. The misspellings / abbreviations without a mapping hold. |
+   | Sender block over Pat's name, Pat's block on the right under a misspelled / abbreviated heading | 1,080 | nn 1,080 |
+   | Role-only heading (`RECIPIENT:` / `DISCLOSER:` / `The Recipient:`) with the recital parsed or swapped; Pat's name in the band; other party none / right / below; plus `RECIPIENT:` over the sender's name | 2,610 | nn 2,034 · **n → p 576, every one where the role maps to HLA (correct)** · 0 W. Every role that maps to Fleet holds; `The Recipient:` holds. |
+   | Two signers from the same company (Pat + Chris @harborlight; top named Pat with Chris right named / blank; Chris's block on top with Pat's name in the band and Pat's block below, unheaded or headed; Pat's real block on the next page) | 1,350 | nn 1,074 · pp 60 · **n → p 216, Pat top + Chris right named (correct)** · 0 W |
+   | Name under a neighbouring column (Fleet-left / HLA-right; HLA-left / Fleet-right with the name drifting toward the other column; two-row grid) × name x 72–340 | 4,050 | nn 3,546 · **n → p 504, all to the column the name sits in (correct)** · 0 W |
+   | **Sender heading = the counterparty's affiliate** (`HARBOR LIGHT HOLDINGS / GROUP / CAPITAL / PARTNERS`, `HARBORLIGHT, LLC`, `HARBOR LIGHT ANALYTICS HOLDINGS, LLC`) × recital parsed / none / `aff` (affiliate = Discloser) × signer × Pat's block none / next page headed / next page role-only / next page unheaded / same page below unheaded / same page right headed | 14,580 | **n → p 576 (M-1)**, all with recital = none · the rest identical |
+
+   - **Holds:** same-page conflicts are vetoed, and any recital that maps HLA or the affiliate vetoes. `HOLDINGS` / `CAPITAL` / `PARTNERS` (generic suffix on the sender heading) hold everywhere.
+
+4. **Test tree: only new files (by hashes; git is sandbox-blocked, N-1).**
+   - Codex's `c2a-r31/starting-hashes.json` has 4,954 files, with `placement.py` = `e55bf345` = r30.
+   - Every non-`docs/` file is byte-identical on disk except `backend/dealroom_sign/placement.py`.
+   - All 321 test-tree files in the snapshot are unchanged.
+   - The 42 new files are `test_placement_r31.py`, `test_placement_r31_ownership.py`, `test_placement_r31_recital.py`, `test_placement_r31_unclaimed.py`, `placement_r31_review_cases.py`, and 37 files under `tests/fixtures/r31/`.
+
+## Medium
+
+**M-1. With no recital, the widened band adopts the signer's printed name under an affiliate-style heading (576 n → p vs live; not blocking).**
+- **Where:** `extended_date_names_owned`, `placement.py:1062-1083`.
+  - `similarity(company, ' '.join(own_party))` accepts:
+    - a joined sub-span (`harborlight` ≈ `HARBOR LIGHT GROUP`, `HARBORLIGHT, LLC`);
+    - a prefix sub-span (`Harbor Light Analytics, Inc.` ≈ `HARBOR LIGHT ANALYTICS HOLDINGS, LLC`).
+  - The competing-heading veto only looks at blocks on the same page (`other.line.page != block.line.page → continue`), and the mapped-party veto needs a recital.
+- **Shape (real worker):**
+  - **page 2:** `DISCLOSER:` / `HARBOR LIGHT ANALYTICS HOLDINGS, LLC` / `By:` y 200 / `Date:` y 230 / `Name: Pat Smith` y 260.
+  - **page 3:** `RECIPIENT:` / `HARBOR LIGHT ANALYTICS, INC.` / `By:` / `Date:`.
+  - **No recital.** Signer Pat, explicit company `Harbor Light Analytics, Inc.`.
+  - **r31:** `placed`, with Pat's SIGNATURE and DATE on page 2 (the Holdings lines, y 200 / 230). HLA's own page-3 block stays unsigned.
+  - **Live c2a.29:** `needs_sender` / `ambiguous_identity`.
+- **Sweep** (`/tmp/r31rev/aff_repro.py`):
+  - r31 places at gaps 24–42 (pitch 24) and 24–48 (pitch 30 / 40), whether HLA's block is on the next page, the previous page, or absent.
+  - It does so for HLAH (domain and explicit), HLG (domain) and `HARBORLIGHT, LLC` (domain). `HARBOR LIGHT HOLDINGS, LLC` holds.
+- **Why not blocking:**
+  - **Live c2a.29 places the identical documents at gap 16 and 20 pt.** That covers every head, every page order, and explicit company included: the name-authoritative policy inside 22 pt. r31 applies the same reading at 24–48 pt.
+  - The printed name is the signer's own, and the heading shares the signer's company name. This is not the B-1 pattern, where the heading named a different party (that case is held: `b1_close.py`, Fleet heading at gap ≥ 24 → `needs_sender` in both).
+  - **Recitals close it:** any parsed recital (parsed, or `aff` where the affiliate is the Discloser) vetoes, through the mapped-party check. So does any same-page competing block.
+- **Why it is still worth fixing:**
+  - r31 treats an unsigned `HARBOR LIGHT ANALYTICS, INC.` block as a veto on the same page, but not on the next page.
+  - An explicit company `Harbor Light Analytics, Inc.` is counted as owning `Harbor Light Analytics Holdings, LLC`.
+  - r31 also exists to be no less conservative than live beyond 22 pt.
+- **Counts:**
+  - By head: HLAH 288 (domain 144, explicit 144), HLG 144, `HARBORLIGHT, LLC` 144.
+  - By where Pat's block is: none 144, next page headed 144, next page role-only 144, next page unheaded 144.
+- **Suggested fix (hold-only):** in `extended_date_names_owned`, choose one of:
+  - require `tokens(company) == own_party` (or equal joined), and do not admit the sub-span / generic-suffix forms;
+  - or drop the same-page restriction in the unclaimed-heading veto.
+
+  Add these 576 cells as must-hold regressions.
+- **Reproduction:**
+  ```bash
+  /root/work/sign-product/send-venv/bin/python /tmp/r31rev/aff_repro.py one     # r31 worker placed p2 y200/230; live needs_sender
+  /root/work/sign-product/send-venv/bin/python /tmp/r31rev/aff_repro.py sweep   # gap 16-20: live places too; 24-48: only r31
+  /root/work/sign-product/send-venv/bin/python /tmp/r31rev/own.py affiliate_sender none   # nW 576 (oracle: Pat → her HLA block or nowhere)
+  /root/work/sign-product/send-venv/bin/python /tmp/r31rev/b1_close.py         # Fleet heading: both place at <=20, both hold at >=24
+  ```
+
+## Nits
+
+- **N-1:** git is sandbox-blocked for `send-c1b` again (`git -C … diff` was refused). So:
+  - Q4 was answered by sha256 against Codex's r31 `starting-hashes.json`.
+  - I reviewed the on-disk file (`a8ad8dcc`, equal to `shipping-source.py.txt`), not commit `8dd65f82` itself.
+- **N-2:** `unclaimed_date_rule` uses a bare `r.y >= 110` threshold (`placement.py:748`) with no comment. It presumably skips header rules, and should be named or explained.
+- **Disclosures:** the only files I wrote other than this review are scratch scripts in `/tmp/r31rev/`. No background work ran.
+
+## Holds a human resolves (r31, my runs)
+
+| Run | Holds | Cells |
+| --- | ---: | ---: |
+| B-1 band attack, plain / swap | 8,448 / 8,448 | 9,216 / 9,216 |
+| M-1 date-first | 633 | 2,844 |
+| H-1: hidden / two-col / no-rule / geometry / ruleless | 1,008 / 288 / 648 / 1,728 / 558 | 1,008 / 288 / 648 / 1,728 / 810 |
+| Stray person text | 2,758 | 2,916 |
+| Real workers (H-1 16, B-1 5) + r30 repro 36 | 57 | 57 |
+| Q3: misspell / misspell-sender / role / same-company / column | 5,652 / 1,080 / 2,034 / 1,074 / 3,546 | 6,480 / 1,080 / 2,610 / 1,350 / 4,050 |
+| Q3 affiliate-sender (per run; the `none` filter overlaps `pblock = none`) | parsed 4,410 · none-filter 5,454 · aff 4,410 | 4,860 · 6,480 · 4,860 |
+| Inherited families | unchanged from live (identical cells) | 47,867 |
+
+## Attacks that held (r31)
+
+- 0 W on the r30 B-1 matrix (18,432), all H-1 matrices (4,482) and the 21 worker reproductions.
+- Role-only headings that map to the other party, `The Recipient:`, and a role heading over the sender's printed name: all hold.
+- Two signers from one company: every cell is correct or held; Chris is never placed on Pat's printed block.
+- Names drifting into the neighbouring column follow the column they sit in. 0 W.
+- Misspelled / abbreviated own headings without a recital mapping hold; with a mapping (`("HLA")`) they place correctly.
+- Any recital naming HLA or the affiliate, and any same-page competing HLA block, vetoes the affiliate shape.

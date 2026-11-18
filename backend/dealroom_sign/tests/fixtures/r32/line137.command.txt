@@ -1,0 +1,1 @@
+cd /tmp/r31rev && timeout 560 /root/work/sign-product/send-venv/bin/python band.py plain 2>&1 | tail -20

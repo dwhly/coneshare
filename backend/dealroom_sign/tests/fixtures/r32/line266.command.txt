@@ -1,0 +1,7 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+for f in ['call00.sh','call29.sh','call35.sh','call41.sh','call45.sh','call53.sh' ]:
+    p='/tmp/r29rev/'+f
+    import os
+    if os.path.exists(p): print('=====',f); print(open(p).read()[:1500])
+print('=====inh'); print(open('/tmp/r29rev/inh.py').read()[:3000])
+EOF

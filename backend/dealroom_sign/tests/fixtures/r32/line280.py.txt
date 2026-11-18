@@ -1,0 +1,5 @@
+import os
+for f in sorted(os.listdir('/tmp/r29rev')):
+    if f.startswith('call'):
+        s=open('/tmp/r29rev/'+f).read()
+        if 'inh.py' in s or 'tests.py' in s: print(f, s.strip()[:300])

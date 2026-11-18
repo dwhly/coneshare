@@ -1,0 +1,1 @@
+git -C /root/worktrees/send-c1b log --oneline -3; git -C /root/worktrees/send-c1b diff 9a9196bf 8dd65f82 --stat -- backend/dealroom_sign/tests | tail -3; ls /tmp/r30rev/; ls /root/worktrees/send-merge/backend/dealroom_sign/placement.py

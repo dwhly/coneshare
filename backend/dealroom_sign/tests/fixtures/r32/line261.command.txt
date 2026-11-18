@@ -1,0 +1,7 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import os
+for d in ['/tmp/r29rev','/tmp/r28rev','/tmp/r27rev']:
+    print(d, sorted(os.listdir(d)) if os.path.exists(d) else None)
+s=open('/root/worktrees/dealroom-sign-edd/docs/edd/reviews/counterparty-c2a-gate3-r29.md').read().splitlines()
+print('\n'.join(s[52:75]))
+EOF

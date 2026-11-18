@@ -1,0 +1,5 @@
+import subprocess,time
+for sel in ['BLOCKING','ATTACK']:
+    t=time.time()
+    r=subprocess.run(['/root/work/sign-product/send-venv/bin/python','/tmp/r31rev/inh.py','c45',sel],capture_output=True,text=True,timeout=280,cwd='/tmp/r31rev')
+    print('#####',sel,round(time.time()-t),r.returncode); print(r.stdout[-1500:]); print(r.stderr[-800:])

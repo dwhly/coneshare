@@ -1,0 +1,7 @@
+import os,re
+os.makedirs('/tmp/r31rev',exist_ok=True)
+for f in sorted(os.listdir('/tmp/r30rev')):
+    s=open('/tmp/r30rev/'+f).read()
+    print(f, 'e55bf345' in s, '866637df' in s, 'c2a-r30' in s, len(s))
+    s=s.replace('e55bf345','a8ad8dcc').replace("r30=","r31=").replace("SRC['r30']","SRC['r31']").replace('r30 worker','r31 worker')
+    open('/tmp/r31rev/'+f,'w').write(s)

@@ -1,0 +1,9 @@
+Archived audit: 170935 release cells; 5922 measurement cells
+Fresh review/date 686
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r32/r32b/audit_outcomes.py", line 224, in <module>
+    main()
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r32/r32b/audit_outcomes.py", line 168, in main
+    assert axes == archived['axes']
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

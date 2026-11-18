@@ -1,0 +1,5 @@
+import subprocess,time
+for f in ['c35','c53','c48','c29','c30','c59']:
+    t=time.time()
+    r=subprocess.run(['/root/work/sign-product/send-venv/bin/python','/tmp/r31rev/inh.py',f],capture_output=True,text=True,timeout=500,cwd='/tmp/r31rev')
+    print('#####',f,round(time.time()-t),r.returncode); print(r.stdout[-2200:]); print(r.stderr[-800:])

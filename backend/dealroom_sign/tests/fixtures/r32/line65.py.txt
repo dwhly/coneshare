@@ -1,0 +1,7 @@
+import re
+s=open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read().splitlines()
+def show(pat,n=30):
+    for i,l in enumerate(s):
+        if re.match(pat,l):
+            print('\n'.join(f'{j+1}: {s[j]}' for j in range(i,min(i+n,len(s))))); print('----')
+show(r'def printed_name_evidence',45); show(r'def printed_names\b',15); show(r'def score',60); show(r'def name_match|def name_tokens|def same_name',20)

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="9" skipped="0" tests="12" time="0.492" timestamp="2026-11-18T16:12:59.509439" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[HARBOR LIGHT ANALYTICS, LLC-Harbor Light Analytics, Inc.-placed]" time="0.016" /><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[Harbor Light Analytics-HARBOR LIGHT ANALYTICS, INC.-placed]" time="0.010" /><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[HARBORLIGHT ANALYTICS, INC.-Harbor Light Analytics, Inc.-needs_sender]" time="0.010"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert 'placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed">dealroom_sign/tests/test_placement_r32_ownership.py:28: in test_exact_normalized_company_without_recital
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert 'placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[HARBOR LIGHT ANALYTICS HOLDINGS, LLC-Harbor Light Analytics, Inc.-needs_sender]" time="0.010"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert 'placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed">dealroom_sign/tests/test_placement_r32_ownership.py:28: in test_exact_normalized_company_without_recital
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert 'placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[HARBORLIGHT, LLC--needs_sender]" time="0.010"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert 'placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed">dealroom_sign/tests/test_placement_r32_ownership.py:28: in test_exact_normalized_company_without_recital
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert 'placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[HARBOR LIGHT ANALYTICS, INC.--needs_sender]" time="0.010"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert 'placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed">dealroom_sign/tests/test_placement_r32_ownership.py:28: in test_exact_normalized_company_without_recital
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert 'placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[HARBOR LIGHT ANALYTICS, INC.-Harbor of Light Analytics, Inc.-needs_sender]" time="0.010"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert 'placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed">dealroom_sign/tests/test_placement_r32_ownership.py:28: in test_exact_normalized_company_without_recital
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 10, 'score': 10, ......ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert 'placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_exact_normalized_company_without_recital[HARBOR LIGHT ANALYTICS 2, INC.-Harbor Light Analytics 3, Inc.-needs_sender]" time="0.010" /><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion[False-False]" time="0.018"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r32_ownership.py:49: in test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion[False-True]" time="0.018"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r32_ownership.py:49: in test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion[True-False]" time="0.017"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r32_ownership.py:49: in test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_ownership" name="test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion[True-True]" time="0.018"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r32_ownership.py:49: in test_better_unclaimed_company_heading_on_any_page_vetoes_role_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase></testsuite></testsuites>

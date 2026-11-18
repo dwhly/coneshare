@@ -1,0 +1,13 @@
+import json
+calls=[]
+for line in open('/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r29.jsonl'):
+    try: d=json.loads(line)
+    except: continue
+    m=d.get('message') if isinstance(d,dict) else None
+    c=m.get('content') if isinstance(m,dict) else None
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use': calls.append(b)
+for i,b in enumerate(calls):
+    cmd=b['input'].get('command','')
+    if 'inh.py' in cmd or 'tests.py' in cmd: print(i, cmd[:250])

@@ -1,0 +1,9 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import re
+s=open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read().splitlines()
+def show(pat,n=30):
+    for i,l in enumerate(s):
+        if re.match(pat,l):
+            print('\n'.join(f'{j+1}: {s[j]}' for j in range(i,min(i+n,len(s))))); print('----')
+show(r'def similarity',25); show(r'def tokens',8); show(r'def company_text',15); show(r'def printed_name_boundary',60)
+EOF

@@ -1,0 +1,39 @@
+import sys, os, hashlib
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+rc = R24.rc
+print(placement.VERSION, hashlib.sha256(open(placement.__file__, 'rb').read()).hexdigest()[:8])
+src = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(src.encode()).hexdigest().startswith('866637df')
+live = ModuleType('live29'); live.__file__ = placement.__file__; sys.modules['live29'] = live
+exec(compile(src, 'live29', 'exec'), live.__dict__)
+http = Mock(side_effect=AssertionError('http'))
+def doc(head, p, g, own, order='aff_first'):
+    aff = [(150, 'DISCLOSER:', False, 72), (162, head, False, 72), (200, 'By:', True, 72, 272),
+           (200 + p, 'Date:', True, 72, 272), (200 + p + g, 'Name: Pat Smith', False, 72)]
+    hla = [(150, 'RECIPIENT:', False, 72), (162, 'HARBOR LIGHT ANALYTICS, INC.', False, 72),
+           (200, 'By:', True, 72, 272), (230, 'Date:', True, 72, 272)]
+    pages = [[]] + ([aff, hla] if order == 'aff_first' else [hla, aff]) if own else [[], aff]
+    return rc.pages_pdf(pages)
+PAT_X = dict(name='Pat Smith', email=rc.PE, company='Harbor Light Analytics, Inc.')
+PAT_D = dict(name='Pat Smith', email=rc.PE)
+with patch('httpx.Client.send', http):
+    for head, pat in [('HARBOR LIGHT ANALYTICS HOLDINGS, LLC', PAT_X), ('HARBOR LIGHT ANALYTICS HOLDINGS, LLC', PAT_D),
+                      ('HARBOR LIGHT GROUP, INC.', PAT_D), ('HARBORLIGHT, LLC', PAT_D), ('HARBOR LIGHT HOLDINGS, LLC', PAT_D)]:
+        for order in ('aff_first', 'hla_first'):
+            for p in (24, 30, 40):
+                row = []
+                for g in (16, 20, 24, 30, 36, 42, 48, 54):
+                    pdf = doc(head, p, g, True, order)
+                    mo = Mock(); r = placement.place(pdf, [pat], model_client=mo)
+                    l = in_process(live, pdf, [pat], Mock())
+                    where = sorted({(f['page'], f['evidence']['line'][1]) for f in r['fields']})
+                    row.append(f"g{g}:{r['status'][:6]}{where if where else ''}/live:{l['status'][:6]}{'+' if l['fields'] else ''}/m{mo.call_count}")
+                print(head[:24], 'explicit' if 'company' in pat else 'domain', order, 'p', p, ' '.join(row))
+print('http', http.call_count)

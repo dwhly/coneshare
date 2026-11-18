@@ -1,0 +1,7 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+p='/root/worktrees/dealroom-sign-edd/docs/edd/reviews/counterparty-c2a-gate3-r31.md'; s=open(p).read()
+a='That covers every head, every page order, and explicit company included:'
+assert s.count(a)==1
+s=s.replace(a,'That covers every affected head (HLAH, HLG, `HARBORLIGHT, LLC`), every page order, and explicit company included:')
+open(p,'w').write(s); print(s.splitlines()[0]); print(s.splitlines()[1])
+EOF

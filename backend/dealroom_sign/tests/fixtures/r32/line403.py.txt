@@ -1,0 +1,8 @@
+import sys; sys.dont_write_bytecode=True
+sys.path.insert(0,'/root/worktrees/send-c1b/backend')
+from dealroom_sign.tests import placement_r24_review_cases as R24
+import inspect
+rc=R24.rc; print(rc.__name__, rc.PE, rc.DE)
+for k,v in rc.RECITALS.items(): print(k, v)
+print(inspect.getsource(rc.wrong_fields)); print(inspect.getsource(rc.pages_pdf)[:1500])
+from dealroom_sign.tests.test_placement import TWO; print(TWO)

@@ -1,0 +1,54 @@
+{
+  "copied": [
+    {
+      "generator": "band",
+      "body_sha256": "a08a78bd04de2f06e60b1207451165471c2209f332ed7fc263e93f854d9d21e2",
+      "prior_frozen_fixture": "r31/reviewer-r30-band.py.txt",
+      "equal": true
+    },
+    {
+      "generator": "q3new",
+      "body_sha256": "c3dd31352c7b33336b3eb2cc35eec5750155dd16b36fb6152fc717ce9844993d",
+      "prior_frozen_fixture": "r31/reviewer-r30-q3new.py.txt",
+      "equal": true
+    },
+    {
+      "generator": "stray",
+      "body_sha256": "a5f6a85696be9de57e0d2d66ba0a4aedee1c12ec22fe5e3b4f847f3f3d038d40",
+      "prior_frozen_fixture": "r31/reviewer-r30-stray.py.txt",
+      "equal": true
+    },
+    {
+      "generator": "g31",
+      "body_sha256": "d5e62154d08855fc75a5f8c09b89f81f4888829511222646e9d044a7ec2e0dc9",
+      "prior_frozen_fixture": "r31/reviewer-r30-g31.py.txt",
+      "equal": true
+    },
+    {
+      "generator": "g32",
+      "body_sha256": "ea535b4d5c8cfd76648df0dc066589678667f00077afbee9b74752fef6e7da50",
+      "prior_frozen_fixture": "r31/reviewer-r30-g32.py.txt",
+      "equal": true
+    },
+    {
+      "generator": "g33",
+      "body_sha256": "52f4453fe95ed20fe872afc2fdf726b83bf518c63a9948f2eef87ab9cc30ec86",
+      "prior_frozen_fixture": "r31/reviewer-r30-g33.py.txt",
+      "equal": true
+    },
+    {
+      "generator": "g36",
+      "body_sha256": "f4b254611eaff434781d3ada4621e3415a6cc967ba4e401da9ed9bd46e686a55",
+      "prior_frozen_fixture": "r31/reviewer-r30-g36.py.txt",
+      "equal": true
+    },
+    {
+      "generator": "g40",
+      "body_sha256": "6db3ff9767ffde92fe6f10221a81d610d9d667fab9870072748b2b67411f7d4d",
+      "prior_frozen_fixture": "r31/reviewer-r30-g40.py.txt",
+      "equal": true
+    }
+  ],
+  "own_generator_exact": true,
+  "earlier_h1_fixture_note": "The r30 reviewer copy omits the terminal newline present in r28 heredoc fixtures; loop bytes unchanged."
+}

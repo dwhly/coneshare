@@ -1,0 +1,96 @@
+{
+  "part": "workers24",
+  "cases": 5,
+  "groups": {
+    "b1": {
+      "cases": 2,
+      "r21_n": 2,
+      "r21_raw_wrong": 0,
+      "r28_n": 2,
+      "r28_raw_wrong": 0,
+      "r29_n": 2,
+      "r29_raw_wrong": 0,
+      "r32_n": 2,
+      "r32_raw_wrong": 0,
+      "r21_to_r32_n_to_p": 0,
+      "r21_to_r32_c_to_w": 0,
+      "r21_to_r32_c_to_n": 0,
+      "r21_to_r32_w_to_n": 0,
+      "r28_to_r32_n_to_p": 0,
+      "r28_to_r32_c_to_w": 0,
+      "r28_to_r32_c_to_n": 0,
+      "r28_to_r32_w_to_n": 0,
+      "r29_to_r32_n_to_p": 0,
+      "r29_to_r32_c_to_w": 0,
+      "r29_to_r32_c_to_n": 0,
+      "r29_to_r32_w_to_n": 0
+    },
+    "b2": {
+      "cases": 2,
+      "r21_n": 2,
+      "r21_raw_wrong": 0,
+      "r28_n": 2,
+      "r28_raw_wrong": 0,
+      "r29_n": 2,
+      "r29_raw_wrong": 0,
+      "r32_n": 2,
+      "r32_raw_wrong": 0,
+      "r21_to_r32_n_to_p": 0,
+      "r21_to_r32_c_to_w": 0,
+      "r21_to_r32_c_to_n": 0,
+      "r21_to_r32_w_to_n": 0,
+      "r28_to_r32_n_to_p": 0,
+      "r28_to_r32_c_to_w": 0,
+      "r28_to_r32_c_to_n": 0,
+      "r28_to_r32_w_to_n": 0,
+      "r29_to_r32_n_to_p": 0,
+      "r29_to_r32_c_to_w": 0,
+      "r29_to_r32_c_to_n": 0,
+      "r29_to_r32_w_to_n": 0
+    },
+    "h1": {
+      "cases": 1,
+      "r21_n": 1,
+      "r21_raw_wrong": 0,
+      "r28_n": 1,
+      "r28_raw_wrong": 0,
+      "r29_n": 1,
+      "r29_raw_wrong": 0,
+      "r32_n": 1,
+      "r32_raw_wrong": 0,
+      "r21_to_r32_n_to_p": 0,
+      "r21_to_r32_c_to_w": 0,
+      "r21_to_r32_c_to_n": 0,
+      "r21_to_r32_w_to_n": 0,
+      "r28_to_r32_n_to_p": 0,
+      "r28_to_r32_c_to_w": 0,
+      "r28_to_r32_c_to_n": 0,
+      "r28_to_r32_w_to_n": 0,
+      "r29_to_r32_n_to_p": 0,
+      "r29_to_r32_c_to_w": 0,
+      "r29_to_r32_c_to_n": 0,
+      "r29_to_r32_w_to_n": 0
+    }
+  },
+  "transitions": {
+    "b1": {
+      "n -> n -> n -> n": 2
+    },
+    "b2": {
+      "n -> n -> n -> n": 2
+    },
+    "h1": {
+      "n -> n -> n -> n": 1
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r28": "e5dc8ef0c406b2e5e5fd22f91c7d7327bb80db185b658771f0fccb4eeead6733",
+    "r29": "866637df797137e74b748c85a644629edda206544a6bc8a3b685e31f1c29bae6",
+    "r32": "a433e6f1a64a2300223c82be7948849b3752ce86482a797f5b4f5141b423361d"
+  },
+  "archive_results_exact": true,
+  "baseline_method": "immutable c2a.29 replay archive; baseline sources match git commits",
+  "external_http_calls": 0,
+  "worker_evaluations": 5
+}

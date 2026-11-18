@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.371" timestamp="2026-11-18T16:16:03.581013" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r32_rules" name="test_better_unclaimed_underscore_block_vetoes_expansion[False]" time="0.028"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r32_rules.py:23: in test_better_unclaimed_underscore_block_vetoes_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r32_rules" name="test_better_unclaimed_underscore_block_vetoes_expansion[True]" time="0.020"><failure message="AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}&#10;assert ('placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed)">dealroom_sign/tests/test_placement_r32_rules.py:23: in test_better_unclaimed_underscore_block_vetoes_expansion
+    assert result['status'] == 'needs_sender' and not result['fields'], result
+E   AssertionError: {'analysis_version': 'c2a.31', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 6, 'score': 10, ...}...ate:'}], 'line': [105.9, 230.0, 272.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert ('placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed)</failure></testcase></testsuite></testsuites>

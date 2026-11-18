@@ -1,0 +1,5 @@
+import difflib,hashlib
+d='/root/worktrees/send-c1b/docs/implementation/c2a-r31/'
+a=open(d+'r30-source.py.txt').read(); b=open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read()
+print(hashlib.sha256(a.encode()).hexdigest()[:8], hashlib.sha256(open(d+'shipping-source.py.txt','rb').read()).hexdigest()[:8])
+print(''.join(difflib.unified_diff(a.splitlines(1),b.splitlines(1),n=4)))

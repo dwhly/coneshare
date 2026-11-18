@@ -1,0 +1,28 @@
+{
+  "family": "geometry",
+  "cases": 1728,
+  "counts": {
+    "r29_n": 1728,
+    "r29_model_calls": 0,
+    "r31_n": 1728,
+    "r31_model_calls": 0,
+    "r32_n": 1728,
+    "r32_model_calls": 0,
+    "r29_to_r29_nn": 1728,
+    "r29_to_r31_nn": 1728,
+    "r29_to_r32_nn": 1728,
+    "r31_to_r29_nn": 1728,
+    "r31_to_r31_nn": 1728,
+    "r31_to_r32_nn": 1728,
+    "r32_to_r29_nn": 1728,
+    "r32_to_r31_nn": 1728,
+    "r32_to_r32_nn": 1728
+  },
+  "external_http_calls": 0,
+  "oracle": "unadjusted rc.wrong_fields; no policy exceptions",
+  "source_sha256": {
+    "r29": "866637df797137e74b748c85a644629edda206544a6bc8a3b685e31f1c29bae6",
+    "r31": "a8ad8dcc098f3416e46cc519bddf2414fd780fcab48d5ce8fd413f6b1be13566",
+    "r32": "a433e6f1a64a2300223c82be7948849b3752ce86482a797f5b4f5141b423361d"
+  }
+}

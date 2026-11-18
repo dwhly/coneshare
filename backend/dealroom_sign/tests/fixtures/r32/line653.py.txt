@@ -1,0 +1,5 @@
+import json, hashlib, os
+D='/root/worktrees/send-c1b/'
+I=D+'docs/implementation/c2a-r31/'
+for name in ['starting-hashes.json','frozen-tests-hashes.json']:
+    h=json.load(open(I+name)); print(name, type(h).__name__, len(h), list(h.items())[:1] if isinstance(h,dict) else h[:1])

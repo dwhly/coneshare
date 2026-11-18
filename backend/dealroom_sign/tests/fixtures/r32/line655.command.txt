@@ -1,0 +1,21 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json, hashlib, os
+D='/root/worktrees/send-c1b/'
+I=D+'docs/implementation/c2a-r31/'
+h=json.load(open(I+'starting-hashes.json'))
+sha=lambda p: hashlib.sha256(open(D+p,'rb').read()).hexdigest()
+print('starting placement.py', h.get('backend/dealroom_sign/placement.py','')[:8])
+T='backend/dealroom_sign/tests'
+diff=[p for p in h if not p.startswith('docs/') and os.path.exists(D+p) and sha(p)!=h[p]]
+missing=[p for p in h if not p.startswith('docs/') and not os.path.exists(D+p)]
+print('changed non-docs', diff); print('missing non-docs', missing[:10], len(missing))
+disk=[]
+for root,_,fs in os.walk(D+T):
+    if '__pycache__' in root: continue
+    for f in fs: disk.append(os.path.relpath(os.path.join(root,f),D))
+new=sorted(p for p in disk if p not in h)
+print('tests in start', sum(p.startswith(T) for p in h), 'tests on disk', len(disk), 'new', len(new))
+import collections
+print(collections.Counter(p.split('/')[3] if p.count('/')>3 else p for p in new).most_common(10))
+print([p for p in new if 'fixtures/r31' not in p])
+EOF

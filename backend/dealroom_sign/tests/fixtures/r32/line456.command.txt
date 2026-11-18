@@ -1,0 +1,7 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+p='/tmp/r31rev/own.py'; s=open(p).read()
+a="    for key, pages, people, allowed in cases(fam):\n        pdf"
+assert s.count(a)==1
+s=s.replace(a,"    for key, pages, people, allowed in cases(fam):\n        if len(sys.argv) > 2 and sys.argv[2] not in key: continue\n        pdf")
+open(p,'w').write(s); print('ok')
+EOF

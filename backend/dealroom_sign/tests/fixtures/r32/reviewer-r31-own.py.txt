@@ -1,0 +1,182 @@
+import sys, os, time, hashlib
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+rc = R24.rc
+live = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(live.encode()).hexdigest().startswith('866637df')
+SRC = dict(r29=live, r31=open(_p.__file__).read())
+assert hashlib.sha256(SRC['r31'].encode()).hexdigest().startswith('a8ad8dcc')
+def mk(n):
+    m = ModuleType('own_' + n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = {n: mk(n) for n in SRC}
+http = Mock(side_effect=AssertionError('http')); calls = Counter()
+NOWHERE = (99, 0, 0, 0)
+PE, DE, CE = rc.PE, rc.DE, 'chris@harborlight.fleet.test'
+HLA = 'HARBOR LIGHT ANALYTICS, INC.'
+REC = dict(rc.RECITALS)
+REC['aff'] = [(80, 'This Agreement is entered into between HARBOR LIGHT HOLDINGS, LLC ("Discloser") and HARBOR LIGHT ANALYTICS, INC. ("Recipient").', False, 40)]
+REC['swapped'] = [(80, 'This Agreement is entered into between FLEET TEST CO. ("Recipient") and HARBOR LIGHT ANALYTICS, INC. ("Discloser").', False, 40)]
+REC['abbr'] = [(80, 'This Agreement is entered into between FLEET TEST CO. ("Discloser") and HARBOR LIGHT ANALYTICS, INC. ("HLA").', False, 40)]
+
+def blk(role, head, x, y, p, w=200):
+    rows = []
+    if role: rows.append((y - 50, role, False, x))
+    if head: rows.append((y - 38, head, False, x))
+    return rows + [(y, 'By:', True, x, x + w), (y + p, 'Date:', True, x, x + w)]
+
+def nm(form, who, x, y):
+    return {'name': [(y, f'Name: {who}', False, x)], 'bare': [(y, who, False, x)],
+            'role': [(y, f'{who}, CEO', False, x)]}[form]
+
+def pat(kind):
+    return {'domain': dict(name='Pat Smith', email=PE),
+            'explicit': dict(name='Pat Smith', email=PE, company='Harbor Light Analytics, Inc.')}[kind]
+DAN = dict(name='Dan Whaley', email=DE, company='Fleet Test Co.')
+
+def cases(fam):
+    for p, g, form in product((24, 30, 40), (24, 30, 36, 44, 50), ('name', 'bare', 'role')):
+        Y = 200; D = Y + p; NY = D + g
+        if fam == 'misspell':
+            # Pat's own block under a misspelled / abbreviated heading; Fleet unnamed on the right.
+            for head, rec, sk, right in product(
+                    ('HARBOR LITE ANALYTICS, INC.', 'HLA, INC.', 'HARBOR LIGHT, INC.', 'HARBORLIGHT ANALYTICS INC.',
+                     'HARBOUR LIGHT ANALYTICS, INC.', 'H.L. ANALYTICS, INC.', 'HLA:', 'Harbor Light Analytics'),
+                    ('parsed', 'none', 'abbr'), ('domain', 'explicit', 'both'), (False, True)):
+                rows = blk(None, head, 72, Y, p) + nm(form, 'Pat Smith', 72, NY)
+                allowed = {PE: (2, 72, Y, 272), DE: NOWHERE}
+                if right:
+                    rows += blk('DISCLOSER:', 'FLEET TEST CO.', 340, Y, p, 200); allowed[DE] = (2, 340, Y, 540)
+                people = [DAN, pat('domain')] if sk == 'both' else [pat(sk)]
+                yield (fam, head, rec, sk, right), [REC[rec], rows], people, allowed
+        elif fam == 'misspell_sender':
+            # Sender block (nameless) whose heading misspells / abbreviates Pat's company is impossible
+            # to tell apart; instead: sender heading is Fleet, and Pat's block is a misspelled heading on the right.
+            for head, rec, sk in product(('HARBOR LITE ANALYTICS, INC.', 'HLA, INC.', 'HARBOR LIGHT, INC.', 'HARBOUR LIGHT ANALYTICS, INC.'),
+                                         ('parsed', 'none', 'abbr'), ('domain', 'explicit')):
+                rows = blk('DISCLOSER:', 'FLEET TEST CO.', 72, Y, p) + nm(form, 'Pat Smith', 72, NY) + blk(None, head, 340, Y, p)
+                yield (fam, head, rec, sk), [REC[rec], rows], [pat(sk)], {PE: (2, 340, Y, 540)}
+        elif fam == 'role_other':
+            # Role-only heading whose recital maps to the other party.
+            for top, rec, sk, other in product(('RECIPIENT:', 'DISCLOSER:', 'The Recipient:'), ('parsed', 'swapped'),
+                                               ('domain', 'explicit', 'both'), ('none', 'right', 'below')):
+                owner_is_hla = (top.endswith('Recipient:') or top == 'RECIPIENT:') == (rec == 'parsed')
+                otherrole = 'DISCLOSER:' if 'ecipient' in top.lower() else 'RECIPIENT:'
+                rows = blk(None, top, 72, Y, p) + nm(form, 'Pat Smith', 72, NY)
+                allowed = {PE: (2, 72, Y, 272) if owner_is_hla else NOWHERE, DE: NOWHERE if owner_is_hla else (2, 72, Y, 272)}
+                if other == 'right':
+                    rows += blk(None, otherrole, 340, Y, p)
+                    allowed[DE if owner_is_hla else PE] = (2, 340, Y, 540)
+                elif other == 'below':
+                    rows += blk(None, otherrole, 72, 500, 30)
+                    allowed[DE if owner_is_hla else PE] = (2, 72, 500, 272)
+                people = [DAN, pat('domain')] if sk == 'both' else [pat(sk)]
+                yield (fam, top, rec, sk, other, owner_is_hla), [REC[rec], rows], people, allowed
+            # Role heading maps to HLA but the printed name is the sender's.
+            for rec, other in product(('parsed', 'none'), ('none', 'right')):
+                rows = blk(None, 'RECIPIENT:', 72, Y, p) + nm(form, 'Dan Whaley', 72, NY)
+                allowed = {DE: NOWHERE}
+                if other == 'right':
+                    rows += blk(None, 'DISCLOSER:', 340, Y, p); allowed[DE] = (2, 340, Y, 540)
+                yield (fam, 'RECIPIENT:dan', rec, 'dan', other, False), [REC[rec], rows], [DAN], allowed
+        elif fam == 'same_company':
+            CHRIS = dict(name='Chris Doe', email=CE)
+            for shape, rec, who in product(('pat_top_chris_right_named', 'chris_top_pat_below_noheading',
+                                            'chris_top_pat_below_headed', 'pat_top_chris_right_blank',
+                                            'chris_top_named_elsewhere'),
+                                           ('parsed', 'none'), ('pat', 'both', 'pat_explicit')):
+                people = {'pat': [pat('domain')], 'both': [pat('domain'), CHRIS],
+                          'pat_explicit': [pat('explicit'), dict(CHRIS, company='Harbor Light Analytics, Inc.')]}[who]
+                rows = blk(None, HLA, 72, Y, p) + nm(form, 'Pat Smith', 72, NY)
+                if shape == 'pat_top_chris_right_named':
+                    rows += blk(None, HLA, 340, Y, p) + [(D + 14, 'Name: Chris Doe', False, 340)]
+                    allowed = {PE: (2, 72, Y, 272), CE: (2, 340, Y, 540)}
+                elif shape == 'pat_top_chris_right_blank':
+                    rows += blk(None, HLA, 340, Y, p)
+                    allowed = {PE: (2, 72, Y, 272), CE: (2, 340, Y, 540)}
+                elif shape == 'chris_top_pat_below_noheading':
+                    yb = NY + 44
+                    rows += [(yb, 'By:', True, 72, 272), (yb + 30, 'Date:', True, 72, 272)]
+                    allowed = {PE: (2, 72, yb, 272), CE: (2, 72, Y, 272)}
+                elif shape == 'chris_top_pat_below_headed':
+                    yb = 560
+                    rows += blk(None, HLA, 72, yb, 30)
+                    allowed = {PE: (2, 72, yb, 272), CE: (2, 72, Y, 272)}
+                else:
+                    # Chris's top block, Pat Smith printed in band is a stray; Pat's real block next page.
+                    allowed = {PE: (3, 72, 200, 272), CE: (2, 72, Y, 272)}
+                    pages = [REC[rec], rows, blk(None, HLA, 72, 200, 30) + [(244, 'Name: Pat Smith', False, 72)]]
+                    yield (fam, shape, rec, who), pages, people, allowed
+                    continue
+                yield (fam, shape, rec, who), [REC[rec], rows], people, allowed
+        elif fam == 'affiliate_sender':
+            # Sender's heading names the counterparty's affiliate; Pat's name in the band belongs elsewhere.
+            for head, rec, sk, pblock in product(('HARBOR LIGHT HOLDINGS, LLC', 'HARBOR LIGHT GROUP, INC.', 'HARBOR LIGHT CAPITAL, LLC',
+                                                  'HARBOR LIGHT PARTNERS, LLC', 'HARBORLIGHT, LLC', 'HARBOR LIGHT ANALYTICS HOLDINGS, LLC'),
+                                                 ('parsed', 'none', 'aff'), ('domain', 'explicit', 'both'),
+                                                 ('none', 'next_page_headed', 'next_page_role', 'below_noheading', 'right_headed', 'next_page_named')):
+                rows = blk('DISCLOSER:', head, 72, Y, p) + nm(form, 'Pat Smith', 72, NY)
+                pages = [REC[rec], rows]; allowed = {PE: NOWHERE, DE: (2, 72, Y, 272)}
+                if pblock == 'next_page_headed':
+                    pages.append(blk('RECIPIENT:', HLA, 72, 200, 30)); allowed[PE] = (3, 72, 200, 272)
+                elif pblock == 'next_page_role':
+                    pages.append(blk(None, 'RECIPIENT:', 72, 200, 30)); allowed[PE] = (3, 72, 200, 272)
+                elif pblock == 'next_page_named':
+                    pages.append(blk(None, None, 72, 200, 30)); allowed[PE] = (3, 72, 200, 272)
+                elif pblock == 'below_noheading':
+                    yb = NY + 44
+                    rows += [(yb, 'By:', True, 72, 272), (yb + 30, 'Date:', True, 72, 272)]; allowed[PE] = (2, 72, yb, 272)
+                elif pblock == 'right_headed':
+                    rows += blk('RECIPIENT:', HLA, 340, Y, p); allowed[PE] = (2, 340, Y, 540)
+                people = [DAN, pat('domain')] if sk == 'both' else [pat(sk)]
+                yield (fam, head, rec, sk, pblock), pages, people, allowed
+        elif fam == 'prev_column':
+            # Name printed under the left column's heading region, while the date-first block is to its right
+            # or the reverse; and two-row column grids.
+            for layout, rec, sk, nx in product(('fleet_left_hla_right', 'hla_left_fleet_right', 'grid'),
+                                               ('parsed', 'none'), ('domain', 'explicit', 'both'), (72, 150, 250, 300, 340)):
+                if layout == 'fleet_left_hla_right':
+                    rows = blk(None, 'FLEET TEST CO.', 72, Y, p) + blk(None, HLA, 340, Y, p)
+                    allowed = {PE: (2, 340, Y, 540), DE: (2, 72, Y, 272)}
+                elif layout == 'hla_left_fleet_right':
+                    rows = blk(None, HLA, 72, Y, p) + blk(None, 'FLEET TEST CO.', 340, Y, p)
+                    allowed = {PE: (2, 72, Y, 272), DE: (2, 340, Y, 540)}
+                    nx = {72: 340, 150: 380, 250: 300, 300: 250, 340: 200}[nx]  # name drifts toward the other column
+                else:
+                    # Top row: HLA left, Fleet right (both nameless); second row has Pat's name over Fleet's column
+                    rows = blk(None, 'FLEET TEST CO.', 72, Y, p) + blk(None, HLA, 340, Y, p)
+                    rows += blk(None, 'FLEET TEST CO.', 72, 520, 30)
+                    allowed = {PE: (2, 340, Y, 540), DE: (2, 72, Y, 272)}
+                rows += nm(form, 'Pat Smith', nx, NY)
+                people = [DAN, pat('domain')] if sk == 'both' else [pat(sk)]
+                yield (fam, layout, rec, sk, nx), [REC[rec], rows], people, allowed
+        else:
+            raise KeyError(fam)
+
+fam = sys.argv[1]
+G = Counter(); EX = Counter(); WS = []; t = time.time()
+with patch('httpx.Client.send', http):
+    for key, pages, people, allowed in cases(fam):
+        pdf = rc.pages_pdf(pages); k = ''; got = {}
+        for n, m in M.items():
+            mo = Mock(); r = in_process(m, pdf, people, mo); calls[n] += mo.call_count
+            w = rc.wrong_fields(r, allowed)
+            k += 'W' if w else ('p' if r['fields'] else 'n')
+            got[n] = sorted({(f['signer'][:3], f['page'], tuple(f['evidence']['line'])) for f in r['fields']})
+        G[(key[1], k)] += 1
+        if k[0] != k[1] or 'W' in k:
+            EX[(k,) + key[1:]] += 1
+            if len(WS) < 25 and ('W' in k or k == 'np'): WS.append((k, key, got['r31']))
+print(fam, 'http', http.call_count, 'model', dict(calls), 'elapsed', round(time.time() - t), 'cells', sum(G.values()))
+print('totals', sorted(Counter(k for (_, k) in G.elements()).items()))
+for item in sorted(G.items(), key=str): print(' ', item)
+for e, c in sorted(EX.items(), key=str): print('EX', c, e)
+for w in WS: print('S', w)
