@@ -1,0 +1,22 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import sys, os
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+rc = R24.rc; X = 72
+print(placement.VERSION)
+fleet = [(200, 'FLEET TEST CO.', False, X), (240, 'By:', True, X, 290), (252, 'Name:', False, X), (264, 'Title:', False, X), (290, 'Date:', True, X, 290)]
+own = [(200, 'HARBOR LIGHT ANALYTICS, INC.', False, 340), (240, 'Signature:', False, 340), (252, 'Name: Pat Smith', False, 340), (264, 'Title: CEO', False, 340), (290, 'Date:', False, 340)]
+pdf = rc.pages_pdf([list(rc.RECITALS['parsed']), fleet + own])
+http = Mock(side_effect=AssertionError('http'))
+with patch('httpx.Client.send', http):
+    for ppl in ([dict(name='Pat Smith', email=rc.PE)], [dict(name='Pat Smith', email=rc.PE, company='Harbor Light Analytics, Inc.')], [TWO[1], dict(name='Pat Smith', email=rc.PE)]):
+        mo = Mock(); r = placement.place(pdf, ppl, model_client=mo)
+        print(len(ppl), ppl[-1].get('company'), '|', r['status'], r['reason_code'], [(f['signer'][:3], f['type'], f['page'], f['evidence']['line'], f['confidence']) for f in r['fields']], [(a.get('score'), a.get('margin')) for a in r['assignments']], 'model', mo.call_count, 'eq', r == in_process(placement, pdf, ppl, Mock()))
+print('http', http.call_count)
+EOF

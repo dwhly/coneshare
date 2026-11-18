@@ -1,0 +1,6 @@
+import hashlib, difflib
+a=open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+b=open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read()
+c=open('/root/worktrees/send-c1b/docs/implementation/c2a-r28/r28-source.py.txt').read()
+for n,s in [('live',a),('r28',b),('evid',c)]: print(n, hashlib.sha256(s.encode()).hexdigest()[:16])
+print(''.join(difflib.unified_diff(a.splitlines(1), b.splitlines(1), 'r27','r28', n=4)))

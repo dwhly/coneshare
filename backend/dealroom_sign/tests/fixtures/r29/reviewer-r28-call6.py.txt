@@ -1,0 +1,19 @@
+import json
+calls=[]
+for line in open('counterparty-c2a-gate3-r27.jsonl'):
+    try: d=json.loads(line)
+    except: continue
+    if not isinstance(d,dict): continue
+    m=d.get('message')
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use':
+                calls.append(b)
+import os
+os.makedirs('/tmp/r28rev',exist_ok=True)
+for i in [25,35,40,41,43,45,48,52,53,54,55,56,59]:
+    open(f'/tmp/r28rev/c{i}.sh','w').write(calls[i]['input']['command'])
+    s=calls[i]['input']['command']
+    print(i, 'Nom:' in s, 'cand27' in s, 'Witness' in s, s.count('\n'))

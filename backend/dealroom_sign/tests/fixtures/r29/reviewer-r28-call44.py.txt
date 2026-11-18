@@ -1,0 +1,6 @@
+import os, time
+for d in ['/root/worktrees/send-c1b/backend/dealroom_sign/tests/__pycache__', '/root/worktrees/send-c1b/backend/dealroom_sign/__pycache__']:
+    if os.path.isdir(d):
+        fs = os.listdir(d); ms = [os.path.getmtime(os.path.join(d, f)) for f in fs]
+        print(d, len(fs), 'newest', time.ctime(max(ms)) if ms else None, 'dir mtime', time.ctime(os.path.getmtime(d)))
+print('now', time.ctime())

@@ -1,0 +1,9 @@
+import hashlib, os
+print(os.path.exists('/tmp/rev19/h.py'), os.path.exists('/tmp/rev19/gens.py'))
+assert hashlib.sha256(open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py','rb').read()).hexdigest().startswith('e5dc8ef0')
+s = open('/tmp/r28rev/c25.sh').read()
+body = s.split("<<'EOF'\n",1)[1].rsplit('\nEOF',1)[0]
+assert body.count("startswith('5683ff7b')")==1
+body = body.replace("startswith('5683ff7b')", "startswith('f26d989f')")
+print('columns = live r27 (send-merge f26d989f), r28 (on disk e5dc8ef0)')
+exec(compile(body,'c25','exec'), dict(__name__='__main__'))

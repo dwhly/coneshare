@@ -1,0 +1,23 @@
+import json, hashlib, os
+R = '/root/worktrees/send-c1b/'
+d = json.load(open(R + 'docs/implementation/c2a-r28/starting-hashes.json'))
+print(type(d).__name__, len(d))
+if not all(isinstance(v, str) for v in d.values()): print(list(d.items())[:3])
+print('placement.py in snapshot', str(d.get('backend/dealroom_sign/placement.py', ''))[:12])
+sha = lambda p: hashlib.sha256(open(R + p, 'rb').read()).hexdigest()
+snap = dict((k, v) for k, v in d.items() if k.startswith('backend/dealroom_sign/tests/'))
+disk = []
+for root, dirs, files in os.walk(R + 'backend/dealroom_sign/tests'):
+    dirs[:] = [x for x in dirs if x != '__pycache__']
+    for f in files: disk.append(os.path.relpath(os.path.join(root, f), R))
+changed = [k for k in snap if k in disk and sha(k) != snap[k]]
+missing = [k for k in snap if k not in disk]
+new = sorted(k for k in disk if k not in snap)
+print('snapshot test files', len(snap), 'on disk', len(disk)); print('changed', changed); print('deleted', missing); print('new', len(new))
+for k in new[:12]: print(' ', k, os.path.getsize(R + k))
+print('new outside fixtures/r28 + 2 py:', [k for k in new if not k.startswith('backend/dealroom_sign/tests/fixtures/r28/') and k not in ('backend/dealroom_sign/tests/test_placement_r28.py', 'backend/dealroom_sign/tests/placement_r28_review_cases.py')])
+print('r27 test files in snapshot:', [k for k in snap if 'r27' in k])
+print('pyc', [k for k in disk if k.endswith('.pyc')][:5], 'pycache dirs', [r for r, ds, fs in os.walk(R + 'backend/dealroom_sign/tests') if '__pycache__' in r][:3])
+# product files changed vs snapshot (outside docs)
+prod = [k for k, v in d.items() if not k.startswith('docs/') and os.path.exists(R + k) and sha(k) != v]
+print('changed non-docs files vs snapshot', prod)

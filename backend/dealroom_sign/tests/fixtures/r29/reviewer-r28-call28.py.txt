@@ -1,0 +1,14 @@
+import hashlib
+disk = open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(disk.encode()).hexdigest().startswith('e5dc8ef0')
+s = open('/tmp/r28rev/c59.sh').read()
+body = s.split("<<'EOF'\n",1)[1].rsplit('\nEOF',1)[0]
+lines = body.split('\n')
+i = next(k for k,l in enumerate(lines) if l.startswith('r27 = open(_p.__file__)'))
+j = next(k for k,l in enumerate(lines) if l.startswith('SRC = dict(r27=r27, cand27=cand)'))
+lines[i:j+1] = ["live = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()",
+                "assert hashlib.sha256(live.encode()).hexdigest().startswith('f26d989f')",
+                "SRC = dict(r27=live, r28=open(_p.__file__).read())"]
+body = '\n'.join(lines).replace('rev27k_','rev28k_')
+print('columns = live r27, r28')
+exec(compile(body,'c59','exec'), dict(__name__='__main__'))
