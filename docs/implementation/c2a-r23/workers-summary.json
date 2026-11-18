@@ -1,0 +1,49 @@
+{
+  "cases": 72,
+  "groups": {
+    "b1": {
+      "cases": 36,
+      "r21_wrong": 6,
+      "r21_holds": 26,
+      "r22_wrong": 30,
+      "r22_wrong_placements": 30,
+      "r23_wrong": 0,
+      "r23_holds": 32,
+      "r22_holds": 6,
+      "r21_placed": 4,
+      "r23_placed": 4,
+      "r21_wrong_placements": 6
+    },
+    "b2": {
+      "cases": 36,
+      "r21_wrong": 0,
+      "r21_holds": 24,
+      "r22_wrong": 12,
+      "r22_wrong_placements": 12,
+      "r23_wrong": 0,
+      "r23_holds": 36,
+      "r22_holds": 24,
+      "r21_placed": 12
+    }
+  },
+  "transitions": {
+    "b1": {
+      "needs_sender -> wrong -> needs_sender": 20,
+      "needs_sender -> needs_sender -> needs_sender": 6,
+      "placed -> wrong -> placed": 4,
+      "wrong -> wrong -> needs_sender": 6
+    },
+    "b2": {
+      "needs_sender -> wrong -> needs_sender": 12,
+      "needs_sender -> needs_sender -> needs_sender": 12,
+      "placed -> needs_sender -> needs_sender": 12
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33",
+    "r23": "5cc800a1206dba57fe93f49d89652d56ec1e12f5d1fa7517b8c648c7ec829e60"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 216
+}

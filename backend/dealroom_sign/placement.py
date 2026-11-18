@@ -27,14 +27,21 @@ from pdfminer.psparser import PSEOF, PSKeyword, literal_name
 
 LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|name|title|date|its)\b[:\s]*', re.I)
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+# A conjunction starts a new party only after a completed designation.
+# Company names and descriptive phrases may themselves contain 'and'.
+PARTY_JOIN_STOP = (
+    r'(?!(?:(?<=Inc)|(?<=Inc\.)|(?<=INC)|(?<=INC\.)|(?<=LLC)|(?<=LLP)'
+    r'|(?<=Ltd)|(?<=Ltd\.)|(?<=LTD)|(?<=LTD\.)|(?<=Corp)|(?<=Corp\.)'
+    r'|(?<=Co)|(?<=Co\.)|(?<=CO)|(?<=CO\.)|(?<=Corporation)|(?<=corporation)'
+    r'|(?<=company)|(?<=partnership))\s*,?\s+and\s+[A-Z])')
 ROLE_DESCRIPTION = re.compile(
     r'(?:\b(?:between|and|by|with)\s+)'
-    r'([A-Z](?:(?!,?\s+and\s+[A-Z])[\w&.,\' -]){2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
-    r'(?:,\s*(?:(?!,?\s+and\s+[A-Z])[^()]){0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
+    r'([A-Z](?:' + PARTY_JOIN_STOP + r'[\w&.,\' -]){2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
+    r'(?:,\s*(?:' + PARTY_JOIN_STOP + r'[^()]){0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.22'
+VERSION = 'c2a.23'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -633,12 +640,9 @@ def extract(pdf, *, deadline=None):
             if pno <= 2:
                 opening = ' '.join(w['text'] for w in words)
                 definitions = list(ROLE_DEF.finditer(opening))
-                # Both grammars may reach the same quoted role. Its direct
-                # definition owns that occurrence; separate clauses still
-                # contribute independent definitions and can conflict.
-                defined_roles = {match.span(2) for match in definitions}
-                descriptions = (match for match in ROLE_DESCRIPTION.finditer(opening)
-                                if match.span(2) not in defined_roles)
+                # A lazy direct definition can match a description's tail.
+                # Let both grammars contribute; disagreement retains the hold.
+                descriptions = ROLE_DESCRIPTION.finditer(opening)
                 for match in (*definitions, *descriptions):
                     company, role = match.groups()
                     if COMPANY.search(company):
@@ -943,7 +947,19 @@ def score(signer, block, roles, blocks=()):
         # heading competes, even when a veto or geometry removes its score.
         if not value:
             for other in blocks:
-                if other is block or other.line.page != block.line.page:
+                if other is block:
+                    continue
+                # An unresolved article-prefixed role can still name this
+                # company in the recital. It cannot free an affiliate's
+                # company-only block, even with an explicit signer company.
+                if not printed_names(other, blocks):
+                    for label in other.raw_labels:
+                        role_key = label['text'].rstrip(': ').lower()
+                        if (role_key not in roles and role_key.startswith('the ')
+                                and party_role_text(role_key)
+                                and similarity(company, roles.get(role_key[4:], ''))):
+                            return value
+                if other.line.page != block.line.page:
                     continue
                 other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
                 other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]

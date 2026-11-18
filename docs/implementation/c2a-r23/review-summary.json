@@ -1,0 +1,206 @@
+{
+  "part": "review",
+  "cases": 12760,
+  "groups": {
+    "Competition": {
+      "cases": 480,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 96,
+      "r21_model_calls": 0,
+      "r21_holds": 384,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 96,
+      "r22_model_calls": 0,
+      "r22_holds": 384,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 96,
+      "r23_model_calls": 0,
+      "r23_holds": 384,
+      "full_result_diffs": 0,
+      "r21_placed": 96,
+      "r22_placed": 96,
+      "r23_placed": 96
+    },
+    "L1 boundary pat": {
+      "cases": 3480,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 191,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_placed": 191,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_placed": 191,
+      "full_result_diffs": 0,
+      "r21_holds": 3289,
+      "r22_holds": 3289,
+      "r23_holds": 3289
+    },
+    "L1 boundary fleet": {
+      "cases": 1800,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1800,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1800,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 1800,
+      "full_result_diffs": 0
+    },
+    "F fine": {
+      "cases": 3456,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_placed": 2325,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_placed": 2325,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_placed": 2325,
+      "full_result_diffs": 0,
+      "r21_holds": 1131,
+      "r22_holds": 1131,
+      "r23_holds": 1131
+    },
+    "F fine company-only": {
+      "cases": 3456,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2680,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 2680,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 2680,
+      "full_result_diffs": 0,
+      "r21_placed": 776,
+      "r22_placed": 776,
+      "r23_placed": 776
+    },
+    "Realistic NDA matrix": {
+      "cases": 48,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 48,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 48,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 48,
+      "full_result_diffs": 0
+    },
+    "B1 real worker": {
+      "cases": 2,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 2,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 2,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 2,
+      "full_result_diffs": 0
+    },
+    "Q4 M1 ambiguity": {
+      "cases": 6,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 6,
+      "r21_model_calls": 0,
+      "r21_placed": 6,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 6,
+      "r22_model_calls": 0,
+      "r22_placed": 6,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 6,
+      "r23_model_calls": 0,
+      "r23_placed": 6,
+      "full_result_diffs": 0
+    },
+    "Q4 controls": {
+      "cases": 32,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 20,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 20,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 20,
+      "full_result_diffs": 0,
+      "r21_placed": 12,
+      "r22_placed": 12,
+      "r23_placed": 12
+    }
+  },
+  "transitions": {
+    "Competition": {
+      "needs_sender -> needs_sender": 384,
+      "placed -> placed": 96
+    },
+    "L1 boundary pat": {
+      "placed -> placed": 191,
+      "needs_sender -> needs_sender": 3289
+    },
+    "L1 boundary fleet": {
+      "needs_sender -> needs_sender": 1800
+    },
+    "F fine": {
+      "placed -> placed": 2325,
+      "needs_sender -> needs_sender": 1131
+    },
+    "F fine company-only": {
+      "needs_sender -> needs_sender": 2680,
+      "placed -> placed": 776
+    },
+    "Realistic NDA matrix": {
+      "needs_sender -> needs_sender": 48
+    },
+    "B1 real worker": {
+      "needs_sender -> needs_sender": 2
+    },
+    "Q4 M1 ambiguity": {
+      "placed -> placed": 6
+    },
+    "Q4 controls": {
+      "needs_sender -> needs_sender": 20,
+      "placed -> placed": 12
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33",
+    "r23": "5cc800a1206dba57fe93f49d89652d56ec1e12f5d1fa7517b8c648c7ec829e60"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 6
+}

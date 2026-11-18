@@ -1,0 +1,7 @@
+coder rc=1 head=e2d7ba11e138da4f67fbb5562507985f19bde7f5
+failing-first: final new inputs 126 failed/6912 passed on r22 (Q2 66, workers 42, mapping 6, supplement 12); Q2 is 42 B-1 + 24 B-2; exact cand leaves 6 worker failures, final focused 80/80 pass; draft logs retained
+shipped: reviewer cand; completed-designation boundary in name/description; ROLE_DEF suppression removed; M-2 hold retained; local-label alias veto closes 6 further worker failures; low L-1 restored; VERSION c2a.23
+full-suite: 31480 passed, 0 failed, 0 errors, 0 skipped; completed without -x, filtering or deselection
+test changes: 2 new files, 7038 new tests; all 24442 original IDs preserved; no existing test/fixture/evidence edits
+preservation: 2139 original files hash-identical; only placement.py modified; no staging/commit
+blockers: carried medium M-1 has 48/192 wrong cells unchanged across releases; literal all-family zero-wrong bar not met; review-classified required families and Q2 are zero wrong

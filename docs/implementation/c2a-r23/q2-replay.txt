@@ -1,0 +1,421 @@
+q2 240 cells; 0 r23 wrong
+q2 480 cells; 0 r23 wrong
+q2 720 cells; 0 r23 wrong
+q2 960 cells; 0 r23 wrong
+q2 1200 cells; 0 r23 wrong
+q2 1440 cells; 0 r23 wrong
+q2 1680 cells; 0 r23 wrong
+q2 1920 cells; 0 r23 wrong
+q2 2160 cells; 0 r23 wrong
+q2 2400 cells; 0 r23 wrong
+q2 2640 cells; 0 r23 wrong
+q2 2880 cells; 0 r23 wrong
+q2 3120 cells; 0 r23 wrong
+q2 3360 cells; 0 r23 wrong
+q2 3600 cells; 0 r23 wrong
+q2 3840 cells; 0 r23 wrong
+q2 4080 cells; 0 r23 wrong
+q2 4320 cells; 0 r23 wrong
+q2 4560 cells; 0 r23 wrong
+q2 4800 cells; 0 r23 wrong
+q2 5040 cells; 0 r23 wrong
+q2 5280 cells; 0 r23 wrong
+{
+  "cases": 5280,
+  "groups": {
+    "inc_repeat": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 100,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 140,
+      "r23_placed": 140
+    },
+    "description_repeat": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 92,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 148,
+      "r23_placed": 140
+    },
+    "description_repeat_pages": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 92,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 148,
+      "r23_placed": 140
+    },
+    "conflict_hla_nw": {
+      "cases": 240,
+      "r21_wrong": 24,
+      "r21_wrong_placements": 24,
+      "r22_wrong": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 120,
+      "r21_placed": 120,
+      "r22_placed": 120,
+      "r23_placed": 120,
+      "r21_holds": 96
+    },
+    "conflict_nw_hla": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 120,
+      "r21_placed": 140,
+      "r22_placed": 120,
+      "r23_placed": 120
+    },
+    "signature_nw": {
+      "cases": 240,
+      "r21_wrong": 24,
+      "r21_wrong_placements": 24,
+      "r22_wrong": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 120,
+      "r21_placed": 120,
+      "r22_placed": 120,
+      "r23_placed": 120,
+      "r21_holds": 96
+    },
+    "signature_hla": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 120,
+      "r21_placed": 140,
+      "r22_placed": 120,
+      "r23_placed": 120
+    },
+    "signature_same": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 100,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 140,
+      "r23_placed": 140
+    },
+    "three_quoted": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 170,
+      "r22_wrong": 0,
+      "r22_holds": 170,
+      "r23_wrong": 0,
+      "r23_holds": 170,
+      "r21_placed": 70,
+      "r22_placed": 70,
+      "r23_placed": 70
+    },
+    "three_two_joins": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 180,
+      "r22_wrong": 0,
+      "r22_holds": 166,
+      "r23_wrong": 0,
+      "r23_holds": 170,
+      "r21_placed": 60,
+      "r22_placed": 74,
+      "r23_placed": 70
+    },
+    "three_middle_address": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 180,
+      "r22_wrong": 0,
+      "r22_holds": 174,
+      "r23_wrong": 0,
+      "r23_holds": 174,
+      "r21_placed": 60,
+      "r22_placed": 66,
+      "r23_placed": 66
+    },
+    "three_last_address": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 180,
+      "r22_wrong": 0,
+      "r22_holds": 170,
+      "r23_wrong": 0,
+      "r23_holds": 170,
+      "r21_placed": 60,
+      "r22_placed": 70,
+      "r23_placed": 70
+    },
+    "llp_short": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 110,
+      "r22_wrong": 0,
+      "r22_holds": 110,
+      "r23_wrong": 0,
+      "r23_holds": 110,
+      "r21_placed": 130,
+      "r22_placed": 130,
+      "r23_placed": 130
+    },
+    "llp_address": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 132,
+      "r22_wrong": 0,
+      "r22_holds": 132,
+      "r23_wrong": 0,
+      "r23_holds": 132,
+      "r21_placed": 108,
+      "r22_placed": 108,
+      "r23_placed": 108
+    },
+    "smith_short_description": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 106,
+      "r22_wrong": 0,
+      "r22_holds": 106,
+      "r23_wrong": 0,
+      "r23_holds": 106,
+      "r21_placed": 134,
+      "r22_placed": 134,
+      "r23_placed": 134
+    },
+    "b1_inc_address": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 106,
+      "r22_wrong": 12,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 106,
+      "r21_placed": 134,
+      "r22_placed": 108,
+      "r23_placed": 134,
+      "r22_wrong_placements": 12
+    },
+    "b1_co_address": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 106,
+      "r22_wrong": 12,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 106,
+      "r21_placed": 134,
+      "r22_placed": 108,
+      "r23_placed": 134,
+      "r22_wrong_placements": 12
+    },
+    "b1_llc_hereinafter": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 106,
+      "r22_wrong": 12,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 106,
+      "r21_placed": 134,
+      "r22_placed": 108,
+      "r23_placed": 134,
+      "r22_wrong_placements": 12
+    },
+    "b1_three": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 180,
+      "r22_wrong": 6,
+      "r22_holds": 174,
+      "r23_wrong": 0,
+      "r23_holds": 166,
+      "r21_placed": 60,
+      "r22_placed": 60,
+      "r23_placed": 74,
+      "r22_wrong_placements": 6
+    },
+    "b2_lazy_tail": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 24,
+      "r22_wrong_placements": 24,
+      "r23_wrong": 0,
+      "r23_holds": 120,
+      "r21_placed": 140,
+      "r22_placed": 120,
+      "r23_placed": 120,
+      "r22_holds": 96
+    },
+    "brown_company": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 120,
+      "r21_placed": 140,
+      "r22_placed": 120,
+      "r23_placed": 120
+    },
+    "research_center": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 120,
+      "r23_placed": 140
+    }
+  },
+  "transitions": {
+    "inc_repeat": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 140
+    },
+    "description_repeat": {
+      "needs_sender -> needs_sender -> needs_sender": 92,
+      "placed -> placed -> placed": 140,
+      "needs_sender -> placed -> needs_sender": 8
+    },
+    "description_repeat_pages": {
+      "needs_sender -> needs_sender -> needs_sender": 92,
+      "placed -> placed -> placed": 140,
+      "needs_sender -> placed -> needs_sender": 8
+    },
+    "conflict_hla_nw": {
+      "wrong -> needs_sender -> needs_sender": 24,
+      "placed -> placed -> placed": 120,
+      "needs_sender -> needs_sender -> needs_sender": 96
+    },
+    "conflict_nw_hla": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 120,
+      "placed -> needs_sender -> needs_sender": 20
+    },
+    "signature_nw": {
+      "wrong -> needs_sender -> needs_sender": 24,
+      "placed -> placed -> placed": 120,
+      "needs_sender -> needs_sender -> needs_sender": 96
+    },
+    "signature_hla": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 120,
+      "placed -> needs_sender -> needs_sender": 20
+    },
+    "signature_same": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 140
+    },
+    "three_quoted": {
+      "needs_sender -> needs_sender -> needs_sender": 170,
+      "placed -> placed -> placed": 70
+    },
+    "three_two_joins": {
+      "needs_sender -> needs_sender -> needs_sender": 166,
+      "placed -> placed -> placed": 60,
+      "needs_sender -> placed -> placed": 10,
+      "needs_sender -> placed -> needs_sender": 4
+    },
+    "three_middle_address": {
+      "needs_sender -> needs_sender -> needs_sender": 174,
+      "placed -> placed -> placed": 60,
+      "needs_sender -> placed -> placed": 6
+    },
+    "three_last_address": {
+      "needs_sender -> needs_sender -> needs_sender": 170,
+      "placed -> placed -> placed": 60,
+      "needs_sender -> placed -> placed": 10
+    },
+    "llp_short": {
+      "needs_sender -> needs_sender -> needs_sender": 110,
+      "placed -> placed -> placed": 130
+    },
+    "llp_address": {
+      "needs_sender -> needs_sender -> needs_sender": 132,
+      "placed -> placed -> placed": 108
+    },
+    "smith_short_description": {
+      "needs_sender -> needs_sender -> needs_sender": 106,
+      "placed -> placed -> placed": 134
+    },
+    "b1_inc_address": {
+      "needs_sender -> needs_sender -> needs_sender": 98,
+      "placed -> placed -> placed": 108,
+      "needs_sender -> wrong -> needs_sender": 8,
+      "placed -> needs_sender -> placed": 22,
+      "placed -> wrong -> placed": 4
+    },
+    "b1_co_address": {
+      "needs_sender -> needs_sender -> needs_sender": 98,
+      "placed -> placed -> placed": 108,
+      "needs_sender -> wrong -> needs_sender": 8,
+      "placed -> needs_sender -> placed": 22,
+      "placed -> wrong -> placed": 4
+    },
+    "b1_llc_hereinafter": {
+      "needs_sender -> needs_sender -> needs_sender": 98,
+      "placed -> placed -> placed": 108,
+      "needs_sender -> wrong -> needs_sender": 8,
+      "placed -> needs_sender -> placed": 22,
+      "placed -> wrong -> placed": 4
+    },
+    "b1_three": {
+      "needs_sender -> needs_sender -> needs_sender": 162,
+      "placed -> placed -> placed": 60,
+      "needs_sender -> wrong -> needs_sender": 4,
+      "needs_sender -> needs_sender -> placed": 12,
+      "needs_sender -> wrong -> placed": 2
+    },
+    "b2_lazy_tail": {
+      "needs_sender -> wrong -> needs_sender": 24,
+      "placed -> placed -> placed": 120,
+      "needs_sender -> needs_sender -> needs_sender": 76,
+      "placed -> needs_sender -> needs_sender": 20
+    },
+    "brown_company": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 120,
+      "placed -> needs_sender -> needs_sender": 20
+    },
+    "research_center": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 120,
+      "placed -> needs_sender -> placed": 20
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33",
+    "r23": "5cc800a1206dba57fe93f49d89652d56ec1e12f5d1fa7517b8c648c7ec829e60"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

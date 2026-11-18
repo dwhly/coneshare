@@ -1,0 +1,59 @@
+new 250 r23 wrong 0
+{
+  "part": "new",
+  "cases": 420,
+  "groups": {
+    "M2 conflict probes": {
+      "cases": 36,
+      "r21_wrong": 24,
+      "r21_raw_wrong": 24,
+      "r21_model_calls": 0,
+      "r21_placed": 24,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 36,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 36,
+      "full_result_diffs": 24,
+      "r21_holds": 12
+    },
+    "L1 recital matrix": {
+      "cases": 384,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 384,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 348,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 356,
+      "full_result_diffs": 120,
+      "r22_placed": 36,
+      "r23_placed": 28
+    }
+  },
+  "transitions": {
+    "M2 conflict probes": {
+      "wrong -> needs_sender": 24,
+      "needs_sender -> needs_sender": 12
+    },
+    "L1 recital matrix": {
+      "needs_sender -> needs_sender": 356,
+      "needs_sender -> placed": 28
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33",
+    "r23": "5cc800a1206dba57fe93f49d89652d56ec1e12f5d1fa7517b8c648c7ec829e60"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 108
+}

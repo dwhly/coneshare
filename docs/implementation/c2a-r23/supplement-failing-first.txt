@@ -1,0 +1,136 @@
+........................................................................ [  4%]
+........................................................................ [  8%]
+........................................................................ [ 12%]
+........................................................................ [ 17%]
+........................................................................ [ 21%]
+........................................................................ [ 25%]
+........................................................................ [ 30%]
+........................................................................ [ 34%]
+........................................................................ [ 38%]
+........................................................................ [ 42%]
+........FF......................................FF...................... [ 47%]
+................FF......................................FF.............. [ 51%]
+........................FF......................................FF...... [ 55%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+........................................................................ [ 68%]
+........................................................................ [ 72%]
+........................................................................ [ 77%]
+........................................................................ [ 81%]
+........................................................................ [ 85%]
+........................................................................ [ 90%]
+........................................................................ [ 94%]
+........................................................................ [ 98%]
+........................                                                 [100%]
+=================================== FAILURES ===================================
+_____________ test_additional_conjunction_and_repeat_controls[728] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'same', 'RECIPIENT:', ('ventures', False), 'placeholders', False), {'analysis_version': 'c2a.22',...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[729] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'same', 'RECIPIENT:', ('ventures', False), 'placeholders', True), {'analysis_version': 'c2a.22', ...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[768] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'same', 'Recipient', ('ventures', False), 'placeholders', False), {'analysis_version': 'c2a.22', ...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[769] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'same', 'Recipient', ('ventures', False), 'placeholders', True), {'analysis_version': 'c2a.22', '...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[808] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'guarantor', 'RECIPIENT:', ('ventures', False), 'placeholders', False), {'analysis_version': 'c2a...[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[809] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'guarantor', 'RECIPIENT:', ('ventures', False), 'placeholders', True), {'analysis_version': 'c2a....[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[848] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'guarantor', 'Recipient', ('ventures', False), 'placeholders', False), {'analysis_version': 'c2a....[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[849] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'guarantor', 'Recipient', ('ventures', False), 'placeholders', True), {'analysis_version': 'c2a.2...[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[888] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'split', 'RECIPIENT:', ('ventures', False), 'placeholders', False), {'analysis_version': 'c2a.22'...[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (3, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[889] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'split', 'RECIPIENT:', ('ventures', False), 'placeholders', True), {'analysis_version': 'c2a.22',...[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (3, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[928] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'split', 'Recipient', ('ventures', False), 'placeholders', False), {'analysis_version': 'c2a.22',...[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (3, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+_____________ test_additional_conjunction_and_repeat_controls[929] _____________
+dealroom_sign/tests/test_placement_r23.py:51: in test_additional_conjunction_and_repeat_controls
+    assert not cases.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('procter_address', 'split', 'Recipient', ('ventures', False), 'placeholders', True), {'analysis_version': 'c2a.22', ...[{...}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'PROCTER AND GAMBLE CONSULTING LLC | By: | Name: | Title: | Date:',...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7fa28b832160>({'analysis_version': 'c2a.22', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@proctergamble.fleet.test': (3, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7fa28b832160> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r23/supplement-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[728]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[729]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[768]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[769]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[808]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[809]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[848]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[849]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[888]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[889]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[928]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_additional_conjunction_and_repeat_controls[929]
+12 failed, 1668 passed, 5358 deselected in 41.24s

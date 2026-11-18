@@ -1,0 +1,60 @@
+..........F..F..F...........F..F..F..................................... [ 90%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+__________ test_review_real_worker[b1-False-True-same-THE RECIPIENT] ___________
+dealroom_sign/tests/test_placement_r23.py:42: in test_review_real_worker
+    assert not cases.rc.wrong_fields(result, allowed), result
+E   AssertionError: {'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x7a80b88320c0>({'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@smithjones.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7a80b88320c0> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+________ test_review_real_worker[b1-False-True-guarantor-THE RECIPIENT] ________
+dealroom_sign/tests/test_placement_r23.py:42: in test_review_real_worker
+    assert not cases.rc.wrong_fields(result, allowed), result
+E   AssertionError: {'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7a80b88320c0>({'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@smithjones.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7a80b88320c0> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+__________ test_review_real_worker[b1-False-True-split-THE RECIPIENT] __________
+dealroom_sign/tests/test_placement_r23.py:42: in test_review_real_worker
+    assert not cases.rc.wrong_fields(result, allowed), result
+E   AssertionError: {'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7a80b88320c0>({'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@smithjones.fleet.test': (3, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7a80b88320c0> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+___________ test_review_real_worker[b1-True-True-same-THE RECIPIENT] ___________
+dealroom_sign/tests/test_placement_r23.py:42: in test_review_real_worker
+    assert not cases.rc.wrong_fields(result, allowed), result
+E   AssertionError: {'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x7a80b88320c0>({'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@smithjones.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7a80b88320c0> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+________ test_review_real_worker[b1-True-True-guarantor-THE RECIPIENT] _________
+dealroom_sign/tests/test_placement_r23.py:42: in test_review_real_worker
+    assert not cases.rc.wrong_fields(result, allowed), result
+E   AssertionError: {'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7a80b88320c0>({'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@smithjones.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7a80b88320c0> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+__________ test_review_real_worker[b1-True-True-split-THE RECIPIENT] ___________
+dealroom_sign/tests/test_placement_r23.py:42: in test_review_real_worker
+    assert not cases.rc.wrong_fields(result, allowed), result
+E   AssertionError: {'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:', 'l...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7a80b88320c0>({'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@smithjones.fleet.test': (3, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7a80b88320c0> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = cases.rc
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r23/focused-alias.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r23.py::test_review_real_worker[b1-False-True-same-THE RECIPIENT]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_review_real_worker[b1-False-True-guarantor-THE RECIPIENT]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_review_real_worker[b1-False-True-split-THE RECIPIENT]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_review_real_worker[b1-True-True-same-THE RECIPIENT]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_review_real_worker[b1-True-True-guarantor-THE RECIPIENT]
+FAILED dealroom_sign/tests/test_placement_r23.py::test_review_real_worker[b1-True-True-split-THE RECIPIENT]
+6 failed, 74 passed, 7420 deselected in 23.56s

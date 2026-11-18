@@ -1,0 +1,130 @@
+{
+  "cases": 1680,
+  "groups": {
+    "johnson_short": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 144,
+      "r22_wrong": 0,
+      "r22_holds": 144,
+      "r23_wrong": 0,
+      "r23_holds": 144,
+      "r21_placed": 96,
+      "r22_placed": 96,
+      "r23_placed": 96
+    },
+    "johnson_address": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 144,
+      "r22_wrong": 0,
+      "r22_holds": 144,
+      "r23_wrong": 0,
+      "r23_holds": 144,
+      "r21_placed": 96,
+      "r22_placed": 96,
+      "r23_placed": 96
+    },
+    "procter_short": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 124,
+      "r22_wrong": 0,
+      "r22_holds": 124,
+      "r23_wrong": 0,
+      "r23_holds": 124,
+      "r21_placed": 116,
+      "r22_placed": 116,
+      "r23_placed": 116
+    },
+    "procter_address": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 124,
+      "r22_wrong": 12,
+      "r22_holds": 132,
+      "r23_wrong": 0,
+      "r23_holds": 124,
+      "r21_placed": 116,
+      "r22_placed": 96,
+      "r23_placed": 116,
+      "r22_wrong_placements": 12
+    },
+    "group_repeat": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 100,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 140,
+      "r23_placed": 140
+    },
+    "holdings_repeat": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 100,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 140,
+      "r23_placed": 140
+    },
+    "light_repeat": {
+      "cases": 240,
+      "r21_wrong": 0,
+      "r21_holds": 100,
+      "r22_wrong": 0,
+      "r22_holds": 100,
+      "r23_wrong": 0,
+      "r23_holds": 100,
+      "r21_placed": 140,
+      "r22_placed": 140,
+      "r23_placed": 140
+    }
+  },
+  "transitions": {
+    "johnson_short": {
+      "needs_sender -> needs_sender -> needs_sender": 144,
+      "placed -> placed -> placed": 96
+    },
+    "johnson_address": {
+      "needs_sender -> needs_sender -> needs_sender": 144,
+      "placed -> placed -> placed": 96
+    },
+    "procter_short": {
+      "needs_sender -> needs_sender -> needs_sender": 124,
+      "placed -> placed -> placed": 116
+    },
+    "procter_address": {
+      "needs_sender -> needs_sender -> needs_sender": 116,
+      "placed -> placed -> placed": 96,
+      "needs_sender -> wrong -> needs_sender": 8,
+      "placed -> needs_sender -> placed": 16,
+      "placed -> wrong -> placed": 4
+    },
+    "group_repeat": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 140
+    },
+    "holdings_repeat": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 140
+    },
+    "light_repeat": {
+      "needs_sender -> needs_sender -> needs_sender": 100,
+      "placed -> placed -> placed": 140
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33",
+    "r23": "5cc800a1206dba57fe93f49d89652d56ec1e12f5d1fa7517b8c648c7ec829e60"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

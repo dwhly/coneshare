@@ -1,0 +1,206 @@
+{
+  "part": "layouts",
+  "cases": 5680,
+  "groups": {
+    "Review matrix same": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1255,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1255,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 1255,
+      "full_result_diffs": 0,
+      "r21_placed": 65,
+      "r22_placed": 65,
+      "r23_placed": 65
+    },
+    "Review matrix guarantor": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1190,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1190,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 1190,
+      "full_result_diffs": 0,
+      "r21_placed": 130,
+      "r22_placed": 130,
+      "r23_placed": 130
+    },
+    "Review matrix split": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1255,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1255,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 1255,
+      "full_result_diffs": 0,
+      "r21_placed": 65,
+      "r22_placed": 65,
+      "r23_placed": 65
+    },
+    "Review matrix witness": {
+      "cases": 1320,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 1320,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 1320,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 1320,
+      "full_result_diffs": 0
+    },
+    "Cross-page regression guarantor": {
+      "cases": 120,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 120,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 120,
+      "full_result_diffs": 0
+    },
+    "Cross-page regression split": {
+      "cases": 120,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 120,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 120,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 120,
+      "full_result_diffs": 0
+    },
+    "B2 exact worker": {
+      "cases": 12,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 6,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 6,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 6,
+      "full_result_diffs": 0,
+      "r21_placed": 6,
+      "r22_placed": 6,
+      "r23_placed": 6
+    },
+    "B2 role vocabulary": {
+      "cases": 52,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 52,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 52,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 52,
+      "full_result_diffs": 0
+    },
+    "ROLE_DEF layouts": {
+      "cases": 96,
+      "r21_wrong": 0,
+      "r21_raw_wrong": 0,
+      "r21_model_calls": 0,
+      "r21_holds": 84,
+      "r22_wrong": 0,
+      "r22_raw_wrong": 0,
+      "r22_model_calls": 0,
+      "r22_holds": 84,
+      "r23_wrong": 0,
+      "r23_raw_wrong": 0,
+      "r23_model_calls": 0,
+      "r23_holds": 84,
+      "full_result_diffs": 0,
+      "r21_placed": 12,
+      "r22_placed": 12,
+      "r23_placed": 12
+    }
+  },
+  "transitions": {
+    "Review matrix same": {
+      "needs_sender -> needs_sender": 1255,
+      "placed -> placed": 65
+    },
+    "Review matrix guarantor": {
+      "needs_sender -> needs_sender": 1190,
+      "placed -> placed": 130
+    },
+    "Review matrix split": {
+      "needs_sender -> needs_sender": 1255,
+      "placed -> placed": 65
+    },
+    "Review matrix witness": {
+      "needs_sender -> needs_sender": 1320
+    },
+    "Cross-page regression guarantor": {
+      "needs_sender -> needs_sender": 120
+    },
+    "Cross-page regression split": {
+      "needs_sender -> needs_sender": 120
+    },
+    "B2 exact worker": {
+      "needs_sender -> needs_sender": 6,
+      "placed -> placed": 6
+    },
+    "B2 role vocabulary": {
+      "needs_sender -> needs_sender": 52
+    },
+    "ROLE_DEF layouts": {
+      "needs_sender -> needs_sender": 84,
+      "placed -> placed": 12
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r22": "015c3d09d52926d01d6b3d5dbc2962e7895a39f6f6935a16b23b2b05444d7c33",
+    "r23": "5cc800a1206dba57fe93f49d89652d56ec1e12f5d1fa7517b8c648c7ec829e60"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 36
+}

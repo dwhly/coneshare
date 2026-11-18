@@ -1,0 +1,1045 @@
+{
+  "bare": {
+    "status": "bare",
+    "reason": "No attributable signature cues. Placement review comes next; nothing was sent.",
+    "reason_code": "no_identity",
+    "fields": [],
+    "assignments": [],
+    "analysis_version": "c2a.23",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "nda": {
+    "status": "placed",
+    "reason": "",
+    "reason_code": "placed",
+    "fields": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "SIGNATURE",
+        "page": 2,
+        "x": 11.764706,
+        "y": 42.575758,
+        "w": 35.294118,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Harbor Light Analytics, Inc. | Name / title: Lee Harbor, COO | Date:",
+          "labels": [
+            {
+              "text": "Harbor Light Analytics, Inc.",
+              "rect": [
+                72.0,
+                294.07349999999997,
+                197.46450000000002,
+                304.57349999999997
+              ]
+            },
+            {
+              "text": "Name / title: Lee Harbor, COO",
+              "rect": [
+                72.0,
+                369.6735,
+                213.2145,
+                380.1735
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                331.2,
+                369.6735,
+                429.27000000000004,
+                380.1735
+              ]
+            }
+          ],
+          "line": [
+            72.0,
+            367.2,
+            288.0
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "DATE",
+        "page": 2,
+        "x": 58.695098,
+        "y": 45.981503,
+        "w": 11.447059,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                331.2,
+                369.6735,
+                429.27000000000004,
+                380.1735
+              ]
+            }
+          ],
+          "line": [
+            359.214,
+            378.1735,
+            429.27000000000004
+          ],
+          "line_kind": "underscores"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "SIGNATURE",
+        "page": 2,
+        "x": 11.764706,
+        "y": 22.575758,
+        "w": 35.294118,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Fleet Test Co. | Name / title: Dan Whaley, CEO | Date:",
+          "labels": [
+            {
+              "text": "Fleet Test Co.",
+              "rect": [
+                72.0,
+                135.6735,
+                137.94000000000003,
+                146.1735
+              ]
+            },
+            {
+              "text": "Name / title: Dan Whaley, CEO",
+              "rect": [
+                72.0,
+                211.2735,
+                216.711,
+                221.7735
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                331.2,
+                211.2735,
+                429.27000000000004,
+                221.7735
+              ]
+            }
+          ],
+          "line": [
+            72.0,
+            208.79999999999995,
+            288.0
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "DATE",
+        "page": 2,
+        "x": 58.695098,
+        "y": 25.981503,
+        "w": 11.447059,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                331.2,
+                211.2735,
+                429.27000000000004,
+                221.7735
+              ]
+            }
+          ],
+          "line": [
+            359.214,
+            219.7735,
+            429.27000000000004
+          ],
+          "line_kind": "underscores"
+        }
+      }
+    ],
+    "assignments": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "block_id": "b1",
+        "score": 10,
+        "margin": 10,
+        "confidence": "high"
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "block_id": "b0",
+        "score": 10,
+        "margin": 10,
+        "confidence": "high"
+      }
+    ],
+    "analysis_version": "c2a.23",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "offer": {
+    "status": "placed",
+    "reason": "",
+    "reason_code": "placed",
+    "fields": [
+      {
+        "signer": "jordan.reyes.1987@gmail.com",
+        "type": "SIGNATURE",
+        "page": 1,
+        "x": 11.764706,
+        "y": 59.292929,
+        "w": 32.941176,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Accepted and agreed: | Date: | Jordan Reyes",
+          "labels": [
+            {
+              "text": "Accepted and agreed:",
+              "rect": [
+                72.0,
+                450.987,
+                167.293,
+                461.987
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                302.4,
+                488.987,
+                411.476,
+                499.987
+              ]
+            },
+            {
+              "text": "Jordan Reyes",
+              "rect": [
+                72.0,
+                506.553,
+                120.24000000000001,
+                515.553
+              ]
+            }
+          ],
+          "line": [
+            72.0,
+            499.6,
+            273.6
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "jordan.reyes.1987@gmail.com",
+        "type": "DATE",
+        "page": 1,
+        "x": 53.754248,
+        "y": 61.10947,
+        "w": 13.480392,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                302.4,
+                488.987,
+                411.476,
+                499.987
+              ]
+            }
+          ],
+          "line": [
+            328.976,
+            497.987,
+            411.476
+          ],
+          "line_kind": "underscores"
+        }
+      }
+    ],
+    "assignments": [
+      {
+        "signer": "jordan.reyes.1987@gmail.com",
+        "block_id": "b1",
+        "score": 6,
+        "margin": 6,
+        "confidence": "high"
+      }
+    ],
+    "analysis_version": "c2a.23",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "roles": {
+    "status": "placed",
+    "reason": "",
+    "reason_code": "placed",
+    "fields": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "SIGNATURE",
+        "page": 3,
+        "x": 19.603105,
+        "y": 19.165025,
+        "w": 26.960784,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "RECIPIENT | Signature: | Printed name: | Date:",
+          "labels": [
+            {
+              "text": "RECIPIENT",
+              "rect": [
+                72.0,
+                127.78700000000003,
+                133.11599999999999,
+                138.78699999999992
+              ]
+            },
+            {
+              "text": "Signature:",
+              "rect": [
+                72.0,
+                172.78700000000003,
+                284.971,
+                183.78699999999992
+              ]
+            },
+            {
+              "text": "Printed name:",
+              "rect": [
+                72.0,
+                194.78700000000003,
+                284.663,
+                205.78699999999992
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                216.78700000000003,
+                203.076,
+                227.78699999999992
+              ]
+            }
+          ],
+          "line": [
+            119.971,
+            181.78699999999992,
+            284.971
+          ],
+          "line_kind": "underscores"
+        }
+      },
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "NAME",
+        "page": 3,
+        "x": 22.248856,
+        "y": 23.963005,
+        "w": 24.264706,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Printed name:",
+          "labels": [
+            {
+              "text": "Printed name:",
+              "rect": [
+                72.0,
+                194.78700000000003,
+                284.663,
+                205.78699999999992
+              ]
+            }
+          ],
+          "line": [
+            136.163,
+            203.78699999999992,
+            284.663
+          ],
+          "line_kind": "underscores"
+        }
+      },
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "DATE",
+        "page": 3,
+        "x": 16.10719,
+        "y": 26.740783,
+        "w": 17.075163,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                216.78700000000003,
+                203.076,
+                227.78699999999992
+              ]
+            }
+          ],
+          "line": [
+            98.576,
+            225.78699999999992,
+            203.076
+          ],
+          "line_kind": "underscores"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "SIGNATURE",
+        "page": 3,
+        "x": 19.603105,
+        "y": 37.978157,
+        "w": 26.960784,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "DISCLOSER | Signature: | Printed name: | Date:",
+          "labels": [
+            {
+              "text": "DISCLOSER",
+              "rect": [
+                72.0,
+                276.78700000000003,
+                135.56900000000002,
+                287.787
+              ]
+            },
+            {
+              "text": "Signature:",
+              "rect": [
+                72.0,
+                321.787,
+                284.971,
+                332.787
+              ]
+            },
+            {
+              "text": "Printed name:",
+              "rect": [
+                72.0,
+                343.787,
+                284.663,
+                354.787
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                365.787,
+                203.076,
+                376.787
+              ]
+            }
+          ],
+          "line": [
+            119.971,
+            330.787,
+            284.971
+          ],
+          "line_kind": "underscores"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "NAME",
+        "page": 3,
+        "x": 22.248856,
+        "y": 42.776136,
+        "w": 24.264706,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Printed name:",
+          "labels": [
+            {
+              "text": "Printed name:",
+              "rect": [
+                72.0,
+                343.787,
+                284.663,
+                354.787
+              ]
+            }
+          ],
+          "line": [
+            136.163,
+            352.787,
+            284.663
+          ],
+          "line_kind": "underscores"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "DATE",
+        "page": 3,
+        "x": 16.10719,
+        "y": 45.553914,
+        "w": 17.075163,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                365.787,
+                203.076,
+                376.787
+              ]
+            }
+          ],
+          "line": [
+            98.576,
+            374.787,
+            203.076
+          ],
+          "line_kind": "underscores"
+        }
+      }
+    ],
+    "assignments": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "block_id": "b0",
+        "score": 4,
+        "margin": 4,
+        "confidence": "high"
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "block_id": "b1",
+        "score": 4,
+        "margin": 4,
+        "confidence": "high"
+      }
+    ],
+    "analysis_version": "c2a.23",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "witness": {
+    "status": "placed",
+    "reason": "",
+    "reason_code": "placed",
+    "fields": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "SIGNATURE",
+        "page": 2,
+        "x": 18.300654,
+        "y": 31.060606,
+        "w": 25.228758,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "HARBOR LIGHT ANALYTICS, INC. | By: | Name: | Title: | Date:",
+          "labels": [
+            {
+              "text": "HARBOR LIGHT ANALYTICS, INC.",
+              "rect": [
+                72.0,
+                225.38699999999994,
+                255.04000000000002,
+                236.38699999999994
+              ]
+            },
+            {
+              "text": "By:",
+              "rect": [
+                72.0,
+                265.38699999999994,
+                87.89500000000001,
+                276.38699999999994
+              ]
+            },
+            {
+              "text": "Name:",
+              "rect": [
+                72.0,
+                295.387,
+                101.32600000000001,
+                306.387
+              ]
+            },
+            {
+              "text": "Title:",
+              "rect": [
+                72.0,
+                325.387,
+                95.837,
+                336.387
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                355.387,
+                95.82600000000001,
+                366.387
+              ]
+            }
+          ],
+          "line": [
+            112.0,
+            276.0,
+            266.4
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "NAME",
+        "page": 2,
+        "x": 18.300654,
+        "y": 36.868687,
+        "w": 25.228758,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Name:",
+          "labels": [
+            {
+              "text": "Name:",
+              "rect": [
+                72.0,
+                295.387,
+                101.32600000000001,
+                306.387
+              ]
+            }
+          ],
+          "line": [
+            112.0,
+            306.0,
+            266.4
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "DATE",
+        "page": 2,
+        "x": 18.300654,
+        "y": 44.444444,
+        "w": 25.228758,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                355.387,
+                95.82600000000001,
+                366.387
+              ]
+            }
+          ],
+          "line": [
+            112.0,
+            366.0,
+            266.4
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "SIGNATURE",
+        "page": 2,
+        "x": 58.300654,
+        "y": 31.060606,
+        "w": 25.228758,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "FLEET TEST CO. | By: | Name: | Title: | Date:",
+          "labels": [
+            {
+              "text": "FLEET TEST CO.",
+              "rect": [
+                316.8,
+                225.38699999999994,
+                405.746,
+                236.38699999999994
+              ]
+            },
+            {
+              "text": "By:",
+              "rect": [
+                316.8,
+                265.38699999999994,
+                332.695,
+                276.38699999999994
+              ]
+            },
+            {
+              "text": "Name:",
+              "rect": [
+                316.8,
+                295.387,
+                346.126,
+                306.387
+              ]
+            },
+            {
+              "text": "Title:",
+              "rect": [
+                316.8,
+                325.387,
+                340.637,
+                336.387
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                316.8,
+                355.387,
+                340.626,
+                366.387
+              ]
+            }
+          ],
+          "line": [
+            356.8,
+            276.0,
+            511.2
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "NAME",
+        "page": 2,
+        "x": 58.300654,
+        "y": 36.868687,
+        "w": 25.228758,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Name:",
+          "labels": [
+            {
+              "text": "Name:",
+              "rect": [
+                316.8,
+                295.387,
+                346.126,
+                306.387
+              ]
+            }
+          ],
+          "line": [
+            356.8,
+            306.0,
+            511.2
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "type": "DATE",
+        "page": 2,
+        "x": 58.300654,
+        "y": 44.444444,
+        "w": 25.228758,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                316.8,
+                355.387,
+                340.626,
+                366.387
+              ]
+            }
+          ],
+          "line": [
+            356.8,
+            366.0,
+            511.2
+          ],
+          "line_kind": "drawn"
+        }
+      }
+    ],
+    "assignments": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "block_id": "b0",
+        "score": 4,
+        "margin": 4,
+        "confidence": "high"
+      },
+      {
+        "signer": "dan@fleettest.fleet.test",
+        "block_id": "b1",
+        "score": 4,
+        "margin": 4,
+        "confidence": "high"
+      }
+    ],
+    "analysis_version": "c2a.23",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "harbor": {
+    "status": "placed",
+    "reason": "",
+    "reason_code": "placed",
+    "fields": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "SIGNATURE",
+        "page": 2,
+        "x": 11.764706,
+        "y": 42.575758,
+        "w": 35.294118,
+        "h": 3.661616,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Harbor Light Analytics, Inc. | Name / title: Lee Harbor, COO | Date:",
+          "labels": [
+            {
+              "text": "Harbor Light Analytics, Inc.",
+              "rect": [
+                72.0,
+                294.07349999999997,
+                197.46450000000002,
+                304.57349999999997
+              ]
+            },
+            {
+              "text": "Name / title: Lee Harbor, COO",
+              "rect": [
+                72.0,
+                369.6735,
+                213.2145,
+                380.1735
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                331.2,
+                369.6735,
+                429.27000000000004,
+                380.1735
+              ]
+            }
+          ],
+          "line": [
+            72.0,
+            367.2,
+            288.0
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "DATE",
+        "page": 2,
+        "x": 58.695098,
+        "y": 45.981503,
+        "w": 11.447059,
+        "h": 1.641414,
+        "confidence": "high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                331.2,
+                369.6735,
+                429.27000000000004,
+                380.1735
+              ]
+            }
+          ],
+          "line": [
+            359.214,
+            378.1735,
+            429.27000000000004
+          ],
+          "line_kind": "underscores"
+        }
+      }
+    ],
+    "assignments": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "block_id": "b1",
+        "score": 10,
+        "margin": 10,
+        "confidence": "high"
+      }
+    ],
+    "analysis_version": "c2a.23",
+    "method": "rules",
+    "model": {
+      "attempted": false,
+      "outcome": "not_needed"
+    }
+  },
+  "unusual": {
+    "status": "placed",
+    "reason": "",
+    "reason_code": "placed",
+    "fields": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "SIGNATURE",
+        "page": 1,
+        "x": 40.03268,
+        "y": 52.272727,
+        "w": 35.947712,
+        "h": 3.661616,
+        "confidence": "model-high",
+        "evidence": {
+          "label_text": "Lee Harbor | Hand of the covenanting party: | Date:",
+          "labels": [
+            {
+              "text": "Lee Harbor",
+              "rect": [
+                72.0,
+                382.484,
+                256.068,
+                394.484
+              ]
+            },
+            {
+              "text": "Hand of the covenanting party:",
+              "rect": [
+                72.0,
+                432.484,
+                235.42800000000003,
+                444.484
+              ]
+            },
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                472.484,
+                100.67999999999999,
+                484.484
+              ]
+            }
+          ],
+          "line": [
+            245.0,
+            444.0,
+            465.0
+          ],
+          "line_kind": "drawn"
+        }
+      },
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "type": "DATE",
+        "page": 1,
+        "x": 18.300654,
+        "y": 59.343434,
+        "w": 25.0,
+        "h": 1.641414,
+        "confidence": "model-high",
+        "evidence": {
+          "label_text": "Date:",
+          "labels": [
+            {
+              "text": "Date:",
+              "rect": [
+                72.0,
+                472.484,
+                100.67999999999999,
+                484.484
+              ]
+            }
+          ],
+          "line": [
+            112.0,
+            484.0,
+            265.0
+          ],
+          "line_kind": "drawn"
+        }
+      }
+    ],
+    "assignments": [
+      {
+        "signer": "lee@harborlight.fleet.test",
+        "block_id": "b0",
+        "score": 10,
+        "margin": 10,
+        "confidence": "model-high"
+      }
+    ],
+    "analysis_version": "c2a.23",
+    "method": "rules+model",
+    "model": {
+      "attempted": true,
+      "outcome": "resolved",
+      "model_id": ""
+    }
+  }
+}
