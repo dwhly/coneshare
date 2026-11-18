@@ -1,0 +1,6 @@
+import re
+for i in [25,35,40,41,43,45,48,52,54,56,59]:
+    s=open(f'/tmp/r28rev/c{i}.sh').read()
+    print('=====',i, s.count('\n'))
+    for l in s.splitlines():
+        if re.search(r"SRC|r26 =|r27 =|startswith|product\(|for .* in |FAM|import placement_r|from /tmp|rev19|exec\(", l): print('  ', l[:230])

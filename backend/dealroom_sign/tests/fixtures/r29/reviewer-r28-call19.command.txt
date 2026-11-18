@@ -1,0 +1,20 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json
+calls=[]; results={}
+for line in open('counterparty-c2a-gate3-r27.jsonl'):
+    try: d=json.loads(line)
+    except: continue
+    if not isinstance(d,dict): continue
+    m=d.get('message')
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use': calls.append(b)
+            if isinstance(b,dict) and b.get('type')=='tool_result':
+                cc=b.get('content'); results[b['tool_use_id']]=cc if isinstance(cc,str) else json.dumps(cc)
+for i in [26,27,28,29,30,35,52,56]:
+    open(f'/tmp/r28rev/c{i}.sh','w').write(calls[i]['input']['command'])
+    print('=====',i, calls[i]['input']['command'][:120].replace('\n',' | '))
+    print('RESULT:', results.get(calls[i]['id'],'')[:600])
+EOF

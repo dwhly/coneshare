@@ -1,0 +1,258 @@
+..............................F..F...................................... [  7%]
+F..F..FF.FF...............................F..F..FFFFFF.................. [ 14%]
+............F.FF.F....................................F..F.............. [ 21%]
+........................F..F..FF.FF...............................F..F.. [ 28%]
+FFFFFF..............................F.FF.F.............................. [ 35%]
+......F..F......................................F..F..FF.FF............. [ 42%]
+..................F..F..FFFFFF..............................F.FF.F...... [ 50%]
+..............................F..F...................................... [ 57%]
+F..F..FF.FF...............................F..F..FFFFFF.................. [ 64%]
+............F.FF.F....................................F..F.............. [ 71%]
+........................F..F..FF.FF...............................F..F.. [ 78%]
+FFFFFF..............................F.FF.F.............................. [ 85%]
+......F..F......................................F..F..FF.FF............. [ 92%]
+..................F..F..FFFFFF..............................F.FF.F...... [100%]
+=================================== FAILURES ===================================
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith, CEO'], 'recital': 'parsed', 'shape': 'two_col_rows'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith, CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith, CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith, CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith, CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith, CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith, CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith, CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith, CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a....{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith, CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a....{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith'], 'recital': 'parsed', 'shape': 'two_col_rows', ......{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith'], 'recital': 'none', 'shape': 'two_col_rows', ...},...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'a...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'ana...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'a...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'ana...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29', ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29', ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith / CEO'], 'recital': 'parsed', 'shape': 'two_col_rows...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith / CEO'], 'recital': 'none', 'shape': 'two_col_rows',...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith / CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ......{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith / CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...},...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith / CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ......{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith / CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...},...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith / CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith / CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith / CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith / CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['PAT SMITH'], 'recital': 'parsed', 'shape': 'two_col_rows', ......{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['PAT SMITH'], 'recital': 'none', 'shape': 'two_col_rows', ...},...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['PAT SMITH'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'a...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['PAT SMITH'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'ana...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['PAT SMITH'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'a...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['PAT SMITH'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'ana...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['PAT SMITH'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['PAT SMITH'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['PAT SMITH'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29', ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['PAT SMITH'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_version': 'c2a.29', ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'parsed', '...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'none', 'sh...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'parsed', 'shape'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'none', 'shape': ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'parsed', 'shape'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'none', 'shape': ...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'an...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Chief Executive Officer'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'an...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'parsed', 'shape': 'two_...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'For and on behalf of the Recipient', 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'none', 'shape': 'two_co...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'parsed', 'shape': 'two_col_ro...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'harbor light analytics, inc.', 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'none', 'shape': 'two_col_rows...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 0 == 1
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'parsed', 'shape': 'two_col_ro...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': 'HARBOR LIGHT ANALYTICS, INC.', 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'none', 'shape': 'two_col_rows...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:17: AssertionError: assert 1 == 0
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_vers...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'parsed', 'shape': 'two_col_rows', ...}, {'analysis_vers...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_versio...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+/root/worktrees/send-c1b/backend/dealroom_sign/tests/test_placement_r29_hidden.py:16: AssertionError: ({'head': None, 'nm': ['Pat Smith', 'Title: CEO'], 'recital': 'none', 'shape': 'two_col_rows', ...}, {'analysis_versio...{...}], 'line': [105.9, 600.0, 290.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r29/hidden-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes30-pages30-people30-allowed30]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes33-pages33-people33-allowed33]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes72-pages72-people72-allowed72]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes75-pages75-people75-allowed75]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes78-pages78-people78-allowed78]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes79-pages79-people79-allowed79]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes81-pages81-people81-allowed81]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes82-pages82-people82-allowed82]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes114-pages114-people114-allowed114]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes117-pages117-people117-allowed117]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes120-pages120-people120-allowed120]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes121-pages121-people121-allowed121]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes122-pages122-people122-allowed122]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes123-pages123-people123-allowed123]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes124-pages124-people124-allowed124]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes125-pages125-people125-allowed125]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes156-pages156-people156-allowed156]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes158-pages158-people158-allowed158]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes159-pages159-people159-allowed159]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes161-pages161-people161-allowed161]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes198-pages198-people198-allowed198]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes201-pages201-people201-allowed201]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes240-pages240-people240-allowed240]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes243-pages243-people243-allowed243]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes246-pages246-people246-allowed246]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes247-pages247-people247-allowed247]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes249-pages249-people249-allowed249]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes250-pages250-people250-allowed250]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes282-pages282-people282-allowed282]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes285-pages285-people285-allowed285]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes288-pages288-people288-allowed288]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes289-pages289-people289-allowed289]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes290-pages290-people290-allowed290]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes291-pages291-people291-allowed291]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes292-pages292-people292-allowed292]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes293-pages293-people293-allowed293]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes324-pages324-people324-allowed324]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes326-pages326-people326-allowed326]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes327-pages327-people327-allowed327]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes329-pages329-people329-allowed329]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes366-pages366-people366-allowed366]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes369-pages369-people369-allowed369]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes408-pages408-people408-allowed408]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes411-pages411-people411-allowed411]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes414-pages414-people414-allowed414]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes415-pages415-people415-allowed415]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes417-pages417-people417-allowed417]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes418-pages418-people418-allowed418]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes450-pages450-people450-allowed450]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes453-pages453-people453-allowed453]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes456-pages456-people456-allowed456]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes457-pages457-people457-allowed457]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes458-pages458-people458-allowed458]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes459-pages459-people459-allowed459]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes460-pages460-people460-allowed460]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes461-pages461-people461-allowed461]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes492-pages492-people492-allowed492]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes494-pages494-people494-allowed494]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes495-pages495-people495-allowed495]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes497-pages497-people497-allowed497]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes534-pages534-people534-allowed534]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes537-pages537-people537-allowed537]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes576-pages576-people576-allowed576]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes579-pages579-people579-allowed579]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes582-pages582-people582-allowed582]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes583-pages583-people583-allowed583]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes585-pages585-people585-allowed585]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes586-pages586-people586-allowed586]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes618-pages618-people618-allowed618]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes621-pages621-people621-allowed621]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes624-pages624-people624-allowed624]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes625-pages625-people625-allowed625]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes626-pages626-people626-allowed626]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes627-pages627-people627-allowed627]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes628-pages628-people628-allowed628]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes629-pages629-people629-allowed629]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes660-pages660-people660-allowed660]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes662-pages662-people662-allowed662]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes663-pages663-people663-allowed663]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes665-pages665-people665-allowed665]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes702-pages702-people702-allowed702]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes705-pages705-people705-allowed705]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes744-pages744-people744-allowed744]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes747-pages747-people747-allowed747]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes750-pages750-people750-allowed750]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes751-pages751-people751-allowed751]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes753-pages753-people753-allowed753]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes754-pages754-people754-allowed754]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes786-pages786-people786-allowed786]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes789-pages789-people789-allowed789]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes792-pages792-people792-allowed792]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes793-pages793-people793-allowed793]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes794-pages794-people794-allowed794]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes795-pages795-people795-allowed795]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes796-pages796-people796-allowed796]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes797-pages797-people797-allowed797]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes828-pages828-people828-allowed828]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes830-pages830-people830-allowed830]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes831-pages831-people831-allowed831]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes833-pages833-people833-allowed833]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes870-pages870-people870-allowed870]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes873-pages873-people873-allowed873]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes912-pages912-people912-allowed912]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes915-pages915-people915-allowed915]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes918-pages918-people918-allowed918]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes919-pages919-people919-allowed919]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes921-pages921-people921-allowed921]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes922-pages922-people922-allowed922]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes954-pages954-people954-allowed954]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes957-pages957-people957-allowed957]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes960-pages960-people960-allowed960]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes961-pages961-people961-allowed961]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes962-pages962-people962-allowed962]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes963-pages963-people963-allowed963]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes964-pages964-people964-allowed964]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes965-pages965-people965-allowed965]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes996-pages996-people996-allowed996]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes998-pages998-people998-allowed998]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes999-pages999-people999-allowed999]
+FAILED dealroom_sign/tests/test_placement_r29_hidden.py::test_exact_hidden_shapes[axes1001-pages1001-people1001-allowed1001]
+120 failed, 888 passed in 30.46s

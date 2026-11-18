@@ -1,0 +1,10 @@
+/root/work/sign-product/send-venv/bin/python - <<'PYEOF'
+import hashlib
+assert hashlib.sha256(open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py','rb').read()).hexdigest().startswith('e5dc8ef0')
+s = open('/tmp/r28rev/c35.sh').read()
+body = s.split("<<'EOF'\n",1)[1].rsplit('\nEOF',1)[0]
+assert body.count("startswith('5683ff7b')")==1
+body = body.replace("startswith('5683ff7b')", "startswith('f26d989f')")
+print('columns = live r27, r28')
+exec(compile(body,'c35','exec'), dict(__name__='__main__'))
+PYEOF

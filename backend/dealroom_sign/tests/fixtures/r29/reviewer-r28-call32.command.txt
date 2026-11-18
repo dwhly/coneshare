@@ -1,0 +1,88 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import sys, os, time, hashlib, io
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+from reportlab.pdfgen import canvas
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+rc = R24.rc
+live = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(live.encode()).hexdigest().startswith('f26d989f')
+SRC = dict(r27=live, r28=open(_p.__file__).read())
+assert hashlib.sha256(SRC['r28'].encode()).hexdigest().startswith('e5dc8ef0')
+def mk(n):
+    m = ModuleType('rev28q4_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+def pdf(pages):
+    out = io.BytesIO(); c = canvas.Canvas(out, pagesize=(612, 792))
+    for rows in pages:
+        c.setFont('Helvetica', 10)
+        for row in rows:
+            if row[0] == 'rect':
+                _, x0, y0, x1, y1 = row; c.rect(x0, 792 - y1, x1 - x0, y1 - y0); continue
+            if row[0] == 'hline':
+                _, x0, y, x1 = row; c.line(x0, 792 - y, x1, 792 - y); continue
+            if row[0] == 'vline':
+                _, x, y0, y1 = row; c.line(x, 792 - y0, x, 792 - y1); continue
+            y, text, rule, *pos = row; x = pos[0]; end = pos[1] if len(pos) > 1 else x + 218
+            c.drawString(x, 792 - y + (2 if rule else -8), text)
+            if rule: c.line(x + 10 + c.stringWidth(text, 'Helvetica', 10), 792 - y, end, 792 - y)
+        c.showPage()
+    c.save(); return out.getvalue()
+http = Mock(side_effect=AssertionError('http')); calls = Counter()
+def run(pages, people, allowed):
+    b = pdf(pages); out = ''
+    for n, m in M.items():
+        mo = Mock(); r = in_process(m, b, people, mo); calls[n] += mo.call_count
+        out += 'W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n')
+    return out
+X = 72
+FLEET = [(240, 'FLEET TEST CO.', False, X), (270, 'By:', True, X), (300, 'Date:', True, X)]
+AFF = [(520, 'HARBOR LIGHT GROUP, INC.', False, X), (560, 'By:', True, X), (600, 'Date:', True, X)]
+NAMES = [['Pat Smith, CEO'], ['Pat Smith'], ['Pat Smith / CEO'], ['PAT SMITH'], ['Pat Smith', 'Chief Executive Officer'], ['Pat Smith', 'Title: CEO']]
+HEADS = ['For and on behalf of the Recipient', 'harbor light analytics, inc.', 'HARBOR LIGHT ANALYTICS, INC.', None]
+def shapes():
+    for nm, head in product(NAMES, HEADS):
+        hd = [(340, head, False, X)] if head else []
+        nrows = [(382 + 12 * i, t, False, X) for i, t in enumerate(nm)]
+        # 1. rule, no caption, name beneath
+        yield 'uncaptioned_rule', nm, head, [FLEET + hd + [(370, '', True, X, 290)] + nrows + AFF], (2, 0, 370, 612)
+        # 2. signature image box (empty rectangle) with caption above, name beneath
+        yield 'image_box', nm, head, [FLEET + hd + [(352, 'Signature', False, X), ('rect', X, 356, 290, 376)] + [(388 + 12 * i, t, False, X) for i, t in enumerate(nm)] + AFF], (2, 0, 356, 612)
+        # 3. underscore text line (not drawn)
+        yield 'underscores', nm, head, [FLEET + hd + [(370, '______________________________', False, X)] + nrows + AFF], (2, 0, 360, 612)
+        # 4. conformed /s/ signature
+        yield 'conformed_s', nm, head, [FLEET + hd + [(370, '/s/ Pat Smith', False, X)] + nrows + AFF], (2, 0, 360, 612)
+        # 5. execution table: party | signature rule | name, gridded
+        grid = [('hline', 60, 350, 560), ('hline', 60, 400, 560), ('vline', 60, 350, 400), ('vline', 230, 350, 400), ('vline', 420, 350, 400), ('vline', 560, 350, 400)]
+        cells = [(338, 'Party', False, 66), (338, 'Signature', False, 236), (338, 'Name / Title', False, 426),
+                 (372, 'Harbor Light Analytics, Inc.', False, 66), (385, '', True, 236, 410)] + [(372 + 12 * i, t, False, 426) for i, t in enumerate(nm)]
+        yield 'exec_table', nm, head, [FLEET + hd + grid + cells + AFF], (2, 230, 360, 420)
+        # 6. two-column table, ungridded: hidden Pat block in the right column beside the affiliate on the left
+        yield 'two_col_rows', nm, head, [FLEET + [(r[0], r[1], r[2], 320) if len(r) == 4 else r for r in (hd + [(370, '', True, X, 290)] + nrows)] + AFF], (2, 300, 370, 612)
+        # 7. hidden block alone on a separate page
+        yield 'own_page', nm, head, [FLEET + AFF, hd + [(370, 'Executed by:', True, X, 290)] + nrows], (3, 0, 370, 612)
+G = Counter(); EX = Counter(); t = time.time()
+with patch('httpx.Client.send', http):
+    for shape, nm, head, sigpages, pat_allowed in shapes():
+        for recital, signer in product(('parsed', 'none'), ('domain', 'explicit', 'both')):
+            pat = dict(name='Pat Smith', email=rc.PE)
+            if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+            people = [TWO[1], pat] if signer == 'both' else [pat]
+            k = run([list(rc.RECITALS[recital])] + sigpages, people, dict([(rc.PE, pat_allowed), (rc.DE, (2, 0, 270, 612))]))
+            G[(shape, recital, k)] += 1
+            if 'W' in k or k[0] != k[1]: EX[(shape, k, recital, signer, ' | '.join(nm), head)] += 1
+print('http', http.call_count, 'model', dict(calls), 'elapsed', round(time.time() - t), 'cells', sum(G.values()))
+for x in sorted(G.items(), key=str): print(x)
+print(sorted(Counter((k[0], k[1], k[2], k[3]) for k in EX.elements()).items(), key=str))
+print(sorted(Counter((k[0], k[1], k[4]) for k in EX.elements()).items(), key=str))
+print(sorted(Counter((k[0], k[1], k[5]) for k in EX.elements()).items(), key=str))
+EOF

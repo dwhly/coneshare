@@ -1,0 +1,76 @@
+{
+  "part": "workers",
+  "cases": 72,
+  "groups": {
+    "b1": {
+      "cases": 36,
+      "r21_n": 26,
+      "r21_raw_wrong": 6,
+      "r27_n": 36,
+      "r27_raw_wrong": 0,
+      "r28_n": 36,
+      "r28_raw_wrong": 0,
+      "r29_n": 36,
+      "r29_raw_wrong": 0,
+      "r21_to_r29_n_to_p": 0,
+      "r21_to_r29_c_to_w": 0,
+      "r21_to_r29_c_to_n": 4,
+      "r21_to_r29_w_to_n": 6,
+      "r27_to_r29_n_to_p": 0,
+      "r27_to_r29_c_to_w": 0,
+      "r27_to_r29_c_to_n": 0,
+      "r27_to_r29_w_to_n": 0,
+      "r28_to_r29_n_to_p": 0,
+      "r28_to_r29_c_to_w": 0,
+      "r28_to_r29_c_to_n": 0,
+      "r28_to_r29_w_to_n": 0,
+      "r21_c": 4,
+      "r21_w": 6
+    },
+    "b2": {
+      "cases": 36,
+      "r21_n": 24,
+      "r21_raw_wrong": 0,
+      "r27_n": 36,
+      "r27_raw_wrong": 0,
+      "r28_n": 36,
+      "r28_raw_wrong": 0,
+      "r29_n": 36,
+      "r29_raw_wrong": 0,
+      "r21_to_r29_n_to_p": 0,
+      "r21_to_r29_c_to_w": 0,
+      "r21_to_r29_c_to_n": 12,
+      "r21_to_r29_w_to_n": 0,
+      "r27_to_r29_n_to_p": 0,
+      "r27_to_r29_c_to_w": 0,
+      "r27_to_r29_c_to_n": 0,
+      "r27_to_r29_w_to_n": 0,
+      "r28_to_r29_n_to_p": 0,
+      "r28_to_r29_c_to_w": 0,
+      "r28_to_r29_c_to_n": 0,
+      "r28_to_r29_w_to_n": 0,
+      "r21_c": 12
+    }
+  },
+  "transitions": {
+    "b1": {
+      "n -> n -> n -> n": 26,
+      "c -> n -> n -> n": 4,
+      "w -> n -> n -> n": 6
+    },
+    "b2": {
+      "n -> n -> n -> n": 24,
+      "c -> n -> n -> n": 12
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r27": "f26d989f0d09494086fb2158e7d6ab3eb4e5c2aaee55e2745a134bdef1fd0f20",
+    "r28": "e5dc8ef0c406b2e5e5fd22f91c7d7327bb80db185b658771f0fccb4eeead6733",
+    "r29": "866637df797137e74b748c85a644629edda206544a6bc8a3b685e31f1c29bae6"
+  },
+  "archive_results_exact": true,
+  "baseline_method": "immutable c2a.28 replay archive; baseline sources match git commits",
+  "external_http_calls": 0,
+  "worker_evaluations": 72
+}

@@ -1,0 +1,44 @@
+{
+  "cases": 1008,
+  "groups": {
+    "hidden": {
+      "cases": 1008,
+      "r28_n": 864,
+      "r28_raw_wrong": 144,
+      "r28_model_calls": 36,
+      "narrow_n": 1008,
+      "narrow_raw_wrong": 0,
+      "narrow_model_calls": 36,
+      "r28_to_r28_n_to_p": 0,
+      "r28_to_r28_c_to_w": 0,
+      "r28_to_r28_c_to_n": 0,
+      "r28_to_r28_w_to_n": 0,
+      "r28_to_narrow_n_to_p": 0,
+      "r28_to_narrow_c_to_w": 0,
+      "r28_to_narrow_c_to_n": 0,
+      "r28_to_narrow_w_to_n": 144,
+      "r28_w": 144
+    }
+  },
+  "comparisons": {
+    "r28_to_r28": {
+      "n_to_n": 864,
+      "n_to_p": 0,
+      "w_to_w": 144
+    },
+    "r28_to_narrow": {
+      "n_to_n": 864,
+      "n_to_p": 0,
+      "w_to_n": 144
+    }
+  },
+  "source_sha256": {
+    "r28": "e5dc8ef0c406b2e5e5fd22f91c7d7327bb80db185b658771f0fccb4eeead6733",
+    "narrow": "8be395e9524e0d716c72e559276f1afa5d369e9baf64ec04c9f64bb68663d6c4"
+  },
+  "external_http_calls": 0,
+  "model_calls": {
+    "r28": 36,
+    "narrow": 36
+  }
+}

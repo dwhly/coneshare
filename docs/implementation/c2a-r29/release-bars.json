@@ -1,0 +1,86 @@
+{
+  "rc": 0,
+  "base_head": "3e3f33de3f06742b13b4d8a85c7cbf48e7538598",
+  "working_tree_version": "c2a.29",
+  "source_sha256": "866637df797137e74b748c85a644629edda206544a6bc8a3b685e31f1c29bae6",
+  "full_suite": {
+    "passed": 58058,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "targeted": {
+    "passed": 37,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "failing_first": {
+    "passed": 2656,
+    "failed": 680,
+    "errors": 0,
+    "skipped": 0
+  },
+  "inherited_cells": 82450,
+  "inherited_comparisons": {
+    "r21": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 7336,
+      "w_to_n": 1908
+    },
+    "r27": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 1,
+      "w_to_n": 0
+    },
+    "r28": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 1,
+      "w_to_n": 0
+    }
+  },
+  "new_comparisons": {
+    "r21": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 2822,
+      "w_to_n": 2909
+    },
+    "r27": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 188,
+      "w_to_n": 1524
+    },
+    "r28": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 8,
+      "w_to_n": 1084
+    }
+  },
+  "worker_evaluations": 269,
+  "seven_goldens_exact_except_analysis_version": true,
+  "inherited_raw_wrong": 0,
+  "new_required_scope_raw_wrong": 0,
+  "retained_policy_controls": {
+    "recitals": {
+      "unchanged_raw_flags": 120
+    },
+    "r27": {
+      "unchanged_raw_flags": 206
+    },
+    "stacks": {
+      "unchanged_raw_flags": 444
+    },
+    "notices": {
+      "unchanged_raw_flags": 94
+    }
+  },
+  "l1_retained_holds": 180,
+  "preservation_passed": true,
+  "blockers": []
+}

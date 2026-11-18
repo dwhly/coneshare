@@ -1,0 +1,233 @@
+/* Fleet Dealroom shell (fleet-dealroom docs/design/dealroom-shell.md §1-§4), shared by the React console and the
+   Django glue pages (nginx serves frontend/dist at /, so both link /dealroom/shell.css). Sign implements the same
+   spec in its own header component. Reads fds roles only (tokens.css); no colour literals. */
+
+/* §1 Staff app header: background surface, 1px bottom border, 56px, 24px side padding, full width.
+   lockup → 24px → tabs → flexible space → account menu → Theme (last). */
+.dr-header.fds-header { box-sizing: border-box; width: 100%; height: 56px; min-height: 56px; padding: 0 24px; gap: 24px;
+  position: sticky; top: 0; z-index: 30; flex-wrap: nowrap; }
+.dr-header .fds-lockup { flex: none; }
+.dr-header .fds-nav a, .dr-subnav a { font-size: 14px; font-weight: 500; }
+.dr-header .fds-nav a[aria-current="page"], .dr-subnav a[aria-current="page"] { font-weight: 500; }
+.dr-header .fds-header__utils { gap: 8px; }
+/* §7 round 3: the header's two controls (account trigger, Theme) are one quiet 32px, 13px/500 style. */
+.dr-header [data-fds-theme-toggle] { box-sizing: border-box; height: 32px; padding: 0 12px; font-size: 13px; font-weight: 500;
+  line-height: 1; display: inline-flex; align-items: center; }
+
+/* Account menu = the person: 28px neutral initials avatar + display name (14px/500) + chevron. */
+.dr-account { box-sizing: border-box; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 8px 0 2px; margin: 0;
+  border: 0; border-radius: var(--radius-control); background: transparent; color: hsl(var(--foreground));
+  font: inherit; font-size: 13px; font-weight: 500; line-height: 1; cursor: pointer; }
+.dr-account:hover, .dr-account[aria-expanded="true"] { background: hsl(var(--accent)); }
+.dr-account:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
+.dr-account__name { max-width: 12rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dr-account__chevron { width: 16px; height: 16px; color: hsl(var(--muted-foreground)); flex: none; }
+.dr-avatar { box-sizing: border-box; width: 28px; height: 28px; flex: none; border-radius: 999px; display: inline-flex;
+  align-items: center; justify-content: center; background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground));
+  border: 1px solid hsl(var(--border)); font-size: 12px; font-weight: 600; letter-spacing: 0; }
+.dr-menu { position: relative; }
+.dr-menu__panel { position: absolute; right: 0; top: calc(100% + 6px); z-index: 50; min-width: 15rem; padding: 4px;
+  background: hsl(var(--popover)); color: hsl(var(--popover-foreground)); border: 1px solid hsl(var(--border));
+  border-radius: var(--radius); box-shadow: var(--dr-popover-shadow); }
+/* Popovers and menus are elevated in both schemes: popover surface + border + shadow. In dark a foreground-tinted
+   shadow glows, so the dark shadow uses the canvas (near-black) role and the border steps up to --input. */
+:root { --dr-popover-shadow: 0 8px 24px hsl(var(--foreground) / 0.12), 0 2px 6px hsl(var(--foreground) / 0.06); }
+[data-theme="dark"] { --dr-popover-shadow: 0 12px 32px hsl(var(--canvas) / 0.75), 0 2px 8px hsl(var(--canvas) / 0.6); }
+.dr-popover { background: hsl(var(--popover)); color: hsl(var(--popover-foreground)); box-shadow: var(--dr-popover-shadow); }
+[data-theme="dark"] .dr-popover, [data-theme="dark"] .dr-menu__panel, [data-theme="dark"] .dr-select__list { border-color: hsl(var(--input)); }
+.dr-menu__label { padding: 8px 10px; font-size: 13px; color: hsl(var(--muted-foreground)); overflow: hidden; text-overflow: ellipsis; }
+.dr-menu__sep { height: 1px; margin: 4px -4px; background: hsl(var(--border)); }
+.dr-menu__item { display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; padding: 8px 10px; border: 0;
+  border-radius: calc(var(--radius-control) * 0.75); background: transparent; color: hsl(var(--foreground)); font: inherit;
+  font-size: 14px; text-align: left; text-decoration: none; cursor: pointer; }
+.dr-menu__item:hover, .dr-menu__item:focus-visible { background: hsl(var(--accent)); outline: none; }
+
+/* §2 Sub-navigation: a second row in the content container, 44px, bottom hairline. fds v0.8.1 baseline (DESIGN.md §10):
+   pill tabs, the same "selected" language as the header tabs (.fds-nav) and the filter controls; the first pill's
+   box sits on the content edge. */
+/* width: 100% — the glue pages' body is a flex column, where an auto-margin child shrink-wraps and centres. */
+.dr-subnav { box-sizing: border-box; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.dr-subnav nav { display: flex; align-items: center; gap: 2px; height: 44px; border-bottom: 1px solid hsl(var(--border)); }
+.dr-subnav a { display: inline-flex; align-items: center; padding: 4px 12px; line-height: 1.4; color: hsl(var(--muted-foreground));
+  text-decoration: none; border: 1px solid transparent; border-radius: var(--radius-control); }
+.dr-subnav a:hover { color: hsl(var(--foreground)); background: hsl(var(--accent)); }
+.dr-subnav a[aria-current="page"] { color: hsl(var(--selected-foreground)); background: hsl(var(--selected));
+  border-color: hsl(var(--selected-border)); }
+.dr-subnav a:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
+
+/* §3 Page structure: 1200px container, 24px side + top padding. */
+.dr-container { box-sizing: border-box; width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 24px 48px; }
+.dr-pagehead { margin: 0 0 24px; }
+.dr-crumbs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; font-size: 13px;
+  line-height: 20px; color: hsl(var(--muted-foreground)); }
+.dr-crumbs a { color: inherit; text-decoration: none; }
+.dr-crumbs a:hover { color: hsl(var(--foreground)); text-decoration: underline; text-underline-offset: 2px; }
+.dr-crumbs li + li::before { content: "/"; margin-right: 6px; color: hsl(var(--muted-foreground)); }
+.dr-pagehead__row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.dr-pagehead h1 { margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.01em; color: hsl(var(--foreground)); }
+.dr-pagehead__sub { margin: 4px 0 0; font-size: 14px; line-height: 20px; color: hsl(var(--muted-foreground)); }
+.dr-pagehead__actions { display: flex; align-items: center; gap: 8px; }
+
+/* Buttons for page actions and table rows (fds primary = ink, secondary = outline). Leading 16px icon. */
+.dr-btn { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px;
+  padding: 0 14px; border-radius: var(--radius-control); border: 1px solid hsl(var(--input)); background: hsl(var(--background));
+  color: hsl(var(--foreground)); font: inherit; font-size: 14px; font-weight: 500; line-height: 1; white-space: nowrap;
+  text-decoration: none; cursor: pointer; }
+.dr-btn:hover { background: hsl(var(--accent)); }
+.dr-btn:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
+.dr-btn:disabled, .dr-btn[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+.dr-btn--primary { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-color: transparent; }
+.dr-btn--primary:hover { background: hsl(var(--primary) / 0.88); }
+.dr-btn--danger { background: hsl(var(--danger)); color: hsl(var(--danger-foreground)); border-color: transparent; }
+.dr-btn--sm { height: 32px; padding: 0 10px; font-size: 13px; }
+.dr-btn--icon { width: 32px; height: 32px; padding: 0; border-color: transparent; background: transparent; }
+.dr-btn--icon:hover { background: hsl(var(--accent)); }
+.dr-btn svg { width: 16px; height: 16px; flex: none; }
+
+/* Cards (fds outline style) with a 16px/600 title row and optional right-aligned secondary action. */
+.dr-stack { display: flex; flex-direction: column; gap: 24px; }
+.dr-card { box-sizing: border-box; background: hsl(var(--card)); color: hsl(var(--card-foreground)); border: 1px solid hsl(var(--border));
+  border-radius: var(--radius); padding: 20px 24px; }
+.dr-card--flush { padding: 0; overflow: hidden; }
+.dr-card--flush > .dr-card__head { padding: 16px 24px; margin: 0; border-bottom: 1px solid hsl(var(--border)); }
+.dr-card__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 16px; min-height: 32px; }
+.dr-card__title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; color: hsl(var(--foreground)); }
+.dr-card__sub { margin: 2px 0 0; font-size: 14px; color: hsl(var(--muted-foreground)); }
+
+/* List pages: filter bar above a bordered table. */
+.dr-filterbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; }
+.dr-search { position: relative; display: inline-flex; align-items: center; width: 280px; max-width: 100%; }
+.dr-search svg { position: absolute; left: 10px; width: 16px; height: 16px; color: hsl(var(--muted-foreground)); pointer-events: none; }
+.dr-input { box-sizing: border-box; width: 100%; height: 36px; padding: 0 12px; border: 1px solid hsl(var(--input));
+  border-radius: var(--radius-control); background: hsl(var(--background)); color: hsl(var(--foreground)); font: inherit; font-size: 14px; }
+.dr-input::placeholder { color: hsl(var(--muted-foreground)); }
+.dr-input:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 1px; }
+.dr-search .dr-input { padding-left: 34px; }
+/* fds v0.8.1 baseline: toolbar controls (filter toggles, menus) sit tight to their text at 26px, never stretched to
+   the 36px search input's height; selected = the neutral --selected role (same as the tabs). */
+.dr-filterbar .dr-filter, .dr-filterbar .dr-select__trigger { height: 26px; padding: 0 10px; font-size: 13px; }
+.dr-filter[aria-pressed="true"] { background: hsl(var(--selected)); color: hsl(var(--selected-foreground));
+  border-color: hsl(var(--selected-border)); }
+.dr-table-wrap { border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card)); overflow-x: auto; }
+.dr-card .dr-table-wrap { border: 0; border-radius: 0; }
+.dr-table { width: 100%; border-collapse: collapse; font-size: 14px; color: hsl(var(--foreground)); }
+.dr-table th { height: 40px; padding: 0 16px; text-align: left; font-size: 13px; font-weight: 500; color: hsl(var(--muted-foreground));
+  border-bottom: 1px solid hsl(var(--border)); white-space: nowrap; }
+.dr-table td { height: 48px; padding: 6px 16px; border-bottom: 1px solid hsl(var(--border)); vertical-align: middle; box-sizing: border-box; }
+.dr-table tbody tr:last-child td { border-bottom: 0; }
+.dr-table tbody tr:hover td { background: hsl(var(--accent) / 0.5); }
+.dr-table tr[aria-selected="true"] td { background: hsl(var(--selected)); color: hsl(var(--selected-foreground)); }
+.dr-table .dr-num, .dr-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dr-table .dr-actions { width: 1%; text-align: right; white-space: nowrap; }
+.dr-table .dr-strong { font-weight: 500; }
+/* Inside a flush card the first/last cells line up with the card head's 24px inset. */
+.dr-card--flush .dr-table th:first-child, .dr-card--flush .dr-table td:first-child { padding-left: 24px; }
+.dr-card--flush .dr-table th:last-child, .dr-card--flush .dr-table td:last-child { padding-right: 24px; }
+/* Rows that can expand (Details) keep every cell on the first line. */
+.dr-table--top td { vertical-align: top; padding-top: 14px; padding-bottom: 14px; height: auto; }
+.dr-table .dr-sub { display: block; font-size: 13px; color: hsl(var(--muted-foreground)); }
+.dr-table a.dr-rowlink { color: hsl(var(--foreground)); font-weight: 500; text-decoration: none; }
+.dr-table a.dr-rowlink:hover { text-decoration: underline; text-underline-offset: 2px; }
+.dr-muted { color: hsl(var(--muted-foreground)); }
+.dr-more { display: flex; justify-content: center; padding: 12px; border-top: 1px solid hsl(var(--border)); }
+/* §7 table footer on every list table: count ("1 room" / "Showing 1–10 of 47") left, pager right only when >1 page. */
+.dr-tfoot { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 6px 16px;
+  border-top: 1px solid hsl(var(--border)); font-size: 13px; line-height: 20px; color: hsl(var(--muted-foreground));
+  font-variant-numeric: tabular-nums; }
+.dr-card--flush .dr-tfoot { padding-left: 24px; padding-right: 24px; }
+.dr-pager { display: flex; align-items: center; gap: 4px; }
+.dr-pager__page { padding: 0 8px; }
+.dr-pager .dr-btn { width: 32px; height: 32px; padding: 0; }
+
+/* Empty state: dashed-outline card, one line + one primary action. */
+.dr-empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px 24px; text-align: center;
+  border: 1px dashed hsl(var(--input)); border-radius: var(--radius); color: hsl(var(--muted-foreground)); font-size: 14px; }
+.dr-empty p { margin: 0; }
+
+/* Status pill (bordered tint + word) and identity chip (neutral + tag dot): fds components.css .fds-pill/.fds-tag,
+   sized for 14px rows: 22px chips (fds v0.8.1 baseline), small-control radius, never 999px. */
+.dr-table .fds-pill, .dr-card .fds-pill { box-sizing: border-box; height: 22px; font-size: 12px; }
+.dr-chip { display: inline-flex; align-items: center; gap: 6px; padding: 0 8px; height: 22px; border-radius: calc(var(--radius-control) * 0.75);
+  background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.dr-chip::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: hsl(var(--tag-dot, var(--neutral))); }
+
+/* Copy-able URL field. */
+.dr-copy { display: flex; gap: 8px; align-items: center; }
+.dr-copy .dr-input { flex: 1; min-width: 0; font-family: var(--font-mono); font-size: 13px; color: hsl(var(--muted-foreground)); background: hsl(var(--muted) / 0.5); }
+
+/* Dashed dropzone with a "Choose file" outline button (the native file input stays hidden). */
+.dr-dropzone { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 28px 20px; text-align: center;
+  border: 1px dashed hsl(var(--input)); border-radius: var(--radius); background: hsl(var(--muted) / 0.4); color: hsl(var(--muted-foreground)); font-size: 14px; }
+.dr-dropzone[data-over="true"] { border-color: hsl(var(--ring)); background: hsl(var(--brand-subtle)); }
+.dr-dropzone svg { width: 20px; height: 20px; }
+.dr-dropzone p { margin: 0; }
+
+/* Details disclosure for raw evidence. */
+.dr-details { font-size: 13px; }
+.dr-details > summary { cursor: pointer; color: hsl(var(--muted-foreground)); list-style: none; display: inline-flex; align-items: center; gap: 4px; }
+.dr-details > summary::-webkit-details-marker { display: none; }
+.dr-details > summary::before { content: "▸"; font-size: 10px; }
+.dr-details[open] > summary::before { content: "▾"; }
+.dr-details > summary:hover { color: hsl(var(--foreground)); }
+.dr-details pre { margin: 8px 0 0; padding: 12px; max-height: 320px; overflow: auto; white-space: pre-wrap; word-break: break-all;
+  font-family: var(--font-mono); font-size: 12px; background: hsl(var(--muted)); border: 1px solid hsl(var(--border)); border-radius: var(--radius-control); }
+
+/* Forms inside dialogs. */
+.dr-field { display: flex; flex-direction: column; gap: 6px; margin: 0 0 16px; }
+.dr-field > label, .dr-label { font-size: 14px; font-weight: 500; color: hsl(var(--foreground)); }
+.dr-hint { font-size: 13px; color: hsl(var(--muted-foreground)); margin: 0; }
+.dr-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.dr-grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0 12px; }
+
+/* Native <dialog> for the Django glue pages (React uses the Radix dialog with the same geometry). */
+dialog.dr-dialog { box-sizing: border-box; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 64px); overflow: visible; padding: 24px; margin: auto;
+  border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background)); color: hsl(var(--foreground));
+  box-shadow: 0 16px 48px hsl(var(--foreground) / 0.18); }
+dialog.dr-dialog--wide { width: min(720px, calc(100vw - 32px)); }
+/* Bounded dialog (review r1 [4]): title and actions stay put, the fields between them scroll when the viewport is short.
+   The body's negative margin + padding keeps focus rings unclipped; the select's absolutely placed list extends the
+   body's scroll area, so it is never cut off. Same geometry as before whenever the content fits. */
+dialog.dr-dialog[open] { display: flex; flex-direction: column; }
+dialog.dr-dialog > form { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+.dr-dialog__body { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain;
+  margin: -4px -24px; padding: 4px 24px; }
+dialog.dr-dialog::backdrop { background: hsl(var(--foreground) / 0.45); }
+.dr-dialog__title { margin: 0 0 4px; font-size: 18px; font-weight: 600; }
+.dr-dialog__desc { margin: 0 0 20px; font-size: 14px; color: hsl(var(--muted-foreground)); }
+.dr-dialog__foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+
+/* Styled select (Django glue pages; React has the same trigger via SelectMenu). */
+.dr-select { position: relative; }
+.dr-select__trigger { box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+  height: 36px; padding: 0 10px 0 12px; border: 1px solid hsl(var(--input)); border-radius: var(--radius-control); background: hsl(var(--background));
+  color: hsl(var(--foreground)); font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+.dr-select__trigger:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 1px; }
+.dr-select__trigger span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dr-select__trigger svg { width: 16px; height: 16px; color: hsl(var(--muted-foreground)); flex: none; }
+.dr-select__list { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 60; max-height: 260px; overflow: auto; margin: 0;
+  padding: 4px; list-style: none; background: hsl(var(--popover)); color: hsl(var(--popover-foreground)); border: 1px solid hsl(var(--border));
+  border-radius: var(--radius); box-shadow: var(--dr-popover-shadow); }
+.dr-select__list [role="option"] { padding: 8px 10px; border-radius: calc(var(--radius-control) * 0.75); font-size: 14px; cursor: pointer; }
+.dr-select__list [role="option"]:hover, .dr-select__list [role="option"].is-active { background: hsl(var(--accent)); }
+.dr-select__list [role="option"][aria-selected="true"] { background: hsl(var(--selected)); color: hsl(var(--selected-foreground)); }
+
+/* Toast-like inline notice. */
+.dr-notice { margin: 0 0 16px; }
+
+/* §4 Visitor pages: same 56px header, content in the 960px visitor container; context bar underneath. */
+.dr-header--visitor.fds-header { padding: 0; }
+.dr-visitor { box-sizing: border-box; width: 100%; max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.dr-header--visitor .dr-visitor { display: flex; align-items: center; gap: 24px; height: 100%; }
+.dr-header--visitor .fds-header__utils { margin-left: auto; }
+.dr-context { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px;
+  font-size: 13px; line-height: 20px; color: hsl(var(--muted-foreground)); border-bottom: 1px solid hsl(var(--border)); }
+.dr-context__room { color: hsl(var(--foreground)); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dr-context__who { text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dr-visitor-main { padding-top: 32px; padding-bottom: 48px; }
+
+@media (max-width: 720px) {
+  .dr-header.fds-header { padding: 0 16px; gap: 12px; }
+  .dr-header .dr-account__name { display: none; }
+  .dr-grid2, .dr-grid5 { grid-template-columns: 1fr; }
+  .dr-search { width: 100%; }
+}

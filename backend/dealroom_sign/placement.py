@@ -15,7 +15,7 @@ import sys
 import threading
 import time
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime
 from pathlib import Path
 
@@ -47,7 +47,7 @@ ROLE_DESCRIPTION_WIDE = re.compile(
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.28'
+VERSION = 'c2a.29'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -86,6 +86,7 @@ class Block:
     company_only_blocked: bool = False
     ambiguous_heading: bool = False
     unclaimed_cross_page: bool = False
+    printed_name_blocked: bool = False
     unclaimed_signing_peers: list = field(default_factory=list, repr=False)
 
 
@@ -643,6 +644,7 @@ def unclaimed_signing_peers(rules, texts, blocks):
         # Any labelled rule can close the stack (including Title/Its or an
         # unfamiliar date caption). Keep cand27's short fallback for a name
         # followed by text only, such as Title: CEO without a date rule.
+        # The fallback also covers a name alone; notice-shaped holds are intentional.
         tail_y = min((r.y for r in tails), default=line.y + 60)
         if any(line.y < r.y < tail_y and r is not line
                and r.semantic not in {'NAME', 'TITLE'}
@@ -653,6 +655,80 @@ def unclaimed_signing_peers(rules, texts, blocks):
                    if (value := person_text(part))]
         peers.append(printed or ([tokens(person)] if person else []))
     return peers
+
+
+def printed_name_column(row, line):
+    """Recognize the rule column and its existing inline/local continuations."""
+    x0, top, x1, bottom = row['rect']
+    left = min(line.x0, line.label.get('rect', [line.x0])[0])
+    if x0 < line.x1 and x1 > left:
+        return True
+    # Preserve the existing bare-name margin control at a Signature caption.
+    # Name-caption rows and outdents on the right receive no such extension.
+    if (line.semantic == 'SIGNATURE' and not NAME_CAPTION.match(row['text'])
+            and 0 <= left - x1 <= 24):
+        return True
+    # Existing rule-row forms place Name and Signature in adjacent table cells.
+    # They form one signing row; separate rows still require column proximity.
+    return line.semantic == 'SIGNATURE' and -3 <= line.y - bottom <= 5
+
+
+def printed_name_boundary(block, blocks, texts, rules, roles):
+    """Keep a borrowed printed identity as competition, but veto its placement."""
+    line = block.line
+    left = min(line.x0, line.label.get('rect', [line.x0])[0])
+
+    def party(text):
+        text = re.sub(r'^(?:signed\s+)?for and on behalf of\s+', '', text, flags=re.I)
+        key = text.rstrip(': ').lower()
+        mapped = roles.get(key, roles.get(key.removeprefix('the ')))
+        company = mapped or (behalf_parts(text) or ('', text))[1]
+        if mapped or (company_text(company) and not BLOCK_WORDING.fullmatch(company)):
+            return tuple(t for t in tokens(company) if t not in STOP)
+        return ()
+
+    own_party = party(block.heading)
+    for row in block.raw_labels:
+        # Inspect only rows that actually contribute a printed identity to this
+        # column. Evidence assigned to a neighbouring rule remains competition.
+        single = replace(block, raw_labels=[row])
+        names, ambiguous = printed_name_evidence(single, blocks)
+        if not names or ambiguous:
+            continue
+        x0, y0, x1, _ = row['rect']
+        # Preserve only the six explicit contact captions already exempt in
+        # extraction; an absorbed unknown signing caption is not a contact.
+        contacts = [r for r in rules if line.y < r.y and -10 <= y0 - r.y < 125
+                    and re.fullmatch(r'(?:email|e-mail|address|phone|tel|company)\s*:\s*',
+                                     r.label.get('text', ''), re.I)
+                    and (printed_name_column(row, r)
+                         or (y0 <= r.y <= row['rect'][3] and 0 <= x0 - r.x1 <= 24))]
+        if contacts and not any(line.y < t['rect'][1] < y0 and party(t['text'])
+                                and t['rect'][0] < max(x1, line.x1)
+                                and t['rect'][2] > min(x0, left) for t in texts):
+            continue
+        if not printed_name_column(row, line):
+            return True
+        headings = [t for t in texts if t is not row and party(t['text'])
+                    and t['rect'][0] < x1 and t['rect'][2] > x0]
+        above = [t for t in headings if t['rect'][3] <= y0]
+        nearest = max(above, key=lambda t: t['rect'][3], default=None)
+        if (nearest is not None and own_party and party(nearest['text']) != own_party
+                and y0 - nearest['rect'][3] < 125):
+            return True
+        # A heading between a leading name and this rule closes the earlier
+        # party's identity; a heading below this rule begins a separate block.
+        if any(min(line.y, y0) < t['rect'][1] < max(line.y, y0)
+               for t in headings):
+            return True
+        # A completed signature/date stack cannot absorb a later ruleless
+        # name. Keep the existing adjacent Name-after-Date companion band;
+        # beyond it, Date is a boundary even without a party heading.
+        if any(line.y < r.y < y0 - 22 and r.semantic == 'DATE'
+               and r.x1 > left and r.label.get('rect', [r.x0])[0] < line.x1
+               for r in rules):
+            return True
+    return False
 
 
 def extract(pdf, *, deadline=None):
@@ -842,6 +918,7 @@ def extract(pdf, *, deadline=None):
                 extents.append((block, (top, bottom, left, right)))
             partition_stacked_blocks(hosts, texts, roles)
             peers = unclaimed_signing_peers(unique, texts, hosts)
+            # Peers are page-local: without a hosted block this page lends no veto.
             for block in hosts:
                 block.unclaimed_signing_peers = peers
             blocks.extend(hosts)
@@ -877,6 +954,20 @@ def extract(pdf, *, deadline=None):
     unresolved_heading_pages = set()
     for block, extent in extents:
         texts, rules, _ = pages[block.line.page]
+        block.printed_name_blocked = printed_name_boundary(block, blocks, texts, rules, roles)
+        # A ruleless column may fall outside every host's text band. Keep its
+        # printed identity unresolved instead of lending an affiliate credit.
+        if not printed_names(block, blocks) and any(
+                any(person_text(part) for part in identity_parts(t['text']))
+                and not any((r.semantic not in COMPANION_SEMANTICS
+                             or re.fullmatch(r'(?:email|e-mail|address|phone|tel|company)\s*:\s*',
+                                             r.label.get('text', ''), re.I))
+                            and (printed_name_column(t, r)
+                                 or (t['rect'][1] <= r.y <= t['rect'][3]
+                                     and 0 <= t['rect'][0] - r.x1 <= 24))
+                            for r in rules)
+                for t in texts):
+            block.printed_name_blocked = True
         if shared_company_heading(block, blocks, texts, roles):
             unresolved_heading_pages.add(block.line.page)
         top, bottom, left, right = extent
@@ -1403,6 +1494,12 @@ def place(pdf, signers, *, model_client=None):
                for i, (j, _) in accepted.items()):
             return hold(result, 'ambiguous_identity',
                         'An unclaimed signing block requires placement review.')
+        if any(blocks[j].printed_name_blocked
+               or (scores[i][j] == 4 and any(b.printed_name_blocked
+                   and b.line.page == blocks[j].line.page for b in blocks))
+               for i, (j, _) in accepted.items()):
+            return hold(result, 'ambiguous_identity',
+                        'A printed name crosses a signing boundary and requires placement review.')
         result['status'] = 'placed'
         result['reason_code'] = 'placed'
     elif not result['reason']:

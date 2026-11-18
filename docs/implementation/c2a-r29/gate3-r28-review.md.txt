@@ -1,0 +1,205 @@
+VERDICT: APPROVE-WITH-NITS
+Counts: blocking 0 · high 1 · medium 0 · low 2 · nit 3
+
+Scope: r28 on disk in `/root/worktrees/send-c1b` (`VERSION = 'c2a.28'`, `placement.py` sha256 `e5dc8ef0…`, equal to Codex's `r28-source.py.txt`), compared with live r27 in `/root/worktrees/send-merge` (`VERSION = 'c2a.27'`, sha256 `f26d989f…`, equal to the r27 hash in my r27 review and to `placement.py` in Codex's r28 `starting-hashes.json`).
+
+**Bottom line**
+- **r27 B-1 is CLOSED.**
+  - My exact 700-cell matrix goes from r27 220 W to r28 0 W (220 W → n, 480 nn).
+  - All five real-worker shapes now hold.
+- **r28 is at least as safe as live r27.** Over 50,037 cells of my inherited families: n → p = 0 and c → w = 0.
+  - Every difference is W → hold (220).
+  - In 18,324 new cells for this review the only differences are p → hold (180; L-1).
+  - In code, r28 can only add peers, and a peer can only make `unclaimed_cross_page` true, which returns `hold` (`placement.py:1402`).
+  - **I recommend r28 replace live r27.**
+- **The widened peer cannot create a wrong placement.** On ordinary documents its cost is 180 extra holds in 14,112 attack cells. All of them come from one shape: a notice / `cc:` / uncaptioned rule with a person row, sitting on the signature page (L-1).
+- **New, pre-existing, not blocking (H-1):** when the counterparty's block has no drawn line at all, its printed `Name: Pat Smith` can be absorbed by another company's rule on the page.
+  - The rule can be the affiliate's or the sender's own (`FLEET TEST CO.`).
+  - The trigger is a conformed `/s/` line, a `Signature:` or `By:` caption with no line, a DocuSign stamp, or blank space.
+  - Pat is then placed there, `high`. r27 is identical. Details and why I did not block below.
+
+**Method: executed.**
+- **Isolation:**
+  - Interpreter: `/root/work/sign-product/send-venv/bin/python` only, with `sys.dont_write_bytecode` set and `OPENROUTER_API_KEY` / `PLACE_MODEL` popped.
+  - `httpx.Client.send` was patched to raise. **HTTP calls: 0 in every run.**
+  - Mock model-client calls are identical between r27 and r28 in every run: 360 + 240 in attack E, 780 in Q4 recitals, 36 in the Q4 hidden-shape run, 0 elsewhere.
+- **Sources:**
+  - r27 was read from `send-merge` and r28 from disk. Each run asserts both hash prefixes.
+  - Each revision is exec'd as its own in-memory module.
+- **Generators:**
+  - Taken verbatim from my r27 transcript (`counterparty-c2a-gate3-r27.jsonl`).
+  - The only edits: the baseline hash assert (`5683ff7b` → `f26d989f`, because `send-merge` now holds r27), and, in call 59, the `cand27` source swapped for r28.
+  - Mapping: calls 29 + 30 = attack E; 35 = A–D; 40 = r19 families; 41 = F fine / added; 45 = r24 + Q2; 48 = H-1 cross-page + r24 veto; 53 = the 700 variants; 55 = stacks; 56 = Q4 recitals; 59 = L-2 + B-2 subset + ordinary; 26 = 14 real-worker shapes.
+  - In every output below, column 1 is r27 and column 2 is r28.
+- **Oracle:** `rc.wrong_fields` (page, column, and the By/Date span).
+- **Tests run by me:** `test_placement_r28.py` + `test_placement_r13.py`, with a scratch sqlite DB in a /tmp tempdir and `-p no:cacheprovider`: **2,215 passed, 0 failed**, in 264 s.
+  - Not run by me: the full suite (Codex: 53,690 / 0 / 0 / 0) and the goldens.
+
+## Answers
+
+1. **r27 B-1 is closed.**
+   - **Exact 700-cell matrix (call 53):** `Wn` 220 and `nn` 480. r28 W = 0, and HTTP / model calls = 0.
+     - The 220 are the same 22 name × tail combinations I listed in r27, at 10 cells each, all single-signer domain cells.
+     - The tails are `Nom:` (all), bare `Pat Smith`, and `Print name:` / `Printed Name:` / `Name (print):` / `Name/Title:` / `Name:`, each with `Title:` / `Fecha:` tails.
+   - **The five real-worker shapes on `placement.place` (on-disk r28):** `Executed by:` + `Title: CEO` text, `Authorised signatory:` + `Title:` rule, `Signatory:` + `Nom:`, `Firma:` + bare name, and `Unterschrift:` + `Fecha:`.
+     - All five are `needs_sender` / `ambiguous_identity` with 0 fields, 0 model calls, and worker == in-process. In r27 all five were `placed` on `HARBOR LIGHT GROUP, INC.`, `high`.
+   - **The 14 earlier worker shapes (r26 B-1 ×4, r26 B-2 ×10):** all still `needs_sender`.
+   - **Call 59 subset:**
+     - B-2 560 cells: `Wn` 220 and `nn` 340.
+     - r13 L-2 fixtures: 20/20 placed at y = 560 with score 4 in both revisions, and 20/20 both-signer holds.
+
+2. **r28 vs live r27: n → p = 0 and c → w = 0 in every family I hold.**
+
+   | Family (r27 call) | Cells | r27 → r28 |
+   | --- | ---: | --- |
+   | A–D (35) | 1,869 | identical (WW 106 name-authoritative / L-2 controls, unchanged) |
+   | Attack E (29 + 30) | 2,592 | identical (WW 280: L-2 own-line and no-recital controls) |
+   | Q4 recitals A / B / E (56) | 3,354 | identical (WW 240: r13 L-2 own line) |
+   | Non-signing stacks (55) | 5,376 | identical (WW 444: `Name: Pat Smith` name-authoritative) |
+   | r19 veto / affiliate / competition / L-1 boundary (40) | 7,438 | identical |
+   | F fine / added (41) | 11,668 | identical |
+   | `BLOCKING` / `ATTACK` / `BOUNDARY` / Q2 (45) | 12,720 | identical |
+   | H-1 cross-page / r24 veto (48) | 3,420 | identical |
+   | B-2 variants (53) | 700 | **W → n 220** · rest identical |
+   | L-2 + B-2 subset + ordinary 300 (59) | 900 | **W → n 220** (overlaps the row above) · rest identical |
+
+   - **Totals:** 50,037 cells; 0 n → p, 0 c → w, 0 W → p, 0 p → W.
+   - **Code check (r27 → r28 diff, `placement.py:616-656` only, plus `VERSION`).** Every r27 peer is still an r28 peer with the same token list:
+     - The name-row test is `NAME_CAPTION or person`, a superset.
+     - The stack closers are `DATE or any labelled rule`, a superset. A nearer `tail_y` can only shrink the "intervening rule" set.
+     - With no closer, r27 skipped the stack; r28 uses the 60 pt fallback.
+   - **Code check (consumers).** Peers are read only at `placement.py:951` (`unclaimed_pages`) and `:969` (`hidden`). Both are monotone in the peer list. `unclaimed_cross_page` is read only at `:1402`, after acceptance, and returns `hold`.
+     - Scores, margins, assignment and `extract` output are untouched. Peers are cleared at `:993`.
+   - **N-3 shipped:** `r.label.get('rect', [r.x0])` on closing rules.
+
+3. **Attacking the widened peer: 0 wrong placements; 180 extra holds.**
+   - **The attack matrix: 14,112 cells, new for this review.**
+     - The base is an ordinary two-party NDA or MSA (calls 55 / 59 base), with recital none or parsed, and domain, explicit or both signers.
+     - Added to it is one non-signing structure: a heading (`NOTICES:` / `WITNESS:` / `EXHIBIT B - FORM`), a drawn rule, a person row, and a tail.
+     - Rule captions (7): none, `Attention:`, `Witness:`, `Employee Name:`, `cc:`, `Approved by:`, `Signature:`.
+     - Person rows (7): `Chris Jones`, `Attention: Chris Jones`, `Pat Smith`, `Attention: Pat Smith`, `cc: Lee Harbor`, `Nom: Chris Jones`, `Lee Harbor, General Counsel`.
+     - Tails (6): none, `Title: General Counsel` text, and `Title:` / `Its:` / `Email:` / `Date:` rules.
+     - Placement (4): on the signature page below the blocks, on an exhibit page, on the recital page, or as a two-column table on an exhibit.
+
+     | Layout | r27 → r28 |
+     | --- | --- |
+     | Signature page below the blocks | **p → n 180** · nn 3,168 · pp 162 · WW 18 |
+     | Exhibit page | identical (nn 3,156 · pp 342 · WW 30) |
+     | Recital page | identical (nn 3,210 · pp 288 · WW 30) |
+     | Two-column table exhibit | identical (nn 3,386 · pp 126 · WW 16) |
+
+     - **The 180 p → n:** all have an uncaptioned / `Attention:` / `cc:` rule (60 each), over `Attention: Chris Jones` (54), `Nom: Chris Jones` (54), `cc: Lee Harbor` (54) or `Attention: Pat Smith` (18), with every tail (30 each) → **L-1**.
+     - **The 94 WW are identical in both revisions.** Each is a bare `Pat Smith` row between a rule and a `Date:` rule. That really is a signing block for Pat, and it is name-authoritative.
+     - **No structure on an exhibit or recital page adds a hold.** Peers attach only to blocks hosted on their own page (`placement.py:844-846`), so a page with no signature block contributes no peer (N-3).
+   - **Text-only notice mentions, 540 cells:** `Attention:` / `cc:` / `Copy to: Pat Smith, Harbor Light Analytics, Inc.` near the sender's block never caused a wrong placement in r27 or r28.
+     - Pat's real block was on the same page or on the next page.
+     - Fleet's block had no name row, a blank `Name:`, or `Name: Dan Whaley`.
+   - **Hold → wrong placement:** impossible by construction (Q2 code check), and measured 0 in 68,361 cells.
+
+4. **Other hidden-signing-block shapes, measured (new matrices, r27 vs r28):**
+
+   | Shape (Pat's own block; affiliate `HARBOR LIGHT GROUP, INC.` line below) | Cells | Result |
+   | --- | ---: | --- |
+   | Uncaptioned rule, name beneath (`Pat Smith, CEO` / `Pat Smith` / `Pat Smith / CEO` / `PAT SMITH` / two-line name + role / `Title: CEO` text) × 4 headings | 144 | nn (all hold, both revisions) |
+   | Signature image box (empty rectangle, `Signature` caption, name beneath) | 144 | nn |
+   | Underscore text line (no drawn rule) | 144 | nn |
+   | Gridded execution table: Party / Signature / Name-Title, Pat's row with a rule in the Signature cell | 144 | nn |
+   | Two-column page: Pat's uncaptioned stack beside Fleet's block, or beside the affiliate's | 288 | nn |
+   | Hidden `Executed by:` block alone on its own page | 144 | nn |
+   | **Conformed `/s/ Pat Smith` text, no rule** | 144 | **WW 84** → H-1 |
+   | **No rule at all** (`Signature:` text, `By:` text, blank, DocuSign stamp, `[Sign Here]`), with and without the affiliate | 648 | **WW 282** → H-1 |
+   | Geometry sweep of the no-rule class: Fleet name row (none / blank `Name:` / `Name: Dan Whaley` / + Title) × gap × stacked or side-by-side | 1,728 | **WW 256**, all with Fleet's name row absent or blank; 0 when Fleet prints `Name: Dan Whaley` |
+
+   - r27 and r28 are identical on all 4,212 cells, including the shapes not listed above.
+   - The r28 peer covers every hidden-rule shape I could build. What remains is the case where Pat's block has **no rule at all** → H-1.
+
+5. **Test files: CONFIRMED by file hashes, not by git (N-1).**
+   - Codex's `docs/implementation/c2a-r28/starting-hashes.json` (3,311 files) records `placement.py` = `f26d989f…` (r27).
+   - All 83 test-tree files in that snapshot are unchanged on disk, including `test_placement_r27.py` and `placement_r27_review_cases.py`, and none were deleted.
+   - The 79 new files are `test_placement_r28.py`, `placement_r28_review_cases.py` and 77 files under `tests/fixtures/r28/`. There are no others.
+   - The only non-`docs/` file that differs from the snapshot is `backend/dealroom_sign/placement.py`.
+   - No `.pyc` files exist outside `__pycache__`. Both `__pycache__` directories predate this session (07:12 and 10:08; my runs started after 10:53).
+
+## High
+
+**H-1. A counterparty block with no drawn line lets its printed name be absorbed by another company's rule, including the sender's own (pre-existing; r27 identical; not a regression).**
+- **Where:** label collection gives the only rule on a page every text row within reach, including rows in another column 268 pt to the right. The name-authoritative score then accepts `Name: Pat Smith` as that block's identity, even though the block's own heading is `FLEET TEST CO.`.
+  - Peers (`unclaimed_signing_peers`) need a drawn rule, so there is no veto.
+- **Effect:** Pat (domain or explicit company), as the only signer, is `placed` with score 6, margin 6 and `high`. She lands on Fleet's `By:` line (y = 270) or on the affiliate's line.
+  - With both signers present it holds.
+  - When Fleet's block prints `Name: Dan Whaley` it holds.
+  - When the counterparty column has any drawn rule it holds: a filled 0.75 pt rectangle, an underscore line and an image box all hold.
+- **Scope in my matrices:**
+  - 84 / 144 conformed cells;
+  - 282 / 648 no-rule cells;
+  - 256 / 1,728 geometry cells (all with Fleet's name row absent or blank `Name:`);
+  - 32 + 16 / 540 cells where `Name: Pat Smith` / `Pat Smith, CEO` sits in a ruleless spot below Fleet's block.
+  - All are WW: identical in r27 and r28.
+- **Why not blocking:** the document offers Pat no signing line at all, so a hold is the only correct answer, and real documents rarely look like this.
+  - A conformed `/s/` or DocuSign-stamped counterparty would not normally be a pending signer.
+  - A `Signature:` caption with no line beside a ruled sender block is a malformed mixed template.
+  - It sits outside r28's change and needs a different guard. Suggested: a block may not take a printed-name identity from a text row that shares no x-overlap with its rule column, or that sits beneath a heading naming a different mapped party.
+  - I would take this next, not hold r28 for it. If the manager reads "concrete" more strictly, this is the item to escalate.
+- **Reproduction (real worker, on-disk r28):**
+  ```bash
+  /root/work/sign-product/send-venv/bin/python - <<'EOF'
+  import sys, os; sys.dont_write_bytecode = True
+  for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+  sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+  from unittest.mock import Mock, patch
+  from dealroom_sign import placement
+  from dealroom_sign.tests import placement_r24_review_cases as R24
+  rc = R24.rc; X = 72
+  fleet = [(240, 'FLEET TEST CO.', False, X), (270, 'By:', True, X, 290), (310, 'Date:', True, X, 290)]
+  for head in ('For and on behalf of the Recipient', None):
+      own = ([(340, head, False, 340)] if head else []) + [(370, 'Signature:', False, 340), (382, 'Name: Pat Smith', False, 340), (394, 'Title: CEO', False, 340)]
+      with patch('httpx.Client.send', Mock(side_effect=AssertionError('http'))):
+          r = placement.place(rc.pages_pdf([list(rc.RECITALS['parsed']), fleet + own]), [dict(name='Pat Smith', email=rc.PE)], model_client=Mock())
+      print(head, '|', r['status'], [(f['type'], f['evidence']['line'], f['confidence']) for f in r['fields']], r['assignments'])
+  EOF
+  ```
+  - **Observed (r28 and r27):** `placed`, with SIGNATURE `[96.45, 270.0, 290.0]` and DATE `[105.9, 310.0, 290.0]`, `high`, score 6, margin 6. That is the line under `FLEET TEST CO.`
+  - **Expected:** a hold.
+  - Swap `(370, 'Signature:', …)` for `'/s/ Pat Smith'`, a DocuSign stamp, or nothing: the result is the same. Add the affiliate rows from the r27 B-1 repro and stack the own block at x = 72: Pat goes on `HARBOR LIGHT GROUP, INC.`
+
+## Low
+
+**L-1. The widened peer adds holds when a notice / `cc:` / uncaptioned rule with a person row sits on the signature page.**
+- 180 of 3,528 signature-page cells in the Q3 matrix: p → n, never W.
+- The shape: a rule (uncaptioned, `Attention:` or `cc:`) with `Attention: Chris Jones` / `cc: Lee Harbor` / `Nom: Chris Jones` / `Attention: Pat Smith` beneath it, under any tail, including none (the 60 pt fallback).
+- The same structure on an exhibit or recital page adds 0.
+- Codex's "ordinary two-party added holds 0" is correct for its cohorts, which do not contain this shape.
+- These are holds a human resolves. Plain-text notice blocks (no drawn rule) are unaffected.
+
+**L-2 (carried, unchanged).** r27 L-1 (280 `r26c` own-line holds under misspelt recitals) and r27 L-2 (44 + 24 table-row exhibit holds) are unchanged in r28. The calls 56 and 55 totals are identical to r27.
+
+## Nits
+
+- **N-1:** git is again sandbox-blocked for `send-c1b` in this session; Q5 was answered by sha256 against Codex's `starting-hashes.json`.
+  - Disclosures on my own process:
+    - One run (call 45, 12,720 cells) exceeded my 560 s foreground timeout, and the harness moved it to the background. It finished with exit 0, and I read its output before continuing. No other background work ran.
+    - I wrote extracted copies of my own r27 transcript commands to `/tmp/r28rev/` as scratch, outside every repository. That is the only file I wrote other than this review.
+- **N-2:** `unclaimed_signing_peers` results are attached only to `hosts` on their own page (`placement.py:844-846`). A hidden signing stack on a page with no hosted block cannot veto anything.
+  - Measured harmless: the `own_page` shape holds, 144 nn, because that rule becomes its own block.
+  - Worth one comment line so a future change does not rely on it.
+- **N-3:** the 60 pt fallback (`default=line.y + 60`) applies even when the person row is the only thing under the rule. That is the reason L-1 fires with no tail at all. It is acceptable as a veto; noted for calibration.
+
+## Holds a human resolves (r28, my runs)
+
+| Run | Holds | Cells |
+| --- | ---: | ---: |
+| A–D / attack E / Q4 recitals | 990 / 2,100 / 2,802 | 1,869 / 2,592 / 3,354 |
+| Stacks / r19 families / F fine + added | 4,784 / 7,247 / 9,930 | 5,376 / 7,438 / 11,668 |
+| r24 + Q2 / cross-page + r24 veto | 8,396 / 2,182 | 12,720 / 3,420 |
+| B-2 variants (700) / B-2 subset (560) / L-2 both / ordinary 300 | 700 / 560 / 20 / 258 | 700 / 560 / 20 / 300 |
+| Q3 widened-peer attack / text-mention attack | 13,100 / 502 | 14,112 / 540 |
+| Q4 hidden shapes (1,008 + 288 + 648 + 1,728) | 864 / 288 / 360 / 1,472 | 3,672 |
+| Real-worker shapes (B-1 r27 ×5, r26 ×14) | 19 | 19 |
+
+## Attacks that held (r28)
+
+- **r27 B-1:** 0 W across all 700 cells, the 5 real workers, and the 14 earlier worker shapes.
+- **Widened peer:** 0 new wrong placements across 14,112 non-signing person-row cells, 540 text-mention cells, and every inherited family.
+- **Monotonicity:** 0 n → p and 0 c → w over 68,361 cells, and structurally confined to a hold-only veto.
+- **Hidden-rule shapes:** an uncaptioned rule with `Pat Smith, CEO` beneath, an image box, underscores, a gridded execution table, two-column stacks and own-page blocks all hold.
+- **r13 L-2 (immutable):** 20/20 placed + 20/20 holds in-process, and `test_placement_r13.py` passes.

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r29/measure29.py", line 123, in <module>
+    main(sys.argv[1], sys.argv[2:])
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r29/measure29.py", line 80, in main
+    raw = bool(review.rc.wrong_fields(result, allowed))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py", line 87, in wrong_fields
+    page, x, y, end = allowed[field['signer']]
+                      ~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'pat@harborlight.fleet.test'

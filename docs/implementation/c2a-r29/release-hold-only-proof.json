@@ -1,0 +1,23 @@
+{
+  "source_sha256": "866637df797137e74b748c85a644629edda206544a6bc8a3b685e31f1c29bae6",
+  "changed_functions_or_classes": [
+    "Block",
+    "extract",
+    "place"
+  ],
+  "added_functions": [
+    "printed_name_column",
+    "printed_name_boundary"
+  ],
+  "unchanged": {
+    "score": true,
+    "printed_name_evidence": true,
+    "prepare_blocks": true,
+    "assignment": true,
+    "field_for": true,
+    "validate_result": true,
+    "to_native_fields": true
+  },
+  "baseline_native_conversions_exact": true,
+  "guard": "Only new metadata and a post-validation hold branch; no existing score, assignment, model eligibility or output geometry is changed."
+}

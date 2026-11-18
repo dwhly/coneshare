@@ -1,0 +1,14 @@
+import json, os
+calls=[]
+for line in open('counterparty-c2a-gate3-r27.jsonl'):
+    try: d=json.loads(line)
+    except: continue
+    if not isinstance(d,dict): continue
+    m=d.get('message')
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use': calls.append(b)
+for i in (58, 61, 62): print('=====', i); print(calls[i]['input']['command'])
+print(sorted(os.listdir('/root/worktrees/send-c1b/docs/implementation/c2a-r28')))

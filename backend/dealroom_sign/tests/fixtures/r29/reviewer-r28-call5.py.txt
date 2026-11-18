@@ -1,0 +1,16 @@
+import json
+calls=[]
+for line in open('counterparty-c2a-gate3-r27.jsonl'):
+    try: d=json.loads(line)
+    except: continue
+    if not isinstance(d,dict): continue
+    m=d.get('message')
+    if not isinstance(m,dict): continue
+    c=m.get('content')
+    if isinstance(c,list):
+        for b in c:
+            if isinstance(b,dict) and b.get('type')=='tool_use':
+                calls.append(b)
+for i,b in enumerate(calls):
+    s=json.dumps(b['input'])
+    print(i,b['name'],len(s),s[:140].replace('\\n',' | '))
