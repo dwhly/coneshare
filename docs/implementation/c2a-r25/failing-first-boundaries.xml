@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="9" time="1.167" timestamp="2026-11-18T04:15:12.196346" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[False-False-False]" time="0.019" /><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[False-False-True]" time="0.013"><failure message="AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r25.py:58: in test_cross_page_guard_accounts_for_all_signers
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[False-True-False]" time="0.012" /><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[False-True-True]" time="0.013"><failure message="AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r25.py:58: in test_cross_page_guard_accounts_for_all_signers
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[True-False-False]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [353.9, 360.0, 500.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}&#10;assert 'placed' == 'needs_sender'&#10;  &#10;  - needs_sender&#10;  + placed">dealroom_sign/tests/test_placement_r25.py:58: in test_cross_page_guard_accounts_for_all_signers
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [353.9, 360.0, 500.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert 'placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[True-False-True]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r25.py:58: in test_cross_page_guard_accounts_for_all_signers
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[True-True-False]" time="0.013" /><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_guard_accounts_for_all_signers[True-True-True]" time="0.014"><failure message="AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r25.py:58: in test_cross_page_guard_accounts_for_all_signers
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 10, 'score': 10, ...}, {'block_id': 'b0', 'confidence': 'low', 'margin': 0, 'score': 0, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r25" name="test_cross_page_witness_does_not_claim_party_identity" time="0.012" /></testsuite></testsuites>

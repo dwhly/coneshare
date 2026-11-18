@@ -1,0 +1,17 @@
+q3b_aligned 240 r25 raw 0
+q3b_aligned 480 r25 raw 0
+q3b_aligned 720 r25 raw 0
+q3b_aligned 960 r25 raw 0
+q3b_aligned 1200 r25 raw 0
+q3b_aligned 1440 r25 raw 0
+q3b_aligned 1680 r25 raw 0
+q3b_aligned 1920 r25 raw 0
+q3b_aligned 2160 r25 raw 0
+q3b_aligned 2400 r25 raw 0
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r25/review_q3b.py", line 30, in <module>
+    replay.main('q3b_aligned', replay.OUT / 'v1', replay.OUT / 'structural-v1-source.py.txt')
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r25/replay25.py", line 152, in main
+    assert all(g[b + '_to_r25_n_to_p'] == g[b + '_to_r25_c_to_w'] == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

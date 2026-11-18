@@ -1,0 +1,14 @@
+....F....                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_cross_page_guard_accounts_for_all_signers[True-False-False] _______
+dealroom_sign/tests/test_placement_r25.py:58: in test_cross_page_guard_accounts_for_all_signers
+    assert result['status'] == expected, result
+E   AssertionError: {'analysis_version': 'c2a.24', 'assignments': [{'block_id': 'b1', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...ate:'}], 'line': [353.9, 360.0, 500.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}
+E   assert 'placed' == 'needs_sender'
+E     
+E     - needs_sender
+E     + placed
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r25/failing-first-boundaries-final.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r25.py::test_cross_page_guard_accounts_for_all_signers[True-False-False]
+1 failed, 8 passed, 7460 deselected in 1.26s

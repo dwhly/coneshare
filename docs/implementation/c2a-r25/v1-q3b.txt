@@ -1,0 +1,19 @@
+q3b 240 r25 raw 0
+q3b 480 r25 raw 0
+q3b 720 r25 raw 0
+q3b 960 r25 raw 0
+q3b 1200 r25 raw 0
+q3b 1440 r25 raw 0
+q3b 1680 r25 raw 0
+q3b 1920 r25 raw 0
+q3b 2160 r25 raw 0
+q3b 2400 r25 raw 0
+q3b 2640 r25 raw 0
+q3b 2880 r25 raw 0
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r25/replay25.py", line 178, in <module>
+    main(part, folder, source)
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r25/replay25.py", line 152, in main
+    assert all(g[b + '_to_r25_n_to_p'] == g[b + '_to_r25_c_to_w'] == 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,8 @@
+coder rc=1 head=9a91a4b99d0df4d913780914379bf7e0fa374e1d
+failing-first: 422 failed, 7047 passed on unchanged c2a.24; 248 Q3a, 166 broader Q3b, 7 worker, 1 boundary failures
+what shipped: VERSION c2a.25; structural cross-page unclaimed-block flag and final hold-only guard; original scores/margins preserved; cand4 rejected; first score-zeroing candidate rejected for 8 n -> p transitions
+vs-live: 72054 measured cells; n -> p = 0 and c -> w = 0 versus c2a.24 AND r21; 940 worker evaluations; all nonexception measured families 0 wrong; remaining 16 M-1 and 138 historical flags exact to r21 except analysis_version; seven goldens exact
+full-suite: 47655 passed, 0 failed, 0 errors, 0 skipped; completed without -x or selection; r19 competition 40/40
+test changes: 2 added test-tree files, 7469 added tests; all 40186 old IDs retained; 2441 other pre-existing tracked files hash-identical, including tests/fixtures/evidence/.done; no commit
+blockers: The exact review Q3a/Q3b stdin generators were not supplied. Every stated Q3a shape is covered (4,536 cells; r24 248 wrong and cand4 152, matching the review), but its reported 3,888-cell selection is unspecified. Q3b's nine role pairs are not enumerated; the explicit 2,430-cell reconstruction is independently measured, not certified as the exact review input set.
+results: docs/implementation/c2a-r25/results-r25.md

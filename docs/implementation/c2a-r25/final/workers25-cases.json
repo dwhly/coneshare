@@ -1,0 +1,1116 @@
+{
+  "cases": [
+    {
+      "group": "msa_supplier",
+      "case": "('msa_supplier', False)",
+      "results": {
+        "r21": "e214f549fd9727919286d594a4fcdd277f021c0b5924ca932c79391a71360fd9",
+        "r24": "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2",
+        "cand4": "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2",
+        "r25": "274b934c67b0e833a589adf244ecd095f18f0ea853a7c989d3951ba84231682d"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "aa31da0ad6bf419cf2beff31634e0d73c28b3c43af69521a26b021000eec829e"
+    },
+    {
+      "group": "msa_supplier",
+      "case": "('msa_supplier', True)",
+      "results": {
+        "r21": "584015c8df478145f8a5a0da45017871729c556571ca7da38bdb911d1f0a71df",
+        "r24": "b80d3143623349bd4ba3a84698b51169fbd6f6da38fe7ba42bc2bf917683e749",
+        "cand4": "b80d3143623349bd4ba3a84698b51169fbd6f6da38fe7ba42bc2bf917683e749",
+        "r25": "fdddd76ae08c9ffdd456083dcd1384de45f1f273540db99771bd2bf84b26ec0e"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "cand4": false,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "cand4": false,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "13a2af74b1bc530630e39f15f39083a8d6d9d0450f65899f04c58860fc9938a8"
+    },
+    {
+      "group": "nda_member",
+      "case": "('nda_member', False)",
+      "results": {
+        "r21": "e214f549fd9727919286d594a4fcdd277f021c0b5924ca932c79391a71360fd9",
+        "r24": "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2",
+        "cand4": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4",
+        "r25": "274b934c67b0e833a589adf244ecd095f18f0ea853a7c989d3951ba84231682d"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": false,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": false,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "d5154fb003614a7e71d23fcdd7fb94d43b728956666144b173046576f38eec09"
+    },
+    {
+      "group": "nda_member",
+      "case": "('nda_member', True)",
+      "results": {
+        "r21": "97d230b0ae73792bf710ec2c36cda464964a479fae4a0128066c263bd902e92e",
+        "r24": "ae66214bdd37846125acb4bbee2b302c79f833455a60fc6598180324ba7876c4",
+        "cand4": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534",
+        "r25": "1ed80651aef2ea5a7c596e99aa853c52e64dc863bbbf8f7c76e5422a8722ba6f"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": false,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": false,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "7865fca63368683444459f2abe12a1784ccd076774eecbc71056835afdcf9cf7"
+    },
+    {
+      "group": "nda_caption",
+      "case": "('nda_caption', False)",
+      "results": {
+        "r21": "e214f549fd9727919286d594a4fcdd277f021c0b5924ca932c79391a71360fd9",
+        "r24": "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2",
+        "cand4": "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2",
+        "r25": "274b934c67b0e833a589adf244ecd095f18f0ea853a7c989d3951ba84231682d"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "8566005cbaab3fdcff44a5effbe2cfee6dd85d4dd00a401e0bedb7aa016b70ee"
+    },
+    {
+      "group": "nda_caption",
+      "case": "('nda_caption', True)",
+      "results": {
+        "r21": "97d230b0ae73792bf710ec2c36cda464964a479fae4a0128066c263bd902e92e",
+        "r24": "ae66214bdd37846125acb4bbee2b302c79f833455a60fc6598180324ba7876c4",
+        "cand4": "ae66214bdd37846125acb4bbee2b302c79f833455a60fc6598180324ba7876c4",
+        "r25": "1ed80651aef2ea5a7c596e99aa853c52e64dc863bbbf8f7c76e5422a8722ba6f"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "39baa69de56dc2011103197ae440b7eb8a83a1c537e6f91511fc3793e4a9c089"
+    },
+    {
+      "group": "nda_named",
+      "case": "('nda_named', False)",
+      "results": {
+        "r21": "e214f549fd9727919286d594a4fcdd277f021c0b5924ca932c79391a71360fd9",
+        "r24": "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2",
+        "cand4": "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2",
+        "r25": "274b934c67b0e833a589adf244ecd095f18f0ea853a7c989d3951ba84231682d"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "b0f546e5e1cbd9097ed81d8feaa3cf760088ef1c61c227bbeebf2cd385b7f175"
+    },
+    {
+      "group": "nda_named",
+      "case": "('nda_named', True)",
+      "results": {
+        "r21": "97d230b0ae73792bf710ec2c36cda464964a479fae4a0128066c263bd902e92e",
+        "r24": "ae66214bdd37846125acb4bbee2b302c79f833455a60fc6598180324ba7876c4",
+        "cand4": "ae66214bdd37846125acb4bbee2b302c79f833455a60fc6598180324ba7876c4",
+        "r25": "1ed80651aef2ea5a7c596e99aa853c52e64dc863bbbf8f7c76e5422a8722ba6f"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": true,
+        "cand4": true,
+        "r25": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "cand4": 0,
+        "r25": 0
+      },
+      "input_sha256": "29e8267c624eedf32b2c1d90124d6d36257aa52b07f21a72686c507620ca19da"
+    }
+  ],
+  "outcomes": {
+    "e214f549fd9727919286d594a4fcdd277f021c0b5924ca932c79391a71360fd9": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT GROUP, INC.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  180.02,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "eeadad94620584944543e04254c08023f56e6c5c993309b56567b9166390bbe2": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT GROUP, INC.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  180.02,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "274b934c67b0e833a589adf244ecd095f18f0ea853a7c989d3951ba84231682d": {
+      "status": "needs_sender",
+      "reason": "An unclaimed signing block on another page requires placement review.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "584015c8df478145f8a5a0da45017871729c556571ca7da38bdb911d1f0a71df": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "b80d3143623349bd4ba3a84698b51169fbd6f6da38fe7ba42bc2bf917683e749": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "fdddd76ae08c9ffdd456083dcd1384de45f1f273540db99771bd2bf84b26ec0e": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "97d230b0ae73792bf710ec2c36cda464964a479fae4a0128066c263bd902e92e": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT GROUP, INC.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  180.02,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "ae66214bdd37846125acb4bbee2b302c79f833455a60fc6598180324ba7876c4": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "HARBOR LIGHT GROUP, INC.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  180.02,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "1ed80651aef2ea5a7c596e99aa853c52e64dc863bbbf8f7c76e5422a8722ba6f": {
+      "status": "needs_sender",
+      "reason": "An unclaimed signing block on another page requires placement review.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    }
+  }
+}

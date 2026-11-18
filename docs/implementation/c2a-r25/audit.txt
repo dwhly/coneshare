@@ -1,0 +1,41 @@
+{
+  "rc": 1,
+  "source_sha256": "8988fe1a399c903aeb0c9794c810d2dcb66995beb663ddb89a690e71c179d7a5",
+  "version": "c2a.25",
+  "full_suite": {
+    "passed": 47655,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "measured_cells": 72054,
+  "comparisons": {
+    "r21": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 4033,
+      "w_to_n": 1106
+    },
+    "r24": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 2574,
+      "w_to_n": 621
+    }
+  },
+  "goldens_exact": true,
+  "historical_raw_flags": {
+    "review: Competition": 96,
+    "review: Q4 M1 ambiguity": 6,
+    "stress: Recitals northwind": 16,
+    "stress: Recitals misspelled_M1": 16,
+    "stress: Page probes nw_page2": 8,
+    "stress: Page probes nw_section1": 8,
+    "stress: Page probes the_recipient_page2": 4
+  },
+  "all_measured_nonexception_families_zero_wrong": true,
+  "preservation_passed": true,
+  "blockers": [
+    "The exact review Q3a/Q3b stdin generators were not supplied. Every stated Q3a shape is covered (4,536 cells; r24 248 wrong and cand4 152, matching the review), but its reported 3,888-cell selection is unspecified. Q3b's nine role pairs are not enumerated; the explicit 2,430-cell reconstruction is independently measured, not certified as the exact review input set."
+  ]
+}

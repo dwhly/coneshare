@@ -1,0 +1,206 @@
+VERDICT: FIX-FIRST
+Counts: blocking 2 · high 0 · medium 1 · low 1 · nit 0
+
+Scope: r24 HEAD `9a91a4b9` in `/root/worktrees/send-c1b` (r23 `e2bbb758`, live r21 `afb9aa6e`), `VERSION = 'c2a.24'`.
+- On-disk `placement.py` equals `git show 9a91a4b9:backend/dealroom_sign/placement.py`.
+- `git status --short` in that worktree is empty before and after my runs.
+
+**Bottom line**
+- **r23 B-1 (five phrasings) and B-2 (designation mid-name) are closed**, both in process and on the real worker.
+- **H-1 is closed in its measured shape:** 0 W in the 2,160-cell cross-page matrix. This includes the `GUARANTOR:` / `THE GUARANTOR` captions and the affiliate-above-recital variants.
+- **r24 is at least as safe as live r21 on every family I hold.** Across ~45,300 cells compared directly with r21:
+  - **n → p = 0**: no cell where r21 holds and r24 places.
+  - **c → w = 0**: no cell where r21 is correct and r24 is wrong.
+  - Every difference is either W → hold (r24 fixes an r21 error) or correct → hold (cost).
+  - **I recommend r24 replace live r21 now.**
+- **The narrow H-1 guard can be bypassed (Q3, BLOCKING by the brief's rule).** In 332 of 6,318 attack cells a cross-page affiliate still takes Pat's domain match. r24 places Pat `high` on `HARBOR LIGHT GROUP, INC.` in shapes such as:
+  - a role word outside the vocabulary (`MEMBER:`, `THE SUPPLIER`, `CLIENT:` …);
+  - a role named only in a caption (`Recipient Signature`, `as Recipient`, `Its: Recipient`);
+  - an abbreviated or misspelt own-company heading (`H.L.A., INC.`, `HL ANALYTICS, INC.`).
+- **Every one of those 332 cells is also wrong in live r21.** They are surviving r21 errors, not r24 regressions. So they block Gate 3 approval of the H-1 fix, but not replacing live.
+
+**Method: executed.**
+- **Isolation:**
+  - Interpreter: `/root/work/sign-product/send-venv/bin/python` only, with `sys.dont_write_bytecode`.
+  - `OPENROUTER_API_KEY` and `PLACE_MODEL` were popped, and `httpx.Client.send` was patched to raise.
+  - **HTTP calls: 0 in every run. Model calls: 0 in every cell.**
+- **Sources:** r21, r23 and r24 come from `git show` of `afb9aa6e` / `e2bbb758` / `9a91a4b9`. Each was exec'd as its own in-memory module. For the r21/r23/r24 worker runs, each had its own temporary worker package.
+  - `cand4` (see B-1) is an in-memory one-line patch on r24.
+- **Oracle:** `placement_r21_review_cases.wrong_fields` (page, column, and By/Date span), or `new17.wrong_fields` for my r19 harness families.
+- **Harness:**
+  - My r16–r22 families use `/tmp/rev19/h.py` + `gens.py`, loaded with the stale `assert SRC['r19'] == …` lines dropped.
+  - Everything else uses Codex's `placement_r2{1,2,3,4}_review_cases` generators, or the inline matrices quoted below.
+- **Files:** none written except this review. All harness code went in via stdin; temporary worker packages were deleted at exit.
+- **Not run by me:** the full pytest suite, the goldens, and the 113-group historical replay. Codex reports 40,186 passed / 0 failed / 0 errors / 0 skipped, exact goldens, and 210 historical flags identical to r21.
+
+## Answers
+
+1. **r23 B-1 / B-2 / H-1 on r24: CLOSED (as measured).**
+   - **B-1 / B-2:** `cases.matrix(R24.BLOCKING)`, 2,160 cells, columns r21 → r23 → r24 (W = wrong, p = placed correctly, n = hold):
+
+     | Recital | n→W→n | p→p→p | p→n→n | n→n→n |
+     | --- | ---: | ---: | ---: | ---: |
+     | each of the five B-1 phrasings (joint venture, subsidiary, successor ± address, on behalf of affiliates) | 24 | 120 | 20 | 76 |
+     | `b2_partners` / `b2_associates` / `b2_affiliates` | 12 | 60 | 10 | 158 |
+     | `b2_smith` | 6 | 60 | 12 | 162 |
+
+     - **Real worker:** `R24.worker_case` × b1/b2 × PAT, DAN+PAT gives `nWn` in every cell, and worker equals in-process.
+   - **H-1:** `R24.cross_page_matrix()`, 2,160 cells, r21 → r23 → r24:
+
+     | Transition | Cells |
+     | --- | ---: |
+     | p→p→p | 1,170 |
+     | n→n→n | 672 |
+     | **p→p→n** | **228** (the guard's hold cost) |
+     | W→W→n | 54 |
+     | W→n→n | 36 |
+
+     - **r24 is 0 W.** The r23 W cells were all uncaptioned affiliates. Captioned ones (`GUARANTOR:` / `THE GUARANTOR`) and the affiliate-above-recital ("before") variants are 0 W in all three versions. Explicit-company signers are never wrong.
+     - **Real worker:** `h1_worker_case` (captioned) gives n/n/n. `h1_uncaptioned_worker_case` gives **W/W/n**, so r24 holds where r21 and r23 place Pat on the affiliate.
+
+2. **Is r24 at least as safe as live r21? YES: n → p = 0 and c → w = 0 in every family.** Columns r21 → r24:
+
+   | Family | Cells | r21→r24 |
+   | --- | ---: | --- |
+   | Veto matrix (r19) | 140 | n→n 140 |
+   | Affiliate matrix + r18 B1 repro | 1,538 | n→n 1,538 |
+   | Competition | 480 | W→W 96 (the accepted "Chris Jones printed" cells) · n→n 384 |
+   | L-1 boundary, Pat / Fleet | 3,480 / 1,800 | p→p 191, n→n 3,289 / n→n 1,800 |
+   | F fine / F fine company-only | 3,456 / 3,456 | p→p 2,325, n→n 1,131 / p→p 776, n→n 2,680 |
+   | Added (A2, witness, F perms / gaps, L1 stacked, B1/B2 repro) | 4,756 | identical cell for cell, 0 W |
+   | r22 conflict probes | 36 | W→n 24 · n→n 12 |
+   | r22 L-1 384 | 384 | n→n 384 |
+   | r23 Q2 matrix (22 recitals) | 5,280 | p→p 2,420 · n→n 2,648 · **W→n 48** · p→n 164 |
+   | r24 attack + boundary recitals | 5,280 | p→p 1,960 · n→n 3,130 · **W→n 24** · p→n 166 |
+   | r24 veto matrix | 1,260 | p→p 542 · n→n 652 · p→n 66 |
+   | r21 `matrix_cases` / `cross_page_cases` | 5,280 / 240 | p→p 195, n→n 5,020, p→n 65 / n→n 240 |
+   | H-1 cross-page matrix | 2,160 | W→n 90 · p→p 1,170 · p→n 228 · n→n 672 |
+   | My Q3 attack matrices (below) | 6,318 | W→W 332 · **W→n 52** · p→n 212 · p→p / n→n rest |
+
+   - The r23 fixture-artefact rows (`procter_first`, `smith_llp_first`) are 0 W in r24.
+   - **Hold cost against r21:** 901 correct → hold cells (p→n) over these families. They come from the `cand` conflict grammar (as predicted in r23), the alias veto, and the H-1 guard; a `GUARANTOR:` caption alone accounts for 192 of my Q3b cells. All are holds a human resolves.
+
+3. **Attacking the narrow H-1 guard: TWO WRONG-SIGNATURE PATHS SURVIVE (B-1, B-2).**
+   - **Why the guard misses them:** it only fires when some block carries a label in `PARTY_ROLE_WORDS` that is not accounted for (`placement.py:956-958`). If the counterparty's own block has no such label, the guard stays off, cross-page competition is still skipped (`:972`), and the affiliate keeps its company-only 4.
+   - **Q3a, 3,888 cells.** Pat's block varies over the shapes below. Recital `none` / `parsed` / `address`. The affiliate `HARBOR LIGHT GROUP, INC.` is on page 3 or above the recital, with caption none / `GUARANTOR:` / `PARENT:`. Extras placeholders / printed. Signers domain / explicit / both.
+     - Pat-block shapes:
+       - an unknown role word with the HLA line below it (12 words);
+       - the same role word without a company line;
+       - a named non-matching heading (4 names, with or without `RECIPIENT:`);
+       - a role named only in a caption under the block (5 captions, with or without the HLA line).
+     - Results:
+
+       | Pat block | r21→r24 W→W | W→n | p→n |
+       | --- | ---: | ---: | ---: |
+       | `MEMBER:` / `CONTRACTOR:` / `SUPPLIER:` / `VENDOR:` / `CONSULTANT:` / `CLIENT:` / `CUSTOMER:` / `LENDER:` / `INVESTOR:` / `MANAGER:` + HLA | 8 each | 2 each | — |
+       | `THE CONTRACTOR` + HLA / without a company line | 16 / 20 | 4 / 0 | — |
+       | `RECEIVING PARTY:` (in the vocabulary) | 0 | 0 | — |
+       | named non-matching heading: `H.L.A., INC.`, `HL ANALYTICS, INC.`, `HARBOUR LIGHT ANALYTICS, INC.`, `BRIGHTWATER, INC.` (each with or without `RECIPIENT:`) | 10 each (80) | 0 | 0 |
+       | caption only: `Recipient Signature` (± HLA) / `as Recipient` / `Its: Recipient` (with HLA) | 36 / 8 / 8 | 4 / 2 / 2 | 8 total |
+       | caption only: `(Recipient)` / `RECIPIENT` (with HLA) | 0 | 10 / 2 | — |
+
+       - **W cells by condition:** every W cell has an **uncaptioned** affiliate. A `GUARANTOR:` or `PARENT:` caption is never wrong, because the caption either trips the guard or zeroes the affiliate. The W signers are domain-only Pat or DAN+PAT; an explicit company is never wrong.
+   - **Q3b, 2,430 cells: realistic role-defining recitals.**
+     - Recitals: `between Fleet Test Co. ("<Customer|Company|…>") and Harbor Light Analytics, Inc. ("<Supplier|Consultant|…>")`, short or address form, or none, over 9 role pairs.
+     - Pat's block: `<ROLE>:` / `THE <ROLE>` / no heading, with HLA.
+     - Affiliate: none, uncaptioned, or `GUARANTOR:`; after or before.
+     - **84 W→W.** For example: `("Supplier")` + `THE SUPPLIER` + an uncaptioned affiliate on page 3, with the role map resolving correctly to `supplier: Harbor Light Analytics, Inc.`. Same for Vendor, Client, Contractor, Investor and Lender. `<ROLE>:` with a defined recital is never wrong.
+     - **Ordinary two-party documents (affiliate `none`, 486 cells):** r21 = r24 exactly: 322 correct, **164 holds**, 0 W. The guard adds no hold there.
+   - **Real worker (r24, on disk), every case `placed`, Pat `high` on page 3 at `[64.45, 300, 220]`, which is `HARBOR LIGHT GROUP, INC.`, 0 model calls:** `msa_supplier`, `nda_member`, `nda_caption`, `nda_named` (reproduction under B-1).
+
+4. **Test expectation changes: CONFIRMED, exactly as described.** `git diff e2bbb758 9a91a4b9 --stat` lists these changes outside `docs/`:
+   - `placement.py` (+15/−5)
+   - `test_placement_r22.py` (1 line, line 38: also accepts `roles['recipient'].strip().lower() == 'recipient'`; lines 39 and 41 unchanged)
+   - `test_placement_r23.py` (1 line, `('b1_three', 'Smith and Jones, Inc.')` → `('b1_three', 'Recipient')`)
+   - two new files: `placement_r24_review_cases.py` and `test_placement_r24.py`
+
+   No other existing test changed.
+   - **The `placement.py` diff matches the brief:** `ROLE_DESCRIPTION_WIDE` is byte-identical to my r23 `cand`, `extract()` chains both grammars, and the `unresolved_role` guard gates the cross-page `continue`.
+
+## Blocking
+
+**B-1. A role word missing from `PARTY_ROLE_WORDS`, or a role named only in a caption, leaves the H-1 guard off. A cross-page affiliate wins.**
+- **Mechanism:**
+  - Pat's own block scores 0 because it has an unaccounted label (`MEMBER:`, `THE SUPPLIER`, `Recipient Signature` …).
+  - That label is not party-role text, so `unresolved_role` is False.
+  - The uncaptioned affiliate on another page therefore scores 4 alone, and the domain places Pat there.
+- **Scope:** Q3a: 168 W (unknown-role 116 + caption 52). Q3b: 84 W. All are also W in live r21.
+  - The realistic MSA shape (`Harbor Light Analytics, Inc. ("Supplier")` / `THE SUPPLIER` / HLA, plus a parent's signature page) is the case I'd expect in practice.
+- **Reproduction (real worker):**
+  ```bash
+  /root/work/sign-product/send-venv/bin/python - <<'EOF'
+  import sys, os; sys.dont_write_bytecode = True
+  for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+  sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+  from unittest.mock import Mock, patch
+  from dealroom_sign import placement
+  from dealroom_sign.tests import placement_r24_review_cases as R24
+  rc = R24.rc
+  PAT = dict(name='Pat Smith', email=rc.PE)
+  def fleet(h): return R24.company_block(h, 'FLEET TEST CO.', 40)
+  aff = R24.company_block(None, 'HARBOR LIGHT GROUP, INC.', 40)
+  CASES = dict(
+    msa_supplier=[[(80, 'This Agreement is entered into between Fleet Test Co. ("Customer") and Harbor Light Analytics, Inc. ("Supplier").', False, 40)],
+                  fleet('THE CUSTOMER') + R24.company_block('THE SUPPLIER', R24.HLA, 320), aff],
+    nda_member=[list(rc.RECITALS['parsed']), fleet('DISCLOSER:') + R24.company_block('MEMBER:', R24.HLA, 320), aff],
+    nda_caption=[list(rc.RECITALS['parsed']),
+                 fleet('DISCLOSER:') + R24.company_block(None, R24.HLA, 320) + [(372, 'Recipient Signature', False, 320)], aff],
+    nda_named=[list(rc.RECITALS['parsed']), fleet('DISCLOSER:') + R24.company_block('RECIPIENT:', 'HL ANALYTICS, INC.', 320), aff])
+  with patch('httpx.Client.send', Mock(side_effect=AssertionError('http'))):
+      for name, pages in CASES.items():
+          pdf = rc.pages_pdf(pages)
+          r = placement.place(pdf, [PAT], model_client=Mock())
+          print(name, placement.extract(pdf)[2], r['status'], [(f['page'], f['evidence']['line'], f['confidence']) for f in r['fields']])
+  EOF
+  ```
+  - **Expected:** Pat on her block at x = 320 on page 2, or a hold.
+  - **Observed (r24 = r21):** `placed`, with Pat's signature and date both `high` on **page 3** at x = 64 / 74, which is `HARBOR LIGHT GROUP, INC.`. This holds for all four cases (`nda_named` is B-2).
+- **Measured direction, not a fix: `cand4`** drops `party_role_text(...) and` from the guard, so any unaccounted label anywhere turns on cross-page competition.
+  - Q3a: **closes 96 of the 248 W** (unknown role + HLA 80, caption 16), for 8 + 8 new holds.
+  - H-1 2,160: unchanged (0 W, identical holds). Veto 1,260: unchanged.
+  - Still W: `THE CONTRACTOR` (36), `Recipient Signature` without a company line (36), and all of B-2.
+  - Not run on the other families or the suite.
+  - A more complete fix probably keys the guard on the fact that matters: **a non-witness signing block on another page whose own score was zeroed by an unaccounted or non-matching identity**, whatever its words. The cost must be measured against the 20 live r19 `test_company_competition_uses_identity_before_vetoes` cells that `cand3` broke.
+
+**B-2. A named but non-matching heading on the counterparty block leaves the guard off.**
+- **The case:** Pat's block reads `HL ANALYTICS, INC.`, `H.L.A., INC.` or `HARBOUR LIGHT ANALYTICS, INC.`, with or without `RECIPIENT:`. The recital names HLA as Recipient.
+  - The heading does not match the `harborlight` domain, and there is no unaccounted role label, so the uncaptioned affiliate on the other page scores 4 alone.
+- **Scope:** 80 W in Q3a (10 per name × form), all W in r21 too. `cand4` does not touch them.
+  - The `HARBOUR` variant is M-1's misspelling carried onto the signature page.
+  - `BRIGHTWATER, INC.` (20 of the 80) is arguable as "wrong", since the document does print a different company. But with a recital naming HLA as Recipient, the defensible answer is a hold.
+- **Reproduction:** `nda_named` above.
+
+## Medium
+
+**M-1 (carried over, unchanged):** a misspelled recital (`HARBOUR LIGHT ANALYTICS`) places Pat on a domain-exact affiliate. Codex measures 48 / 192 cells, the same in r21–r24. B-2 is its signature-page sibling.
+
+## Low
+
+**L-1 (holds only): the guard's hold cost on correct cells.**
+- **Scope:** 228 of the 2,160 H-1 cells and 192 of my 2,430 Q3b cells go correct → hold.
+- **Cause:** a `GUARANTOR:` caption on the affiliate makes `unresolved_role` true document-wide, so Pat's matching block competes with the cross-page affiliate.
+- Two-block NDAs pay nothing; this costs no wrong placements.
+
+## Holds a human resolves (r24, my runs)
+| Run | Holds | Cells |
+| --- | ---: | ---: |
+| B-1/B-2 blocking recitals | 1,320 | 2,160 |
+| Other attack + boundary recitals | 2,000 | 3,120 |
+| Q2 matrix | 2,860 | 5,280 |
+| H-1 cross-page matrix | 990 | 2,160 |
+| Veto matrix (r24) / (r19) | 718 / 140 | 1,260 / 140 |
+| Conflict probes / L-1 384 | 36 / 384 | 36 / 384 |
+| r21 `matrix_cases` / `cross_page_cases` | 5,085 / 240 | 5,280 / 240 |
+| Affiliate + B1 repro / Competition | 1,538 / 384 | 1,538 / 480 |
+| L-1 boundary Pat / Fleet | 3,289 / 1,800 | 3,480 / 1,800 |
+| F fine / F fine company-only | 1,131 / 2,680 | 3,456 / 3,456 |
+| Added families | 4,240 | 4,756 |
+| Q3a / Q3b attacks | 2,418 / 1,120 | 3,888 (248 W) / 2,430 (84 W) |
+| Ordinary two-party NDAs (Q3b, no affiliate) | 164 | 486 (r21 identical) |
+
+## Attacks that held (r24)
+- **Captioned affiliates never win.** Any `GUARANTOR:`, `THE GUARANTOR` or `PARENT:` caption, in every matrix, gives 0 W.
+- **Explicit-company signers:** 0 W in every matrix.
+- **`RECEIVING PARTY:`** and defined `<ROLE>:` headings: 0 W.
+- **The wide grammar adds no new placement anywhere** (n → p = 0). Disagreement always lands on the role word, so it holds.
+- **Isolation:** 0 HTTP calls and 0 model calls everywhere. The worker equals in-process on the B-1/B-2 worker cells. The send-c1b worktree is clean.
