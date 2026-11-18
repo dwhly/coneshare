@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r24/measure.py", line 21, in <module>
+    import replay
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r23/replay.py", line 18, in <module>
+    import check_evidence as prior
+  File "/root/worktrees/send-c1b/docs/implementation/c2a-r21/check_evidence.py", line 19, in <module>
+    from variants import variants as build_variants
+ImportError: cannot import name 'variants' from 'variants' (/root/worktrees/send-c1b/docs/implementation/c2a-r24/variants.py)

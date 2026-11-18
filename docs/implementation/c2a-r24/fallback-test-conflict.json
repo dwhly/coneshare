@@ -1,0 +1,666 @@
+{
+  "test": "test_placement_r19.py::test_company_competition_uses_identity_before_vetoes",
+  "assertion": "score == (0 if same_page else 4)",
+  "counts": {
+    "r21": {
+      "passed": 40
+    },
+    "r23": {
+      "passed": 40
+    },
+    "cand": {
+      "passed": 40
+    },
+    "cand3": {
+      "failed": 20,
+      "passed": 20
+    },
+    "r24": {
+      "passed": 40
+    }
+  },
+  "cases": [
+    {
+      "args": {
+        "same_page": false,
+        "reason": "uncertain",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "uncertain",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "uncertain",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "uncertain",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "company_veto",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "company_veto",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "company_veto",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "company_veto",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "name",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "name",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "name",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "name",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "prose",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "prose",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "prose",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "prose",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "ordinary",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "ordinary",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "ordinary",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": false,
+        "reason": "ordinary",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "failed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "uncertain",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "uncertain",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "uncertain",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "uncertain",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "company_veto",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "company_veto",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "company_veto",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "company_veto",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "name",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "name",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "name",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "name",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "prose",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "prose",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "prose",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "prose",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "ordinary",
+        "heading": "HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "ordinary",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "ordinary",
+        "heading": "For and on behalf of HARBOR LIGHT ANALYTICS, INC.",
+        "roles": {}
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    },
+    {
+      "args": {
+        "same_page": true,
+        "reason": "ordinary",
+        "heading": "RECIPIENT:",
+        "roles": {
+          "recipient": "For and on behalf of HARBOR LIGHT ANALYTICS, INC."
+        }
+      },
+      "outcomes": {
+        "r21": "passed",
+        "r23": "passed",
+        "cand": "passed",
+        "cand3": "passed",
+        "r24": "passed"
+      }
+    }
+  ],
+  "external_http_calls": 0,
+  "note": "Original r24 key is the narrow candidate. Final fallback is cand3. No test code or input was changed."
+}

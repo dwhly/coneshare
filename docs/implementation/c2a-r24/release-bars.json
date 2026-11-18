@@ -1,0 +1,39 @@
+{
+  "passed": false,
+  "rc": 1,
+  "full_suite": {
+    "passed": 39782,
+    "failed": 404,
+    "errors": 0,
+    "skipped": 0
+  },
+  "full_suite_passed": false,
+  "cases": 59788,
+  "families": 229,
+  "worker_evaluations": 1135,
+  "n_to_p": 0,
+  "c_to_w": 0,
+  "golden_diffs": 0,
+  "preservation_passed": true,
+  "carried_M1_wrong": 48,
+  "additional_raw_flags": 210,
+  "reviewer_H1_totals_reproduced": true,
+  "H1_cells": 2160,
+  "H1_wrong": 0,
+  "reviewer_H1_generator_available": false,
+  "additional_holds_vs_cand": {
+    "cand3": 547,
+    "narrow": 489
+  },
+  "candidate": "cand3 fallback; not release-certified",
+  "blockers": [
+    "The required cand returns Recipient on disagreement, but 384 immutable r22 recital-precedence assertions require Harbor Light Analytics. Only the r23 b1_three expectation was authorised to change.",
+    "The cand3 fallback returns score 0 across pages, but 20 immutable r19 controls require score 4. The narrow guard passes those controls.",
+    "The strict M-1-only raw-zero bar retains 210 historical raw flags; both candidates retain them unchanged.",
+    "The completed full suite did not meet the zero-failure/error/skip bar."
+  ],
+  "failed_test_families": {
+    "dealroom_sign.tests.test_placement_r19::test_company_competition_uses_identity_before_vetoes": 20,
+    "dealroom_sign.tests.test_placement_r22::test_recital_precedence_matrix": 384
+  }
+}

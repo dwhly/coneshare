@@ -1,0 +1,229 @@
+{
+  "part": "attack",
+  "cases": 2880,
+  "groups": {
+    "b1_joint_venture": {
+      "cases": 240,
+      "r21_n": 100,
+      "r21_raw_wrong": 0,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 20,
+      "r21_c": 140,
+      "r24_c": 120
+    },
+    "b1_subsidiary": {
+      "cases": 240,
+      "r21_n": 100,
+      "r21_raw_wrong": 0,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 20,
+      "r21_c": 140,
+      "r24_c": 120
+    },
+    "b1_successor_address": {
+      "cases": 240,
+      "r21_n": 100,
+      "r21_raw_wrong": 0,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 20,
+      "r21_c": 140,
+      "r24_c": 120
+    },
+    "b1_successor": {
+      "cases": 240,
+      "r21_n": 100,
+      "r21_raw_wrong": 0,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 20,
+      "r21_c": 140,
+      "r24_c": 120
+    },
+    "b1_affiliates": {
+      "cases": 240,
+      "r21_n": 100,
+      "r21_raw_wrong": 0,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 20,
+      "r21_c": 140,
+      "r24_c": 120
+    },
+    "b2_partners": {
+      "cases": 240,
+      "r21_n": 170,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 10,
+      "r21_c": 70,
+      "r24_c": 60
+    },
+    "b2_associates": {
+      "cases": 240,
+      "r21_n": 170,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 10,
+      "r21_c": 70,
+      "r24_c": 60
+    },
+    "b2_affiliates": {
+      "cases": 240,
+      "r21_n": 170,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 10,
+      "r21_c": 70,
+      "r24_c": 60
+    },
+    "b2_smith": {
+      "cases": 240,
+      "r21_n": 168,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 12,
+      "r21_c": 72,
+      "r24_c": 60
+    },
+    "johnson_inc": {
+      "cases": 240,
+      "r21_n": 124,
+      "r21_raw_wrong": 0,
+      "r24_n": 128,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 4,
+      "r21_c": 116,
+      "r24_c": 112
+    },
+    "ernst_llp": {
+      "cases": 240,
+      "r21_n": 120,
+      "r21_raw_wrong": 0,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 120,
+      "r24_c": 120
+    },
+    "three_llc": {
+      "cases": 240,
+      "r21_n": 180,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 60,
+      "r24_c": 60
+    }
+  },
+  "transitions": {
+    "b1_joint_venture": {
+      "n -> n": 100,
+      "c -> c": 120,
+      "c -> n": 20
+    },
+    "b1_subsidiary": {
+      "n -> n": 100,
+      "c -> c": 120,
+      "c -> n": 20
+    },
+    "b1_successor_address": {
+      "n -> n": 100,
+      "c -> c": 120,
+      "c -> n": 20
+    },
+    "b1_successor": {
+      "n -> n": 100,
+      "c -> c": 120,
+      "c -> n": 20
+    },
+    "b1_affiliates": {
+      "n -> n": 100,
+      "c -> c": 120,
+      "c -> n": 20
+    },
+    "b2_partners": {
+      "n -> n": 170,
+      "c -> c": 60,
+      "c -> n": 10
+    },
+    "b2_associates": {
+      "n -> n": 170,
+      "c -> c": 60,
+      "c -> n": 10
+    },
+    "b2_affiliates": {
+      "n -> n": 170,
+      "c -> c": 60,
+      "c -> n": 10
+    },
+    "b2_smith": {
+      "n -> n": 168,
+      "c -> c": 60,
+      "c -> n": 12
+    },
+    "johnson_inc": {
+      "n -> n": 124,
+      "c -> c": 112,
+      "c -> n": 4
+    },
+    "ernst_llp": {
+      "n -> n": 120,
+      "c -> c": 120
+    },
+    "three_llc": {
+      "n -> n": 180,
+      "c -> c": 60
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r24": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3"
+  },
+  "archive_results_exact": true,
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

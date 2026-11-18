@@ -1,0 +1,36 @@
+{
+  "head": "e2bbb7587f7ef100e1fb82fea825000ba6eac705",
+  "source_sha256": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3",
+  "variant": "narrow",
+  "version": "c2a.24",
+  "original_files": 2245,
+  "original_unchanged": 2242,
+  "original_changed": [
+    "backend/dealroom_sign/placement.py",
+    "backend/dealroom_sign/tests/test_placement_r22.py",
+    "backend/dealroom_sign/tests/test_placement_r23.py"
+  ],
+  "session_files": 2360,
+  "session_unchanged_after_report": 2357,
+  "session_changed_after_report": [
+    "backend/dealroom_sign/placement.py",
+    "backend/dealroom_sign/tests/test_placement_r22.py",
+    "docs/implementation/c2a-r24/results-r24.md"
+  ],
+  "r22_changed_lines": [
+    38
+  ],
+  "r22_lines_39_41_unchanged": true,
+  "r23_exact_authorised_substitution": true,
+  "old_evidence_unchanged": true,
+  "prior_result_prefix_unchanged": true,
+  "index_unchanged": true,
+  "original_test_ids": 31480,
+  "additional_test_ids": 8706,
+  "full_suite": {
+    "passed": 40186,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

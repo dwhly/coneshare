@@ -1,0 +1,31 @@
+{
+  "recital": "This Agreement is entered into between Fleet Test Co., a Delaware corporation, and Harbor Light Analytics, Inc., a Delaware corporation (\"Recipient\").",
+  "matches": {
+    "ROLE_DEF": [
+      [
+        "Harbor Light Analytics, Inc., a Delaware corporation",
+        "Recipient"
+      ]
+    ],
+    "ROLE_DESCRIPTION": [
+      [
+        "Harbor Light Analytics, Inc.",
+        "Recipient"
+      ]
+    ],
+    "ROLE_DESCRIPTION_WIDE": [
+      [
+        "Fleet Test Co.",
+        "Recipient"
+      ]
+    ]
+  },
+  "roles": {
+    "recipient": "Recipient"
+  },
+  "test": "backend/dealroom_sign/tests/test_placement_r22.py::test_recital_precedence_matrix",
+  "assertion": "assert 'harbor light analytics' in roles['recipient'].lower()",
+  "failed_parameters": 384,
+  "authorised_exception_applies": false,
+  "source_sha256": "51c603721188c066b84fb72fa574ffc4396da77415a8aa0b2174187a4ecc840e"
+}

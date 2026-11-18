@@ -1,0 +1,25 @@
+{
+  "rc": 1,
+  "passed": false,
+  "variant": "narrow",
+  "source_sha256": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3",
+  "full_suite": {
+    "passed": 40186,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "full_suite_passed": true,
+  "n_to_p": 0,
+  "c_to_w": 0,
+  "H1_wrong": 0,
+  "B1_wrong": 0,
+  "B2_wrong": 0,
+  "golden_diffs": 0,
+  "preservation_passed": true,
+  "additional_raw_flags": 210,
+  "carried_M1_wrong": 48,
+  "blockers": [
+    "The unchanged strict r24 M-1-only raw-zero bar still has 210 historical raw-coordinate flags beyond the carried 48-cell M-1 family; all are identical to live r21 except analysis_version."
+  ]
+}

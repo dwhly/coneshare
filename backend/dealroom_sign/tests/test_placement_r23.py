@@ -56,7 +56,7 @@ def test_additional_conjunction_and_repeat_controls(args, pages, people, allowed
     ('b1_inc_address', 'Smith and Jones, Inc.'),
     ('b1_co_address', 'Smith and Jones Co.'),
     ('b1_llc_hereinafter', 'Smith and Jones LLC'),
-    ('b1_three', 'Smith and Jones, Inc.'),
+    ('b1_three', 'Recipient'),
     ('b2_lazy_tail', 'Recipient'),
     ('research_center', cases.HLA),
 ])

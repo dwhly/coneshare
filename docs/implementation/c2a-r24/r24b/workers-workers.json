@@ -1,0 +1,866 @@
+[
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "1dc8b3b194359e4fbcc0f78250a40db34e898f4478a774df569b1e3aa12a6c01"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "d7645b58ac8048c1b44468109f56dd03c7cf443712ab8175126fe1a4e00674c8"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "1f6cfa527dfce673e3e3a5d5c6165b9be7f2567f4383a78182c6efb324c2ae32"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "cc92f17fc43ca85c04098d86ce901a1fbd84c6377784be715086234ea9b5a7e2"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, False, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "b6505e83c76e9d2e3d92cd18fc6dd3b3f9ed2c3ee832d0c8e5b822487c218870"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "4f35b02912ed93ac55c1fc42ebaf403a7d952e4a3c55081d2461d6369ee7e0ac"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "c76cdc840615b5e1fab6e706d245849a425681812f956f246896335af1e4a8aa"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "37276a724cb198e39aa29af09c0f13f00da1d76fd53e651f6bd4da2837793496"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "4f35b02912ed93ac55c1fc42ebaf403a7d952e4a3c55081d2461d6369ee7e0ac"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "c76cdc840615b5e1fab6e706d245849a425681812f956f246896335af1e4a8aa"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "0bc966e9dc978304df98f38ed623c8472e542fabb0981a63548fdcc54a9a228a"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', False, True, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "f20cb7c3b063e8a383c7150522c7e2ed60b7768d4ed3f31d70ac9c2eba98a6ed"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "ac061d8bc7a00ec2621f009ab4b5f4cf9f8cfc131b790bbaa2cbdb5a9e0de20b"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "f597d3bf9d59fb41359bd14808c19dd1b2add7913f4e78da2723083e0b9b6a99"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "fc22c7de9ad98c306c86a2c684033e9e78934d718a220dd0980fb6ab22422dd4"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, False, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "bbebfac4b2a099f39083078932f681baf21820c8b8f070b80834b53802c5be51"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "9941e4643a0f7b7d03f55d885af28998ccc4f3c47ab113c6c7a755e0646ad51a"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "739e0055e4c762333c1be5d5387732461a0d4bc09e9dfdecad4bf55d91195785"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "fd014768d0f4d07524da6c984ed5694118f5f58119f72cc8404517e05a951db0"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "9941e4643a0f7b7d03f55d885af28998ccc4f3c47ab113c6c7a755e0646ad51a"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "739e0055e4c762333c1be5d5387732461a0d4bc09e9dfdecad4bf55d91195785"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "6658c70b65116d3a976ab408004aa5e9853e6e74d3a30505631f35036383eb29"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560"
+  },
+  {
+    "group": "b1",
+    "case": "('b1', True, True, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "7291b5c1793de0a561adb238224276e47d9411cceacf23482fa789d6bce9d32f"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "7291b5c1793de0a561adb238224276e47d9411cceacf23482fa789d6bce9d32f"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, False, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "fe43c2319ef98769a714c91a873b090271de1eac57009042af4083c01822c236"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "1b138bc1e3cbdf713cee547e04fee6ca122304f46015fb96d9ff6042dc7bb367"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "fe43c2319ef98769a714c91a873b090271de1eac57009042af4083c01822c236"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "1b138bc1e3cbdf713cee547e04fee6ca122304f46015fb96d9ff6042dc7bb367"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "3c317bd46f5e1ccbe5278bd93aa2622adb7f4fc652ae5251322d5408b8453556"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "70f9d73639036e14a4dac1f9e44fcb86ccc95488a6f0e94e020a0969d5420ada"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', False, True, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "b5e2673f47b0b84aa564cb7b95f983370f56a595aea5d254c25e01dfdef2fe12"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "b5e2673f47b0b84aa564cb7b95f983370f56a595aea5d254c25e01dfdef2fe12"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, False, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'same', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "ffa3547f9bb8fbfdfb6d09271099284e60b91db6280cddd4e0345507ca0fef10"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'same', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'same', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'same', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'same', 'Recipient')",
+    "variant": "r21",
+    "result": "fdd4b04839edf170c60e1e9adb9522dced4e1968aa1f1ea6480a7dcfc7a907e7"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'same', 'Recipient')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "ffa3547f9bb8fbfdfb6d09271099284e60b91db6280cddd4e0345507ca0fef10"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'guarantor', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'guarantor', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'guarantor', 'Recipient')",
+    "variant": "r21",
+    "result": "fdd4b04839edf170c60e1e9adb9522dced4e1968aa1f1ea6480a7dcfc7a907e7"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'guarantor', 'Recipient')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'split', 'RECIPIENT:')",
+    "variant": "r21",
+    "result": "8d03c2e93c0dbf2b98cc93027678370a41f655d648c745178cfb1ff420b2e5ff"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'split', 'RECIPIENT:')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'split', 'THE RECIPIENT')",
+    "variant": "r21",
+    "result": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'split', 'THE RECIPIENT')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'split', 'Recipient')",
+    "variant": "r21",
+    "result": "e75d2fd9f2635736358569533e6120c7c909bf66e021416c05eb5ff26332eea3"
+  },
+  {
+    "group": "b2",
+    "case": "('b2', True, True, 'split', 'Recipient')",
+    "variant": "r24",
+    "result": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+  }
+]

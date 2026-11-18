@@ -1,0 +1,65 @@
+veto 240 r24 wrong 0
+veto 480 r24 wrong 0
+veto 720 r24 wrong 0
+veto 960 r24 wrong 0
+veto 1200 r24 wrong 0
+{
+  "part": "veto",
+  "cases": 1260,
+  "groups": {
+    "VETO": {
+      "cases": 1260,
+      "r21_n": 652,
+      "r21_raw_wrong": 0,
+      "r23_n": 718,
+      "r23_raw_wrong": 0,
+      "cand_n": 718,
+      "cand_raw_wrong": 0,
+      "cand3_n": 718,
+      "cand3_raw_wrong": 0,
+      "r24_n": 718,
+      "r24_raw_wrong": 0,
+      "r23_n_to_p": 0,
+      "r23_c_to_w": 0,
+      "r23_n_to_w": 0,
+      "r23_c_to_n": 66,
+      "r23_cand_c_to_n": 0,
+      "cand_n_to_p": 0,
+      "cand_c_to_w": 0,
+      "cand_n_to_w": 0,
+      "cand_c_to_n": 66,
+      "cand_cand_c_to_n": 0,
+      "cand3_n_to_p": 0,
+      "cand3_c_to_w": 0,
+      "cand3_n_to_w": 0,
+      "cand3_c_to_n": 66,
+      "cand3_cand_c_to_n": 0,
+      "r24_n_to_p": 0,
+      "r24_c_to_w": 0,
+      "r24_n_to_w": 0,
+      "r24_c_to_n": 66,
+      "r24_cand_c_to_n": 0,
+      "r21_c": 608,
+      "r23_c": 542,
+      "cand_c": 542,
+      "cand3_c": 542,
+      "r24_c": 542
+    }
+  },
+  "transitions": {
+    "VETO": {
+      "n -> n -> n -> n -> n": 652,
+      "c -> c -> c -> c -> c": 542,
+      "c -> n -> n -> n -> n": 66
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r23": "5cc800a1206dba57fe93f49d89652d56ec1e12f5d1fa7517b8c648c7ec829e60",
+    "cand": "8b0dfb3237f13aa3778a18721b0fa868fa306d80b17c04fc2c718bb79d802883",
+    "cand3": "603d958bbae60cede9362f8a6bac635ee10b1bf8e538e42f884c244e46c4ad53",
+    "r24": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3"
+  },
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

@@ -1,0 +1,14 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_uncaptioned_cross_page_real_worker ____________________
+dealroom_sign/tests/test_placement_r24.py:70: in test_uncaptioned_cross_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), result
+E   AssertionError: {'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...00006, 360.07], 'text': 'Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}] = <function wrong_fields at 0x7a60fad0e700>({'analysis_version': 'c2a.23', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 360.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 3, ...}], 'method': 'rules', ...}, {'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x7a60fad0e700> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r24/h1-worker-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r24.py::test_uncaptioned_cross_page_real_worker
+1 failed, 8705 deselected in 1.80s

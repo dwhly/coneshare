@@ -1,0 +1,35 @@
+{
+  "part": "h1_review",
+  "cases": 2160,
+  "groups": {
+    "H1_REVIEW": {
+      "cases": 2160,
+      "r21_w": 96,
+      "r21_raw_wrong": 96,
+      "r24_n": 990,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 228,
+      "r21_n": 666,
+      "r21_c": 1398,
+      "r24_c": 1170
+    }
+  },
+  "transitions": {
+    "H1_REVIEW": {
+      "w -> n": 96,
+      "n -> n": 666,
+      "c -> c": 1170,
+      "c -> n": 228
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r24": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3"
+  },
+  "archive_results_exact": true,
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}

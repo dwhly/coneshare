@@ -1,0 +1,13 @@
+diff --git a/backend/dealroom_sign/tests/test_placement_r23.py b/backend/dealroom_sign/tests/test_placement_r23.py
+index fa1716bb..c192bf57 100644
+--- a/backend/dealroom_sign/tests/test_placement_r23.py
++++ b/backend/dealroom_sign/tests/test_placement_r23.py
+@@ -56,7 +56,7 @@ def test_additional_conjunction_and_repeat_controls(args, pages, people, allowed
+     ('b1_inc_address', 'Smith and Jones, Inc.'),
+     ('b1_co_address', 'Smith and Jones Co.'),
+     ('b1_llc_hereinafter', 'Smith and Jones LLC'),
+-    ('b1_three', 'Smith and Jones, Inc.'),
++    ('b1_three', 'Recipient'),
+     ('b2_lazy_tail', 'Recipient'),
+     ('research_center', cases.HLA),
+ ])

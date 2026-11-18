@@ -1,0 +1,209 @@
+{
+  "cases": [
+    {
+      "group": "b1",
+      "case": "('b1', False)",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "77b0db08f3f5135144121a119d1bd0c64aae974d8c5f6c7508e4f6154ee5b01b"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True)",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "d25df4ca6587c79d3b214dfac64cc2cf185146c1b1168acd47b3c5b40d5bc15b"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False)",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "b1c37a3001ec8f3421178b233ba760f4e1154059158debd7948dc6eef963586a"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True)",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "9b8e951020d49e54fb284a35c82644178f3861dc5e6e2241d17ee7556404ad9f"
+    },
+    {
+      "group": "h1",
+      "case": "('h1',)",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "abcf043d60b05fbf97457d80b8f940447dbad4eed3cd2010c644030297ccdd2d"
+    }
+  ],
+  "outcomes": {
+    "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    }
+  }
+}

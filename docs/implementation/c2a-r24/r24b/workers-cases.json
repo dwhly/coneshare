@@ -1,0 +1,5689 @@
+{
+  "cases": [
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "1de5aa82d47f91d50a1e9c1393d2397584c5273df2719500f6b3af04593c70c6"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "2e35ec2b8689350b27c5c846ee42cbb393ba4a9cffa356ba4f57cbd8097bb4aa"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'same', 'Recipient')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "e5fd9c98a76c59838e5c1e1194088652812e075a11fea78779a4565070cc2b42"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "1dc8b3b194359e4fbcc0f78250a40db34e898f4478a774df569b1e3aa12a6c01",
+        "r24": "d7645b58ac8048c1b44468109f56dd03c7cf443712ab8175126fe1a4e00674c8"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "bb5114854926526936609c62aabecf314f4099d2f56ea48be226adc076343688"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "1fa6ee458789c97e31ab00c19bb6bd17f0d5dd5a3db01e329b67f9af5eede6b9"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "1f6cfa527dfce673e3e3a5d5c6165b9be7f2567f4383a78182c6efb324c2ae32",
+        "r24": "cc92f17fc43ca85c04098d86ce901a1fbd84c6377784be715086234ea9b5a7e2"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "70aaac34a3430a678e5ce8c2102ac6db976c04d28481ea35158066bcc1485a5f"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "e176ae57155939686850f5a081f747d844c0ba5917f23b113c5ab07d214961d4"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "c80dd25f3e53f7d8104074e24070bb0eec26f5cd0f7e8f037102694facc4bc47"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, False, 'split', 'Recipient')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "ef770b73d5be0a892dc4fbda28b9ef51ce03f0f6499580669a59e18dcfb3aba6"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "46ad8c9a631a8653ad822311f95be25dab2cf0d45d90f90c306051cc06a78aeb"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "b6505e83c76e9d2e3d92cd18fc6dd3b3f9ed2c3ee832d0c8e5b822487c218870",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "75f051365e6b8a3f3d41c5a3df18c2c065db2d8dd28a016936aaddf6643b600e"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'same', 'Recipient')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "38d44d13b18f44499a000b34cdb77b3d947112ff7b1f50f429ad7d0b90c8b16e"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "4f35b02912ed93ac55c1fc42ebaf403a7d952e4a3c55081d2461d6369ee7e0ac",
+        "r24": "c76cdc840615b5e1fab6e706d245849a425681812f956f246896335af1e4a8aa"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "b91e5066b6d8fcaa672a343083bd354bddc7d90080798189ae8f86dd3e7a0e81"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "37276a724cb198e39aa29af09c0f13f00da1d76fd53e651f6bd4da2837793496",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "c86be4a45e960d90803f6b007c488b67889af1020a923c0f82859aec206213bc"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "4f35b02912ed93ac55c1fc42ebaf403a7d952e4a3c55081d2461d6369ee7e0ac",
+        "r24": "c76cdc840615b5e1fab6e706d245849a425681812f956f246896335af1e4a8aa"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "c57bfe7b650bdf154ee5058b7f2b138efd39827bc2f3366b2b351cf4fe1af150"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "ec15ff4d3ff04d884169401bb1215d13faea13b4d34404e4bbe98658594eef96"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "0bc966e9dc978304df98f38ed623c8472e542fabb0981a63548fdcc54a9a228a",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "4be02677765d9242cdd9d80b3e4dadff3268bdcb4da2094272bfdead81e2ab73"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', False, True, 'split', 'Recipient')",
+      "results": {
+        "r21": "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487",
+        "r24": "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "91b7a45b786d7b49de97f20f2b07f4fbc7f4f942d947dcc42d40d816051add67"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "b399cf13357c970d691ff97c2394648fcb6561841a010a00638853ceb032f50e"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "acbb98d4b9c7475bd1d5f365f5fb7ab8ec927ee4a8dd1846ce0b280425e8f022"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'same', 'Recipient')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "9f78f717b063a653aca87599a9d98f0eef5a5a24d5e766f644b4d0891e2c5ebe"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "f20cb7c3b063e8a383c7150522c7e2ed60b7768d4ed3f31d70ac9c2eba98a6ed",
+        "r24": "ac061d8bc7a00ec2621f009ab4b5f4cf9f8cfc131b790bbaa2cbdb5a9e0de20b"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "8383f9ed8263ecce157dec0d7bf30b704fd96a1484ca1b98dda5132745ad4d03"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "11b1fbe0721ea9b9883e96f664f8394e5f84b62544dbf5f248ddce4e6b564c28"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "f597d3bf9d59fb41359bd14808c19dd1b2add7913f4e78da2723083e0b9b6a99",
+        "r24": "fc22c7de9ad98c306c86a2c684033e9e78934d718a220dd0980fb6ab22422dd4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "b8d6f2a93617fbccef34e7d91875a5542b5a752e7f83b194bd6ae2025a52bf77"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "307ca9df3c46a6e9de28ea5d73ece10595aea78b2400a2de1d2182c0bba28455"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "44645686b22acacd0fed31bfcff313f3f5df990054baaee51f6c4be39362a4ff"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, False, 'split', 'Recipient')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "88a2dfe2b577d9923ec12c7eec572bee7aa778b867496bb3b48a9c6cce299664"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "3b2d25e6b390732e16abd8a3e698897d5f96d803f8e8f70a71276ad31e4a9f07"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "bbebfac4b2a099f39083078932f681baf21820c8b8f070b80834b53802c5be51",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "dcf39f38c1b24a268f773cbbb21bf94ec2c4c97db9fd178a312bfe0fcf4e124b"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'same', 'Recipient')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "6d7a81513da95c68bedccf878380455e8c695217592d0a0edfa512bc7dde5a90"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "9941e4643a0f7b7d03f55d885af28998ccc4f3c47ab113c6c7a755e0646ad51a",
+        "r24": "739e0055e4c762333c1be5d5387732461a0d4bc09e9dfdecad4bf55d91195785"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "e72b1435c1f59a5295685954b2900d8726f8e73ae776878ead1a79301738ce94"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "fd014768d0f4d07524da6c984ed5694118f5f58119f72cc8404517e05a951db0",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "abd1bbb9e6b2c5da33a724e66cecd6960cc7fe2e5e73a69c5fdaa89e39537dac"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "9941e4643a0f7b7d03f55d885af28998ccc4f3c47ab113c6c7a755e0646ad51a",
+        "r24": "739e0055e4c762333c1be5d5387732461a0d4bc09e9dfdecad4bf55d91195785"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "380cc6720494f24c73d2691b04087b9af2d18a7efa2f2b5a8649f81d0e602f8d"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "9306b178a099b1ad1ad786d69bc3357331ba0d81ca35918f7897a93969a11b62"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "6658c70b65116d3a976ab408004aa5e9853e6e74d3a30505631f35036383eb29",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": true,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "50f4798f93aba39efd0babc6d879314be6ab77dd9f0a7cba7c505669cb8d0683"
+    },
+    {
+      "group": "b1",
+      "case": "('b1', True, True, 'split', 'Recipient')",
+      "results": {
+        "r21": "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560",
+        "r24": "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "815401ed465c0a79df28223adb128c9d553f0e17e9c5c382a074cbfb5712e63e"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "74fa0a727196d2930e15ccb8c60d3814afd32cf354f3cf1062b5988cdda1d7ea"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "539790371da20f3aeb4d4afaf7d05bfd7532e7cbd50119ddfcd740ac8ec73f34"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'same', 'Recipient')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "df82810621c1b1e272705b06a12c395f3b050bc782681fa3c2481aa399737d8a"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "7291b5c1793de0a561adb238224276e47d9411cceacf23482fa789d6bce9d32f",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "27ca28ca09462050ec355e2852d7a43d4f2d3ef2913d3f9fdc18ec4841fff8c8"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "ce42470a8def41a11686a5752e14dbf95e745574cedd5d7c7829bef8a60cc168"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "7291b5c1793de0a561adb238224276e47d9411cceacf23482fa789d6bce9d32f",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "6c3b007173210e418ecc8c6243c7c194f30a057dbe3d37303842e9446fa3289d"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "5a44f5fc592dcabe68871c6744dd85769a19c7ee0d455242933bfedb78eb3ac6"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "a9e7273669bd9bba60b3f35ef28f2e19726a619a3a9a6ff710b1a4e6fbeef064"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, False, 'split', 'Recipient')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "7c59168356cef860ac696ae82f86123840bc07cb322a4319171693d583b3bf93"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "fe43c2319ef98769a714c91a873b090271de1eac57009042af4083c01822c236",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "eeecc4ad64ee45a2426abfe01c3938440b857cbc3443801940942b8a46914797"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "cddb982f1db7349611dadb41e5d85cbd7dd79ce3d909648c733eacd61d1e9903"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'same', 'Recipient')",
+      "results": {
+        "r21": "1b138bc1e3cbdf713cee547e04fee6ca122304f46015fb96d9ff6042dc7bb367",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "2a2570a3f7ad9e68fa7b465912fbbcbd2680192d0733b2a28e49ff1327626919"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "fe43c2319ef98769a714c91a873b090271de1eac57009042af4083c01822c236",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "4366ab2ef6787f805bfc6a22fc12ec1791b1ffcc06a9a524341333d7722ab82c"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "f02e7425df824c9f7e74b55a44f0f29fc92c88e772abdb91f6b1656cd1e140e4"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "1b138bc1e3cbdf713cee547e04fee6ca122304f46015fb96d9ff6042dc7bb367",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "a4cceedac3e00fe7f064d6dae6c4a363d7421ccb78aa1f024bf129a6054fa5b5"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "3c317bd46f5e1ccbe5278bd93aa2622adb7f4fc652ae5251322d5408b8453556",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "19d0cb74373bc1a96dfe9c024a05e14ffc31bde10ab84bf5f9491cba93a54efb"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "97a65817d78797142cd76989adfdca2e6f45b175b6b9ba44700b13b848d010b3"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', False, True, 'split', 'Recipient')",
+      "results": {
+        "r21": "70f9d73639036e14a4dac1f9e44fcb86ccc95488a6f0e94e020a0969d5420ada",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "9c5c4f115bdff1389b0ee5b234ac301302b3036e934527b6c376c4fb664814f2"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "4e1ed6640692c4223e8fc64a6d51858dca7cec7e57d708c5b48239f6d9ceeb3f"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "74d073064ac48a34b01a9136b5d2ca8790e21f709880ceac345ea5665ee3a065"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'same', 'Recipient')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "3eaaf8fecc3cb8c8fdf7c875a5213667a1228bf5a1db23606d3d2a6b484ff166"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "b5e2673f47b0b84aa564cb7b95f983370f56a595aea5d254c25e01dfdef2fe12",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "460240d4f0f27420d9329e15938986fe414771b82c6a63b0e37436720db4403e"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "3208f5056287770da8e026bc50559e0dc2d04ed769b074917a3c34e37f9de340"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "b5e2673f47b0b84aa564cb7b95f983370f56a595aea5d254c25e01dfdef2fe12",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "a655fcd723082d13449fab2ea86468c6c59dfc01c36c5fee5e1715e9ae18d6f1"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "c0481699ee2c91a1438c3227ac1a92bcb81bc67a48b4fcafcf76cad0b764e036"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "31f4da4637c1be161738b5e904306556ebfbbbe91177d338da860b6e03edf106"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, False, 'split', 'Recipient')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "5c94ac295aa0860383d262babf88d0f76cdcee192081f00e83b6fcedddbe5819"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'same', 'RECIPIENT:')",
+      "results": {
+        "r21": "ffa3547f9bb8fbfdfb6d09271099284e60b91db6280cddd4e0345507ca0fef10",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "26068bc45ffe6a6655491a90d3c42401fa9d2e6fdecf5dc96ecddf2ca2ae4935"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'same', 'THE RECIPIENT')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "d77457a38d134c6ff56bb09e3571b7be5c00f03ba7c479f568ddd97dd2b52374"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'same', 'Recipient')",
+      "results": {
+        "r21": "fdd4b04839edf170c60e1e9adb9522dced4e1968aa1f1ea6480a7dcfc7a907e7",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "d26680d6e4d1afefbc24ee852e3ae205aa44f7f6ac632565c7481111e853ac12"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'guarantor', 'RECIPIENT:')",
+      "results": {
+        "r21": "ffa3547f9bb8fbfdfb6d09271099284e60b91db6280cddd4e0345507ca0fef10",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "27d20dcbc5270d51890820343355db87d1f0ad33751e15319a2be3039d54bd4b"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'guarantor', 'THE RECIPIENT')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "fc194640731a437f151f44b7a86c4f946a3ea2b727e7babc75c9e33d22bd2dad"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'guarantor', 'Recipient')",
+      "results": {
+        "r21": "fdd4b04839edf170c60e1e9adb9522dced4e1968aa1f1ea6480a7dcfc7a907e7",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "8c8e228515eec263315cab6a3d162081938a6490a62fc912e0cb7e00dd10a95b"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'split', 'RECIPIENT:')",
+      "results": {
+        "r21": "8d03c2e93c0dbf2b98cc93027678370a41f655d648c745178cfb1ff420b2e5ff",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "9237ae56804eaf0e716e171ff9bdf8fd16ab4e2c588ed9d511736ff3b0e60f60"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'split', 'THE RECIPIENT')",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "d8f8a11f864c92292d099f152aa96668b96c530009ff7084ac59de7f04076010"
+    },
+    {
+      "group": "b2",
+      "case": "('b2', True, True, 'split', 'Recipient')",
+      "results": {
+        "r21": "e75d2fd9f2635736358569533e6120c7c909bf66e021416c05eb5ff26332eea3",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0
+      },
+      "input_sha256": "6d71da9813a8dac511e6b3db69cfdf945023e0825bdf154d594d9b8bd4dc702b"
+    }
+  ],
+  "outcomes": {
+    "250c86076fe824dc97b7111fc0546e11275becb6637e19597d90bbe207a68487": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "2a4f42fb044b30c6363b8b91e1c9e2dcfd918e2d5191eca5e23ed7df388022a4": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "1dc8b3b194359e4fbcc0f78250a40db34e898f4478a774df569b1e3aa12a6c01": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "d7645b58ac8048c1b44468109f56dd03c7cf443712ab8175126fe1a4e00674c8": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "1f6cfa527dfce673e3e3a5d5c6165b9be7f2567f4383a78182c6efb324c2ae32": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "cc92f17fc43ca85c04098d86ce901a1fbd84c6377784be715086234ea9b5a7e2": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "b6505e83c76e9d2e3d92cd18fc6dd3b3f9ed2c3ee832d0c8e5b822487c218870": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 59.343434,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "SMITH AND JONES CONSULTING LLC",
+                "rect": [
+                  40.0,
+                  450.07,
+                  220.58,
+                  460.07
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  490.07,
+                  54.45,
+                  500.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  512.0699999999999,
+                  69.45,
+                  522.0699999999999
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  524.0699999999999,
+                  61.67,
+                  534.0699999999999
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  550.0699999999999,
+                  63.900000000000006,
+                  560.0699999999999
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              500.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 68.939394,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  550.0699999999999,
+                  63.900000000000006,
+                  560.0699999999999
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              560.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "4f35b02912ed93ac55c1fc42ebaf403a7d952e4a3c55081d2461d6369ee7e0ac": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "c76cdc840615b5e1fab6e706d245849a425681812f956f246896335af1e4a8aa": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "37276a724cb198e39aa29af09c0f13f00da1d76fd53e651f6bd4da2837793496": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "SMITH AND JONES CONSULTING LLC",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  220.58,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "0bc966e9dc978304df98f38ed623c8472e542fabb0981a63548fdcc54a9a228a": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "SMITH AND JONES CONSULTING LLC",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  220.58,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "4a58a75f43d6772cf1cf8cd6fe11e8041b296d6d578636dc24e2e126ef39e560": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "a3ee44d3059c9bc2d940e90e160e3c6595f8bb5af4b44a8386876a9c6cd1f992": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "f20cb7c3b063e8a383c7150522c7e2ed60b7768d4ed3f31d70ac9c2eba98a6ed": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "ac061d8bc7a00ec2621f009ab4b5f4cf9f8cfc131b790bbaa2cbdb5a9e0de20b": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "f597d3bf9d59fb41359bd14808c19dd1b2add7913f4e78da2723083e0b9b6a99": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "fc22c7de9ad98c306c86a2c684033e9e78934d718a220dd0980fb6ab22422dd4": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "bbebfac4b2a099f39083078932f681baf21820c8b8f070b80834b53802c5be51": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 59.343434,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "SMITH AND JONES CONSULTING LLC",
+                "rect": [
+                  40.0,
+                  450.07,
+                  220.58,
+                  460.07
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  490.07,
+                  54.45,
+                  500.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  512.0699999999999,
+                  69.45,
+                  522.0699999999999
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  524.0699999999999,
+                  61.67,
+                  534.0699999999999
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  550.0699999999999,
+                  63.900000000000006,
+                  560.0699999999999
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              500.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 68.939394,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  550.0699999999999,
+                  63.900000000000006,
+                  560.0699999999999
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              560.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "9941e4643a0f7b7d03f55d885af28998ccc4f3c47ab113c6c7a755e0646ad51a": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "739e0055e4c762333c1be5d5387732461a0d4bc09e9dfdecad4bf55d91195785": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "fd014768d0f4d07524da6c984ed5694118f5f58119f72cc8404517e05a951db0": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "SMITH AND JONES CONSULTING LLC",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  220.58,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "6658c70b65116d3a976ab408004aa5e9853e6e74d3a30505631f35036383eb29": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "SMITH AND JONES CONSULTING LLC | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "SMITH AND JONES CONSULTING LLC",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  220.58,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@smithjones.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "7291b5c1793de0a561adb238224276e47d9411cceacf23482fa789d6bce9d32f": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "fe43c2319ef98769a714c91a873b090271de1eac57009042af4083c01822c236": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "1b138bc1e3cbdf713cee547e04fee6ca122304f46015fb96d9ff6042dc7bb367": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "3c317bd46f5e1ccbe5278bd93aa2622adb7f4fc652ae5251322d5408b8453556": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "70f9d73639036e14a4dac1f9e44fcb86ccc95488a6f0e94e020a0969d5420ada": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "b5e2673f47b0b84aa564cb7b95f983370f56a595aea5d254c25e01dfdef2fe12": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "ffa3547f9bb8fbfdfb6d09271099284e60b91db6280cddd4e0345507ca0fef10": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "fdd4b04839edf170c60e1e9adb9522dced4e1968aa1f1ea6480a7dcfc7a907e7": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "8d03c2e93c0dbf2b98cc93027678370a41f655d648c745178cfb1ff420b2e5ff": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "e75d2fd9f2635736358569533e6120c7c909bf66e021416c05eb5ff26332eea3": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 10.531046,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "DISCLOSER: | FLEET TEST CO. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "DISCLOSER:",
+                "rect": [
+                  40.0,
+                  250.07000000000005,
+                  100.57000000000001,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "FLEET TEST CO.",
+                "rect": [
+                  40.0,
+                  262.07000000000005,
+                  120.02000000000001,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  40.0,
+                  290.07,
+                  54.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  40.0,
+                  312.07,
+                  69.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  40.0,
+                  324.07,
+                  61.67,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              64.45,
+              300.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 12.075163,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  40.0,
+                  350.07,
+                  63.900000000000006,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              73.9,
+              360.0,
+              220.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 3,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Recipient | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "Recipient",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  361.67999999999995,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 3,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b2",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    }
+  }
+}

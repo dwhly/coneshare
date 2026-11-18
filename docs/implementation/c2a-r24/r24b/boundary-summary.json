@@ -1,0 +1,188 @@
+{
+  "part": "boundary",
+  "cases": 2400,
+  "groups": {
+    "procter_first": {
+      "cases": 240,
+      "r21_n": 124,
+      "r21_raw_wrong": 0,
+      "r24_n": 144,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 20,
+      "r21_c": 116,
+      "r24_c": 96
+    },
+    "smith_llp_first": {
+      "cases": 240,
+      "r21_n": 180,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 60,
+      "r24_c": 60
+    },
+    "three_lowercase": {
+      "cases": 240,
+      "r21_n": 180,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 60,
+      "r24_c": 60
+    },
+    "three_corp": {
+      "cases": 240,
+      "r21_n": 180,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 60,
+      "r24_c": 60
+    },
+    "trailing_comma": {
+      "cases": 240,
+      "r21_n": 180,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 60,
+      "r24_c": 60
+    },
+    "offices": {
+      "cases": 240,
+      "r21_n": 180,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 60,
+      "r24_c": 60
+    },
+    "corporation_offices": {
+      "cases": 240,
+      "r21_n": 180,
+      "r21_raw_wrong": 0,
+      "r24_n": 180,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 60,
+      "r24_c": 60
+    },
+    "lowercase_inc": {
+      "cases": 240,
+      "r21_n": 120,
+      "r21_raw_wrong": 0,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 120,
+      "r24_c": 120
+    },
+    "quoted_joins": {
+      "cases": 240,
+      "r21_n": 108,
+      "r21_raw_wrong": 0,
+      "r24_n": 108,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 132,
+      "r24_c": 132
+    },
+    "northwind_first": {
+      "cases": 240,
+      "r21_w": 24,
+      "r21_raw_wrong": 24,
+      "r24_n": 120,
+      "r24_raw_wrong": 0,
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "n_to_w": 0,
+      "c_to_n": 0,
+      "r21_c": 120,
+      "r24_c": 120,
+      "r21_n": 96
+    }
+  },
+  "transitions": {
+    "procter_first": {
+      "n -> n": 124,
+      "c -> c": 96,
+      "c -> n": 20
+    },
+    "smith_llp_first": {
+      "n -> n": 180,
+      "c -> c": 60
+    },
+    "three_lowercase": {
+      "n -> n": 180,
+      "c -> c": 60
+    },
+    "three_corp": {
+      "n -> n": 180,
+      "c -> c": 60
+    },
+    "trailing_comma": {
+      "n -> n": 180,
+      "c -> c": 60
+    },
+    "offices": {
+      "n -> n": 180,
+      "c -> c": 60
+    },
+    "corporation_offices": {
+      "n -> n": 180,
+      "c -> c": 60
+    },
+    "lowercase_inc": {
+      "n -> n": 120,
+      "c -> c": 120
+    },
+    "quoted_joins": {
+      "n -> n": 108,
+      "c -> c": 132
+    },
+    "northwind_first": {
+      "w -> n": 24,
+      "c -> c": 120,
+      "n -> n": 96
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r24": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3"
+  },
+  "archive_results_exact": true,
+  "external_http_calls": 0,
+  "worker_evaluations": 0
+}
