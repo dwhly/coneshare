@@ -1,0 +1,59 @@
+import sys, os, time, hashlib
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+rc = R24.rc
+r26 = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(r26.encode()).hexdigest().startswith('5683ff7b')
+SRC = dict(r26=r26, r27=open(_p.__file__).read())
+def mk(n):
+    m = ModuleType('rev27c_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+http = Mock(side_effect=AssertionError('http')); calls = Counter()
+def run(pages, people, allowed):
+    pdf = rc.pages_pdf(pages); out = ''
+    for n, m in M.items():
+        mo = Mock(); r = in_process(m, pdf, people, mo); calls[n] += mo.call_count
+        out += 'W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n')
+    return out
+def stack(heading, cap, name, x, y, table=False):
+    rows = [(y - 30, heading, False, x)] if heading else []
+    rows += [(y, cap, True, x, x + 180), (y + 12, name, False, x), (y + 50, 'Date:', True, x, x + 180)]
+    if table:  # a second column in the same row
+        rows += [(y, 'Phone:', True, x + 280, x + 460), (y + 12, 'Name:', False, x + 280), (y + 50, 'Date:', True, x + 280, x + 460)]
+    return rows
+G = Counter(); EX = Counter(); t = time.time()
+CAPS = ['Attention:', 'Signature:', 'Witness:', 'Acknowledged:', 'Received by:', 'Employee Signature:', 'Notary Public:']
+NAMES = ['Name:', 'Name: Chris Jones', 'Name: Pat Smith', 'Printed name: Lee Harbor']
+HEADS = [None, 'NOTICES:', 'WITNESS:', 'EXHIBIT A - ACKNOWLEDGMENT']
+WHERE = ['sig_page_below', 'exhibit_page', 'recital_page', 'table_exhibit']
+with patch('httpx.Client.send', http):
+    for where, head, cap, nm, recital, signer, msa in product(WHERE, HEADS, CAPS, NAMES, ('none', 'parsed'), ('domain', 'explicit', 'both'), (False, True)):
+        sig = R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40) + R24.company_block('RECIPIENT:', 'HARBOR LIGHT ANALYTICS, INC.' if not msa else None, 320)
+        if msa: sig = [(r[0], 'CUSTOMER:', False, 320) if r[1] == 'RECIPIENT:' else r for r in sig]
+        p1 = list(rc.RECITALS[recital])
+        pages = [p1, sig]
+        if where == 'sig_page_below': pages[1] = sig + stack(head, cap, nm, 40, 520)
+        elif where == 'exhibit_page': pages.append(stack(head, cap, nm, 40, 300))
+        elif where == 'recital_page': pages[0] = p1 + stack(head, cap, nm, 40, 400)
+        else: pages.append(stack(head, cap, nm, 40, 300, table=True))
+        pat = dict(name='Pat Smith', email=rc.PE)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        people = [TWO[1], pat] if signer == 'both' else [pat]
+        k = run(pages, people, dict([(rc.PE, (2, 320, 300, 500)), (rc.DE, (2, 40, 300, 220))]))
+        G[(where, k)] += 1
+        if k != 'pp' and k != 'nn': EX[(k, where, cap, nm, signer)] += 1
+print('http', http.call_count, 'model', dict(calls), 'elapsed', round(time.time() - t))
+for x in sorted(G.items(), key=str): print(x)
+E2 = Counter((k[0], k[1], k[4]) for k in EX.elements()); print(sorted(E2.items(), key=str))
+E3 = Counter((k[0], k[2]) for k in EX.elements()); print(sorted(E3.items(), key=str))
+E4 = Counter((k[0], k[3]) for k in EX.elements()); print(sorted(E4.items(), key=str))

@@ -1,0 +1,78 @@
+import sys, os, time, hashlib
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from pathlib import Path
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+ROOT = Path('/root/worktrees/send-c1b'); sys.path.insert(0, str(ROOT/'backend'))
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+rc = R24.rc
+r26 = open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read()
+assert hashlib.sha256(r26.encode()).hexdigest().startswith('5683ff7b')
+SRC = dict(r26=r26, r27=open(_p.__file__).read())
+def mk(n):
+    m = ModuleType('rev27a_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+forbid = Mock(side_effect=AssertionError('http')); calls = Counter()
+def run(pages, people, allowed):
+    pdf = rc.pages_pdf(pages); out = []
+    for n, m in M.items():
+        mo = Mock(); r = in_process(m, pdf, people, mo); calls[n] += mo.call_count
+        out.append('W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n'))
+    return ''.join(out)
+HLA = R24.HLA
+OWN_HEAD = [('RECIPIENT:', HLA), (None, HLA), ('RECIPIENT:', None), (None, None), ('THE SUPPLIER', None), ('RECIPIENT:', 'HL ANALYTICS, INC.'), (None, 'HL ANALYTICS, INC.')]
+SECOND = ['Title: CEO', 'Title:', 'Signature', 'Authorized Signature', 'Harbor Way Holdings', 'Title: Head of Strategic Partnerships',
+          'Email: pat@harborlight.com', 'Address: 100 Harbor Way', 'Duly authorized', 'Pat Smith', 'Its: Authorized Signatory', 'Print Name']
+def own_block(h, co, second, x=320, y=300):
+    rows = [r for r in R24.company_block(h, co, x, y) if r[1] not in ('Name:', 'Title:')]
+    return rows + [(y + 12, 'Name: Pat Smith', False, x), (y + 24, second, False, x)]
+G = Counter(); t = time.time()
+PAT = dict(name='Pat Smith', email=rc.PE)
+AL = {rc.PE: (2, 320, 300, 500), rc.DE: (2, 40, 300, 220)}
+RK = lambda rec: 'rec' if rec != 'none' else 'norec'
+with patch('httpx.Client.send', forbid):
+    for (h, co), second, recital, fleet_extra, signer in product(OWN_HEAD, SECOND, ('none', 'parsed', 'address'), ('placeholders', 'dan'), ('domain', 'explicit', 'both')):
+        fleet = R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40)
+        if fleet_extra == 'dan': fleet = [(r[0], 'Name: Dan Whaley', False, 40) if r[1] == 'Name:' else r for r in fleet]
+        pages = [list(rc.RECITALS[recital]), fleet + own_block(h, co, second) + R24.company_block(None, 'HARBOR LIGHT GROUP, INC.', 40, 500)]
+        pat = dict(PAT)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        G[('A', RK(recital), run(pages, [TWO[1], pat] if signer == 'both' else [pat], AL))] += 1
+    for (h, co), recital, signer in product([('RECIPIENT:', 'HL ANALYTICS, INC.'), (None, 'HL ANALYTICS, INC.'), (None, 'BRIGHTWATER, INC.'), ('THE SUPPLIER', None),
+                                               ('RECIPIENT:', HLA), (None, HLA), ('RECIPIENT:', None), (None, None)], ('none', 'parsed', 'address'), ('domain', 'explicit')):
+        fleet = [(r[0], 'Name: Pat Smith', False, 40) if r[1] == 'Name:' else r for r in R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40)]
+        pages = [list(rc.RECITALS[recital]), fleet + R24.company_block(h, co, 320, 300) + R24.company_block(None, 'HARBOR LIGHT GROUP, INC.', 40, 500)]
+        pat = dict(PAT)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        fpat = dict(name='Pat Smith', email=rc.DE, company='Fleet Test Co.', side='us')
+        for people in ([fpat, pat], [pat]):
+            G[('B', len(people), RK(recital), run(pages, people, AL))] += 1
+    for (h, co), ntext, recital, signer in product([('RECIPIENT:', 'HL ANALYTICS, INC.'), ('THE SUPPLIER', None), (None, None), ('RECIPIENT:', HLA)],
+                                                    [('NOTICES TO RECIPIENT:', 'Attn:'), ('COPY TO:', 'Attention:'), ('ACKNOWLEDGED BY EMPLOYEE:', 'Signature:')],
+                                                    ('none', 'parsed'), ('domain', 'explicit', 'both')):
+        notice = [(640, ntext[0], False, 320), (680, ntext[1], True, 320, 500), (692, 'Name: Pat Smith', False, 320), (704, 'Harbor Way Holdings', False, 320)]
+        pages = [list(rc.RECITALS[recital]), R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40) + R24.company_block(h, co, 320, 300)
+                 + R24.company_block(None, 'HARBOR LIGHT GROUP, INC.', 40, 500) + notice]
+        pat = dict(PAT)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        G[('C', RK(recital), run(pages, [TWO[1], pat] if signer == 'both' else [pat], AL))] += 1
+    for (h, co), variant, recital, signer in product(OWN_HEAD, ('blank_name', 'name_in_affiliate', 'name_in_affiliate_plus_holdings'),
+                                                     ('none', 'parsed', 'address'), ('domain', 'explicit', 'both')):
+        own = R24.company_block(h, co, 320, 300)
+        aff = R24.company_block(None, 'HARBOR LIGHT GROUP, INC.', 40, 500)
+        if variant != 'blank_name':
+            aff = [(r[0], 'Name: Pat Smith', False, 40) if r[1] == 'Name:' else r for r in aff]
+            if variant.endswith('holdings'): aff = [(r[0], 'Harbor Way Holdings', False, 40) if r[1] == 'Title:' else r for r in aff]
+        pages = [list(rc.RECITALS[recital]), R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40) + own + aff]
+        pat = dict(PAT)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        G[('D ' + variant, RK(recital), run(pages, [TWO[1], pat] if signer == 'both' else [pat], AL))] += 1
+print('http', forbid.call_count, 'calls', sorted(calls.items()), 'elapsed', round(time.time() - t))
+for x in sorted(G.items(), key=str): print(x)

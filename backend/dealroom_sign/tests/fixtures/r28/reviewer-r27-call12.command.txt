@@ -1,0 +1,15 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json
+cmds=[]
+for line in open('counterparty-c2a-gate3-r26.jsonl'):
+    try: o=json.loads(line)
+    except: continue
+    m=o.get('message') or {}
+    c=m.get('content') if isinstance(m,dict) else None
+    if not isinstance(c,list): continue
+    for x in c:
+        if isinstance(x,dict) and x.get('type')=='tool_use': cmds.append(x['input'].get('command') or '')
+for i,c in enumerate(cmds):
+    if "'l2'" in c or 'E:' in c or 'Executed by' in c: print(i)
+print(cmds[52]); print('====54'); print(cmds[54])
+EOF

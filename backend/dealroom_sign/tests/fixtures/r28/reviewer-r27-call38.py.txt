@@ -1,0 +1,63 @@
+import sys, os, time, hashlib
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+from dealroom_sign.tests.test_placement_r8 import CAPTIONS
+from dealroom_sign.tests.test_placement_r12 import HEADINGS
+from dealroom_sign.tests.test_placement_r13 import own_company_pdf
+from dealroom_sign.tests.test_placement_r3 import PAT as PAT13
+rc = R24.rc
+r27 = open(_p.__file__).read()
+a1 = "        if not following or not NAME_CAPTION.match(following[0]['text']):\n"
+a2 = "        if not dates:\n            continue\n        date = min(dates, key=lambda r: r.y)\n        if any(line.y < r.y < date.y and r is not line\n"
+assert r27.count(a1) == 1 and r27.count(a2) == 1
+cand = r27.replace(a1, "        if not following or not (NAME_CAPTION.match(following[0]['text']) or person_text(following[0]['text'])):\n").replace(
+    a2, "        date_y = min((r.y for r in dates), default=line.y + 60)\n        if any(line.y < r.y < date_y and r is not line\n")
+SRC = dict(r27=r27, cand27=cand)
+def mk(n):
+    m = ModuleType('rev27k_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+def run(pdf, people, allowed=None):
+    out = []
+    for n, m in M.items():
+        r = in_process(m, pdf, people, Mock())
+        out.append(r if allowed is None else ('W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n')))
+    return out
+G = Counter(); t = time.time(); X = 72
+with patch('httpx.Client.send', Mock(side_effect=AssertionError('http'))):
+    for caption, heading in product(CAPTIONS, HEADINGS):
+        src = own_company_pdf(caption, heading)
+        rs = run(src, PAT13)
+        G[('L-2 single placed@560 score4', tuple(r['status'] == 'placed' and sorted(f['evidence']['line'][1] for f in r['fields']) == [560, 600] and r['assignments'][0]['score'] == 4 for r in rs))] += 1
+        rs = run(src, [TWO[1], *PAT13])
+        G[('L-2 both held', tuple(r['status'] == 'needs_sender' and not r['fields'] for r in rs))] += 1
+    NAMES = ['Name: Pat Smith', 'Print name: Pat Smith', 'Nom: Pat Smith', 'Name (print): Pat Smith', 'Printed Name: Pat Smith', 'Pat Smith', 'Name/Title: Pat Smith, CEO']
+    TAIL = dict(date_rule=(420, 'Date:', True, X), title_text_only=(394, 'Title: CEO', False, X), title_rule=(420, 'Title:', True, X), fecha_rule=(420, 'Fecha:', True, X))
+    for nm, tail, cap, head, signer in product(NAMES, list(TAIL), CAPTIONS, ('For and on behalf of the Recipient', 'harbor light analytics, inc.'), ('domain', 'both')):
+        rows = [(240, 'FLEET TEST CO.', False, X), (270, 'By:', True, X), (300, 'Date:', True, X), (340, head, False, X), (370, cap, True, X), (382, nm, False, X), TAIL[tail],
+                (520, 'HARBOR LIGHT GROUP, INC.', False, X), (560, 'By:', True, X), (600, 'Date:', True, X)]
+        pat = dict(name='Pat Smith', email=rc.PE)
+        G[('B-2 variants', ''.join(run(rc.pages_pdf([list(rc.RECITALS['parsed']), rows]), [TWO[1], pat] if signer == 'both' else [pat], dict([(rc.PE, (2, 0, 370, 612)), (rc.DE, (2, 0, 270, 612))]))))] += 1
+    # ordinary two-party NDA / MSA with and without exhibit / notice stacks (no-name-printed stacks only)
+    def stack(cap, nm, x, y): return [(y, cap, True, x, x + 180), (y + 12, nm, False, x), (y + 40, 'Title:', False, x)]
+    for where, cap, nm, recital, signer, msa in product(('none', 'sig_page_below', 'exhibit_page'), ('Attention:', 'Signature:', 'Witness:', 'Received by:'), ('Name:', 'Name: Chris Jones', 'Chris Jones'),
+                                                       ('none', 'parsed'), ('domain', 'explicit', 'both'), (False, True)):
+        if where == 'none' and (cap != 'Attention:' or nm != 'Name:'): continue
+        sig = R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40) + R24.company_block('RECIPIENT:', 'HARBOR LIGHT ANALYTICS, INC.' if not msa else None, 320)
+        pages = [list(rc.RECITALS[recital]), sig]
+        if where == 'sig_page_below': pages[1] = sig + stack(cap, nm, 40, 520)
+        elif where == 'exhibit_page': pages.append(stack(cap, nm, 40, 300))
+        pat = dict(name='Pat Smith', email=rc.PE)
+        if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+        G[('ordinary ' + where, ''.join(run(rc.pages_pdf(pages), [TWO[1], pat] if signer == 'both' else [pat], dict([(rc.PE, (2, 320, 300, 500)), (rc.DE, (2, 40, 300, 220))]))))] += 1
+print('elapsed', round(time.time() - t), 'cols', list(M))
+for x in sorted(G.items(), key=str): print(x)

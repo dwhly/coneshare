@@ -47,7 +47,7 @@ ROLE_DESCRIPTION_WIDE = re.compile(
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.27'
+VERSION = 'c2a.28'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -614,7 +614,7 @@ def shared_company_heading(block, blocks, texts, roles):
 
 
 def unclaimed_signing_peers(rules, texts, blocks):
-    """Retain unscored Name/Date stacks hidden by caption attribution."""
+    """Retain unscored signing stacks hidden by caption attribution."""
     peers = []
     for line in rules:
         if (line.kind != 'drawn' or line.y < 110
@@ -625,24 +625,33 @@ def unclaimed_signing_peers(rules, texts, blocks):
         following = [t for t in texts if 0 <= t['rect'][1] - line.y < 125
                      and abs(t['rect'][0] - column) < 35]
         following.sort(key=lambda t: t['rect'][1])
-        if not following or not NAME_CAPTION.match(following[0]['text']):
+        if not following:
             continue
         name = following[0]
+        # Caption vocabulary must not erase a structurally adjacent person.
+        # A caption's value is evidence only for this veto, never a score.
+        text = name['text']
+        person = person_text(text) or person_text(text.partition(':')[2].strip())
+        if not (NAME_CAPTION.match(text) or person):
+            continue
         if name['rect'][1] - line.y >= 22:
             continue
-        dates = [r for r in rules if r.semantic == 'DATE'
-                 and name['rect'][3] < r.y < line.y + 125
-                 and abs(r.label['rect'][0] - column) < 40]
-        if not dates:
-            continue
-        date = min(dates, key=lambda r: r.y)
-        if any(line.y < r.y < date.y and r is not line
+        tails = [r for r in rules if r.semantic == 'DATE' or r.label.get('text')]
+        tails = [r for r in tails
+                 if name['rect'][3] < r.y < line.y + 125
+                 and abs(r.label.get('rect', [r.x0])[0] - column) < 40]
+        # Any labelled rule can close the stack (including Title/Its or an
+        # unfamiliar date caption). Keep cand27's short fallback for a name
+        # followed by text only, such as Title: CEO without a date rule.
+        tail_y = min((r.y for r in tails), default=line.y + 60)
+        if any(line.y < r.y < tail_y and r is not line
                and r.semantic not in {'NAME', 'TITLE'}
                and r.x1 > column and r.label.get('rect', [r.x0])[0] < line.x1
                for r in rules):
             continue
-        peers.append([tokens(value) for part in identity_parts(name['text'])
-                      if (value := person_text(part))])
+        printed = [tokens(value) for part in identity_parts(text)
+                   if (value := person_text(part))]
+        peers.append(printed or ([tokens(person)] if person else []))
     return peers
 
 

@@ -1,0 +1,6 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import os
+for d in ['/root','/root/code/fleet-dealroom','/root/worktrees/dealroom-sign-edd','/root/worktrees/dealroom-sign-edd/docs/edd/briefs']:
+    p=os.path.join(d,'counterparty-c2a-gate3-r26.jsonl'); print(p, os.path.exists(p))
+print(os.getcwd())
+EOF

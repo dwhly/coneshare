@@ -1,0 +1,1 @@
+git -C /root/worktrees/send-c1b log --oneline -3; git -C /root/worktrees/send-c1b diff f450fdae 1c425e1b --stat; git -C /root/worktrees/send-c1b diff f450fdae 1c425e1b --stat -- backend/dealroom_sign/tests; git -C /root/worktrees/send-c1b diff f450fdae 1c425e1b --diff-filter=M --stat -- backend/dealroom_sign/tests

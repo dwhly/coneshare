@@ -1,0 +1,23 @@
+import sys, os, time, types, hashlib
+sys.dont_write_bytecode = True
+sys.path.insert(0, '/tmp/rev19')
+src = open('/tmp/rev19/h.py').read()
+a = src.index("SRC = {'r18'"); b = src.index("STATUS =")
+src = src[:a] + "SRC = {'r26': open('/root/worktrees/send-merge/backend/dealroom_sign/placement.py').read(), 'r27': (ROOT / 'backend/dealroom_sign/placement.py').read_text()}\nassert hashlib.sha256(SRC['r26'].encode()).hexdigest().startswith('5683ff7b')\nimport hashlib\n" + src[b:]
+src = src.replace("SRC = {'r26'", "import hashlib\nSRC = {'r26'", 1)
+h = types.ModuleType('h'); h.__file__ = '/tmp/rev19/h.py'; sys.modules['h'] = h
+exec(compile(src, 'h', 'exec'), h.__dict__)
+import gens
+from collections import Counter
+from contextlib import ExitStack
+G = Counter(); calls = Counter(); t = time.time()
+fams = [('veto', gens.veto_matrix), ('affiliate', gens.ev.affiliate_cases), ('competition', gens.competition), ('l1', gens.l1_cases)]
+with ExitStack() as st:
+    M = h.modules(st, ('r26', 'r27'))
+    for fname, fn in fams:
+        for g, c, rows, both, allowed in fn():
+            res = h.run_rows(M, rows, both, allowed)
+            for n in M: calls[n] += res[n][2]
+            G[(fname, ''.join('W' if res[n][1] else ('p' if res[n][0]['fields'] else 'n') for n in M))] += 1
+print('http', h.forbidden.call_count, 'model', dict(calls), 'elapsed', round(time.time() - t))
+for x in sorted(G.items(), key=str): print(x)
