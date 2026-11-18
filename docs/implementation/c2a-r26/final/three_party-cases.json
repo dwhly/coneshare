@@ -1,0 +1,3000 @@
+{
+  "cases": [
+    {
+      "group": "three_party",
+      "case": "0: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'domain', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4",
+        "r25": "70e051156f41ae63a4029044fa5ea2102250948fa5a02fcadc879b18668be4e0",
+        "r26": "2b6240384fa8e6a9fdb0d04c8e833bb2401b43bc8a1a02726a0fb8858a66e405"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "0480030b190af6aadf7d1b8f1fda518884451308d83997bb40af4ed3e9075533"
+    },
+    {
+      "group": "three_party",
+      "case": "1: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'explicit', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4",
+        "r25": "70e051156f41ae63a4029044fa5ea2102250948fa5a02fcadc879b18668be4e0",
+        "r26": "2b6240384fa8e6a9fdb0d04c8e833bb2401b43bc8a1a02726a0fb8858a66e405"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "b8851438c679522e920ffb799ba671a050d5ade5b92737fa93eaf7a8921ba81c"
+    },
+    {
+      "group": "three_party",
+      "case": "2: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'both', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "69cc7097a6d4f173200806d981355daf718fe2c9308fa9345dbd255d81de75ef",
+        "r24": "b9106667880b4c7a98e19dc7f8c0f09fef8f05ff62010a2b0cefbad25e28d81b",
+        "r25": "4ed93a676c106427df3e8dfd2185b4e06b7990e71f76a02c2fe8649a7a37fbc9",
+        "r26": "99f17bad719f20ecba103efd3b31e0ae815a8bee7178163610a7defb62803697"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "fbc51704046d9125f2bd18ed77d92e900c6131c647cfcb220f464f4a975d3816"
+    },
+    {
+      "group": "three_party",
+      "case": "3: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'domain', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "cc68ea42963ef8de9056065995b2c61ff11a67812154f75dc68afab32dfa3609",
+        "r24": "65167c0d3650912fb4a4d2f90fde7d8d1894bd61eb0728d1f52dcf467a937033",
+        "r25": "d7746e2e6c897d82040f01df9b5153eff2720a466a9785f99f1bbaf4bfe1caa0",
+        "r26": "277035c65e766d0b60c6ce27d1b7d28d895bfa96421f87d78d4053a194898cdf"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "d8a7c604d5e0f35a6708f56566c46cc51da402cca53a7df6f31916c854059bdd"
+    },
+    {
+      "group": "three_party",
+      "case": "4: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'explicit', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "cc68ea42963ef8de9056065995b2c61ff11a67812154f75dc68afab32dfa3609",
+        "r24": "65167c0d3650912fb4a4d2f90fde7d8d1894bd61eb0728d1f52dcf467a937033",
+        "r25": "d7746e2e6c897d82040f01df9b5153eff2720a466a9785f99f1bbaf4bfe1caa0",
+        "r26": "277035c65e766d0b60c6ce27d1b7d28d895bfa96421f87d78d4053a194898cdf"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "24d4b460364df42bf3234b5fa158e42a3218f3b052dacacf5d761f4710a2d44d"
+    },
+    {
+      "group": "three_party",
+      "case": "5: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'both', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "f844a407f87e96791f2283ade2024f41af812d137bd64ebb8b7a3a45315b920c",
+        "r24": "657c61dd0fc49c31c082659060ab6b0ca545c75b4061df8f0e5c237927677db4",
+        "r25": "a2c36feb449a3a059e45104e4c5e488658971a92e3ad815254d0cf958576da49",
+        "r26": "33f0a0191f27455d2f29ad75326c7aa02759e9afacd6994d33a9097815e1e544"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "5bc79430169f8efc0ba1510388708abe60585344e1ff4f26b9fd6e39752d4a54"
+    },
+    {
+      "group": "three_party",
+      "case": "6: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'domain', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "530a726341ddbe7d65231a8a58fe9cb66abe6ac41cbbe931e0540ff891ad590c",
+        "r24": "ff3ae7e30424e3a09ff85961c8a9ac1bee1e6e4e95ab7b212f0b5a04987bd082",
+        "r25": "1c54e2038ef99e7a3ab2b134a3fbb9bc025afc3440102be5e1d2e30473ef524f",
+        "r26": "b666c181d2f66bafa65f2f05c44676a486d10035e1998a0b142452bf9c19c853"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "2f348a9033e711b702c44503a9170ca0368434ac8870d55806c414d8570e7111"
+    },
+    {
+      "group": "three_party",
+      "case": "7: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'explicit', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "530a726341ddbe7d65231a8a58fe9cb66abe6ac41cbbe931e0540ff891ad590c",
+        "r24": "ff3ae7e30424e3a09ff85961c8a9ac1bee1e6e4e95ab7b212f0b5a04987bd082",
+        "r25": "1c54e2038ef99e7a3ab2b134a3fbb9bc025afc3440102be5e1d2e30473ef524f",
+        "r26": "b666c181d2f66bafa65f2f05c44676a486d10035e1998a0b142452bf9c19c853"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "7203147e975b575dcd3b831fc668c30e95e006b6f9d4d886e8f8a909d324e4ea"
+    },
+    {
+      "group": "three_party",
+      "case": "8: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'both', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "bea6b538f02ff4323f873b721a0cc8aa7e0f3842c71c9198bade52e3b9f6f866",
+        "r24": "b2bdcec1e2a3bc157d9c46100b94c6248b2126d82c61928f32331a36bb893970",
+        "r25": "5e135241f6408be0c9491b08c9ac4ea9bb27963b122a7cd255f0a24e73d76df8",
+        "r26": "27d444ade1b7ee3bd7ae0c3fc0ecf9f95bf873dae042c3aa987280458e0fa3c0"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "0c58f84a9a7701e2e4dec613dba517eaf1292d3f77ef9f2950edeb6ae0bd44ea"
+    },
+    {
+      "group": "three_party",
+      "case": "9: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'domain', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "f52ac33293bca959b8017910b2174232f44aa48c88ef531f4ef656ce123da03b"
+    },
+    {
+      "group": "three_party",
+      "case": "10: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'explicit', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "66b9075dcc3913ab2ab21fb2e8a4c200f4e2dccb48e3abbbd4ca45dd64a58052"
+    },
+    {
+      "group": "three_party",
+      "case": "11: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'both', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "f844a407f87e96791f2283ade2024f41af812d137bd64ebb8b7a3a45315b920c",
+        "r24": "657c61dd0fc49c31c082659060ab6b0ca545c75b4061df8f0e5c237927677db4",
+        "r25": "a2c36feb449a3a059e45104e4c5e488658971a92e3ad815254d0cf958576da49",
+        "r26": "33f0a0191f27455d2f29ad75326c7aa02759e9afacd6994d33a9097815e1e544"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "0bdaca5eb86757940f5e26114def1a9fbd7d3ceac85703b1000150c3e36c5e95"
+    },
+    {
+      "group": "three_party",
+      "case": "12: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'domain', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "530a726341ddbe7d65231a8a58fe9cb66abe6ac41cbbe931e0540ff891ad590c",
+        "r24": "ff3ae7e30424e3a09ff85961c8a9ac1bee1e6e4e95ab7b212f0b5a04987bd082",
+        "r25": "1c54e2038ef99e7a3ab2b134a3fbb9bc025afc3440102be5e1d2e30473ef524f",
+        "r26": "b666c181d2f66bafa65f2f05c44676a486d10035e1998a0b142452bf9c19c853"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "5302c5dbc0919c40e3cbfe40fe1f28336f1c4549954a10fcd77dcb9c5a3eebf9"
+    },
+    {
+      "group": "three_party",
+      "case": "13: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'explicit', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "530a726341ddbe7d65231a8a58fe9cb66abe6ac41cbbe931e0540ff891ad590c",
+        "r24": "ff3ae7e30424e3a09ff85961c8a9ac1bee1e6e4e95ab7b212f0b5a04987bd082",
+        "r25": "1c54e2038ef99e7a3ab2b134a3fbb9bc025afc3440102be5e1d2e30473ef524f",
+        "r26": "b666c181d2f66bafa65f2f05c44676a486d10035e1998a0b142452bf9c19c853"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "dcdb07c6097cc404acaf69703b4c8d8273b1678779c545526248a09df05b24db"
+    },
+    {
+      "group": "three_party",
+      "case": "14: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'both', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "bea6b538f02ff4323f873b721a0cc8aa7e0f3842c71c9198bade52e3b9f6f866",
+        "r24": "b2bdcec1e2a3bc157d9c46100b94c6248b2126d82c61928f32331a36bb893970",
+        "r25": "5e135241f6408be0c9491b08c9ac4ea9bb27963b122a7cd255f0a24e73d76df8",
+        "r26": "27d444ade1b7ee3bd7ae0c3fc0ecf9f95bf873dae042c3aa987280458e0fa3c0"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "cbd4ef7b3f15f645b5eb36dfdd0e318c00193a7bafc64766b0c967639e329862"
+    },
+    {
+      "group": "three_party",
+      "case": "15: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'domain', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "69277998acba2f793d92f4b6590ea7860cd76e1f6fa67697fbba659892c406a3"
+    },
+    {
+      "group": "three_party",
+      "case": "16: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'explicit', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "477bf5d1f956ebed25078bd49b677ab996eaf688c21e0708cc997dcbcfa5866c"
+    },
+    {
+      "group": "three_party",
+      "case": "17: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'both', 'third': 'ACME HOLDINGS, LLC'}",
+      "results": {
+        "r21": "f844a407f87e96791f2283ade2024f41af812d137bd64ebb8b7a3a45315b920c",
+        "r24": "657c61dd0fc49c31c082659060ab6b0ca545c75b4061df8f0e5c237927677db4",
+        "r25": "a2c36feb449a3a059e45104e4c5e488658971a92e3ad815254d0cf958576da49",
+        "r26": "33f0a0191f27455d2f29ad75326c7aa02759e9afacd6994d33a9097815e1e544"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "a1eb29ff80855cf11fd8204109d5a58575c6dd4328056ac14a4aa781c8b38f13"
+    },
+    {
+      "group": "three_party",
+      "case": "18: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'domain', 'third': None}",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4",
+        "r25": "70e051156f41ae63a4029044fa5ea2102250948fa5a02fcadc879b18668be4e0",
+        "r26": "2b6240384fa8e6a9fdb0d04c8e833bb2401b43bc8a1a02726a0fb8858a66e405"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "82d9d656ae57d6ed7f148d15db5687b332eab494efcf9e777158201c9ed38310"
+    },
+    {
+      "group": "three_party",
+      "case": "19: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'explicit', 'third': None}",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4",
+        "r25": "70e051156f41ae63a4029044fa5ea2102250948fa5a02fcadc879b18668be4e0",
+        "r26": "2b6240384fa8e6a9fdb0d04c8e833bb2401b43bc8a1a02726a0fb8858a66e405"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "9b7ae446824c41bdb7eda19889e7bf067821f80ded98f2e37998bde1464af9a9"
+    },
+    {
+      "group": "three_party",
+      "case": "20: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'both', 'third': None}",
+      "results": {
+        "r21": "69cc7097a6d4f173200806d981355daf718fe2c9308fa9345dbd255d81de75ef",
+        "r24": "b9106667880b4c7a98e19dc7f8c0f09fef8f05ff62010a2b0cefbad25e28d81b",
+        "r25": "4ed93a676c106427df3e8dfd2185b4e06b7990e71f76a02c2fe8649a7a37fbc9",
+        "r26": "99f17bad719f20ecba103efd3b31e0ae815a8bee7178163610a7defb62803697"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "57b3266ac067ac62ae8460f75a8b26682a5be37138e7fc91c7dfbc1e3af15ceb"
+    },
+    {
+      "group": "three_party",
+      "case": "21: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'domain', 'third': None}",
+      "results": {
+        "r21": "cc68ea42963ef8de9056065995b2c61ff11a67812154f75dc68afab32dfa3609",
+        "r24": "65167c0d3650912fb4a4d2f90fde7d8d1894bd61eb0728d1f52dcf467a937033",
+        "r25": "d7746e2e6c897d82040f01df9b5153eff2720a466a9785f99f1bbaf4bfe1caa0",
+        "r26": "277035c65e766d0b60c6ce27d1b7d28d895bfa96421f87d78d4053a194898cdf"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "f8165bb9f815bc93a9ea1d750bba8b7869ee0c6ad95b4db527f51cbbe178417b"
+    },
+    {
+      "group": "three_party",
+      "case": "22: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'explicit', 'third': None}",
+      "results": {
+        "r21": "cc68ea42963ef8de9056065995b2c61ff11a67812154f75dc68afab32dfa3609",
+        "r24": "65167c0d3650912fb4a4d2f90fde7d8d1894bd61eb0728d1f52dcf467a937033",
+        "r25": "d7746e2e6c897d82040f01df9b5153eff2720a466a9785f99f1bbaf4bfe1caa0",
+        "r26": "277035c65e766d0b60c6ce27d1b7d28d895bfa96421f87d78d4053a194898cdf"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "71eea43888afdb317f921fde721095d4614a4bbe7f8440467c40d6e456fb6e2f"
+    },
+    {
+      "group": "three_party",
+      "case": "23: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'none', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'both', 'third': None}",
+      "results": {
+        "r21": "f844a407f87e96791f2283ade2024f41af812d137bd64ebb8b7a3a45315b920c",
+        "r24": "657c61dd0fc49c31c082659060ab6b0ca545c75b4061df8f0e5c237927677db4",
+        "r25": "a2c36feb449a3a059e45104e4c5e488658971a92e3ad815254d0cf958576da49",
+        "r26": "33f0a0191f27455d2f29ad75326c7aa02759e9afacd6994d33a9097815e1e544"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "046d8cc65e9dd6d570da2e07bdace5ef0c3a3cfae5dca4e93dd53fe8afb9f0db"
+    },
+    {
+      "group": "three_party",
+      "case": "24: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'domain', 'third': None}",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4",
+        "r25": "70e051156f41ae63a4029044fa5ea2102250948fa5a02fcadc879b18668be4e0",
+        "r26": "2b6240384fa8e6a9fdb0d04c8e833bb2401b43bc8a1a02726a0fb8858a66e405"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "f27a443718a1bd48294ce2d337fb403c5fb2b5da1b7f1b76df1870572d1822c7"
+    },
+    {
+      "group": "three_party",
+      "case": "25: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'explicit', 'third': None}",
+      "results": {
+        "r21": "530a726341ddbe7d65231a8a58fe9cb66abe6ac41cbbe931e0540ff891ad590c",
+        "r24": "ff3ae7e30424e3a09ff85961c8a9ac1bee1e6e4e95ab7b212f0b5a04987bd082",
+        "r25": "1c54e2038ef99e7a3ab2b134a3fbb9bc025afc3440102be5e1d2e30473ef524f",
+        "r26": "b666c181d2f66bafa65f2f05c44676a486d10035e1998a0b142452bf9c19c853"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "d0214d8151e8cc47de55b223b738a8dae67fd6ed021447438b97e4d3f3d5fb2b"
+    },
+    {
+      "group": "three_party",
+      "case": "26: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'both', 'third': None}",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534",
+        "r25": "6be3aaac5820ac36db931ff85bba28ba5d8b6ba0ca2c751eb37fad8f9b733414",
+        "r26": "c6987e0e9c5aa182fba46b8b9a783c2d3a95b925d80935d65ad34acd0b0c1635"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "d572b5508b886eb685871be08dac5b762d80819bbb7578d6fea011d32d1d68a4"
+    },
+    {
+      "group": "three_party",
+      "case": "27: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'domain', 'third': None}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "d2ea1646d691236f447a65e406ed838e29a4e6335390507aeba733db53f21881"
+    },
+    {
+      "group": "three_party",
+      "case": "28: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'explicit', 'third': None}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "cb2644322825406a4457a5981e73e1fa324b9e259750837345db0d15f85f0e82"
+    },
+    {
+      "group": "three_party",
+      "case": "29: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'parsed', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'both', 'third': None}",
+      "results": {
+        "r21": "f844a407f87e96791f2283ade2024f41af812d137bd64ebb8b7a3a45315b920c",
+        "r24": "657c61dd0fc49c31c082659060ab6b0ca545c75b4061df8f0e5c237927677db4",
+        "r25": "a2c36feb449a3a059e45104e4c5e488658971a92e3ad815254d0cf958576da49",
+        "r26": "33f0a0191f27455d2f29ad75326c7aa02759e9afacd6994d33a9097815e1e544"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "621e4115055aba54111190c95fb3ee08e7960205210d41d52a89dfab56d06a1b"
+    },
+    {
+      "group": "three_party",
+      "case": "30: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'domain', 'third': None}",
+      "results": {
+        "r21": "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76",
+        "r24": "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4",
+        "r25": "70e051156f41ae63a4029044fa5ea2102250948fa5a02fcadc879b18668be4e0",
+        "r26": "2b6240384fa8e6a9fdb0d04c8e833bb2401b43bc8a1a02726a0fb8858a66e405"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "0c33becaea49d00ad5b0d84a791eea7d963d9efdc7a458f051e06aa45378cec7"
+    },
+    {
+      "group": "three_party",
+      "case": "31: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'explicit', 'third': None}",
+      "results": {
+        "r21": "530a726341ddbe7d65231a8a58fe9cb66abe6ac41cbbe931e0540ff891ad590c",
+        "r24": "ff3ae7e30424e3a09ff85961c8a9ac1bee1e6e4e95ab7b212f0b5a04987bd082",
+        "r25": "1c54e2038ef99e7a3ab2b134a3fbb9bc025afc3440102be5e1d2e30473ef524f",
+        "r26": "b666c181d2f66bafa65f2f05c44676a486d10035e1998a0b142452bf9c19c853"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "aff0c5d44a6987f7118d7ac35a436d50524b7aab25c762a9a64242cc162162ad"
+    },
+    {
+      "group": "three_party",
+      "case": "32: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'placeholders', 'signer': 'both', 'third': None}",
+      "results": {
+        "r21": "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877",
+        "r24": "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534",
+        "r25": "6be3aaac5820ac36db931ff85bba28ba5d8b6ba0ca2c751eb37fad8f9b733414",
+        "r26": "c6987e0e9c5aa182fba46b8b9a783c2d3a95b925d80935d65ad34acd0b0c1635"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "aecee286b4e7a020370e89e13925746a953f356d4e31387aef4524538ad48c1c"
+    },
+    {
+      "group": "three_party",
+      "case": "33: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'domain', 'third': None}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "88f35e526d2ced8b3f4f9b98c75956282bd31f102d1b28ac2a266d56d01d7ba1"
+    },
+    {
+      "group": "three_party",
+      "case": "34: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'explicit', 'third': None}",
+      "results": {
+        "r21": "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6",
+        "r24": "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e",
+        "r25": "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5",
+        "r26": "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "22a222a16f4db4fdc7fb661e49807898e48c44296fbc16edad761433365a8e34"
+    },
+    {
+      "group": "three_party",
+      "case": "35: {'kind': 'control', 'h': None, 'co': 'HARBOR LIGHT ANALYTICS, INC.', 'cap': None, 'recital': 'address', 'acap': 'GUARANTOR:', 'extra': 'printed', 'signer': 'both', 'third': None}",
+      "results": {
+        "r21": "f844a407f87e96791f2283ade2024f41af812d137bd64ebb8b7a3a45315b920c",
+        "r24": "657c61dd0fc49c31c082659060ab6b0ca545c75b4061df8f0e5c237927677db4",
+        "r25": "a2c36feb449a3a059e45104e4c5e488658971a92e3ad815254d0cf958576da49",
+        "r26": "33f0a0191f27455d2f29ad75326c7aa02759e9afacd6994d33a9097815e1e544"
+      },
+      "wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "raw_wrong": {
+        "r21": false,
+        "r24": false,
+        "r25": false,
+        "r26": false
+      },
+      "model_calls": {
+        "r21": 0,
+        "r24": 0,
+        "r25": 0,
+        "r26": 0
+      },
+      "input_sha256": "fcf9f9fd6dae2b2a9dc886b64b4faa069344f062bb63e38dc8d20375c35cb664"
+    }
+  ],
+  "outcomes": {
+    "dea4909c3d04a5d3d2a0765facb0d7a29cde8911d2730969636d8558ca745a76": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "5c53f8e772018bbeac9350b4dd9904228b8e919ea9388c187a13e4646705ced4": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "70e051156f41ae63a4029044fa5ea2102250948fa5a02fcadc879b18668be4e0": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "2b6240384fa8e6a9fdb0d04c8e833bb2401b43bc8a1a02726a0fb8858a66e405": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "69cc7097a6d4f173200806d981355daf718fe2c9308fa9345dbd255d81de75ef": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley, Pat Smith sign and date. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "b9106667880b4c7a98e19dc7f8c0f09fef8f05ff62010a2b0cefbad25e28d81b": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley, Pat Smith sign and date. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "4ed93a676c106427df3e8dfd2185b4e06b7990e71f76a02c2fe8649a7a37fbc9": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley, Pat Smith sign and date. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "99f17bad719f20ecba103efd3b31e0ae815a8bee7178163610a7defb62803697": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley, Pat Smith sign and date. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "cc68ea42963ef8de9056065995b2c61ff11a67812154f75dc68afab32dfa3609": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "[redacted] | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "[redacted]",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "65167c0d3650912fb4a4d2f90fde7d8d1894bd61eb0728d1f52dcf467a937033": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "[redacted] | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "[redacted]",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "d7746e2e6c897d82040f01df9b5153eff2720a466a9785f99f1bbaf4bfe1caa0": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "[redacted] | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "[redacted]",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "277035c65e766d0b60c6ce27d1b7d28d895bfa96421f87d78d4053a194898cdf": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "[redacted] | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "[redacted]",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "f844a407f87e96791f2283ade2024f41af812d137bd64ebb8b7a3a45315b920c": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "657c61dd0fc49c31c082659060ab6b0ca545c75b4061df8f0e5c237927677db4": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "a2c36feb449a3a059e45104e4c5e488658971a92e3ad815254d0cf958576da49": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "33f0a0191f27455d2f29ad75326c7aa02759e9afacd6994d33a9097815e1e544": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "530a726341ddbe7d65231a8a58fe9cb66abe6ac41cbbe931e0540ff891ad590c": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | HARBOR LIGHT ANALYTICS, INC. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "ff3ae7e30424e3a09ff85961c8a9ac1bee1e6e4e95ab7b212f0b5a04987bd082": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | HARBOR LIGHT ANALYTICS, INC. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "1c54e2038ef99e7a3ab2b134a3fbb9bc025afc3440102be5e1d2e30473ef524f": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | HARBOR LIGHT ANALYTICS, INC. | By: | Name: | Title: | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name:",
+                "rect": [
+                  320.0,
+                  312.07,
+                  349.45,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title:",
+                "rect": [
+                  320.0,
+                  324.07,
+                  341.66999999999996,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "b666c181d2f66bafa65f2f05c44676a486d10035e1998a0b142452bf9c19c853": {
+      "status": "needs_sender",
+      "reason": "An unclaimed signing block requires placement review.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "bea6b538f02ff4323f873b721a0cc8aa7e0f3842c71c9198bade52e3b9f6f866": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "b2bdcec1e2a3bc157d9c46100b94c6248b2126d82c61928f32331a36bb893970": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "5e135241f6408be0c9491b08c9ac4ea9bb27963b122a7cd255f0a24e73d76df8": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "27d444ade1b7ee3bd7ae0c3fc0ecf9f95bf873dae042c3aa987280458e0fa3c0": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Dan Whaley signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "79c53eb4596ad4db07d0ef20051f024340d3b201fb9f39578bc54f61d1defca6": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "b2abed25f791de84ff43360a35d953bcb8c57685b176f7b67036c3658421fe8e": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "1c11c170036f2a5d50e0d554cfce308e8c01f31f2a2d5c3e0ab9dcdb8e3eb0b5": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "4323b971c80b1e0f280c27e59024e1a7acfd6da459a3c94c979682ea4400a906": {
+      "status": "placed",
+      "reason": "",
+      "reason_code": "placed",
+      "fields": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "SIGNATURE",
+          "page": 2,
+          "x": 56.28268,
+          "y": 34.090909,
+          "w": 25.416667,
+          "h": 3.661616,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "RECIPIENT: | HARBOR LIGHT ANALYTICS, INC. | By: | Name: Pat Smith | Title: CEO | Date:",
+            "labels": [
+              {
+                "text": "RECIPIENT:",
+                "rect": [
+                  320.0,
+                  250.07000000000005,
+                  376.12,
+                  260.07000000000005
+                ]
+              },
+              {
+                "text": "HARBOR LIGHT ANALYTICS, INC.",
+                "rect": [
+                  320.0,
+                  262.07000000000005,
+                  478.91999999999996,
+                  272.07000000000005
+                ]
+              },
+              {
+                "text": "By:",
+                "rect": [
+                  320.0,
+                  290.07,
+                  334.45,
+                  300.07
+                ]
+              },
+              {
+                "text": "Name: Pat Smith",
+                "rect": [
+                  320.0,
+                  312.07,
+                  395.58,
+                  322.07
+                ]
+              },
+              {
+                "text": "Title: CEO",
+                "rect": [
+                  320.0,
+                  324.07,
+                  366.12,
+                  334.07
+                ]
+              },
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              344.45,
+              300.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "type": "DATE",
+          "page": 2,
+          "x": 57.826797,
+          "y": 43.686869,
+          "w": 23.872549,
+          "h": 1.641414,
+          "confidence": "high",
+          "evidence": {
+            "label_text": "Date:",
+            "labels": [
+              {
+                "text": "Date:",
+                "rect": [
+                  320.0,
+                  350.07,
+                  343.9,
+                  360.07
+                ]
+              }
+            ],
+            "line": [
+              353.9,
+              360.0,
+              500.0
+            ],
+            "line_kind": "drawn"
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 10,
+          "margin": 4,
+          "confidence": "high"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "e49ce5badeb6972ffc44320c9e70475e074911500c057d2fcd096997a6df8877": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.21",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "7db15101c0d730cc32db149ab6bf3ecbfa34b012802de9218e3a4ac26a7b3534": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.24",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "6be3aaac5820ac36db931ff85bba28ba5d8b6ba0ca2c751eb37fad8f9b733414": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.25",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    },
+    "c6987e0e9c5aa182fba46b8b9a783c2d3a95b925d80935d65ad34acd0b0c1635": {
+      "status": "needs_sender",
+      "reason": "Couldn't tell where Pat Smith signs and dates. Placement review comes next; nothing was sent.",
+      "reason_code": "ambiguous_identity",
+      "fields": [],
+      "assignments": [
+        {
+          "signer": "dan@fleettest.fleet.test",
+          "block_id": "b0",
+          "score": 4,
+          "margin": 4,
+          "confidence": "high"
+        },
+        {
+          "signer": "pat@harborlight.fleet.test",
+          "block_id": "b1",
+          "score": 0,
+          "margin": 0,
+          "confidence": "low"
+        }
+      ],
+      "analysis_version": "c2a.26",
+      "method": "rules",
+      "model": {
+        "attempted": false,
+        "outcome": "not_needed"
+      }
+    }
+  }
+}

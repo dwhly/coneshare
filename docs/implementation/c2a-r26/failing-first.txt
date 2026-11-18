@@ -1,0 +1,602 @@
+........................................................................ [  2%]
+........................................................................ [  5%]
+........................................................................ [  7%]
+........................................................................ [ 10%]
+........................................................................ [ 12%]
+........................................................................ [ 15%]
+........................................................................ [ 17%]
+........................................................................ [ 20%]
+........................................................................ [ 22%]
+........................................................................ [ 25%]
+....................................F.....F.F...F.F..................... [ 28%]
+........................................................................ [ 30%]
+........................................................................ [ 33%]
+....................................F.....F.F...F.F..................... [ 35%]
+........................................................................ [ 38%]
+F.....F.F...F.F......................................................... [ 40%]
+....................................F.....F.F...F.F..................... [ 43%]
+........................................................................ [ 45%]
+F.....F.F...F.F......................................................... [ 48%]
+....................................F.....F.F...F.F..................... [ 51%]
+........................................................................ [ 53%]
+F.....F.F...F.F......................................................... [ 56%]
+....................................F.....F.F...F.F..................... [ 58%]
+........................................................................ [ 61%]
+F.....F.F...F.F......................................................... [ 63%]
+....................................F.....F.F...F.F..................... [ 66%]
+........................................................................ [ 68%]
+........................................................................ [ 71%]
+........................................................................ [ 74%]
+........................................................................ [ 76%]
+........................................................................ [ 79%]
+........................................................................ [ 81%]
+........................................................................ [ 84%]
+........................................................................ [ 86%]
+....................................F.....F.F...F.F..................... [ 89%]
+........................................................................ [ 91%]
+........................................................................ [ 94%]
+........................................................................ [ 97%]
+........................................................................ [ 99%]
+FFFFF...FF.                                                              [100%]
+=================================== FAILURES ===================================
+_____________________ test_q3c_exact_reviewer_matrix[756] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[762] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[764] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[768] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[770] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[972] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[978] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[980] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[984] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[986] ______________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': None, ...}, {'analysis_version': 'c2a.25', 'assignments': [{'blo...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1080] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1086] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1088] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1092] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1094] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1188] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1194] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1196] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1200] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1202] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'H.L.A., INC.', ...}, {'analysis_version': 'c2a.25', 'assignment...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1296] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1302] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1304] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1308] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1310] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1404] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1410] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1412] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1416] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1418] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HL ANALYTICS, INC.', ...}, {'analysis_version': 'c2a.25', 'assi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1512] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1518] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1520] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1524] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1526] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1620] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1626] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1628] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1632] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1634] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'HARBOUR LIGHT ANALYTICS, INC.', ...}, {'analysis_version': 'c2a...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1728] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1734] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1736] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1740] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1742] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1836] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1842] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1844] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1848] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[1850] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': None, 'co': 'BRIGHTWATER, INC.', ...}, {'analysis_version': 'c2a.25', 'assig...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[2484] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': 'Recipient Signature', 'co': None, ...}, {'analysis_version': 'c2a.25', 'ass...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[2490] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': 'Recipient Signature', 'co': None, ...}, {'analysis_version': 'c2a.25', 'ass...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[2492] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': 'Recipient Signature', 'co': None, ...}, {'analysis_version': 'c2a.25', 'ass...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[2496] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': 'Recipient Signature', 'co': None, ...}, {'analysis_version': 'c2a.25', 'ass...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_____________________ test_q3c_exact_reviewer_matrix[2498] _____________________
+dealroom_sign/tests/test_placement_r26.py:20: in test_q3c_exact_reviewer_matrix
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: ({'L': 'same_page3', 'acap': None, 'cap': 'Recipient Signature', 'co': None, ...}, {'analysis_version': 'c2a.25', 'ass...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_________________ test_same_page_real_worker[same_named-False] _________________
+dealroom_sign/tests/test_placement_r26.py:30: in test_same_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('same_named', False), {'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+_________________ test_same_page_real_worker[same_named-True] __________________
+dealroom_sign/tests/test_placement_r26.py:30: in test_same_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('same_named', True), {'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+________________ test_same_page_real_worker[same_harbour-False] ________________
+dealroom_sign/tests/test_placement_r26.py:30: in test_same_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('same_harbour', False), {'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'mar...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+________________ test_same_page_real_worker[same_harbour-True] _________________
+dealroom_sign/tests/test_placement_r26.py:30: in test_same_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('same_harbour', True), {'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'marg...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+________ test_same_page_real_worker[same_msa_supplier_nocompany-False] _________
+dealroom_sign/tests/test_placement_r26.py:30: in test_same_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('same_msa_supplier_nocompany', False), {'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+___________ test_same_page_real_worker[same_caption_nocompany-False] ___________
+dealroom_sign/tests/test_placement_r26.py:30: in test_same_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('same_caption_nocompany', False), {'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'h...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}]...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+___________ test_same_page_real_worker[same_caption_nocompany-True] ____________
+dealroom_sign/tests/test_placement_r26.py:30: in test_same_page_real_worker
+    assert not review.rc.wrong_fields(result, allowed), (args, result)
+E   AssertionError: (('same_caption_nocompany', True), {'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'hi...[{...}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...})
+E   assert not [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}]
+E    +  where [{'confidence': 'high', 'evidence': {'label_text': 'HARBOR LIGHT GROUP, INC. | By: | Name: | Title: | Date:', 'labels'...0699999999999], 'text': 'Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}] = <function wrong_fields at 0x773d57b0ad40>({'analysis_version': 'c2a.25', 'assignments': [{'block_id': 'b0', 'confidence': 'high', 'margin': 4, 'score': 4, ...},...Date:'}], 'line': [73.9, 560.0, 220.0], 'line_kind': 'drawn'}, 'h': 1.641414, 'page': 2, ...}], 'method': 'rules', ...}, {'dan@fleettest.fleet.test': (2, 40, 300, 220), 'pat@harborlight.fleet.test': (2, 320, 300, 500)})
+E    +    where <function wrong_fields at 0x773d57b0ad40> = <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'>.wrong_fields
+E    +      where <module 'dealroom_sign.tests.placement_r21_review_cases' from '/root/worktrees/send-c1b/backend/dealroom_sign/tests/placement_r21_review_cases.py'> = review.rc
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r26/failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[756]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[762]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[764]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[768]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[770]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[972]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[978]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[980]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[984]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[986]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1080]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1086]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1088]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1092]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1094]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1188]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1194]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1196]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1200]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1202]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1296]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1302]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1304]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1308]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1310]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1404]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1410]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1412]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1416]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1418]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1512]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1518]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1520]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1524]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1526]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1620]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1626]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1628]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1632]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1634]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1728]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1734]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1736]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1740]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1742]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1836]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1842]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1844]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1848]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[1850]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[2484]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[2490]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[2492]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[2496]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_q3c_exact_reviewer_matrix[2498]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_same_page_real_worker[same_named-False]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_same_page_real_worker[same_named-True]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_same_page_real_worker[same_harbour-False]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_same_page_real_worker[same_harbour-True]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_same_page_real_worker[same_msa_supplier_nocompany-False]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_same_page_real_worker[same_caption_nocompany-False]
+FAILED dealroom_sign/tests/test_placement_r26.py::test_same_page_real_worker[same_caption_nocompany-True]
+62 failed, 2757 passed in 71.38s (0:01:11)

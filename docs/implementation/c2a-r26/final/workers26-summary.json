@@ -1,0 +1,47 @@
+{
+  "part": "workers26",
+  "cases": 10,
+  "groups": {
+    "workers26": {
+      "cases": 10,
+      "r21_w": 7,
+      "r21_raw_wrong": 7,
+      "r24_w": 7,
+      "r24_raw_wrong": 7,
+      "r25_w": 7,
+      "r25_raw_wrong": 7,
+      "r26_n": 10,
+      "r26_raw_wrong": 0,
+      "r21_to_r26_n_to_p": 0,
+      "r21_to_r26_c_to_w": 0,
+      "r21_to_r26_c_to_n": 0,
+      "r21_to_r26_w_to_n": 7,
+      "r24_to_r26_n_to_p": 0,
+      "r24_to_r26_c_to_w": 0,
+      "r24_to_r26_c_to_n": 0,
+      "r24_to_r26_w_to_n": 7,
+      "r25_to_r26_n_to_p": 0,
+      "r25_to_r26_c_to_w": 0,
+      "r25_to_r26_c_to_n": 0,
+      "r25_to_r26_w_to_n": 7,
+      "r21_n": 3,
+      "r24_n": 3,
+      "r25_n": 3
+    }
+  },
+  "transitions": {
+    "workers26": {
+      "w -> w -> w -> n": 7,
+      "n -> n -> n -> n": 3
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r24": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3",
+    "r25": "8988fe1a399c903aeb0c9794c810d2dcb66995beb663ddb89a690e71c179d7a5",
+    "r26": "50e8c0e2d87717f7e509902eff98bf35eff69124638a8d44cbc251780273ac31"
+  },
+  "archive_results_exact": false,
+  "external_http_calls": 0,
+  "worker_evaluations": 40
+}

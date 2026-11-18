@@ -1,0 +1,59 @@
+......FFFFFF............                                                 [100%]
+=================================== FAILURES ===================================
+_ test_separate_company_with_vetoed_stack[False-True-role-Pat Smith-pat@harborlight.example-HARBOR LIGHT ANALYTICS, INC.] _
+dealroom_sign/tests/test_placement_r26b.py:43: in test_separate_company_with_vetoed_stack
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_separate_company_with_vetoed_stack[False-True-role-Alex Chen-alex@northwindsystems.example-NORTHWIND SYSTEMS, LLC.] _
+dealroom_sign/tests/test_placement_r26b.py:43: in test_separate_company_with_vetoed_stack
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_separate_company_with_vetoed_stack[False-True-role-Morgan Reed-morgan@cedargrove.example-CEDAR GROVE SOFTWARE, INC.] _
+dealroom_sign/tests/test_placement_r26b.py:43: in test_separate_company_with_vetoed_stack
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_separate_company_with_vetoed_stack[False-True-company-Pat Smith-pat@harborlight.example-HARBOR LIGHT ANALYTICS, INC.] _
+dealroom_sign/tests/test_placement_r26b.py:43: in test_separate_company_with_vetoed_stack
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_separate_company_with_vetoed_stack[False-True-company-Alex Chen-alex@northwindsystems.example-NORTHWIND SYSTEMS, LLC.] _
+dealroom_sign/tests/test_placement_r26b.py:43: in test_separate_company_with_vetoed_stack
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_separate_company_with_vetoed_stack[False-True-company-Morgan Reed-morgan@cedargrove.example-CEDAR GROVE SOFTWARE, INC.] _
+dealroom_sign/tests/test_placement_r26b.py:43: in test_separate_company_with_vetoed_stack
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r26/r26b/new-failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r26b.py::test_separate_company_with_vetoed_stack[False-True-role-Pat Smith-pat@harborlight.example-HARBOR LIGHT ANALYTICS, INC.]
+FAILED dealroom_sign/tests/test_placement_r26b.py::test_separate_company_with_vetoed_stack[False-True-role-Alex Chen-alex@northwindsystems.example-NORTHWIND SYSTEMS, LLC.]
+FAILED dealroom_sign/tests/test_placement_r26b.py::test_separate_company_with_vetoed_stack[False-True-role-Morgan Reed-morgan@cedargrove.example-CEDAR GROVE SOFTWARE, INC.]
+FAILED dealroom_sign/tests/test_placement_r26b.py::test_separate_company_with_vetoed_stack[False-True-company-Pat Smith-pat@harborlight.example-HARBOR LIGHT ANALYTICS, INC.]
+FAILED dealroom_sign/tests/test_placement_r26b.py::test_separate_company_with_vetoed_stack[False-True-company-Alex Chen-alex@northwindsystems.example-NORTHWIND SYSTEMS, LLC.]
+FAILED dealroom_sign/tests/test_placement_r26b.py::test_separate_company_with_vetoed_stack[False-True-company-Morgan Reed-morgan@cedargrove.example-CEDAR GROVE SOFTWARE, INC.]
+6 failed, 18 passed in 6.52s

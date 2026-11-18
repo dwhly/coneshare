@@ -1,0 +1,95 @@
+{
+  "part": "workers24",
+  "cases": 5,
+  "groups": {
+    "b1": {
+      "cases": 2,
+      "r21_n": 2,
+      "r21_raw_wrong": 0,
+      "r24_n": 2,
+      "r24_raw_wrong": 0,
+      "r25_n": 2,
+      "r25_raw_wrong": 0,
+      "r26_n": 2,
+      "r26_raw_wrong": 0,
+      "r21_to_r26_n_to_p": 0,
+      "r21_to_r26_c_to_w": 0,
+      "r21_to_r26_c_to_n": 0,
+      "r21_to_r26_w_to_n": 0,
+      "r24_to_r26_n_to_p": 0,
+      "r24_to_r26_c_to_w": 0,
+      "r24_to_r26_c_to_n": 0,
+      "r24_to_r26_w_to_n": 0,
+      "r25_to_r26_n_to_p": 0,
+      "r25_to_r26_c_to_w": 0,
+      "r25_to_r26_c_to_n": 0,
+      "r25_to_r26_w_to_n": 0
+    },
+    "b2": {
+      "cases": 2,
+      "r21_n": 2,
+      "r21_raw_wrong": 0,
+      "r24_n": 2,
+      "r24_raw_wrong": 0,
+      "r25_n": 2,
+      "r25_raw_wrong": 0,
+      "r26_n": 2,
+      "r26_raw_wrong": 0,
+      "r21_to_r26_n_to_p": 0,
+      "r21_to_r26_c_to_w": 0,
+      "r21_to_r26_c_to_n": 0,
+      "r21_to_r26_w_to_n": 0,
+      "r24_to_r26_n_to_p": 0,
+      "r24_to_r26_c_to_w": 0,
+      "r24_to_r26_c_to_n": 0,
+      "r24_to_r26_w_to_n": 0,
+      "r25_to_r26_n_to_p": 0,
+      "r25_to_r26_c_to_w": 0,
+      "r25_to_r26_c_to_n": 0,
+      "r25_to_r26_w_to_n": 0
+    },
+    "h1": {
+      "cases": 1,
+      "r21_n": 1,
+      "r21_raw_wrong": 0,
+      "r24_n": 1,
+      "r24_raw_wrong": 0,
+      "r25_n": 1,
+      "r25_raw_wrong": 0,
+      "r26_n": 1,
+      "r26_raw_wrong": 0,
+      "r21_to_r26_n_to_p": 0,
+      "r21_to_r26_c_to_w": 0,
+      "r21_to_r26_c_to_n": 0,
+      "r21_to_r26_w_to_n": 0,
+      "r24_to_r26_n_to_p": 0,
+      "r24_to_r26_c_to_w": 0,
+      "r24_to_r26_c_to_n": 0,
+      "r24_to_r26_w_to_n": 0,
+      "r25_to_r26_n_to_p": 0,
+      "r25_to_r26_c_to_w": 0,
+      "r25_to_r26_c_to_n": 0,
+      "r25_to_r26_w_to_n": 0
+    }
+  },
+  "transitions": {
+    "b1": {
+      "n -> n -> n -> n": 2
+    },
+    "b2": {
+      "n -> n -> n -> n": 2
+    },
+    "h1": {
+      "n -> n -> n -> n": 1
+    }
+  },
+  "source_sha256": {
+    "r21": "06b0d22d19ebf75a37fd499d3567229ee74d66687d1409cddd789af496917311",
+    "r24": "6fb94115cef7db2c22ebc1cbd2c7278f5e97b9549a8fa11e14d6a3addc5222c3",
+    "r25": "8988fe1a399c903aeb0c9794c810d2dcb66995beb663ddb89a690e71c179d7a5",
+    "r26": "5683ff7bfc5a77b8a268198d689953c9fedc70b981ae83e64c7fb321f34a5c91"
+  },
+  "archive_results_exact": true,
+  "external_http_calls": 0,
+  "worker_evaluations": 20
+}

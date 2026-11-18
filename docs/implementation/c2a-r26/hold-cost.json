@@ -1,0 +1,58 @@
+{
+  "exhibits": {
+    "baseline": "r24",
+    "by": "signer",
+    "groups": {
+      "domain": {
+        "cases": 192,
+        "correct_to_hold": 14
+      },
+      "explicit": {
+        "cases": 192,
+        "correct_to_hold": 28
+      },
+      "both": {
+        "cases": 192
+      }
+    }
+  },
+  "three_party": {
+    "baseline": "r25",
+    "by": "third",
+    "groups": {
+      "ACME HOLDINGS, LLC": {
+        "cases": 18,
+        "correct_to_hold": 4
+      },
+      "None": {
+        "cases": 18,
+        "correct_to_hold": 2
+      }
+    }
+  },
+  "exact_q3c": {
+    "baseline": "r25",
+    "by": "kind",
+    "groups": {
+      "unk+co": {
+        "cases": 90
+      },
+      "unk": {
+        "cases": 90,
+        "wrong_to_hold": 10
+      },
+      "named": {
+        "cases": 144,
+        "wrong_to_hold": 40
+      },
+      "caption": {
+        "cases": 108,
+        "wrong_to_hold": 5
+      },
+      "control": {
+        "cases": 36,
+        "correct_to_hold": 10
+      }
+    }
+  }
+}

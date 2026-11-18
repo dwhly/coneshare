@@ -1,0 +1,42 @@
+{
+  "rc": 0,
+  "head": "701f6aeeabfc47bf5b997b1187705b039aea4f40",
+  "source_sha256": "5683ff7bfc5a77b8a268198d689953c9fedc70b981ae83e64c7fb321f34a5c91",
+  "version": "c2a.26",
+  "full_suite": {
+    "passed": 50498,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "measured_cells": 82450,
+  "comparisons": {
+    "r25": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 2343,
+      "w_to_n": 216
+    },
+    "r24": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 5655,
+      "w_to_n": 1362
+    },
+    "r21": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 7335,
+      "w_to_n": 1908
+    }
+  },
+  "goldens_exact_except_analysis_version": true,
+  "raw_wrong": 0,
+  "changed_functions_vs_cand5": [
+    "prepare_blocks"
+  ],
+  "preservation_passed": true,
+  "l2_positive_placed": 20,
+  "l2_both_signers_held": 20,
+  "blockers": []
+}

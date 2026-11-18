@@ -1,0 +1,34 @@
+{
+  "rc": 1,
+  "cells": 82450,
+  "comparisons": {
+    "r25": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 2363,
+      "w_to_n": 216
+    },
+    "r24": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 5675,
+      "w_to_n": 1362
+    },
+    "r21": {
+      "n_to_p": 0,
+      "c_to_w": 0,
+      "c_to_n": 7355,
+      "w_to_n": 1908
+    }
+  },
+  "full_suite": {
+    "passed": 50454,
+    "failed": 20,
+    "errors": 0,
+    "skipped": 0
+  },
+  "remaining_flags": {},
+  "blockers": [
+    "The exact cand5 rule conflicts with 20 immutable r13 L-2 positive controls. Each has three non-witness blocks on one page with scores [0], [0], [4]. cand5 must hold the score-4 placement, while the existing test requires placed with score=4 and margin=4. Full suite completed with 20 failed, 50454 passed, 0 errors, 0 skipped. Neither the guard nor the tests were weakened."
+  ]
+}

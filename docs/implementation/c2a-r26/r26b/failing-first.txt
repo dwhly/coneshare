@@ -1,0 +1,225 @@
+FFFFFFFFFFFFFFFFFFFF....................                                 [100%]
+=================================== FAILURES ===================================
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Authorised signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Executed by:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Firma:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Unterschrift:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Authorised signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Executed by:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Firma:] __
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Unterschrift:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Authorised signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Executed by:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Firma:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Unterschrift:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Authorised signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Signatory:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Executed by:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Firma:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+_ test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Unterschrift:] _
+dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender
+- generated xml file: /root/worktrees/send-c1b/docs/implementation/c2a-r26/r26b/failing-first.xml -
+=========================== short test summary info ============================
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Authorised signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Executed by:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Firma:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Unterschrift:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Authorised signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Executed by:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Firma:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Unterschrift:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Authorised signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Executed by:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Firma:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Unterschrift:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Authorised signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Signatory:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Executed by:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Firma:]
+FAILED dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Unterschrift:]
+20 failed, 20 passed in 10.46s

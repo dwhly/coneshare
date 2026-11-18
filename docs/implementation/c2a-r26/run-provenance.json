@@ -1,0 +1,5 @@
+{
+  "source_sha256": "50e8c0e2d87717f7e509902eff98bf35eff69124638a8d44cbc251780273ac31",
+  "command": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/run_tests.py dealroom_sign/tests --tb=short --junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r26/full-suite.xml",
+  "replay": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/replay26.py all docs/implementation/c2a-r26/final docs/implementation/c2a-r26/r26-source.py.txt"
+}

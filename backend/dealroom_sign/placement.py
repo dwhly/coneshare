@@ -47,7 +47,7 @@ ROLE_DESCRIPTION_WIDE = re.compile(
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.25'
+VERSION = 'c2a.26'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -898,13 +898,27 @@ def prepare_blocks(blocks, roles, signers):
         if not printed_names(block, blocks) and sum(v >= 4 for v in block.scores) != 1:
             block.scores = [0] * len(signers)
     # Preserve the original scores and margins. An unclaimed signing identity
-    # on another page can veto a company-only placement, never resolve a tie.
+    # on another page, or among three parties on this page, can veto a
+    # company-only placement, never resolve a tie.
     unclaimed_pages = {
         block.line.page for block in blocks
         if not witness_block(block) and not any(block.scores)
     }
     for block in blocks:
-        block.unclaimed_cross_page = bool(unclaimed_pages - {block.line.page})
+        names = [tokens(signer.get('name', ''))
+                 for signer, value in zip(signers, block.scores) if value == 4]
+        same = []
+        for other in blocks:
+            if other is block or other.line.page != block.line.page or witness_block(other):
+                continue
+            printed = printed_names(other, blocks)
+            # A vetoed stack bearing this signer's own name does not add an
+            # independent third party. Mixed or other names still count.
+            if printed and all(name in names for name in printed):
+                continue
+            same.append(other)
+        block.unclaimed_cross_page = bool(unclaimed_pages - {block.line.page}) or (
+            len(same) >= 2 and any(not any(b.scores) for b in same))
     # Every score needs the original role labels, before output redaction.
     for block in blocks:
         # A company word in arbitrary prose is not permission to emit that prose.
@@ -1336,7 +1350,7 @@ def place(pdf, signers, *, model_client=None):
         if any(blocks[j].unclaimed_cross_page and scores[i][j] == 4
                for i, (j, _) in accepted.items()):
             return hold(result, 'ambiguous_identity',
-                        'An unclaimed signing block on another page requires placement review.')
+                        'An unclaimed signing block requires placement review.')
         result['status'] = 'placed'
         result['reason_code'] = 'placed'
     elif not result['reason']:

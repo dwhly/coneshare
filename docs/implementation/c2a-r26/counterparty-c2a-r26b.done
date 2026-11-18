@@ -1,0 +1,7 @@
+coder rc=0 head=701f6aeeabfc47bf5b997b1187705b039aea4f40
+rule: preserve cross-page guard; same-page count excludes a peer whose printed names all match the score-4 signer; unknown/mixed/other-name peers still count. VERSION=c2a.26.
+vs-live: 82450 cells; r25/r24/r21 n->p=0 c->w=0; correct->hold=2343/5655/7335; 0 raw wrong; seven goldens exact except analysis_version; 980 worker evaluations.
+hold cost vs cand5: 20 correct holds recovered in replay, including 20 L-2 controls; 0 added holds; M-1 0/192 wrong.
+full-suite: 50498 passed, 0 failed, 0 errors, 0 skipped; completed without -x; L-2 20/20 placed (score=4 margin=4), 20/20 two-signer holds.
+test changes: one new r26b file, 24 IDs; 50474 pre-existing IDs retained; all existing test/fixture/evidence/.done hashes unchanged; results-r26.md append-only.
+blockers: none. No staging or commit.

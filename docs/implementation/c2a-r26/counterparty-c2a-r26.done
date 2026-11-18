@@ -1,0 +1,8 @@
+coder rc=1 head=701f6aeeabfc47bf5b997b1187705b039aea4f40
+failing-first: 62 failed, 2757 passed (55 Q3c, 7 real-worker failures); final new tests 2819 passed.
+implemented, not release-ready: c2a.26 exact cand5 same-page guard; M-1 now 0/192 wrong; explicit-company exemption rejected (28 n->p).
+vs-live: 82450 cells; r25/r24/r21 n->p=0 c->w=0; accepted residual flags exact r21; seven goldens exact except analysis_version.
+full-suite: 50454 passed, 20 failed, 0 errors, 0 skipped; completed without -x.
+test changes: two new files, 2819 new IDs; all 47655 existing IDs preserved; existing tests/fixtures/evidence/.done hashes unchanged.
+blocker: 20 immutable r13 L-2 controls require placed for three same-page non-witness blocks with scores [0],[0],[4]; exact cand5 must hold. Tests and guard were not weakened.
+count corrections: exact Q3a=4536; same-page Q3c=468, including all 55 r25 wrong cells; exhibit cost is 28 explicit + 14 domain holds vs r24.

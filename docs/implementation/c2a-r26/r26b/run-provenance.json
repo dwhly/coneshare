@@ -1,0 +1,12 @@
+{
+  "source_sha256": "5683ff7bfc5a77b8a268198d689953c9fedc70b981ae83e64c7fb321f34a5c91",
+  "commands": {
+    "existing_failing_first": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/run_tests.py dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring --tb=short --junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r26/r26b/failing-first.xml",
+    "new_failing_first": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/run_tests.py dealroom_sign/tests/test_placement_r26b.py --tb=short --junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r26/r26b/new-failing-first.xml",
+    "pilot": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/r26b/measure_candidates.py",
+    "targeted": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/run_tests.py dealroom_sign/tests/test_placement_r13.py::test_l2_separate_own_company_line_preserves_scoring dealroom_sign/tests/test_placement_r26.py dealroom_sign/tests/test_placement_r26b.py --tb=short --junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r26/r26b/targeted.xml",
+    "full_suite": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/run_tests.py dealroom_sign/tests --tb=short --junitxml=/root/worktrees/send-c1b/docs/implementation/c2a-r26/r26b/full-suite.xml",
+    "replay": "PYTHONDONTWRITEBYTECODE=1 /root/work/sign-product/send-venv/bin/python docs/implementation/c2a-r26/replay26.py all docs/implementation/c2a-r26/r26b/final docs/implementation/c2a-r26/r26b/r26b-source.py.txt"
+  },
+  "invalid_pilot": "candidate-measurement.json and candidate-measurement.txt are invalid: initial patched extract lambda did not accept deadline keyword, resulting in unreadable_pdf holds; replaced by candidate-measurement-v2 with asserted live controls. All release replays use the unchanged replay26.py harness."
+}

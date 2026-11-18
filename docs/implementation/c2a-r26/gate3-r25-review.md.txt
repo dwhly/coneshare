@@ -1,0 +1,209 @@
+VERDICT: FIX-FIRST
+Counts: blocking 1 · high 0 · medium 1 · low 1 · nit 0
+
+Scope: r25 HEAD `701f6aee` in `/root/worktrees/send-c1b` (live r24 `9a91a4b9`, old live r21 `afb9aa6e`), `VERSION = 'c2a.25'`.
+- On-disk `placement.py` equals `git show 701f6aee:backend/dealroom_sign/placement.py`.
+- `git status --short` in that worktree is empty before and after my runs (pytest included).
+
+**Bottom line**
+- **r24 B-1 and B-2 are CLOSED on my exact Q3a and Q3b sets**, including the MSA `THE SUPPLIER` + parent-signature-page shape.
+  - Q3a (3,888 cells): r24 had 248 W; r25 has 0 W.
+  - Q3b (2,430 cells): r24 had 84 W; r25 has 0 W.
+- **r25 is at least as safe as live r24 in every family I hold.** Over 48,728 cells, n → p = 0 and c → w = 0. Every difference is W → hold or correct → hold. **I recommend r25 replace live r24.**
+- **The structural guard is page-relative, and that leaves one wrong-signature path (B-1, blocking by the brief's rule).**
+  - The shape: the counterparty's own unclaimed block and an uncaptioned affiliate sit on the **same** page.
+  - That page has no unclaimed block on another page (the Fleet block is on the same page, or Dan claims it).
+  - In that shape the affiliate still takes Pat's domain match. r25 places Pat `high` on `HARBOR LIGHT GROUP, INC.`.
+  - Scope: 55 of the 324 same-page attack cells (2,808 attack cells in all).
+  - **Every one of the 55 cells is also W in r21 and r24.** They are surviving errors, not r25 regressions. So they block Gate 3 approval of the B-1/B-2 fix, but not replacing live.
+- **Cost of the guard:** 42 of 504 ordinary two-party NDA cells with an attached exhibit page go correct → hold. All of them come from company guarantees, personal guarantees, blank forms and joinders. Witness, notary and employee-acknowledgment pages add 0.
+
+**Method: executed.**
+- **Isolation:**
+  - Interpreter: `/root/work/sign-product/send-venv/bin/python` only, with `sys.dont_write_bytecode`.
+  - `OPENROUTER_API_KEY` and `PLACE_MODEL` were popped, and `httpx.Client.send` was patched to raise.
+  - **HTTP calls: 0 in every run. Model calls: 0 in every cell.**
+- **Sources:** r21, r24 and r25 come from `git show` of `afb9aa6e` / `9a91a4b9` / `701f6aee`, each exec'd as its own in-memory module. The B-1/B-2 worker cells used separate temporary worker packages, deleted at exit.
+- **My exact r24 generators:** I extracted them byte-for-byte from my r24 session transcript (`docs/edd/briefs/counterparty-c2a-gate3-r24.jsonl`, tool calls 17 and 19–24). The only change was to the `SRC = dict(...)` line, to add r25 or swap the columns to r24/r25.
+  - Q3a body sha256 prefix `e41a8ab17b73`; Q3b `431acfa07d6c`.
+  - I did not use Codex's reconstructions.
+- **Oracle:** `placement_r21_review_cases.wrong_fields` (page, column, and By/Date span), or the r19 harness oracle for the `/tmp/rev19` families.
+- **Tests:** I ran `test_placement_r24.py` and `test_placement_r25.py` with the `docs/implementation/c2a-r25/run_tests.py` env, using a temporary sqlite: **16,175 passed**.
+  - Not run by me: the full suite (Codex: 47,655 / 0 / 0 / 0), the goldens, the historical replay, and live r19 competition 40/40.
+
+## Answers
+
+1. **Q3a / Q3b re-run on r25: B-1 and B-2 CLOSED.** Columns are r21 → r24 → r25.
+   - **Q3a, 3,888 cells:**
+
+     | Pat block | WWn | Wnn | pnn | ppn | ppp | nnn |
+     | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+     | unknown role + HLA | 96 | 24 | 12 | 114 | 440 | 610 |
+     | unknown role, no company line | 20 | 0 | 0 | 88 | 440 | 748 |
+     | named non-matching heading (B-2) | 80 | 0 | 0 | 64 | 320 | 400 |
+     | caption-only role | 52 | 20 | 8 | 88 | 316 | 596 |
+
+     - r25 has 0 W. All 248 r24 W cells now hold.
+   - **Q3b, 2,430 cells:**
+
+     | Affiliate | WWn | Wnn | pnn | ppn | ppp | nnn |
+     | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+     | none | — | — | — | — | 322 | 164 |
+     | uncaptioned | 84 | 8 | — | 102 | 350 | 428 |
+     | `GUARANTOR:` | — | — | 192 | 200 | 252 | 328 |
+
+     - r25 has 0 W. All 84 MSA-style W cells now hold, including `("Supplier")` + `THE SUPPLIER` + parent on page 3, Vendor, Client, Contractor, Investor and Lender.
+     - **Ordinary two-party documents (no affiliate):** r21 = r24 = r25 exactly, 322 placed / 164 hold.
+   - **Real worker, my r24 B-1/B-2 cases** (`R24.worker_case` b1/b2 × PAT, DAN+PAT): `nnn`, and worker equals in-process. `h1_uncaptioned_worker_case`: `Wnn` (r21 wrong; r24 and r25 hold).
+
+2. **r25 vs live r24: n → p = 0, c → w = 0 in every family.** Columns are r24 → r25.
+
+   | Family | Cells | r24 → r25 |
+   | --- | ---: | --- |
+   | Q3a / Q3b (above) | 3,888 / 2,430 | W→n 248 / 84 · p→n 354 / 302 · rest identical |
+   | H-1 cross-page matrix | 2,160 | p→p 774 · **p→n 396** · n→n 990 (r25 0 W) |
+   | `R24.BLOCKING` matrix (b1 ×5, b2 ×4) | 2,160 | p→n 16 per b1 recital (80) · rest identical, 0 W |
+   | Attack + boundary recitals | 5,280 | p→p 1,790 · p→n 170 · n→n 3,320 |
+   | Q2 matrix | 5,280 | p→p 2,070 · p→n 350 · n→n 2,860 |
+   | r24 veto matrix | 1,260 | p→p 490 · p→n 52 · n→n 718 |
+   | r22 conflict probes / L-1 384 | 36 / 384 | n→n |
+   | r21 `matrix_cases` / `cross_page_cases` | 5,280 / 240 | p→p 160 · p→n 35 · n→n 5,085 / n→n 240 |
+   | r19 veto / affiliate + B1 repro | 140 / 1,538 | n→n |
+   | Competition | 480 | W→W 96 (the accepted "Chris Jones printed" cells) · n→n 384 |
+   | L-1 boundary, Pat / Fleet | 3,480 / 1,800 | p→p 191, n→n 3,289 / n→n 1,800 |
+   | F fine / F fine company-only | 3,456 / 3,456 | p→p 2,325, n→n 1,131 / p→p 776, n→n 2,680 |
+   | Added (A2, witness sweep, F perms / gaps, L1 stacked, B1/B2 repro) | 4,756 | identical cell for cell, 0 W |
+   | New Q3c attack (below) | 2,808 | W→n 193 · W→W 55 · p→n 40 · rest identical |
+   | NDA + exhibit cost (below) | 576 | p→n 42 · rest identical |
+
+   - The r19-harness and r21-generator families are unchanged by r25, cell for cell.
+   - **Hold cost vs r24:** 1,741 correct → hold cells over these families. All are company-only placements that now hold because some unclaimed non-witness block sits on another page. Explicit-company signers pay too (see L-1).
+
+3. **Attacking the structural guard.**
+   - **Mechanism:** `unclaimed_pages - {block.line.page}` (`placement.py:902-907`) only counts unclaimed blocks on *other* pages.
+     - A same-page unclaimed block never arms the hold.
+     - The same-page competition in `score()` (`:968-1012`) only vetoes the affiliate when the own block's heading is similar to the signer's company, or when the own block is unnamed and the document has at least 3 blocks.
+   - **Q3c, 2,808 cells.**
+     - Pat-block shapes (26): unknown role ± HLA, `THE CONTRACTOR` / `THE SUPPLIER`, B-2 named headings ± `RECIPIENT:`, caption-only ± HLA, and matching controls.
+     - Layouts (6, below). Recital `none` / `parsed` / `address`. Affiliate `HARBOR LIGHT GROUP, INC.`, uncaptioned or `GUARANTOR:`. Signers domain / explicit / both.
+
+     | Layout | r25 W | r21 / r24 W | Notes |
+     | --- | ---: | ---: | --- |
+     | **same page**: Fleet + own + affiliate on page 2 | **55** | 55 / 55 | named B-2 headings 40, `THE CONTRACTOR` / `THE SUPPLIER` without a company line 10, `Recipient Signature` without a company line 5 |
+     | own + affiliate share page 3, Fleet alone on page 2 | 0 | 51 / 51 | the Fleet block (single signer) or another unclaimed block arms the guard |
+     | affiliate alone on page 3 **with a witness block**, own on page 2 | 0 | 96 / 87 | the witness is correctly excluded; own block on page 2 arms the guard |
+     | own + affiliate on page 3, witness on page 2 | 0 | 55 / 55 | — |
+     | own + affiliate + **notary** block on page 3 | 0 | 0 / 0 | the notary block adds no unclaimed signing block of its own |
+     | own + affiliate + `ACKNOWLEDGED AND AGREED:` block on page 3 | 0 | 0 / 0 | at least 3 unnamed blocks: the domain veto holds |
+
+     - **Every same-page W cell has an uncaptioned affiliate and a domain-only or DAN+PAT signer.** Explicit company is never wrong, and a `GUARANTOR:` caption is never wrong.
+     - The MSA shape with an HLA line on the same page holds (`same_msa_supplier_hla`). Without the company line (`THE SUPPLIER` only), it places on the affiliate for a single signer.
+   - **Cost on ordinary two-party NDAs with an attached page, 576 cells.**
+     - Pat's block: `RECIPIENT:` + HLA / HLA / `THE RECIPIENT` + HLA / `RECIPIENT:` alone. Three recitals, placeholders or printed, domain / explicit / both.
+     - Placed cells per attached page (72 cells each):
+
+       | Attached page 3 | r24 placed | r25 placed | new holds |
+       | --- | ---: | ---: | ---: |
+       | none (control) | 42 | 42 | 0 |
+       | witness only | 42 | 42 | 0 |
+       | notary acknowledgment | 36 | 36 | 0 |
+       | employee `ACKNOWLEDGED AND AGREED:` | 22 | 22 | 0 |
+       | personal guarantee (`GUARANTOR:` + `Name: John Doe`) | 36 | 22 | **14** |
+       | company guarantee (`GUARANTOR:` `ACME HOLDINGS, LLC`) | 36 | 22 | **14** |
+       | blank exhibit form (`By:`/`Name:`/`Title:`/`Date:`) | 29 | 22 | **7** |
+       | `[NAME OF JOINING PARTY]` joinder form | 29 | 22 | **7** |
+
+     - **Total: 42 new holds out of 504 exhibit cells**, or 42 of the 230 that r24 placed (18%). 21 of the 42 are explicit-company signers. 0 W anywhere. A human resolves every one.
+
+4. **Test files: CONFIRMED, new files only.** `git diff 9a91a4b9 701f6aee --stat -- backend/dealroom_sign/tests` lists exactly `placement_r25_review_cases.py` (+97) and `test_placement_r25.py` (+76), with 173 insertions and 0 deletions.
+   - Outside `docs/`, the only other change is `placement.py` (+14/−1): the version bump, the `unclaimed_cross_page` field, the unclaimed-page computation in `prepare_blocks`, and the `ambiguous_identity` hold in `place()`.
+
+## Blocking
+
+**B-1. An unclaimed counterparty block on the SAME page as the affiliate does not arm the guard. The affiliate keeps Pat's domain match.**
+- **Mechanism:**
+  - `block.unclaimed_cross_page = bool(unclaimed_pages - {block.line.page})` (`placement.py:907`) excludes the affiliate's own page.
+  - On that page, `score()` vetoes the affiliate only in two cases: when the own block's heading is similar to `harborlight`, or when the own block is unnamed and the document has at least 3 blocks.
+  - So the following own-block shapes leave the affiliate at a company-only 4: a named non-matching heading (`HL ANALYTICS, INC.`, `H.L.A., INC.`, `HARBOUR LIGHT ANALYTICS, INC.`, `BRIGHTWATER, INC.`), or a role or caption with no company line (`THE SUPPLIER`, `THE CONTRACTOR`, `Recipient Signature`).
+  - The domain then places Pat on the affiliate.
+- **Scope:** 55 W in Q3c (same-page layout), all also W in r21 and r24, and 0 in every cross-page layout.
+  - A realistic instance: a signature page carrying the customer, the supplier under an abbreviated name, and the supplier's parent as an uncaptioned co-signer.
+- **Reproduction (real worker, on-disk r25):**
+  ```bash
+  /root/work/sign-product/send-venv/bin/python - <<'EOF'
+  import sys, os; sys.dont_write_bytecode = True
+  for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+  sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+  from unittest.mock import Mock, patch
+  from dealroom_sign import placement
+  from dealroom_sign.tests import placement_r24_review_cases as R24
+  from dealroom_sign.tests.test_placement import TWO
+  rc = R24.rc
+  PAT = dict(name='Pat Smith', email=rc.PE)
+  aff = R24.company_block(None, 'HARBOR LIGHT GROUP, INC.', 40, 500)
+  MSA = [(80, 'This Agreement is entered into between Fleet Test Co. ("Customer") and Harbor Light Analytics, Inc. ("Supplier").', False, 40)]
+  fleet = R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40)
+  CASES = dict(
+    same_named=[list(rc.RECITALS['parsed']), fleet + R24.company_block('RECIPIENT:', 'HL ANALYTICS, INC.', 320) + aff],
+    same_harbour=[list(rc.RECITALS['parsed']), fleet + R24.company_block(None, 'HARBOUR LIGHT ANALYTICS, INC.', 320) + aff],
+    same_msa_supplier_nocompany=[MSA, R24.company_block('THE CUSTOMER', 'FLEET TEST CO.', 40) + R24.company_block('THE SUPPLIER', None, 320) + aff],
+    same_msa_supplier_hla=[MSA, R24.company_block('THE CUSTOMER', 'FLEET TEST CO.', 40) + R24.company_block('THE SUPPLIER', R24.HLA, 320) + aff],
+    same_caption_nocompany=[list(rc.RECITALS['parsed']), fleet + R24.company_block(None, None, 320) + [(372, 'Recipient Signature', False, 320)] + aff])
+  with patch('httpx.Client.send', Mock(side_effect=AssertionError('http'))):
+      for name, pages in CASES.items():
+          for people in ([PAT], [TWO[1], PAT]):
+              r = placement.place(rc.pages_pdf(pages), people, model_client=Mock())
+              print(name, len(people), r['status'], [(f['signer'].split('@')[0], f['page'], f['evidence']['line'], f['confidence']) for f in r['fields']])
+  EOF
+  ```
+  - **Expected:** Pat on her block at x = 320, y = 300 on page 2, or a hold.
+  - **Observed (r25):** `placed`, with Pat's signature and date `high` at `[64.45, 500, 220]` / `[73.9, 560, 220]`. That is `HARBOR LIGHT GROUP, INC.`.
+    - Affected: `same_named` (1 and 2 signers), `same_harbour` (1 and 2), `same_caption_nocompany` (1 and 2), and `same_msa_supplier_nocompany` (1 signer).
+    - `same_msa_supplier_nocompany` with 2 signers and `same_msa_supplier_hla` hold `ambiguous_identity`.
+- **Measured direction, not a fix: `cand5`** keeps r25 and also arms the flag when another non-witness block on the same page is unclaimed and the page has at least 3 non-witness blocks:
+  ```python
+  same = [b for b in blocks if b is not block and b.line.page == block.line.page and not witness_block(b)]
+  block.unclaimed_cross_page = bool(unclaimed_pages - {block.line.page}) or (
+      len(same) >= 2 and any(not any(b.scores) for b in same))
+  ```
+  - **Same-page 324 cells: closes all 55 W.** The cost is 10 correct → hold (the matching controls).
+  - **Three-party same-page controls (36 cells):** 6 correct → hold.
+  - **H-1 2,160:** identical to r25.
+  - Not run on the other families or the suite.
+
+## Medium
+
+**M-1 (carried over, not re-measured):** a misspelled recital (`HARBOUR LIGHT ANALYTICS`) places Pat on a domain-exact affiliate. Codex measured 48 / 192 cells, the same in r21–r24. Its cross-page sibling is now held by the r25 guard: the Q3a `HARBOUR` cells are W→n. The same-page sibling is part of B-1.
+
+## Low
+
+**L-1 (holds only): the guard's hold cost on correct company-only cells, including explicit-company signers.**
+- **Scope:** 1,741 correct → hold cells vs r24 across my families. The largest are H-1 396, Q3a 354, Q2 350 and Q3b 302. On ordinary NDAs with an attached exhibit page, 42 / 504 (guarantees and blank forms only).
+- **Cause:** any unclaimed non-witness block on another page (another party's guarantee, a blank exhibit form, or the sender's own block when Fleet is not a signer) holds every company-only placement.
+- **Explicit-company signers pay too:** 21 of the 42 NDA-exhibit holds. Explicit company has been 0 W in every matrix since r21. Exempting it would recover those cells; I have not measured it against the suite.
+- These cost no wrong placements.
+
+## Holds a human resolves (r25, my runs)
+| Run | Holds | Cells |
+| --- | ---: | ---: |
+| Q3a / Q3b | 2,372 / 1,506 | 3,888 / 2,430 |
+| H-1 cross-page matrix | 1,386 | 2,160 |
+| `R24.BLOCKING` matrix | 1,400 | 2,160 |
+| Other attack + boundary recitals | 2,090 | 3,120 |
+| Q2 matrix / r24 veto matrix | 3,210 / 770 | 5,280 / 1,260 |
+| Conflict probes / L-1 384 | 36 / 384 | 36 / 384 |
+| r21 `matrix_cases` / `cross_page_cases` | 5,120 / 240 | 5,280 / 240 |
+| r19 veto / affiliate + B1 / competition | 140 / 1,538 / 384 | 140 / 1,538 / 480 |
+| L-1 boundary Pat / Fleet | 3,289 / 1,800 | 3,480 / 1,800 |
+| F fine / F fine company-only | 1,131 / 2,680 | 3,456 / 3,456 |
+| Added families | 4,146 | 4,756 |
+| Q3c attack | 2,743 | 2,808 (55 W) |
+| NDA + exhibit cost | 346 | 576 |
+
+## Attacks that held (r25)
+- **Cross-page affiliates:** 0 W in Q3a, Q3b, H-1 and every cross-page Q3c layout. This covers unknown roles, caption-only roles, named non-matching headings and `HARBOUR` on the signature page.
+- **Affiliate alone on its page with a witness block:** 0 W (r24 87 W). A witness block is correctly excluded from "unclaimed", and the counterparty block on the other page arms the guard.
+- **Notary or acknowledgment block on the affiliate's page:** 0 W, and no new holds on ordinary NDAs.
+- **Explicit-company signers and `GUARANTOR:`-captioned affiliates:** 0 W everywhere.
+- **The guard never creates a placement** (n → p = 0), and it does not change scores or margins: tie and competition cells are identical to r24.
+- **Isolation:** 0 HTTP calls and 0 model calls everywhere. The worker equals in-process on the B-1/B-2 worker cells. The send-c1b worktree is clean.

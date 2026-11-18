@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="20" skipped="0" tests="40" time="10.462" timestamp="2026-11-18T06:29:49.754476" hostname="h-do1"><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Authorised signatory:]" time="0.252"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Signatory:]" time="0.258"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Executed by:]" time="0.263"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Firma:]" time="0.237"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT:-Unterschrift:]" time="0.248"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Authorised signatory:]" time="0.243"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Signatory:]" time="0.236"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Executed by:]" time="0.239"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Firma:]" time="0.239"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-RECIPIENT-Unterschrift:]" time="0.235"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Authorised signatory:]" time="0.242"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Signatory:]" time="0.240"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Executed by:]" time="0.265"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Firma:]" time="0.238"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-For and on behalf of the Recipient-Unterschrift:]" time="0.250"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Authorised signatory:]" time="0.242"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Signatory:]" time="0.235"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Executed by:]" time="0.234"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Firma:]" time="0.266"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[False-harbor light analytics, inc.-Unterschrift:]" time="0.240"><failure message="AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}&#10;assert 'needs_sender' == 'placed'&#10;  &#10;  - placed&#10;  + needs_sender">dealroom_sign/tests/test_placement_r13.py:111: in test_l2_separate_own_company_line_preserves_scoring
+    result = assert_pat_placement(source, 560, 600)
+dealroom_sign/tests/test_placement_r13.py:62: in assert_pat_placement
+    assert result['status'] == 'placed', result
+E   AssertionError: {'analysis_version': 'c2a.26', 'assignments': [{'block_id': 'b2', 'confidence': 'high', 'margin': 4, 'score': 4, ...}], 'fields': [], 'method': 'rules', ...}
+E   assert 'needs_sender' == 'placed'
+E     
+E     - placed
+E     + needs_sender</failure></testcase><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT:-Authorised signatory:]" time="0.241" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT:-Signatory:]" time="0.240" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT:-Executed by:]" time="0.244" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT:-Firma:]" time="0.239" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT:-Unterschrift:]" time="0.252" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT-Authorised signatory:]" time="0.248" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT-Signatory:]" time="0.251" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT-Executed by:]" time="0.251" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT-Firma:]" time="0.258" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-RECIPIENT-Unterschrift:]" time="0.239" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-For and on behalf of the Recipient-Authorised signatory:]" time="0.258" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-For and on behalf of the Recipient-Signatory:]" time="0.252" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-For and on behalf of the Recipient-Executed by:]" time="0.247" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-For and on behalf of the Recipient-Firma:]" time="0.245" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-For and on behalf of the Recipient-Unterschrift:]" time="0.261" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-harbor light analytics, inc.-Authorised signatory:]" time="0.259" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-harbor light analytics, inc.-Signatory:]" time="0.253" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-harbor light analytics, inc.-Executed by:]" time="0.249" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-harbor light analytics, inc.-Firma:]" time="0.259" /><testcase classname="dealroom_sign.tests.test_placement_r13" name="test_l2_separate_own_company_line_preserves_scoring[True-harbor light analytics, inc.-Unterschrift:]" time="0.285" /></testsuite></testsuites>
