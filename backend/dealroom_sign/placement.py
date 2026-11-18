@@ -27,14 +27,27 @@ from pdfminer.psparser import PSEOF, PSKeyword, literal_name
 
 LABEL = re.compile(r'^(signature|signed|sign here|by|printed name|print name|name|title|date|its)\b[:\s]*', re.I)
 ROLE_DEF = re.compile(r'(?:\b(?:between|and|by|with)\s+)([A-Z][\w&.,\' -]{2,80}?)\s*\((?:the\s+)?["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+# A conjunction starts a new party only after a completed designation.
+# Company names and descriptive phrases may themselves contain 'and'.
+PARTY_JOIN_STOP = (
+    r'(?!(?:(?<=Inc)|(?<=Inc\.)|(?<=INC)|(?<=INC\.)|(?<=LLC)|(?<=LLP)'
+    r'|(?<=Ltd)|(?<=Ltd\.)|(?<=LTD)|(?<=LTD\.)|(?<=Corp)|(?<=Corp\.)'
+    r'|(?<=Co)|(?<=Co\.)|(?<=CO)|(?<=CO\.)|(?<=Corporation)|(?<=corporation)'
+    r'|(?<=company)|(?<=partnership))\s*,?\s+and\s+[A-Z])')
 ROLE_DESCRIPTION = re.compile(
+    r'(?:\b(?:between|and|by|with)\s+)'
+    r'([A-Z](?:' + PARTY_JOIN_STOP + r'[\w&.,\' -]){2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
+    r'(?:,\s*(?:' + PARTY_JOIN_STOP + r'[^()]){0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
+    r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
+# Preserve r21 as a co-contributor: a bounded parse may start inside a party.
+ROLE_DESCRIPTION_WIDE = re.compile(
     r'(?:\b(?:between|and|by|with)\s+)'
     r'([A-Z][\w&.,\' -]{2,120}?\b(?:Inc\.?|INC\.?|LLC|Ltd\.?|LTD\.?|Corp\.?|Corporation|Co\.?))'
     r'(?:,\s*[^()]{0,400})?\s*\((?:hereinafter\s+)?(?:the\s+)?'
     r'["“\']([A-Z][A-Za-z ]{2,30})["”\']\)', re.M)
 STOP = {'inc', 'llc', 'ltd', 'co', 'corp', 'corporation', 'company', 'the', 'and', 'of', 'gmbh', 'plc'}
 GENERIC_DOMAINS = {'gmail', 'googlemail', 'outlook', 'hotmail', 'yahoo', 'icloud', 'aol', 'proton', 'protonmail', 'live', 'msn'}
-VERSION = 'c2a.21'
+VERSION = 'c2a.24'
 SHORT_CAPTION = re.compile(r"^[A-Za-z][\w .'/&-]{0,30}:\s*$")
 COMPANION_SEMANTICS = {'NAME', 'DATE', 'TITLE', 'OTHER'}
 PAGE_NUMBER = re.compile(r'^\W*(page\s*)?\d+(\s*(of|/)\s*\d+)?\W*$', re.I)
@@ -632,10 +645,17 @@ def extract(pdf, *, deadline=None):
                         raise ValueError('identity_unreadable')
             if pno <= 2:
                 opening = ' '.join(w['text'] for w in words)
-                for match in (*ROLE_DEF.finditer(opening), *ROLE_DESCRIPTION.finditer(opening)):
+                definitions = list(ROLE_DEF.finditer(opening))
+                # A lazy direct definition can match a description's tail.
+                # Let both grammars contribute; disagreement retains the hold.
+                descriptions = (*ROLE_DESCRIPTION.finditer(opening),
+                                *ROLE_DESCRIPTION_WIDE.finditer(opening))
+                for match in (*definitions, *descriptions):
                     company, role = match.groups()
                     if COMPANY.search(company):
-                        roles[role.lower()] = company.strip(' ,')
+                        company, prior = company.strip(' ,'), roles.get(role.lower())
+                        conflict = prior and not (similarity(prior, company) or similarity(company, prior))
+                        roles[role.lower()] = role if conflict else company
             lines = []
             for edge in page.edges:
                 if abs(edge['bottom'] - edge['top']) < 1.5 and edge['x1'] - edge['x0'] >= 50:
@@ -930,11 +950,26 @@ def score(signer, block, roles, blocks=()):
     heading = roles.get(block.heading.rstrip(': ').lower(), block.heading)
     heading = (behalf_parts(heading) or ('', heading))[1]
     if similarity(company, heading) and not heading_crosses_gutter(block, blocks):
-        # Company-only identity must be unique on the page. Every matching
-        # heading competes, even when a veto or geometry removes its score.
+        # Matching headings compete on the page even if their score is vetoed.
+        # An unaccounted party role also leaves cross-page ownership unresolved.
         if not value:
+            unresolved_role = any(
+                party_role_text(label['text']) and not accounted_label(label['text'], roles)
+                for candidate in blocks for label in candidate.raw_labels)
             for other in blocks:
-                if other is block or other.line.page != block.line.page:
+                if other is block:
+                    continue
+                # An unresolved article-prefixed role can still name this
+                # company in the recital. It cannot free an affiliate's
+                # company-only block, even with an explicit signer company.
+                if not printed_names(other, blocks):
+                    for label in other.raw_labels:
+                        role_key = label['text'].rstrip(': ').lower()
+                        if (role_key not in roles and role_key.startswith('the ')
+                                and party_role_text(role_key)
+                                and similarity(company, roles.get(role_key[4:], ''))):
+                            return value
+                if other.line.page != block.line.page and not unresolved_role:
                     continue
                 other_heading = roles.get(other.heading.rstrip(': ').lower(), other.heading)
                 other_heading = (behalf_parts(other_heading) or ('', other_heading))[1]
