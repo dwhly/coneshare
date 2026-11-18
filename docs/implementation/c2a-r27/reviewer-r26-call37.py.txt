@@ -1,0 +1,11 @@
+import json
+p='/root/worktrees/send-c1b/docs/implementation/c2a-r26/'
+d=json.load(open(p+'r26b/family-comparison.json'))
+tot=0; wt=0
+for part, v in d.items():
+    for g, s in v['groups'].items():
+        c=s.get('r25_to_r26_c_to_n',0); w=s.get('r25_to_r26_w_to_n',0)
+        assert not s.get('r25_to_r26_n_to_p') and not s.get('r25_to_r26_c_to_w')
+        if c or w: print(f'{part:12} {g:55} cases {s["cases"]:6} c->n {c:5} w->n {w:4}')
+        tot+=c; wt+=w
+print('total c->n', tot, 'w->n', wt)

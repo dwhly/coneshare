@@ -1,0 +1,13 @@
+import json, hashlib
+p='/root/worktrees/send-c1b/docs/implementation/c2a-r26/'
+print('disk sha', hashlib.sha256(open('/root/worktrees/send-c1b/backend/dealroom_sign/placement.py','rb').read()).hexdigest())
+d=json.load(open(p+'r26b/family-comparison.json'))
+print(type(d), list(d)[:10] if isinstance(d,dict) else len(d))
+def walk(x, path=''):
+    if isinstance(x, dict):
+        if 'r25' in x and isinstance(x['r25'], dict) and 'c_to_n' in x['r25']:
+            if x['r25'].get('c_to_n') or x['r25'].get('w_to_n') or x['r25'].get('c_to_w') or x['r25'].get('n_to_p'):
+                print(path, {k: v for k, v in x['r25'].items() if v})
+            return
+        for k, v in x.items(): walk(v, path + '/' + str(k))
+walk(d)

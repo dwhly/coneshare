@@ -1,0 +1,5 @@
+import sys, inspect
+sys.path.insert(0,'/root/worktrees/send-c1b/backend')
+from dealroom_sign.tests import placement_r24_review_cases as R24
+print(inspect.getsource(R24.rc.block))
+for e in ('placeholders','printed'): print(e, R24.company_block('RECIPIENT:', R24.HLA, 320, 300, extra=e))

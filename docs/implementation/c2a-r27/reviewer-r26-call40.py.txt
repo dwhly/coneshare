@@ -1,0 +1,24 @@
+import sys, os, time, types, subprocess
+sys.dont_write_bytecode = True
+sys.path.insert(0, '/tmp/rev19')
+src = open('/tmp/rev19/h.py').read()
+src = '\n'.join(l for l in src.splitlines() if not l.startswith("assert SRC['r19']"))
+h = types.ModuleType('h'); h.__file__ = '/tmp/rev19/h.py'; sys.modules['h'] = h
+exec(compile(src, 'h', 'exec'), h.__dict__)
+import gens
+from collections import Counter
+from contextlib import ExitStack
+ROOT = h.ROOT
+def show(c): return subprocess.check_output(['git','show',c+':backend/dealroom_sign/placement.py'],cwd=ROOT).decode()
+h.SRC['r25'] = show('701f6aee'); h.SRC['r26'] = show('f450fdae')
+G = Counter(); t = time.time()
+with ExitStack() as st:
+    M = h.modules(st, ('r25', 'r26'))
+    for g, c, rows, both, allowed in gens.f_fine():
+        res = h.run_rows(M, rows, both, allowed)
+        key = ''.join('W' if res[n][1] else ('p' if res[n][0]['fields'] else 'n') for n in M)
+        if key == 'pn':
+            r = res['r25'][0]
+            G[(g, 'both' if both else 'pat-only', 'scores', tuple(sorted(a['score'] for a in r['assignments'])))] += 1
+print('http', h.forbidden.call_count, 'elapsed', round(time.time() - t))
+for x in sorted(G.items(), key=str): print(x)

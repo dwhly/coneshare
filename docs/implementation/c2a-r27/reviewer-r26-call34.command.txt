@@ -1,0 +1,7 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json
+p='/root/worktrees/send-c1b/docs/implementation/c2a-r26/'
+print(open(p+'hold-cost.json').read()[:5000])
+print(open(p+'r26b/vs-live.json').read())
+print(open(p+'r26b/release-bars.json').read())
+EOF

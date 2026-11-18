@@ -1,0 +1,37 @@
+import sys, os; sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+sys.path.insert(0, '/root/worktrees/send-c1b/backend')
+from unittest.mock import Mock, patch
+from dealroom_sign import placement
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+from dealroom_sign.tests.test_placement_r14 import in_process
+rc = R24.rc
+print(placement.VERSION)
+PAT = dict(name='Pat Smith', email=rc.PE)
+FPAT = dict(name='Pat Smith', email=rc.DE, company='Fleet Test Co.', side='us')
+fleet = R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40)
+aff = R24.company_block(None, 'HARBOR LIGHT GROUP, INC.', 40, 500)
+def named(rows, name, second=None):
+    out = [(r[0], name, False, r[3]) if r[1] == 'Name:' else r for r in rows]
+    return [(r[0], second, False, r[3]) if (second and r[1] == 'Title:') else r for r in out if second or r[1] != 'Title:' or True]
+CASES = dict(
+  a_address_hl=[list(rc.RECITALS['parsed']), fleet + named(R24.company_block('RECIPIENT:', 'HL ANALYTICS, INC.', 320), 'Name: Pat Smith', 'Address: 100 Harbor Way') + aff],
+  a_address_blank=[list(rc.RECITALS['address']), fleet + named(R24.company_block(None, None, 320), 'Name: Pat Smith', 'Address: 100 Harbor Way') + aff],
+  b_shared_name=[list(rc.RECITALS['parsed']), named(fleet, 'Name: Pat Smith') + R24.company_block('THE SUPPLIER', None, 320) + aff],
+  b_shared_name_hl=[list(rc.RECITALS['parsed']), named(fleet, 'Name: Pat Smith') + R24.company_block('RECIPIENT:', 'HL ANALYTICS, INC.', 320) + aff],
+)
+http = Mock(side_effect=AssertionError('http'))
+with patch('httpx.Client.send', http):
+    for name, pages in CASES.items():
+        for people in ([PAT], [TWO[1], PAT], [FPAT, PAT]):
+            if name.startswith('b') and people[0] is not FPAT: continue
+            if name.startswith('a') and people[0] is FPAT: continue
+            pdf = rc.pages_pdf(pages); mo = Mock()
+            r = placement.place(pdf, people, model_client=mo)
+            W = rc.wrong_fields(r, {rc.PE: (2, 320, 300, 500), rc.DE: (2, 40, 300, 220)})
+            print(name, len(people), r['status'], 'W' if W else '-', [(f['signer'].split('@')[0], f['type'], f['page'], f['evidence']['line'], f['confidence']) for f in r['fields']],
+                  [(a['signer'].split('@')[0], a['score'], a['margin']) for a in r.get('assignments', [])], 'model', mo.call_count, 'worker==inproc', r == in_process(placement, pdf, people, Mock()))
+print('http', http.call_count)
+for name in ('a_address_hl', 'b_shared_name'):
+    print(name, [r for r in CASES[name][1]])

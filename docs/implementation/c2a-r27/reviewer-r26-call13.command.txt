@@ -1,0 +1,22 @@
+/root/work/sign-product/send-venv/bin/python - <<'EOF'
+import json, hashlib, subprocess, sys
+P='/root/worktrees/dealroom-sign-edd/docs/edd/briefs/counterparty-c2a-gate3-r25.jsonl'
+cmds=[]
+for line in open(P):
+    try: d=json.loads(line)
+    except: continue
+    if not isinstance(d,dict) or not isinstance(d.get('message'),dict): continue
+    c=d['message'].get('content')
+    if not isinstance(c,list): continue
+    for x in c:
+        if isinstance(x,dict) and x.get('type')=='tool_use':
+            cmds.append(x['input'].get('command') or json.dumps(x['input']))
+src=cmds[29]
+body=src[src.index("<<'EOF'\n")+8:src.rindex("\nEOF")]
+print('body sha', hashlib.sha256(body.encode()).hexdigest()[:12])
+old="SRC = dict(r21=show('afb9aa6e'), r24=show('9a91a4b9'), r25=show('701f6aee'))"
+assert body.count(old)==1
+body=body.replace(old,"SRC = dict(r21=show('afb9aa6e'), r24=show('9a91a4b9'), r25=show('701f6aee'), r26=show('f450fdae'))")
+r=subprocess.run(['/root/work/sign-product/send-venv/bin/python','-'],input=body,text=True,capture_output=True)
+print(r.stdout[-20000:]); print(r.stderr[-3000:])
+EOF

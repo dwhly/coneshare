@@ -1,0 +1,6 @@
+/root/work/sign-product/send-venv/bin/python -c "
+import subprocess as s
+R='/root/worktrees/send-c1b'
+for a in [['log','--oneline','-3'],['diff','701f6aee','f450fdae','--stat'],['diff','701f6aee','f450fdae','--stat','--','backend/dealroom_sign/tests'],['diff','701f6aee','f450fdae','--','backend/dealroom_sign/placement.py']]:
+    print('>>>',a); print(s.run(['git','-C',R]+a,capture_output=True,text=True).stdout)
+"
