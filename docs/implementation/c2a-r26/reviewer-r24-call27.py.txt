@@ -1,0 +1,58 @@
+import sys, os, subprocess, time
+sys.dont_write_bytecode = True
+for k in ['OPENROUTER_API_KEY', 'PLACE_MODEL']: os.environ.pop(k, None)
+from pathlib import Path
+from types import ModuleType
+from collections import Counter
+from itertools import product
+from unittest.mock import Mock, patch
+ROOT = Path('/root/worktrees/send-c1b'); sys.path.insert(0, str(ROOT/'backend'))
+from dealroom_sign import placement as _p
+from dealroom_sign.tests.test_placement_r14 import in_process
+from dealroom_sign.tests import placement_r24_review_cases as R24
+from dealroom_sign.tests.test_placement import TWO
+rc = R24.rc
+def show(c): return subprocess.check_output(['git','show',c+':backend/dealroom_sign/placement.py'],cwd=ROOT).decode()
+r24 = show('9a91a4b9')
+old = "                party_role_text(label['text']) and not accounted_label(label['text'], roles)\n"
+assert r24.count(old) == 1
+SRC = dict(r24=r24, cand4=r24.replace(old, "                not accounted_label(label['text'], roles)\n"))
+def mk(n):
+    m = ModuleType('rev24_'+n); m.__file__ = _p.__file__; sys.modules[m.__name__] = m
+    exec(compile(SRC[n], m.__name__, 'exec'), m.__dict__); return m
+M = dict((n, mk(n)) for n in SRC)
+forbid = Mock(side_effect=AssertionError('http'))
+def run(pages, people, allowed):
+    pdf = rc.pages_pdf(pages); out = []
+    for n, m in M.items():
+        r = in_process(m, pdf, people, Mock())
+        out.append('W' if rc.wrong_fields(r, allowed) else ('p' if r['fields'] else 'n'))
+    return ''.join(out)
+HLA = R24.HLA
+AL = dict([(rc.PE, (2, 320, 300, 500)), (rc.DE, (2, 40, 300, 220))])
+def ppl(signer):
+    pat = dict(name='Pat Smith', email=rc.PE)
+    if signer == 'explicit': pat['company'] = 'Harbor Light Analytics, Inc.'
+    return [TWO[1], pat] if signer == 'both' else [pat]
+OWN = []
+for h in ['MEMBER:','CONTRACTOR:','SUPPLIER:','VENDOR:','CONSULTANT:','CLIENT:','CUSTOMER:','LENDER:','INVESTOR:','RECEIVING PARTY:','THE CONTRACTOR','MANAGER:']:
+    OWN += [('unk+co', h, HLA, None), ('unk', h, None, None)]
+for co in ['H.L.A., INC.','HL ANALYTICS, INC.','HARBOUR LIGHT ANALYTICS, INC.','BRIGHTWATER, INC.']:
+    OWN += [('named', 'RECIPIENT:', co, None), ('named', None, co, None)]
+for cap in ['(Recipient)','Its: Recipient','as Recipient','RECIPIENT','Recipient Signature']:
+    OWN += [('caption', None, HLA, cap), ('caption', None, None, cap)]
+G = Counter(); t = time.time()
+with patch('httpx.Client.send', forbid):
+    for (kind, h, co, cap), recital, loc, acap, extra, signer in product(
+            OWN, ('none', 'parsed', 'address'), ('after', 'before'), (None, 'GUARANTOR:', 'PARENT:'),
+            ('placeholders', 'printed'), ('domain', 'explicit', 'both')):
+        own = R24.company_block('DISCLOSER:', 'FLEET TEST CO.', 40) + R24.company_block(h, co, 320, extra=extra)
+        if cap: own.append((372, cap, False, 320))
+        a = R24.company_block(acap, 'HARBOR LIGHT GROUP, INC.', 40, 300 if loc == 'after' else 180)
+        pages = [list(rc.RECITALS[recital]), own, a] if loc == 'after' else [a + [(y + 400, tx, ru, *p) for y, tx, ru, *p in rc.RECITALS[recital]], own]
+        G[('Q3a ' + kind, run(pages, ppl(signer), AL))] += 1
+    print('q3a secs', round(time.time() - t), flush=True)
+    for args, pages, people, allowed in R24.cross_page_matrix(): G[('H1 2160', run(pages, people, allowed))] += 1
+    for args, pages, people, allowed in R24.veto_matrix(): G[('veto 1260', run(pages, people, allowed))] += 1
+print('http', forbid.call_count, 'elapsed', round(time.time() - t))
+for x in sorted(G.items()): print(x)
