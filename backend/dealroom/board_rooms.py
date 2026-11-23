@@ -92,9 +92,13 @@ def excluded_folder(folder, room_id):
 
 def excluded_item(item):
     return (item.document.organization_id != item.dataroom.organization_id
-            or hooks.is_protected_document(item.document_id)
-            or ExecutedArtifact.objects.filter(version__document_id=item.document_id).exists()
+            or excluded_document(item.document_id)
             or excluded_folder(item.folder, item.dataroom_id))
+
+
+def excluded_document(document_id):
+    return (hooks.is_protected_document(document_id)
+            or ExecutedArtifact.objects.filter(version__document_id=document_id).exists())
 
 
 def visible_items(room):
@@ -119,15 +123,17 @@ def activity_projection(fact):
     elif fact.actor_kind in ('member', 'visitor'):
         viewer = Viewer.objects.filter(pk=fact.actor_id, organization=fact.organization).first()
         actor = session.viewer_email if session else viewer.email if viewer else None
+    elif fact.actor_kind in ('operator', 'agent'):
+        actor = {'operator': 'Operator', 'agent': 'Agent key'}[fact.actor_kind]
     document = None
     if fact.event_type.startswith('document.') and fact.target_id:
         item = DataroomDocument.objects.select_related('document', 'folder', 'dataroom').filter(
             dataroom_id=fact.room_id, document_id=fact.target_id, dataroom__organization=fact.organization).first()
-        if item and excluded_item(item):
+        if excluded_item(item) if item else excluded_document(fact.target_id):
             return None
         document = (item.name or item.document.name) if item else None
     return {'id': str(fact.pk), 'event_type': fact.event_type, 'at': fact.created_at,
-            'actor': actor or 'Not recorded', 'phrase': ACTIVITY_PHRASES[fact.event_type],
+            'actor': actor or None, 'phrase': ACTIVITY_PHRASES[fact.event_type],
             'document': document, 'view_session_id': str(session.pk) if session else None,
             'visit_id': str(visit.pk) if visit else None}
 
@@ -140,7 +146,7 @@ def room_activity(room):
     sessions = ViewSession.objects.filter(share_link__dataroom=room).order_by('-viewed_at', '-pk')[:50]
     for session in sessions:
         events.append({'id': 'visit-' + str(session.pk), 'event_type': 'room.visited',
-            'at': session.viewed_at, 'actor': session.viewer_email or 'Not recorded',
+            'at': session.viewed_at, 'actor': session.viewer_email or None,
             'phrase': ACTIVITY_PHRASES['room.visited'], 'document': None,
             'view_session_id': str(session.pk), 'visit_id': None})
     return sorted(events, key=lambda a: (a['at'], a['id']), reverse=True)[:50]
@@ -163,9 +169,12 @@ def room_summary(row):
     policy = getattr(row.room, 'roompolicy', None)
     activity = room_activity(row.room)
     last = activity[0] if activity else None
+    phrase = ' '.join(filter(None, [last['actor'], last['phrase'], last['document']])) if last else None
+    if last and not last['actor']:
+        phrase = phrase[:1].upper() + phrase[1:]
     return {'document_count': len(visible_items(row.room)),
             'people_count': len(room_people(row.room, ShareLinkAccessGrant.objects.filter(share_link__dataroom=row.room))),
-            'last_activity': {'at': last['at'], 'phrase': ' '.join(filter(None, [last['actor'], last['phrase'], last['document']]))} if last else None,
+            'last_activity': {'at': last['at'], 'phrase': phrase} if last else None,
             'id': str(row.room_id), 'name': row.room.name, 'board_id': row.board_id,
             'build_state': row.build_state, 'revision': row.revision,
             'lifecycle': policy.status if policy else 'active',
@@ -247,11 +256,17 @@ class BoardVisitSerializer(serializers.Serializer):
 
 
 def visit_projection(session, activities):
-    visits = list(session.dataroom_visits.all())
-    visit_ids = {str(v.pk) for v in visits}
-    facts = [a for a in activities if str(a.data.get('view_session_id', '')) == str(session.pk)
+    all_visits = list(session.dataroom_visits.all())
+    visit_ids = {str(v.pk) for v in all_visits}
+    all_facts = [a for a in activities if str(a.data.get('view_session_id', '')) == str(session.pk)
              or str(a.data.get('visit_id', '')) in visit_ids]
-    views = list(session.page_views.all())
+    excluded_visits = {v.pk for v in all_visits
+                       if (v.dataroom_document and excluded_item(v.dataroom_document))
+                       or (v.dataroom_folder and excluded_folder(v.dataroom_folder, session.share_link.dataroom_id))}
+    visits = [v for v in all_visits if v.pk not in excluded_visits]
+    projected = [(a, event) for a in all_facts if (event := activity_projection(a)) is not None]
+    facts = [a for a, _ in projected]
+    views = [v for v in session.page_views.all() if v.dataroom_visit_id not in excluded_visits]
     pages = {v.page_number for v in views}
     pages.update(a.data['page'] for a in facts if type(a.data.get('page')) is int and a.data['page'] > 0)
     browser, device = stored_browser_device(session.user_agent)
@@ -262,9 +277,12 @@ def visit_projection(session, activities):
             'duration_seconds': session.duration_seconds if session.duration_seconds > 0 else
                         sum(v.duration_seconds for v in views) if views else None,
             'pages': sorted(pages) or None,
-            'downloaded': True if (session.downloaded_at or any(v.downloaded_at for v in visits)
+            # A session-wide download marker cannot establish a visible-item download
+            # when some of its item-level evidence has been excluded.
+            'downloaded': True if ((session.downloaded_at and not excluded_visits and len(facts) == len(all_facts))
+                                   or any(v.downloaded_at for v in visits)
                                    or any(a.event_type == 'document.downloaded' for a in facts)) else None,
-            'activity': [event for a in facts if (event := activity_projection(a)) is not None]}
+            'activity': [event for _, event in projected]}
 
 
 def preview_target(request, pk, item_id):

@@ -39,7 +39,8 @@ class Command(BaseCommand):
         if assignment:
             self.stdout.write('Room already assigned to this board.')
             return
-        if not options['force'] and not BoardStaffBinding.objects.filter(board_id=board_id).exists():
+        if not options['force'] and not BoardStaffBinding.objects.filter(
+                board_id=board_id, enabled=True, send_user__organization=room.organization).exists():
             raise CommandError('No staff binding exists for this board; use --force to adopt intentionally.')
         # No invitation table exists in S1a. Historical invitation facts are Activity rows.
         # Keep revoked grants and old sessions: either proves previous recipient exposure.

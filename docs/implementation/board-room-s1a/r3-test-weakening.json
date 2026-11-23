@@ -1,0 +1,54 @@
+{
+  "baseline": "c38ccbff",
+  "removed_line_count": 8,
+  "removed_lines": [
+    {
+      "file": "backend/tests/dealroom/golden/detail.json",
+      "r2_line": 88,
+      "removed": "    \"at\": \"2026-11-20T12:00:00Z\",",
+      "justification": "Regenerated from real Dealroom views after adding a later null-actor adoption fixture; last_activity now records that adoption with a capitalised phrase."
+    },
+    {
+      "file": "backend/tests/dealroom/golden/detail.json",
+      "r2_line": 89,
+      "removed": "    \"phrase\": \"pat@harborlight.test visited the room\"",
+      "justification": "Regenerated from real Dealroom views after adding a later null-actor adoption fixture; last_activity now records that adoption with a capitalised phrase."
+    },
+    {
+      "file": "backend/tests/dealroom/golden/list.json",
+      "r2_line": 12,
+      "removed": "        \"at\": \"2026-11-20T12:00:00Z\",",
+      "justification": "Regenerated from real Dealroom views after adding a later null-actor adoption fixture; last_activity now records that adoption with a capitalised phrase."
+    },
+    {
+      "file": "backend/tests/dealroom/golden/list.json",
+      "r2_line": 13,
+      "removed": "        \"phrase\": \"pat@harborlight.test visited the room\"",
+      "justification": "Regenerated from real Dealroom views after adding a later null-actor adoption fixture; last_activity now records that adoption with a capitalised phrase."
+    },
+    {
+      "file": "backend/tests/dealroom/test_board_rooms_r2.py",
+      "r2_line": 5,
+      "removed": "from datetime import datetime, timezone as dt_timezone",
+      "justification": "Extend the import with timedelta to give the adoption fixture a deterministic later timestamp."
+    },
+    {
+      "file": "backend/tests/dealroom/test_board_rooms_r2.py",
+      "r2_line": 26,
+      "removed": "CONTRACT = Path(__file__).resolve().parents[4] / 'fd-board-dealroom/docs/edd/contracts/board-rooms-v1.json'",
+      "justification": "Resolve the checked-in contract inside this repository instead of assuming a sibling worktree."
+    },
+    {
+      "file": "backend/tests/dealroom/test_board_rooms_r2.py",
+      "r2_line": 246,
+      "removed": "        assert json.loads((GOLDEN / (name+'.json')).read_text()) == value, name",
+      "justification": "Keep exact JSON equality for every non-page example; replace page byte equality with status, content type, PNG signature, successful decode and dimensions checks for portability."
+    },
+    {
+      "file": "backend/tests/dealroom/test_board_rooms_r2.py",
+      "r2_line": 248,
+      "removed": "    assert contract['examples'] == examples",
+      "justification": "Retain exact example-key coverage and per-example equality, with the same portable PNG comparison for page."
+    }
+  ]
+}

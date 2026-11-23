@@ -1,0 +1,71 @@
+diff --git a/backend/tests/dealroom/golden/detail.json b/backend/tests/dealroom/golden/detail.json
+index bd97fe8e..f3f8e4b7 100644
+--- a/backend/tests/dealroom/golden/detail.json
++++ b/backend/tests/dealroom/golden/detail.json
+@@ -2,0 +3,10 @@
++    {
++      "actor": null,
++      "at": "2026-11-20T12:00:01Z",
++      "document": null,
++      "event_type": "board.room.adopted",
++      "id": "00000000-0000-0000-0000-000000000072",
++      "phrase": "added the room to the board",
++      "view_session_id": null,
++      "visit_id": null
++    },
+@@ -88,2 +98,2 @@
+-    "at": "2026-11-20T12:00:00Z",
+-    "phrase": "pat@harborlight.test visited the room"
++    "at": "2026-11-20T12:00:01Z",
++    "phrase": "Added the room to the board"
+diff --git a/backend/tests/dealroom/golden/list.json b/backend/tests/dealroom/golden/list.json
+index ae80f314..da51eca6 100644
+--- a/backend/tests/dealroom/golden/list.json
++++ b/backend/tests/dealroom/golden/list.json
+@@ -12,2 +12,2 @@
+-        "at": "2026-11-20T12:00:00Z",
+-        "phrase": "pat@harborlight.test visited the room"
++        "at": "2026-11-20T12:00:01Z",
++        "phrase": "Added the room to the board"
+diff --git a/backend/tests/dealroom/test_board_rooms_r2.py b/backend/tests/dealroom/test_board_rooms_r2.py
+index 2144c41d..6ae27978 100644
+--- a/backend/tests/dealroom/test_board_rooms_r2.py
++++ b/backend/tests/dealroom/test_board_rooms_r2.py
+@@ -5 +5,2 @@ import os
+-from datetime import datetime, timezone as dt_timezone
++from datetime import datetime, timedelta, timezone as dt_timezone
++from io import BytesIO
+@@ -9,0 +11 @@ import pytest
++from PIL import Image
+@@ -26 +28 @@ GOLDEN = Path(__file__).with_name('golden')
+-CONTRACT = Path(__file__).resolve().parents[4] / 'fd-board-dealroom/docs/edd/contracts/board-rooms-v1.json'
++CONTRACT = GOLDEN / 'board-rooms-v1.json'
+@@ -224,0 +227,3 @@ def test_real_serializer_golden_contract(settings, image_transport):
++        adoption = models.Activity.objects.create(id='00000000-0000-0000-0000-000000000072', organization=org,
++            room_id=str(room.pk), event_type='board.room.adopted', actor_kind='', actor_id='')
++        models.Activity.objects.filter(pk=adoption.pk).update(created_at=fixed + timedelta(seconds=1))
+@@ -246 +251 @@ def test_real_serializer_golden_contract(settings, image_transport):
+-        assert json.loads((GOLDEN / (name+'.json')).read_text()) == value, name
++        assert_example(name, json.loads((GOLDEN / (name+'.json')).read_text()), value)
+@@ -248 +253,20 @@ def test_real_serializer_golden_contract(settings, image_transport):
+-    assert contract['examples'] == examples
++    assert set(contract['examples']) == set(examples)
++    for name, value in examples.items():
++        assert_example(name, contract['examples'][name], value)
++
++
++def assert_example(name, expected, actual):
++    if name != 'page':
++        assert expected == actual, name
++        return
++    assert set(expected) == set(actual) == {'status', 'content_type', 'body_base64'}
++    assert expected['status'] == actual['status'] == 200
++    assert expected['content_type'] == actual['content_type'] == 'image/png'
++    dimensions = []
++    for value in (expected, actual):
++        content = base64.b64decode(value['body_base64'], validate=True)
++        assert content.startswith(b'\x89PNG\r\n\x1a\n')
++        with Image.open(BytesIO(content), formats=['PNG']) as image:
++            image.load()
++            dimensions.append(image.size)
++    assert dimensions[0] == dimensions[1]

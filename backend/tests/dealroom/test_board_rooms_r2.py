@@ -2,11 +2,13 @@
 import base64
 import json
 import os
-from datetime import datetime, timezone as dt_timezone
+from datetime import datetime, timedelta, timezone as dt_timezone
+from io import BytesIO
 from pathlib import Path
 from unittest.mock import Mock, patch
 
 import pytest
+from PIL import Image
 from django.core.management import call_command, CommandError
 from django.utils import timezone
 from rest_framework.test import APIClient
@@ -23,7 +25,7 @@ from tests.dealroom.test_board_rooms import setup, image_transport, adopt, get, 
 
 pytestmark = pytest.mark.django_db
 GOLDEN = Path(__file__).with_name('golden')
-CONTRACT = Path(__file__).resolve().parents[4] / 'fd-board-dealroom/docs/edd/contracts/board-rooms-v1.json'
+CONTRACT = GOLDEN / 'board-rooms-v1.json'
 
 
 def test_canonical_contract_and_summary(setup):
@@ -222,6 +224,9 @@ def test_real_serializer_golden_contract(settings, image_transport):
         models.Activity.objects.create(id='00000000-0000-0000-0000-000000000071', organization=org,
             room_id=str(room.pk), event_type='document.downloaded', actor_kind='member', actor_id='', target_id=uid(30),
             data={'view_session_id': str(session.pk)})
+        adoption = models.Activity.objects.create(id='00000000-0000-0000-0000-000000000072', organization=org,
+            room_id=str(room.pk), event_type='board.room.adopted', actor_kind='', actor_id='')
+        models.Activity.objects.filter(pk=adoption.pk).update(created_at=fixed + timedelta(seconds=1))
         detail_path = PREFIX + str(room.pk) + '/'
         pages_path = detail_path + f'documents/{uid(50)}/pages/'
         with patch('dealroom.board_rooms.PAGE_SIZE', 1):
@@ -243,6 +248,25 @@ def test_real_serializer_golden_contract(settings, image_transport):
         for name, value in examples.items():
             (GOLDEN / (name+'.json')).write_text(json.dumps(value, indent=2, sort_keys=True)+'\n')
     for name, value in examples.items():
-        assert json.loads((GOLDEN / (name+'.json')).read_text()) == value, name
+        assert_example(name, json.loads((GOLDEN / (name+'.json')).read_text()), value)
     contract = json.loads(CONTRACT.read_text())
-    assert contract['examples'] == examples
+    assert set(contract['examples']) == set(examples)
+    for name, value in examples.items():
+        assert_example(name, contract['examples'][name], value)
+
+
+def assert_example(name, expected, actual):
+    if name != 'page':
+        assert expected == actual, name
+        return
+    assert set(expected) == set(actual) == {'status', 'content_type', 'body_base64'}
+    assert expected['status'] == actual['status'] == 200
+    assert expected['content_type'] == actual['content_type'] == 'image/png'
+    dimensions = []
+    for value in (expected, actual):
+        content = base64.b64decode(value['body_base64'], validate=True)
+        assert content.startswith(b'\x89PNG\r\n\x1a\n')
+        with Image.open(BytesIO(content), formats=['PNG']) as image:
+            image.load()
+            dimensions.append(image.size)
+    assert dimensions[0] == dimensions[1]

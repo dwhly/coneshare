@@ -37,7 +37,7 @@ def issue_staff_preview(binding, room, item, version, page, storage_key):
                 raise ValueError('Preview is too large.')
             buffer.write(chunk)
     buffer.seek(0)
-    with Image.open(buffer) as source:
+    with Image.open(buffer, formats=['PNG', 'JPEG', 'GIF', 'WEBP']) as source:
         if source.width * source.height > MAX_IMAGE_PIXELS:
             raise ValueError('Preview is too large.')
         with source.convert('RGBA') as image:

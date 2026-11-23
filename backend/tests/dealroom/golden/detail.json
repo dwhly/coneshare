@@ -1,6 +1,16 @@
 {
   "activity": [
     {
+      "actor": null,
+      "at": "2026-11-20T12:00:01Z",
+      "document": null,
+      "event_type": "board.room.adopted",
+      "id": "00000000-0000-0000-0000-000000000072",
+      "phrase": "added the room to the board",
+      "view_session_id": null,
+      "visit_id": null
+    },
+    {
       "actor": "pat@harborlight.test",
       "at": "2026-11-20T12:00:00Z",
       "document": null,
@@ -85,8 +95,8 @@
     }
   ],
   "last_activity": {
-    "at": "2026-11-20T12:00:00Z",
-    "phrase": "pat@harborlight.test visited the room"
+    "at": "2026-11-20T12:00:01Z",
+    "phrase": "Added the room to the board"
   },
   "lifecycle": "active",
   "name": "Northwind diligence",
