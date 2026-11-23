@@ -1,0 +1,1056 @@
+FFFFFFFFFFF..........FFFFF......                                         [100%]
+=================================== FAILURES ===================================
+_____________________ test_canonical_contract_and_summary ______________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F45V23ECEZNQVZQB1WGRH)>)
+
+    def test_canonical_contract_and_summary(setup):
+        adopt(setup)
+        result = get(PREFIX).json()
+>       assert set(result) == {'results', 'next'}
+E       AssertionError: assert {'items', 'next_cursor'} == {'next', 'results'}
+E         
+E         Extra items in the left set:
+E         'items'
+E         'next_cursor'
+E         Extra items in the right set:
+E         'next'
+E         'results'
+E         Use -v to get more diff
+
+tests/dealroom/test_board_rooms_r2.py:31: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M83F45QM9BKKTC61WSB7WWEF
+________________ test_detail_omits_protected_metadata[snapshot] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F46JPX2DWFYX91XMBVV93)>)
+kind = 'snapshot'
+
+    @pytest.mark.parametrize('kind', ['snapshot', 'audit', 'signed', 'executed_folder'])
+    def test_detail_omits_protected_metadata(setup, kind):
+        adopt(setup)
+        if kind == 'executed_folder':
+            top = DataroomFolder.objects.create(dataroom=setup.room, name='Executed')
+            child = DataroomFolder.objects.create(dataroom=setup.room, name='Private evidence', parent=top)
+            setup.item.folder = child; setup.item.save()
+        else:
+            work = Workflow.objects.create(owner=setup.user, room=setup.room, source_version=setup.version,
+                                           external_id='fixture', idempotency_key='fixture')
+            if kind == 'snapshot':
+                req = SignatureRequest.objects.create(board_id='fixture', creator=setup.user, workflow=work)
+                RequestArtifact.objects.create(request=req, version=setup.version, kind='partial', snapshot_id='a'*64, sha256='a'*64, size=10)
+            else:
+                ExecutedArtifact.objects.create(workflow=work, version=setup.version, kind=kind, item_id='fixture', sha256='a'*64, size=10)
+        models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.uploaded', target_id=str(setup.doc.pk))
+        response = get(paths(setup)['detail'])
+        assert response.status_code == 200
+>       assert response.data['items'] == [] and response.data['folders'] == []
+E       AssertionError: assert ([{'document_i...active', ...}] == []
+E         
+E         Left contains one more item: {'document_id': '01M83F46JMQHGGNG0ZEM8CNC3Q', 'folder_id': None, 'item_id': '01M83F46JPX2DWFYX91XMBVV93', 'lifecycle': 'active', ...}
+E         Use -v to get more diff)
+
+tests/dealroom/test_board_rooms_r2.py:60: AssertionError
+_________________ test_detail_omits_protected_metadata[audit] __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F46M3DMKHXN77K5B1A966)>)
+kind = 'audit'
+
+    @pytest.mark.parametrize('kind', ['snapshot', 'audit', 'signed', 'executed_folder'])
+    def test_detail_omits_protected_metadata(setup, kind):
+        adopt(setup)
+        if kind == 'executed_folder':
+            top = DataroomFolder.objects.create(dataroom=setup.room, name='Executed')
+            child = DataroomFolder.objects.create(dataroom=setup.room, name='Private evidence', parent=top)
+            setup.item.folder = child; setup.item.save()
+        else:
+            work = Workflow.objects.create(owner=setup.user, room=setup.room, source_version=setup.version,
+                                           external_id='fixture', idempotency_key='fixture')
+            if kind == 'snapshot':
+                req = SignatureRequest.objects.create(board_id='fixture', creator=setup.user, workflow=work)
+                RequestArtifact.objects.create(request=req, version=setup.version, kind='partial', snapshot_id='a'*64, sha256='a'*64, size=10)
+            else:
+                ExecutedArtifact.objects.create(workflow=work, version=setup.version, kind=kind, item_id='fixture', sha256='a'*64, size=10)
+        models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.uploaded', target_id=str(setup.doc.pk))
+        response = get(paths(setup)['detail'])
+        assert response.status_code == 200
+>       assert response.data['items'] == [] and response.data['folders'] == []
+E       AssertionError: assert ([{'document_i...active', ...}] == []
+E         
+E         Left contains one more item: {'document_id': '01M83F46M13VTTVF3SMYVPD2B2', 'folder_id': None, 'item_id': '01M83F46M3DMKHXN77K5B1A966', 'lifecycle': 'active', ...}
+E         Use -v to get more diff)
+
+tests/dealroom/test_board_rooms_r2.py:60: AssertionError
+_________________ test_detail_omits_protected_metadata[signed] _________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F46NAPDKPVC6R1MJ0E7HA)>)
+kind = 'signed'
+
+    @pytest.mark.parametrize('kind', ['snapshot', 'audit', 'signed', 'executed_folder'])
+    def test_detail_omits_protected_metadata(setup, kind):
+        adopt(setup)
+        if kind == 'executed_folder':
+            top = DataroomFolder.objects.create(dataroom=setup.room, name='Executed')
+            child = DataroomFolder.objects.create(dataroom=setup.room, name='Private evidence', parent=top)
+            setup.item.folder = child; setup.item.save()
+        else:
+            work = Workflow.objects.create(owner=setup.user, room=setup.room, source_version=setup.version,
+                                           external_id='fixture', idempotency_key='fixture')
+            if kind == 'snapshot':
+                req = SignatureRequest.objects.create(board_id='fixture', creator=setup.user, workflow=work)
+                RequestArtifact.objects.create(request=req, version=setup.version, kind='partial', snapshot_id='a'*64, sha256='a'*64, size=10)
+            else:
+                ExecutedArtifact.objects.create(workflow=work, version=setup.version, kind=kind, item_id='fixture', sha256='a'*64, size=10)
+        models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.uploaded', target_id=str(setup.doc.pk))
+        response = get(paths(setup)['detail'])
+        assert response.status_code == 200
+>       assert response.data['items'] == [] and response.data['folders'] == []
+E       AssertionError: assert ([{'document_i...active', ...}] == []
+E         
+E         Left contains one more item: {'document_id': '01M83F46N9GE39YBAMAH4BXYMW', 'folder_id': None, 'item_id': '01M83F46NAPDKPVC6R1MJ0E7HA', 'lifecycle': 'active', ...}
+E         Use -v to get more diff)
+
+tests/dealroom/test_board_rooms_r2.py:60: AssertionError
+____________ test_detail_omits_protected_metadata[executed_folder] _____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F46PHZMTRC61CTYHVZ23T)>)
+kind = 'executed_folder'
+
+    @pytest.mark.parametrize('kind', ['snapshot', 'audit', 'signed', 'executed_folder'])
+    def test_detail_omits_protected_metadata(setup, kind):
+        adopt(setup)
+        if kind == 'executed_folder':
+            top = DataroomFolder.objects.create(dataroom=setup.room, name='Executed')
+            child = DataroomFolder.objects.create(dataroom=setup.room, name='Private evidence', parent=top)
+            setup.item.folder = child; setup.item.save()
+        else:
+            work = Workflow.objects.create(owner=setup.user, room=setup.room, source_version=setup.version,
+                                           external_id='fixture', idempotency_key='fixture')
+            if kind == 'snapshot':
+                req = SignatureRequest.objects.create(board_id='fixture', creator=setup.user, workflow=work)
+                RequestArtifact.objects.create(request=req, version=setup.version, kind='partial', snapshot_id='a'*64, sha256='a'*64, size=10)
+            else:
+                ExecutedArtifact.objects.create(workflow=work, version=setup.version, kind=kind, item_id='fixture', sha256='a'*64, size=10)
+        models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.uploaded', target_id=str(setup.doc.pk))
+        response = get(paths(setup)['detail'])
+        assert response.status_code == 200
+>       assert response.data['items'] == [] and response.data['folders'] == []
+E       AssertionError: assert ([{'document_i...active', ...}] == []
+E         
+E         Left contains one more item: {'document_id': '01M83F46PFMNNFY9HGRK8AM7PQ', 'folder_id': '01M83F46PRVCY0XDASNP21VPPS', 'item_id': '01M83F46PHZMTRC61CTYHVZ23T', 'lifecycle': 'active', ...}
+E         Use -v to get more diff)
+
+tests/dealroom/test_board_rooms_r2.py:60: AssertionError
+____________ test_activity_phrases_actors_targets_and_stored_visits ____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F46QXER8QZYQVN157P6RT)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772874991616'>, fetch=<MagicMock name='get' id='137772876790384'>, response=<Mock id='137772875154784'>)
+
+    def test_activity_phrases_actors_targets_and_stored_visits(setup, image_transport):
+        adopt(setup)
+        setup.user.first_name = 'Maya'; setup.user.last_name = 'Chen'; setup.user.save()
+        models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.uploaded',
+            actor_kind='staff', actor_id=str(setup.user.pk), target_id=str(setup.doc.pk))
+        models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='new.unknown')
+        session = ViewSession.objects.create(share_link=setup.link, viewer_email='priya@northwind.test', city='Seattle',
+            user_agent='Mozilla/5.0 (Macintosh) Version/17.5 Safari/605.1', duration_seconds=840, downloaded_at=timezone.now())
+        blank = ViewSession.objects.create(share_link=setup.link, viewer_email='pat@harborlight.test')
+        visit = DataroomVisit.objects.create(view_session=session, dataroom_document=setup.item)
+        models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.downloaded',
+            actor_kind='member', actor_id='absent', target_id=str(setup.doc.pk), data={'visit_id': str(visit.pk)})
+        assert get(paths(setup)['page']).status_code == 200
+        assert models.Activity.objects.filter(event_type='board.preview.issued').exists()
+        activity = get(paths(setup)['detail']).json()['activity']
+>       assert not {'board.preview.issued', 'new.unknown'} & {a['event_type'] for a in activity}
+E       AssertionError: assert not ({'board.preview.issued', 'new.unknown'} & {'board.preview.issued', 'document.downloaded', 'document.uploaded', 'new.unknown'})
+
+tests/dealroom/test_board_rooms_r2.py:81: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:39,712 [WARNING] sharelinks.views:2622 _apply_watermark_to_image() - Watermark font not found or failed to load. Falling back to default font.
+------------------------------ Captured log call -------------------------------
+WARNING  sharelinks.views:views.py:2622 Watermark font not found or failed to load. Falling back to default font.
+__________________ test_image_only_accept_and_foreign_version __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F46X9B3TS57NCKRVYPHYT)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772876875200'>, fetch=<MagicMock name='get' id='137772902307152'>, response=<Mock id='137772876875536'>)
+
+    def test_image_only_accept_and_foreign_version(setup, image_transport):
+        adopt(setup)
+        for path, status in [(paths(setup)['page'], 200), (paths(setup)['page'].replace(str(setup.version.pk), '00000000000000000000000999'), 404)]:
+            response = APIClient().get(path, HTTP_ACCEPT='image/png,image/jpeg,image/webp', **headers(path))
+>           assert response.status_code == status
+E           assert 406 == 200
+E            +  where 406 = <Response status_code=406, "application/json">.status_code
+
+tests/dealroom/test_board_rooms_r2.py:97: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:39,849 [WARNING] django.request:253 log_response() - Not Acceptable: /api/v1/dealroom/board/rooms/01M83F46X3H8CJCSQ1NHKEQR03/documents/01M83F46X9B3TS57NCKRVYPHYT/pages/1/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Acceptable: /api/v1/dealroom/board/rooms/01M83F46X3H8CJCSQ1NHKEQR03/documents/01M83F46X9B3TS57NCKRVYPHYT/pages/1/
+_______________ test_staff_footer_omits_missing_identity_fields ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F46YVW5VRRKR597KC2PR6)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772874933376'>, fetch=<MagicMock name='get' id='137772874937168'>, response=<Mock id='137772874933232'>)
+
+    def test_staff_footer_omits_missing_identity_fields(setup, image_transport):
+        adopt(setup)
+        setup.user.first_name = None; setup.user.last_name = None; setup.user.save()
+        from dealroom.staff_preview import _apply_watermark_to_image
+        with patch('dealroom.staff_preview._apply_watermark_to_image', wraps=_apply_watermark_to_image) as stamp:
+            assert get(paths(setup)['page']).status_code == 200
+        identity = stamp.call_args.kwargs['identity']
+>       assert identity['name'] == setup.binding.login
+E       AssertionError: assert 'None None' == 'staff@example.test'
+E         
+E         - staff@example.test
+E         + None None
+
+tests/dealroom/test_board_rooms_r2.py:108: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:39,921 [WARNING] sharelinks.views:2622 _apply_watermark_to_image() - Watermark font not found or failed to load. Falling back to default font.
+------------------------------ Captured log call -------------------------------
+WARNING  sharelinks.views:views.py:2622 Watermark font not found or failed to load. Falling back to default font.
+_______________________ test_render_enqueue_after_commit _______________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F4736D6YY9ZGRGFRC8HAG)>)
+django_capture_on_commit_callbacks = <bound method TestCase.captureOnCommitCallbacks of <class 'django.test.testcases.TestCase'>>
+
+    def test_render_enqueue_after_commit(setup, django_capture_on_commit_callbacks):
+        adopt(setup)
+        setup.version.render_status = 'not_generated'; setup.version.has_pages = False; setup.version.save()
+        renderer = Mock()
+        renderer.get_effective_render_status.return_value = 'queued'
+        with patch('dealroom.board_rooms.get_renderer', return_value=renderer):
+            with django_capture_on_commit_callbacks(execute=True) as callbacks:
+                assert get(paths(setup)['pages']).status_code == 200
+>               renderer.enqueue_render_task.assert_not_called()
+
+tests/dealroom/test_board_rooms_r2.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock name='mock.enqueue_render_task' id='137772875409520'>
+
+    def assert_not_called(self):
+        """assert that the mock was never called.
+        """
+        if self.call_count != 0:
+            msg = ("Expected '%s' to not have been called. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'enqueue_render_task' to not have been called. Called 1 times.
+E           Calls: [call(<DocumentVersion: Report.pdf v1>)].
+
+/usr/lib/python3.12/unittest/mock.py:905: AssertionError
+_________________ test_render_slot_timeout_returns_unavailable _________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F475HFDTAMW3K6QZEREKZ)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772875774144'>, fetch=<MagicMock name='get' id='137772875526032'>, response=<Mock id='137772875772128'>)
+
+    def test_render_slot_timeout_returns_unavailable(setup, image_transport):
+        adopt(setup)
+        with patch('dealroom.board_rooms.hooks.RENDER_SEMAPHORE') as slot:
+            slot.acquire.return_value = False
+>           assert get(paths(setup)['page']).status_code == 503
+E           assert 200 == 503
+E            +  where 200 = <HttpResponse status_code=200, "image/png">.status_code
+E            +    where <HttpResponse status_code=200, "image/png"> = get('/api/v1/dealroom/board/rooms/01M83F475DH75PWTNZG9CWV0F9/documents/01M83F475HFDTAMW3K6QZEREKZ/pages/1/?version_id=01M83F475HTZ8HHFA63Q4C3T2F')
+
+tests/dealroom/test_board_rooms_r2.py:131: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:40,132 [WARNING] sharelinks.views:2622 _apply_watermark_to_image() - Watermark font not found or failed to load. Falling back to default font.
+------------------------------ Captured log call -------------------------------
+WARNING  sharelinks.views:views.py:2622 Watermark font not found or failed to load. Falling back to default font.
+__________________ test_adoption_unknown_board_requires_force __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F479SK1SZVM92SX723C6N)>)
+
+    def test_adoption_unknown_board_requires_force(setup):
+>       with pytest.raises(CommandError, match='binding'):
+E       Failed: DID NOT RAISE <class 'django.core.management.base.CommandError'>
+
+tests/dealroom/test_board_rooms_r2.py:138: Failed
+----------------------------- Captured stdout call -----------------------------
+Room adopted with ready state.
+__________________ test_json_format_suffix_keeps_scope[list] ___________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F47R6CQH3BE0A7YW7F0T5)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772874532336'>, fetch=<MagicMock name='get' id='137772874536272'>, response=<Mock id='137772874532192'>)
+action = 'list'
+
+    @pytest.mark.parametrize('action', ACTIONS)
+    def test_json_format_suffix_keeps_scope(setup, image_transport, action):
+        row = adopt(setup)
+        path = paths(setup)[action]
+        base, sep, query = path.partition('?')
+        path = base.rstrip('/') + '.json' + (sep + query if sep else '')
+>       assert get(path).status_code == 200
+
+tests/dealroom/test_board_rooms_r2.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/dealroom/test_board_rooms.py:43: in get
+    return APIClient().get(path, **headers(path, **context))
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:295: in get
+    response = super().get(path, data=data, **extra)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:212: in get
+    return self.generic('GET', path, **r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:240: in generic
+    return super().generic(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:292: in request
+    return super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:244: in request
+    request = super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1090: in request
+    self.check_exception(response)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:805: in check_exception
+    raise exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py:197: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py:65: in _view_wrapper
+    return view_func(request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py:124: in view
+    return self.dispatch(request, *args, **kwargs)
+dealroom/hooks.py:106: in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:526: in dispatch
+    response = self.handle_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:474: in handle_exception
+    self.raise_uncaught_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:485: in raise_uncaught_exception
+    raise exc
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3f3d40>
+request = <rest_framework.request.Request: GET '/api/v1/dealroom/board/rooms.json'>
+args = (), kwargs = {'format': 'json'}
+handler = <bound method BoardRoomReadViewSet.list of <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3f3d40>>
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Dispatch the incoming request to the appropriate handler method.
+    
+        This method implements the core request/response lifecycle for
+        Django REST Framework views:
+    
+        1. Wraps the incoming Django HttpRequest in a REST framework Request.
+        2. Performs content negotiation, authentication, permission, and
+            throttling checks.
+        3. Resolves and calls the appropriate HTTP method handler
+            (e.g. get(), post(), put()).
+        4. Handles any exceptions raised during processing and converts
+            them into appropriate Response objects.
+        5. Finalizes and returns the response with proper rendering
+            and headers applied.
+        """
+        self.args = args
+        self.kwargs = kwargs
+        request = self.initialize_request(request, *args, **kwargs)
+        self.request = request
+        self.headers = self.default_response_headers  # deprecate?
+    
+        try:
+            self.initial(request, *args, **kwargs)
+    
+            # Get the appropriate handler method
+            if request.method.lower() in self.http_method_names:
+                handler = getattr(self, request.method.lower(),
+                                  self.http_method_not_allowed)
+            else:
+                handler = self.http_method_not_allowed
+    
+>           response = handler(request, *args, **kwargs)
+E           TypeError: BoardRoomReadViewSet.list() got an unexpected keyword argument 'format'
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:523: TypeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:40,720 [ERROR] django.request:253 log_response() - Internal Server Error: /api/v1/dealroom/board/rooms.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.list() got an unexpected keyword argument 'format'
+------------------------------ Captured log call -------------------------------
+ERROR    django.request:log.py:253 Internal Server Error: /api/v1/dealroom/board/rooms.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.list() got an unexpected keyword argument 'format'
+_________________ test_json_format_suffix_keeps_scope[detail] __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F47X1V55P4GJ0PH7QS6B0)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772874500480'>, fetch=<MagicMock name='get' id='137772874504272'>, response=<Mock id='137772874506624'>)
+action = 'detail'
+
+    @pytest.mark.parametrize('action', ACTIONS)
+    def test_json_format_suffix_keeps_scope(setup, image_transport, action):
+        row = adopt(setup)
+        path = paths(setup)[action]
+        base, sep, query = path.partition('?')
+        path = base.rstrip('/') + '.json' + (sep + query if sep else '')
+>       assert get(path).status_code == 200
+
+tests/dealroom/test_board_rooms_r2.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/dealroom/test_board_rooms.py:43: in get
+    return APIClient().get(path, **headers(path, **context))
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:295: in get
+    response = super().get(path, data=data, **extra)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:212: in get
+    return self.generic('GET', path, **r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:240: in generic
+    return super().generic(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:292: in request
+    return super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:244: in request
+    request = super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1090: in request
+    self.check_exception(response)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:805: in check_exception
+    raise exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py:197: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py:65: in _view_wrapper
+    return view_func(request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py:124: in view
+    return self.dispatch(request, *args, **kwargs)
+dealroom/hooks.py:106: in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:526: in dispatch
+    response = self.handle_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:474: in handle_exception
+    self.raise_uncaught_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:485: in raise_uncaught_exception
+    raise exc
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3ea300>
+request = <rest_framework.request.Request: GET '/api/v1/dealroom/board/rooms/01M83F47WXYV9971Q9DEC8ADP9.json'>
+args = (), kwargs = {'format': 'json', 'pk': '01M83F47WXYV9971Q9DEC8ADP9'}
+handler = <bound method BoardRoomReadViewSet.retrieve of <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3ea300>>
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Dispatch the incoming request to the appropriate handler method.
+    
+        This method implements the core request/response lifecycle for
+        Django REST Framework views:
+    
+        1. Wraps the incoming Django HttpRequest in a REST framework Request.
+        2. Performs content negotiation, authentication, permission, and
+            throttling checks.
+        3. Resolves and calls the appropriate HTTP method handler
+            (e.g. get(), post(), put()).
+        4. Handles any exceptions raised during processing and converts
+            them into appropriate Response objects.
+        5. Finalizes and returns the response with proper rendering
+            and headers applied.
+        """
+        self.args = args
+        self.kwargs = kwargs
+        request = self.initialize_request(request, *args, **kwargs)
+        self.request = request
+        self.headers = self.default_response_headers  # deprecate?
+    
+        try:
+            self.initial(request, *args, **kwargs)
+    
+            # Get the appropriate handler method
+            if request.method.lower() in self.http_method_names:
+                handler = getattr(self, request.method.lower(),
+                                  self.http_method_not_allowed)
+            else:
+                handler = self.http_method_not_allowed
+    
+>           response = handler(request, *args, **kwargs)
+E           TypeError: BoardRoomReadViewSet.retrieve() got an unexpected keyword argument 'format'
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:523: TypeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:40,864 [ERROR] django.request:253 log_response() - Internal Server Error: /api/v1/dealroom/board/rooms/01M83F47WXYV9971Q9DEC8ADP9.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.retrieve() got an unexpected keyword argument 'format'
+------------------------------ Captured log call -------------------------------
+ERROR    django.request:log.py:253 Internal Server Error: /api/v1/dealroom/board/rooms/01M83F47WXYV9971Q9DEC8ADP9.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.retrieve() got an unexpected keyword argument 'format'
+_________________ test_json_format_suffix_keeps_scope[visits] __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F485ED0MEXJ9BBH8VHTXM)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772874607760'>, fetch=<MagicMock name='get' id='137772874543760'>, response=<Mock id='137772874605456'>)
+action = 'visits'
+
+    @pytest.mark.parametrize('action', ACTIONS)
+    def test_json_format_suffix_keeps_scope(setup, image_transport, action):
+        row = adopt(setup)
+        path = paths(setup)[action]
+        base, sep, query = path.partition('?')
+        path = base.rstrip('/') + '.json' + (sep + query if sep else '')
+>       assert get(path).status_code == 200
+
+tests/dealroom/test_board_rooms_r2.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/dealroom/test_board_rooms.py:43: in get
+    return APIClient().get(path, **headers(path, **context))
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:295: in get
+    response = super().get(path, data=data, **extra)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:212: in get
+    return self.generic('GET', path, **r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:240: in generic
+    return super().generic(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:292: in request
+    return super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:244: in request
+    request = super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1090: in request
+    self.check_exception(response)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:805: in check_exception
+    raise exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py:197: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py:65: in _view_wrapper
+    return view_func(request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py:124: in view
+    return self.dispatch(request, *args, **kwargs)
+dealroom/hooks.py:106: in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:526: in dispatch
+    response = self.handle_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:474: in handle_exception
+    self.raise_uncaught_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:485: in raise_uncaught_exception
+    raise exc
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3f1760>
+request = <rest_framework.request.Request: GET '/api/v1/dealroom/board/rooms/01M83F485AD7TCREZPNVCZXBKJ/visits.json'>
+args = (), kwargs = {'format': 'json', 'pk': '01M83F485AD7TCREZPNVCZXBKJ'}
+handler = <bound method BoardRoomReadViewSet.visits of <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3f1760>>
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Dispatch the incoming request to the appropriate handler method.
+    
+        This method implements the core request/response lifecycle for
+        Django REST Framework views:
+    
+        1. Wraps the incoming Django HttpRequest in a REST framework Request.
+        2. Performs content negotiation, authentication, permission, and
+            throttling checks.
+        3. Resolves and calls the appropriate HTTP method handler
+            (e.g. get(), post(), put()).
+        4. Handles any exceptions raised during processing and converts
+            them into appropriate Response objects.
+        5. Finalizes and returns the response with proper rendering
+            and headers applied.
+        """
+        self.args = args
+        self.kwargs = kwargs
+        request = self.initialize_request(request, *args, **kwargs)
+        self.request = request
+        self.headers = self.default_response_headers  # deprecate?
+    
+        try:
+            self.initial(request, *args, **kwargs)
+    
+            # Get the appropriate handler method
+            if request.method.lower() in self.http_method_names:
+                handler = getattr(self, request.method.lower(),
+                                  self.http_method_not_allowed)
+            else:
+                handler = self.http_method_not_allowed
+    
+>           response = handler(request, *args, **kwargs)
+E           TypeError: BoardRoomReadViewSet.visits() got an unexpected keyword argument 'format'
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:523: TypeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:41,135 [ERROR] django.request:253 log_response() - Internal Server Error: /api/v1/dealroom/board/rooms/01M83F485AD7TCREZPNVCZXBKJ/visits.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.visits() got an unexpected keyword argument 'format'
+------------------------------ Captured log call -------------------------------
+ERROR    django.request:log.py:253 Internal Server Error: /api/v1/dealroom/board/rooms/01M83F485AD7TCREZPNVCZXBKJ/visits.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.visits() got an unexpected keyword argument 'format'
+__________________ test_json_format_suffix_keeps_scope[pages] __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F48A4VZZWN36EA7Q1DDG8)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772874667920'>, fetch=<MagicMock name='get' id='137772874459200'>, response=<Mock id='137772874666288'>)
+action = 'pages'
+
+    @pytest.mark.parametrize('action', ACTIONS)
+    def test_json_format_suffix_keeps_scope(setup, image_transport, action):
+        row = adopt(setup)
+        path = paths(setup)[action]
+        base, sep, query = path.partition('?')
+        path = base.rstrip('/') + '.json' + (sep + query if sep else '')
+>       assert get(path).status_code == 200
+
+tests/dealroom/test_board_rooms_r2.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/dealroom/test_board_rooms.py:43: in get
+    return APIClient().get(path, **headers(path, **context))
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:295: in get
+    response = super().get(path, data=data, **extra)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:212: in get
+    return self.generic('GET', path, **r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:240: in generic
+    return super().generic(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:292: in request
+    return super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:244: in request
+    request = super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1090: in request
+    self.check_exception(response)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:805: in check_exception
+    raise exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py:197: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py:65: in _view_wrapper
+    return view_func(request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py:124: in view
+    return self.dispatch(request, *args, **kwargs)
+dealroom/hooks.py:106: in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:526: in dispatch
+    response = self.handle_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:474: in handle_exception
+    self.raise_uncaught_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:485: in raise_uncaught_exception
+    raise exc
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3f7d40>
+request = <rest_framework.request.Request: GET '/api/v1/dealroom/board/rooms/01M83F48A057KC53M1NNAJYNMC/documents/01M83F48A4VZZWN36EA7Q1DDG8/pages.json?version_id=01M83F48A41CRYSDQ1GJCDDGYP'>
+args = ()
+kwargs = {'format': 'json', 'item_id': '01M83F48A4VZZWN36EA7Q1DDG8', 'pk': '01M83F48A057KC53M1NNAJYNMC'}
+handler = <bound method BoardRoomReadViewSet.pages of <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf3f7d40>>
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Dispatch the incoming request to the appropriate handler method.
+    
+        This method implements the core request/response lifecycle for
+        Django REST Framework views:
+    
+        1. Wraps the incoming Django HttpRequest in a REST framework Request.
+        2. Performs content negotiation, authentication, permission, and
+            throttling checks.
+        3. Resolves and calls the appropriate HTTP method handler
+            (e.g. get(), post(), put()).
+        4. Handles any exceptions raised during processing and converts
+            them into appropriate Response objects.
+        5. Finalizes and returns the response with proper rendering
+            and headers applied.
+        """
+        self.args = args
+        self.kwargs = kwargs
+        request = self.initialize_request(request, *args, **kwargs)
+        self.request = request
+        self.headers = self.default_response_headers  # deprecate?
+    
+        try:
+            self.initial(request, *args, **kwargs)
+    
+            # Get the appropriate handler method
+            if request.method.lower() in self.http_method_names:
+                handler = getattr(self, request.method.lower(),
+                                  self.http_method_not_allowed)
+            else:
+                handler = self.http_method_not_allowed
+    
+>           response = handler(request, *args, **kwargs)
+E           TypeError: BoardRoomReadViewSet.pages() got an unexpected keyword argument 'format'
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:523: TypeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:41,283 [ERROR] django.request:253 log_response() - Internal Server Error: /api/v1/dealroom/board/rooms/01M83F48A057KC53M1NNAJYNMC/documents/01M83F48A4VZZWN36EA7Q1DDG8/pages.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.pages() got an unexpected keyword argument 'format'
+------------------------------ Captured log call -------------------------------
+ERROR    django.request:log.py:253 Internal Server Error: /api/v1/dealroom/board/rooms/01M83F48A057KC53M1NNAJYNMC/documents/01M83F48A4VZZWN36EA7Q1DDG8/pages.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.pages() got an unexpected keyword argument 'format'
+__________________ test_json_format_suffix_keeps_scope[page] ___________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M83F48EWVA427CCVYJ6HW5P8)>)
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='137772875413408'>, fetch=<MagicMock name='get' id='137772875175344'>, response=<Mock id='137772875413600'>)
+action = 'page'
+
+    @pytest.mark.parametrize('action', ACTIONS)
+    def test_json_format_suffix_keeps_scope(setup, image_transport, action):
+        row = adopt(setup)
+        path = paths(setup)[action]
+        base, sep, query = path.partition('?')
+        path = base.rstrip('/') + '.json' + (sep + query if sep else '')
+>       assert get(path).status_code == 200
+
+tests/dealroom/test_board_rooms_r2.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/dealroom/test_board_rooms.py:43: in get
+    return APIClient().get(path, **headers(path, **context))
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:295: in get
+    response = super().get(path, data=data, **extra)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:212: in get
+    return self.generic('GET', path, **r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:240: in generic
+    return super().generic(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:292: in request
+    return super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:244: in request
+    request = super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1090: in request
+    self.check_exception(response)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:805: in check_exception
+    raise exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py:197: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py:65: in _view_wrapper
+    return view_func(request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py:124: in view
+    return self.dispatch(request, *args, **kwargs)
+dealroom/hooks.py:106: in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:526: in dispatch
+    response = self.handle_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:474: in handle_exception
+    self.raise_uncaught_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:485: in raise_uncaught_exception
+    raise exc
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf48f260>
+request = <rest_framework.request.Request: GET '/api/v1/dealroom/board/rooms/01M83F48ESVVT2PK59QFHZVAY2/documents/01M83F48EWVA427CCVYJ6HW5P8/pages/1.json?version_id=01M83F48EWS73G2H86VPYAH5YC'>
+args = ()
+kwargs = {'format': 'json', 'item_id': '01M83F48EWVA427CCVYJ6HW5P8', 'page': '1', 'pk': '01M83F48ESVVT2PK59QFHZVAY2'}
+handler = <bound method BoardRoomReadViewSet.page of <dealroom.board_rooms.BoardRoomReadViewSet object at 0x7d4dbf48f260>>
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Dispatch the incoming request to the appropriate handler method.
+    
+        This method implements the core request/response lifecycle for
+        Django REST Framework views:
+    
+        1. Wraps the incoming Django HttpRequest in a REST framework Request.
+        2. Performs content negotiation, authentication, permission, and
+            throttling checks.
+        3. Resolves and calls the appropriate HTTP method handler
+            (e.g. get(), post(), put()).
+        4. Handles any exceptions raised during processing and converts
+            them into appropriate Response objects.
+        5. Finalizes and returns the response with proper rendering
+            and headers applied.
+        """
+        self.args = args
+        self.kwargs = kwargs
+        request = self.initialize_request(request, *args, **kwargs)
+        self.request = request
+        self.headers = self.default_response_headers  # deprecate?
+    
+        try:
+            self.initial(request, *args, **kwargs)
+    
+            # Get the appropriate handler method
+            if request.method.lower() in self.http_method_names:
+                handler = getattr(self, request.method.lower(),
+                                  self.http_method_not_allowed)
+            else:
+                handler = self.http_method_not_allowed
+    
+>           response = handler(request, *args, **kwargs)
+E           TypeError: BoardRoomReadViewSet.page() got an unexpected keyword argument 'format'
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:523: TypeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:47:41,435 [ERROR] django.request:253 log_response() - Internal Server Error: /api/v1/dealroom/board/rooms/01M83F48ESVVT2PK59QFHZVAY2/documents/01M83F48EWVA427CCVYJ6HW5P8/pages/1.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.page() got an unexpected keyword argument 'format'
+------------------------------ Captured log call -------------------------------
+ERROR    django.request:log.py:253 Internal Server Error: /api/v1/dealroom/board/rooms/01M83F48ESVVT2PK59QFHZVAY2/documents/01M83F48EWVA427CCVYJ6HW5P8/pages/1.json
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 106, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 523, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BoardRoomReadViewSet.page() got an unexpected keyword argument 'format'
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_board_rooms_r2.py::test_canonical_contract_and_summary
+FAILED tests/dealroom/test_board_rooms_r2.py::test_detail_omits_protected_metadata[snapshot]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_detail_omits_protected_metadata[audit]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_detail_omits_protected_metadata[signed]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_detail_omits_protected_metadata[executed_folder]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_activity_phrases_actors_targets_and_stored_visits
+FAILED tests/dealroom/test_board_rooms_r2.py::test_image_only_accept_and_foreign_version
+FAILED tests/dealroom/test_board_rooms_r2.py::test_staff_footer_omits_missing_identity_fields
+FAILED tests/dealroom/test_board_rooms_r2.py::test_render_enqueue_after_commit
+FAILED tests/dealroom/test_board_rooms_r2.py::test_render_slot_timeout_returns_unavailable
+FAILED tests/dealroom/test_board_rooms_r2.py::test_adoption_unknown_board_requires_force
+FAILED tests/dealroom/test_board_rooms_r2.py::test_json_format_suffix_keeps_scope[list]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_json_format_suffix_keeps_scope[detail]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_json_format_suffix_keeps_scope[visits]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_json_format_suffix_keeps_scope[pages]
+FAILED tests/dealroom/test_board_rooms_r2.py::test_json_format_suffix_keeps_scope[page]
+16 failed, 16 passed in 13.19s

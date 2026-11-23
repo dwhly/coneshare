@@ -1,0 +1,840 @@
+........................................................................ [  4%]
+........................................................................ [  8%]
+........................................................................ [ 13%]
+........................................................................ [ 17%]
+.................F...................................................... [ 22%]
+........................................................................ [ 26%]
+........................................................................ [ 30%]
+........................................................................ [ 35%]
+........................................................................ [ 39%]
+........................................................................ [ 44%]
+........................................................................ [ 48%]
+........................................................................ [ 52%]
+..............................................................F......... [ 57%]
+........................................................................ [ 61%]
+........................................................................ [ 66%]
+........................................................................ [ 70%]
+........................................................................ [ 75%]
+........................................................................ [ 79%]
+........................................................................ [ 83%]
+........................................................................ [ 88%]
+........................................................................ [ 92%]
+........................................................................ [ 97%]
+................................................                         [100%]
+=================================== FAILURES ===================================
+_______________ test_reencrypt_data_models_and_fields_configured _______________
+
+    @pytest.mark.django_db
+    def test_reencrypt_data_models_and_fields_configured():
+        from django.apps import apps
+        from django_cryptography.fields import EncryptedMixin
+        from core.management.commands.reencrypt_data import Command
+    
+        configured_dict = {model.__name__: fields for model, fields in Command.MODELS_AND_FIELDS}
+    
+        assert "ShareLink" in configured_dict
+        assert "password" in configured_dict["ShareLink"]
+    
+        assert "CloudConnection" in configured_dict
+        assert "access_token" in configured_dict["CloudConnection"]
+        assert "refresh_token" in configured_dict["CloudConnection"]
+    
+        assert "AutomationDestination" in configured_dict
+        assert "signing_secret" in configured_dict["AutomationDestination"]
+    
+        # Verify that the explicit list accurately covers all models using EncryptedMixin
+        discovered_models = set()
+        for model_class in apps.get_models():
+            if model_class._meta.abstract or model_class._meta.proxy:
+                continue
+            for field in model_class._meta.get_fields():
+                if getattr(field, "concrete", True) and not getattr(field, "is_relation", False) and isinstance(field, EncryptedMixin):
+                    discovered_models.add(model_class)
+    
+        configured_models = {model for model, _ in Command.MODELS_AND_FIELDS}
+>       assert discovered_models == configured_models
+E       AssertionError: assert {<class 'deal...s.ShareLink'>} == {<class 'auto...s.ShareLink'>}
+E         
+E         Extra items in the left set:
+E         <class 'dealroom_sign.models.SignerAccess'>
+E         <class 'dealroom_sign.models.SignCredential'>
+E         <class 'dealroom_sign.models.Workflow'>
+E         Use -v to get more diff
+
+tests/core/test_reencrypt_data.py:72: AssertionError
+________________ test_prepare_pages_data_watermark_suppression _________________
+
+self = <HTTPConnection(host='127.0.0.1', port=18080) at 0x703c6871ac00>
+
+    def _new_conn(self) -> socket.socket:
+        """Establish a socket connection and set nodelay settings on it.
+    
+        :return: New socket connection.
+        """
+        try:
+>           sock = connection.create_connection(
+                (self._dns_host, self.port),
+                self.timeout,
+                source_address=self.source_address,
+                socket_options=self.socket_options,
+            )
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/connection.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/util/connection.py:85: in create_connection
+    raise err
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address = ('127.0.0.1', 18080), timeout = 5, source_address = None
+socket_options = [(6, 1, 1)]
+
+    def create_connection(
+        address: tuple[str, int],
+        timeout: _TYPE_TIMEOUT = _DEFAULT_TIMEOUT,
+        source_address: tuple[str, int] | None = None,
+        socket_options: _TYPE_SOCKET_OPTIONS | None = None,
+    ) -> socket.socket:
+        """Connect to *address* and return the socket object.
+    
+        Convenience function.  Connect to *address* (a 2-tuple ``(host,
+        port)``) and return the socket object.  Passing the optional
+        *timeout* parameter will set the timeout on the socket instance
+        before attempting to connect.  If no *timeout* is supplied, the
+        global default timeout setting returned by :func:`socket.getdefaulttimeout`
+        is used.  If *source_address* is set it must be a tuple of (host, port)
+        for the socket to bind as a source address before making the connection.
+        An host of '' or port 0 tells the OS to use the default.
+        """
+    
+        host, port = address
+        if host.startswith("["):
+            host = host.strip("[]")
+        err = None
+    
+        # Using the value from allowed_gai_family() in the context of getaddrinfo lets
+        # us select whether to work with IPv4 DNS records, IPv6 records, or both.
+        # The original create_connection function always returns all records.
+        family = allowed_gai_family()
+    
+        try:
+            host.encode("idna")
+        except UnicodeError:
+            raise LocationParseError(f"'{host}', label empty or too long") from None
+    
+        for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            sock = None
+            try:
+                sock = socket.socket(af, socktype, proto)
+    
+                # If provided, set socket level options before connecting.
+                _set_socket_options(sock, socket_options)
+    
+                if timeout is not _DEFAULT_TIMEOUT:
+                    sock.settimeout(timeout)
+                if source_address:
+                    sock.bind(source_address)
+>               sock.connect(sa)
+E               ConnectionRefusedError: [Errno 111] Connection refused
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/util/connection.py:73: ConnectionRefusedError
+
+The above exception was the direct cause of the following exception:
+
+self = <urllib3.connectionpool.HTTPConnectionPool object at 0x703c6871b080>
+method = 'POST', url = '/internal/v1/generate-download-url'
+body = b'{"storage_key": "test_page_1.png"}'
+headers = {'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer fixture-internal-api-token', 'Content-Type': 'application/json', 'Content-Length': '34'}
+retries = Retry(total=0, connect=None, read=False, redirect=None, status=None)
+redirect = False, assert_same_host = False
+timeout = Timeout(connect=5, read=5, total=None), pool_timeout = None
+release_conn = False, chunked = False, body_pos = None, preload_content = False
+decode_content = False, response_kw = {}, destination_scheme = None, conn = None
+release_this_conn = True, http_tunnel_required = False, err = None
+clean_exit = False
+
+    def urlopen(  # type: ignore[override]
+        self,
+        method: str,
+        url: str,
+        body: _TYPE_BODY | None = None,
+        headers: typing.Mapping[str, str] | None = None,
+        retries: Retry | bool | int | None = None,
+        redirect: bool = True,
+        assert_same_host: bool = True,
+        timeout: _TYPE_TIMEOUT = _DEFAULT_TIMEOUT,
+        pool_timeout: int | None = None,
+        release_conn: bool | None = None,
+        chunked: bool = False,
+        body_pos: _TYPE_BODY_POSITION | None = None,
+        preload_content: bool = True,
+        decode_content: bool = True,
+        **response_kw: typing.Any,
+    ) -> BaseHTTPResponse:
+        """
+        Get a connection from the pool and perform an HTTP request. This is the
+        lowest level call for making a request, so you'll need to specify all
+        the raw details.
+    
+        .. note::
+    
+           More commonly, it's appropriate to use a convenience method
+           such as :meth:`request`.
+    
+        .. note::
+    
+           `release_conn` will only behave as expected if
+           `preload_content=False` because we want to make
+           `preload_content=False` the default behaviour someday soon without
+           breaking backwards compatibility.
+    
+        :param method:
+            HTTP request method (such as GET, POST, PUT, etc.)
+    
+        :param url:
+            The URL to perform the request on.
+    
+        :param body:
+            Data to send in the request body, either :class:`str`, :class:`bytes`,
+            an iterable of :class:`str`/:class:`bytes`, or a file-like object.
+    
+        :param headers:
+            Dictionary of custom headers to send, such as User-Agent,
+            If-None-Match, etc. If None, pool headers are used. If provided,
+            these headers completely replace any pool-specific headers.
+    
+        :param retries:
+            Configure the number of retries to allow before raising a
+            :class:`~urllib3.exceptions.MaxRetryError` exception.
+    
+            If ``None`` (default) will retry 3 times, see ``Retry.DEFAULT``. Pass a
+            :class:`~urllib3.util.retry.Retry` object for fine-grained control
+            over different types of retries.
+            Pass an integer number to retry connection errors that many times,
+            but no other types of errors. Pass zero to never retry.
+    
+            If ``False``, then retries are disabled and any exception is raised
+            immediately. Also, instead of raising a MaxRetryError on redirects,
+            the redirect response will be returned.
+    
+        :type retries: :class:`~urllib3.util.retry.Retry`, False, or an int.
+    
+        :param redirect:
+            If True, automatically handle redirects (status codes 301, 302,
+            303, 307, 308). Each redirect counts as a retry. Disabling retries
+            will disable redirect, too.
+    
+        :param assert_same_host:
+            If ``True``, will make sure that the host of the pool requests is
+            consistent else will raise HostChangedError. When ``False``, you can
+            use the pool on an HTTP proxy and request foreign hosts.
+    
+        :param timeout:
+            If specified, overrides the default timeout for this one
+            request. It may be a float (in seconds) or an instance of
+            :class:`urllib3.util.Timeout`.
+    
+        :param pool_timeout:
+            If set and the pool is set to block=True, then this method will
+            block for ``pool_timeout`` seconds and raise EmptyPoolError if no
+            connection is available within the time period.
+    
+        :param bool preload_content:
+            If True, the response's body will be preloaded into memory.
+    
+        :param bool decode_content:
+            If True, will attempt to decode the body based on the
+            'content-encoding' header.
+    
+        :param release_conn:
+            If False, then the urlopen call will not release the connection
+            back into the pool once a response is received (but will release if
+            you read the entire contents of the response such as when
+            `preload_content=True`). This is useful if you're not preloading
+            the response's content immediately. You will need to call
+            ``r.release_conn()`` on the response ``r`` to return the connection
+            back into the pool. If None, it takes the value of ``preload_content``
+            which defaults to ``True``.
+    
+        :param bool chunked:
+            If True, urllib3 will send the body using chunked transfer
+            encoding. Otherwise, urllib3 will send the body using the standard
+            content-length form. Defaults to False.
+    
+        :param int body_pos:
+            Position to seek to in file-like body in the event of a retry or
+            redirect. Typically this won't need to be set because urllib3 will
+            auto-populate the value when needed.
+        """
+        # Ensure that the URL we're connecting to is properly encoded
+        if url.startswith("/"):
+            # URLs starting with / are inherently schemeless.
+            url = to_str(_encode_target(url))
+            destination_scheme = None
+        else:
+            parsed_url = parse_url(url)
+            destination_scheme = parsed_url.scheme
+            url = to_str(parsed_url._replace(fragment=None).url)
+    
+        if headers is None:
+            headers = self.headers
+    
+        if not isinstance(retries, Retry):
+            retries = Retry.from_int(retries, redirect=redirect, default=self.retries)
+    
+        if release_conn is None:
+            release_conn = preload_content
+    
+        # Check host
+        if assert_same_host and not self.is_same_host(url):
+            raise HostChangedError(self, url, retries)
+    
+        conn = None
+    
+        # Track whether `conn` needs to be released before
+        # returning/raising/recursing. Update this variable if necessary, and
+        # leave `release_conn` constant throughout the function. That way, if
+        # the function recurses, the original value of `release_conn` will be
+        # passed down into the recursive call, and its value will be respected.
+        #
+        # See issue #651 [1] for details.
+        #
+        # [1] <https://github.com/urllib3/urllib3/issues/651>
+        release_this_conn = release_conn
+    
+        http_tunnel_required = connection_requires_http_tunnel(
+            self.proxy, self.proxy_config, destination_scheme
+        )
+    
+        # Merge the proxy headers. Only done when not using HTTP CONNECT. We
+        # have to copy the headers dict so we can safely change it without those
+        # changes being reflected in anyone else's copy.
+        if not http_tunnel_required:
+            headers = headers.copy()  # type: ignore[attr-defined]
+            headers.update(self.proxy_headers)  # type: ignore[union-attr]
+    
+        # Must keep the exception bound to a separate variable or else Python 3
+        # complains about UnboundLocalError.
+        err = None
+    
+        # Keep track of whether we cleanly exited the except block. This
+        # ensures we do proper cleanup in finally.
+        clean_exit = False
+    
+        # Rewind body position, if needed. Record current position
+        # for future rewinds in the event of a redirect/retry.
+        body_pos = set_file_position(body, body_pos)
+    
+        timeout_obj = self._get_timeout(timeout)
+        try:
+            # Request a connection from the queue.
+            conn = self._get_conn(timeout=pool_timeout)
+            conn.timeout = timeout_obj.connect_timeout  # type: ignore[assignment]
+    
+            # Is this a closed/new connection that requires CONNECT tunnelling?
+            if self.proxy is not None and http_tunnel_required and conn.is_closed:
+                try:
+                    self._prepare_proxy(conn)
+                except (BaseSSLError, OSError, SocketTimeout) as e:
+                    self._raise_timeout(
+                        err=e, url=self.proxy.url, timeout_value=conn.timeout
+                    )
+                    raise
+    
+            # If we're going to release the connection in ``finally:``, then
+            # the response doesn't need to know about the connection. Otherwise
+            # it will also try to release it and we'll have a double-release
+            # mess.
+            response_conn = conn if not release_conn else None
+    
+            # Make the request on the HTTPConnection object
+>           response = self._make_request(
+                conn,
+                method,
+                url,
+                timeout=timeout_obj,
+                body=body,
+                headers=headers,
+                chunked=chunked,
+                retries=retries,
+                response_conn=response_conn,
+                preload_content=preload_content,
+                decode_content=decode_content,
+                **response_kw,
+            )
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/connectionpool.py:793: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/connectionpool.py:499: in _make_request
+    conn.request(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/connection.py:567: in request
+    self.endheaders()
+/usr/lib/python3.12/http/client.py:1360: in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+/usr/lib/python3.12/http/client.py:1120: in _send_output
+    self.send(msg)
+/usr/lib/python3.12/http/client.py:1064: in send
+    self.connect()
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/connection.py:398: in connect
+    self.sock = self._new_conn()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <HTTPConnection(host='127.0.0.1', port=18080) at 0x703c6871ac00>
+
+    def _new_conn(self) -> socket.socket:
+        """Establish a socket connection and set nodelay settings on it.
+    
+        :return: New socket connection.
+        """
+        try:
+            sock = connection.create_connection(
+                (self._dns_host, self.port),
+                self.timeout,
+                source_address=self.source_address,
+                socket_options=self.socket_options,
+            )
+        except socket.gaierror as e:
+            raise NameResolutionError(self.host, self, e) from e
+        except SocketTimeout as e:
+            raise ConnectTimeoutError(
+                self,
+                f"Connection to {self.host} timed out. (connect timeout={self.timeout})",
+            ) from e
+    
+        except OSError as e:
+>           raise NewConnectionError(
+                self, f"Failed to establish a new connection: {e}"
+            ) from e
+E           urllib3.exceptions.NewConnectionError: HTTPConnection(host='127.0.0.1', port=18080): Failed to establish a new connection: [Errno 111] Connection refused
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/connection.py:254: NewConnectionError
+
+The above exception was the direct cause of the following exception:
+
+self = <requests.adapters.HTTPAdapter object at 0x703c6871b770>
+request = <PreparedRequest [POST]>, stream = False, timeout = 5, verify = True
+cert = None, proxies = OrderedDict()
+
+    def send(
+        self,
+        request: PreparedRequest,
+        stream: bool = False,
+        timeout: _t.TimeoutType = None,
+        verify: _t.VerifyType = True,
+        cert: _t.CertType = None,
+        proxies: dict[str, str] | None = None,
+    ) -> Response:
+        """Sends PreparedRequest object. Returns Response object.
+    
+        :param request: The :class:`PreparedRequest <PreparedRequest>` being sent.
+        :param stream: (optional) Whether to stream the request content.
+        :param timeout: (optional) How long to wait for the server to send
+            data before giving up, as a float, or a :ref:`(connect timeout,
+            read timeout) <timeouts>` tuple.
+        :type timeout: float or tuple or urllib3 Timeout object
+        :param verify: (optional) Either a boolean, in which case it controls whether
+            we verify the server's TLS certificate, or a string, in which case it
+            must be a path to a CA bundle to use
+        :param cert: (optional) Any user-provided SSL certificate to be trusted.
+        :param proxies: (optional) The proxies dictionary to apply to the request.
+        :rtype: requests.Response
+        """
+    
+        assert _is_prepared(request)
+    
+        try:
+            conn = self.get_connection_with_tls_context(
+                request, verify, proxies=proxies, cert=cert
+            )
+        except LocationValueError as e:
+            raise InvalidURL(e, request=request)
+    
+        self.cert_verify(conn, request.url, verify, cert)
+        url = self.request_url(request, proxies)
+        self.add_headers(
+            request,
+            stream=stream,
+            timeout=timeout,
+            verify=verify,
+            cert=cert,
+            proxies=proxies,
+        )
+    
+        chunked = not (request.body is None or "Content-Length" in request.headers)
+    
+        if isinstance(timeout, tuple):
+            try:
+                connect, read = timeout
+                resolved_timeout = TimeoutSauce(connect=connect, read=read)
+            except ValueError:
+                raise ValueError(
+                    f"Invalid timeout {timeout}. Pass a (connect, read) timeout tuple, "
+                    f"or a single float to set both timeouts to the same value."
+                )
+        elif isinstance(timeout, TimeoutSauce):
+            resolved_timeout = timeout
+        else:
+            resolved_timeout = TimeoutSauce(connect=timeout, read=timeout)
+    
+        try:
+>           resp = conn.urlopen(
+                method=request.method,
+                url=url,
+                body=request.body,  # type: ignore[arg-type]  # urllib3 stubs don't accept Iterable[bytes | str]
+                headers=request.headers,  # type: ignore[arg-type]  # urllib3#3072
+                redirect=False,
+                assert_same_host=False,
+                preload_content=False,
+                decode_content=False,
+                retries=self.max_retries,
+                timeout=resolved_timeout,
+                chunked=chunked,
+            )
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/requests/adapters.py:696: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/connectionpool.py:847: in urlopen
+    retries = retries.increment(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Retry(total=0, connect=None, read=False, redirect=None, status=None)
+method = 'POST', url = '/internal/v1/generate-download-url', response = None
+error = NewConnectionError("HTTPConnection(host='127.0.0.1', port=18080): Failed to establish a new connection: [Errno 111] Connection refused")
+_pool = <urllib3.connectionpool.HTTPConnectionPool object at 0x703c6871b080>
+_stacktrace = <traceback object at 0x703c689024c0>
+
+    def increment(
+        self,
+        method: str | None = None,
+        url: str | None = None,
+        response: BaseHTTPResponse | None = None,
+        error: Exception | None = None,
+        _pool: ConnectionPool | None = None,
+        _stacktrace: TracebackType | None = None,
+    ) -> Self:
+        """Return a new Retry object with incremented retry counters.
+    
+        :param response: A response object, or None, if the server did not
+            return a response.
+        :type response: :class:`~urllib3.response.BaseHTTPResponse`
+        :param Exception error: An error encountered during the request, or
+            None if the response was received successfully.
+    
+        :return: A new ``Retry`` object.
+        """
+        if self.total is False and error:
+            # Disabled, indicate to re-raise the error.
+            raise reraise(type(error), error, _stacktrace)
+    
+        total = self.total
+        if total is not None:
+            total -= 1
+    
+        connect = self.connect
+        read = self.read
+        redirect = self.redirect
+        status_count = self.status
+        other = self.other
+        cause = "unknown"
+        status = None
+        redirect_location = None
+    
+        if error and self._is_connection_error(error):
+            # Connect retry?
+            if connect is False:
+                raise reraise(type(error), error, _stacktrace)
+            elif connect is not None:
+                connect -= 1
+    
+        elif error and self._is_read_error(error):
+            # Read retry?
+            if read is False or method is None or not self._is_method_retryable(method):
+                raise reraise(type(error), error, _stacktrace)
+            elif read is not None:
+                read -= 1
+    
+        elif error:
+            # Other retry?
+            if other is not None:
+                other -= 1
+    
+        elif response and response.get_redirect_location():
+            # Redirect retry?
+            if redirect is not None:
+                redirect -= 1
+            cause = "too many redirects"
+            response_redirect_location = response.get_redirect_location()
+            if response_redirect_location:
+                redirect_location = response_redirect_location
+            status = response.status
+    
+        else:
+            # Incrementing because of a server error like a 500 in
+            # status_forcelist and the given method is in the allowed_methods
+            cause = ResponseError.GENERIC_ERROR
+            if response and response.status:
+                if status_count is not None:
+                    status_count -= 1
+                cause = ResponseError.SPECIFIC_ERROR.format(status_code=response.status)
+                status = response.status
+    
+        history = self.history + (
+            RequestHistory(method, url, error, status, redirect_location),
+        )
+    
+        new_retry = self.new(
+            total=total,
+            connect=connect,
+            read=read,
+            redirect=redirect,
+            status=status_count,
+            other=other,
+            history=history,
+        )
+    
+        if new_retry.is_exhausted():
+            reason = error or ResponseError(cause)
+>           raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+E           urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=18080): Max retries exceeded with url: /internal/v1/generate-download-url (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=18080): Failed to establish a new connection: [Errno 111] Connection refused"))
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/urllib3/util/retry.py:555: MaxRetryError
+
+During handling of the above exception, another exception occurred:
+
+self = <documents.fileserver.FileServerClient object at 0x703c6ef9ce60>
+endpoint = '/internal/v1/generate-download-url'
+data = {'storage_key': 'test_page_1.png'}, expect_json = True, timeout = 5
+
+    def _post(self, endpoint, data, expect_json=True, timeout=5):
+        url = urljoin(self.base_url, endpoint)
+        try:
+>           response = requests.post(url, json=data, headers=self.headers, timeout=timeout)
+
+documents/fileserver.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/requests/api.py:134: in post
+    return request("post", url, data=data, json=json, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/requests/api.py:71: in request
+    return session.request(method=method, url=url, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/requests/sessions.py:651: in request
+    resp = self.send(prep, **send_kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/requests/sessions.py:784: in send
+    r = adapter.send(request, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <requests.adapters.HTTPAdapter object at 0x703c6871b770>
+request = <PreparedRequest [POST]>, stream = False, timeout = 5, verify = True
+cert = None, proxies = OrderedDict()
+
+    def send(
+        self,
+        request: PreparedRequest,
+        stream: bool = False,
+        timeout: _t.TimeoutType = None,
+        verify: _t.VerifyType = True,
+        cert: _t.CertType = None,
+        proxies: dict[str, str] | None = None,
+    ) -> Response:
+        """Sends PreparedRequest object. Returns Response object.
+    
+        :param request: The :class:`PreparedRequest <PreparedRequest>` being sent.
+        :param stream: (optional) Whether to stream the request content.
+        :param timeout: (optional) How long to wait for the server to send
+            data before giving up, as a float, or a :ref:`(connect timeout,
+            read timeout) <timeouts>` tuple.
+        :type timeout: float or tuple or urllib3 Timeout object
+        :param verify: (optional) Either a boolean, in which case it controls whether
+            we verify the server's TLS certificate, or a string, in which case it
+            must be a path to a CA bundle to use
+        :param cert: (optional) Any user-provided SSL certificate to be trusted.
+        :param proxies: (optional) The proxies dictionary to apply to the request.
+        :rtype: requests.Response
+        """
+    
+        assert _is_prepared(request)
+    
+        try:
+            conn = self.get_connection_with_tls_context(
+                request, verify, proxies=proxies, cert=cert
+            )
+        except LocationValueError as e:
+            raise InvalidURL(e, request=request)
+    
+        self.cert_verify(conn, request.url, verify, cert)
+        url = self.request_url(request, proxies)
+        self.add_headers(
+            request,
+            stream=stream,
+            timeout=timeout,
+            verify=verify,
+            cert=cert,
+            proxies=proxies,
+        )
+    
+        chunked = not (request.body is None or "Content-Length" in request.headers)
+    
+        if isinstance(timeout, tuple):
+            try:
+                connect, read = timeout
+                resolved_timeout = TimeoutSauce(connect=connect, read=read)
+            except ValueError:
+                raise ValueError(
+                    f"Invalid timeout {timeout}. Pass a (connect, read) timeout tuple, "
+                    f"or a single float to set both timeouts to the same value."
+                )
+        elif isinstance(timeout, TimeoutSauce):
+            resolved_timeout = timeout
+        else:
+            resolved_timeout = TimeoutSauce(connect=timeout, read=timeout)
+    
+        try:
+            resp = conn.urlopen(
+                method=request.method,
+                url=url,
+                body=request.body,  # type: ignore[arg-type]  # urllib3 stubs don't accept Iterable[bytes | str]
+                headers=request.headers,  # type: ignore[arg-type]  # urllib3#3072
+                redirect=False,
+                assert_same_host=False,
+                preload_content=False,
+                decode_content=False,
+                retries=self.max_retries,
+                timeout=resolved_timeout,
+                chunked=chunked,
+            )
+    
+        except (ProtocolError, OSError) as err:
+            raise ConnectionError(err, request=request)
+    
+        except MaxRetryError as e:
+            if isinstance(e.reason, ConnectTimeoutError):
+                # TODO: Remove this in 3.0.0: see #2811
+                if not isinstance(e.reason, NewConnectionError):
+                    raise ConnectTimeout(e, request=request)
+    
+            if isinstance(e.reason, ResponseError):
+                raise RetryError(e, request=request)
+    
+            if isinstance(e.reason, _ProxyError):
+                raise ProxyError(e, request=request)
+    
+            if isinstance(e.reason, _SSLError):
+                # This branch is for urllib3 v1.22 and later.
+                raise SSLError(e, request=request)
+    
+>           raise ConnectionError(e, request=request)
+E           requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=18080): Max retries exceeded with url: /internal/v1/generate-download-url (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=18080): Failed to establish a new connection: [Errno 111] Connection refused"))
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/requests/adapters.py:729: ConnectionError
+
+During handling of the above exception, another exception occurred:
+
+user = <User: test@example.com>
+
+    @pytest.mark.django_db
+    def test_prepare_pages_data_watermark_suppression(user):
+        document = Document.objects.create(
+            organization=user.organization,
+            created_by=user,
+            name="test_text_watermark.pdf",
+            status="ready",
+        )
+        version = DocumentVersion.objects.create(
+            document=document,
+            version_number=1,
+            has_pages=True,
+            render_status=DocumentVersion.RENDER_READY,
+        )
+        page = DocumentPage.objects.create(
+            document_version=version,
+            page_number=1,
+            storage_key="test_page_1.png",
+            metadata={
+                "custom_meta": "keep_this",
+                "text_content": {
+                    "lines": [
+                        {
+                            "text": "Confidential internal report",
+                            "bbox": {"left": 10, "top": 10, "width": 80, "height": 5},
+                            "font_size_pt": 12,
+                        }
+                    ]
+                },
+            },
+        )
+    
+        # 1. Non-watermarked preview: returns text_content and safe metadata
+>       pages_unwatermarked = prepare_pages_data(document, version, share_link=None)
+
+tests/documents/test_tasks.py:1378: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+documents/views.py:625: in prepare_pages_data
+    return renderer.get_preview_pages_data(
+documents/renderers/base.py:186: in get_preview_pages_data
+    url = self._build_page_url(
+documents/renderers/base.py:250: in _build_page_url
+    return fileserver.fileserver_client.generate_download_url(storage_key, **kwargs)
+documents/fileserver.py:53: in generate_download_url
+    response_data = self._post('/internal/v1/generate-download-url', data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <documents.fileserver.FileServerClient object at 0x703c6ef9ce60>
+endpoint = '/internal/v1/generate-download-url'
+data = {'storage_key': 'test_page_1.png'}, expect_json = True, timeout = 5
+
+    def _post(self, endpoint, data, expect_json=True, timeout=5):
+        url = urljoin(self.base_url, endpoint)
+        try:
+            response = requests.post(url, json=data, headers=self.headers, timeout=timeout)
+            response.raise_for_status()
+            if expect_json:
+                return response.json()
+            return response
+        except requests.exceptions.RequestException as e:
+            # In production, you would have more robust logging here.
+            # Raising an APIException will result in a 503 Service Unavailable
+            # response to the frontend.
+>           raise APIException(f"File server is unavailable: {e}")
+E           rest_framework.exceptions.APIException: File server is unavailable: HTTPConnectionPool(host='127.0.0.1', port=18080): Max retries exceeded with url: /internal/v1/generate-download-url (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=18080): Failed to establish a new connection: [Errno 111] Connection refused"))
+
+documents/fileserver.py:37: APIException
+=============================== warnings summary ===============================
+tests/core/test_admin_views.py: 2 warnings
+tests/core/test_auth.py: 4 warnings
+tests/core/test_views.py: 5 warnings
+tests/dealroom/test_board_rooms.py: 6 warnings
+tests/dealroom/test_foundation.py: 41 warnings
+tests/dealroom/test_review_r2.py: 22 warnings
+tests/dealroom/test_review_v09_send.py: 5 warnings
+bdd/step_definitions/test_user_authentication.py: 2 warnings
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/core/test_auth.py: 2 warnings
+tests/dealroom/test_board_rooms.py: 1 warning
+tests/dealroom/test_foundation.py: 41 warnings
+tests/dealroom/test_review_r2.py: 22 warnings
+tests/dealroom/test_review_v09_send.py: 5 warnings
+bdd/step_definitions/test_user_authentication.py: 1 warning
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:370: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+tests/sharelinks/test_amforge_watermark.py::test_vector_pdf_has_footer_and_metadata
+tests/sharelinks/test_amforge_watermark.py::test_vector_pdf_has_footer_and_metadata
+tests/sharelinks/test_amforge_watermark.py::test_flattened_pdf_keeps_metadata
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/pypdf/_page.py:1368: DeprecationWarning: Calling `PageObject.replace_contents()` for pages not assigned to a writer is deprecated and will be removed in pypdf 7.0.0. Attach the page to the writer first or use `PdfWriter(clone_from=...)` directly. The existing approach has proved being unreliable.
+    self.replace_contents(ContentStream(new_content_array, self.pdf))
+
+tests/sharelinks/test_amforge_watermark.py::test_image_watermark_draws_footer_band_and_margin_line
+  /root/worktrees/send-boardroom/backend/tests/sharelinks/test_amforge_watermark.py:61: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert min(footer_marked.getdata()) < 100, 'footer text should be dark'
+
+tests/sharelinks/test_amforge_watermark.py::test_image_watermark_draws_footer_band_and_margin_line
+tests/sharelinks/test_amforge_watermark.py::test_image_watermark_draws_footer_band_and_margin_line
+  /root/worktrees/send-boardroom/backend/tests/sharelinks/test_amforge_watermark.py:62: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    assert list(footer_plain.getdata()) != list(footer_marked.getdata())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/core/test_reencrypt_data.py::test_reencrypt_data_models_and_fields_configured
+FAILED tests/documents/test_tasks.py::test_prepare_pages_data_watermark_suppression
+2 failed, 1630 passed, 165 warnings in 1220.92s (0:20:20)

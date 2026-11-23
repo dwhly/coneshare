@@ -1,6 +1,7 @@
 """Board-only room reads. All projections are explicit and contain no storage capabilities."""
 import re
 
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -9,14 +10,17 @@ from rest_framework import serializers, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.negotiation import DefaultContentNegotiation
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
+from core.models import User
 from datarooms.models import DataroomDocument
 from dealroom_sign.board_auth import BoardProxyAuthentication, HUMAN_VIAS
 from dealroom_sign.models import BoardStaffBinding, ExecutedArtifact, NdaPolicy, NdaAcceptance
 from documents.models import DocumentVersion
 from documents.renderers import get_renderer
-from sharelinks.models import ShareLinkAccessGrant, ViewSession, Viewer, NDAAcceptance
+from sharelinks.models import ShareLinkAccessGrant, ViewSession, Viewer, NDAAcceptance, DataroomVisit
 from . import hooks
 from .models import Activity, BoardRoom, MemberDeny
 from .staff_preview import issue_staff_preview
@@ -58,14 +62,111 @@ def paginate(queryset, cursor, *, time_field, id_field):
     return rows[:PAGE_SIZE], str(getattr(rows[PAGE_SIZE - 1], id_field)) if len(rows) > PAGE_SIZE else None
 
 
+# Only these events belong in the room feed. Audit-only and unknown events stay private.
+ACTIVITY_PHRASES = {
+    'document.uploaded': 'uploaded', 'document.viewed': 'viewed',
+    'document.downloaded': 'downloaded', 'document.removed': 'removed',
+    'document.restored': 'restored', 'room.updated': 'updated the room',
+    'room.created': 'created the room', 'room.archived': 'archived the room',
+    'room.restored': 'restored the room', 'board.room.adopted': 'added the room to the board',
+    'board.room.unadopted': 'removed the room from the board',
+    'invitation.sent': 'sent an invitation', 'member.denied': 'removed access',
+    'member.restored': 'restored access', 'nda.accepted': 'accepted the NDA',
+    'room.visited': 'visited the room',
+}
+
+
+def staff_name(user):
+    return (user.name or '').strip() or user.email
+
+
+def excluded_folder(folder, room_id):
+    seen = set()
+    while folder:
+        if folder.pk in seen or folder.dataroom_id != room_id or folder.name.casefold() == 'executed':
+            return True
+        seen.add(folder.pk)
+        folder = folder.parent
+    return False
+
+
+def excluded_item(item):
+    return (item.document.organization_id != item.dataroom.organization_id
+            or hooks.is_protected_document(item.document_id)
+            or ExecutedArtifact.objects.filter(version__document_id=item.document_id).exists()
+            or excluded_folder(item.folder, item.dataroom_id))
+
+
+def visible_items(room):
+    return [item for item in room.documents.select_related('document', 'folder', 'dataroom')
+            .prefetch_related('document__versions').order_by('created_at', 'pk') if not excluded_item(item)]
+
+
 def activity_projection(fact):
-    return {'id': str(fact.pk), 'event_type': fact.event_type, 'time': fact.created_at,
-            'actor_kind': fact.actor_kind, 'actor_id': fact.actor_id, 'target_id': fact.target_id or None}
+    if fact.event_type not in ACTIVITY_PHRASES:
+        return None
+    sessions = ViewSession.objects.filter(share_link__dataroom_id=fact.room_id,
+                                          share_link__dataroom__organization=fact.organization)
+    data = fact.data if isinstance(fact.data, dict) else {}
+    session = sessions.filter(pk=data.get('view_session_id')).first() if data.get('view_session_id') else None
+    visit = DataroomVisit.objects.filter(pk=data.get('visit_id'), view_session__in=sessions).first() if data.get('visit_id') else None
+    if session is None and visit:
+        session = visit.view_session
+    actor = None
+    if fact.actor_kind == 'staff':
+        user = User.objects.filter(pk=fact.actor_id, organization=fact.organization).first()
+        actor = staff_name(user) if user else None
+    elif fact.actor_kind in ('member', 'visitor'):
+        viewer = Viewer.objects.filter(pk=fact.actor_id, organization=fact.organization).first()
+        actor = session.viewer_email if session else viewer.email if viewer else None
+    document = None
+    if fact.event_type.startswith('document.') and fact.target_id:
+        item = DataroomDocument.objects.select_related('document', 'folder', 'dataroom').filter(
+            dataroom_id=fact.room_id, document_id=fact.target_id, dataroom__organization=fact.organization).first()
+        if item and excluded_item(item):
+            return None
+        document = (item.name or item.document.name) if item else None
+    return {'id': str(fact.pk), 'event_type': fact.event_type, 'at': fact.created_at,
+            'actor': actor or 'Not recorded', 'phrase': ACTIVITY_PHRASES[fact.event_type],
+            'document': document, 'view_session_id': str(session.pk) if session else None,
+            'visit_id': str(visit.pk) if visit else None}
+
+
+def room_activity(room):
+    facts = Activity.objects.filter(organization=room.organization, room_id=str(room.pk),
+        event_type__in=ACTIVITY_PHRASES).order_by('-created_at', '-pk')[:50]
+    events = [event for fact in facts if (event := activity_projection(fact)) is not None]
+    # A stored ViewSession itself proves a visit, even where legacy capture wrote no Activity.
+    sessions = ViewSession.objects.filter(share_link__dataroom=room).order_by('-viewed_at', '-pk')[:50]
+    for session in sessions:
+        events.append({'id': 'visit-' + str(session.pk), 'event_type': 'room.visited',
+            'at': session.viewed_at, 'actor': session.viewer_email or 'Not recorded',
+            'phrase': ACTIVITY_PHRASES['room.visited'], 'document': None,
+            'view_session_id': str(session.pk), 'visit_id': None})
+    return sorted(events, key=lambda a: (a['at'], a['id']), reverse=True)[:50]
+
+
+def room_people(room, grants):
+    emails = {g.email for g in grants if g.email}
+    orgs = {g.viewer_organisation_id for g in grants if g.viewer_organisation_id}
+    people = list(Viewer.objects.filter(organization=room.organization)
+                  .filter(Q(email__in=emails) | Q(recipient_org_id__in=orgs)).order_by('email'))
+    denied = set(MemberDeny.objects.filter(room=room).values_list('member_id', flat=True))
+    result = [{'id': str(p.pk), 'email': p.email, 'name': p.name or None,
+               'disabled_at': p.disabled_at, 'denied': p.pk in denied} for p in people]
+    known = {p.email for p in people}
+    return result + [{'id': None, 'email': email, 'name': None, 'disabled_at': None, 'denied': False}
+                     for email in sorted(emails - known)]
 
 
 def room_summary(row):
     policy = getattr(row.room, 'roompolicy', None)
-    return {'id': str(row.room_id), 'name': row.room.name, 'board_id': row.board_id,
+    activity = room_activity(row.room)
+    last = activity[0] if activity else None
+    return {'document_count': len(visible_items(row.room)),
+            'people_count': len(room_people(row.room, ShareLinkAccessGrant.objects.filter(share_link__dataroom=row.room))),
+            'last_activity': {'at': last['at'], 'phrase': ' '.join(filter(None, [last['actor'], last['phrase'], last['document']]))} if last else None,
+            'id': str(row.room_id), 'name': row.room.name, 'board_id': row.board_id,
             'build_state': row.build_state, 'revision': row.revision,
             'lifecycle': policy.status if policy else 'active',
             'archived': bool(policy and policy.status == 'archived'),
@@ -78,16 +179,16 @@ def room_detail(row):
     orders = list(room.item_orders.all())
     folder_order = {o.folder_id: o.position for o in orders if o.folder_id}
     item_order = {o.dataroom_document_id: o.position for o in orders if o.dataroom_document_id}
-    data['folders'] = [{'folder_id': str(f.pk), 'parent_id': str(f.parent_id) if f.parent_id else None,
-                        'name': f.name, 'position': folder_order.get(f.pk)}
-                       for f in room.folders.order_by('created_at', 'pk')]
+    data['folders'] = [{'id': str(f.pk), 'parent_id': str(f.parent_id) if f.parent_id else None,
+                        'name': f.name, 'order': folder_order.get(f.pk)}
+                       for f in room.folders.order_by('created_at', 'pk') if not excluded_folder(f, room.pk)]
     data['items'] = []
-    for item in room.documents.select_related('document').prefetch_related('document__versions').order_by('created_at', 'pk'):
+    for item in visible_items(room):
         version = next((v for v in item.document.versions.all() if v.is_primary), None)
         data['items'].append({'item_id': str(item.pk), 'document_id': str(item.document_id),
             'version_id': str(version.pk) if version else None,
             'folder_id': str(item.folder_id) if item.folder_id else None,
-            'name': item.name or item.document.name, 'position': item_order.get(item.pk),
+            'name': item.name or item.document.name, 'order': item_order.get(item.pk),
             'type': item.document.type, 'lifecycle': 'removed' if item.document.deleted_at else 'active'})
     grants = list(ShareLinkAccessGrant.objects.filter(share_link__dataroom=room)
                   .select_related('viewer_organisation', 'share_link').order_by('created_at', 'pk'))
@@ -96,16 +197,7 @@ def room_detail(row):
         'recipient_org_name': g.viewer_organisation.name if g.viewer_organisation else None,
         'expires_at': g.expires_at, 'revoked_at': g.revoked_at, 'download_ceiling': g.download_ceiling,
         'link_active': g.share_link.is_active} for g in grants]
-    emails = {g.email for g in grants if g.email}
-    orgs = {g.viewer_organisation_id for g in grants if g.viewer_organisation_id}
-    people = list(Viewer.objects.filter(organization=room.organization)
-                  .filter(Q(email__in=emails) | Q(recipient_org_id__in=orgs)).order_by('email'))
-    denied = set(MemberDeny.objects.filter(room=room).values_list('member_id', flat=True))
-    data['people'] = [{'id': str(p.pk), 'email': p.email, 'name': p.name or None,
-                      'disabled_at': p.disabled_at, 'denied': p.pk in denied} for p in people]
-    known = {p.email for p in people}
-    data['people'] += [{'id': None, 'email': email, 'name': None, 'disabled_at': None, 'denied': False}
-                       for email in sorted(emails - known)]
+    data['people'] = room_people(room, grants)
     nda = NdaPolicy.objects.filter(room=room).first()
     data['nda'] = {
         'enabled': bool((nda and nda.enabled) or room.share_links.filter(require_nda=True).exists()),
@@ -121,8 +213,7 @@ def room_detail(row):
                                 'accepted_at': a.accepted_at}
                                for a in NDAAcceptance.objects.filter(share_link__dataroom=room)],
     }
-    data['activity'] = [activity_projection(a) for a in Activity.objects.filter(
-        organization=room.organization, room_id=str(room.pk)).order_by('-created_at', '-pk')[:50]]
+    data['activity'] = room_activity(room)
     return data
 
 
@@ -142,14 +233,14 @@ def stored_browser_device(ua):
 
 class BoardVisitSerializer(serializers.Serializer):
     id = serializers.CharField()
-    time = serializers.DateTimeField(allow_null=True)
+    at = serializers.DateTimeField(allow_null=True)
     email = serializers.EmailField(allow_null=True)
     ip = serializers.IPAddressField(allow_null=True)
     city = serializers.CharField(allow_null=True)
     country = serializers.CharField(allow_null=True)
     browser = serializers.CharField(allow_null=True)
     device = serializers.CharField(allow_null=True)
-    duration = serializers.IntegerField(allow_null=True)
+    duration_seconds = serializers.IntegerField(allow_null=True)
     pages = serializers.ListField(child=serializers.IntegerField(), allow_null=True)
     downloaded = serializers.BooleanField(allow_null=True)
     activity = serializers.ListField(child=serializers.DictField())
@@ -164,16 +255,16 @@ def visit_projection(session, activities):
     pages = {v.page_number for v in views}
     pages.update(a.data['page'] for a in facts if type(a.data.get('page')) is int and a.data['page'] > 0)
     browser, device = stored_browser_device(session.user_agent)
-    return {'id': str(session.pk), 'time': session.viewed_at, 'email': session.viewer_email or None,
+    return {'id': str(session.pk), 'at': session.viewed_at, 'email': session.viewer_email or None,
             'ip': session.ip_address or None, 'city': session.city or None, 'country': session.country or None,
             'browser': browser, 'device': device,
             # Legacy zero defaults do not prove recorded zero engagement.
-            'duration': session.duration_seconds if session.duration_seconds > 0 else
+            'duration_seconds': session.duration_seconds if session.duration_seconds > 0 else
                         sum(v.duration_seconds for v in views) if views else None,
             'pages': sorted(pages) or None,
             'downloaded': True if (session.downloaded_at or any(v.downloaded_at for v in visits)
                                    or any(a.event_type == 'document.downloaded' for a in facts)) else None,
-            'activity': [activity_projection(a) for a in facts]}
+            'activity': [event for a in facts if (event := activity_projection(a)) is not None]}
 
 
 def preview_target(request, pk, item_id):
@@ -181,15 +272,8 @@ def preview_target(request, pk, item_id):
     item = get_object_or_404(DataroomDocument.objects.select_related('document', 'folder'),
                             pk=item_id, dataroom=row.room,
                             document__organization_id=row.room.organization_id)
-    if hooks.is_protected_document(item.document_id) or ExecutedArtifact.objects.filter(
-            version__document_id=item.document_id).exists():
+    if excluded_item(item):
         raise PermissionDenied('Use the authorized signature product operation.')
-    folder, seen = item.folder, set()
-    while folder:
-        if folder.pk in seen or folder.dataroom_id != row.room_id or folder.name.casefold() == 'executed':
-            raise PermissionDenied('This folder is excluded from room previews.')
-        seen.add(folder.pk)
-        folder = folder.parent
     if item.document.deleted_at:
         raise PermissionDenied('Removed documents cannot be previewed.')
     version_id = request.query_params.get('version_id')
@@ -211,7 +295,16 @@ VERSION_PARAM = OpenApiParameter('version_id', OpenApiTypes.STR, required=True)
 CURSOR_PARAM = OpenApiParameter('cursor', OpenApiTypes.STR)
 
 
+class PageContentNegotiation(DefaultContentNegotiation):
+    def select_renderer(self, request, renderers, format_suffix=None):
+        # Binary page success is an HttpResponse; failures remain JSON even for image-only Accept.
+        if request.parser_context.get('view').action == 'page':
+            return JSONRenderer(), 'application/json'
+        return super().select_renderer(request, renderers, format_suffix)
+
+
 class BoardRoomReadViewSet(viewsets.ViewSet):
+    content_negotiation_class = PageContentNegotiation
     authentication_classes = [BoardProxyAuthentication]
     permission_classes = [IsAuthenticated]
     http_method_names = ['get']
@@ -224,18 +317,18 @@ class BoardRoomReadViewSet(viewsets.ViewSet):
         return response
 
     @extend_schema(parameters=[CURSOR_PARAM], responses=OpenApiTypes.OBJECT)
-    def list(self, request):
+    def list(self, request, format=None):
         rows, cursor = paginate(board_room_scope(request), request.query_params.get('cursor'),
                                 time_field='room__created_at', id_field='room_id')
-        return Response({'items': [room_summary(row) for row in rows], 'next_cursor': cursor})
+        return Response({'results': [room_summary(row) for row in rows], 'next': cursor})
 
     @extend_schema(responses=OpenApiTypes.OBJECT)
-    def retrieve(self, request, pk=None):
+    def retrieve(self, request, pk=None, format=None):
         return Response(room_detail(get_object_or_404(board_room_scope(request), room_id=pk)))
 
     @extend_schema(parameters=[CURSOR_PARAM], responses=OpenApiTypes.OBJECT)
     @action(detail=True, methods=['get'])
-    def visits(self, request, pk=None):
+    def visits(self, request, pk=None, format=None):
         row = get_object_or_404(board_room_scope(request), room_id=pk)
         sessions = ViewSession.objects.filter(share_link__dataroom=row.room).prefetch_related('dataroom_visits', 'page_views')
         rows, cursor = paginate(sessions, request.query_params.get('cursor'), time_field='viewed_at', id_field='id')
@@ -243,24 +336,21 @@ class BoardRoomReadViewSet(viewsets.ViewSet):
         visit_ids = [str(v.pk) for s in rows for v in s.dataroom_visits.all()]
         activities = list(Activity.objects.filter(organization=row.room.organization, room_id=str(row.room_id))
                           .filter(Q(data__view_session_id__in=session_ids) | Q(data__visit_id__in=visit_ids)))
-        return Response({'items': BoardVisitSerializer([visit_projection(s, activities) for s in rows], many=True).data,
-                         'next_cursor': cursor})
+        return Response({'results': BoardVisitSerializer([visit_projection(s, activities) for s in rows], many=True).data,
+                         'next': cursor})
 
     @extend_schema(parameters=[VERSION_PARAM], responses=OpenApiTypes.OBJECT)
     @action(detail=True, methods=['get'], url_path=r'documents/(?P<item_id>[^/.]+)/pages')
-    def pages(self, request, pk=None, item_id=None):
+    def pages(self, request, pk=None, item_id=None, format=None):
         row, item, version = preview_target(request, pk, item_id)
         renderer = get_renderer(version)
         if version.render_status == DocumentVersion.RENDER_NOT_GENERATED:
-            try:
-                renderer.enqueue_render_task(version)
-            except Exception:
-                return Response({'status': 'failed', 'page_count': None})
+            transaction.on_commit(lambda: renderer.enqueue_render_task(version), robust=True)
         return Response(preview_state(version, renderer))
 
     @extend_schema(parameters=[VERSION_PARAM], responses={(200, 'image/png'): OpenApiTypes.BINARY})
     @action(detail=True, methods=['get'], url_path=r'documents/(?P<item_id>[^/.]+)/pages/(?P<page>[0-9]+)')
-    def page(self, request, pk=None, item_id=None, page=None):
+    def page(self, request, pk=None, item_id=None, page=None, format=None):
         row, item, version = preview_target(request, pk, item_id)
         renderer = get_renderer(version)
         state = preview_state(version, renderer)
@@ -269,7 +359,8 @@ class BoardRoomReadViewSet(viewsets.ViewSet):
         number = int(page)
         if number < 1 or number > state['page_count']:
             return Response({'detail': 'Page not found.'}, status=404)
-        hooks.RENDER_SEMAPHORE.acquire()
+        if not hooks.RENDER_SEMAPHORE.acquire(timeout=5):
+            return Response({'detail': 'Preview is unavailable.'}, status=503)
         try:
             storage_key = renderer.get_page_storage_key(version, number)
             if not storage_key:

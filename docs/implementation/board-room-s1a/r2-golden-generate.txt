@@ -1,0 +1,101 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________ test_real_serializer_golden_contract _____________________
+
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x746ce7025df0>
+image_transport = namespace(source=b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x03 \x00\x00\x03\xe8\x08\x02\x00\x00\x00\xa9\xa9\r\xe6\...ad_url' id='128011073050368'>, fetch=<MagicMock name='get' id='128011072302896'>, response=<Mock id='128011080981952'>)
+
+    def test_real_serializer_golden_contract(settings, image_transport):
+        """Regenerate only with UPDATE_BOARD_GOLDEN=1; no hand-authored route payloads."""
+        settings.BOARD_SIGN_PROXY_KEY = KEY
+        settings.PDF_PREVIEW_ENGINE = 'server_pages'
+        settings.PASSWORD_HASHERS = ['django.contrib.auth.hashers.MD5PasswordHasher']
+        fixed = datetime(2026, 11, 20, 12, 0, tzinfo=dt_timezone.utc)
+        uid = lambda number: f'{number:026d}'
+        with patch('django.utils.timezone.now', return_value=fixed):
+            org = Organization.objects.create(id=uid(1), name='Northwind')
+            user = User.objects.create_user(id=uid(2), username='staff@example.test', email='staff@example.test',
+                name='Maya Chen', organization=org, is_staff=True, role='admin')
+            BoardStaffBinding.objects.create(board_id='fixture', login=user.email, send_user=user, signer_email=user.email,
+                role='reader', room_capabilities=['read'])
+            older = Dataroom.objects.create(id=uid(9), organization=org, created_by=user, name='Lighthouse diligence')
+            room = Dataroom.objects.create(id=uid(10), organization=org, created_by=user, name='Northwind diligence')
+            for r in (older, room): models.BoardRoom.objects.create(board_id='fixture', room=r, build_state='ready')
+            link = ShareLink.objects.create(id=uid(11), dataroom=room, created_by=user, slug='northwind-golden', require_nda=True)
+            models.RoomPolicy.objects.create(room=room, entry_link=link)
+            folder = DataroomFolder.objects.create(id=uid(20), dataroom=room, name='01 Corporate')
+            empty = DataroomFolder.objects.create(id=uid(21), dataroom=room, name='Empty', parent=folder)
+            DataroomItemOrder.objects.create(dataroom=room, item_type='folder', folder=folder, position=1)
+            DataroomItemOrder.objects.create(dataroom=room, item_type='folder', folder=empty, parent_folder=folder, position=1)
+            for number, name, parent in [(30, 'Report.docx', folder), (31, 'Overview.pdf', None)]:
+                doc = Document.objects.create(id=uid(number), organization=org, created_by=user, name=name, type='pdf', content_type='application/pdf')
+                version = DocumentVersion.objects.create(id=uid(number+10), document=doc, version_number=1, is_primary=True,
+                    type='pdf', content_type='application/pdf', has_pages=True, num_pages=2, render_status='ready')
+                item = DataroomDocument.objects.create(id=uid(number+20), dataroom=room, document=doc, folder=parent)
+                DataroomItemOrder.objects.create(dataroom=room, item_type='document', dataroom_document=item, parent_folder=parent, position=0)
+                DocumentPage.objects.create(document_version=version, page_number=1, storage_key='private/page.png')
+            session = ViewSession.objects.create(id=uid(60), share_link=link, viewer_email='priya@northwind.test',
+                ip_address='203.0.113.24', city='Seattle', country='United States', duration_seconds=840,
+                user_agent='Mozilla/5.0 (Macintosh) Version/17.5 Safari/605.1', downloaded_at=fixed)
+            blank = ViewSession.objects.create(id=uid(61), share_link=link, viewer_email='pat@harborlight.test')
+            ViewSession.objects.filter(pk__in=[session.pk, blank.pk]).update(viewed_at=fixed)
+            models.Activity.objects.create(id='00000000-0000-0000-0000-000000000070', organization=org,
+                room_id=str(room.pk), event_type='document.uploaded', actor_kind='staff', actor_id=str(user.pk), target_id=uid(30))
+            models.Activity.objects.create(id='00000000-0000-0000-0000-000000000071', organization=org,
+                room_id=str(room.pk), event_type='document.downloaded', actor_kind='member', actor_id='', target_id=uid(30),
+                data={'view_session_id': str(session.pk)})
+            detail_path = PREFIX + str(room.pk) + '/'
+            pages_path = detail_path + f'documents/{uid(50)}/pages/'
+            with patch('dealroom.board_rooms.PAGE_SIZE', 1):
+                examples = {'list': get(PREFIX).json(), 'detail': get(detail_path).json(),
+                            'visits': get(detail_path+'visits/').json(),
+                            'pages': get(pages_path+f'?version_id={uid(40)}').json()}
+                assert 'results' in examples['list']
+                examples['list-next'] = get(PREFIX+'?cursor='+examples['list']['next']).json()
+                examples['visits-next'] = get(detail_path+'visits/?cursor='+examples['visits']['next']).json()
+            with patch('dealroom.staff_preview.uuid.uuid4') as uuid4:
+                uuid4.return_value.hex = 'f'*32
+                # Leave the audit model's captured UUID default untouched.
+                response = get(pages_path+f'1/?version_id={uid(40)}')
+            assert response.status_code == 200
+            examples['page'] = {'status': response.status_code, 'content_type': response['Content-Type'],
+                                'body_base64': base64.b64encode(response.content).decode()}
+        if os.environ.get('UPDATE_BOARD_GOLDEN') == '1':
+            GOLDEN.mkdir(exist_ok=True)
+            for name, value in examples.items():
+                (GOLDEN / (name+'.json')).write_text(json.dumps(value, indent=2, sort_keys=True)+'\n')
+        for name, value in examples.items():
+            assert json.loads((GOLDEN / (name+'.json')).read_text()) == value, name
+>       contract = json.loads(CONTRACT.read_text())
+
+tests/dealroom/test_board_rooms_r2.py:247: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/root/worktrees/fd-board-dealroom/docs/edd/contracts/board-rooms-v1.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/root/worktrees/fd-board-dealroom/docs/edd/contracts/board-rooms-v1.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M83F84AAFH3W95B9MG6DZJMZ
+----------------------------- Captured stdout call -----------------------------
+2026-11-23 05:49:49,256 [WARNING] sharelinks.views:2622 _apply_watermark_to_image() - Watermark font not found or failed to load. Falling back to default font.
+------------------------------ Captured log call -------------------------------
+WARNING  sharelinks.views:views.py:2622 Watermark font not found or failed to load. Falling back to default font.
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_board_rooms_r2.py::test_real_serializer_golden_contract
+1 failed in 11.49s

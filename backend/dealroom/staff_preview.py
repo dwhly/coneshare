@@ -20,7 +20,8 @@ def issue_staff_preview(binding, room, item, version, page, storage_key):
     copy_id = 'preview-' + uuid.uuid4().hex
     identity = {
         'copy_id': copy_id, 'email': binding.login,
-        'name': binding.send_user.get_full_name() or binding.login,
+        'name': (binding.send_user.name or '').strip() or binding.login,
+        'kind': 'staff_preview',
         'organisation': binding.send_user.organization.name,
         'timestamp': timezone.now().strftime('%Y-%m-%d %H:%M UTC'),
     }

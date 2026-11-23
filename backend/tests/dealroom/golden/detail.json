@@ -1,0 +1,109 @@
+{
+  "activity": [
+    {
+      "actor": "pat@harborlight.test",
+      "at": "2026-11-20T12:00:00Z",
+      "document": null,
+      "event_type": "room.visited",
+      "id": "visit-00000000000000000000000061",
+      "phrase": "visited the room",
+      "view_session_id": "00000000000000000000000061",
+      "visit_id": null
+    },
+    {
+      "actor": "priya@northwind.test",
+      "at": "2026-11-20T12:00:00Z",
+      "document": null,
+      "event_type": "room.visited",
+      "id": "visit-00000000000000000000000060",
+      "phrase": "visited the room",
+      "view_session_id": "00000000000000000000000060",
+      "visit_id": null
+    },
+    {
+      "actor": "priya@northwind.test",
+      "at": "2026-11-20T12:00:00Z",
+      "document": "Report.docx",
+      "event_type": "document.downloaded",
+      "id": "00000000-0000-0000-0000-000000000071",
+      "phrase": "downloaded",
+      "view_session_id": "00000000000000000000000060",
+      "visit_id": null
+    },
+    {
+      "actor": "Maya Chen",
+      "at": "2026-11-20T12:00:00Z",
+      "document": "Report.docx",
+      "event_type": "document.uploaded",
+      "id": "00000000-0000-0000-0000-000000000070",
+      "phrase": "uploaded",
+      "view_session_id": null,
+      "visit_id": null
+    }
+  ],
+  "archived": false,
+  "board_id": "fixture",
+  "build_state": "ready",
+  "document_count": 2,
+  "ever_invited_at": null,
+  "folders": [
+    {
+      "id": "00000000000000000000000020",
+      "name": "01 Corporate",
+      "order": 1,
+      "parent_id": null
+    },
+    {
+      "id": "00000000000000000000000021",
+      "name": "Empty",
+      "order": 1,
+      "parent_id": "00000000000000000000000020"
+    }
+  ],
+  "grants": [],
+  "id": "00000000000000000000000010",
+  "items": [
+    {
+      "document_id": "00000000000000000000000030",
+      "folder_id": "00000000000000000000000020",
+      "item_id": "00000000000000000000000050",
+      "lifecycle": "active",
+      "name": "Report.docx",
+      "order": 0,
+      "type": "pdf",
+      "version_id": "00000000000000000000000040"
+    },
+    {
+      "document_id": "00000000000000000000000031",
+      "folder_id": null,
+      "item_id": "00000000000000000000000051",
+      "lifecycle": "active",
+      "name": "Overview.pdf",
+      "order": 0,
+      "type": "pdf",
+      "version_id": "00000000000000000000000041"
+    }
+  ],
+  "last_activity": {
+    "at": "2026-11-20T12:00:00Z",
+    "phrase": "pat@harborlight.test visited the room"
+  },
+  "lifecycle": "active",
+  "name": "Northwind diligence",
+  "nda": {
+    "acceptances": [],
+    "enabled": true,
+    "legacy_acceptances": [],
+    "legacy_policies": [
+      {
+        "enabled": true,
+        "id": "00000000000000000000000011",
+        "version": 1
+      }
+    ],
+    "revision": null
+  },
+  "people": [],
+  "people_count": 0,
+  "revision": 1
+}

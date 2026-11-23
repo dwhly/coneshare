@@ -235,12 +235,12 @@ def footer_text(identity: dict) -> str:
     """'Issued to {name} · {organisation} · {email} · {UTC timestamp} · Copy {copy_id}'."""
     name = identity.get('name') or identity.get('email') or 'Unidentified viewer'
     from dealroom.brand import load_brand
-    if getattr(settings, 'DEALROOM_ENABLED', False):
+    if getattr(settings, 'DEALROOM_ENABLED', False) and identity.get('kind') != 'staff_preview':
         return render_watermark_template(load_brand()['watermark'], identity)
     parts = [f"Issued to {name}"]
     if identity.get('organisation'):
         parts.append(identity['organisation'])
-    if identity.get('email'):
+    if identity.get('email') and (identity.get('kind') != 'staff_preview' or identity['email'] != name):
         parts.append(identity['email'])
     parts.append(identity.get('timestamp') or '')
     if identity.get('copy_id'):

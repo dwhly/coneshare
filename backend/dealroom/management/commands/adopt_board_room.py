@@ -4,6 +4,7 @@ from django.db import transaction
 
 from datarooms.models import Dataroom
 from sharelinks.models import ShareLinkAccessGrant, ViewSession
+from dealroom_sign.models import BoardStaffBinding
 from dealroom.activity import record
 from dealroom.models import Activity, BoardRoom
 
@@ -15,6 +16,7 @@ class Command(BaseCommand):
         parser.add_argument('--board', required=True)
         parser.add_argument('--room', required=True)
         parser.add_argument('--undo', action='store_true')
+        parser.add_argument('--force', action='store_true', help='Allow a board without a staff binding.')
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -37,6 +39,8 @@ class Command(BaseCommand):
         if assignment:
             self.stdout.write('Room already assigned to this board.')
             return
+        if not options['force'] and not BoardStaffBinding.objects.filter(board_id=board_id).exists():
+            raise CommandError('No staff binding exists for this board; use --force to adopt intentionally.')
         # No invitation table exists in S1a. Historical invitation facts are Activity rows.
         # Keep revoked grants and old sessions: either proves previous recipient exposure.
         candidates = [

@@ -138,7 +138,7 @@ def test_permission_matrix(setup, image_transport, action, denial):
         session = client.session; session['dealroom_member'] = {'room_id': str(setup.room.pk), 'member_id': 'fixture'}; session.save()
     response = client.get(path) if denial in ('jwt', 'api_key', 'recipient') else get(path, **context)
     if denial in ('board', 'org') and action == 'list':
-        assert response.status_code == 200 and response.data['items'] == []
+        assert response.status_code == 200 and response.data['results'] == []
     else:
         assert response.status_code == (404 if denial in ('board', 'org') else 403)
 
@@ -154,10 +154,10 @@ def test_detail_explicit_ids_order_people_nda_and_archived(setup):
     result = get(paths(setup)['detail']).data
     assert result['id'] == str(setup.room.pk) and result['archived'] is True
     assert result['build_state'] == 'ready' and result['revision'] == 1
-    assert result['folders'][0]['folder_id'] == str(folder.pk)
+    assert result['folders'][0]['id'] == str(folder.pk)
     item = result['items'][0]
     assert (item['item_id'], item['document_id'], item['version_id']) == tuple(str(v.pk) for v in [setup.item, setup.doc, setup.version])
-    assert item['position'] == 3 and item['folder_id'] == str(folder.pk)
+    assert item['order'] == 3 and item['folder_id'] == str(folder.pk)
     assert result['grants'][0]['id'] == str(grant.pk)
     assert result['people'][0]['email'] == grant.email
     assert result['nda']['enabled'] is False
@@ -176,14 +176,14 @@ def test_visits_use_only_stored_session_and_visit_ids_and_nulls(setup):
     joined = models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.downloaded', data={'view_session_id': str(visit.pk)})
     via_visit = models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.viewed', data={'visit_id': str(dv.pk), 'page': 2})
     unjoined = models.Activity.objects.create(organization=setup.org, room_id=str(setup.room.pk), event_type='document.downloaded', data={'email': visit.viewer_email})
-    results = get(paths(setup)['visits']).data['items']
+    results = get(paths(setup)['visits']).data['results']
     empty = next(r for r in results if r['id'] == str(blank.pk))
-    for field in ['email', 'ip', 'city', 'country', 'browser', 'device', 'duration', 'pages', 'downloaded']:
+    for field in ['email', 'ip', 'city', 'country', 'browser', 'device', 'duration_seconds', 'pages', 'downloaded']:
         assert empty[field] is None, field
     card = next(r for r in results if r['id'] == str(visit.pk))
     assert card['email'] == visit.viewer_email and card['ip'] == '192.0.2.1'
     assert card['browser'] == 'Chrome' and card['device'] == 'Desktop'
-    assert card['duration'] == 42 and card['pages'] == [1, 2] and card['downloaded'] is True
+    assert card['duration_seconds'] == 42 and card['pages'] == [1, 2] and card['downloaded'] is True
     assert {e['id'] for e in card['activity']} == {str(joined.pk), str(via_visit.pk)}
     assert str(unjoined.pk) not in json.dumps(results, default=str)
     assert not {'latitude', 'longitude', 'user_agent', 'share_link', 'url'} & card.keys()
@@ -206,10 +206,10 @@ def test_pagination_cursor_is_scoped(setup, kind):
             ViewSession.objects.create(share_link=setup.link)
         path, foreign_id = paths(setup)['visits'], str(foreign.pk)
     first = get(path).data
-    assert len(first['items']) == 50 and first['next_cursor']
-    second = get(path+'?cursor='+first['next_cursor']).data
-    assert len(second['items']) == 2 and second['next_cursor'] is None
-    assert not {r['id'] for r in first['items']} & {r['id'] for r in second['items']}
+    assert len(first['results']) == 50 and first['next']
+    second = get(path+'?cursor='+first['next']).data
+    assert len(second['results']) == 2 and second['next'] is None
+    assert not {r['id'] for r in first['results']} & {r['id'] for r in second['results']}
     assert get(path+'?cursor='+foreign_id).status_code == 404
 
 
