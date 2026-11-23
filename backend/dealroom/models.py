@@ -4,6 +4,23 @@ from django.db import models
 from django.utils import timezone
 
 
+class BoardRoom(models.Model):
+    board_id = models.CharField(max_length=100)
+    room = models.OneToOneField('datarooms.Dataroom', on_delete=models.CASCADE)
+    creator_binding = models.ForeignKey('dealroom_sign.BoardStaffBinding', null=True,
+                                        blank=True, on_delete=models.PROTECT)
+    draft_id = models.CharField(max_length=100, null=True, blank=True, default=None)
+    manifest_sha256 = models.CharField(max_length=64, blank=True, default='')
+    build_state = models.CharField(max_length=16, default='building',
+                                  choices=[('building', 'Building'), ('ready', 'Ready'), ('failed', 'Failed')])
+    revision = models.PositiveIntegerField(default=1)
+    ever_invited_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['board_id', 'draft_id'],
+                                               name='dealroom_board_draft')]
+
+
 class RoomPolicy(models.Model):
     room = models.OneToOneField('datarooms.Dataroom', on_delete=models.CASCADE, primary_key=True)
     entry_link = models.OneToOneField('sharelinks.ShareLink', on_delete=models.PROTECT)

@@ -2,6 +2,7 @@
 import uuid
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django_cryptography.fields import encrypt
@@ -102,6 +103,11 @@ class ObservedSignEvent(models.Model):
         constraints = [models.UniqueConstraint(fields=['workflow', 'source_id', 'kind'], name='sign_observed_fact')]
 
 
+def validate_room_capabilities(value):
+    if not isinstance(value, list) or any(v not in ('read', 'write') for v in value):
+        raise ValidationError('Room capabilities must be a list containing only read and write.')
+
+
 class BoardStaffBinding(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     board_id = models.CharField(max_length=100)
@@ -109,7 +115,14 @@ class BoardStaffBinding(models.Model):
     send_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     signer_email = models.EmailField()
     enabled = models.BooleanField(default=True)
+    room_capabilities = models.JSONField(default=list, blank=True, validators=[validate_room_capabilities])
     role = models.CharField(max_length=16, choices=[('reader', 'Reader'), ('writer', 'Writer'), ('manager', 'Manager')])
+
+    def clean(self):
+        super().clean()
+        # JSONField(blank=True) skips field validators for empty objects/strings.
+        if not isinstance(self.room_capabilities, list):
+            raise ValidationError({'room_capabilities': 'Room capabilities must be a list.'})
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['board_id', 'login'], name='sign_board_login')]

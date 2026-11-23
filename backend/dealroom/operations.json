@@ -1309,6 +1309,56 @@
     "tier": "read_only",
     "widens_access": false
   },
+  "dealroom_BoardRoomReadViewSet_list_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_BoardRoomReadViewSet_list_get",
+    "path": "/api/v1/dealroom/board/rooms/",
+    "reason": "Human board proxy with room read capability and board/organization scope.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_BoardRoomReadViewSet_page_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_BoardRoomReadViewSet_page_get",
+    "path": "/api/v1/dealroom/board/rooms/{pk}/documents/{item_id}/pages/{page}/",
+    "reason": "Human board proxy with room read capability and board/organization scope.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_BoardRoomReadViewSet_pages_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_BoardRoomReadViewSet_pages_get",
+    "path": "/api/v1/dealroom/board/rooms/{pk}/documents/{item_id}/pages/",
+    "reason": "Human board proxy with room read capability and board/organization scope.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_BoardRoomReadViewSet_retrieve_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_BoardRoomReadViewSet_retrieve_get",
+    "path": "/api/v1/dealroom/board/rooms/{pk}/",
+    "reason": "Human board proxy with room read capability and board/organization scope.",
+    "tier": "read_only",
+    "widens_access": false
+  },
+  "dealroom_BoardRoomReadViewSet_visits_get": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "GET",
+    "operation_id": "dealroom_BoardRoomReadViewSet_visits_get",
+    "path": "/api/v1/dealroom/board/rooms/{pk}/visits/",
+    "reason": "Human board proxy with room read capability and board/organization scope.",
+    "tier": "read_only",
+    "widens_access": false
+  },
   "dealroom_BrandView_endpoint_get": {
     "boundary": "public",
     "human_only": false,

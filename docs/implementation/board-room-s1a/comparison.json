@@ -1,0 +1,39 @@
+{
+  "packages": {
+    "base": {
+      "summary": "1 failed, 58321 passed, 219 warnings in 3065.52s (0:51:05)",
+      "failures": [
+        "tests/dealroom/test_foundation.py::test_schema_mcp_static_parity"
+      ]
+    },
+    "current": {
+      "summary": "58428 passed, 226 warnings in 3035.11s (0:50:35)",
+      "failures": []
+    },
+    "new_failures": [],
+    "resolved_failures": [
+      "tests/dealroom/test_foundation.py::test_schema_mcp_static_parity"
+    ]
+  },
+  "full": {
+    "base": {
+      "summary": "3 failed, 1490 passed, 158 warnings in 1324.91s (0:22:04)",
+      "failures": [
+        "tests/core/test_reencrypt_data.py::test_reencrypt_data_models_and_fields_configured",
+        "tests/dealroom/test_foundation.py::test_schema_mcp_static_parity",
+        "tests/documents/test_tasks.py::test_prepare_pages_data_watermark_suppression"
+      ]
+    },
+    "current": {
+      "summary": "2 failed, 1597 passed, 165 warnings in 1323.75s (0:22:03)",
+      "failures": [
+        "tests/core/test_reencrypt_data.py::test_reencrypt_data_models_and_fields_configured",
+        "tests/documents/test_tasks.py::test_prepare_pages_data_watermark_suppression"
+      ]
+    },
+    "new_failures": [],
+    "resolved_failures": [
+      "tests/dealroom/test_foundation.py::test_schema_mcp_static_parity"
+    ]
+  }
+}

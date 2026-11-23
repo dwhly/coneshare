@@ -104,6 +104,10 @@ def classify(view, method):
         entry.update(boundary='recipient', reason='Central recipient policy; unsupported legacy actions denied.', widens_access=False)
     elif name in STAFF or (name in UPSTREAM_READ and read):
         entry.update(boundary='staff', reason='Phase-one staff business operation.')
+    if (name == 'BoardRoomReadViewSet' and method == 'GET'
+            and action in {'list', 'retrieve', 'visits', 'pages', 'page'}):
+        entry.update(boundary='staff', tier='read_only', human_only=True, widens_access=False,
+                     reason='Human board proxy with room read capability and board/organization scope.')
     if name == 'SignatureExportView':
         entry.update(widens_access=False, human_only_kinds=['partial', 'audit', 'evidence_report', 'history_evidence'])
     if name == 'SigningEnvelopeViewSet' and action == 'create':

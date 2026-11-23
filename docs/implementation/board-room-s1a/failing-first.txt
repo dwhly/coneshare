@@ -1,0 +1,948 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 67%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                       [100%]
+=================================== FAILURES ===================================
+___________________ test_scoped_human_reads[tailscale-list] ____________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M8392JB0BS8BRDP57MMJZ6BB
+__________________ test_scoped_human_reads[tailscale-detail] ___________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_scoped_human_reads[tailscale-visits] ___________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_scoped_human_reads[tailscale-pages] ___________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_scoped_human_reads[tailscale-page] ____________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_scoped_human_reads[cloudflare-list] ___________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_scoped_human_reads[cloudflare-detail] __________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_scoped_human_reads[cloudflare-visits] __________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_scoped_human_reads[cloudflare-pages] ___________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_scoped_human_reads[cloudflare-page] ___________________
+tests/dealroom/test_board_rooms.py:102: in test_scoped_human_reads
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[board-list] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____________________ test_permission_matrix[board-detail] _____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____________________ test_permission_matrix[board-visits] _____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____________________ test_permission_matrix[board-pages] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[board-page] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________________ test_permission_matrix[org-list] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[org-detail] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[org-visits] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[org-pages] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________________ test_permission_matrix[org-page] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_permission_matrix[missing_read-list] ___________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[missing_read-detail] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[missing_read-visits] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_permission_matrix[missing_read-pages] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_permission_matrix[missing_read-page] ___________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[disabled-list] _____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[disabled-detail] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[disabled-visits] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[disabled-pages] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[disabled-page] _____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_permission_matrix[inactive_user-list] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[inactive_user-detail] _________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[inactive_user-visits] _________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[inactive_user-pages] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________________ test_permission_matrix[inactive_user-page] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[non_staff-list] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[non_staff-detail] ___________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[non_staff-visits] ___________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[non_staff-pages] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[non_staff-page] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[service:worker-list] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_permission_matrix[service:worker-detail] _________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_permission_matrix[service:worker-visits] _________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[service:worker-pages] _________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________________ test_permission_matrix[service:worker-page] __________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________________ test_permission_matrix[dev-list] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[dev-detail] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[dev-visits] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[dev-pages] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________________ test_permission_matrix[dev-page] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________________ test_permission_matrix[jwt-list] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[jwt-detail] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[jwt-visits] ______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________________ test_permission_matrix[jwt-pages] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________________ test_permission_matrix[jwt-page] _______________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____________________ test_permission_matrix[api_key-list] _____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[api_key-detail] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[api_key-visits] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[api_key-pages] _____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____________________ test_permission_matrix[api_key-page] _____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[recipient-list] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[recipient-detail] ___________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[recipient-visits] ___________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_permission_matrix[recipient-pages] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_permission_matrix[recipient-page] ____________________
+tests/dealroom/test_board_rooms.py:114: in test_permission_matrix
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________ test_detail_explicit_ids_order_people_nda_and_archived ____________
+tests/dealroom/test_board_rooms.py:147: in test_detail_explicit_ids_order_people_nda_and_archived
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________ test_visits_use_only_stored_session_and_visit_ids_and_nulls __________
+tests/dealroom/test_board_rooms.py:169: in test_visits_use_only_stored_session_and_visit_ids_and_nulls
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________________ test_pagination_cursor_is_scoped[list] ____________________
+tests/dealroom/test_board_rooms.py:194: in test_pagination_cursor_is_scoped
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_pagination_cursor_is_scoped[visits] ___________________
+tests/dealroom/test_board_rooms.py:194: in test_pagination_cursor_is_scoped
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________ test_page_membership_before_storage[pages-item] ________________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________ test_page_membership_before_storage[pages-version] ______________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________ test_page_membership_before_storage[pages-missing_version] __________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________ test_page_membership_before_storage[pages-other_document_org] _________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_page_membership_before_storage[page-item] ________________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________ test_page_membership_before_storage[page-version] _______________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+__________ test_page_membership_before_storage[page-missing_version] ___________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_________ test_page_membership_before_storage[page-other_document_org] _________
+tests/dealroom/test_board_rooms.py:219: in test_page_membership_before_storage
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________ test_protected_documents_excluded[pages-snapshot] _______________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_protected_documents_excluded[pages-audit] ________________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________ test_protected_documents_excluded[pages-signed] ________________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________ test_protected_documents_excluded[pages-executed_folder] ___________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________ test_protected_documents_excluded[page-snapshot] _______________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_protected_documents_excluded[page-audit] _________________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_protected_documents_excluded[page-signed] ________________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________ test_protected_documents_excluded[page-executed_folder] ____________
+tests/dealroom/test_board_rooms.py:241: in test_protected_documents_excluded
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____________ test_revocation_between_page_list_and_fetch[binding] _____________
+tests/dealroom/test_board_rooms.py:261: in test_revocation_between_page_list_and_fetch
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________ test_revocation_between_page_list_and_fetch[capability] ____________
+tests/dealroom/test_board_rooms.py:261: in test_revocation_between_page_list_and_fetch
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________ test_revocation_between_page_list_and_fetch[assignment] ____________
+tests/dealroom/test_board_rooms.py:261: in test_revocation_between_page_list_and_fetch
+    row = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____ test_pages_are_stamped_with_staff_copy_and_not_recipient_visits[pdf] _____
+tests/dealroom/test_board_rooms.py:275: in test_pages_are_stamped_with_staff_copy_and_not_recipient_visits
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____ test_pages_are_stamped_with_staff_copy_and_not_recipient_visits[docx] _____
+tests/dealroom/test_board_rooms.py:275: in test_pages_are_stamped_with_staff_copy_and_not_recipient_visits
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_____ test_missing_render_never_falls_back_to_original[queued-processing] ______
+tests/dealroom/test_board_rooms.py:299: in test_missing_render_never_falls_back_to_original
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___ test_missing_render_never_falls_back_to_original[processing-processing] ____
+tests/dealroom/test_board_rooms.py:299: in test_missing_render_never_falls_back_to_original
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______ test_missing_render_never_falls_back_to_original[failed-failed] ________
+tests/dealroom/test_board_rooms.py:299: in test_missing_render_never_falls_back_to_original
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___ test_missing_render_never_falls_back_to_original[not_applicable-failed] ____
+tests/dealroom/test_board_rooms.py:299: in test_missing_render_never_falls_back_to_original
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_semaphore_released_on_render_error[fetch] ________________
+tests/dealroom/test_board_rooms.py:309: in test_semaphore_released_on_render_error
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________ test_semaphore_released_on_render_error[watermark] ______________
+tests/dealroom/test_board_rooms.py:309: in test_semaphore_released_on_render_error
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________ test_semaphore_released_on_render_error[oversize] _______________
+tests/dealroom/test_board_rooms.py:309: in test_semaphore_released_on_render_error
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________ test_semaphore_released_on_render_error[invalid_image] ____________
+tests/dealroom/test_board_rooms.py:309: in test_semaphore_released_on_render_error
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_adoption_seed_idempotence_and_undo[none] _________________
+tests/dealroom/test_board_rooms.py:327: in test_adoption_seed_idempotence_and_undo
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+________________ test_adoption_seed_idempotence_and_undo[grant] ________________
+tests/dealroom/test_board_rooms.py:327: in test_adoption_seed_idempotence_and_undo
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________ test_adoption_seed_idempotence_and_undo[revoked_grant] ____________
+tests/dealroom/test_board_rooms.py:327: in test_adoption_seed_idempotence_and_undo
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+______________ test_adoption_seed_idempotence_and_undo[activity] _______________
+tests/dealroom/test_board_rooms.py:327: in test_adoption_seed_idempotence_and_undo
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+_______________ test_adoption_seed_idempotence_and_undo[session] _______________
+tests/dealroom/test_board_rooms.py:327: in test_adoption_seed_idempotence_and_undo
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+____________ test_null_drafts_multiple_non_null_unique_and_one_room ____________
+tests/dealroom/test_board_rooms.py:353: in test_null_drafts_multiple_non_null_unique_and_one_room
+    first = adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+___________________ test_capabilities_default_and_validation ___________________
+tests/dealroom/test_board_rooms.py:365: in test_capabilities_default_and_validation
+    assert 'room_capabilities' in {field.name for field in BoardStaffBinding._meta.fields}
+E   AssertionError: assert 'room_capabilities' in {'board_id', 'enabled', 'id', 'login', 'role', 'send_user', ...}
+_____________ test_only_five_read_operations_and_legacy_boundaries _____________
+tests/dealroom/test_board_rooms.py:377: in test_only_five_read_operations_and_legacy_boundaries
+    adopt(setup)
+tests/dealroom/test_board_rooms.py:72: in adopt
+    assert hasattr(models, 'BoardRoom'), 'S1a BoardRoom adoption is not implemented'
+E   AssertionError: S1a BoardRoom adoption is not implemented
+E   assert False
+E    +  where False = hasattr(models, 'BoardRoom')
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[tailscale-list]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[tailscale-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[tailscale-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[tailscale-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[tailscale-page]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[cloudflare-list]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[cloudflare-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[cloudflare-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[cloudflare-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_scoped_human_reads[cloudflare-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[board-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[board-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[board-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[board-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[board-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[org-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[org-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[org-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[org-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[org-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[missing_read-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[missing_read-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[missing_read-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[missing_read-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[missing_read-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[disabled-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[disabled-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[disabled-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[disabled-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[disabled-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[inactive_user-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[inactive_user-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[inactive_user-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[inactive_user-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[inactive_user-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[non_staff-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[non_staff-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[non_staff-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[non_staff-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[non_staff-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[service:worker-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[service:worker-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[service:worker-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[service:worker-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[service:worker-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[dev-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[dev-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[dev-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[dev-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[dev-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[jwt-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[jwt-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[jwt-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[jwt-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[jwt-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[api_key-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[api_key-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[api_key-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[api_key-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[api_key-page]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[recipient-list]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[recipient-detail]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[recipient-visits]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[recipient-pages]
+FAILED tests/dealroom/test_board_rooms.py::test_permission_matrix[recipient-page]
+FAILED tests/dealroom/test_board_rooms.py::test_detail_explicit_ids_order_people_nda_and_archived
+FAILED tests/dealroom/test_board_rooms.py::test_visits_use_only_stored_session_and_visit_ids_and_nulls
+FAILED tests/dealroom/test_board_rooms.py::test_pagination_cursor_is_scoped[list]
+FAILED tests/dealroom/test_board_rooms.py::test_pagination_cursor_is_scoped[visits]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[pages-item]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[pages-version]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[pages-missing_version]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[pages-other_document_org]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[page-item]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[page-version]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[page-missing_version]
+FAILED tests/dealroom/test_board_rooms.py::test_page_membership_before_storage[page-other_document_org]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[pages-snapshot]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[pages-audit]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[pages-signed]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[pages-executed_folder]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[page-snapshot]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[page-audit]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[page-signed]
+FAILED tests/dealroom/test_board_rooms.py::test_protected_documents_excluded[page-executed_folder]
+FAILED tests/dealroom/test_board_rooms.py::test_revocation_between_page_list_and_fetch[binding]
+FAILED tests/dealroom/test_board_rooms.py::test_revocation_between_page_list_and_fetch[capability]
+FAILED tests/dealroom/test_board_rooms.py::test_revocation_between_page_list_and_fetch[assignment]
+FAILED tests/dealroom/test_board_rooms.py::test_pages_are_stamped_with_staff_copy_and_not_recipient_visits[pdf]
+FAILED tests/dealroom/test_board_rooms.py::test_pages_are_stamped_with_staff_copy_and_not_recipient_visits[docx]
+FAILED tests/dealroom/test_board_rooms.py::test_missing_render_never_falls_back_to_original[queued-processing]
+FAILED tests/dealroom/test_board_rooms.py::test_missing_render_never_falls_back_to_original[processing-processing]
+FAILED tests/dealroom/test_board_rooms.py::test_missing_render_never_falls_back_to_original[failed-failed]
+FAILED tests/dealroom/test_board_rooms.py::test_missing_render_never_falls_back_to_original[not_applicable-failed]
+FAILED tests/dealroom/test_board_rooms.py::test_semaphore_released_on_render_error[fetch]
+FAILED tests/dealroom/test_board_rooms.py::test_semaphore_released_on_render_error[watermark]
+FAILED tests/dealroom/test_board_rooms.py::test_semaphore_released_on_render_error[oversize]
+FAILED tests/dealroom/test_board_rooms.py::test_semaphore_released_on_render_error[invalid_image]
+FAILED tests/dealroom/test_board_rooms.py::test_adoption_seed_idempotence_and_undo[none]
+FAILED tests/dealroom/test_board_rooms.py::test_adoption_seed_idempotence_and_undo[grant]
+FAILED tests/dealroom/test_board_rooms.py::test_adoption_seed_idempotence_and_undo[revoked_grant]
+FAILED tests/dealroom/test_board_rooms.py::test_adoption_seed_idempotence_and_undo[activity]
+FAILED tests/dealroom/test_board_rooms.py::test_adoption_seed_idempotence_and_undo[session]
+FAILED tests/dealroom/test_board_rooms.py::test_null_drafts_multiple_non_null_unique_and_one_room
+FAILED tests/dealroom/test_board_rooms.py::test_capabilities_default_and_validation
+FAILED tests/dealroom/test_board_rooms.py::test_only_five_read_operations_and_legacy_boundaries
+106 failed in 20.98s

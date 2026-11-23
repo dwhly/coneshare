@@ -1,0 +1,12 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_capabilities_default_and_validation ___________________
+tests/dealroom/test_board_rooms.py:365: in test_capabilities_default_and_validation
+    assert 'room_capabilities' in {field.name for field in BoardStaffBinding._meta.fields}
+E   AssertionError: assert 'room_capabilities' in {'board_id', 'enabled', 'id', 'login', 'role', 'send_user', ...}
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M83B86R4Y8ZZFS4ZWP1NCZSG
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_board_rooms.py::test_capabilities_default_and_validation
+1 failed in 11.25s

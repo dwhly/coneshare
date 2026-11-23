@@ -1,0 +1,20 @@
+packages
+BASE: 1 failed, 58321 passed, 219 warnings in 3065.52s (0:51:05)
+CURRENT: 58428 passed, 226 warnings in 3035.11s (0:50:35)
+Pre-existing failures retained:
+Resolved baseline failures:
+tests/dealroom/test_foundation.py::test_schema_mcp_static_parity
+New failures:
+None
+
+full
+BASE: 3 failed, 1490 passed, 158 warnings in 1324.91s (0:22:04)
+CURRENT: 2 failed, 1597 passed, 165 warnings in 1323.75s (0:22:03)
+Pre-existing failures retained:
+tests/core/test_reencrypt_data.py::test_reencrypt_data_models_and_fields_configured
+tests/documents/test_tasks.py::test_prepare_pages_data_watermark_suppression
+Resolved baseline failures:
+tests/dealroom/test_foundation.py::test_schema_mcp_static_parity
+New failures:
+None
+

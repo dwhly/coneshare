@@ -1,8 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views, recipient, downloads
+from .board_rooms import BoardRoomReadViewSet
 
 router = DefaultRouter()
+router.register('board/rooms', BoardRoomReadViewSet, basename='dealroom-board-rooms')
 for name, cls in [('rooms', views.RoomViewSet), ('orgs', views.OrgViewSet), ('members', views.MemberViewSet), ('grants', views.GrantViewSet), ('share-links', views.EntryLinkViewSet), ('approvals', views.ApprovalViewSet), ('activity', views.ActivityViewSet), ('drift', views.DriftViewSet), ('operations', views.OperationViewSet), ('copies', views.CopyViewSet), ('agent-keys', views.AgentKeyViewSet), ('file-policies', views.FilePolicyViewSet), ('original-exceptions', views.OriginalExceptionViewSet)]:
     router.register(name, cls, basename='dealroom-' + name)
 urlpatterns = [

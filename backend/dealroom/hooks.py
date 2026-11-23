@@ -7,9 +7,17 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from core.models import APIKey
+from dealroom_sign.models import ExecutedArtifact, RequestArtifact
 from .registry import resolve_operation, TIERS, RECIPIENT
 
 RENDER_SEMAPHORE = BoundedSemaphore(1)
+
+
+def is_protected_document(document_id):
+    """Product snapshots retain their original legacy document-read boundary."""
+    return (RequestArtifact.objects.filter(version__document_id=document_id).exists()
+            or ExecutedArtifact.objects.filter(version__document_id=document_id,
+                kind='audit', workflow__signature_request__isnull=False).exists())
 
 
 def human_staff(request):
@@ -39,12 +47,8 @@ def enforce(view, request):
     # Product snapshots are intentionally reachable only through signed product
     # routes. Legacy admin document reads must not reveal their page capabilities.
     if type(view).__name__ == 'DocumentViewSet' and view.kwargs.get('pk'):
-        from dealroom_sign.models import RequestArtifact, ExecutedArtifact
         document_id = view.kwargs['pk']
-        protected = RequestArtifact.objects.filter(version__document_id=document_id).exists()
-        protected = protected or ExecutedArtifact.objects.filter(version__document_id=document_id,
-            kind='audit', workflow__signature_request__isnull=False).exists()
-        if protected:
+        if is_protected_document(document_id):
             raise PermissionDenied('Use the authorized signature product operation.')
     if isinstance(request.auth, APIKey):
         if request.method not in ('GET', 'HEAD', 'OPTIONS') and not (type(view).__name__ == 'RoomViewSet' and getattr(view, 'action', None) == 'upload'):
