@@ -5,7 +5,7 @@ import uuid
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from datarooms.models import Dataroom, DataroomFolder, DataroomItemOrder, DataroomDocument
-from documents.models import Document, DocumentVersion
+from documents.models import Document, DocumentPage, DocumentVersion
 from dealroom_sign.models import NdaPolicy
 from documents.renderers import get_renderer
 from sharelinks.models import ShareLink, ShareLinkDataroomSetting
@@ -239,6 +239,29 @@ def complete(request, payload, room, row, approved, file):
     return result
 
 
+def exclusively_staged(document, room, item_ids, version_ids):
+    """Only the batch's room rows, original versions and rendered pages are owned.
+
+    Called with the room and document locked, before unlinking anything. Check
+    every reverse relation so additional consumers also prevent hard deletion.
+    """
+    for relation in Document._meta.related_objects:
+        references = relation.related_model._base_manager.filter(**{relation.field.name: document})
+        if relation.related_model is DataroomDocument:
+            references = references.exclude(dataroom=room, pk__in=item_ids)
+        elif relation.related_model is DocumentVersion:
+            references = references.exclude(pk__in=version_ids)
+        if references.exists():
+            return False
+    for version in document.versions.select_for_update().order_by('pk'):
+        for relation in DocumentVersion._meta.related_objects:
+            if relation.related_model is DocumentPage:
+                continue
+            if relation.related_model._base_manager.filter(**{relation.field.name: version}).exists():
+                return False
+    return True
+
+
 def abandon(request, payload, room, row, approved, file):
     """Remove only this unpublished batch; retain receipt authority after deletion."""
     fields(payload, COMMON | {'room_id', 'expected_revision'})
@@ -254,14 +277,19 @@ def abandon(request, payload, room, row, approved, file):
     uploads = list(steps.filter(operation='upload'))
     item_ids = [r.result['id'] for r in uploads]
     document_ids = [r.result['document_id'] for r in uploads]
+    version_ids = [r.result['version_id'] for r in uploads]
     folder_ids = [r.result['id'] for r in steps.filter(operation='folders')]
+    deletable = [document.pk for document in Document.objects.select_for_update().filter(
+        organization=room.organization, pk__in=document_ids).order_by('pk')
+        if exclusively_staged(document, room, item_ids, version_ids)]
     DataroomDocument.objects.filter(dataroom=room, pk__in=item_ids).delete()
     DataroomFolder.objects.filter(dataroom=room, pk__in=folder_ids).delete()
-    # Uploads are vault documents with no personal quota charge. Hard deletion
-    # cascades to versions/pages, releasing every reference to the staged bytes.
+    # Independently referenced uploads survive; only their batch rows are unlinked.
+    # Unreferenced vault uploads have no personal quota charge. Hard deletion
+    # cascades to their versions/pages, releasing references to staged bytes.
     # Keep storage I/O outside this transaction; the staging reaper collects it
     # only after cancellation commits and the room's staging lock is released.
-    Document.objects.filter(organization=room.organization, pk__in=document_ids).delete()
+    Document.objects.filter(pk__in=deletable).delete()
     row.staged_import = ''; row.revision += 1
     row.save(update_fields=['staged_import', 'revision'])
     result = {'id': str(room.pk), 'import_id': approved.import_id, 'revision': row.revision,

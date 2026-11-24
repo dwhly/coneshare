@@ -1,0 +1,457 @@
+FFFFFFFFFF..                                                             [100%]
+=================================== FAILURES ===================================
+____ test_abandon_keeps_independently_referenced_document[share_link-False] ____
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJDMNV2VJR3RW0W91NECR)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent0')
+creating = False, reference = 'share_link'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJE86G6Q8V8RNV0AYPAKY')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJE86G6Q8V8RNV0AYPAKY' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M87EJDH7XFFP2Y8JBBQ4VRRV
+____ test_abandon_keeps_independently_referenced_document[share_link-True] _____
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJEDSA55F5SG30V0D9BP0)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent1')
+creating = True, reference = 'share_link'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJEF0GFW986MR8CPJDRH7')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJEF0GFW986MR8CPJDRH7' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+___ test_abandon_keeps_independently_referenced_document[second_room-False] ____
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJEHPAQ303N8A6PV5731H)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent2')
+creating = False, reference = 'second_room'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJEPZ2XHKZRB812P9ZN85')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJEPZ2XHKZRB812P9ZN85' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+____ test_abandon_keeps_independently_referenced_document[second_room-True] ____
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJES2179T652W4YK39EBP)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent3')
+creating = True, reference = 'second_room'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJETTRQE5HJQEMQE7TWDP')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJETTRQE5HJQEMQE7TWDP' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+_______ test_abandon_keeps_independently_referenced_document[qna-False] ________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJEXKCEFM28S193WDHE9T)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent4')
+creating = False, reference = 'qna'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJEYZ92VNZJCETVGZM73C')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJEYZ92VNZJCETVGZM73C' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+________ test_abandon_keeps_independently_referenced_document[qna-True] ________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJF12JYSG0265R41N6Z00)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent5')
+creating = True, reference = 'qna'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJF2DXEP720F0Y5B0741P')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJF2DXEP720F0Y5B0741P' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+___ test_abandon_keeps_independently_referenced_document[file_request-False] ___
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJF53XF5QM6R4Z1F7NJHK)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent6')
+creating = False, reference = 'file_request'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJF6HHXJ0WT9MVSF982Y7')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJF6HHXJ0WT9MVSF982Y7' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+___ test_abandon_keeps_independently_referenced_document[file_request-True] ____
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJF8QF02PP2Q8MHX1R4D1)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent7')
+creating = True, reference = 'file_request'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJFA76RZ6WVS8J4C0PX4A')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJFA76RZ6WVS8J4C0PX4A' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+_____ test_abandon_keeps_independently_referenced_document[version-False] ______
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJFCV236QHK78BFWMRPJ8)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent8')
+creating = False, reference = 'version'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJFE6YJDF509PQPAPJETS')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJFE6YJDF509PQPAPJETS' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+______ test_abandon_keeps_independently_referenced_document[version-True] ______
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87EJFG7DQRBHXBJQZ44DJZK)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-244/test_abandon_keeps_independent9')
+creating = True, reference = 'version'
+
+    @pytest.mark.parametrize('creating', [False, True])
+    @pytest.mark.parametrize('reference', ['share_link', 'second_room', 'qna', 'file_request', 'version'])
+    def test_abandon_keeps_independently_referenced_document(setup, tmp_path, creating, reference):
+        path, body, result, content = staged(setup, creating)
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        if reference == 'share_link':
+            related = ShareLink.objects.create(document=doc, created_by=setup.user)
+        elif reference == 'second_room':
+            other = Dataroom.objects.create(organization=setup.org, created_by=setup.user, name='Other')
+            related = DataroomDocument.objects.create(dataroom=other, document=doc)
+        elif reference == 'qna':
+            related = QnAThread.objects.create(organization=setup.org, share_link=setup.link,
+                                              document=doc, subject='Report question')
+        elif reference == 'file_request':
+            request = FileRequest.objects.create(folder=doc.folder, created_by=setup.user, name='Reports')
+            related = UploadedFile.objects.create(file_request=request, document=doc,
+                uploader_name='Example', uploader_email='example@example.test')
+        else:
+            related = DocumentVersion.objects.create(document=doc, version_number=2,
+                storage_key='custom/later.pdf')
+        key = version.original_storage_key or version.storage_key
+        stored = tmp_path / key
+        stored.parent.mkdir(parents=True)
+        stored.write_bytes(content)
+        os.utime(stored, (time.time() - 90000,) * 2)
+        response = call(path, body)
+        assert response.status_code == 200, response.content
+>       assert Document.objects.filter(pk=doc.pk).exists()
+E       AssertionError: assert False
+E        +  where False = <bound method QuerySet.exists of <SoftDeleteQuerySet []>>()
+E        +    where <bound method QuerySet.exists of <SoftDeleteQuerySet []>> = <SoftDeleteQuerySet []>.exists
+E        +      where <SoftDeleteQuerySet []> = <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>>(pk='01M87EJFHDT51XY4VR9TWT48HQ')
+E        +        where <bound method QuerySet.filter of <documents.models.DocumentManager object at 0x785544c0f1a0>> = <documents.models.DocumentManager object at 0x785544c0f1a0>.filter
+E        +          where <documents.models.DocumentManager object at 0x785544c0f1a0> = Document.objects
+E        +        and   '01M87EJFHDT51XY4VR9TWT48HQ' = <Document: Report.pdf>.pk
+
+tests/dealroom/test_room_commands_s2_r4.py:77: AssertionError
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[share_link-False]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[share_link-True]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[second_room-False]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[second_room-True]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[qna-False]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[qna-True]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[file_request-False]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[file_request-True]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[version-False]
+FAILED tests/dealroom/test_room_commands_s2_r4.py::test_abandon_keeps_independently_referenced_document[version-True]
+10 failed, 2 passed in 11.87s

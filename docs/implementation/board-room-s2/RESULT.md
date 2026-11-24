@@ -264,3 +264,56 @@ per-mode diagnostics with NODE_PATH/PLAYWRIGHT_BROWSERS_PATH set explicitly.
 No Sign code or tests were changed and the full suite was not repeated. Thus the
 measured baseline still differs from the brief's three-failure expectation, with
 no new r3 failures. See the Board r3 RESULT for the exact failure names.
+
+
+## r4
+
+S-c and N-e are addressed on `ff99b71d`, as uncommitted file edits. The manager
+owns commits, builds and deployment. No running stack or preview was modified.
+
+- Abandon checks references while holding the room lock and locking staged
+  Documents. Only this batch's receipt-listed room rows, original versions and
+  rendered pages are owned. Any other Document relation (including ShareLink,
+  QnAThread, another room row, file-request uploads and issued copies), any
+  additional version, or an external reference to an original version preserves
+  the Document. The batch rows are still unlinked. Unreferenced staged uploads
+  retain hard deletion and post-commit reaping.
+- New tests cover ShareLink, second-room row, QnAThread, file request and later
+  version preservation in both building and existing rooms. They assert the
+  independent row, Document, original version and stored bytes survive, the batch
+  row disappears, and abandon replays. The original plain-upload deletion/reaper
+  tests remain unchanged and pass.
+- N-e tests both room modes against the real command endpoint: a stale revision
+  returns 409 without adding any receipt or deleting a batch row; the same
+  idempotency key with the fresh body succeeds with 200 and replays. This invariant
+  already passed before the r4 implementation.
+
+| Validation | Result / evidence |
+| --- | --- |
+| Failing-first, before production changes | **10 failed, 2 passed**, `r4-red.txt` |
+| S1a wrapper: S2/r2/r3/r4, all Board room reads and legacy review r2 | **276 passed**, `r4-focused.txt` |
+| Isolated PostgreSQL: S2 migration/concurrency plus r2/r3/r4 | **87 passed**, `r4-postgres.txt` |
+| Board full suite, one run | **696 passed, 8 failed, 58 skipped, 622 subtests passed**; see Board r4 report |
+| Deploy offline suite | **60 passed**; see `fd-board-dealroom/deploy/do1/DEPLOY-RESULT.md` |
+
+Commands from `backend/`:
+
+```sh
+sh ../docs/implementation/board-room-s1a/run-tests.sh \
+  tests/dealroom/test_room_commands_s2.py tests/dealroom/test_room_commands_s2_r2.py \
+  tests/dealroom/test_room_commands_s2_r3.py tests/dealroom/test_room_commands_s2_r4.py \
+  tests/dealroom/test_board_rooms.py tests/dealroom/test_board_rooms_r2.py \
+  tests/dealroom/test_board_rooms_r3.py tests/dealroom/test_review_r2.py -q
+```
+
+From the repository root:
+
+```sh
+bash docs/implementation/board-room-s2/run-isolated-postgres.sh \
+  tests/dealroom/test_room_commands_s2_r2.py tests/dealroom/test_room_commands_s2_r3.py \
+  tests/dealroom/test_room_commands_s2_r4.py
+```
+
+The PostgreSQL runner created and removed only its disposable test container.
+No schema/model/migration change was needed; the earlier 0006 rollout caveat still
+applies. No existing test was weakened, skipped or removed. No memory was saved.
