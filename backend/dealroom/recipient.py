@@ -15,7 +15,7 @@ from rest_framework.views import APIView
 from drf_spectacular.utils import extend_schema
 from sharelinks.models import ShareLink, Viewer, ViewSession, ShareLinkDataroomSetting
 from backend.utils import get_client_ip
-from .models import Challenge, IssuanceBudget
+from .models import Challenge, IssuanceBudget, RoomCommandReceipt
 from .policy import select_grant, evaluate
 from .brand import load_brand
 from .activity import record
@@ -160,13 +160,34 @@ class RecipientRoomView(APIView):
                 continue
             files.append({'id': str(item.pk), 'name': item.name or item.document.name, 'folder_id': str(item.folder_id or ''), 'page_count': version.num_pages or 1, 'download_level': file_decision.effective_download_level, 'page_url': f'/api/v1/links/{slug}/render-page/1/?dataroom_document_id={item.pk}', 'download_url': f'/api/v1/links/{slug}/download-file/?dataroom_document_id={item.pk}'})
         from sharelinks.views import _is_dataroom_folder_path_visible
+        # Ordinary legacy empty folders remain private. S2 explicitly approved
+        # empty folders become visible only with the completion receipt.
         visible_folder_ids = {item['folder_id'] for item in files if item['folder_id']}
+        completed = RoomCommandReceipt.objects.filter(room=link.dataroom, operation='complete').values_list('import_id', flat=True)
+        visible_folder_ids.update(r.result['id'] for r in RoomCommandReceipt.objects.filter(
+            room=link.dataroom, operation='folders', import_id__in=completed))
+        folder_rows = list(link.dataroom.folders.all())
+        by_id = {str(f.pk): f for f in folder_rows}
+        for fid in list(visible_folder_ids):
+            parent = by_id.get(fid)
+            seen = set()
+            while parent and parent.parent_id and str(parent.parent_id) not in seen:
+                seen.add(str(parent.parent_id))
+                visible_folder_ids.add(str(parent.parent_id))
+                parent = by_id.get(str(parent.parent_id))
+        orders = list(link.dataroom.item_orders.all())
+        folder_order = {str(o.folder_id): o.position for o in orders if o.folder_id}
+        item_order = {str(o.dataroom_document_id): o.position for o in orders if o.dataroom_document_id}
+        for item in files:
+            item['order'] = item_order.get(item['id'])
+        files.sort(key=lambda i: (i['folder_id'], i['order'] if i['order'] is not None else 0, i['id']))
         folders = [
-            {'id': str(folder.pk), 'name': folder.name}
-            for folder in link.dataroom.folders.order_by('name', 'pk')
-            if str(folder.pk) in visible_folder_ids
-            and _is_dataroom_folder_path_visible(link, folder)
+            {'id': str(folder.pk), 'name': folder.name, 'parent_id': str(folder.parent_id) if folder.parent_id else None,
+             'order': folder_order.get(str(folder.pk))}
+            for folder in folder_rows
+            if str(folder.pk) in visible_folder_ids and _is_dataroom_folder_path_visible(link, folder)
         ]
+        folders.sort(key=lambda f: (f['parent_id'] or '', f['order'] if f['order'] is not None else 0, f['id']))
         return Response({'id': str(link.dataroom_id), 'name': link.dataroom.name, 'member': {'name': member.name, 'email': member.email, 'org': member.recipient_org.name if member.recipient_org else ''}, 'folders': folders, 'files': files, 'brand': load_brand()})
 
 

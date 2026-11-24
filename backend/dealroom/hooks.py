@@ -9,6 +9,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from core.models import APIKey
 from dealroom_sign.models import ExecutedArtifact, RequestArtifact
 from .registry import resolve_operation, TIERS, RECIPIENT
+from .room_boundary import board_enforce, legacy_lock
 
 RENDER_SEMAPHORE = BoundedSemaphore(1)
 
@@ -38,6 +39,10 @@ def enforce(view, request):
     if op is None or op['boundary'] == 'denied':
         raise PermissionDenied('Unclassified or disabled operation.')
     request.dealroom_operation = op
+    if hasattr(request, 'board_binding') and (type(view).__module__.startswith('dealroom.') or type(view).__name__ in {'SigningNdaPolicyView', 'NdaPlacementView'}):
+        board_enforce(request, op)
+    elif op['boundary'] == 'staff':
+        legacy_lock(view, request)
     if type(view).__name__ in RECIPIENT or type(view).__module__.startswith('filerequests.'):
         guard_recipient(request, view)
     if op['boundary'] == 'staff' and not (request.user.is_authenticated and request.user.is_staff):

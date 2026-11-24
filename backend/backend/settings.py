@@ -621,3 +621,6 @@ MIDDLEWARE = ['dealroom_sign.recipient_proxy.RecipientBoundaryMiddleware', *MIDD
 FLEET_TENANT_NAME = os.environ.get('FLEET_TENANT_NAME', '')
 FLEET_ABOUT_URL = os.environ.get('FLEET_ABOUT_URL', '')
 FLEET_SOURCE_URL = os.environ.get('FLEET_SOURCE_URL', '')
+
+# S2 rollout switch. Disabling retains receipts and closes all continuation writes.
+BOARD_ROOM_WRITES_ENABLED = os.environ.get("BOARD_ROOM_WRITES_ENABLED", "false").lower() == "true"

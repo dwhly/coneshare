@@ -1,0 +1,171 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___________________ test_agent_nda_preparation_bounds[size] ____________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87889JJH4FCSRKPTEZR0WDR)>)
+case = 'size'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 413
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:233: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M87889E642W0CKVQM5BK9KY1
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:04:32,472 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+___________________ test_agent_nda_preparation_bounds[pages] ___________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8788AVSB7AQMD3TS8NSFQ80)>)
+case = 'pages'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 400
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:233: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:04:32,647 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+__________________ test_agent_nda_preparation_bounds[office] ___________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8788AX42YM45FTKTEYYF4DT)>)
+case = 'office'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 400
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:233: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:04:32,684 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+___________________ test_agent_nda_preparation_bounds[rate] ____________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8788AYHV176J2NMVQJ4NNVG)>)
+case = 'rate'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 429
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:233: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:04:32,729 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[size]
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[pages]
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[office]
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[rate]
+4 failed, 38 deselected in 14.46s

@@ -22,7 +22,7 @@ from documents.models import DocumentVersion
 from documents.renderers import get_renderer
 from sharelinks.models import ShareLinkAccessGrant, ViewSession, Viewer, NDAAcceptance, DataroomVisit
 from . import hooks
-from .models import Activity, BoardRoom, MemberDeny
+from .models import Activity, BoardRoom, MemberDeny, RoomCommandReceipt
 from .staff_preview import issue_staff_preview
 
 PAGE_SIZE = 50
@@ -103,7 +103,8 @@ def excluded_document(document_id):
 
 def visible_items(room):
     return [item for item in room.documents.select_related('document', 'folder', 'dataroom')
-            .prefetch_related('document__versions').order_by('created_at', 'pk') if not excluded_item(item)]
+            .prefetch_related('document__versions').order_by('created_at', 'pk') if not excluded_item(item)
+            and not any(v.metadata.get('board_import_purpose') == 'nda' for v in item.document.versions.all())]
 
 
 def activity_projection(fact):
@@ -222,6 +223,14 @@ def room_detail(row):
                                 'accepted_at': a.accepted_at}
                                for a in NDAAcceptance.objects.filter(share_link__dataroom=room)],
     }
+    if row.draft_id or row.staged_import:
+        data['staged_import'] = row.staged_import or None
+        approved = RoomCommandReceipt.objects.filter(room=room, operation='create').first()
+        data['access'] = approved.approved_manifest['access'] if approved else {'download_ceiling':'none','expires_at':None}
+        for item in data['items']:
+            version = DocumentVersion.objects.filter(pk=item['version_id']).first()
+            item['sha256'] = version.metadata.get('source_sha256') if version else None
+            item['status'] = preview_state(version, get_renderer(version))['status'] if version else 'failed'
     data['activity'] = room_activity(room)
     return data
 

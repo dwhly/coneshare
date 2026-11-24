@@ -1,0 +1,1238 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                       [100%]
+=================================== FAILURES ===================================
+___________ test_create_receipt_response_loss_conflict_and_tombstone ___________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790F0GWV5JTAZYTWCAZA69)>)
+
+    def test_create_receipt_response_loss_conflict_and_tombstone(setup):
+>       r, body = start(setup); assert r.status_code == 201, r.content
+E       AssertionError: b'{"detail":"Authentication credentials were not provided."}'
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:54: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M8790EK44PQX8AGV76QVT4K7
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:44,608 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+_________ test_every_board_write_requires_human[create-service:worker] _________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790GFA8J5753WB0QG2M7PY)>)
+via = 'service:worker', operation = 'create'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/', {}, via='service:worker')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:44,840 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+_____________ test_every_board_write_requires_human[create-agent] ______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790GJCRJMP1111HGC31R6Y)>)
+via = 'agent', operation = 'create'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/', {}, via='agent')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:44,930 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+______________ test_every_board_write_requires_human[create-dev] _______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790GMZ2WZ80GRX4KQBWGK8)>)
+via = 'dev', operation = 'create'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/', {}, via='dev')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,015 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________________ test_every_board_write_requires_human[create-] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790GRWHJ89WM2KNMSHEJZH)>)
+via = '', operation = 'create'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/', {}, via='')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,152 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________ test_every_board_write_requires_human[folders-service:worker] _________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790GW4B7CY9CM5DBX14NZ3)>)
+via = 'service:worker', operation = 'folders'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790GVJV7K2XAW3ZRWXVZN2/folders/', {}, via='service:worker')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,241 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790GVJV7K2XAW3ZRWXVZN2/folders/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790GVJV7K2XAW3ZRWXVZN2/folders/
+_____________ test_every_board_write_requires_human[folders-agent] _____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790GZMG4FK16TC0Q1W2MK0)>)
+via = 'agent', operation = 'folders'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790GYQH84V1CZ4XZFTPCNQ/folders/', {}, via='agent')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,365 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790GYQH84V1CZ4XZFTPCNQ/folders/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790GYQH84V1CZ4XZFTPCNQ/folders/
+______________ test_every_board_write_requires_human[folders-dev] ______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790H2FTN08S22S0M7TB536)>)
+via = 'dev', operation = 'folders'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790H21QVTT1WE0PVYR5B43/folders/', {}, via='dev')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,441 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790H21QVTT1WE0PVYR5B43/folders/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790H21QVTT1WE0PVYR5B43/folders/
+_______________ test_every_board_write_requires_human[folders-] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790H4SSBM3CC18HC892M04)>)
+via = '', operation = 'folders'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790H4CY67JBSCTWSRNVX4E/folders/', {}, via='')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,516 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790H4CY67JBSCTWSRNVX4E/folders/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790H4CY67JBSCTWSRNVX4E/folders/
+_________ test_every_board_write_requires_human[upload-service:worker] _________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790H6S0W1WV8WVK8MB6BS1)>)
+via = 'service:worker', operation = 'upload'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790H6DMNM4AQKKZ70E3ER4/upload/', {}, via='service:worker')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,577 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790H6DMNM4AQKKZ70E3ER4/upload/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790H6DMNM4AQKKZ70E3ER4/upload/
+_____________ test_every_board_write_requires_human[upload-agent] ______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790H8Y9XAEXM3BM9DH5783)>)
+via = 'agent', operation = 'upload'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790H8HPDGFM1CYMW3H6FYN/upload/', {}, via='agent')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,649 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790H8HPDGFM1CYMW3H6FYN/upload/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790H8HPDGFM1CYMW3H6FYN/upload/
+______________ test_every_board_write_requires_human[upload-dev] _______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HBA35BCD3Q8236GW1P9)>)
+via = 'dev', operation = 'upload'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790HAWNWWEDKQWTMGWDN89/upload/', {}, via='dev')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,723 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790HAWNWWEDKQWTMGWDN89/upload/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790HAWNWWEDKQWTMGWDN89/upload/
+________________ test_every_board_write_requires_human[upload-] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HDFVESHK5YW06321W8P)>)
+via = '', operation = 'upload'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/01M8790HCZNM5HYXH0QXKH6386/upload/', {}, via='')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,796 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/01M8790HCZNM5HYXH0QXKH6386/upload/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/01M8790HCZNM5HYXH0QXKH6386/upload/
+________ test_every_board_write_requires_human[complete-service:worker] ________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HGB26XEEPASQ5X9JMK8)>)
+via = 'service:worker', operation = 'complete'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790HFPJZ3YEF4J4KWRM11V/complete/', {}, via='service:worker')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:45,921 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790HFPJZ3YEF4J4KWRM11V/complete/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790HFPJZ3YEF4J4KWRM11V/complete/
+____________ test_every_board_write_requires_human[complete-agent] _____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HMMHRX1Z2ZWC9B3P909)>)
+via = 'agent', operation = 'complete'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790HKGD558QY4HKD8DMRD7/complete/', {}, via='agent')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,024 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790HKGD558QY4HKD8DMRD7/complete/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790HKGD558QY4HKD8DMRD7/complete/
+_____________ test_every_board_write_requires_human[complete-dev] ______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HQJTNWE64JVSGPJ07MY)>)
+via = 'dev', operation = 'complete'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790HPY7SZKFD192MJ02QJ0/complete/', {}, via='dev')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,118 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790HPY7SZKFD192MJ02QJ0/complete/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790HPY7SZKFD192MJ02QJ0/complete/
+_______________ test_every_board_write_requires_human[complete-] _______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HT8BC93NEGDJREE9ZQ2)>)
+via = '', operation = 'complete'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790HSRA7XR4B1WCM01JKQP/complete/', {}, via='')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,201 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790HSRA7XR4B1WCM01JKQP/complete/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790HSRA7XR4B1WCM01JKQP/complete/
+________ test_every_board_write_requires_human[imports-service:worker] _________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HWGCM54CVP7MYX19EEK)>)
+via = 'service:worker', operation = 'imports'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790HVYG06MX36TMFS8F8AT/imports/', {}, via='service:worker')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,277 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790HVYG06MX36TMFS8F8AT/imports/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790HVYG06MX36TMFS8F8AT/imports/
+_____________ test_every_board_write_requires_human[imports-agent] _____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790HYTMD1R2JEW0D8QRBDC)>)
+via = 'agent', operation = 'imports'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790HYE4ZRG3KMBXSEMT2XP/imports/', {}, via='agent')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,349 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790HYE4ZRG3KMBXSEMT2XP/imports/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790HYE4ZRG3KMBXSEMT2XP/imports/
+______________ test_every_board_write_requires_human[imports-dev] ______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790J125DX1XFRD124WPFP2)>)
+via = 'dev', operation = 'imports'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790J0NN93XKF9B17GABTEV/imports/', {}, via='dev')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,419 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790J0NN93XKF9B17GABTEV/imports/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790J0NN93XKF9B17GABTEV/imports/
+_______________ test_every_board_write_requires_human[imports-] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790J390QZH7Y9N3PWCSH8K)>)
+via = '', operation = 'imports'
+
+    @pytest.mark.parametrize('via', ['service:worker', 'agent', 'dev', ''])
+    @pytest.mark.parametrize('operation', ['create', 'folders', 'upload', 'complete', 'imports'])
+    def test_every_board_write_requires_human(setup, via, operation):
+        setup.binding.role='writer'; setup.binding.room_capabilities=['write']; setup.binding.save()
+        path = BASE if operation=='create' else BASE+str(setup.room.pk)+'/'+operation+'/'
+>       assert call(path, {}, via=via).status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M8790J2W1DSREVJS0XC0YZK7/imports/', {}, via='')
+
+tests/dealroom/test_room_commands_s2.py:71: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,494 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790J2W1DSREVJS0XC0YZK7/imports/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790J2W1DSREVJS0XC0YZK7/imports/
+______________ test_empty_private_room_complete_and_stale_replay _______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790J616ZP9KK00EQRV30MC)>)
+
+    def test_empty_private_room_complete_and_stale_replay(setup):
+>       m=manifest(); r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:74: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,582 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+__________________ test_nda_on_never_completes_without_policy __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790J8D999XHAFK0V9DH4PF)>)
+
+    def test_nda_on_never_completes_without_policy(setup):
+>       m=manifest(nda=True); r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:82: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,653 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+_______________ test_folder_tree_order_empty_and_stored_manifest _______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JBEP7SC3TP6DYQ3SJN3)>)
+
+    def test_folder_tree_order_empty_and_stored_manifest(setup):
+        items=[{'client_item_id':'parent','kind':'folder','name':'Parent','parent_id':None,'position':0},
+               {'client_item_id':'empty','kind':'folder','name':'Empty','parent_id':'parent','position':2}]
+>       m=manifest(items); r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:91: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:46,766 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+_______ test_building_recipient_and_legacy_jwt_closed_ready_staff_works ________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JE6DF2XQ801T7ZFTMDZ)>)
+
+    def test_building_recipient_and_legacy_jwt_closed_ready_staff_works(setup):
+        row=models.BoardRoom.objects.create(board_id='fixture',room=setup.room,build_state='building')
+        from dealroom.policy import select_grant
+        from rest_framework.exceptions import PermissionDenied
+        ShareLinkAccessGrant.objects.create(share_link=setup.link,email='reader@example.test',created_by=setup.user)
+>       with pytest.raises(PermissionDenied,match='unavailable'):
+E       Failed: DID NOT RAISE <class 'rest_framework.exceptions.PermissionDenied'>
+
+tests/dealroom/test_room_commands_s2.py:112: Failed
+___________________________ test_legacy_doc_message ____________________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JHR5V0E8274P5MAPRDZ)>)
+
+    def test_legacy_doc_message(setup):
+        from dealroom.uploads import upload
+        from rest_framework.exceptions import ValidationError
+        with pytest.raises(ValidationError,match='save as .docx'):
+>           upload(setup.room,setup.user,SimpleUploadedFile('old.doc',b'legacy'))
+
+tests/dealroom/test_room_commands_s2.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+room = <Dataroom: Board room>, actor = <User: staff@example.test>
+file = <SimpleUploadedFile: old.doc (text/plain)>, folder_id = None
+
+    def upload(room, actor, file, folder_id=None):
+        from pypdf import PdfReader
+        import zipfile
+        ext = Path(file.name).suffix.lower()
+        if ext not in ALLOWED or file.size > 50 * 1024 * 1024:
+>           raise ValidationError('Supported PDF/DOCX/PPTX/XLSX up to 50 MiB required. Macros and video are disabled.')
+E           rest_framework.exceptions.ValidationError: [ErrorDetail(string='Supported PDF/DOCX/PPTX/XLSX up to 50 MiB required. Macros and video are disabled.', code='invalid')]
+
+dealroom/uploads.py:20: ValidationError
+
+During handling of the above exception, another exception occurred:
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JHR5V0E8274P5MAPRDZ)>)
+
+    def test_legacy_doc_message(setup):
+        from dealroom.uploads import upload
+        from rest_framework.exceptions import ValidationError
+>       with pytest.raises(ValidationError,match='save as .docx'):
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'save as .docx'
+E        Input: "[ErrorDetail(string='Supported PDF/DOCX/PPTX/XLSX up to 50 MiB required. Macros and video are disabled.', code='invalid')]"
+
+tests/dealroom/test_room_commands_s2.py:124: AssertionError
+___________________________ test_contract_operations ___________________________
+
+    def test_contract_operations():
+        from pathlib import Path
+        contract=json.loads((Path(__file__).parent/'golden/board-rooms-v1.json').read_text())
+>       assert set(contract['commands']['operations'])=={'create','folders','upload','imports','complete'}
+E       KeyError: 'commands'
+
+tests/dealroom/test_room_commands_s2.py:130: KeyError
+________ test_upload_replay_pinned_bytes_readiness_and_hash_check[pdf] _________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JNYMBEAWXWQJ8W1B9CZ)>)
+kind = 'pdf'
+django_capture_on_commit_callbacks = <bound method TestCase.captureOnCommitCallbacks of <class 'django.test.testcases.TestCase'>>
+
+    @pytest.mark.parametrize('kind',['pdf','docx'])
+    def test_upload_replay_pinned_bytes_readiness_and_hash_check(setup,kind,django_capture_on_commit_callbacks):
+        from unittest.mock import patch
+        from datarooms.models import DataroomDocument
+        from documents.models import DocumentVersion
+        from documents.renderers.base import BasePreviewRenderer
+        content=file_bytes(kind); sha=hashlib.sha256(content).hexdigest(); name='Report.'+kind
+        m=manifest([{'client_item_id':'file','kind':'file','name':name,'parent_id':None,'position':0,'sha256':sha,'purpose':'document'}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:155: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,098 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________ test_upload_replay_pinned_bytes_readiness_and_hash_check[docx] ________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JRTENDA47A1QSQ8X7ZP)>)
+kind = 'docx'
+django_capture_on_commit_callbacks = <bound method TestCase.captureOnCommitCallbacks of <class 'django.test.testcases.TestCase'>>
+
+    @pytest.mark.parametrize('kind',['pdf','docx'])
+    def test_upload_replay_pinned_bytes_readiness_and_hash_check(setup,kind,django_capture_on_commit_callbacks):
+        from unittest.mock import patch
+        from datarooms.models import DataroomDocument
+        from documents.models import DocumentVersion
+        from documents.renderers.base import BasePreviewRenderer
+        content=file_bytes(kind); sha=hashlib.sha256(content).hexdigest(); name='Report.'+kind
+        m=manifest([{'client_item_id':'file','kind':'file','name':name,'parent_id':None,'position':0,'sha256':sha,'purpose':'document'}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:155: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,182 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+___________ test_add_batch_keeps_published_content_and_locks_legacy ____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JVPEHJ9RCZSS7B639YQ)>)
+
+    def test_add_batch_keeps_published_content_and_locks_legacy(setup):
+        from dealroom.policy import select_grant
+        from unittest.mock import patch
+        row=models.BoardRoom.objects.create(board_id='fixture',room=setup.room,build_state='ready')
+        setup.binding.role='writer'; setup.binding.room_capabilities=['read','write']; setup.binding.save()
+        ShareLinkAccessGrant.objects.create(share_link=setup.link,email='reader@example.test',created_by=setup.user)
+        m=manifest([{'client_item_id':'empty','kind':'folder','name':'Empty','parent_id':None,'position':4}])
+        body={'expected_revision':1,'approved_manifest':m,'manifest_sha256':digest(m),'idempotency_key':'batch-1'}
+        path=BASE+str(setup.room.pk)+'/'
+>       batch=call(path+'imports/',body); assert batch.status_code==201,batch.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 201
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:194: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,273 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M8790JV44TAN8BCWY74DBW51/imports/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M8790JV44TAN8BCWY74DBW51/imports/
+________________ test_continuation_is_exactly_approved[change0] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790JYCW16NJFXQ80GS8G1A)>)
+change = {'approval_key': 'missing'}
+
+    @pytest.mark.parametrize('change',[{'approval_key':'missing'},{'import_id':'wrong'},{'name':'Other'},{'position':8},{'parent_id':'other'}])
+    def test_continuation_is_exactly_approved(setup,change):
+        m=manifest([{'client_item_id':'folder','kind':'folder','name':'Folder','parent_id':None,'position':0}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:215: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,363 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________________ test_continuation_is_exactly_approved[change1] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790K16XTXB3KRZY7MWC71S)>)
+change = {'import_id': 'wrong'}
+
+    @pytest.mark.parametrize('change',[{'approval_key':'missing'},{'import_id':'wrong'},{'name':'Other'},{'position':8},{'parent_id':'other'}])
+    def test_continuation_is_exactly_approved(setup,change):
+        m=manifest([{'client_item_id':'folder','kind':'folder','name':'Folder','parent_id':None,'position':0}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:215: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,450 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________________ test_continuation_is_exactly_approved[change2] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790K3J4BDMW2YN7R8MDH7V)>)
+change = {'name': 'Other'}
+
+    @pytest.mark.parametrize('change',[{'approval_key':'missing'},{'import_id':'wrong'},{'name':'Other'},{'position':8},{'parent_id':'other'}])
+    def test_continuation_is_exactly_approved(setup,change):
+        m=manifest([{'client_item_id':'folder','kind':'folder','name':'Folder','parent_id':None,'position':0}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:215: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,523 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________________ test_continuation_is_exactly_approved[change3] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790K62WX6SA97CYCFP14HF)>)
+change = {'position': 8}
+
+    @pytest.mark.parametrize('change',[{'approval_key':'missing'},{'import_id':'wrong'},{'name':'Other'},{'position':8},{'parent_id':'other'}])
+    def test_continuation_is_exactly_approved(setup,change):
+        m=manifest([{'client_item_id':'folder','kind':'folder','name':'Folder','parent_id':None,'position':0}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:215: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,611 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________________ test_continuation_is_exactly_approved[change4] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790K9X2M0QJBNPZNV7EQ6E)>)
+change = {'parent_id': 'other'}
+
+    @pytest.mark.parametrize('change',[{'approval_key':'missing'},{'import_id':'wrong'},{'name':'Other'},{'position':8},{'parent_id':'other'}])
+    def test_continuation_is_exactly_approved(setup,change):
+        m=manifest([{'client_item_id':'folder','kind':'folder','name':'Folder','parent_id':None,'position':0}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:215: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,738 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________ test_write_capability_and_role_required[reader-capabilities0] _________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790KCSYNK0KCJF5X74CK2Y)>)
+role = 'reader', capabilities = ['write']
+
+    @pytest.mark.parametrize('role,capabilities',[('reader',['write']),('writer',[]),('manager',['read'])])
+    def test_write_capability_and_role_required(setup,role,capabilities):
+        setup.binding.role=role;setup.binding.room_capabilities=capabilities;setup.binding.save()
+>       assert call(BASE,{}).status_code==403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/', {})
+
+tests/dealroom/test_room_commands_s2.py:224: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,820 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________ test_write_capability_and_role_required[writer-capabilities1] _________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790KFBV8G6FHXPXAQT623B)>)
+role = 'writer', capabilities = []
+
+    @pytest.mark.parametrize('role,capabilities',[('reader',['write']),('writer',[]),('manager',['read'])])
+    def test_write_capability_and_role_required(setup,role,capabilities):
+        setup.binding.role=role;setup.binding.room_capabilities=capabilities;setup.binding.save()
+>       assert call(BASE,{}).status_code==403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/', {})
+
+tests/dealroom/test_room_commands_s2.py:224: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,899 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+________ test_write_capability_and_role_required[manager-capabilities2] ________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790KHANBWJ38FY5JNXVZ14)>)
+role = 'manager', capabilities = ['read']
+
+    @pytest.mark.parametrize('role,capabilities',[('reader',['write']),('writer',[]),('manager',['read'])])
+    def test_write_capability_and_role_required(setup,role,capabilities):
+        setup.binding.role=role;setup.binding.room_capabilities=capabilities;setup.binding.save()
+>       assert call(BASE,{}).status_code==403
+E       assert 401 == 403
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+E        +    where <Response status_code=401, "application/json"> = call('/api/v1/dealroom/rooms/', {})
+
+tests/dealroom/test_room_commands_s2.py:224: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:47,971 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+___________________ test_agent_nda_preparation_bounds[size] ____________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790KKR5Y8Y6TNWSVQGKK9R)>)
+case = 'size'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 413
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:242: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:48,175 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+___________________ test_agent_nda_preparation_bounds[pages] ___________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790KTGBQ94W2X45254D58X)>)
+case = 'pages'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 400
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:242: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:48,261 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+__________________ test_agent_nda_preparation_bounds[office] ___________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790KWSJPR684YKJES925XX)>)
+case = 'office'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 400
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:242: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:48,328 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+___________________ test_agent_nda_preparation_bounds[rate] ____________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790KZBEYA45KM25D8CXKFW)>)
+case = 'rate'
+
+    @pytest.mark.parametrize('case',['size','pages','office','rate'])
+    def test_agent_nda_preparation_bounds(setup,case):
+        import io
+        from pypdf import PdfWriter
+        from django.core.cache import cache
+        setup.binding.room_capabilities=['read'];setup.binding.save();cache.clear()
+        body={'file':SimpleUploadedFile('nda.pdf',file_bytes('pdf'))}
+        if case=='size':body['file']=SimpleUploadedFile('nda.pdf',b'%PDF-'+b'x'*(15*1024*1024))
+        if case=='pages':
+            writer=PdfWriter();out=io.BytesIO()
+            for _ in range(51):writer.add_blank_page(width=100,height=100)
+            writer.write(out);body['file']=SimpleUploadedFile('nda.pdf',out.getvalue())
+        if case=='office':body['file']=SimpleUploadedFile('nda.docx',b'not-an-office-container')
+        if case=='rate':cache.set('room-nda-placement:'+str(setup.binding.pk),10,60)
+        result=call('/api/v1/dealroom-sign/nda-placement/',body,via='service:assistant',multipart=True)
+>       assert result.status_code==({'size':413,'pages':400,'office':400,'rate':429}[case]),result.content
+E       AssertionError: b'
+E         <!doctype html>
+E         <html lang="en">
+E         <head>
+E           <title>Not Found</title>
+E         </head>
+E         <body>
+E           <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+E         </body>
+E         </html>
+E         '
+E       assert 404 == 429
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+tests/dealroom/test_room_commands_s2.py:242: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:48,416 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom-sign/nda-placement/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom-sign/nda-placement/
+__________________ test_command_contract_has_typed_mcp_bodies __________________
+
+    def test_command_contract_has_typed_mcp_bodies():
+        from pathlib import Path
+>       contract=json.loads((Path(__file__).parent/'golden/board-rooms-v1.json').read_text())['commands']
+E       KeyError: 'commands'
+
+tests/dealroom/test_room_commands_s2.py:247: KeyError
+_______ test_recipient_sees_approved_empty_folders_only_after_completion _______
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790M34AFMX5R9XQKX795TW)>)
+
+    def test_recipient_sees_approved_empty_folders_only_after_completion(setup):
+        from django.utils import timezone
+        from sharelinks.models import Viewer
+        m=manifest([{'client_item_id':'root','kind':'folder','name':'Outer','parent_id':None,'position':0},
+                    {'client_item_id':'child','kind':'folder','name':'Empty','parent_id':'root','position':1}])
+>       r,_=start(setup,m);result=r.json();room=Dataroom.objects.get(pk=result['id']);link=room.roompolicy.entry_link
+E       KeyError: 'id'
+
+tests/dealroom/test_room_commands_s2.py:259: KeyError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:48,540 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+___________ test_rollout_switch_blocks_writes_not_receipt_retention ____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790M5WXV1RXVPDES2R0Y14)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x79dc179fa360>
+
+    def test_rollout_switch_blocks_writes_not_receipt_retention(setup,settings):
+>       response,body=start(setup);assert response.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:277: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:48,628 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+______________ test_create_replay_rechecks_room_assignment_scope _______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790M8G5TEAJP1JTJ9RWW6Z)>)
+
+    def test_create_replay_rechecks_room_assignment_scope(setup):
+>       r,body=start(setup);assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2.py:284: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:48,707 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+__________ test_staging_reaper_preserves_referenced_and_active_bytes ___________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790MB6BFJZR7EB12ZMZ30E)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-160/test_staging_reaper_preserves_0')
+
+    def test_staging_reaper_preserves_referenced_and_active_bytes(setup,tmp_path):
+        import os
+        from django.core.management import call_command
+        folder=tmp_path/str(setup.org.pk)/'board-import'/str(setup.room.pk)/('a'*64)
+        folder.mkdir(parents=True)
+        published=folder/('b'*64);orphan=folder/('c'*64)
+        for file in (published,orphan):
+            file.write_bytes(b'fixture');os.utime(file,(time.time()-90000,)*2)
+        setup.version.original_storage_key=published.relative_to(tmp_path).as_posix();setup.version.save()
+>       row=models.BoardRoom.objects.create(board_id='fixture',room=setup.room,build_state='ready',staged_import='active')
+
+tests/dealroom/test_room_commands_s2.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/manager.py:87: in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/query.py:663: in create
+    obj = self.model(**kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <BoardRoom: BoardRoom object (None)>, args = ()
+kwargs = {'staged_import': 'active'}, cls = <class 'dealroom.models.BoardRoom'>
+opts = <Options for BoardRoom>, _setattr = <built-in function setattr>
+_DEFERRED = <Deferred field>
+fields_iter = <tuple_iterator object at 0x79dc178ff550>, val = None
+field = <django.db.models.fields.DateTimeField: ever_invited_at>
+is_related_object = False, rel_obj = <Dataroom: Board room>
+property_names = frozenset({'pk'})
+
+    def __init__(self, *args, **kwargs):
+        # Alias some things as locals to avoid repeat global lookups
+        cls = self.__class__
+        opts = self._meta
+        _setattr = setattr
+        _DEFERRED = DEFERRED
+        if opts.abstract:
+            raise TypeError("Abstract models cannot be instantiated.")
+    
+        pre_init.send(sender=cls, args=args, kwargs=kwargs)
+    
+        # Set up the storage for instance state
+        self._state = ModelState()
+    
+        # There is a rather weird disparity here; if kwargs, it's set, then args
+        # overrides it. It should be one or the other; don't duplicate the work
+        # The reason for the kwargs check is that standard iterator passes in by
+        # args, and instantiation for iteration is 33% faster.
+        if len(args) > len(opts.concrete_fields):
+            # Daft, but matches old exception sans the err msg.
+            raise IndexError("Number of args exceeds number of fields")
+    
+        if not kwargs:
+            fields_iter = iter(opts.concrete_fields)
+            # The ordering of the zip calls matter - zip throws StopIteration
+            # when an iter throws it. So if the first iter throws it, the second
+            # is *not* consumed. We rely on this, so don't change the order
+            # without changing the logic.
+            for val, field in zip(args, fields_iter):
+                if val is _DEFERRED:
+                    continue
+                _setattr(self, field.attname, val)
+        else:
+            # Slower, kwargs-ready version.
+            fields_iter = iter(opts.fields)
+            for val, field in zip(args, fields_iter):
+                if val is _DEFERRED:
+                    continue
+                _setattr(self, field.attname, val)
+                if kwargs.pop(field.name, NOT_PROVIDED) is not NOT_PROVIDED:
+                    raise TypeError(
+                        f"{cls.__qualname__}() got both positional and "
+                        f"keyword arguments for field '{field.name}'."
+                    )
+    
+        # Now we're left with the unprocessed fields that *must* come from
+        # keywords, or default.
+    
+        for field in fields_iter:
+            is_related_object = False
+            # Virtual field
+            if field.column is None or field.generated:
+                continue
+            if kwargs:
+                if isinstance(field.remote_field, ForeignObjectRel):
+                    try:
+                        # Assume object instance was passed in.
+                        rel_obj = kwargs.pop(field.name)
+                        is_related_object = True
+                    except KeyError:
+                        try:
+                            # Object instance wasn't passed in -- must be an ID.
+                            val = kwargs.pop(field.attname)
+                        except KeyError:
+                            val = field.get_default()
+                else:
+                    try:
+                        val = kwargs.pop(field.attname)
+                    except KeyError:
+                        # This is done with an exception rather than the
+                        # default argument on pop because we don't want
+                        # get_default() to be evaluated, and then not used.
+                        # Refs #12057.
+                        val = field.get_default()
+            else:
+                val = field.get_default()
+    
+            if is_related_object:
+                # If we are passed a related instance, set it using the
+                # field.name instead of field.attname (e.g. "user" instead of
+                # "user_id") so that the object gets properly cached (and type
+                # checked) by the RelatedObjectDescriptor.
+                if rel_obj is not _DEFERRED:
+                    _setattr(self, field.name, rel_obj)
+            else:
+                if val is not _DEFERRED:
+                    _setattr(self, field.attname, val)
+    
+        if kwargs:
+            property_names = opts._property_names
+            unexpected = ()
+            for prop, value in kwargs.items():
+                # Any remaining kwargs must correspond to properties or virtual
+                # fields.
+                if prop in property_names:
+                    if value is not _DEFERRED:
+                        _setattr(self, prop, value)
+                else:
+                    try:
+                        opts.get_field(prop)
+                    except FieldDoesNotExist:
+                        unexpected += (prop,)
+                    else:
+                        if value is not _DEFERRED:
+                            _setattr(self, prop, value)
+            if unexpected:
+                unexpected_names = ", ".join(repr(n) for n in unexpected)
+>               raise TypeError(
+                    f"{cls.__name__}() got unexpected keyword arguments: "
+                    f"{unexpected_names}"
+                )
+E               TypeError: BoardRoom() got unexpected keyword arguments: 'staged_import'
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/base.py:569: TypeError
+___________ test_same_key_concurrent_create_never_duplicates_or_500 ____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790MHT7A37A29QD91QDTNC)>)
+
+    def test_same_key_concurrent_create_never_duplicates_or_500(setup):
+        assert connection.vendor=='postgresql', 'This locking acceptance test requires PostgreSQL'
+        setup.binding.role='writer';setup.binding.room_capabilities=['write'];setup.binding.save()
+        m=manifest();body={'name':m['name'],'board_draft_id':'concurrent','draft_revision':1,
+            'approved_manifest':m,'manifest_sha256':digest(m),'idempotency_key':'concurrent'}
+        barrier=Barrier(2)
+        def send():
+            close_old_connections()
+            try:
+                barrier.wait(timeout=10)
+                result=call(BASE,body)
+                return result.status_code,result.json()
+            finally:
+                close_old_connections()
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            results=list(pool.map(lambda _:send(),range(2)))
+>       assert all(status in (201,409) for status,_ in results),results
+E       AssertionError: [(401, {'detail': 'Authentication credentials were not provided.'}), (401, {'detail': 'Authentication credentials were not provided.'})]
+E       assert False
+E        +  where False = all(<generator object test_same_key_concurrent_create_never_duplicates_or_500.<locals>.<genexpr> at 0x79dc17997030>)
+
+tests/s2_postgres/test_room_concurrency.py:29: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:49,033 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+2026-11-24 17:17:49,041 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+--------------------------- Captured stdout teardown ---------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M8790MTFAXYF5DV4TJGTK0MF
+_____________ test_same_key_concurrent_upload_has_one_item_version _____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M8790N2F9FRDGTYBVF8QD2WX)>)
+
+    def test_same_key_concurrent_upload_has_one_item_version(setup):
+        import hashlib
+        from unittest.mock import patch
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from datarooms.models import DataroomDocument
+        from documents.models import DocumentVersion
+        from documents.renderers.base import BasePreviewRenderer
+        from tests.dealroom.test_room_commands_s2 import file_bytes, start, continuation
+        assert connection.vendor=='postgresql', 'This locking acceptance test requires PostgreSQL'
+        content=file_bytes('pdf'); sha=hashlib.sha256(content).hexdigest()
+        m=manifest([{'client_item_id':'file','kind':'file','name':'Report.pdf','parent_id':None,'position':0,'sha256':sha,'purpose':'document'}])
+>       r,_=start(setup,m); assert r.status_code==201
+E       assert 401 == 201
+E        +  where 401 = <Response status_code=401, "application/json">.status_code
+
+tests/s2_postgres/test_room_concurrency.py:48: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:17:49,539 [WARNING] django.request:253 log_response() - Unauthorized: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Unauthorized: /api/v1/dealroom/rooms/
+--------------------------- Captured stdout teardown ---------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M8790NA9C5D6TXDDS3DGPQCB
+_______ test_receipt_migration_is_reversible_on_empty_isolated_database ________
+
+    def test_receipt_migration_is_reversible_on_empty_isolated_database():
+        from django.db.migrations.executor import MigrationExecutor
+        assert connection.vendor=='postgresql'
+        executor=MigrationExecutor(connection)
+        leaves=executor.loader.graph.leaf_nodes()
+        executor.migrate([('dealroom','0005_boardroom')])
+        assert 'dealroom_roomcommandreceipt' not in connection.introspection.table_names()
+        MigrationExecutor(connection).migrate(leaves)
+>       assert 'dealroom_roomcommandreceipt' in connection.introspection.table_names()
+E       AssertionError: assert 'dealroom_roomcommandreceipt' in ['auth_group', 'auth_group_permissions', 'auth_permission', 'automations_automationassignment', 'automations_automationdelivery', 'automations_automationdestination', ...]
+E        +  where ['auth_group', 'auth_group_permissions', 'auth_permission', 'automations_automationassignment', 'automations_automationdelivery', 'automations_automationdestination', ...] = <bound method BaseDatabaseIntrospection.table_names of <django.db.backends.postgresql.introspection.DatabaseIntrospection object at 0x79dc1e7e8260>>()
+E        +    where <bound method BaseDatabaseIntrospection.table_names of <django.db.backends.postgresql.introspection.DatabaseIntrospection object at 0x79dc1e7e8260>> = <django.db.backends.postgresql.introspection.DatabaseIntrospection object at 0x79dc1e7e8260>.table_names
+E        +      where <django.db.backends.postgresql.introspection.DatabaseIntrospection object at 0x79dc1e7e8260> = <django.utils.connection.ConnectionProxy object at 0x79dc20ee5df0>.introspection
+
+tests/s2_postgres/test_room_concurrency.py:77: AssertionError
+--------------------------- Captured stdout teardown ---------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M8790NV00WX5EG2QVGNT3A8S
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_room_commands_s2.py::test_create_receipt_response_loss_conflict_and_tombstone
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[create-service:worker]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[create-agent]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[create-dev]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[create-]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[folders-service:worker]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[folders-agent]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[folders-dev]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[folders-]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[upload-service:worker]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[upload-agent]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[upload-dev]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[upload-]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[complete-service:worker]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[complete-agent]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[complete-dev]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[complete-]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[imports-service:worker]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[imports-agent]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[imports-dev]
+FAILED tests/dealroom/test_room_commands_s2.py::test_every_board_write_requires_human[imports-]
+FAILED tests/dealroom/test_room_commands_s2.py::test_empty_private_room_complete_and_stale_replay
+FAILED tests/dealroom/test_room_commands_s2.py::test_nda_on_never_completes_without_policy
+FAILED tests/dealroom/test_room_commands_s2.py::test_folder_tree_order_empty_and_stored_manifest
+FAILED tests/dealroom/test_room_commands_s2.py::test_building_recipient_and_legacy_jwt_closed_ready_staff_works
+FAILED tests/dealroom/test_room_commands_s2.py::test_legacy_doc_message - Ass...
+FAILED tests/dealroom/test_room_commands_s2.py::test_contract_operations - Ke...
+FAILED tests/dealroom/test_room_commands_s2.py::test_upload_replay_pinned_bytes_readiness_and_hash_check[pdf]
+FAILED tests/dealroom/test_room_commands_s2.py::test_upload_replay_pinned_bytes_readiness_and_hash_check[docx]
+FAILED tests/dealroom/test_room_commands_s2.py::test_add_batch_keeps_published_content_and_locks_legacy
+FAILED tests/dealroom/test_room_commands_s2.py::test_continuation_is_exactly_approved[change0]
+FAILED tests/dealroom/test_room_commands_s2.py::test_continuation_is_exactly_approved[change1]
+FAILED tests/dealroom/test_room_commands_s2.py::test_continuation_is_exactly_approved[change2]
+FAILED tests/dealroom/test_room_commands_s2.py::test_continuation_is_exactly_approved[change3]
+FAILED tests/dealroom/test_room_commands_s2.py::test_continuation_is_exactly_approved[change4]
+FAILED tests/dealroom/test_room_commands_s2.py::test_write_capability_and_role_required[reader-capabilities0]
+FAILED tests/dealroom/test_room_commands_s2.py::test_write_capability_and_role_required[writer-capabilities1]
+FAILED tests/dealroom/test_room_commands_s2.py::test_write_capability_and_role_required[manager-capabilities2]
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[size]
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[pages]
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[office]
+FAILED tests/dealroom/test_room_commands_s2.py::test_agent_nda_preparation_bounds[rate]
+FAILED tests/dealroom/test_room_commands_s2.py::test_command_contract_has_typed_mcp_bodies
+FAILED tests/dealroom/test_room_commands_s2.py::test_recipient_sees_approved_empty_folders_only_after_completion
+FAILED tests/dealroom/test_room_commands_s2.py::test_rollout_switch_blocks_writes_not_receipt_retention
+FAILED tests/dealroom/test_room_commands_s2.py::test_create_replay_rechecks_room_assignment_scope
+FAILED tests/dealroom/test_room_commands_s2.py::test_staging_reaper_preserves_referenced_and_active_bytes
+FAILED tests/s2_postgres/test_room_concurrency.py::test_same_key_concurrent_create_never_duplicates_or_500
+FAILED tests/s2_postgres/test_room_concurrency.py::test_same_key_concurrent_upload_has_one_item_version
+FAILED tests/s2_postgres/test_room_concurrency.py::test_receipt_migration_is_reversible_on_empty_isolated_database
+50 failed in 23.01s

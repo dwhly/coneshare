@@ -46,7 +46,8 @@ for path, methods in schema['paths'].items():
             if spec.get('requestBody',{}).get('required'): required.append('body')
             if multipart:
                 # Bytes are carried explicitly, never local filesystem paths or arbitrary fetch URLs.
-                props['file_base64']={'type':'string','description':'Base64 bytes of the upload, maximum 50 MiB decoded.'}
+                upload_limit = 15 if oid == 'dealroom_sign_NdaPlacementView_endpoint_post' else 50
+                props['file_base64']={'type':'string','description':f'Base64 bytes of the upload, maximum {upload_limit} MiB decoded.'}
                 props['filename']={'type':'string'}
                 required += ['file_base64','filename']
         if recipient:

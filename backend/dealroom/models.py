@@ -15,6 +15,7 @@ class BoardRoom(models.Model):
                                   choices=[('building', 'Building'), ('ready', 'Ready'), ('failed', 'Failed')])
     revision = models.PositiveIntegerField(default=1)
     ever_invited_at = models.DateTimeField(null=True, blank=True)
+    staged_import = models.CharField(max_length=36, blank=True, default='')
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['board_id', 'draft_id'],
@@ -138,3 +139,25 @@ class CopyEvidence(models.Model):
 class StaffPreference(models.Model):
     user = models.OneToOneField('core.User', primary_key=True, on_delete=models.CASCADE)
     layout = models.CharField(max_length=16, default='topbar', choices=[('topbar','Top bar'),('sidebar','Sidebar')])
+
+
+class RoomCommandReceipt(models.Model):
+    """Committed command result, retained after room deletion to stop replay creation."""
+    board_id = models.CharField(max_length=100)
+    command_key = models.CharField(max_length=200)
+    actor = models.CharField(max_length=254)
+    via = models.CharField(max_length=32)
+    operation = models.CharField(max_length=32)
+    payload_sha256 = models.CharField(max_length=64)
+    approved_manifest = models.JSONField(null=True, blank=True)
+    result = models.JSONField(default=dict)
+    room = models.ForeignKey('datarooms.Dataroom', null=True, on_delete=models.SET_NULL)
+    approval_key = models.CharField(max_length=200, blank=True)
+    import_id = models.CharField(max_length=36)
+    client_item_id = models.CharField(max_length=128, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['board_id', 'command_key'], name='room_command_key'),
+                       models.UniqueConstraint(fields=['board_id', 'import_id', 'operation', 'client_item_id'],
+                                               name='room_import_step')]

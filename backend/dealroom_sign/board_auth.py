@@ -1,4 +1,6 @@
 """Private board proxy authentication. No browser-provided identity is accepted by Board."""
+import io
+import re
 import hashlib
 import hmac
 import json
@@ -7,7 +9,7 @@ import time
 from django.conf import settings
 from drf_spectacular.extensions import OpenApiAuthenticationExtension
 from rest_framework.authentication import BaseAuthentication
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.exceptions import PermissionDenied, APIException
 
 from .models import BoardStaffBinding
 
@@ -18,6 +20,35 @@ def signature(key, method, path, body, timestamp, context):
     fields = [method, path, hashlib.sha256(body).hexdigest(), timestamp, context]
     message = b''.join(str(len(value.encode())).encode() + b':' + value.encode() for value in fields)
     return hmac.new(key.encode(), message, hashlib.sha256).hexdigest()
+
+
+class BodyTooLarge(APIException):
+    status_code = 413
+    default_detail = 'Board upload exceeds the byte limit.'
+
+
+def signed_body(request):
+    # Django's generic in-memory body limit is smaller than room files. Bound only
+    # these authenticated transport shapes, then preserve the exact signed bytes
+    # for DRF's multipart parser. All other endpoints retain Django's normal limit.
+    path = request.path
+    limit = None
+    if re.fullmatch(r'/api/v1/dealroom/rooms/[^/]+/upload/', path):
+        limit = 50*1024*1024 + 65536
+    elif path == '/api/v1/dealroom-sign/nda-placement/':
+        limit = 15*1024*1024 + 65536
+    if limit is None:
+        return request.body
+    original = request._request
+    if not hasattr(original, '_body'):
+        content = original.read(limit+1)
+        if len(content) > limit:
+            raise BodyTooLarge()
+        original._body = content
+        original._stream = io.BytesIO(content)
+    if len(original._body) > limit:
+        raise BodyTooLarge()
+    return original._body
 
 
 class BoardProxyAuthentication(BaseAuthentication):
@@ -35,7 +66,7 @@ class BoardProxyAuthentication(BaseAuthentication):
                      and raw == json.dumps(context, sort_keys=True, separators=(',', ':'))
                      and abs(time.time() - int(stamp)) <= 60
                      and hmac.compare_digest(supplied, signature(key, request.method,
-                         request.get_full_path(), request.body, stamp, raw)))
+                         request.get_full_path(), signed_body(request), stamp, raw)))
         except (ValueError, TypeError, AttributeError):
             valid = False
         if not valid:

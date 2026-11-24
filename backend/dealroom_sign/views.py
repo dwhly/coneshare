@@ -15,6 +15,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.exceptions import NotFound, PermissionDenied, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.settings import api_settings
 
 from core.authentication import APIKeyAuthentication
 from core.models import APIKey
@@ -152,6 +153,10 @@ class SignCredentialView(APIView):
 
 
 class SigningNdaPolicyView(APIView):
+    def get_authenticate_header(self, request):
+        return api_settings.DEFAULT_AUTHENTICATION_CLASSES[0]().authenticate_header(request)
+
+    authentication_classes = [BoardProxyAuthentication, *api_settings.DEFAULT_AUTHENTICATION_CLASSES]
     permission_classes = [permissions.IsAuthenticated]
 
     def key_scope_targets(self, request):

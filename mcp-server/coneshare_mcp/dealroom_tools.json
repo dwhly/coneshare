@@ -611,6 +611,46 @@
   },
   {
     "human_only": false,
+    "method": "POST",
+    "multipart": true,
+    "name": "dealroom_sign_NdaPlacementView_endpoint_post",
+    "operation_id": "dealroom_sign_NdaPlacementView_endpoint_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "properties": {
+            "file": {
+              "format": "binary",
+              "type": "string"
+            }
+          },
+          "required": [
+            "file"
+          ],
+          "type": "object"
+        },
+        "file_base64": {
+          "description": "Base64 bytes of the upload, maximum 15 MiB decoded.",
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "file_base64",
+        "filename"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom-sign/nda-placement/",
+    "path_params": [],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": false,
     "method": "GET",
     "multipart": false,
     "name": "dealroom_sign_SigningNdaPolicyView_endpoint_get",
@@ -3124,6 +3164,114 @@
     "recipient": false
   },
   {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_complete_post",
+    "operation_id": "dealroom_RoomViewSet_complete_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": false,
+          "properties": {
+            "access": {
+              "additionalProperties": false,
+              "properties": {
+                "download_ceiling": {
+                  "enum": [
+                    "none",
+                    "watermarked"
+                  ],
+                  "type": "string"
+                },
+                "expires_at": {
+                  "format": "date-time",
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "download_ceiling",
+                "expires_at"
+              ],
+              "type": "object"
+            },
+            "approval_key": {
+              "type": "string"
+            },
+            "expected_revision": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "idempotency_key": {
+              "type": "string"
+            },
+            "import_id": {
+              "type": "string"
+            },
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "client_item_id": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "version_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "client_item_id",
+                  "version_id",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "manifest_sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "nda_revision": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          "required": [
+            "approval_key",
+            "import_id",
+            "idempotency_key",
+            "expected_revision",
+            "manifest_sha256",
+            "items",
+            "nda_revision",
+            "access"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/complete/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
     "human_only": false,
     "method": "POST",
     "multipart": false,
@@ -3146,6 +3294,174 @@
       "type": "object"
     },
     "path": "/api/v1/dealroom/rooms/{id}/folders/",
+    "path_params": [
+      "id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_imports_post",
+    "operation_id": "dealroom_RoomViewSet_imports_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": false,
+          "properties": {
+            "approved_manifest": {
+              "additionalProperties": false,
+              "properties": {
+                "access": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "download_ceiling": {
+                      "enum": [
+                        "none",
+                        "watermarked"
+                      ],
+                      "type": "string"
+                    },
+                    "expires_at": {
+                      "format": "date-time",
+                      "nullable": true,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "download_ceiling",
+                    "expires_at"
+                  ],
+                  "type": "object"
+                },
+                "intended_emails": {
+                  "items": {
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "maxItems": 200,
+                  "type": "array"
+                },
+                "items": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "client_item_id": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "enum": [
+                          "folder",
+                          "file"
+                        ],
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "parent_id": {
+                        "nullable": true,
+                        "type": "string"
+                      },
+                      "position": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "purpose": {
+                        "enum": [
+                          "document",
+                          "nda"
+                        ],
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "pattern": "^[0-9a-f]{64}$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "client_item_id",
+                      "kind",
+                      "name",
+                      "parent_id",
+                      "position"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 2000,
+                  "type": "array"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "nda": {
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "fields": {
+                      "items": {
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "revision": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "source": {
+                      "nullable": true,
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "enabled"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "name",
+                "items",
+                "nda",
+                "access",
+                "intended_emails"
+              ],
+              "type": "object"
+            },
+            "expected_revision": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "idempotency_key": {
+              "type": "string"
+            },
+            "manifest_sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "expected_revision",
+            "approved_manifest",
+            "manifest_sha256",
+            "idempotency_key"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/imports/",
     "path_params": [
       "id"
     ],

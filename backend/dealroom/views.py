@@ -9,6 +9,10 @@ from rest_framework.views import APIView
 from rest_framework.pagination import CursorPagination
 from drf_spectacular.utils import extend_schema
 from core.models import APIKey
+from rest_framework.settings import api_settings
+from dealroom_sign.board_auth import BoardProxyAuthentication
+from .room_commands import execute
+from .room_schemas import IMPORTS, COMPLETE
 from core.authentication import generate_raw_api_key
 from datarooms.models import Dataroom
 from sharelinks.models import ViewerOrganisation, Viewer, ShareLinkAccessGrant, ShareLink, IssuedCopy, ShareLinkDataroomSetting
@@ -47,6 +51,26 @@ class StaffViewSet(viewsets.ModelViewSet):
 
 
 class RoomViewSet(StaffViewSet):
+    authentication_classes = [BoardProxyAuthentication, *api_settings.DEFAULT_AUTHENTICATION_CLASSES]
+
+    def get_authenticate_header(self, request):
+        return api_settings.DEFAULT_AUTHENTICATION_CLASSES[0]().authenticate_header(request)
+
+    def create(self, request, *args, **kwargs):
+        if hasattr(request, 'board_binding'):
+            return execute(request, 'create')
+        return super().create(request, *args, **kwargs)
+
+    @extend_schema(request={'application/json': IMPORTS}, responses=dict)
+    @action(detail=True, methods=['post'])
+    def imports(self, request, pk=None):
+        return execute(request, 'imports', pk)
+
+    @extend_schema(request={'application/json': COMPLETE}, responses=dict)
+    @action(detail=True, methods=['post'])
+    def complete(self, request, pk=None):
+        return execute(request, 'complete', pk)
+
     serializer_class = RoomSerializer
     def approval_before(self):
         if self.action == 'policy':
@@ -83,6 +107,8 @@ class RoomViewSet(StaffViewSet):
     @extend_schema(request={'multipart/form-data': {'type':'object','properties':{'file':{'type':'string','format':'binary'},'folder_id':{'type':'string'}},'required':['file']}}, responses=dict)
     @action(detail=True, methods=['post'])
     def upload(self, request, pk=None):
+        if hasattr(request, 'board_binding'):
+            return execute(request, 'upload', pk)
         from .uploads import upload
         if 'file' not in request.FILES:
             raise ValidationError('file required')
@@ -92,6 +118,8 @@ class RoomViewSet(StaffViewSet):
     @extend_schema(request=dict, responses=dict)
     @action(detail=True, methods=['post'])
     def folders(self, request, pk=None):
+        if hasattr(request, 'board_binding'):
+            return execute(request, 'folders', pk)
         from datarooms.models import DataroomFolder
         name = serializers.CharField(max_length=255).run_validation(request.data.get('name'))
         folder = DataroomFolder.objects.create(dataroom=self.get_object(), name=name, created_by=request.user)

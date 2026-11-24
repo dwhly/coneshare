@@ -1,0 +1,96 @@
+........................................................................ [ 22%]
+........................................................................ [ 45%]
+......................................................................F. [ 67%]
+...........F............................................................ [ 90%]
+...............................                                          [100%]
+=================================== FAILURES ===================================
+________ test_r2_03_recipient_folders_require_visible_permitted_content ________
+
+staff = <rest_framework.test.APIClient object at 0x76508ecb2060>
+owner = <User: staff@acme.test>
+django_capture_on_commit_callbacks = <bound method TestCase.captureOnCommitCallbacks of <class 'django.test.testcases.TestCase'>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76508ecb3350>
+
+    @pytest.mark.django_db
+    def test_r2_03_recipient_folders_require_visible_permitted_content(staff, owner, django_capture_on_commit_callbacks, monkeypatch):
+        from datarooms.models import DataroomFolder, DataroomDocument
+        from documents.models import Document, DocumentVersion
+        from sharelinks.models import ShareLink, ShareLinkDataroomSetting
+        from rest_framework.exceptions import PermissionDenied
+        import dealroom.recipient as recipient
+        room, slug = setup_recipient(staff)
+        link = ShareLink.objects.get(slug=slug)
+        folders = {}
+        for name in ('Financials', 'Bidder B – LOI', 'Empty', 'Executed', 'NDAs'):
+            folders[name] = DataroomFolder.objects.create(dataroom_id=room, name=name, created_by=owner, parent=folders.get('Executed') if name == 'NDAs' else None)
+        private_id = None
+        for name in ('Financials', 'Bidder B – LOI', 'NDAs'):
+            doc = Document.objects.create(organization=owner.organization, created_by=owner, name=name + '.pdf')
+            DocumentVersion.objects.create(document=doc, version_number=1, is_primary=True)
+            item = DataroomDocument.objects.create(dataroom_id=room, folder=folders[name], document=doc)
+            if name == 'NDAs':
+                private_id = str(item.pk)
+        ShareLinkDataroomSetting.objects.filter(share_link=link, dataroom_folder=folders['Bidder B – LOI']).update(is_visible=False)
+        original = recipient.evaluate
+        def subject_policy(request, link, **kwargs):
+            if kwargs.get('document_id') == private_id:
+                raise PermissionDenied('Execution artifact belongs to another member.')
+            return original(request, link, **kwargs)
+        monkeypatch.setattr(recipient, 'evaluate', subject_policy)
+        client, result = verify(staff, slug, django_capture_on_commit_callbacks)
+        assert result.data['status'] == 'verified'
+        result = client.get(f'/api/v1/dealroom/recipient/{slug}/room/')
+        assert result.status_code == 200
+>       assert [f['name'] for f in result.data['folders']] == ['Financials']
+E       AssertionError: assert ['Financials'...uted', 'NDAs'] == ['Financials']
+E         
+E         Left contains 3 more items, first extra item: 'Empty'
+E         Use -v to get more diff
+
+tests/dealroom/test_review_r2.py:50: AssertionError
+__________ test_r2_09_legacy_prefix_authenticates_only_matching_hash ___________
+
+owner = <User: staff@acme.test>
+
+    @pytest.mark.django_db
+    def test_r2_09_legacy_prefix_authenticates_only_matching_hash(owner):
+        from core.authentication import generate_raw_api_key
+        from core.models import APIKey
+        raw, prefix, hashed = generate_raw_api_key()
+        APIKey.objects.create(user=owner, name='Legacy key', prefix=raw[:12], hashed_key=hashed, tier='read_only')
+        client = APIClient(); client.credentials(HTTP_AUTHORIZATION='Bearer '+raw)
+        assert client.get('/api/v1/dealroom/rooms/').status_code == 200
+        client.credentials(HTTP_AUTHORIZATION='Bearer '+raw[:-1]+('0' if raw[-1]!='0' else '1'))
+>       assert client.get('/api/v1/dealroom/rooms/').status_code == 401
+E       assert 403 == 401
+E        +  where 403 = <Response status_code=403, "application/json">.status_code
+E        +    where <Response status_code=403, "application/json"> = <bound method APIClient.get of <rest_framework.test.APIClient object at 0x76508ef55e50>>('/api/v1/dealroom/rooms/')
+E        +      where <bound method APIClient.get of <rest_framework.test.APIClient object at 0x76508ef55e50>> = <rest_framework.test.APIClient object at 0x76508ef55e50>.get
+
+tests/dealroom/test_review_r2.py:214: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:09:51,766 [WARNING] django.request:253 log_response() - Forbidden: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Forbidden: /api/v1/dealroom/rooms/
+=============================== warnings summary ===============================
+tests/dealroom/test_board_rooms.py: 6 warnings
+tests/dealroom/test_foundation.py: 41 warnings
+tests/dealroom/test_review_r2.py: 22 warnings
+tests/dealroom/test_review_v09_send.py: 5 warnings
+tests/dealroom/test_room_commands_s2.py: 2 warnings
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/dealroom/test_board_rooms.py: 1 warning
+tests/dealroom/test_foundation.py: 41 warnings
+tests/dealroom/test_review_r2.py: 22 warnings
+tests/dealroom/test_review_v09_send.py: 5 warnings
+tests/dealroom/test_room_commands_s2.py: 2 warnings
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:370: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_review_r2.py::test_r2_03_recipient_folders_require_visible_permitted_content
+FAILED tests/dealroom/test_review_r2.py::test_r2_09_legacy_prefix_authenticates_only_matching_hash
+2 failed, 317 passed, 147 warnings in 109.02s (0:01:49)

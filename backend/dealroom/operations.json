@@ -1859,6 +1859,16 @@
     "tier": "read_only",
     "widens_access": false
   },
+  "dealroom_RoomViewSet_complete_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_RoomViewSet_complete_post",
+    "path": "/api/v1/dealroom/rooms/{pk}/complete/",
+    "reason": "Human board receipt with room write capability.",
+    "tier": "read_write",
+    "widens_access": false
+  },
   "dealroom_RoomViewSet_create_post": {
     "boundary": "staff",
     "human_only": false,
@@ -1886,6 +1896,16 @@
     "operation_id": "dealroom_RoomViewSet_folders_post",
     "path": "/api/v1/dealroom/rooms/{pk}/folders/",
     "reason": "Phase-one staff business operation.",
+    "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_RoomViewSet_imports_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_RoomViewSet_imports_post",
+    "path": "/api/v1/dealroom/rooms/{pk}/imports/",
+    "reason": "Human board receipt with room write capability.",
     "tier": "read_write",
     "widens_access": false
   },
@@ -1947,6 +1967,16 @@
     "path": "/api/v1/dealroom/rooms/{pk}/upload/",
     "reason": "Phase-one staff business operation.",
     "tier": "read_write",
+    "widens_access": false
+  },
+  "dealroom_sign_NdaPlacementView_endpoint_post": {
+    "boundary": "staff",
+    "human_only": false,
+    "method": "POST",
+    "operation_id": "dealroom_sign_NdaPlacementView_endpoint_post",
+    "path": "/api/v1/dealroom-sign/nda-placement/",
+    "reason": "Bounded supplied NDA bytes; board read capability; no policy mutation.",
+    "tier": "read_only",
     "widens_access": false
   },
   "dealroom_sign_RecipientNdaEnterView_endpoint_post": {

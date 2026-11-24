@@ -108,6 +108,12 @@ def classify(view, method):
             and action in {'list', 'retrieve', 'visits', 'pages', 'page'}):
         entry.update(boundary='staff', tier='read_only', human_only=True, widens_access=False,
                      reason='Human board proxy with room read capability and board/organization scope.')
+    if name == 'RoomViewSet' and action in ('complete', 'imports'):
+        entry.update(boundary='staff', tier='read_write', human_only=True, widens_access=False,
+                     reason='Human board receipt with room write capability.')
+    if name == 'NdaPlacementView' and method == 'POST':
+        entry.update(boundary='staff', tier='read_only', human_only=False, widens_access=False,
+                     reason='Bounded supplied NDA bytes; board read capability; no policy mutation.')
     if name == 'SignatureExportView':
         entry.update(widens_access=False, human_only_kinds=['partial', 'audit', 'evidence_report', 'history_evidence'])
     if name == 'SigningEnvelopeViewSet' and action == 'create':

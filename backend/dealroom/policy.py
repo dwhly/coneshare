@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.utils import timezone
 from rest_framework.exceptions import PermissionDenied, NotAuthenticated
 from sharelinks.models import ShareLink, Viewer, ViewSession
-from .models import RoomPolicy, MemberDeny
+from .models import RoomPolicy, MemberDeny, BoardRoom
 
 LEVELS = {'none': 0, 'watermarked': 1, 'original': 2}
 
@@ -24,6 +24,8 @@ def select_grant(link, email):
         policy = RoomPolicy.objects.select_related('room', 'entry_link').get(room_id=link.dataroom_id)
     except RoomPolicy.DoesNotExist:
         raise PermissionDenied('Room policy is not configured.')
+    if BoardRoom.objects.filter(room_id=link.dataroom_id).exclude(build_state='ready').exists():
+        raise PermissionDenied('Room is unavailable.')
     now = timezone.now()
     if not link.is_active or (link.expires_at and link.expires_at <= now) or policy.status != 'active' or (policy.expires_at and policy.expires_at <= now):
         raise PermissionDenied('Room is unavailable.')

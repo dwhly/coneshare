@@ -234,5 +234,168 @@
         }
       ]
     }
+  },
+  "commands": {
+    "version": 2,
+    "canonical_json": "UTF-8, sorted keys, compact separators, ensure_ascii=false",
+    "manifest": {
+      "name": "Private review",
+      "items": [],
+      "nda": {
+        "enabled": false
+      },
+      "access": {
+        "download_ceiling": "none",
+        "expires_at": null
+      },
+      "intended_emails": []
+    },
+    "manifest_sha256": "1827da48700b4b15af29edf19ad88f7f5c36482879b33a70c6038fc33ff59905",
+    "operations": {
+      "create": {
+        "method": "POST",
+        "path": "/api/v1/dealroom/rooms/",
+        "required": [
+          "name",
+          "board_draft_id",
+          "draft_revision",
+          "approved_manifest",
+          "manifest_sha256",
+          "idempotency_key"
+        ],
+        "status": 201
+      },
+      "imports": {
+        "method": "POST",
+        "path": "/api/v1/dealroom/rooms/{id}/imports/",
+        "required": [
+          "expected_revision",
+          "approved_manifest",
+          "manifest_sha256",
+          "idempotency_key"
+        ],
+        "status": 201
+      },
+      "folders": {
+        "method": "POST",
+        "path": "/api/v1/dealroom/rooms/{id}/folders/",
+        "required": [
+          "approval_key",
+          "import_id",
+          "idempotency_key",
+          "client_item_id",
+          "name",
+          "parent_id",
+          "position"
+        ],
+        "status": 201
+      },
+      "upload": {
+        "method": "POST",
+        "path": "/api/v1/dealroom/rooms/{id}/upload/",
+        "encoding": "multipart/form-data",
+        "required": [
+          "approval_key",
+          "import_id",
+          "idempotency_key",
+          "client_item_id",
+          "file",
+          "folder_id",
+          "position",
+          "source_sha256",
+          "purpose"
+        ],
+        "status": 201
+      },
+      "complete": {
+        "method": "POST",
+        "path": "/api/v1/dealroom/rooms/{id}/complete/",
+        "required": [
+          "approval_key",
+          "import_id",
+          "idempotency_key",
+          "expected_revision",
+          "manifest_sha256",
+          "items",
+          "nda_revision",
+          "access"
+        ],
+        "status": 200
+      }
+    },
+    "item_fields": [
+      "client_item_id",
+      "kind",
+      "name",
+      "parent_id",
+      "position",
+      "sha256",
+      "purpose"
+    ],
+    "errors": {
+      "409": "Changed inputs, stale revision, readiness or NDA needs attention; retry only identical receipt-bound work.",
+      "410": "Creation tombstone; never recreate.",
+      "403": "Human write capability revoked or missing."
+    },
+    "publication": "Only complete reveals ordinary batch items and empty folders atomically. NDA sources remain hidden. S2 never publishes NDA-on commands or sends invitations.",
+    "replay": "Authorize scope then lookup receipt before stale revision checks. Lock room before upload receipt lookup. Receipt and effect commit together.",
+    "board": {
+      "create": [
+        "expected_revision",
+        "approved_manifest_sha256",
+        "command_key"
+      ],
+      "resume": [
+        "expected_revision",
+        "command_key"
+      ],
+      "imports": [
+        "expected_room_revision",
+        "manifest",
+        "command_key"
+      ],
+      "poll": "GET /api/views/{view}/room-drafts/{id}/command",
+      "prepare": {
+        "path": "POST /api/views/{view}/room-drafts/{id}/prepare",
+        "required": [
+          "expected_revision",
+          "roots"
+        ],
+        "optional": [
+          "include",
+          "exclude",
+          "room_id"
+        ],
+        "result": [
+          "manifest",
+          "manifest_sha256",
+          "tree",
+          "revision",
+          "target"
+        ],
+        "blockers": "Visible tree entries; manifest_sha256 is null until included blockers are resolved."
+      }
+    },
+    "limits": {
+      "file_bytes": 52428800,
+      "batch_bytes": 209715200,
+      "manifest_items": 2000,
+      "preview_pages": 500
+    }
+  },
+  "preparation": {
+    "operation_id": "dealroom_sign_NdaPlacementView_endpoint_post",
+    "path": "/api/v1/dealroom-sign/nda-placement/",
+    "method": "POST",
+    "encoding": "multipart/form-data",
+    "required": [
+      "file"
+    ],
+    "capability": "read",
+    "human_only": false,
+    "max_bytes": 15728640,
+    "max_pdf_pages": 50,
+    "requests_per_binding_per_minute": 10,
+    "result": "sha256, page_count, fields:[], status:needs_attention, NDA comes next; no policy is written."
   }
 }
