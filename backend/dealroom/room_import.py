@@ -5,7 +5,7 @@ import uuid
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from datarooms.models import Dataroom, DataroomFolder, DataroomItemOrder, DataroomDocument
-from documents.models import DocumentVersion
+from documents.models import Document, DocumentVersion
 from dealroom_sign.models import NdaPolicy
 from documents.renderers import get_renderer
 from sharelinks.models import ShareLink, ShareLinkDataroomSetting
@@ -251,10 +251,17 @@ def abandon(request, payload, room, row, approved, file):
     if type(payload['expected_revision']) is not int or payload['expected_revision'] != row.revision:
         raise Conflict('Room changed; review again.')
     steps = RoomCommandReceipt.objects.filter(board_id=row.board_id, import_id=approved.import_id)
-    item_ids = [r.result['id'] for r in steps.filter(operation='upload')]
+    uploads = list(steps.filter(operation='upload'))
+    item_ids = [r.result['id'] for r in uploads]
+    document_ids = [r.result['document_id'] for r in uploads]
     folder_ids = [r.result['id'] for r in steps.filter(operation='folders')]
     DataroomDocument.objects.filter(dataroom=room, pk__in=item_ids).delete()
     DataroomFolder.objects.filter(dataroom=room, pk__in=folder_ids).delete()
+    # Uploads are vault documents with no personal quota charge. Hard deletion
+    # cascades to versions/pages, releasing every reference to the staged bytes.
+    # Keep storage I/O outside this transaction; the staging reaper collects it
+    # only after cancellation commits and the room's staging lock is released.
+    Document.objects.filter(organization=room.organization, pk__in=document_ids).delete()
     row.staged_import = ''; row.revision += 1
     row.save(update_fields=['staged_import', 'revision'])
     result = {'id': str(room.pk), 'import_id': approved.import_id, 'revision': row.revision,

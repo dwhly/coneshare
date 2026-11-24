@@ -1,0 +1,127 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+____ test_abandon_removes_staff_document_and_reaper_collects_upload[False] _____
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87CNT14V673JNTR3TYXYRGZ)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-221/test_abandon_removes_staff_doc0')
+creating = False
+
+    @pytest.mark.parametrize('creating', [False, True])
+    def test_abandon_removes_staff_document_and_reaper_collects_upload(setup, tmp_path, creating):
+        content = file_bytes('pdf')
+        sha = hashlib.sha256(content).hexdigest()
+        m = manifest([dict(client_item_id='file', kind='file', name='Report.pdf',
+                           parent_id=None, position=4, sha256=sha, purpose='document')])
+        if creating:
+            response, _ = start(setup, m)
+        else:
+            models.BoardRoom.objects.create(board_id='fixture', room=setup.room, build_state='ready')
+            response = batch(setup, m)
+        assert response.status_code == 201
+        approved = response.json()
+        root = BASE+approved['id']+'/'
+        with patch('documents.fileserver.fileserver_client.upload_file'):
+            uploaded = call(root+'upload/', continuation(approved, 'upload',
+                file=SimpleUploadedFile('Report.pdf', content), folder_id='', position='4',
+                client_item_id='file', source_sha256=sha, purpose='document'), multipart=True)
+        assert uploaded.status_code == 201, uploaded.content
+        result = uploaded.json()
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        key = version.original_storage_key or version.storage_key
+        path = tmp_path/key
+        path.parent.mkdir(parents=True)
+        path.write_bytes(content)
+        os.utime(path, (time.time()-90000,)*2)
+        DocumentPage.objects.create(document_version=version, page_number=1, storage_key=key)
+        call_command('reap_board_staging', storage_root=str(tmp_path), apply=True)
+        assert path.exists()
+        staff = APIClient()
+        staff.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(setup.user).access_token))
+        document_url = '/api/v1/documents/'+str(doc.pk)+'/'
+        assert staff.get(document_url).status_code == 200
+        body = dict(approval_key=approved['approval_key'], idempotency_key='abandon',
+                    expected_revision=result['revision'])
+        response = call(root+'imports/'+approved['import_id']+'/abandon/', body)
+        assert response.status_code == 200, response.content
+>       assert staff.get(document_url).status_code == 404
+E       assert 200 == 404
+E        +  where 200 = <Response status_code=200, "application/json">.status_code
+E        +    where <Response status_code=200, "application/json"> = <bound method APIClient.get of <rest_framework.test.APIClient object at 0x7061e0ca14f0>>('/api/v1/documents/01M87CNTXWDZXTFF4STKWFA26X/')
+E        +      where <bound method APIClient.get of <rest_framework.test.APIClient object at 0x7061e0ca14f0>> = <rest_framework.test.APIClient object at 0x7061e0ca14f0>.get
+
+tests/dealroom/test_room_commands_s2_r3.py:62: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M87CNSXP815XFRENAQ82A21Y
+----------------------------- Captured stdout call -----------------------------
+0 orphaned import files removed.
+_____ test_abandon_removes_staff_document_and_reaper_collects_upload[True] _____
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87CNV49C7KGVH0JR2HAQD7P)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-221/test_abandon_removes_staff_doc1')
+creating = True
+
+    @pytest.mark.parametrize('creating', [False, True])
+    def test_abandon_removes_staff_document_and_reaper_collects_upload(setup, tmp_path, creating):
+        content = file_bytes('pdf')
+        sha = hashlib.sha256(content).hexdigest()
+        m = manifest([dict(client_item_id='file', kind='file', name='Report.pdf',
+                           parent_id=None, position=4, sha256=sha, purpose='document')])
+        if creating:
+            response, _ = start(setup, m)
+        else:
+            models.BoardRoom.objects.create(board_id='fixture', room=setup.room, build_state='ready')
+            response = batch(setup, m)
+        assert response.status_code == 201
+        approved = response.json()
+        root = BASE+approved['id']+'/'
+        with patch('documents.fileserver.fileserver_client.upload_file'):
+            uploaded = call(root+'upload/', continuation(approved, 'upload',
+                file=SimpleUploadedFile('Report.pdf', content), folder_id='', position='4',
+                client_item_id='file', source_sha256=sha, purpose='document'), multipart=True)
+        assert uploaded.status_code == 201, uploaded.content
+        result = uploaded.json()
+        doc = Document.objects.get(pk=result['document_id'])
+        version = DocumentVersion.objects.get(pk=result['version_id'])
+        key = version.original_storage_key or version.storage_key
+        path = tmp_path/key
+        path.parent.mkdir(parents=True)
+        path.write_bytes(content)
+        os.utime(path, (time.time()-90000,)*2)
+        DocumentPage.objects.create(document_version=version, page_number=1, storage_key=key)
+        call_command('reap_board_staging', storage_root=str(tmp_path), apply=True)
+        assert path.exists()
+        staff = APIClient()
+        staff.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(setup.user).access_token))
+        document_url = '/api/v1/documents/'+str(doc.pk)+'/'
+        assert staff.get(document_url).status_code == 200
+        body = dict(approval_key=approved['approval_key'], idempotency_key='abandon',
+                    expected_revision=result['revision'])
+        response = call(root+'imports/'+approved['import_id']+'/abandon/', body)
+        assert response.status_code == 200, response.content
+>       assert staff.get(document_url).status_code == 404
+E       assert 200 == 404
+E        +  where 200 = <Response status_code=200, "application/json">.status_code
+E        +    where <Response status_code=200, "application/json"> = <bound method APIClient.get of <rest_framework.test.APIClient object at 0x7061e0d41d90>>('/api/v1/documents/01M87CNV5FJ5S13Q3Z089JA0A9/')
+E        +      where <bound method APIClient.get of <rest_framework.test.APIClient object at 0x7061e0d41d90>> = <rest_framework.test.APIClient object at 0x7061e0d41d90>.get
+
+tests/dealroom/test_room_commands_s2_r3.py:62: AssertionError
+----------------------------- Captured stdout call -----------------------------
+0 orphaned import files removed.
+=============================== warnings summary ===============================
+tests/dealroom/test_room_commands_s2_r3.py::test_abandon_removes_staff_document_and_reaper_collects_upload[False]
+tests/dealroom/test_room_commands_s2_r3.py::test_abandon_removes_staff_document_and_reaper_collects_upload[True]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/dealroom/test_room_commands_s2_r3.py::test_abandon_removes_staff_document_and_reaper_collects_upload[False]
+tests/dealroom/test_room_commands_s2_r3.py::test_abandon_removes_staff_document_and_reaper_collects_upload[True]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:370: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_room_commands_s2_r3.py::test_abandon_removes_staff_document_and_reaper_collects_upload[False]
+FAILED tests/dealroom/test_room_commands_s2_r3.py::test_abandon_removes_staff_document_and_reaper_collects_upload[True]
+2 failed, 1 passed, 4 warnings in 11.51s

@@ -187,3 +187,80 @@ Cloud failures match the brief. The five additional Sign UI subcases reproduce
 on the exact unchanged starting head `a255e69` (**5 failed, 1 passed, 7 subtests
 passed**), so no new failures were introduced. Evidence and offline browser
 screenshots are in the Board r2 RESULT; unrelated Sign code was not changed.
+
+
+## r3
+
+Gate 3 r2 S-a (both parts), S-b, N-a and N-b are addressed. File edits only,
+starting from Dealroom `2bbdf564` and Board `4bb4d68`; the manager owns staging
+and commits. Existing previews and stacks were untouched. Optional N-c remains
+deferred: Cancel still waits for the current runner step rather than returning
+an asynchronous 202.
+
+- **S-b:** Abandon uses this batch's upload receipt `document_id` values to
+  hard-delete the organization-scoped Documents and cascade their versions/pages.
+  These vault uploads carry no personal quota charge. Storage deletion remains
+  with `reap_board_staging` after the cancellation transaction commits. Both a
+  building room and an import into an existing room are tested: the staff document
+  endpoint changes from 200 to 404, all document references disappear, the old
+  published document survives, and the reaper removes the staged key. Receipt
+  replay still succeeds after deletion.
+- **N-a:** Added an actual adopted-room positive control with the matching
+  `download_ceiling: "none"`; it returns 201 beside the existing widening rejection.
+- **S-a / N-b (Board):** Persist cancellation intent independently of the abandon
+  payload. A definite abandon 4xx discards the stale payload, allowing the next
+  Cancel to read the current revision with the same key. Transport uncertainty
+  retains the exact body. Resume and run refuse after cancellation begins, also
+  after restart; the UI hides Resume and refreshes after failed Cancel. A retried
+  uncertain start stays paused; a definite rejection cancels locally on that click.
+
+The command contract is version 4 and documents cancellation intent, retry,
+start recovery and document cleanup. Canonical and both vendored copies have
+SHA-256 `795fc4da106b67e04fddb830ec9d34a64611c7b7e2fe94dd26d5632ba05acf8d`.
+No existing test was changed or weakened; new cases are in
+`backend/tests/dealroom/test_room_commands_s2_r3.py` and Board's r3 module/browser
+harness. There are no schema, migration, environment or deployment changes.
+
+| Validation | Result / evidence |
+| --- | --- |
+| Failing-first, before Dealroom implementation | **2 failed, 1 passed**, `r3-red.txt`; both failures show the abandoned document still returning 200 |
+| New Dealroom regressions | **3 passed**, `r3-green.txt` |
+| S1a wrapper: S2/r2/r3, all Board room read suites and legacy review r2 | **264 passed**, `r3-focused.txt` |
+| Disposable PostgreSQL: original S2/migration/concurrency suite plus r2/r3 | **75 passed**, `r3-postgres.txt` |
+| Foundation/registry | **80 passed**, `r3-registry.txt` |
+| Board focused room suites | **220 passed**, Board `r3-focused.txt` |
+| Board full suite (one run) | **684 passed, 8 failed, 58 skipped, 622 subtests passed**, Board `r3-full-suite.txt` |
+| Offline browser | Passed; Board `r3-ui-walk.txt`, `r3-cancel-mobile.png`, `r3-cancel-desktop.png` |
+
+Commands from Dealroom `backend/`:
+
+```sh
+sh ../docs/implementation/board-room-s1a/run-tests.sh \
+  tests/dealroom/test_room_commands_s2.py tests/dealroom/test_room_commands_s2_r2.py \
+  tests/dealroom/test_room_commands_s2_r3.py tests/dealroom/test_board_rooms.py \
+  tests/dealroom/test_board_rooms_r2.py tests/dealroom/test_board_rooms_r3.py \
+  tests/dealroom/test_review_r2.py -q
+sh ../docs/implementation/board-room-s1a/run-tests.sh tests/dealroom/test_foundation.py -q
+```
+
+From Dealroom root:
+
+```sh
+bash docs/implementation/board-room-s2/run-isolated-postgres.sh \
+  tests/dealroom/test_room_commands_s2_r2.py tests/dealroom/test_room_commands_s2_r3.py
+```
+
+The PostgreSQL script created only its disposable test container and removed it
+on exit. The original migration rollout caveat remains unchanged: the manager
+must determine whether 0006's earlier form has been applied before rollout.
+
+The Board full run has the three expected Cloud failures plus the same five Sign
+UI subcase failures recorded in r2. Despite the updated runner's environment,
+these still fail: the Node fake-DOM harness does not use Playwright and expects
+an old title/button. `r3-check-baseline.py` reproduced all five on the exact
+unchanged Board starting commit `4bb4d68` with the updated runner (**5 failed,
+1 passed, 7 subtests passed**). Board `r3-baseline-sign.txt` includes direct
+per-mode diagnostics with NODE_PATH/PLAYWRIGHT_BROWSERS_PATH set explicitly.
+No Sign code or tests were changed and the full suite was not repeated. Thus the
+measured baseline still differs from the brief's three-failure expectation, with
+no new r3 failures. See the Board r3 RESULT for the exact failure names.

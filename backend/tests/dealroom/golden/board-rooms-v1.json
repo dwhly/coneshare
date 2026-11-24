@@ -236,7 +236,7 @@
     }
   },
   "commands": {
-    "version": 3,
+    "version": 4,
     "canonical_json": "UTF-8, sorted keys, compact separators, ensure_ascii=false",
     "manifest": {
       "name": "Private review",
@@ -401,7 +401,12 @@
         "expected_revision",
         "command_key"
       ],
-      "add_from_drive_draft_id": "string; identifies the reviewed draft even when manifests match"
+      "add_from_drive_draft_id": "string; identifies the reviewed draft even when manifests match",
+      "sticky": "Persist cancellation intent before recovery or abandon. Resume and run refuse once cancellation begins, including a persisted abandon_body from an older command.",
+      "board_status_field": "cancellation_requested: boolean; hide Resume when true and refresh status after a failed Cancel.",
+      "retry": "Transport errors and 5xx preserve the exact abandon_body for receipt replay. A definite abandon 4xx discards that body; the next Cancel re-reads revision and uses the same idempotency key. Cancellation intent remains set.",
+      "start_recovery": "An uncertain start remains paused without local cleanup. A definite start rejection permits local cancellation on the first Cancel click.",
+      "documents": "Abandon hard-deletes only Documents from this unpublished batch upload receipts, cascading versions/pages. The staging reaper can then collect unreferenced keys after commit. Completed batches retain their documents."
     }
   },
   "preparation": {
