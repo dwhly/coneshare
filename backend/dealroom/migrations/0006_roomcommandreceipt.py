@@ -20,5 +20,5 @@ class Migration(migrations.Migration):
             ('created_at', models.DateTimeField(auto_now_add=True)),
         ]),
         migrations.AddConstraint(model_name='roomcommandreceipt', constraint=models.UniqueConstraint(fields=['board_id', 'command_key'], name='room_command_key')),
-        migrations.AddConstraint(model_name='roomcommandreceipt', constraint=models.UniqueConstraint(fields=['board_id', 'import_id', 'operation', 'client_item_id'], name='room_import_step')),
+        migrations.AddConstraint(model_name='roomcommandreceipt', constraint=models.UniqueConstraint(fields=['board_id', 'import_id', 'operation', 'client_item_id'], condition=~models.Q(client_item_id=''), name='room_import_step')),
     ]

@@ -127,7 +127,7 @@ def test_legacy_doc_message(setup):
 def test_contract_operations():
     from pathlib import Path
     contract=json.loads((Path(__file__).parent/'golden/board-rooms-v1.json').read_text())
-    assert set(contract['commands']['operations'])=={'create','folders','upload','imports','complete'}
+    assert set(contract['commands']['operations'])=={'create','folders','upload','imports','complete','abandon'}
 
 
 def file_bytes(kind):

@@ -160,4 +160,4 @@ class RoomCommandReceipt(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['board_id', 'command_key'], name='room_command_key'),
                        models.UniqueConstraint(fields=['board_id', 'import_id', 'operation', 'client_item_id'],
-                                               name='room_import_step')]
+                                               condition=~models.Q(client_item_id=''), name='room_import_step')]

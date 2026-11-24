@@ -32,3 +32,8 @@ COMPLETE = {'type': 'object', 'additionalProperties': False,
                            'items': {'type': 'array', 'items': {'type': 'object', 'additionalProperties': False,
                                'required': ['client_item_id', 'version_id', 'sha256'],
                                'properties': {'client_item_id': TEXT, 'version_id': TEXT, 'sha256': SHA}}}}}
+
+ABANDON = {'type': 'object', 'additionalProperties': False,
+           'required': ['approval_key', 'idempotency_key', 'expected_revision'],
+           'properties': {'approval_key': TEXT, 'idempotency_key': TEXT,
+                          'expected_revision': {'type': 'integer', 'minimum': 1}}}

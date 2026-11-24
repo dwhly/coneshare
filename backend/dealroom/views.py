@@ -12,7 +12,7 @@ from core.models import APIKey
 from rest_framework.settings import api_settings
 from dealroom_sign.board_auth import BoardProxyAuthentication
 from .room_commands import execute
-from .room_schemas import IMPORTS, COMPLETE
+from .room_schemas import IMPORTS, COMPLETE, ABANDON
 from core.authentication import generate_raw_api_key
 from datarooms.models import Dataroom
 from sharelinks.models import ViewerOrganisation, Viewer, ShareLinkAccessGrant, ShareLink, IssuedCopy, ShareLinkDataroomSetting
@@ -70,6 +70,11 @@ class RoomViewSet(StaffViewSet):
     @action(detail=True, methods=['post'])
     def complete(self, request, pk=None):
         return execute(request, 'complete', pk)
+
+    @extend_schema(request={'application/json': ABANDON}, responses=dict)
+    @action(detail=True, methods=['post'], url_path=r'imports/(?P<import_id>[^/.]+)/abandon')
+    def abandon(self, request, pk=None, import_id=None):
+        return execute(request, 'abandon', pk, import_id)
 
     serializer_class = RoomSerializer
     def approval_before(self):

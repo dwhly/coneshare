@@ -1,0 +1,710 @@
+FFFFFFFFF.FF..FFFFFFF                                                    [100%]
+=================================== FAILURES ===================================
+______ test_render_failure_abandon_unlocks_and_new_review_succeeds[False] ______
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B28D3FR62RSV0MG5M13S4)>)
+creating = False
+
+    @pytest.mark.parametrize('creating', [False, True])
+    def test_render_failure_abandon_unlocks_and_new_review_succeeds(setup, creating):
+        content = file_bytes('docx'); sha = hashlib.sha256(content).hexdigest()
+        m = manifest([
+            dict(client_item_id='folder', kind='folder', name='Reports', parent_id=None, position=4),
+            dict(client_item_id='file', kind='file', name='Report.docx', parent_id='folder', position=0, sha256=sha, purpose='document'),
+        ])
+        if creating:
+            response, original = start(setup, m)
+        else:
+            models.BoardRoom.objects.create(board_id='fixture', room=setup.room, build_state='ready')
+            response = batch(setup, m)
+        assert response.status_code == 201
+        approved = response.json(); root = BASE+approved['id']+'/'
+        f = call(root+'folders/', continuation(approved, 'folder', name='Reports', parent_id=None, position=4, client_item_id='folder'))
+        with patch('documents.fileserver.fileserver_client.upload_file'):
+            uploaded = call(root+'upload/', continuation(approved, 'upload', file=SimpleUploadedFile('Report.docx', content),
+                folder_id=f.json()['id'], position='0', client_item_id='file', source_sha256=sha, purpose='document'), multipart=True)
+        assert uploaded.status_code == 201, uploaded.content
+        result = uploaded.json()
+        DocumentVersion.objects.filter(pk=result['version_id']).update(render_status='failed')
+        completion = complete(approved, m, [dict(client_item_id='file', version_id=result['version_id'], sha256=sha)], result['revision'])
+        assert call(root+'complete/', completion).status_code == 409
+        staff = APIClient(); staff.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(setup.user).access_token))
+        assert staff.post(root+'folders/', {'name':'Staff'}, format='json').status_code == 409
+        path = root+'imports/'+approved['import_id']+'/abandon/'
+        body = dict(approval_key=approved['approval_key'], idempotency_key='abandon', expected_revision=result['revision'])
+>       assert call(path, body, via='service:assistant').status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M87B28CVKG3B1M6JS5SA76H0/imports/7a96ac08-f3fa-47b9-9053-5d0ab545bc51/abandon/', {'approval_key': 'batch', 'expected_revision': 4, 'idempotency_key': 'abandon'}, via='service:assistant')
+
+tests/dealroom/test_room_commands_s2_r2.py:63: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Default organization not found, creating one...
+Default root folder is set, id: 01M87B2874REWFZ9GY0AQ07NN9
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:53:40,589 [WARNING] django.request:253 log_response() - Conflict: /api/v1/dealroom/rooms/01M87B28CVKG3B1M6JS5SA76H0/complete/
+2026-11-24 17:53:40,633 [WARNING] django.request:253 log_response() - Conflict: /api/v1/dealroom/rooms/01M87B28CVKG3B1M6JS5SA76H0/folders/
+2026-11-24 17:53:40,685 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M87B28CVKG3B1M6JS5SA76H0/imports/7a96ac08-f3fa-47b9-9053-5d0ab545bc51/abandon/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Conflict: /api/v1/dealroom/rooms/01M87B28CVKG3B1M6JS5SA76H0/complete/
+WARNING  django.request:log.py:253 Conflict: /api/v1/dealroom/rooms/01M87B28CVKG3B1M6JS5SA76H0/folders/
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M87B28CVKG3B1M6JS5SA76H0/imports/7a96ac08-f3fa-47b9-9053-5d0ab545bc51/abandon/
+______ test_render_failure_abandon_unlocks_and_new_review_succeeds[True] _______
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2A2M7XC76GXPW72G0TM0)>)
+creating = True
+
+    @pytest.mark.parametrize('creating', [False, True])
+    def test_render_failure_abandon_unlocks_and_new_review_succeeds(setup, creating):
+        content = file_bytes('docx'); sha = hashlib.sha256(content).hexdigest()
+        m = manifest([
+            dict(client_item_id='folder', kind='folder', name='Reports', parent_id=None, position=4),
+            dict(client_item_id='file', kind='file', name='Report.docx', parent_id='folder', position=0, sha256=sha, purpose='document'),
+        ])
+        if creating:
+            response, original = start(setup, m)
+        else:
+            models.BoardRoom.objects.create(board_id='fixture', room=setup.room, build_state='ready')
+            response = batch(setup, m)
+        assert response.status_code == 201
+        approved = response.json(); root = BASE+approved['id']+'/'
+        f = call(root+'folders/', continuation(approved, 'folder', name='Reports', parent_id=None, position=4, client_item_id='folder'))
+        with patch('documents.fileserver.fileserver_client.upload_file'):
+            uploaded = call(root+'upload/', continuation(approved, 'upload', file=SimpleUploadedFile('Report.docx', content),
+                folder_id=f.json()['id'], position='0', client_item_id='file', source_sha256=sha, purpose='document'), multipart=True)
+        assert uploaded.status_code == 201, uploaded.content
+        result = uploaded.json()
+        DocumentVersion.objects.filter(pk=result['version_id']).update(render_status='failed')
+        completion = complete(approved, m, [dict(client_item_id='file', version_id=result['version_id'], sha256=sha)], result['revision'])
+        assert call(root+'complete/', completion).status_code == 409
+        staff = APIClient(); staff.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(setup.user).access_token))
+        assert staff.post(root+'folders/', {'name':'Staff'}, format='json').status_code == 409
+        path = root+'imports/'+approved['import_id']+'/abandon/'
+        body = dict(approval_key=approved['approval_key'], idempotency_key='abandon', expected_revision=result['revision'])
+>       assert call(path, body, via='service:assistant').status_code == 403
+E       assert 404 == 403
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +    where <HttpResponseNotFound status_code=404, "text/html; charset=utf-8"> = call('/api/v1/dealroom/rooms/01M87B2A3P8ZSQWKMXFHRK9AW7/imports/06598efd-70fd-4516-b4ea-5233f9e46c9d/abandon/', {'approval_key': 'create-1', 'expected_revision': 3, 'idempotency_key': 'abandon'}, via='service:assistant')
+
+tests/dealroom/test_room_commands_s2_r2.py:63: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:53:41,145 [WARNING] django.request:253 log_response() - Conflict: /api/v1/dealroom/rooms/01M87B2A3P8ZSQWKMXFHRK9AW7/complete/
+2026-11-24 17:53:41,163 [WARNING] django.request:253 log_response() - Conflict: /api/v1/dealroom/rooms/01M87B2A3P8ZSQWKMXFHRK9AW7/folders/
+2026-11-24 17:53:41,167 [WARNING] django.request:253 log_response() - Not Found: /api/v1/dealroom/rooms/01M87B2A3P8ZSQWKMXFHRK9AW7/imports/06598efd-70fd-4516-b4ea-5233f9e46c9d/abandon/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Conflict: /api/v1/dealroom/rooms/01M87B2A3P8ZSQWKMXFHRK9AW7/complete/
+WARNING  django.request:log.py:253 Conflict: /api/v1/dealroom/rooms/01M87B2A3P8ZSQWKMXFHRK9AW7/folders/
+WARNING  django.request:log.py:253 Not Found: /api/v1/dealroom/rooms/01M87B2A3P8ZSQWKMXFHRK9AW7/imports/06598efd-70fd-4516-b4ea-5233f9e46c9d/abandon/
+_____________ test_position_zero_on_populated_room_requires_review _____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2AAJAEBJA262WQESMA1X)>)
+
+    def test_position_zero_on_populated_room_requires_review(setup):
+        models.BoardRoom.objects.create(board_id='fixture', room=setup.room, build_state='ready')
+        DataroomItemOrder.objects.create(dataroom=setup.room, dataroom_document=setup.item, item_type='document', position=0)
+        m = manifest([dict(client_item_id='folder', kind='folder', name='Reports', parent_id=None, position=0)])
+        response = batch(setup, m)
+>       assert response.status_code == 409
+E       assert 201 == 409
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:91: AssertionError
+_________________ test_approval_extension_allowlist[file.exe] __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2ADH88HFVG19XPPYDVAM)>)
+name = 'file.exe'
+
+    @pytest.mark.parametrize('name', ['file.exe', 'file.zip', 'file', 'file.pdf.exe'])
+    def test_approval_extension_allowlist(setup, name):
+        m = manifest([dict(client_item_id='f', kind='file', name=name, parent_id=None, position=0, sha256='a'*64, purpose='document')])
+        response, _ = start(setup, m)
+>       assert response.status_code == 400
+E       assert 201 == 400
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:100: AssertionError
+_________________ test_approval_extension_allowlist[file.zip] __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2AG72NW8WEYDWY008RVF)>)
+name = 'file.zip'
+
+    @pytest.mark.parametrize('name', ['file.exe', 'file.zip', 'file', 'file.pdf.exe'])
+    def test_approval_extension_allowlist(setup, name):
+        m = manifest([dict(client_item_id='f', kind='file', name=name, parent_id=None, position=0, sha256='a'*64, purpose='document')])
+        response, _ = start(setup, m)
+>       assert response.status_code == 400
+E       assert 201 == 400
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:100: AssertionError
+___________________ test_approval_extension_allowlist[file] ____________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2AJYFZBKPBTVJPTBW40E)>)
+name = 'file'
+
+    @pytest.mark.parametrize('name', ['file.exe', 'file.zip', 'file', 'file.pdf.exe'])
+    def test_approval_extension_allowlist(setup, name):
+        m = manifest([dict(client_item_id='f', kind='file', name=name, parent_id=None, position=0, sha256='a'*64, purpose='document')])
+        response, _ = start(setup, m)
+>       assert response.status_code == 400
+E       assert 201 == 400
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:100: AssertionError
+_______________ test_approval_extension_allowlist[file.pdf.exe] ________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2ANK0W6R8DP37CNRA6SP)>)
+name = 'file.pdf.exe'
+
+    @pytest.mark.parametrize('name', ['file.exe', 'file.zip', 'file', 'file.pdf.exe'])
+    def test_approval_extension_allowlist(setup, name):
+        m = manifest([dict(client_item_id='f', kind='file', name=name, parent_id=None, position=0, sha256='a'*64, purpose='document')])
+        response, _ = start(setup, m)
+>       assert response.status_code == 400
+E       assert 201 == 400
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:100: AssertionError
+____________________ test_adopted_room_cannot_widen_access _____________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2AQEQKADPM1DCB67NYPH)>)
+
+    def test_adopted_room_cannot_widen_access(setup):
+        models.BoardRoom.objects.create(board_id='fixture', room=setup.room, build_state='ready')
+        m = manifest(); m['access']['download_ceiling'] = 'watermarked'
+>       assert batch(setup, m).status_code == 409
+E       assert 201 == 409
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+E        +    where <Response status_code=201, "application/json"> = batch(namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2AQEQKADPM1DCB67NYPH)>), {'access': {'download_ceiling': 'watermarked', 'expires_at': None}, 'intended_emails': [], 'items': [], 'name': 'Private review', ...})
+
+tests/dealroom/test_room_commands_s2_r2.py:107: AssertionError
+___________________ test_draft_id_requires_json_string[123] ____________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2ASJY33SFVA4C6NX0N4A)>)
+draft = 123
+
+    @pytest.mark.parametrize('draft', [123, True])
+    def test_draft_id_requires_json_string(setup, draft):
+        response, _ = start(setup, draft=draft)
+>       assert response.status_code == 400
+E       assert 201 == 400
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:113: AssertionError
+_________________ test_nonreceipt_integrity_error_is_definite __________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2AWZDGAVS2V8TZM89973)>)
+
+    def test_nonreceipt_integrity_error_is_definite(setup):
+        with patch('dealroom.room_import.start', side_effect=IntegrityError('order collision')):
+            response, _ = start(setup)
+        assert response.status_code == 409
+>       assert 'review again' in str(response.content)
+E       assert 'review again' in 'b\'{"detail":"Command is in progress; retry the same key."}\''
+E        +  where 'b\'{"detail":"Command is in progress; retry the same key."}\'' = str(b'{"detail":"Command is in progress; retry the same key."}')
+E        +    where b'{"detail":"Command is in progress; retry the same key."}' = <Response status_code=409, "application/json">.content
+
+tests/dealroom/test_room_commands_s2_r2.py:120: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:53:41,812 [WARNING] django.request:253 log_response() - Conflict: /api/v1/dealroom/rooms/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Conflict: /api/v1/dealroom/rooms/
+________________ test_legacy_malformed_room_returns_400[body0] _________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2AYQ25TBRE9SVR9XR4Y4)>)
+body = []
+
+    @pytest.mark.parametrize('body', [[], {'room':'invalid'}, {'dataroom':['invalid']}])
+    def test_legacy_malformed_room_returns_400(setup, body):
+        staff = APIClient(); staff.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(setup.user).access_token))
+>       response = staff.post(BASE+str(setup.room.pk)+'/folders/', body, format='json')
+
+tests/dealroom/test_room_commands_s2_r2.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:302: in post
+    response = super().post(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:216: in post
+    return self.generic('POST', path, data, content_type, **extra)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:240: in generic
+    return super().generic(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:292: in request
+    return super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/test.py:244: in request
+    request = super().request(**kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:1090: in request
+    self.check_exception(response)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/test/client.py:805: in check_exception
+    raise exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py:197: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py:65: in _view_wrapper
+    return view_func(request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py:124: in view
+    return self.dispatch(request, *args, **kwargs)
+dealroom/hooks.py:111: in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:526: in dispatch
+    response = self.handle_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:474: in handle_exception
+    self.raise_uncaught_exception(exc)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:485: in raise_uncaught_exception
+    raise exc
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py:514: in dispatch
+    self.initial(request, *args, **kwargs)
+dealroom/hooks.py:98: in initial
+    enforce(self, request)
+dealroom/hooks.py:45: in enforce
+    legacy_lock(view, request)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+view = <dealroom.views.RoomViewSet object at 0x7aec6b69fd40>
+request = <rest_framework.request.Request: POST '/api/v1/dealroom/rooms/01M87B2AYF42JFWM08ZK3H82FN/folders/'>
+
+    def legacy_lock(view, request):
+        if request.method in ('GET', 'HEAD', 'OPTIONS'):
+            return
+        name = type(view).__name__
+        if name == 'RoomViewSet' and getattr(view, 'action', '') in {'imports', 'complete'}:
+            raise PermissionDenied('Board approval required.')
+        pk = view.kwargs.get('pk')
+        data = request.data
+        ids = set()
+>       for value in (view.kwargs.get('room_id'), data.get('room'), data.get('room_id'), data.get('dataroom')):
+E       AttributeError: 'list' object has no attribute 'get'
+
+dealroom/room_boundary.py:39: AttributeError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:53:41,863 [ERROR] django.request:253 log_response() - Internal Server Error: /api/v1/dealroom/rooms/01M87B2AYF42JFWM08ZK3H82FN/folders/
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 111, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 514, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 98, in initial
+    enforce(self, request)
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 45, in enforce
+    legacy_lock(view, request)
+  File "/root/worktrees/send-boardroom/backend/dealroom/room_boundary.py", line 39, in legacy_lock
+    for value in (view.kwargs.get('room_id'), data.get('room'), data.get('room_id'), data.get('dataroom')):
+                                              ^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+------------------------------ Captured log call -------------------------------
+ERROR    django.request:log.py:253 Internal Server Error: /api/v1/dealroom/rooms/01M87B2AYF42JFWM08ZK3H82FN/folders/
+Traceback (most recent call last):
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 111, in dispatch
+    response = original_dispatch(self, request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 526, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 474, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 485, in raise_uncaught_exception
+    raise exc
+  File "/root/work/sign-product/send-venv/lib/python3.12/site-packages/rest_framework/views.py", line 514, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 98, in initial
+    enforce(self, request)
+  File "/root/worktrees/send-boardroom/backend/dealroom/hooks.py", line 45, in enforce
+    legacy_lock(view, request)
+  File "/root/worktrees/send-boardroom/backend/dealroom/room_boundary.py", line 39, in legacy_lock
+    for value in (view.kwargs.get('room_id'), data.get('room'), data.get('room_id'), data.get('dataroom')):
+                                              ^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+___________________ test_empty_item_receipts_do_not_collide ____________________
+
+self = <django.db.backends.utils.CursorWrapper object at 0x7aec6b5a67b0>
+sql = 'INSERT INTO "dealroom_roomcommandreceipt" ("board_id", "command_key", "actor", "via", "operation", "payload_sha256", ..."created_at") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING "dealroom_roomcommandreceipt"."id"'
+params = ('fixture', 'second', 'staff@example.test', 'tailscale', 'lifecycle', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', ...)
+ignored_wrapper_args = (False, {'connection': <DatabaseWrapper vendor='sqlite' alias='default'>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x7aec6b5a67b0>})
+
+    def _execute(self, sql, params, *ignored_wrapper_args):
+        # Raise a warning during app initialization (stored_app_configs is only
+        # ever set during testing).
+        if not apps.ready and not apps.stored_app_configs:
+            warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+        self.db.validate_no_broken_transaction()
+        with self.db.wrap_database_errors:
+            if params is None:
+                # params default might be backend specific.
+                return self.cursor.execute(sql)
+            else:
+>               return self.cursor.execute(sql, params)
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/backends/utils.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.sqlite3.base.SQLiteCursorWrapper object at 0x7aec6b5670b0>
+query = 'INSERT INTO "dealroom_roomcommandreceipt" ("board_id", "command_key", "actor", "via", "operation", "payload_sha256", ...nt_item_id", "created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "dealroom_roomcommandreceipt"."id"'
+params = ('fixture', 'second', 'staff@example.test', 'tailscale', 'lifecycle', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', ...)
+
+    def execute(self, query, params=None):
+        if params is None:
+            return super().execute(query)
+        # Extract names if params is a mapping, i.e. "pyformat" style is used.
+        param_names = list(params) if isinstance(params, Mapping) else None
+        query = self.convert_query(query, param_names=param_names)
+>       return super().execute(query, params)
+E       sqlite3.IntegrityError: UNIQUE constraint failed: dealroom_roomcommandreceipt.board_id, dealroom_roomcommandreceipt.import_id, dealroom_roomcommandreceipt.operation, dealroom_roomcommandreceipt.client_item_id
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py:360: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2B75902HS68AKRNVSNV9)>)
+
+    def test_empty_item_receipts_do_not_collide(setup):
+        values = dict(board_id='fixture', actor='staff@example.test', via='tailscale', operation='lifecycle', payload_sha256='a'*64, import_id='', client_item_id='')
+        models.RoomCommandReceipt.objects.create(command_key='first', **values)
+>       models.RoomCommandReceipt.objects.create(command_key='second', **values)
+
+tests/dealroom/test_room_commands_s2_r2.py:134: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/manager.py:87: in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/query.py:665: in create
+    obj.save(force_insert=True, using=self.db)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/base.py:902: in save
+    self.save_base(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/base.py:1008: in save_base
+    updated = self._save_table(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/base.py:1169: in _save_table
+    results = self._do_insert(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/base.py:1210: in _do_insert
+    return manager._insert(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/manager.py:87: in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/query.py:1873: in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py:1882: in execute_sql
+    cursor.execute(sql, params)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/backends/utils.py:79: in execute
+    return self._execute_with_wrappers(
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/backends/utils.py:92: in _execute_with_wrappers
+    return executor(sql, params, many, context)
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/backends/utils.py:100: in _execute
+    with self.db.wrap_database_errors:
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/utils.py:91: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/backends/utils.py:105: in _execute
+    return self.cursor.execute(sql, params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <django.db.backends.sqlite3.base.SQLiteCursorWrapper object at 0x7aec6b5670b0>
+query = 'INSERT INTO "dealroom_roomcommandreceipt" ("board_id", "command_key", "actor", "via", "operation", "payload_sha256", ...nt_item_id", "created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING "dealroom_roomcommandreceipt"."id"'
+params = ('fixture', 'second', 'staff@example.test', 'tailscale', 'lifecycle', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', ...)
+
+    def execute(self, query, params=None):
+        if params is None:
+            return super().execute(query)
+        # Extract names if params is a mapping, i.e. "pyformat" style is used.
+        param_names = list(params) if isinstance(params, Mapping) else None
+        query = self.convert_query(query, param_names=param_names)
+>       return super().execute(query, params)
+E       django.db.utils.IntegrityError: UNIQUE constraint failed: dealroom_roomcommandreceipt.board_id, dealroom_roomcommandreceipt.import_id, dealroom_roomcommandreceipt.operation, dealroom_roomcommandreceipt.client_item_id
+
+/root/work/sign-product/send-venv/lib/python3.12/site-packages/django/db/backends/sqlite3/base.py:360: IntegrityError
+________ test_execute_rechecks_human_and_switch[service:assistant-True] ________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2BKR5PDG46R9TSAZ97WT)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7aec6b64c200>
+via = 'service:assistant', enabled = True
+
+    @pytest.mark.parametrize('via,enabled', [('service:assistant', True), ('tailscale', False)])
+    def test_execute_rechecks_human_and_switch(setup, settings, via, enabled):
+        from dealroom.room_commands import execute
+        writer(setup); settings.BOARD_ROOM_WRITES_ENABLED = enabled
+        request = SimpleNamespace(data={}, FILES={}, board_binding=setup.binding, user=setup.user,
+                                  board_context={'login':setup.user.email, 'via':via})
+        with pytest.raises(PermissionDenied):
+>           execute(request, 'create')
+
+tests/dealroom/test_room_commands_s2_r2.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom/room_commands.py:115: in execute
+    old = receipt(request, operation, payload)
+dealroom/room_commands.py:41: in receipt
+    key = command_key(payload.get('idempotency_key'))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None
+
+    def command_key(value):
+        if not isinstance(value, str) or not re.fullmatch(r'[A-Za-z0-9_.:-]{1,200}', value):
+>           raise ValidationError('Invalid command key.')
+E           rest_framework.exceptions.ValidationError: [ErrorDetail(string='Invalid command key.', code='invalid')]
+
+dealroom/room_commands.py:36: ValidationError
+___________ test_execute_rechecks_human_and_switch[tailscale-False] ____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2BNCRZ22QT2M1HXE1498)>)
+settings = <pytest_django.fixtures.SettingsWrapper object at 0x7aec6b538b30>
+via = 'tailscale', enabled = False
+
+    @pytest.mark.parametrize('via,enabled', [('service:assistant', True), ('tailscale', False)])
+    def test_execute_rechecks_human_and_switch(setup, settings, via, enabled):
+        from dealroom.room_commands import execute
+        writer(setup); settings.BOARD_ROOM_WRITES_ENABLED = enabled
+        request = SimpleNamespace(data={}, FILES={}, board_binding=setup.binding, user=setup.user,
+                                  board_context={'login':setup.user.email, 'via':via})
+        with pytest.raises(PermissionDenied):
+>           execute(request, 'create')
+
+tests/dealroom/test_room_commands_s2_r2.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom/room_commands.py:115: in execute
+    old = receipt(request, operation, payload)
+dealroom/room_commands.py:41: in receipt
+    key = command_key(payload.get('idempotency_key'))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None
+
+    def command_key(value):
+        if not isinstance(value, str) or not re.fullmatch(r'[A-Za-z0-9_.:-]{1,200}', value):
+>           raise ValidationError('Invalid command key.')
+E           rest_framework.exceptions.ValidationError: [ErrorDetail(string='Invalid command key.', code='invalid')]
+
+dealroom/room_commands.py:36: ValidationError
+__________________ test_abandon_inventory_schema_and_contract __________________
+
+    def test_abandon_inventory_schema_and_contract():
+        import json
+        from pathlib import Path
+        from dealroom.registry import registry
+        from dealroom.management.commands.dealroom_registry import inventory
+        name = 'dealroom_RoomViewSet_abandon_post'
+>       assert name in inventory()
+E       AssertionError: assert 'dealroom_RoomViewSet_abandon_post' in {'analytics_AllLinksView_endpoint_get': {'boundary': 'denied', 'human_only': False, 'method': 'GET', 'operation_id': '...enied', 'human_only': False, 'method': 'GET', 'operation_id': 'analytics_DashboardSummaryView_endpoint_get', ...}, ...}
+E        +  where {'analytics_AllLinksView_endpoint_get': {'boundary': 'denied', 'human_only': False, 'method': 'GET', 'operation_id': '...enied', 'human_only': False, 'method': 'GET', 'operation_id': 'analytics_DashboardSummaryView_endpoint_get', ...}, ...} = <function inventory at 0x7aec6f1753a0>()
+
+tests/dealroom/test_room_commands_s2_r2.py:157: AssertionError
+_______________________ test_upload_hashes_incrementally _______________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2BRWSZHN57JWNSDTWS92)>)
+
+    def test_upload_hashes_incrementally(setup):
+        from dealroom.room_commands import execute
+        writer(setup)
+        file = SimpleUploadedFile('file.pdf', b'abc')
+        file.chunks = lambda: iter([b'a', b'b', b'c'])
+        request = SimpleNamespace(data={'file':file, 'position':'0', 'idempotency_key':'hash'}, FILES={'file':file},
+            board_binding=setup.binding, user=setup.user, board_context={'login':setup.user.email, 'via':'tailscale'})
+        real_hash = hashlib.sha256
+        streamed = []
+        def hasher(data=b''):
+            assert data != b'abc', 'Upload body must be hashed incrementally'
+            obj = real_hash(data)
+            class Hash:
+                def update(self, chunk):
+                    streamed.append(chunk); obj.update(chunk)
+                def hexdigest(self):
+                    return obj.hexdigest()
+            return Hash()
+        with patch('dealroom.room_commands.hashlib.sha256', side_effect=hasher), patch('dealroom.room_import.start', return_value={}):
+>           execute(request, 'create')
+
+tests/dealroom/test_room_commands_s2_r2.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+dealroom/room_commands.py:91: in execute
+    payload['file_sha256'] = hashlib.sha256(b''.join(file.chunks())).hexdigest()
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+/usr/lib/python3.12/unittest/mock.py:1199: in _execute_mock_call
+    result = effect(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = b'abc'
+
+    def hasher(data=b''):
+>       assert data != b'abc', 'Upload body must be hashed incrementally'
+E       AssertionError: Upload body must be hashed incrementally
+E       assert b'abc' != b'abc'
+
+tests/dealroom/test_room_commands_s2_r2.py:174: AssertionError
+____________ test_reaper_preserves_all_storage_references[document] ____________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2BZEMJVZM6NWPJHCJM66)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor0')
+reference = 'document'
+
+    @pytest.mark.parametrize('reference', ['document', 'page'])
+    def test_reaper_preserves_all_storage_references(setup, tmp_path, reference):
+        import os
+        import time
+        from django.core.management import call_command
+        from documents.models import DocumentPage
+        key = f'{setup.org.pk}/board-import/{setup.room.pk}/'+('a'*64)+'/'+('b'*64)
+        path = tmp_path/key; path.parent.mkdir(parents=True); path.write_bytes(b'referenced')
+        os.utime(path, (time.time()-90000,)*2)
+        if reference == 'document':
+            setup.doc.storage_key = key; setup.doc.save()
+        else:
+            DocumentPage.objects.filter(document_version=setup.version).update(storage_key=key)
+        call_command('reap_board_staging', storage_root=str(tmp_path), apply=True)
+>       assert path.exists()
+E       AssertionError: assert False
+E        +  where False = <bound method Path.exists of PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor0/01M87B2BYZ04GQS...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')>()
+E        +    where <bound method Path.exists of PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor0/01M87B2BYZ04GQS...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')> = PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor0/01M87B2BYZ04GQSKJ9EB5CHZ5G/board-import/01M8...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb').exists
+
+tests/dealroom/test_room_commands_s2_r2.py:201: AssertionError
+----------------------------- Captured stdout call -----------------------------
+1 orphaned import files removed.
+______________ test_reaper_preserves_all_storage_references[page] ______________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B2C1N75F0VD1BXHBZFPGZ)>)
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor1')
+reference = 'page'
+
+    @pytest.mark.parametrize('reference', ['document', 'page'])
+    def test_reaper_preserves_all_storage_references(setup, tmp_path, reference):
+        import os
+        import time
+        from django.core.management import call_command
+        from documents.models import DocumentPage
+        key = f'{setup.org.pk}/board-import/{setup.room.pk}/'+('a'*64)+'/'+('b'*64)
+        path = tmp_path/key; path.parent.mkdir(parents=True); path.write_bytes(b'referenced')
+        os.utime(path, (time.time()-90000,)*2)
+        if reference == 'document':
+            setup.doc.storage_key = key; setup.doc.save()
+        else:
+            DocumentPage.objects.filter(document_version=setup.version).update(storage_key=key)
+        call_command('reap_board_staging', storage_root=str(tmp_path), apply=True)
+>       assert path.exists()
+E       AssertionError: assert False
+E        +  where False = <bound method Path.exists of PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor1/01M87B2C18K63DH...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')>()
+E        +    where <bound method Path.exists of PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor1/01M87B2C18K63DH...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')> = PosixPath('/tmp/pytest-of-root/pytest-192/test_reaper_preserves_all_stor1/01M87B2C18K63DHZZ3XYWK64QK/board-import/01M8...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb').exists
+
+tests/dealroom/test_room_commands_s2_r2.py:201: AssertionError
+----------------------------- Captured stdout call -----------------------------
+1 orphaned import files removed.
+=============================== warnings summary ===============================
+tests/dealroom/test_room_commands_s2_r2.py::test_render_failure_abandon_unlocks_and_new_review_succeeds[False]
+tests/dealroom/test_room_commands_s2_r2.py::test_render_failure_abandon_unlocks_and_new_review_succeeds[True]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body0]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body1]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body2]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/dealroom/test_room_commands_s2_r2.py::test_render_failure_abandon_unlocks_and_new_review_succeeds[False]
+tests/dealroom/test_room_commands_s2_r2.py::test_render_failure_abandon_unlocks_and_new_review_succeeds[True]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body0]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body1]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body2]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:370: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_render_failure_abandon_unlocks_and_new_review_succeeds[False]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_render_failure_abandon_unlocks_and_new_review_succeeds[True]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_position_zero_on_populated_room_requires_review
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_approval_extension_allowlist[file.exe]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_approval_extension_allowlist[file.zip]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_approval_extension_allowlist[file]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_approval_extension_allowlist[file.pdf.exe]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_adopted_room_cannot_widen_access
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_draft_id_requires_json_string[123]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_nonreceipt_integrity_error_is_definite
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body0]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_empty_item_receipts_do_not_collide
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_execute_rechecks_human_and_switch[service:assistant-True]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_execute_rechecks_human_and_switch[tailscale-False]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_abandon_inventory_schema_and_contract
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_upload_hashes_incrementally
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_reaper_preserves_all_storage_references[document]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_reaper_preserves_all_storage_references[page]
+18 failed, 3 passed, 10 warnings in 21.72s
+.F.F                                                                     [100%]
+=================================== FAILURES ===================================
+________________ test_legacy_malformed_room_returns_400[body1] _________________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B73SBRGVP816TYY8FF6KS)>)
+body = {'name': 'Folder', 'room': 'invalid'}
+
+    @pytest.mark.parametrize('body', [[], {'name':'Folder', 'room':'invalid'}, {'name':'Folder', 'dataroom':['invalid']}])
+    def test_legacy_malformed_room_returns_400(setup, body):
+        staff = APIClient(); staff.credentials(HTTP_AUTHORIZATION='Bearer '+str(RefreshToken.for_user(setup.user).access_token))
+        response = staff.post(BASE+str(setup.room.pk)+'/folders/', body, format='json')
+>       assert response.status_code == 400
+E       assert 201 == 400
+E        +  where 201 = <Response status_code=201, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:128: AssertionError
+___________ test_cancel_after_lost_completion_retains_published_room ___________
+
+setup = namespace(org=<Organization: Board fixture>, user=<User: staff@example.test>, binding=<BoardStaffBinding: BoardStaffBi...ersion=<DocumentVersion: Report.pdf v1>, item=<DataroomDocument: DataroomDocument object (01M87B7403PBSKFET7T2DEJDCB)>)
+
+    def test_cancel_after_lost_completion_retains_published_room(setup):
+        response, _ = start(setup); approved = response.json()
+        done = call(BASE+approved['id']+'/complete/', complete(approved, manifest()))
+        assert done.status_code == 200
+        path = BASE+approved['id']+'/imports/'+approved['import_id']+'/abandon/'
+        body = dict(approval_key=approved['approval_key'], idempotency_key='cancel-completed', expected_revision=done.json()['revision'])
+        cancelled = call(path, body)
+>       assert cancelled.status_code == 200
+E       assert 409 == 200
+E        +  where 409 = <Response status_code=409, "application/json">.status_code
+
+tests/dealroom/test_room_commands_s2_r2.py:211: AssertionError
+----------------------------- Captured stdout call -----------------------------
+2026-11-24 17:56:18,630 [WARNING] django.request:253 log_response() - Conflict: /api/v1/dealroom/rooms/01M87B740S795D2G7VT5K4768H/imports/593f278d-fa68-445d-8e92-6d48277187c0/abandon/
+------------------------------ Captured log call -------------------------------
+WARNING  django.request:log.py:253 Conflict: /api/v1/dealroom/rooms/01M87B740S795D2G7VT5K4768H/imports/593f278d-fa68-445d-8e92-6d48277187c0/abandon/
+=============================== warnings summary ===============================
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body0]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body1]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body2]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:149: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    return self._jws.encode(
+
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body0]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body1]
+tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body2]
+  /root/work/sign-product/send-venv/lib/python3.12/site-packages/jwt/api_jwt.py:370: InsecureKeyLengthWarning: The HMAC key is 7 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+    decoded = self.decode_complete(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_legacy_malformed_room_returns_400[body1]
+FAILED tests/dealroom/test_room_commands_s2_r2.py::test_cancel_after_lost_completion_retains_published_room
+2 failed, 2 passed, 18 deselected, 6 warnings in 14.84s

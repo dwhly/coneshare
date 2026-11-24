@@ -3469,6 +3469,57 @@
     "recipient": false
   },
   {
+    "human_only": true,
+    "method": "POST",
+    "multipart": false,
+    "name": "dealroom_RoomViewSet_abandon_post",
+    "operation_id": "dealroom_RoomViewSet_abandon_post",
+    "parameters": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "additionalProperties": false,
+          "properties": {
+            "approval_key": {
+              "type": "string"
+            },
+            "expected_revision": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "idempotency_key": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "approval_key",
+            "idempotency_key",
+            "expected_revision"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        },
+        "import_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "import_id"
+      ],
+      "type": "object"
+    },
+    "path": "/api/v1/dealroom/rooms/{id}/imports/{import_id}/abandon/",
+    "path_params": [
+      "id",
+      "import_id"
+    ],
+    "query_params": [],
+    "recipient": false
+  },
+  {
     "human_only": false,
     "method": "PATCH",
     "multipart": false,

@@ -1859,6 +1859,16 @@
     "tier": "read_only",
     "widens_access": false
   },
+  "dealroom_RoomViewSet_abandon_post": {
+    "boundary": "staff",
+    "human_only": true,
+    "method": "POST",
+    "operation_id": "dealroom_RoomViewSet_abandon_post",
+    "path": "/api/v1/dealroom/rooms/{pk}/imports/{import_id}/abandon/",
+    "reason": "Human board receipt with room write capability.",
+    "tier": "read_write",
+    "widens_access": false
+  },
   "dealroom_RoomViewSet_complete_post": {
     "boundary": "staff",
     "human_only": true,

@@ -4,9 +4,8 @@ import time
 from pathlib import Path
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
-from django.db.models import Q
 from datarooms.models import Dataroom
-from documents.models import DocumentVersion
+from documents.services import is_storage_key_referenced
 from dealroom.models import BoardRoom
 
 
@@ -35,7 +34,7 @@ class Command(BaseCommand):
                 room = Dataroom.objects.select_for_update().filter(pk=parts[2]).first()
                 if room and BoardRoom.objects.filter(room=room).exclude(staged_import='').exists():
                     continue
-                if DocumentVersion.objects.filter(Q(original_storage_key=key) | Q(storage_key=key)).exists():
+                if is_storage_key_referenced(key, parts[0]):
                     continue
                 if options['apply']:
                     path.unlink()

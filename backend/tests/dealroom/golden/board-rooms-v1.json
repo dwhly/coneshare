@@ -236,7 +236,7 @@
     }
   },
   "commands": {
-    "version": 2,
+    "version": 3,
     "canonical_json": "UTF-8, sorted keys, compact separators, ensure_ascii=false",
     "manifest": {
       "name": "Private review",
@@ -321,6 +321,16 @@
           "access"
         ],
         "status": 200
+      },
+      "abandon": {
+        "method": "POST",
+        "path": "/api/v1/dealroom/rooms/{id}/imports/{import_id}/abandon/",
+        "required": [
+          "approval_key",
+          "idempotency_key",
+          "expected_revision"
+        ],
+        "status": 200
       }
     },
     "item_fields": [
@@ -381,6 +391,17 @@
       "batch_bytes": 209715200,
       "manifest_items": 2000,
       "preview_pages": 500
+    },
+    "cancellation": {
+      "human_only": true,
+      "receipt_bound": true,
+      "deleted_building_room": "Old command keys remain tombstoned; a new review with a new key may create the draft again.",
+      "board_path": "/api/views/{view}/room-drafts/{draft_id}/command/cancel",
+      "board_required": [
+        "expected_revision",
+        "command_key"
+      ],
+      "add_from_drive_draft_id": "string; identifies the reviewed draft even when manifests match"
     }
   },
   "preparation": {

@@ -1,4 +1,5 @@
 """Manifest-derived effects. Caller data can never replace an approved manifest."""
+from pathlib import Path
 import re
 import uuid
 from rest_framework import serializers
@@ -10,8 +11,8 @@ from documents.renderers import get_renderer
 from sharelinks.models import ShareLink, ShareLinkDataroomSetting
 from .activity import record as activity
 from .models import BoardRoom, RoomPolicy, RoomCommandReceipt
-from .room_commands import Conflict, digest, fields, record
-from .uploads import upload as store_upload
+from .room_commands import Conflict, active, digest, fields, record
+from .uploads import ALLOWED, upload as store_upload
 
 COMMON = {'approval_key', 'import_id', 'idempotency_key'}
 
@@ -59,8 +60,12 @@ def validate_manifest(value, checksum):
         if item['kind'] == 'file':
             if not re.fullmatch(r'[0-9a-f]{64}', str(item.get('sha256', ''))) or item.get('purpose') not in ('document', 'nda'):
                 raise ValidationError('File checksum and purpose required.')
+            if not isinstance(item['name'], str):
+                raise ValidationError('Invalid file name.')
             if item['name'].lower().endswith('.doc'):
                 raise ValidationError('Please save as .docx.')
+            if Path(item['name']).suffix.lower() not in ALLOWED:
+                raise ValidationError('Unsupported file type; review again.')
         seen[iid] = item
     return value
 
@@ -74,13 +79,11 @@ def start(request, operation, payload, room, row):
     if operation == 'create':
         if payload['name'] != manifest['name'] or type(payload['draft_revision']) is not int or payload['draft_revision'] < 1:
             raise Conflict()
+        if not isinstance(payload['board_draft_id'], str):
+            raise ValidationError('board_draft_id must be a string.')
         serializers.CharField(max_length=100).run_validation(payload['board_draft_id'])
         if BoardRoom.objects.filter(board_id=request.board_binding.board_id, draft_id=payload['board_draft_id']).exists():
             raise Conflict('Draft already has a room.')
-        # A creation tombstone also protects a retry under a different command key.
-        if RoomCommandReceipt.objects.filter(board_id=request.board_binding.board_id, operation='create',
-                result__draft_id=payload['board_draft_id']).exists():
-            raise Conflict('Draft already has a retained creation receipt.')
         room = Dataroom.objects.create(organization=request.user.organization, created_by=request.user,
                                      name=manifest['name'], enable_qna=False)
         link = ShareLink.objects.create(dataroom=room, created_by=request.user, name='Room entry',
@@ -98,12 +101,18 @@ def start(request, operation, payload, room, row):
         if not RoomPolicy.objects.filter(room=room).exists():
             raise Conflict('Room policy is not configured.')
         original = RoomCommandReceipt.objects.filter(room=room, operation='create').first()
-        if manifest['nda']['enabled'] or (original and manifest['access'] != original.approved_manifest['access']):
+        policy = RoomPolicy.objects.get(room=room)
+        access = original.approved_manifest['access'] if original else {
+            'download_ceiling': 'none', 'expires_at': policy.expires_at.isoformat() if policy.expires_at else None}
+        if manifest['nda']['enabled'] or manifest['access'] != access:
             raise Conflict('Review existing access; NDA comes next.')
+        positions = [item['position'] for item in manifest['items'] if item['parent_id'] is None]
+        if DataroomItemOrder.objects.filter(dataroom=room, parent_folder=None, position__in=positions).exists():
+            raise Conflict('Room changed; review again.')
         row.staged_import = import_id
         row.revision += 1
         row.save(update_fields=['staged_import', 'revision'])
-    result = {'id': str(room.pk), 'draft_id': row.draft_id, 'approval_key': payload['idempotency_key'],
+    result = {'id': str(room.pk), 'draft_id': str(row.draft_id), 'approval_key': payload['idempotency_key'],
               'import_id': import_id, 'revision': row.revision, 'build_state': row.build_state}
     record(request, operation, payload, room, result, manifest=manifest)
     activity('room.created' if operation == 'create' else 'room.import.started', organization=room.organization,
@@ -227,4 +236,33 @@ def complete(request, payload, room, row, approved, file):
     row.save(update_fields=['build_state', 'staged_import', 'revision'])
     result = {'id': str(room.pk), 'import_id': approved.import_id, 'revision': row.revision, 'build_state': 'ready'}
     record(request, 'complete', payload, room, result, approval=approved)
+    return result
+
+
+def abandon(request, payload, room, row, approved, file):
+    """Remove only this unpublished batch; retain receipt authority after deletion."""
+    fields(payload, COMMON | {'room_id', 'expected_revision'})
+    completed = RoomCommandReceipt.objects.filter(board_id=row.board_id, import_id=approved.import_id, operation='complete').first()
+    if completed:
+        result = {**completed.result, 'abandoned': False, 'deleted': False}
+        record(request, 'abandon', payload, room, result, approval=approved)
+        return result
+    active(row, approved)
+    if type(payload['expected_revision']) is not int or payload['expected_revision'] != row.revision:
+        raise Conflict('Room changed; review again.')
+    steps = RoomCommandReceipt.objects.filter(board_id=row.board_id, import_id=approved.import_id)
+    item_ids = [r.result['id'] for r in steps.filter(operation='upload')]
+    folder_ids = [r.result['id'] for r in steps.filter(operation='folders')]
+    DataroomDocument.objects.filter(dataroom=room, pk__in=item_ids).delete()
+    DataroomFolder.objects.filter(dataroom=room, pk__in=folder_ids).delete()
+    row.staged_import = ''; row.revision += 1
+    row.save(update_fields=['staged_import', 'revision'])
+    result = {'id': str(room.pk), 'import_id': approved.import_id, 'revision': row.revision,
+              'abandoned': True, 'deleted': row.build_state == 'building'}
+    record(request, 'abandon', payload, room, result, approval=approved)
+    activity('room.import.abandoned', organization=room.organization, actor=request.user, room_id=room.pk)
+    if row.build_state == 'building':
+        # The policy protects its entry link; remove it before cascading the room.
+        RoomPolicy.objects.filter(room=room).delete()
+        room.delete()
     return result

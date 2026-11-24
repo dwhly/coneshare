@@ -128,3 +128,62 @@ from an offline browser fixture, not a deployed integration claim. Staging reap
 requires an explicitly selected core storage root and operator scheduling.
 NDA field publication, invitations/mail, lifecycle and duplicate/copy operations
 remain outside S2. No project memory was saved.
+
+## r2
+
+Gate 3 r1 recovery and approval findings are addressed as file edits; the manager
+owns staging and commits. Work is limited to the supplied Dealroom and Board
+worktrees and the canonical contract under `fd-board-dealroom/docs/edd/contracts/`.
+No preview or existing stack was changed.
+
+| Finding | Fix | Regression evidence |
+| --- | --- | --- |
+| B1 | Human writer/manager `POST rooms/{id}/imports/{import_id}/abandon/` binds the actor, approval, import, room, expected revision and idempotency key under the room lock. Deletes that batch's unpublished items/folders/order rows, releases staging, advances revision and stores a receipt. Building rooms are deleted; their receipts survive. Old create keys remain tombstoned, while a fresh review/key can create the same draft. | Both render-failure → abandon → fresh review variants; existing published content survives, staff editing resumes, old create returns 410, abandon replay survives deletion. |
+| B1 response loss | An abandon against a completed batch records a harmless receipt reporting `abandoned:false`; Board reconciles completion without deleting published content. | Lost-completion regression; Board additionally tests lost-abandon reply replay. |
+| S1 | Reject root position overlaps at approval with “Room changed; review again”. Only named receipt/BoardRoom uniqueness races receive retry wording. | Position 0 on a populated room; unrelated IntegrityError is a definite 409. |
+| S2 | Board classifies definite 400/404/409/422 as `needs_attention` with review wording and Cancel; transport uncertainty remains resumable. | Board start/continuation status matrix. |
+| S3 | Validate file extensions against the upload allowlist before approving. | Four unsupported filename forms return 400 without receipts. |
+| S4 | Adopted rooms require download-off and matching current expiry; create-backed rooms require their approved access. | Actual `adopt_board_room` command, followed by a rejected download-widening batch. |
+| S5 | Require a string `board_draft_id`; receipt draft IDs are strings. | Numeric and boolean IDs rejected; Board checks draft ID type too. |
+| S6/S7 | Board retries its lease and recovers abandoned running states; traversal deduplicates reached roots with “Already included”. | Board lease takeover, failed error-save and overlapping selection tests. |
+| N1 | Hash uploaded chunks incrementally. | Chunk-by-chunk hashing assertion. |
+| N2 | Reaper uses `is_storage_key_referenced`. | Both Document and DocumentPage references survive reaping. |
+| N3 | Validate mutation-body shape and room identifiers before the legacy lock query. | List body, invalid room ID and list-valued dataroom return 400. |
+| N4 | Amend unshipped migration 0006 and model: `room_import_step` applies only when `client_item_id != ''`. | Empty item receipts coexist, duplicate actual steps still fail; isolated PostgreSQL forward/reverse coverage. |
+| N5 | Execute rechecks the write switch and human transport, independently of hooks. | Direct execute calls reject nonhuman and disabled writes. |
+| N7/N8/N9/N10/N13 | Board bounds pagination, uses manifest hashes for readiness, wraps Drive availability errors, identifies the prepared draft explicitly, and scales multipart timeout with bytes. | Board focused regressions. |
+
+Abandon is included in the operation inventory, typed OpenAPI request schema and
+generated MCP tools (121 tools). The contract command version is 3; its three
+copies pass `deploy/do1/check-board-rooms-contract.sh` byte-for-byte. The two
+existing exhaustive operation-set assertions were extended with `abandon`; no
+test was weakened, skipped or deleted.
+
+Failing-first evidence is in `r2-red.txt`: initial run **18 failed, 3 passed**.
+The strengthened malformed-ID test and lost-completion case then ran red
+(**2 failed, 2 passed** in that focused follow-up) before their fixes.
+
+| Validation | Result |
+| --- | --- |
+| S1a wrapper, S2 + all prior Board room reads + legacy review regressions (`r2-focused.txt`) | **261 passed** |
+| Registry/MCP foundation suite (`r2-registry.txt`) | **80 passed** |
+| Disposable PostgreSQL via `run-isolated-postgres.sh` (`r2-postgres.txt`) | **72 passed** |
+| Final adopted-room command and typed MCP assertions (`r2-final-assertions.txt`) | **2 passed** |
+| Final PostgreSQL recovery/adoption/schema checks (`r2-final-recovery.txt`) | **4 passed**; both recovery variants re-upload and publish the actual DOCX after cancellation |
+| Shared contract and whitespace | Passed |
+
+PostgreSQL used only the script's disposable test container, removed on exit.
+Migration 0006 was explicitly authorized to be amended while unshipped. For an
+environment that already applied its old form, the manager must add/apply a new
+constraint migration before rollout; do not reverse a database containing receipts.
+No migration was applied to a running product database.
+
+Board's full-suite and browser counts are recorded in its matching r2 RESULT.
+Optional N6, N11 and N12 remain deferred. No project memory was changed.
+
+Board validation finished with **205 focused tests passed**. Its single full run
+was **669 passed, 8 failed, 58 existing skips, 622 subtests passed**. The three
+Cloud failures match the brief. The five additional Sign UI subcases reproduce
+on the exact unchanged starting head `a255e69` (**5 failed, 1 passed, 7 subtests
+passed**), so no new failures were introduced. Evidence and offline browser
+screenshots are in the Board r2 RESULT; unrelated Sign code was not changed.
